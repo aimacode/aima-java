@@ -60,6 +60,12 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 		return SearchUtils.toState(findNode(p));
 	}
 
+	/**
+	 * Returns a solution node if a solution was found, empty if no solution is reachable or the task was cancelled
+	 * by the user.
+	 * @param p
+	 * @return
+	 */
 	private Optional<Node<S, A>> findNode(Problem<S, A> p) {
 		clearMetrics();
 		// for depth = 0 to infinity do

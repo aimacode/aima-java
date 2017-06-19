@@ -59,10 +59,10 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 	// function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or
 	// failure/cutoff
 	/**
-	 * Returns a list of actions to the goal if the goal was found, or empty.
-	 * The list itself can be empty if already at the goal!
+	 * Returns a list of actions to reach the goal if a goal was found, or empty.
+	 * The list itself can be empty if the initial state is a goal state.
 	 * 
-	 * @return if goal found, the list of actions to the Goal, empty otherwise.
+	 * @return if goal found, the list of actions to the goal, empty otherwise.
 	 */
 	@Override
 	public Optional<List<A>> findActions(Problem<S, A> p) {
@@ -82,43 +82,44 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 		clearMetrics();
 		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
 		// limit)
-		return recursiveDLS(nodeExpander.createRootNode(p.getInitialState()), p, limit);
+		Node<S, A> solution = recursiveDLS(nodeExpander.createRootNode(p.getInitialState()), p, limit);
+		return solution != null ? Optional.of(solution) : Optional.empty();
 	}
 
 	// function RECURSIVE-DLS(node, problem, limit) returns a solution, or
 	// failure/cutoff
 
 	/**
-	 * Returns a solution node, the {@link #cutoffNode}, or empty (failure).
+	 * Returns a solution node, the {@link #cutoffNode}, or null (failure).
 	 */
-	private Optional<Node<S, A>> recursiveDLS(Node<S, A> node, Problem<S, A> problem, int limit) {
+	private Node<S, A> recursiveDLS(Node<S, A> node, Problem<S, A> problem, int limit) {
 		// if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
 		if (problem.testSolution(node)) {
 			metrics.set(METRIC_PATH_COST, node.getPathCost());
-			return Optional.of(node);
+			return node;
 		} else if (0 == limit || Tasks.currIsCancelled()) {
 			// else if limit = 0 then return cutoff
-			return Optional.of(cutoffNode);
+			return cutoffNode;
 		} else {
 			// else
 			// cutoff_occurred? <- false
-			boolean cutoff_occurred = false;
+			boolean cutoffOccurred = false;
 			// for each action in problem.ACTIONS(node.STATE) do
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
 			for (Node<S, A> child : nodeExpander.expand(node, problem)) {
 				// child <- CHILD-NODE(problem, node, action)
 				// result <- RECURSIVE-DLS(child, problem, limit - 1)
-				Optional<Node<S, A>> result = recursiveDLS(child, problem, limit - 1);
+				Node<S, A> result = recursiveDLS(child, problem, limit - 1);
 				// if result = cutoff then cutoff_occurred? <- true
-				if (isCutoffResult(result)) {
-					cutoff_occurred = true;
-				} else if (result.isPresent()) {
+				if (node == cutoffNode) {
+					cutoffOccurred = true;
+				} else if (result != null) {
 					// else if result != failure then return result
 					return result;
 				}
 			}
 			// if cutoff_occurred? then return cutoff else return failure
-			return cutoff_occurred ? Optional.of(cutoffNode) : Optional.empty();
+			return cutoffOccurred ? cutoffNode : null;
 		}
 	}
 
