@@ -3,6 +3,8 @@ package aima.core.search.csp;
 import aima.core.search.csp.inference.InferenceLog;
 import aima.core.util.Tasks;
 
+import java.util.Optional;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.5, Page 215.<br>
  * <br>
@@ -47,13 +49,15 @@ import aima.core.util.Tasks;
 public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL> {
 
     /** Applies a recursive backtracking search to solve the CSP. */
-    public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
-        return backtrack(csp, new Assignment<>());
+    public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp) {
+        Assignment<VAR, VAL> result = backtrack(csp, new Assignment<>());
+        return result != null ? Optional.of(result) : Optional.empty();
     }
 
     /**
      * Template method, which can be configured by overriding the three
      * primitive operations below.
+     * @return An assignment (possibly incomplete if task was cancelled) or empty if no solution was found.
      */
     private Assignment<VAR, VAL> backtrack(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
         Assignment<VAR, VAL> result = null;

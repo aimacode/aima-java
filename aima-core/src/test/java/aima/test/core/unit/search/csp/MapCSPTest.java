@@ -7,12 +7,15 @@ import org.junit.Test;
 
 import aima.core.search.csp.examples.MapCSP;
 
+import java.util.Optional;
+
 /**
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
 public class MapCSPTest {
-	private CSP csp;
+	private CSP<Variable, String> csp;
 
 	@Before
 	public void setUp() {
@@ -21,19 +24,19 @@ public class MapCSPTest {
 
 	@Test
 	public void testBackTrackingSearch() {
-		Assignment results = new FlexibleBacktrackingSolver().solve(csp);
-		Assert.assertNotNull(results);
-		Assert.assertEquals(MapCSP.GREEN, results.getValue(MapCSP.WA));
-		Assert.assertEquals(MapCSP.RED, results.getValue(MapCSP.NT));
-		Assert.assertEquals(MapCSP.BLUE, results.getValue(MapCSP.SA));
-		Assert.assertEquals(MapCSP.GREEN, results.getValue(MapCSP.Q));
-		Assert.assertEquals(MapCSP.RED, results.getValue(MapCSP.NSW));
-		Assert.assertEquals(MapCSP.GREEN, results.getValue(MapCSP.V));
-		Assert.assertEquals(MapCSP.RED, results.getValue(MapCSP.T));
+		Optional<Assignment<Variable, String>> results = new FlexibleBacktrackingSolver<Variable, String>().solve(csp);
+		Assert.assertTrue(results.isPresent());
+		Assert.assertEquals(MapCSP.GREEN, results.get().getValue(MapCSP.WA));
+		Assert.assertEquals(MapCSP.RED, results.get().getValue(MapCSP.NT));
+		Assert.assertEquals(MapCSP.BLUE, results.get().getValue(MapCSP.SA));
+		Assert.assertEquals(MapCSP.GREEN, results.get().getValue(MapCSP.Q));
+		Assert.assertEquals(MapCSP.RED, results.get().getValue(MapCSP.NSW));
+		Assert.assertEquals(MapCSP.GREEN, results.get().getValue(MapCSP.V));
+		Assert.assertEquals(MapCSP.RED, results.get().getValue(MapCSP.T));
 	}
 
 	@Test
 	public void testMCSearch() {
-		new MinConflictsSolver(100).solve(csp);
+		new MinConflictsSolver<Variable, String>(100).solve(csp);
 	}
 }

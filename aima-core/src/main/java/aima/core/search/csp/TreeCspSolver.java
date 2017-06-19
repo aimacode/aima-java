@@ -1,8 +1,8 @@
 package aima.core.search.csp;
 
-import java.util.*;
-
 import aima.core.util.Util;
+
+import java.util.*;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.11, Page
@@ -40,13 +40,13 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
 
     private boolean useRandom;
 
-    public TreeCspSolver<VAR, VAL> useRandom(boolean s) {
-        useRandom = s;
+    public TreeCspSolver<VAR, VAL> useRandom(boolean b) {
+        useRandom = b;
         return this;
     }
 
     @Override
-    public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
+    public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp) {
 
         Assignment<VAR, VAL> assignment = new Assignment<>();
         // Select a root from the List of Variables
@@ -56,7 +56,7 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
         Map<VAR, Constraint<VAR, VAL>> parentConstraints = new HashMap<>();
         topologicalSort(csp, root, orderedVars, parentConstraints);
         if (csp.getDomain(root).isEmpty())
-            return null; // CSP has no solution! (needed if orderedVars.size() == 1)
+            return Optional.empty(); // CSP has no solution! (needed if orderedVars.size() == 1)
 
         // Establish arc consistency from top to bottom (starting at the bottom).
         csp = csp.copyDomains(); // do not change the original CSP!
@@ -67,7 +67,7 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
             if (makeArcConsistent(parent, var, constraint, csp)) {
                 fireStateChanged(csp, null, parent);
                 if (csp.getDomain(parent).isEmpty())
-                    return null; // CSP has no solution!
+                    return Optional.empty(); // CSP has no solution!
             }
         }
 
@@ -82,7 +82,7 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
                 }
             }
         }
-        return assignment;
+        return Optional.of(assignment);
     }
 
     /**

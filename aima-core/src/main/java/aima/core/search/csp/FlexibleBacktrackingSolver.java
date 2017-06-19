@@ -1,6 +1,7 @@
 package aima.core.search.csp;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import aima.core.search.csp.inference.*;
@@ -12,6 +13,7 @@ import aima.core.search.csp.inference.*;
  *
  * @param <VAR> Type which is used to represent variables
  * @param <VAL> Type which is used to represent the values in the domains
+ *
  * @author Ruediger Lunde
  */
 public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends AbstractBacktrackingSolver<VAR, VAL> {
@@ -57,14 +59,14 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      * Applies an initial inference step and then calls the super class implementation.
      */
     @Override
-    public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
+    public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp) {
         if (inferenceStrategy != null) {
             csp = csp.copyDomains(); // do not change the original CSP!
             InferenceLog log = inferenceStrategy.apply(csp);
             if (!log.isEmpty()) {
                 fireStateChanged(csp, null, null);
                 if (log.inconsistencyFound())
-                    return null;
+                    return Optional.empty();
             }
         }
         return super.solve(csp);
@@ -75,8 +77,8 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      */
     @Override
     protected VAR selectUnassignedVariable(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
-        List<VAR> vars = csp.getVariables().stream()
-                .filter((v) -> !assignment.contains(v)).collect(Collectors.toList());
+        List<VAR> vars = csp.getVariables().stream().
+                filter((v) -> !assignment.contains(v)).collect(Collectors.toList());
         if (varSelectionStrategy != null)
             vars = varSelectionStrategy.apply(csp, vars);
         return vars.get(0);
@@ -87,11 +89,10 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      */
     @Override
     protected Iterable<VAL> orderDomainValues(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
-        if (valSelectionStrategy != null) {
+        if (valSelectionStrategy != null)
             return valSelectionStrategy.apply(csp, assignment, var);
-        } else {
+        else
             return csp.getDomain(var);
-        }
     }
 
     /**

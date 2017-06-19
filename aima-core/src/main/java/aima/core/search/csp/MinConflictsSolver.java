@@ -3,10 +3,7 @@ package aima.core.search.csp;
 import aima.core.util.Tasks;
 import aima.core.util.Util;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.8, Page 221.<br>
@@ -53,12 +50,12 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 		this.maxSteps = maxSteps;
 	}
 
-	public Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp) {
+	public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp) {
 		Assignment<VAR, VAL> current = generateRandomAssignment(csp);
 		fireStateChanged(csp, current, null);
 		for (int i = 0; i < maxSteps && !Tasks.currIsCancelled(); i++) {
 			if (current.isSolution(csp)) {
-				return current;
+				return Optional.of(current);
 			} else {
 				Set<VAR> vars = getConflictedVariables(current, csp);
 				VAR var = Util.selectRandomlyFromSet(vars);
@@ -67,7 +64,7 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 				fireStateChanged(csp, current, var);
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
 	private Assignment<VAR, VAL> generateRandomAssignment(CSP<VAR, VAL> csp) {

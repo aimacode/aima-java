@@ -2,6 +2,7 @@ package aima.gui.fx.applications.search;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.search.csp.*;
@@ -128,9 +129,9 @@ public class NQueensCspApp extends IntegrableApplication {
      * Starts the experiment.
      */
     public void startExperiment() {
-        Assignment<Variable, Integer> solution = solver.solve(csp);
-        if (solution != null) {
-            NQueensBoard board = getBoard(solution);
+        Optional<Assignment<Variable, Integer>> solution = solver.solve(csp);
+        if (solution.isPresent()) {
+            NQueensBoard board = getBoard(solution.get());
             stateViewCtrl.update(board);
         }
     }

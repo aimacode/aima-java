@@ -2,6 +2,7 @@ package aima.test.core.unit.search.csp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -109,9 +110,9 @@ public class TreeCspSolverTest {
 		csp.setDomain(V, colors);
 		
 		TreeCspSolver<Variable, String> treeCSPSolver = new TreeCspSolver<>();
-		Assignment<Variable, String> assignment = treeCSPSolver.solve(csp);
-		Assert.assertNotNull(assignment);
-		Assert.assertTrue(assignment.isComplete(csp.getVariables()));
-		Assert.assertTrue(assignment.isSolution(csp));
+		Optional<Assignment<Variable, String>> assignment = treeCSPSolver.solve(csp);
+		Assert.assertTrue(assignment.isPresent());
+		Assert.assertTrue(assignment.get().isComplete(csp.getVariables()));
+		Assert.assertTrue(assignment.get().isSolution(csp));
 	}
 }

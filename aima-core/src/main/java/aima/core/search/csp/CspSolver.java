@@ -2,6 +2,7 @@ package aima.core.search.csp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Base class for CSP solver implementations. Solving a CSP means finding an
@@ -20,13 +21,13 @@ public abstract class CspSolver<VAR extends Variable, VAL> {
     private List<CspListener<VAR, VAL>> listeners = new ArrayList<>();
 
     /**
-     * Computes a solution to the specified CSP, which specifies values for all
-     * variables of the given CSP such that all constraints are satisfied.
+     * Computes a solution to the given CSP, which specifies values for all
+     * variables of the CSP such that all constraints are satisfied.
      *
      * @param csp a CSP to be solved.
-     * @return the computed solution or null if no solution was found.
+     * @return the computed solution or empty if no solution was found.
      */
-    public abstract Assignment<VAR, VAL> solve(CSP<VAR, VAL> csp);
+    public abstract Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp);
 
     /**
      * Adds a CSP listener to the solution strategy.
