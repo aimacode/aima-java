@@ -37,7 +37,7 @@ import aima.core.search.framework.problem.Problem;
  * node's costs (comparator of priority queue is used, if available).
  *
  * @param <S> The type used to represent states
- * @param <A> The type of the actions to be used to navigate in the state space
+ * @param <A> The type of the actions to be used to navigate through the state space
  *
  * @author Ruediger Lunde
  * @author Ravi Mohan
