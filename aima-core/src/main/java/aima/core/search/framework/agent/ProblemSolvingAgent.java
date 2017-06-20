@@ -1,9 +1,10 @@
-package aima.core.search.framework;
+package aima.core.search.framework.agent;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
+import aima.core.search.framework.agent.SimpleProblemSolvingAgent;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.LinkedList;
@@ -13,7 +14,7 @@ import java.util.Queue;
 
 /**
  * Modified copy of class
- * {@link aima.core.search.framework.SimpleProblemSolvingAgent} which can be used for
+ * {@link SimpleProblemSolvingAgent} which can be used for
  * online search, too. Here, attribute {@link #plan} (original:
  * <code>seq</code>) is protected. Static pseudo code variable state is used in
  * a more general sense including world state as well as agent state aspects.

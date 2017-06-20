@@ -5,7 +5,7 @@ import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.SimpleProblemSolvingAgent;
+import aima.core.search.framework.agent.SimpleProblemSolvingAgent;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.List;

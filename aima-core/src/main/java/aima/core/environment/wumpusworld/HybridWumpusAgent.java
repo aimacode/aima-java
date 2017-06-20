@@ -18,7 +18,7 @@ import aima.core.environment.wumpusworld.action.Grab;
 import aima.core.environment.wumpusworld.action.Shoot;
 import aima.core.environment.wumpusworld.action.TurnLeft;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.GoalTest;

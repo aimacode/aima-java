@@ -14,7 +14,7 @@ import aima.core.environment.eightpuzzle.EightPuzzleFunctions;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.QueueBasedSearch;
-import aima.core.search.framework.SearchAgent;
+import aima.core.search.framework.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;

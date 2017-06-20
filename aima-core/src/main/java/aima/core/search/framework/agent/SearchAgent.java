@@ -1,4 +1,4 @@
-package aima.core.search.framework;
+package aima.core.search.framework.agent;
 
 import java.util.*;
 
@@ -6,6 +6,8 @@ import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
+import aima.core.search.framework.Metrics;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 
 /**

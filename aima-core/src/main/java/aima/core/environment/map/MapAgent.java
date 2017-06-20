@@ -4,7 +4,7 @@ import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
-import aima.core.search.framework.ProblemSolvingAgent;
+import aima.core.search.framework.agent.ProblemSolvingAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.informed.HeuristicFunctionFactory;
