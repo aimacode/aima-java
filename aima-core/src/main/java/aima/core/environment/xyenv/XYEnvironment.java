@@ -149,7 +149,7 @@ class XYEnvironmentState implements EnvironmentState {
 	}
 
 	public Set<EnvironmentObject> getObjectsNear(Agent agent, int radius) {
-		Set<EnvironmentObject> objsNear = new LinkedHashSet<EnvironmentObject>();
+		Set<EnvironmentObject> objsNear = new LinkedHashSet<>();
 
 		XYLocation agentLocation = getCurrentLocationFor(agent);
 		for (XYLocation loc : objsAtLocation.keySet()) {

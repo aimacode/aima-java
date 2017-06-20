@@ -1,14 +1,11 @@
 package aimax.osm.gui.fx.applications;
 
-import java.util.HashSet;
-import java.util.List;
-
 import aima.core.agent.Agent;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.informed.HeuristicFunctionFactory;
 import aima.gui.util.SearchFactory;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.entities.EntityViewInfo;
@@ -20,6 +17,11 @@ import aimax.osm.viewer.DefaultEntityViewInfo;
 import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.viewer.UColor;
 import javafx.scene.layout.Pane;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Integrable application which demonstrates how different kinds of search
@@ -86,12 +88,12 @@ public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 		search.addNodeListener(node -> visitedStates.add(node.getState()));
 		visitedStates.clear();
 
-		HeuristicFunctionFactory<String, MoveToAction> hfFactory;
+		Function<String, ToDoubleFunction<Node<String, MoveToAction>>> hFnFactory;
 		if (taskPaneCtrl.getParamValueIndex(PARAM_HEURISTIC) == 0)
-			hfFactory = goal -> (node -> 0.0);
+			hFnFactory = goal -> (node -> 0.0);
 		else
-			hfFactory = goal -> MapFunctions.createSLDHeuristicFunction(goal, map);
-		return new MapAgent(map, search, locations.subList(1, locations.size()), envViewCtrl::notify, hfFactory);
+			hFnFactory = goal -> MapFunctions.createSLDHeuristicFunction(goal, map);
+		return new MapAgent(map, search, locations.subList(1, locations.size()), envViewCtrl::notify, hFnFactory);
 	}
 
 	// helper classes...

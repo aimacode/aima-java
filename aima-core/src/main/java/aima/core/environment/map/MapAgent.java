@@ -4,16 +4,18 @@ import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
-import aima.core.search.framework.agent.ProblemSolvingAgent;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.framework.agent.ProblemSolvingAgent;
 import aima.core.search.framework.problem.Problem;
-import aima.core.search.informed.HeuristicFunctionFactory;
 import aima.core.search.informed.Informed;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Variant of {@link aima.core.environment.map.SimpleMapAgent} which works
@@ -34,7 +36,7 @@ public class MapAgent extends ProblemSolvingAgent<String, MoveToAction> {
     // possibly null...
     protected EnvironmentViewNotifier notifier = null;
     private SearchForActions<String, MoveToAction> search = null;
-    private HeuristicFunctionFactory<String, MoveToAction> hfFactory;
+    private Function<String, ToDoubleFunction<Node<String, MoveToAction>>> hFnFactory;
 
     public MapAgent(Map map, SearchForActions<String, MoveToAction> search, String goal) {
         this.map = map;
@@ -59,10 +61,21 @@ public class MapAgent extends ProblemSolvingAgent<String, MoveToAction> {
         this.notifier = notifier;
     }
 
+    /**
+     * Constructor.
+     * @param map Information about the environment
+     * @param search Search strategy to be used
+     * @param goals List of locations to be visited
+     * @param notifier Gets informed about decisions of the agent
+     * @param hFnFactory Factory, mapping goal locations to heuristic functions. When using
+     *                   informed search, the agent must be able to estimate rest costs for
+     *                   the goals he has selected.
+     */
     public MapAgent(Map map, SearchForActions<String, MoveToAction> search, List<String> goals,
-                    EnvironmentViewNotifier notifier, HeuristicFunctionFactory<String, MoveToAction> hfFactory) {
+                    EnvironmentViewNotifier notifier,
+                    Function<String, ToDoubleFunction<Node<String, MoveToAction>>> hFnFactory) {
         this(map, search, goals, notifier);
-        this.hfFactory = hfFactory;
+        this.hFnFactory = hFnFactory;
     }
 
     //
@@ -111,8 +124,8 @@ public class MapAgent extends ProblemSolvingAgent<String, MoveToAction> {
 
     @SuppressWarnings("unchecked")
     private void modifyHeuristicFunction(String goal) {
-        if (hfFactory != null && search instanceof Informed) {
-            ((Informed<String, MoveToAction>) search).setHeuristicFunction(hfFactory.createHeuristicFunction(goal));
+        if (hFnFactory != null && search instanceof Informed) {
+            ((Informed<String, MoveToAction>) search).setHeuristicFunction(hFnFactory.apply(goal));
         }
     }
 }
