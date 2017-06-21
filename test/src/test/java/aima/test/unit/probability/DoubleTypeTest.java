@@ -2,7 +2,6 @@ package aima.test.unit.probability;
 
 import aima.extra.probability.*;
 import static org.junit.Assert.*;
-import java.math.BigInteger;
 import org.junit.Test;
 
 public class DoubleTypeTest {
@@ -24,7 +23,7 @@ public class DoubleTypeTest {
 		ProbabilityNumber testValue2 = ProbabilityFactory.doubleValueOf(0.15);
 
 		// Get BigDecimal value
-		System.out.println(testValue2.getValue());
+		// System.out.println(testValue2.getValue());
 		
 		ProbabilityNumber testValue0 = ProbabilityFactory.doubleValueOf(0.00000001);
 		// Check if zero
@@ -61,6 +60,6 @@ public class DoubleTypeTest {
 		assertEquals(0.15 * 0.15, testValue2.pow(2).getValue().doubleValue(), DEFAULT_ROUNDING_THRESHOLD);
 		assertEquals(0.8 * 0.8 * 0.8, testValue6.pow(3).getValue().doubleValue(), DEFAULT_ROUNDING_THRESHOLD);
 		
-		System.out.println(testValue2.pow(BigInteger.valueOf(20)).getValue());
+		// System.out.println(testValue2.pow(BigInteger.valueOf(20)).getValue());
 	}
 }

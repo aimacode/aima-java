@@ -2,9 +2,7 @@ package aima.test.unit.probability;
 
 import aima.extra.probability.*;
 import static org.junit.Assert.*;
-
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import org.junit.Test;
 
 public class RationalTypeTest {
@@ -24,10 +22,10 @@ public class RationalTypeTest {
 		ProbabilityNumber testValue2 = ProbabilityFactory.rationalValueOf(new BigDecimal("0.15"));
 
 		// Get BigDecimal value
-		System.out.println(testValue2.getValue());
+		// System.out.println(testValue2.getValue());
 
-		System.out.println("Numerator -> " + ((RationalProbabilityNumber) testValue2).getNumerator());
-		System.out.println("Denominator -> " + ((RationalProbabilityNumber) testValue2).getDenominator());
+		// System.out.println("Numerator -> " + ((RationalProbabilityNumber) testValue2).getNumerator());
+		// System.out.println("Denominator -> " + ((RationalProbabilityNumber) testValue2).getDenominator());
 		
 		ProbabilityNumber testValue0 = ProbabilityFactory.rationalValueOf(new BigDecimal("0.000"));
 		// Check if zero
@@ -64,7 +62,7 @@ public class RationalTypeTest {
 		assertEquals(0.15 * 0.15, testValue2.pow(2).getValue().doubleValue(), DEFAULT_ROUNDING_THRESHOLD);
 		assertEquals(0.8 * 0.8 * 0.8, testValue6.pow(3).getValue().doubleValue(), DEFAULT_ROUNDING_THRESHOLD);
 		
-		System.out.println(testValue2.pow(BigInteger.valueOf(20)).getValue());
+		// System.out.println(testValue2.pow(BigInteger.valueOf(20)).getValue());
 	
 		/**
 		 * Computation to test number representation precision
@@ -74,7 +72,7 @@ public class RationalTypeTest {
 		double a = 0.005;
 		double b = 0.0049;
 		// Note the slight precision loss
-		System.out.println("double representation -> " + (a - b));
+		// System.out.println("double representation -> " + (a - b));
 		// Accurate value when using string constructors
 		ProbabilityNumber a1 = ProbabilityFactory.rationalValueOf(new BigDecimal("0.005"));
 		ProbabilityNumber a2 = ProbabilityFactory.rationalValueOf(new BigDecimal("0.0049"));
@@ -82,11 +80,11 @@ public class RationalTypeTest {
 		// for the inaccuracy
 		ProbabilityNumber b1 = ProbabilityFactory.rationalValueOf(new BigDecimal(a));
 		ProbabilityNumber b2 = ProbabilityFactory.rationalValueOf(new BigDecimal(b));
-		System.out.println(
-				"String constructor initialised -> " + a1.subtract(a2).getValue().doubleValue());
-		System.out.println(
-				"Double constructor initialised -> " + b1.subtract(b2).getValue().doubleValue());
-
+		// System.out.println("String constructor initialised -> " + a1.subtract(a2).getValue().doubleValue());
+		// System.out.println("Double constructor initialised -> " + b1.subtract(b2).getValue().doubleValue());
+		assertEquals(0.0001, a1.subtract(a2).getValue().doubleValue(), DEFAULT_ROUNDING_THRESHOLD);
+		assertEquals(0.0001, b1.subtract(b2).getValue().doubleValue(), DEFAULT_ROUNDING_THRESHOLD);
+		
 		// Raise RationalProbabilityNumber values to powers
 		ProbabilityNumber v1 = ProbabilityFactory.rationalValueOf(6, 10);
 
@@ -95,6 +93,6 @@ public class RationalTypeTest {
 		assertEquals(0.1 * 0.1 * 0.1 * 0.1 * 0.1, v2.pow(5).getValue().doubleValue(), DEFAULT_ROUNDING_THRESHOLD);
 		// BigDecimal uses integer scale internally, thus scale value cannot
 		// exceed beyond the integer range
-		System.out.println("Power -> " + v1.pow(BigInteger.valueOf(4L)).getValue());
+		// System.out.println("Power -> " + v1.pow(BigInteger.valueOf(4L)).getValue());
 	}
 }

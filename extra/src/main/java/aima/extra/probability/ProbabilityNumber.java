@@ -6,9 +6,15 @@ import java.math.MathContext;
 
 /**
  * ProbabilityNumber interface defines arithmetic specifically for probability
- * values. A probability value is quantified between 0 and 1. Operations that
- * violate the property of a probability value are not permitted. This interface
- * is implemented by the various ProbabilityNumber implementations.
+ * values. A probability value is quantified between 0 and 1. Although a
+ * ProbabilityNumber cannot be initialised with a value outside the bounds [0,
+ * 1], operations may cause the value represented to exceed these bounds. It is
+ * therefore necessary to validate the result obtained from a series of
+ * computations to ensure that the result is a valid probability value. This
+ * interface is implemented by the various ProbabilityNumber implementations.
+ * 
+ * The interface is intended to be immutable. Implementations may implement
+ * overriden versions of equals and hashcode methods.
  * 
  * @author Nagaraj Poti
  *
@@ -24,32 +30,41 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	BigDecimal getValue();
 
 	/**
+	 * Precision (def.) - the number of significant digits (Zero before decimal
+	 * point does not contribute to the precision count)<br>
+	 * 
+	 * <br>
 	 * Get the MathContext object associated with the ProbabilityNumber object.
 	 * MathContext can be set for BigDecimalProbabilityNumber and
-	 * RationalProbabilityNumber via the constructor mechanism. The default
-	 * MathContext object associated with the implementations is of DECIMAL128
-	 * precision. It is possible to go upto an even higher precision all the way
-	 * upto UNLIMITED setting.
+	 * RationalProbabilityNumber instances via the constructor mechanism. The
+	 * precision of the result of a computation is specified by the precision of
+	 * the operands (default) or can be arbitrarily specified all the way upto
+	 * the highest precision defined by the UNLIMITED setting (overriding
+	 * default behaviour).<br>
 	 * 
+	 * <br>
 	 * UNLIMITED - A MathContext object whose settings have the values required
 	 * for unlimited precision arithmetic. The values of the settings are:
 	 * precision=0 and roundingMode=HALF_UP (ignored in this case). When a
 	 * MathContext object is supplied with a precision setting of 0
-	 * (MathContext.UNLIMITED), arithmetic operations are exact. In the case of
-	 * divide, the exact quotient could have an infinitely long decimal
-	 * expansion; for example, 1 divided by 3. If the quotient has a
-	 * nonterminating decimal expansion and the operation is specified to return
-	 * an exact result, an ArithmeticException is thrown. Otherwise, the exact
-	 * result of the division is returned, as done for other operations.
+	 * (MathContext.UNLIMITED), results of arithmetic operations returned are
+	 * exact. In the case of division, the exact quotient could have an
+	 * infinitely long decimal expansion; for example, 1 divided by 3. If the
+	 * quotient has a nonterminating decimal expansion and the operation is
+	 * specified to return an exact result, an ArithmeticException is thrown.
+	 * Otherwise, the exact result of the division is returned, as done for
+	 * other operations.<br>
 	 * 
-	 * The rounding modes and precision setting determine how operations return
-	 * results with a limited number of digits when the exact result has more
-	 * digits than the number of digits returned. First, the total number of
-	 * digits to return is specified by the MathContext's precision setting;
-	 * this determines the result's precision. The digit count starts from the
+	 * <br>
+	 * The rounding modes and precisions determine how operations return results
+	 * with a limited number of digits when the exact result has more digits
+	 * than the number of digits returned. The total number of digits returned
+	 * is determined by (i.e min(operand_1_precision, operand_2_precision) + 1);
+	 * this behaviour can however be overriden. The digit count starts from the
 	 * leftmost nonzero digit of the exact result. The rounding mode determines
-	 * how any discarded trailing digits affect the returned result.
+	 * how any discarded trailing digits affect the returned result.<br>
 	 * 
+	 * <br>
 	 * For all arithmetic operators, the operation is carried out as though an
 	 * exact intermediate result were first calculated and then rounded to the
 	 * number of digits specified by the precision setting (if necessary), using
@@ -74,48 +89,56 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	boolean isOne();
 
 	/**
-	 * Check if two ProbabilityNumber values are equal.
+	 * Checks if the probability value represented is valid i.e it falls within
+	 * the range [0, 1]. It is possible for operations on ProbabilityNumber
+	 * instances to cause the result to either overflow or underflow the range
+	 * [0, 1].
 	 * 
-	 * @param that
-	 *            is a ProbabilityNumber.
-	 * 
-	 * @return true if equal, false otherwise.
+	 * @return true if a valid probability value, false otherwise.
 	 */
-	boolean equals(ProbabilityNumber that);
+	boolean isValid();
 
 	/**
-	 * Add two ProbabilityNumber types and return a ProbabilityNumber.
+	 * Add two ProbabilityNumber types and return a new ProbabilityNumber
+	 * representing the result of addition.
 	 * 
 	 * @param addend
 	 * 
-	 * @return result of addition of two ProbabilityNumber types.
+	 * @return a new ProbabilityNumber representing the result of addition of
+	 *         two ProbabilityNumber types.
 	 */
 	ProbabilityNumber add(ProbabilityNumber addend);
 
 	/**
-	 * Subtract two ProbabilityNumber types and return a ProbabilityNumber.
+	 * Subtract two ProbabilityNumber types and return a new ProbabilityNumber
+	 * representing the result of subtraction.
 	 * 
 	 * @param subtrahend
 	 * 
-	 * @return result of subtraction of two ProbabilityNumber types.
+	 * @return a new ProbabilityNumber representing the result of subtraction of
+	 *         two ProbabilityNumber types.
 	 */
 	ProbabilityNumber subtract(ProbabilityNumber subtrahend);
 
 	/**
-	 * Multiply two ProbabilityNumber types and return a ProbabilityNumber.
+	 * Multiply two ProbabilityNumber types and return a new ProbabilityNumber
+	 * representing the result of multiplication.
 	 * 
 	 * @param multiplicand
 	 * 
-	 * @return result of multiplication of two ProbabilityNumber types.
+	 * @return a new ProbabilityNumber representing the result of multiplication
+	 *         of two ProbabilityNumber types.
 	 */
 	ProbabilityNumber multiply(ProbabilityNumber multiplicand);
 
 	/**
-	 * Divide two ProbabilityNumber types and return a ProbabilityNumber.
+	 * Divide two ProbabilityNumber types and return a ProbabilityNumber
+	 * representing the result of division.
 	 * 
 	 * @param divisor
 	 * 
-	 * @return result of division of two ProbabilityNumber types.
+	 * @return a new ProbabilityNumber representing the result of division of
+	 *         two ProbabilityNumber types.
 	 */
 	ProbabilityNumber divide(ProbabilityNumber divisor);
 
@@ -124,7 +147,8 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * 
 	 * @param exponent
 	 * 
-	 * @return result of exponentiation.
+	 * @return a new ProbabilityNumber representing the result of
+	 *         exponentiation.
 	 */
 	ProbabilityNumber pow(int exponent);
 
@@ -133,7 +157,8 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * 
 	 * @param exponent
 	 * 
-	 * @return result of exponentiation.
+	 * @return a new ProbabilityNumber representing the result of
+	 *         exponentiation.
 	 */
 	ProbabilityNumber pow(BigInteger exponent);
 
@@ -146,4 +171,12 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * @return true if the probabilities sum to one, false otherwise.
 	 */
 	boolean sumsToOne(Iterable<ProbabilityNumber> allProbabilities);
+
+	/**
+	 * Override the precision of ProbabilityNumber instances returned as a
+	 * result of performing operations.
+	 * 
+	 * @param mc
+	 */
+	void overrideComputationPrecisionGlobally(MathContext mc);
 }
