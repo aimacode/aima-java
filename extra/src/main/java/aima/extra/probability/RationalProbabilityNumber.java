@@ -8,16 +8,27 @@ import java.math.RoundingMode;
 /**
  * Rational supports arbitrary precision arithmetic operations. Operations
  * supported are addition, subtraction, multiplication, division and
- * exponentiation. Internally numbers are represented by their fractional
- * components (numerator and denominator) and they are converted to decimal
- * format only when explicitly required. The class is immutable.
+ * exponentiation. The results are computed to exact precision. Internally
+ * numbers are represented by their fractional components (numerator and
+ * denominator) and they are converted to decimal format only when explicitly
+ * required. The class is immutable.
  * 
  * @author Nagaraj Poti
  *
  */
-public class RationalProbabilityNumber implements ProbabilityNumber, Comparable<ProbabilityNumber> {
+public class RationalProbabilityNumber implements ProbabilityNumber {
 
-	// Constants
+	// Static members
+
+	/**
+	 * Maximum integer value that can be accomodated as exponent in the
+	 * Math.pow() function
+	 */
+	private static final int EXPONENT_MAX = Integer.MAX_VALUE;
+
+	private static final BigInteger BIG_INTEGER_ONE = BigInteger.ONE;
+
+	private static final BigInteger BIG_INTEGER_ZERO = BigInteger.ZERO;
 
 	/**
 	 * IEEE 754R Decimal128 format - Precision of 34 digits and a rounding mode
@@ -29,14 +40,10 @@ public class RationalProbabilityNumber implements ProbabilityNumber, Comparable<
 	private static final RoundingMode DEFAULT_PRECISION_ROUNDING_MODE = MathContext.DECIMAL128.getRoundingMode();
 
 	/**
-	 * Maximum integer value that can be accomodated as exponent in the
-	 * Math.pow() function
+	 * MathContext of BigDecimal value returned by getValue().
 	 */
-	private static final int EXPONENT_MAX = Integer.MAX_VALUE;
-
-	private static final BigInteger BIG_INTEGER_ONE = BigInteger.ONE;
-
-	private static final BigInteger BIG_INTEGER_ZERO = BigInteger.ZERO;
+	private static MathContext resultMathContext = new MathContext(DEFAULT_MAX_PRECISION,
+			DEFAULT_PRECISION_ROUNDING_MODE);
 
 	// Internal fields
 
@@ -51,12 +58,6 @@ public class RationalProbabilityNumber implements ProbabilityNumber, Comparable<
 	 * or zero.
 	 */
 	private BigInteger denominator;
-
-	/**
-	 * MathContext of value.
-	 */
-	private static MathContext precisionMathContext = new MathContext(DEFAULT_MAX_PRECISION,
-			DEFAULT_PRECISION_ROUNDING_MODE);
 
 	// Constructors
 
@@ -73,19 +74,19 @@ public class RationalProbabilityNumber implements ProbabilityNumber, Comparable<
 	 */
 	public RationalProbabilityNumber(BigInteger numerator, BigInteger denominator) {
 		if (this.signum(numerator, denominator) == -1) {
+			throw new IllegalArgumentException("Probability value must be between 0 and 1");
+		} else if (null != denominator && denominator.compareTo(BIG_INTEGER_ZERO) == 0) {
 			throw new IllegalArgumentException();
-		} else if (denominator != null && denominator.compareTo(BIG_INTEGER_ZERO) == 0) {
-			throw new IllegalArgumentException();
-		} else if (denominator == null) {
+		} else if (null == denominator) {
 			if (numerator.compareTo(BIG_INTEGER_ONE) == 1) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Probability value must be between 0 and 1");
 			}
 			this.numerator = numerator;
 			// Default denominator value is set to 1 if null
 			this.denominator = BIG_INTEGER_ONE;
 		} else {
 			if (numerator.compareTo(denominator) == 1) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Probability value must be between 0 and 1");
 			}
 			this.numerator = numerator;
 			this.denominator = denominator;
@@ -134,7 +135,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber, Comparable<
 	 */
 	public RationalProbabilityNumber(BigDecimal value) {
 		if (null == value || value.compareTo(new BigDecimal(0)) == -1 || value.compareTo(new BigDecimal(1)) == 1) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Probability value must be between 0 and 1");
 		}
 		String strRational = value.toString();
 		int dot = strRational.indexOf(".");
@@ -159,62 +160,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber, Comparable<
 	 *            of BigDecimal type.
 	 */
 	public RationalProbabilityNumber(BigDecimal value, MathContext mc) {
-		this(value);
-		precisionMathContext = mc;
-	}
-
-	// Private methods
-
-	/**
-	 * Covert other implementations of the ProbabilityNumber interface to a
-	 * RationalProbabilityNumber.
-	 * 
-	 * @param that
-	 *            RationalProbabilityNumber.
-	 */
-	private RationalProbabilityNumber toInternalType(ProbabilityNumber that) {
-		if (that instanceof RationalProbabilityNumber) {
-			return (RationalProbabilityNumber) that;
-		}
-		return new RationalProbabilityNumber(that.getValue());
-	}
-
-	/**
-	 * Store the numerator and denominator in normalized form
-	 * 
-	 * @param numerator
-	 *            of BigInteger type.
-	 * 
-	 * @param denominator
-	 *            of BigInteger type.
-	 */
-	private void normalize(BigInteger numerator, BigInteger denominator) {
-		numerator = numerator.abs();
-		denominator = denominator.abs();
-		BigInteger gcd = gcdCompute(numerator.max(denominator), denominator.min(numerator));
-		this.numerator = numerator.divide(gcd);
-		this.denominator = denominator.divide(gcd);
-	}
-
-	/**
-	 * Compute the Greatest Common Divisor of two numbers (valA is greater than
-	 * or equal to valB).
-	 * 
-	 * @param valA
-	 *            of BigInteger type.
-	 * 
-	 * @param valB
-	 *            of BigInteger type.
-	 * 
-	 * @return gcd of valA and valB.
-	 */
-	private BigInteger gcdCompute(BigInteger valA, BigInteger valB) {
-		while (valB.compareTo(BIG_INTEGER_ZERO) == 1) {
-			BigInteger valC = valA;
-			valA = valB;
-			valB = valC.mod(valB);
-		}
-		return valA;
+		this(new BigDecimal(value.toString(), mc));
 	}
 
 	// Getter methods
@@ -235,88 +181,50 @@ public class RationalProbabilityNumber implements ProbabilityNumber, Comparable<
 	@Override
 	public BigDecimal getValue() {
 		BigDecimal numerator = new BigDecimal(this.numerator);
-		BigDecimal value = numerator.divide(new BigDecimal(denominator), precisionMathContext);
-		return value;
+		return numerator.divide(new BigDecimal(denominator), resultMathContext);
 	}
 
 	/**
-	 * @return precisionMathContext set to DECIMAL128 precision and HALF_EVEN
+	 * @return resultMathContext set to DECIMAL128 precision and HALF_EVEN
 	 *         RoundingMode by default.
 	 */
 	@Override
 	public MathContext getMathContext() {
-		return precisionMathContext;
+		return resultMathContext;
 	}
 
 	/**
-	 * Checks if the value is zero or not. The first check is an absolute check
-	 * with numerators and denominators equated.
+	 * Checks if the value is zero or not.
 	 * 
 	 * @return true if zero, false otherwise.
 	 */
 	@Override
 	public boolean isZero() {
-		return numerator.equals(BIG_INTEGER_ZERO);
+		return (this.compareTo(new RationalProbabilityNumber(BIG_INTEGER_ZERO)) == 0);
 	}
 
 	/**
-	 * Checks if the value is one. The first check is an absolute check with
-	 * numerators and denominators equated.
+	 * Checks if the value is one.
 	 * 
 	 * @return true if one, false otherwise.
 	 */
 	@Override
 	public boolean isOne() {
-		return (numerator.equals(BIG_INTEGER_ONE) && denominator.equals(BIG_INTEGER_ONE));
+		return (this.compareTo(new RationalProbabilityNumber(BIG_INTEGER_ONE)) == 0);
 	}
 
 	/**
-	 * Checks if argument implementing ProbabilityNumber interface is equal to
-	 * the value of the current RationalProbabilityNumber. The check is an
-	 * absolute check with numerators and denominators equated.
+	 * Checks if the probability value represented is valid i.e it falls within
+	 * the range [0, 1]. It is possible for operations on ProbabilityNumber
+	 * instances to cause the result to either overflow or underflow the range
+	 * [0, 1].
 	 * 
-	 * @param that
-	 *            the ProbabilityNumber type that is to be compared with this
-	 *            RationalProbabilityNumber.
-	 *
-	 * @return true if this == that, false otherwise.
+	 * @return true if a valid probability value, false otherwise.
 	 */
 	@Override
-	public boolean equals(ProbabilityNumber that) {
-		RationalProbabilityNumber specificType = toInternalType(that);
-		return (specificType.numerator.equals(numerator) && specificType.denominator.equals(denominator));
-	}
-
-	/**
-	 * Returns a negative, zero, or positive number, indicating if this object
-	 * is less than, equal to, or greater than that, respectively.
-	 * 
-	 * @param that
-	 *            of type ProbabilityNumber.
-	 * 
-	 * @return 1 if this > that, 0 if this == that, -1 if this < that.
-	 */
-	public int compareTo(ProbabilityNumber that) {
-		RationalProbabilityNumber specificType = toInternalType(that);
-		// Easy case: this and that have the same denominator
-		if (denominator.equals(specificType.denominator))
-			return numerator.compareTo(specificType.numerator);
-		// Otherwise first make the denominators equal, then compare the
-		// numerators
-		return numerator.multiply(specificType.denominator).compareTo(denominator.multiply(specificType.numerator));
-	}
-
-	/**
-	 * cumulative signum() of an array of BigInteger values.
-	 * 
-	 * @return -1 (if negative), 0 (if zero), 1 (if positive).
-	 */
-	private int signum(BigInteger... bigIntegers) {
-		int sign = 1;
-		for (BigInteger val : bigIntegers) {
-			sign *= val.signum();
-		}
-		return sign;
+	public boolean isValid() {
+		return (this.compareTo(new RationalProbabilityNumber(BIG_INTEGER_ZERO)) >= 0
+				&& this.compareTo(new RationalProbabilityNumber(BIG_INTEGER_ONE)) <= 0);
 	}
 
 	/**
@@ -374,7 +282,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber, Comparable<
 	public ProbabilityNumber divide(ProbabilityNumber that) {
 		RationalProbabilityNumber divisor = toInternalType(that);
 		if (divisor.isZero()) {
-			return null;
+			throw new IllegalArgumentException("Division by 0 not allowed");
 		}
 		return new RationalProbabilityNumber(numerator.multiply(divisor.denominator),
 				denominator.multiply(divisor.numerator));
@@ -438,7 +346,124 @@ public class RationalProbabilityNumber implements ProbabilityNumber, Comparable<
 		return this.isOne();
 	}
 
+	/**
+	 * Override the precision of ProbabilityNumber instances returned as a
+	 * result of performing operations.
+	 * 
+	 * @param mc
+	 */
+	@Override
+	public void overrideComputationPrecisionGlobally(MathContext mc) {
+		resultMathContext = mc;
+	}
+	
+	/**
+	 * Checks if argument implementing ProbabilityNumber interface is equal to
+	 * the value of the current RationalProbabilityNumber. The check is an
+	 * absolute check with numerators and denominators equated.
+	 * 
+	 * @param that
+	 *            the ProbabilityNumber type that is to be compared with this
+	 *            RationalProbabilityNumber.
+	 *
+	 * @return true if this == that, false otherwise.
+	 */
+	@Override
+	public boolean equals(Object that) {
+		RationalProbabilityNumber specificType = toInternalType((ProbabilityNumber) that);
+		return (this.compareTo(specificType) == 0);
+	}
+
+	/**
+	 * Returns a negative, zero, or positive number, indicating if this object
+	 * is less than, equal to, or greater than that, respectively.
+	 * 
+	 * @param that
+	 *            of type ProbabilityNumber.
+	 * 
+	 * @return 1 if this > that, 0 if this == that, -1 if this < that.
+	 */
+	public int compareTo(ProbabilityNumber that) {
+		RationalProbabilityNumber specificType = toInternalType(that);
+		// Easy case: this and that have the same denominator
+		if (denominator.equals(specificType.denominator))
+			return numerator.compareTo(specificType.numerator);
+		// Otherwise first make the denominators equal, then compare the
+		// numerators
+		return numerator.multiply(specificType.denominator).compareTo(denominator.multiply(specificType.numerator));
+	}
+
+	/**
+	 * @return string representation of value.
+	 */
 	public String toString() {
 		return getValue().toString();
+	}
+
+	// Private methods
+
+	/**
+	 * Covert other implementations of the ProbabilityNumber interface to a
+	 * RationalProbabilityNumber.
+	 * 
+	 * @param that
+	 *            RationalProbabilityNumber.
+	 */
+	private RationalProbabilityNumber toInternalType(ProbabilityNumber that) {
+		if (that instanceof RationalProbabilityNumber) {
+			return (RationalProbabilityNumber) that;
+		}
+		return new RationalProbabilityNumber(that.getValue());
+	}
+
+	/**
+	 * Store the numerator and denominator in normalized form
+	 * 
+	 * @param numerator
+	 *            of BigInteger type.
+	 * 
+	 * @param denominator
+	 *            of BigInteger type.
+	 */
+	private void normalize(BigInteger numerator, BigInteger denominator) {
+		numerator = numerator.abs();
+		denominator = denominator.abs();
+		BigInteger gcd = gcdCompute(numerator.max(denominator), denominator.min(numerator));
+		this.numerator = numerator.divide(gcd);
+		this.denominator = denominator.divide(gcd);
+	}
+
+	/**
+	 * Compute the Greatest Common Divisor of two numbers (valA is greater than
+	 * or equal to valB).
+	 * 
+	 * @param valA
+	 *            of BigInteger type.
+	 * 
+	 * @param valB
+	 *            of BigInteger type.
+	 * 
+	 * @return gcd of valA and valB.
+	 */
+	private BigInteger gcdCompute(BigInteger valA, BigInteger valB) {
+		while (valB.compareTo(BIG_INTEGER_ZERO) == 1) {
+			BigInteger valC = valA;
+			valA = valB;
+			valB = valC.mod(valB);
+		}
+		return valA;
+	}
+
+	/**
+	 * cumulative signum() of an array of BigInteger values.
+	 * 
+	 * @return -1 (if negative), 0 (if zero), 1 (if positive).
+	 */
+	private int signum(BigInteger... bigIntegers) {
+		int sign = 1;
+		for (BigInteger val : bigIntegers) {
+			sign *= val.signum();
+		}
+		return sign;
 	}
 }

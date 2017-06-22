@@ -14,7 +14,7 @@ import java.math.RoundingMode;
  * @author Nagaraj Poti
  *
  */
-public class LogProbabilityNumber implements ProbabilityNumber, Comparable<ProbabilityNumber> {
+public class LogProbabilityNumber implements ProbabilityNumber {
 
 	// Constants
 
@@ -28,23 +28,17 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	 * According to the IEEE 754 format, double values have a precision of 15.95
 	 * decimal digits. Here, max_precision is set to 15 digits by default.
 	 */
-	private static final Integer DEFAULT_MAX_PRECISION = MathContext.DECIMAL64.getPrecision() - 1;
+	private static Integer MAX_PRECISION = MathContext.DECIMAL64.getPrecision() - 1;
 
 	/**
 	 * RoundingMode.HALF_EVEN statistically minimizes cumulative error when
 	 * applied repeatedly over a sequence of calculations.
 	 */
-	private static final RoundingMode DEFAULT_PRECISION_ROUNDING_MODE = RoundingMode.HALF_EVEN;
+	private static RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 
 	// Internal fields
 
 	private Double value;
-
-	/**
-	 * MathContext of value.
-	 */
-	private static MathContext precisionMathContext = new MathContext(DEFAULT_MAX_PRECISION,
-			DEFAULT_PRECISION_ROUNDING_MODE);
 
 	// Constructors
 
@@ -56,7 +50,7 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	 */
 	public LogProbabilityNumber(double value) {
 		if (value < 0 || value > 1) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Probability value must be between 0 and 1");
 		}
 		this.value = Math.log(value);
 	}
@@ -70,8 +64,7 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	 */
 	public LogProbabilityNumber(BigDecimal value) {
 		if (null == value || value.compareTo(new BigDecimal(0)) == -1 || value.compareTo(new BigDecimal(1)) == 1) {
-			// Probability value must between 0 and 1
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Probability value must be between 0 and 1");
 		}
 		this.value = Math.log(value.doubleValue());
 	}
@@ -92,39 +85,26 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 		this.value = value;
 	}
 
-	// Private methods
-
-	/**
-	 * Covert other implementations of the ProbabilityNumber interface to a
-	 * LogProbabilityNumber.
-	 * 
-	 * @param that
-	 *            LogProbabilityNumber.
-	 */
-	private LogProbabilityNumber toInternalType(ProbabilityNumber that) {
-		if (that instanceof LogProbabilityNumber) {
-			return (LogProbabilityNumber) that;
-		}
-		return new LogProbabilityNumber(that.getValue());
-	}
-
 	// Public methods
 
 	/**
+	 * The BigDecimal value returned represents the double value represented by
+	 * this class with MAX_PRECISION.
+	 * 
 	 * @return value of BigDecimal type.
 	 */
 	@Override
 	public BigDecimal getValue() {
-		return new BigDecimal(Math.exp(value));
+		return new BigDecimal(Math.exp(this.value), this.getMathContext());
 	}
 
 	/**
-	 * @return precisionMathContext set to DECIMAL64 - 1 (15 digits) precision
+	 * @return MathContext set to DECIMAL64 - 1 (15 digits) precision
 	 *         and HALF_EVEN RoundingMode by default.
 	 */
 	@Override
 	public MathContext getMathContext() {
-		return precisionMathContext;
+		return new MathContext(MAX_PRECISION, ROUNDING_MODE);
 	}
 
 	/**
@@ -136,12 +116,7 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	 */
 	@Override
 	public boolean isZero() {
-		if (value.isInfinite()) {
-			return true;
-		}
-		// Convert value from logspace to decimal and perform approximation
-		// check with 0
-		return Math.abs(Math.exp(value) - 0) <= DEFAULT_ROUNDING_THRESHOLD;
+		return (compareLog(this.value, Double.NEGATIVE_INFINITY) == 0);
 	}
 
 	/**
@@ -153,51 +128,20 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	 */
 	@Override
 	public boolean isOne() {
-		if (value == 0) {
-			return true;
-		}
-		// Logspace value approximation checked against 0
-		return Math.abs(value - 0) <= DEFAULT_ROUNDING_THRESHOLD;
+		return (compareLog(this.value, 0.0) == 0);
 	}
 
 	/**
-	 * Checks if argument implementing ProbabilityNumber interface is equal to
-	 * the value of the current LogProbabilityNumber. The first check is an
-	 * absolute check upto MAX_PRECISION digits. If the check fails, an
-	 * approximation check based on the specified DEFAULT_ROUNDING_THRESHOLD is
-	 * made.
+	 * Checks if the probability value represented is valid i.e it falls within
+	 * the range [0, 1]. It is possible for operations on ProbabilityNumber
+	 * instances to cause the result to either overflow or underflow the range
+	 * [0, 1].
 	 * 
-	 * @param that
-	 *            the ProbabilityNumber type that is to be compared with this
-	 *            LogProbabilityNumber.
-	 *
-	 * @return true if this == that, false otherwise.
+	 * @return true if a valid probability value, false otherwise.
 	 */
 	@Override
-	public boolean equals(ProbabilityNumber that) {
-		return (this.compareTo(that) == 0);
-	}
-	
-	/**
-	 * Compare this with another ProbabilityNumber value (that).
-	 * 
-	 * @param that
-	 *            of type ProbabilityNumber.
-	 * 
-	 * @return 1 if this > that, 0 if this == that, -1 if this < that.
-	 */
-	@Override
-	public int compareTo(ProbabilityNumber that) {
-		LogProbabilityNumber second = toInternalType(that);
-		if (value == second.value) {
-			return 0;
-		}
-		boolean result = Math.abs(value - second.value) <= DEFAULT_ROUNDING_THRESHOLD;
-		if (result == true) {
-			return 0;
-		} else {
-			return ((value > second.value) ? 1 : -1);
-		}
+	public boolean isValid() {
+		return (compareLog(this.value, Double.NEGATIVE_INFINITY) >= 0 && compareLog(this.value, 0.0) <= 0);
 	}
 
 	/**
@@ -215,7 +159,7 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	@Override
 	public ProbabilityNumber add(ProbabilityNumber that) {
 		LogProbabilityNumber addend = toInternalType(that);
-		return new LogProbabilityNumber(value + Math.log(1 + Math.exp(addend.value - value)), true);
+		return new LogProbabilityNumber(this.value + Math.log(1 + Math.exp(addend.value - this.value)), true);
 	}
 
 	/**
@@ -233,7 +177,7 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	@Override
 	public ProbabilityNumber subtract(ProbabilityNumber that) {
 		LogProbabilityNumber subtrahend = toInternalType(that);
-		return new LogProbabilityNumber(value + Math.log(1 - Math.exp(subtrahend.value - value)), true);
+		return new LogProbabilityNumber(this.value + Math.log(1 - Math.exp(subtrahend.value - this.value)), true);
 	}
 
 	/**
@@ -251,7 +195,7 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	@Override
 	public ProbabilityNumber multiply(ProbabilityNumber that) {
 		LogProbabilityNumber multiplier = toInternalType(that);
-		return new LogProbabilityNumber(value + multiplier.value, true);
+		return new LogProbabilityNumber(this.value + multiplier.value, true);
 	}
 
 	/**
@@ -269,7 +213,7 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	@Override
 	public ProbabilityNumber divide(ProbabilityNumber that) {
 		LogProbabilityNumber divisor = toInternalType(that);
-		return new LogProbabilityNumber(value - divisor.value, true);
+		return new LogProbabilityNumber(this.value - divisor.value, true);
 	}
 
 	/**
@@ -285,7 +229,7 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	 */
 	@Override
 	public ProbabilityNumber pow(int exponent) {
-		return new LogProbabilityNumber(exponent * value, true);
+		return new LogProbabilityNumber(exponent * this.value, true);
 	}
 
 	/**
@@ -301,7 +245,7 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 	 */
 	@Override
 	public ProbabilityNumber pow(BigInteger exponent) {
-		return new LogProbabilityNumber(exponent.intValue() * value, true);
+		return new LogProbabilityNumber(exponent.intValue() * this.value, true);
 	}
 
 	/**
@@ -325,7 +269,108 @@ public class LogProbabilityNumber implements ProbabilityNumber, Comparable<Proba
 		return this.isOne();
 	}
 	
+	/**
+	 * Override the precision of ProbabilityNumber instances returned as a
+	 * result of performing operations.
+	 * 
+	 * @param mc
+	 */
+	@Override
+	public void overrideComputationPrecisionGlobally(MathContext mc) {
+		if (mc.getPrecision() > 15) {
+			throw new IllegalArgumentException("Maximum precision possible for LogProbabilityNumber is 15");
+		}
+		MAX_PRECISION = mc.getPrecision();
+		ROUNDING_MODE = mc.getRoundingMode();
+	}
+	
+	/**
+	 * Checks if argument implementing ProbabilityNumber interface is equal to
+	 * the value of the current LogProbabilityNumber. The first check is an
+	 * absolute check upto MAX_PRECISION digits. If the check fails, an
+	 * approximation check based on the specified DEFAULT_ROUNDING_THRESHOLD is
+	 * made.
+	 * 
+	 * @param that
+	 *            the ProbabilityNumber type that is to be compared with this
+	 *            LogProbabilityNumber.
+	 *
+	 * @return true if this == that, false otherwise.
+	 */
+	@Override
+	public boolean equals(Object that) {
+		LogProbabilityNumber specificType = toInternalType((ProbabilityNumber) that);
+		return (this.compareTo(specificType) == 0);
+	}
+
+	/**
+	 * Compare this with another ProbabilityNumber value (that).
+	 * 
+	 * @param that
+	 *            of type ProbabilityNumber.
+	 * 
+	 * @return 1 if this > that, 0 if this == that, -1 if this < that.
+	 */
+	@Override
+	public int compareTo(ProbabilityNumber that) {
+		LogProbabilityNumber specificType = toInternalType(that);
+		return compareLog(this.value, specificType.value);
+
+	}
+
+	/**
+	 * @return string representation of value.
+	 */
 	public String toString() {
 		return getValue().toString();
+	}
+
+	// Private methods
+
+	/**
+	 * Covert other implementations of the ProbabilityNumber interface to a
+	 * LogProbabilityNumber.
+	 * 
+	 * @param that
+	 *            LogProbabilityNumber.
+	 */
+	private LogProbabilityNumber toInternalType(ProbabilityNumber that) {
+		if (that instanceof LogProbabilityNumber) {
+			return (LogProbabilityNumber) that;
+		}
+		return new LogProbabilityNumber(that.getValue());
+	}
+
+	/**
+	 * Compare two double type values for equality. The first check is an
+	 * absolute check upto DEFAULT_MAX_PRECISION digits. If the check fails, an
+	 * approximation check based on the specified DEFAULT_ROUNDING_THRESHOLD is
+	 * made.
+	 * 
+	 * @param first
+	 *            value of Double type.
+	 * @param second
+	 *            value of Double type.
+	 * 
+	 * @return 1 if first > second, 0 if first == second, -1 if first < second.
+	 */
+	private int compareLog(Double first, Double second) {
+		boolean result;
+		if (first == second) {
+			return 0;
+		} else if (first.isInfinite()) {
+			// Convert value from logspace to decimal and perform approximation
+			// check with 0
+			result = (Math.abs(Math.exp(second) - 0) <= DEFAULT_ROUNDING_THRESHOLD);
+		} else if (second.isInfinite()) {
+			result = Math.abs(Math.exp(first) - 0) <= DEFAULT_ROUNDING_THRESHOLD;
+		} else {
+			result = Math.abs(first - second) <= DEFAULT_ROUNDING_THRESHOLD;
+		}
+		if (result == true) {
+			return 0;
+		} else {
+			return ((first > second) ? 1 : -1);
+		}
 	}
 }
