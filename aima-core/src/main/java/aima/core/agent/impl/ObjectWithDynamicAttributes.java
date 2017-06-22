@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Mike Stampone
  */
 public abstract class ObjectWithDynamicAttributes {
-	private Map<Object, Object> attributes = new LinkedHashMap<Object, Object>();
+	private Map<Object, Object> attributes = new LinkedHashMap<>();
 
 	//
 	// PUBLIC METHODS

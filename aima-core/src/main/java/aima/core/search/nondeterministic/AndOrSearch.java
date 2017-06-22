@@ -109,10 +109,10 @@ public class AndOrSearch<S, A> {
 			return null;
 		}
 		// for each action in problem.ACTIONS(state) do
-		for (A action : problem.getActionsFn().apply(state)) {
+		for (A action : problem.getActions(state)) {
 			// plan <- AND-SEARCH(RESULTS(state, action), problem, [state|path])
 			Plan plan = andSearch(
-					problem.getResultsFn().results(state, action),
+					problem.getResults(state, action),
 					problem, path.prepend(state));
 			// if plan != failure then return [action|plan]
 			if (plan != null) {
@@ -150,7 +150,7 @@ public class AndOrSearch<S, A> {
 		// for each s_i in states do
 		for (int i = 0; i < _states.length; i++) {
 			// plan_i <- OR-SEARCH(s_i, problem, path)
-			plans[i] = this.orSearch((S) _states[i], problem, path);
+			plans[i] = orSearch((S) _states[i], problem, path);
 			// if plan_i = failure then return failure
 			if (plans[i] == null) {
 				return null;
@@ -176,7 +176,7 @@ public class AndOrSearch<S, A> {
 	 */
 	public Metrics getMetrics() {
 		Metrics result = new Metrics();
-		result.set("expandedNodes", this.expandedNodes);
+		result.set("expandedNodes", expandedNodes);
 		return result;
 	}
 }

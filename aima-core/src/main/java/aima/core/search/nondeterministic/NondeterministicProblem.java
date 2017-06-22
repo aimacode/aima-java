@@ -4,6 +4,8 @@ import aima.core.search.framework.problem.ActionsFunction;
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.StepCostFunction;
 
+import java.util.List;
+
 /**
  * Non-deterministic problems may have multiple results for a given state and
  * action; this class handles these results by mimicking Problem and replacing
@@ -61,21 +63,10 @@ public class NondeterministicProblem<S, A> {
 	}
 
 	/**
-	 * Returns the goal test.
-	 * 
-	 * @return the goal test.
-	 */
-	public GoalTest<S> getGoalTest() {
-		return goalTest;
-	}
-
-	/**
 	 * Returns the description of the possible actions available to the agent.
-	 * 
-	 * @return the description of the possible actions available to the agent.
 	 */
-	public ActionsFunction<S, A> getActionsFn() {
-		return actionsFn;
+	List<A> getActions(S state) {
+		return actionsFn.apply(state);
 	}
 
 	/**
@@ -83,16 +74,15 @@ public class NondeterministicProblem<S, A> {
 	 * 
 	 * @return the description of what each action does.
 	 */
-	public ResultsFunction<S, A> getResultsFn() {
-		return this.resultsFn;
+	public List<S> getResults(S state, A action) {
+		return this.resultsFn.results(state, action);
 	}
 
 	/**
-	 * Returns the path cost function.
-	 * 
-	 * @return the path cost function.
+	 * Returns the <b>step cost</b> of taking action <code>action</code> in state <code>state</code> to reach state
+	 * <code>stateDelta</code> denoted by c(s, a, s').
 	 */
-	public StepCostFunction<S, A> getStepCostFn() {
-		return stepCostFn;
+	double getStepCosts(S state, A action, S stateDelta) {
+		return stepCostFn.applyAsDouble(state, action, stateDelta);
 	}
 }

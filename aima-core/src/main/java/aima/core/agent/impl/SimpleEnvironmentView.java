@@ -24,9 +24,9 @@ public class SimpleEnvironmentView implements EnvironmentView {
 	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
 		StringBuilder builder = new StringBuilder();
 		int agentId = source.getAgents().indexOf(agent) + 1;
-		builder.append("Agent " + agentId + " acted.");
-		builder.append("\n   Percept: " + percept.toString());
-		builder.append("\n   Action: " + action.toString());
+		builder.append("Agent ").append(agentId).append(" acted.");
+		builder.append("\n   Percept: ").append(percept.toString());
+		builder.append("\n   Action: ").append(action.toString());
 		System.out.println(builder.toString());
 	}
 }
