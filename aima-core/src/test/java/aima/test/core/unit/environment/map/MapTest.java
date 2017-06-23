@@ -29,7 +29,7 @@ public class MapTest {
 
 	@Test
 	public void testLocationsLinkedTo() {
-		ArrayList<String> locations = new ArrayList<String>();
+		ArrayList<String> locations = new ArrayList<>();
 		List<String> linkedTo;
 
 		linkedTo = aMap.getPossibleNextLocations("A");
@@ -89,7 +89,7 @@ public class MapTest {
 
 	@Test
 	public void testRandomGeneration() {
-		ArrayList<String> locations = new ArrayList<String>();
+		ArrayList<String> locations = new ArrayList<>();
 		locations.add("A");
 		locations.add("B");
 		locations.add("C");

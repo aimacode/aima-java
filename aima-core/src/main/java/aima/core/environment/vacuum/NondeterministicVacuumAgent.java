@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.function.Function;
 
 import aima.core.agent.Action;
+import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
@@ -17,24 +18,23 @@ import aima.core.search.nondeterministic.Plan;
  * contingency plan. See page 135, AIMA3e.
  * 
  * @author Andrew Brown
+ * @author Ruediger Lunde
  */
 public class NondeterministicVacuumAgent extends AbstractAgent {
-	private NondeterministicProblem problem;
 	private Function<Percept, Object> ptsFunction;
+	private EnvironmentViewNotifier notifier;
+
+	private NondeterministicProblem<VacuumEnvironmentState, Action> problem;
 	private Plan contingencyPlan;
 	private LinkedList<Object> stack = new LinkedList<>();
 
 	public NondeterministicVacuumAgent(Function<Percept, Object> ptsFunction) {
-		setPerceptToStateFunction(ptsFunction);
+		this.ptsFunction = ptsFunction;
 	}
 
-	/**
-	 * Returns the search problem for this agent.
-	 * 
-	 * @return the search problem for this agent.
-	 */
-	public NondeterministicProblem getProblem() {
-		return problem;
+	public NondeterministicVacuumAgent(Function<Percept, Object> ptsFunction, EnvironmentViewNotifier notifier) {
+		this.ptsFunction = ptsFunction;
+		this.notifier = notifier;
 	}
 
 	/**
@@ -43,29 +43,23 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 	 * @param problem
 	 *            the search problem for this agent to solve.
 	 */
-	public void setProblem(NondeterministicProblem problem) {
+	public void setProblem(NondeterministicProblem<VacuumEnvironmentState, Action> problem) {
 		this.problem = problem;
-		init();
+		setAlive(true);
+		stack.clear();
+		AndOrSearch<VacuumEnvironmentState, Action> andOrSearch = new AndOrSearch<>();
+		contingencyPlan = andOrSearch.search(problem);
+		if (notifier != null)
+			notifier.notifyViews("   Contingency plan: " + contingencyPlan);
 	}
 
 	/**
-	 * Returns the percept to state function of this agent.
-	 * 
-	 * @return the percept to state function of this agent.
+	 * Returns the search problem for this agent.
+	 *
+	 * @return the search problem for this agent.
 	 */
-	public Function<Percept, Object> getPerceptToStateFunction() {
-		return ptsFunction;
-	}
-
-	/**
-	 * Sets the percept to state functino of this agent.
-	 * 
-	 * @param ptsFunction
-	 *            a function which returns the problem state associated with a
-	 *            given Percept.
-	 */
-	public void setPerceptToStateFunction(Function<Percept, Object> ptsFunction) {
-		this.ptsFunction = ptsFunction;
+	public NondeterministicProblem<VacuumEnvironmentState, Action> getProblem() {
+		return problem;
 	}
 
 	/**
@@ -89,55 +83,43 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 	@Override
 	public Action execute(Percept percept) {
 		// check if goal state
-		VacuumEnvironmentState state = (VacuumEnvironmentState) this
-				.getPerceptToStateFunction().apply(percept);
+		VacuumEnvironmentState state = (VacuumEnvironmentState) ptsFunction.apply(percept);
 		if (state.getLocationState(VacuumEnvironment.LOCATION_A) == VacuumEnvironment.LocationState.Clean
 				&& state.getLocationState(VacuumEnvironment.LOCATION_B) == VacuumEnvironment.LocationState.Clean) {
 			return NoOpAction.NO_OP;
 		}
 		// check stack size
-		if (this.stack.size() < 1) {
-			if (this.contingencyPlan.size() < 1) {
+		if (stack.size() < 1) {
+			if (contingencyPlan.size() < 1) {
 				return NoOpAction.NO_OP;
 			} else {
-				this.stack.push(this.getContingencyPlan().removeFirst());
+				stack.push(this.getContingencyPlan().removeFirst());
 			}
 		}
 		// pop...
-		Object currentStep = this.stack.peek();
+		Object currentStep = stack.peek();
 		// push...
 		if (currentStep instanceof Action) {
-			return (Action) this.stack.remove();
+			return (Action) stack.remove();
 		} // case: next step is a plan
 		else if (currentStep instanceof Plan) {
 			Plan newPlan = (Plan) currentStep;
-			if (newPlan.size() > 0) {
-				this.stack.push(newPlan.removeFirst());
-			} else {
-				this.stack.remove();
-			}
-			return this.execute(percept);
+			if (newPlan.size() > 0)
+				stack.push(newPlan.removeFirst());
+			else
+				stack.remove();
+			return execute(percept);
 		} // case: next step is an if-then
 		else if (currentStep instanceof IfStateThenPlan) {
-			IfStateThenPlan conditional = (IfStateThenPlan) this.stack.remove();
-			this.stack.push(conditional.ifStateMatches(percept));
-			return this.execute(percept);
+			IfStateThenPlan conditional = (IfStateThenPlan) stack.remove();
+			stack.push(conditional.ifStateMatches(percept));
+			return execute(percept);
 		} // case: ignore next step if null
 		else if (currentStep == null) {
-			this.stack.remove();
-			return this.execute(percept);
+			stack.remove();
+			return execute(percept);
 		} else {
 			throw new RuntimeException("Unrecognized contingency plan step.");
 		}
-	}
-
-	//
-	// PRIVATE METHODS
-	//
-	private void init() {
-		setAlive(true);
-		stack.clear();
-		AndOrSearch andOrSearch = new AndOrSearch();
-		this.contingencyPlan = andOrSearch.search(this.problem);
 	}
 }

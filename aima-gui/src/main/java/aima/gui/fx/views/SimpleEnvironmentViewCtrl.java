@@ -54,42 +54,49 @@ public class SimpleEnvironmentViewCtrl extends Observable implements Environment
 	@Override
 	public void notify(String msg) {
 		if (Platform.isFxApplicationThread())
-			textArea.appendText("\n" + msg);
+			textArea.appendText("\n" + msg + "\n");
 		else
-			Platform.runLater(() -> textArea.appendText("\n" + msg));
+			Platform.runLater(() -> textArea.appendText("\n" + msg+ "\n"));
 	}
 
 	/**
-	 * Should not be called from an FX application thread.
+	 * Can be called from every thread.
 	 */
 	@Override
 	public void agentAdded(Agent agent, Environment source) {
-		Platform.runLater(() -> {
+		Runnable r = () -> {
 			int agentId = source.getAgents().indexOf(agent) + 1;
 			textArea.appendText("\nAgent " + agentId + " added.");
 			updateEnvStateView(source);
-		});
-
+		};
+		if (Platform.isFxApplicationThread())
+			r.run();
+		else
+			Platform.runLater(r);
 	}
 
 	/**
-	 * Should not be called from an FX application thread.
+	 * Can be called from every thread.
 	 */
 	@Override
 	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
-		Platform.runLater(() -> {
+		Runnable r = () -> {
 			int agentId = source.getAgents().indexOf(agent) + 1;
 			textArea.appendText("\nAgent " + agentId + " acted.");
 			textArea.appendText("\n   Percept: " + percept.toString());
 			textArea.appendText("\n   Action: " + action.toString());
 			updateEnvStateView(source);
-		});
+		};
+		if (Platform.isFxApplicationThread())
+			r.run();
+		else
+			Platform.runLater(r);
 	}
 
 	/**
 	 * Is called after agent actions. This implementation just notifies all observers.
 	 */
 	protected void updateEnvStateView(Environment env) {
-		this.notifyObservers();
+		notifyObservers();
 	}
 }

@@ -31,7 +31,7 @@ public class HybridWumpusAgentTest {
 	public void testPlanRoute() {
 		HybridWumpusAgent hwa = new HybridWumpusAgent(4);
 		// Should be a NoOp plan as we are already at the goal.
-		Assert.assertEquals(Collections.<Action>emptyList(), 
+		Assert.assertEquals(Collections.emptyList(),
 			hwa.planRoute(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST), 
 				new LinkedHashSet<Room>() {{
 					add(new Room(1,1));
@@ -118,7 +118,7 @@ public class HybridWumpusAgentTest {
 	}
 	
 	private static Set<Room> allRooms(int caveXandYDimensions) {
-		Set<Room> allRooms = new LinkedHashSet<Room>();		
+		Set<Room> allRooms = new LinkedHashSet<>();
 		for (int x = 1; x <= caveXandYDimensions; x++) {
 			for (int y = 1; y <= caveXandYDimensions; y++) {
 				allRooms.add(new Room(x, y));

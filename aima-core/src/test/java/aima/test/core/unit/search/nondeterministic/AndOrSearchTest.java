@@ -30,8 +30,7 @@ public class AndOrSearchTest {
     @Before
     public void setUp() {
         
-        this.agent = new NondeterministicVacuumAgent(
-        		new FullyObservableVacuumEnvironmentPerceptToStateFunction());
+        this.agent = new NondeterministicVacuumAgent(percept -> percept); // percept == env state!
         // create state: both rooms are dirty and the vacuum is in room A
         VacuumEnvironmentState state = new VacuumEnvironmentState();
         state.setLocationState(LOCATION_A, LocationState.Dirty);

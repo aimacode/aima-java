@@ -101,12 +101,12 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
 		if (anAgent instanceof NondeterministicVacuumAgent) {
-    		// Note: implements FullyObservableVacuumEnvironmentPercept
+    		// This agent expects a fully observable environment. It gets a clone of the environment state.
     		return envState.clone();
     	}
+    	// Other agents get a local percept.
 		String agentLocation = envState.getAgentLocation(anAgent);
-		return new LocalVacuumEnvironmentPercept(agentLocation,
-				envState.getLocationState(agentLocation));
+		return new LocalVacuumEnvironmentPercept(agentLocation, envState.getLocationState(agentLocation));
 	}
 
 	@Override

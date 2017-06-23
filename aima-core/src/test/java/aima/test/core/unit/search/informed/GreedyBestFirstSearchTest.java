@@ -87,7 +87,7 @@ public class GreedyBestFirstSearchTest {
 				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
-				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest]]",
+				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=Fagaras], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());
 		Assert.assertEquals(3, agent.getActions().size());
 		Assert.assertEquals("3", agent.getInstrumentation().getProperty("nodesExpanded"));
@@ -107,7 +107,7 @@ public class GreedyBestFirstSearchTest {
 				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
-				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==Fagaras], Action[name==moveTo, location==Bucharest]]",
+				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=Fagaras], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());
 		Assert.assertEquals(3, agent.getActions().size());
 		Assert.assertEquals("3", agent.getInstrumentation().getProperty("nodesExpanded"));

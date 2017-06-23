@@ -118,8 +118,7 @@ public class VacuumController extends AgentAppController {
 	// PRIVATE METHODS
 	//
 	private NondeterministicVacuumAgent createNondeterministicVacuumAgent() {
-		return new NondeterministicVacuumAgent(
-        		new FullyObservableVacuumEnvironmentPerceptToStateFunction());
+		return new NondeterministicVacuumAgent(percept -> percept); // percept == env state!
 	}
 	
 	private NondeterministicProblem<VacuumEnvironmentState, Action> createNondeterministicProblem() {

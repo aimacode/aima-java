@@ -139,8 +139,7 @@ public class VacuumAgentApp extends IntegrableApplication {
     // helper methods...
 
     private NondeterministicVacuumAgent createNondeterministicVacuumAgent() {
-        return new NondeterministicVacuumAgent(
-                new FullyObservableVacuumEnvironmentPerceptToStateFunction());
+        return new NondeterministicVacuumAgent(percept -> percept, env::notifyViews); // percept == env state!
     }
 
     private NondeterministicProblem<VacuumEnvironmentState, Action> createNondeterministicProblem() {

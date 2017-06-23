@@ -19,14 +19,14 @@ public class AssignmentTest {
 	private static final Variable Y = new Variable("y");
 
 	private List<Variable> variables;
-	private Assignment assignment;
+	private Assignment<Variable, String> assignment;
 
 	@Before
 	public void setUp() {
 		variables = new ArrayList<Variable>();
 		variables.add(X);
 		variables.add(Y);
-		assignment = new Assignment();
+		assignment = new Assignment<>();
 	}
 
 	@Test

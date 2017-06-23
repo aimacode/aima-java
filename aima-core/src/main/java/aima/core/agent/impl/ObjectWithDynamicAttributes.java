@@ -45,7 +45,7 @@ public abstract class ObjectWithDynamicAttributes {
 			}
 
 			sb.append(key);
-			sb.append("==");
+			sb.append("=");
 			sb.append(attributes.get(key));
 		}
 		sb.append("]");

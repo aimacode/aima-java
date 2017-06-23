@@ -20,8 +20,8 @@ public class NondeterministicVacuumEnvironmentDemo {
 	private static void startAndOrSearch() {
 		System.out.println("AND-OR-GRAPH-SEARCH");
 	    
-	    NondeterministicVacuumAgent agent = new NondeterministicVacuumAgent(
-        		new FullyObservableVacuumEnvironmentPerceptToStateFunction());
+	    NondeterministicVacuumAgent agent = new NondeterministicVacuumAgent
+                (percept -> percept); // percept == env state!
         // create state: both rooms are dirty and the vacuum is in room A
         VacuumEnvironmentState state = new VacuumEnvironmentState();
         state.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Dirty);

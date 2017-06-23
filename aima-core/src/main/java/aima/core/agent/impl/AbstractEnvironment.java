@@ -78,7 +78,7 @@ public abstract class AbstractEnvironment implements Environment,
 			Agent a = (Agent) eo;
 			if (!agents.contains(a)) {
 				agents.add(a);
-				this.notifyEnvironmentViews(a);
+				notifyEnvironmentViews(a);
 			}
 		}
 	}

@@ -21,27 +21,27 @@ public class CSPTest {
 	private static final Variable Y = new Variable("y");
 	private static final Variable Z = new Variable("z");
 
-	private static final Constraint C1 = new NotEqualConstraint(X, Y);
-	private static final Constraint C2 = new NotEqualConstraint(X, Y);
+	private static final Constraint<Variable, String> C1 = new NotEqualConstraint<>(X, Y);
+	private static final Constraint<Variable, String> C2 = new NotEqualConstraint<>(X, Y);
 
-	private Domain colors;
-	private Domain animals;
+	private Domain<String> colors;
+	private Domain<String> animals;
 
 	private List<Variable> variables;
 
 	@Before
 	public void setUp() {
-		variables = new ArrayList<Variable>();
+		variables = new ArrayList<>();
 		variables.add(X);
 		variables.add(Y);
 		variables.add(Z);
-		colors = new Domain("red", "green", "blue");
-		animals = new Domain("cat", "dog");
+		colors = new Domain<>("red", "green", "blue");
+		animals = new Domain<>("cat", "dog");
 	}
 
 	@Test
 	public void testConstraintNetwork() {
-		CSP csp = new CSP(variables);
+		CSP<Variable, String> csp = new CSP<>(variables);
 		csp.addConstraint(C1);
 		csp.addConstraint(C2);
 		Assert.assertNotNull(csp.getConstraints());
@@ -56,10 +56,10 @@ public class CSPTest {
 
 	@Test
 	public void testDomainChanges() {
-		Domain colors2 = new Domain(colors.asList());
+		Domain<String> colors2 = new Domain<>(colors.asList());
 		Assert.assertEquals(colors, colors2);
 
-		CSP csp = new CSP(variables);
+		CSP<Variable, String> csp = new CSP<>(variables);
 		csp.addConstraint(C1);
 		Assert.assertNotNull(csp.getDomain(X));
 		Assert.assertEquals(0, csp.getDomain(X).size());
@@ -70,7 +70,7 @@ public class CSPTest {
 		Assert.assertEquals(3, csp.getDomain(X).size());
 		Assert.assertEquals("red", csp.getDomain(X).get(0));
 
-		CSP cspCopy = csp.copyDomains();
+		CSP<Variable, String> cspCopy = csp.copyDomains();
 		Assert.assertNotNull(cspCopy.getDomain(X));
 		Assert.assertEquals(3, cspCopy.getDomain(X).size());
 		Assert.assertEquals("red", cspCopy.getDomain(X).get(0));

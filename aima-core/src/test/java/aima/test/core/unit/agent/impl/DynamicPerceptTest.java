@@ -11,11 +11,11 @@ public class DynamicPerceptTest {
 	public void testToString() {
 		DynamicPercept p = new DynamicPercept("key1", "value1");
 
-		Assert.assertEquals("Percept[key1==value1]", p.toString());
+		Assert.assertEquals("Percept[key1=value1]", p.toString());
 
 		p = new DynamicPercept("key1", "value1", "key2", "value2");
 
-		Assert.assertEquals("Percept[key1==value1, key2==value2]", p.toString());
+		Assert.assertEquals("Percept[key1=value1, key2=value2]", p.toString());
 	}
 
 	@Test

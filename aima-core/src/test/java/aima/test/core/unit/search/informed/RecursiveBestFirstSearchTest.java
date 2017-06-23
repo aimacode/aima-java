@@ -54,7 +54,7 @@ public class RecursiveBestFirstSearchTest {
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(Bucharest), Goal=In(Bucharest):Action[name==NoOp]:METRIC[pathCost]=0.0:METRIC[maxRecursiveDepth]=0:METRIC[nodesExpanded]=0:Action[name==NoOp]:",
+				"CurrentLocation=In(Bucharest), Goal=In(Bucharest):Action[name=NoOp]:METRIC[pathCost]=0.0:METRIC[maxRecursiveDepth]=0:METRIC[nodesExpanded]=0:Action[name=NoOp]:",
 				envChanges.toString());
 	}
 
@@ -69,7 +69,7 @@ public class RecursiveBestFirstSearchTest {
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(Arad), Goal=In(Bucharest):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:Action[name==NoOp]:",
+				"CurrentLocation=In(Arad), Goal=In(Bucharest):Action[name=moveTo, location=Sibiu]:Action[name=moveTo, location=RimnicuVilcea]:Action[name=moveTo, location=Pitesti]:Action[name=moveTo, location=Bucharest]:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:Action[name=NoOp]:",
 				envChanges.toString());
 	}
 
@@ -84,7 +84,7 @@ public class RecursiveBestFirstSearchTest {
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(Arad), Goal=In(Neamt):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:Action[name==moveTo, location==Urziceni]:Action[name==moveTo, location==Vaslui]:Action[name==moveTo, location==Iasi]:Action[name==moveTo, location==Neamt]:METRIC[pathCost]=824.0:METRIC[maxRecursiveDepth]=12:METRIC[nodesExpanded]=340208:Action[name==NoOp]:",
+				"CurrentLocation=In(Arad), Goal=In(Neamt):Action[name=moveTo, location=Sibiu]:Action[name=moveTo, location=RimnicuVilcea]:Action[name=moveTo, location=Pitesti]:Action[name=moveTo, location=Bucharest]:Action[name=moveTo, location=Urziceni]:Action[name=moveTo, location=Vaslui]:Action[name=moveTo, location=Iasi]:Action[name=moveTo, location=Neamt]:METRIC[pathCost]=824.0:METRIC[maxRecursiveDepth]=12:METRIC[nodesExpanded]=340208:Action[name=NoOp]:",
 				envChanges.toString());
 	}
 
@@ -100,7 +100,7 @@ public class RecursiveBestFirstSearchTest {
 
 		// loops avoided, now much less number of expanded nodes ...
 		Assert.assertEquals(
-				"CurrentLocation=In(Arad), Goal=In(Neamt):Action[name==moveTo, location==Sibiu]:Action[name==moveTo, location==RimnicuVilcea]:Action[name==moveTo, location==Pitesti]:Action[name==moveTo, location==Bucharest]:Action[name==moveTo, location==Urziceni]:Action[name==moveTo, location==Vaslui]:Action[name==moveTo, location==Iasi]:Action[name==moveTo, location==Neamt]:METRIC[pathCost]=824.0:METRIC[maxRecursiveDepth]=9:METRIC[nodesExpanded]=1367:Action[name==NoOp]:",
+				"CurrentLocation=In(Arad), Goal=In(Neamt):Action[name=moveTo, location=Sibiu]:Action[name=moveTo, location=RimnicuVilcea]:Action[name=moveTo, location=Pitesti]:Action[name=moveTo, location=Bucharest]:Action[name=moveTo, location=Urziceni]:Action[name=moveTo, location=Vaslui]:Action[name=moveTo, location=Iasi]:Action[name=moveTo, location=Neamt]:METRIC[pathCost]=824.0:METRIC[maxRecursiveDepth]=9:METRIC[nodesExpanded]=1367:Action[name=NoOp]:",
 				envChanges.toString());
 	}
 

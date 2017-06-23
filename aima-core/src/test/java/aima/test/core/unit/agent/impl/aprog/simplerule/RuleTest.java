@@ -35,7 +35,7 @@ public class RuleTest {
 		Assert.assertEquals(ACTION_INITIATE_BRAKING, r.getAction());
 
 		Assert.assertEquals(
-				"if car-in-front-is-braking==true then Action[name==initiate-braking].",
+				"if car-in-front-is-braking==true then Action[name=initiate-braking].",
 				r.toString());
 
 		Assert.assertEquals(true, r.evaluate(new DynamicPercept(
@@ -57,7 +57,7 @@ public class RuleTest {
 		Assert.assertEquals(ACTION_INITIATE_BRAKING, r.getAction());
 
 		Assert.assertEquals(
-				"if ![car-in-front-is-braking==true] then Action[name==initiate-braking].",
+				"if ![car-in-front-is-braking==true] then Action[name=initiate-braking].",
 				r.toString());
 
 		Assert.assertEquals(false, r.evaluate(new DynamicPercept(
@@ -80,7 +80,7 @@ public class RuleTest {
 		Assert.assertEquals(ACTION_EMERGENCY_BRAKING, r.getAction());
 
 		Assert.assertEquals(
-				"if [car-in-front-is-braking==true && car-in-front-tires-smoking==true] then Action[name==emergency-braking].",
+				"if [car-in-front-is-braking==true && car-in-front-tires-smoking==true] then Action[name=emergency-braking].",
 				r.toString());
 
 		Assert.assertEquals(false, r.evaluate(new DynamicPercept(
@@ -112,7 +112,7 @@ public class RuleTest {
 		Assert.assertEquals(ACTION_EMERGENCY_BRAKING, r.getAction());
 
 		Assert.assertEquals(
-				"if [car-in-front-is-braking==true || car-in-front-tires-smoking==true] then Action[name==emergency-braking].",
+				"if [car-in-front-is-braking==true || car-in-front-tires-smoking==true] then Action[name=emergency-braking].",
 				r.toString());
 
 		Assert.assertEquals(true, r.evaluate(new DynamicPercept(

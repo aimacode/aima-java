@@ -55,26 +55,8 @@ public class LocalVacuumEnvironmentPercept extends DynamicPercept {
 	}
 
 	/**
-	 * Determine whether this percept matches an environment state
-	 * 
-	 * @param state
-	 * @param agent
-	 * @return true of the percept matches an environment state, false otherwise.
-	 */
-	public boolean matches(VacuumEnvironmentState state, Agent agent) {
-		if (!this.getAgentLocation().equals(state.getAgentLocation(agent))) {
-			return false;
-		}
-		if (!this.getLocationState().equals(
-				state.getLocationState(this.getAgentLocation()))) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
 	 * Return string representation of this percept.
-	 * 
+	 *
 	 * @return a string representation of this percept.
 	 */
 	@Override

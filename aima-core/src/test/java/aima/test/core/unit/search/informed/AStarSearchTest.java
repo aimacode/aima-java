@@ -69,7 +69,7 @@ public class AStarSearchTest {
 		List<Action> actions = agent.getActions();
 
 		Assert.assertEquals(
-				"[Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+				"[Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]",
 				actions.toString());
 		Assert.assertEquals("278.0",
 				search.getMetrics().get(QueueSearch.METRIC_PATH_COST));
@@ -89,7 +89,7 @@ public class AStarSearchTest {
 				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
-				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());
 		Assert.assertEquals(4, agent.getActions().size());
 		Assert.assertEquals("5",
@@ -114,7 +114,7 @@ public class AStarSearchTest {
 				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
-				"[Action[name==moveTo, location==Sibiu], Action[name==moveTo, location==RimnicuVilcea], Action[name==moveTo, location==Pitesti], Action[name==moveTo, location==Bucharest]]",
+				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());
 		Assert.assertEquals(4, agent.getActions().size());
 		Assert.assertEquals("5",
@@ -148,7 +148,7 @@ public class AStarSearchTest {
 		List<Action> actions = agent.getActions();
 
 		Assert.assertEquals(
-				"[Action[name==moveTo, location==b], Action[name==moveTo, location==d], Action[name==moveTo, location==goal]]",
+				"[Action[name=moveTo, location=b], Action[name=moveTo, location=d], Action[name=moveTo, location=goal]]",
 				actions.toString());
 		Assert.assertEquals("5.5",
 				search.getMetrics().get(QueueSearch.METRIC_PATH_COST));

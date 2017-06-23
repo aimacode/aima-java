@@ -17,22 +17,22 @@ public class PerceptSequenceTest {
 
 	@Test
 	public void testToString() {
-		List<Percept> ps = new ArrayList<Percept>();
+		List<Percept> ps = new ArrayList<>();
 		ps.add(new DynamicPercept("key1", "value1"));
 
-		Assert.assertEquals("[Percept[key1==value1]]", ps.toString());
+		Assert.assertEquals("[Percept[key1=value1]]", ps.toString());
 
 		ps.add(new DynamicPercept("key1", "value1", "key2", "value2"));
 
 		Assert.assertEquals(
-				"[Percept[key1==value1], Percept[key1==value1, key2==value2]]",
+				"[Percept[key1=value1], Percept[key1=value1, key2=value2]]",
 				ps.toString());
 	}
 
 	@Test
 	public void testEquals() {
-		List<Percept> ps1 = new ArrayList<Percept>();
-		List<Percept> ps2 = new ArrayList<Percept>();
+		List<Percept> ps1 = new ArrayList<>();
+		List<Percept> ps2 = new ArrayList<>();
 
 		Assert.assertEquals(ps1, ps2);
 

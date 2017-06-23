@@ -149,7 +149,7 @@ public class XYLocation {
 
 	@Override
 	public String toString() {
-		return " ( " + xCoOrdinate + " , " + yCoOrdinate + " ) ";
+		return "(" + xCoOrdinate + ", " + yCoOrdinate + ")";
 	}
 
 	@Override

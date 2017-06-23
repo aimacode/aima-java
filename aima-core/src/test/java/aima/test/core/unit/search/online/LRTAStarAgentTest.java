@@ -46,7 +46,7 @@ public class LRTAStarAgentTest {
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
-		Assert.assertEquals("Action[name==NoOp]->", envChanges.toString());
+		Assert.assertEquals("Action[name=NoOp]->", envChanges.toString());
 	}
 
 	@Test
@@ -63,7 +63,7 @@ public class LRTAStarAgentTest {
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name==moveTo, location==B]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==F]->Action[name==NoOp]->",
+				"Action[name=moveTo, location=B]->Action[name=moveTo, location=A]->Action[name=moveTo, location=B]->Action[name=moveTo, location=C]->Action[name=moveTo, location=B]->Action[name=moveTo, location=C]->Action[name=moveTo, location=D]->Action[name=moveTo, location=C]->Action[name=moveTo, location=D]->Action[name=moveTo, location=E]->Action[name=moveTo, location=D]->Action[name=moveTo, location=E]->Action[name=moveTo, location=F]->Action[name=NoOp]->",
 				envChanges.toString());
 	}
 
@@ -84,7 +84,7 @@ public class LRTAStarAgentTest {
 		me.step(14);
 
 		Assert.assertEquals(
-				"Action[name==moveTo, location==B]->Action[name==moveTo, location==A]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==B]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==C]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==D]->Action[name==moveTo, location==E]->Action[name==moveTo, location==F]->Action[name==moveTo, location==E]->",
+				"Action[name=moveTo, location=B]->Action[name=moveTo, location=A]->Action[name=moveTo, location=B]->Action[name=moveTo, location=C]->Action[name=moveTo, location=B]->Action[name=moveTo, location=C]->Action[name=moveTo, location=D]->Action[name=moveTo, location=C]->Action[name=moveTo, location=D]->Action[name=moveTo, location=E]->Action[name=moveTo, location=D]->Action[name=moveTo, location=E]->Action[name=moveTo, location=F]->Action[name=moveTo, location=E]->",
 				envChanges.toString());
 	}
 
