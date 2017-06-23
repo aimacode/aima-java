@@ -1,15 +1,16 @@
 package aima.core.search.nondeterministic;
 
-import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Represents the path the agent travels through the AND-OR tree (see figure
  * 4.10, page 135, AIMA3e).
  * 
  * @author Andrew Brown
+ * @author Ruediger Lunde
  */
-public class Path extends LinkedList<Object> {
+public class Path<S> extends LinkedList<S> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,10 +23,10 @@ public class Path extends LinkedList<Object> {
 	 * @return a new Path that contains this path's states along with the passed
 	 *         in argument states appended to the end.
 	 */
-	public Path append(Object... states) {
-		Path appendedPath = new Path();
+	public Path<S> append(List<S> states) {
+		Path<S> appendedPath = new Path<>();
 		appendedPath.addAll(this);
-		Collections.addAll(appendedPath, states);
+		appendedPath.addAll(states);
 		return appendedPath;
 	}
 
@@ -38,11 +39,10 @@ public class Path extends LinkedList<Object> {
 	 * @return a new Path that contains the passed in state along with this
 	 *         path's current states.
 	 */
-	public Path prepend(Object state) {
-		Path prependedPath = new Path();
+	public Path<S> prepend(S state) {
+		Path<S> prependedPath = new Path<>();
 		prependedPath.add(state);
 		prependedPath.addAll(this);
-
 		return prependedPath;
 	}
 }

@@ -9,6 +9,7 @@ import aima.core.search.nondeterministic.NondeterministicProblem;
  * 
  * 
  * @author Andrew Brown
+ * @auther Ruediger Lunde
  */
 public class NondeterministicVacuumEnvironmentDemo {
 	public static void main(String[] args) {
@@ -22,24 +23,21 @@ public class NondeterministicVacuumEnvironmentDemo {
 	    
 	    NondeterministicVacuumAgent agent = new NondeterministicVacuumAgent
                 (percept -> percept); // percept == env state!
-        // create state: both rooms are dirty and the vacuum is in room A
-        VacuumEnvironmentState state = new VacuumEnvironmentState();
-        state.setLocationState(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Dirty);
-        state.setLocationState(VacuumEnvironment.LOCATION_B, VacuumEnvironment.LocationState.Dirty);
-        state.setAgentLocation(agent, VacuumEnvironment.LOCATION_A);
-        // create problem
+
+        // create world
+        NondeterministicVacuumEnvironment world = new NondeterministicVacuumEnvironment
+                (VacuumEnvironment.LocationState.Dirty, VacuumEnvironment.LocationState.Dirty);
+        world.addAgent(agent, VacuumEnvironment.LOCATION_A);
+
+        // provide the agent with a problem formulation so that a contingency plan can be computed.
+        VacuumEnvironmentState state = (VacuumEnvironmentState) world.getCurrentState();
         NondeterministicProblem<VacuumEnvironmentState, Action> problem = new NondeterministicProblem<>(
                 state,
                 VacuumWorldFunctions::getActions,
                 VacuumWorldFunctions.createResultsFunction(agent),
                 VacuumWorldFunctions::testGoal,
                 (s, a, sPrimed) -> 1.0);
-        // set the problem and agent
         agent.setProblem(problem);
-        
-        // create world
-        NondeterministicVacuumEnvironment world = new NondeterministicVacuumEnvironment(VacuumEnvironment.LocationState.Dirty, VacuumEnvironment.LocationState.Dirty);
-        world.addAgent(agent, VacuumEnvironment.LOCATION_A);
         
         // execute and show plan
         System.out.println("Initial Plan: " + agent.getContingencyPlan());

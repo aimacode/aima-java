@@ -1,6 +1,7 @@
 package aima.core.environment.vacuum;
 
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.function.Function;
 
 import aima.core.agent.Action;
@@ -48,7 +49,8 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 		setAlive(true);
 		stack.clear();
 		AndOrSearch<VacuumEnvironmentState, Action> andOrSearch = new AndOrSearch<>();
-		contingencyPlan = andOrSearch.search(problem);
+		Optional<Plan> plan = andOrSearch.search(problem);
+		contingencyPlan = plan.isPresent() ? plan.get() : null;
 		if (notifier != null)
 			notifier.notifyViews("   Contingency plan: " + contingencyPlan);
 	}

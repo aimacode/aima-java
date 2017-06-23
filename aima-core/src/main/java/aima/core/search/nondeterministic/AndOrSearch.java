@@ -1,10 +1,10 @@
 package aima.core.search.nondeterministic;
 
-import aima.core.agent.Action;
 import aima.core.search.framework.Metrics;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.11, page
@@ -67,12 +67,13 @@ public class AndOrSearch<S, A> {
 	 * </code>
 	 * </pre>
 	 *
-	 * @return a conditional plan or null on failure
+	 * @return a conditional plan or empty on failure
 	 */
-	public Plan search(NondeterministicProblem<S, A> problem) {
+	public Optional<Plan> search(NondeterministicProblem<S, A> problem) {
 		expandedNodes = 0;
 		// OR-SEARCH(problem.INITIAL-STATE, problem, [])
-		return orSearch(problem.getInitialState(), problem, new Path());
+		Plan plan = orSearch(problem.getInitialState(), problem, new Path<>());
+		return plan != null ? Optional.of(plan) : Optional.empty();
 	}
 
 	/**
@@ -90,16 +91,12 @@ public class AndOrSearch<S, A> {
 	 *   return failure
 	 * </code>
 	 * </pre>
-	 * 
-	 * @param state
-	 * @param problem
-	 * @param path
+	 *
 	 * @return a conditional plan or null on failure
 	 */
-	public Plan orSearch(S state, NondeterministicProblem<S, A> problem,
-			Path path) {
+	public Plan orSearch(S state, NondeterministicProblem<S, A> problem, Path<S> path) {
 		// do metrics
-		this.expandedNodes++;
+		expandedNodes++;
 		// if problem.GOAL-TEST(state) then return the empty plan
 		if (problem.testGoal(state)) {
 			return new Plan();
@@ -115,9 +112,8 @@ public class AndOrSearch<S, A> {
 					problem.getResults(state, action),
 					problem, path.prepend(state));
 			// if plan != failure then return [action|plan]
-			if (plan != null) {
+			if (plan != null)
 				return plan.prepend(action);
-			}
 		}
 		// return failure
 		return null;
@@ -142,31 +138,28 @@ public class AndOrSearch<S, A> {
 	 * @param path
 	 * @return a conditional plan or null on failure
 	 */
-	public Plan andSearch(List<S> states, NondeterministicProblem<S, A> problem, Path path) {
+	public Plan andSearch(List<S> states, NondeterministicProblem<S, A> problem, Path<S> path) {
 		// do metrics, setup
-		this.expandedNodes++;
-		Object[] _states = states.toArray();
-		Plan[] plans = new Plan[_states.length];
+		expandedNodes++;
+		List<Plan> plans = new ArrayList<>(states.size());
 		// for each s_i in states do
-		for (int i = 0; i < _states.length; i++) {
+		for (S state : states) {
 			// plan_i <- OR-SEARCH(s_i, problem, path)
-			plans[i] = orSearch((S) _states[i], problem, path);
-			// if plan_i = failure then return failure
-			if (plans[i] == null) {
+			Plan plan = orSearch(state, problem, path);
+			plans.add(plan);
+			if (plan == null)
 				return null;
-			}
 		}
-		// return [if s_1 then plan_1 else ... if s_n-1 then plan_n-1 else
-		// plan_n]
-		Object[] steps = new Object[plans.length];
-		if (plans.length > 0) {
-			for (int i = 0; i < plans.length - 1; i++) {
-				steps[i] = new IfStateThenPlan(_states[i], plans[i]);
-			}
-			steps[steps.length-1] = plans[plans.length - 1];
+		if (plans.size() == 1)
+			// in this case, no if is needed...
+			return plans.get(0);
+		else {
+			// return [if s_1 then plan_1 else ... if s_n-1 then plan_n-1 else plan_n]
+			Object[] steps = new Object[plans.size()];
+			for (int i = 0; i < plans.size(); i++)
+				steps[i] = new IfStateThenPlan<>(states.get(i), plans.get(i));
+			return new Plan(steps);
 		}
-		
-		return new Plan(steps);
 	}
 
 	/**

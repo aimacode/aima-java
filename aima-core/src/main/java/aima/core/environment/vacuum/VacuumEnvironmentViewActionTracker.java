@@ -20,6 +20,8 @@ public class VacuumEnvironmentViewActionTracker implements EnvironmentView {
 	}
 
 	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+		if (actions.length() > 0)
+			actions.append(", ");
 		actions.append(action);
 	}
 

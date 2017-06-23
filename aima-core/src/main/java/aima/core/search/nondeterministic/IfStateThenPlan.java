@@ -5,16 +5,17 @@ package aima.core.search.nondeterministic;
  * explanation given on page 135 of AIMA3e.
  * 
  * @author Andrew Brown
+ * @author Ruediger Lunde
  */
-public class IfStateThenPlan {
+public class IfStateThenPlan<S> {
 
-	private Object state;
+	private S state;
 	private Plan plan;
 
 	/**
 	 * Constructor
 	 */
-	public IfStateThenPlan(Object state, Plan plan) {
+	public IfStateThenPlan(S state, Plan plan) {
 		this.state = state;
 		this.plan = plan;
 	}
@@ -24,12 +25,11 @@ public class IfStateThenPlan {
 	 *
 	 * @return the plan if the given state matches, null otherwise.
 	 */
-	public Plan ifStateMatches(Object state) {
-		if (this.state.equals(state)) {
-			return this.plan;
-		} else {
+	public Plan ifStateMatches(S state) {
+		if (this.state.equals(state))
+			return plan;
+		else
 			return null;
-		}
 	}
 
 	/**

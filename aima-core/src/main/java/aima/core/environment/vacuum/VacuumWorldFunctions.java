@@ -88,7 +88,7 @@ public class VacuumWorldFunctions {
                             VacuumEnvironment.LocationState.Clean);
                     s1.setLocationState(adjacentLocation,
                             state.getLocationState(adjacentLocation));
-                    s1.setAgentLocation(this.agent, currentLocation);
+                    s1.setAgentLocation(agent, currentLocation);
                     results.add(s1);
                     // sometimes clean adjacent as well
                     VacuumEnvironmentState s2 = new VacuumEnvironmentState();
@@ -96,8 +96,9 @@ public class VacuumWorldFunctions {
                             VacuumEnvironment.LocationState.Clean);
                     s2.setLocationState(adjacentLocation,
                             VacuumEnvironment.LocationState.Clean);
-                    s2.setAgentLocation(this.agent, currentLocation);
-                    results.add(s2);
+                    s2.setAgentLocation(agent, currentLocation);
+                    if (!s2.equals(s1))
+                        results.add(s2);
                 } // case: square is clean
                 else {
                     // sometimes do nothing
@@ -106,7 +107,7 @@ public class VacuumWorldFunctions {
                             state.getLocationState(currentLocation));
                     s1.setLocationState(adjacentLocation,
                             state.getLocationState(adjacentLocation));
-                    s1.setAgentLocation(this.agent, currentLocation);
+                    s1.setAgentLocation(agent, currentLocation);
                     results.add(s1);
                     // sometimes deposit dirt
                     VacuumEnvironmentState s2 = new VacuumEnvironmentState();
@@ -114,8 +115,9 @@ public class VacuumWorldFunctions {
                             VacuumEnvironment.LocationState.Dirty);
                     s2.setLocationState(adjacentLocation,
                             state.getLocationState(adjacentLocation));
-                    s2.setAgentLocation(this.agent, currentLocation);
-                    results.add(s2);
+                    s2.setAgentLocation(agent, currentLocation);
+                    if (!s2.equals(s1))
+                        results.add(s2);
                 }
             }
             return results;

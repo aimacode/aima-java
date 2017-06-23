@@ -54,13 +54,10 @@ public class Plan extends LinkedList<Object> {
 		StringBuilder s = new StringBuilder();
 		s.append("[");
 		int count = 0;
-		int size = this.size();
 		for (Object step : this) {
-			s.append(step);
-			if (count < size - 1) {
+			if (count++ > 0)
 				s.append(", ");
-			}
-			count++;
+			s.append(step);
 		}
 		s.append("]");
 		return s.toString();
