@@ -1,4 +1,4 @@
-package aima.core.environment.vacuum;
+package aima.core.search.agent;
 
 import aima.core.agent.Action;
 import aima.core.agent.EnvironmentViewNotifier;
@@ -13,26 +13,26 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * This agent traverses the NondeterministicVacuumEnvironment using a
+ * This agent traverses the nondeterministic environment using a
  * contingency plan. See page 135, AIMA3e.
  *
  * @author Ruediger Lunde
  * @author Andrew Brown
  */
-public class NondeterministicVacuumAgent extends AbstractAgent {
-	private Function<Percept, Object> ptsFunction;
+public class NondeterministicSearchAgent<S, A extends Action> extends AbstractAgent {
+	private Function<Percept, S> ptsFunction;
 	private EnvironmentViewNotifier notifier;
 
-	private NondeterministicProblem<VacuumEnvironmentState, Action> problem;
-	private Plan<VacuumEnvironmentState, Action> contingencyPlan;
+	private NondeterministicProblem<S, A> problem;
+	private Plan<S, A> contingencyPlan;
 	private int currStep;
 
-	public NondeterministicVacuumAgent(Function<Percept, Object> ptsFunction) {
-		this.ptsFunction = ptsFunction;
+	public NondeterministicSearchAgent(Function<Percept, S> ptsFn) {
+		this.ptsFunction = ptsFn;
 	}
 
-	public NondeterministicVacuumAgent(Function<Percept, Object> ptsFunction, EnvironmentViewNotifier notifier) {
-		this.ptsFunction = ptsFunction;
+	public NondeterministicSearchAgent(Function<Percept, S> ptsFn, EnvironmentViewNotifier notifier) {
+		this.ptsFunction = ptsFn;
 		this.notifier = notifier;
 	}
 
@@ -42,15 +42,15 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 	 * @param problem
 	 *            The search problem for this agent to solve.
 	 */
-	public void makePlan(NondeterministicProblem<VacuumEnvironmentState, Action> problem) {
+	public void makePlan(NondeterministicProblem<S, A> problem) {
 		this.problem = problem;
 		setAlive(true);
-		AndOrSearch<VacuumEnvironmentState, Action> andOrSearch = new AndOrSearch<>();
-		Optional<Plan<VacuumEnvironmentState, Action>> plan = andOrSearch.search(problem);
+		AndOrSearch<S, A> andOrSearch = new AndOrSearch<>();
+		Optional<Plan<S, A>> plan = andOrSearch.search(problem);
 		contingencyPlan = plan.isPresent() ? plan.get() : null;
 		currStep = -1;
 		if (notifier != null)
-			notifier.notifyViews("   Contingency plan: " + contingencyPlan);
+			notifier.notifyViews("Contingency plan: " + contingencyPlan);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 	 *
 	 * @return The search problem for this agent.
 	 */
-	public NondeterministicProblem<VacuumEnvironmentState, Action> getProblem() {
+	public NondeterministicProblem<S, A> getProblem() {
 		return problem;
 	}
 
@@ -67,7 +67,7 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 	 * 
 	 * @return The plan the agent uses to clean the vacuum world or null.
 	 */
-	public Plan getContingencyPlan() {
+	public Plan<S, A> getPlan() {
 		return contingencyPlan;
 	}
 
@@ -79,7 +79,7 @@ public class NondeterministicVacuumAgent extends AbstractAgent {
 	 */
 	@Override
 	public Action execute(Percept percept) {
-		VacuumEnvironmentState state = (VacuumEnvironmentState) ptsFunction.apply(percept);
+		S state = (S) ptsFunction.apply(percept);
 		// at goal or no plan?
 		if (problem.testGoal(state) || contingencyPlan == null)
 			return NoOpAction.NO_OP;

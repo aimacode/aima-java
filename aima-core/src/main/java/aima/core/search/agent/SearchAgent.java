@@ -1,4 +1,4 @@
-package aima.core.search.framework.agent;
+package aima.core.search.agent;
 
 import java.util.*;
 

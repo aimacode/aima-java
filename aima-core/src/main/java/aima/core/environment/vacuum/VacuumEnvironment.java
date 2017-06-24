@@ -10,6 +10,7 @@ import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.agent.impl.DynamicAction;
+import aima.core.search.agent.NondeterministicSearchAgent;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): pg 58.<br>
@@ -100,7 +101,7 @@ public class VacuumEnvironment extends AbstractEnvironment {
 
 	@Override
 	public Percept getPerceptSeenBy(Agent anAgent) {
-		if (anAgent instanceof NondeterministicVacuumAgent) {
+		if (anAgent instanceof NondeterministicSearchAgent) {
     		// This agent expects a fully observable environment. It gets a clone of the environment state.
     		return envState.clone();
     	}

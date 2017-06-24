@@ -3,6 +3,7 @@ package aima.gui.swing.applications.agent;
 import aima.core.agent.Action;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.environment.vacuum.*;
+import aima.core.search.agent.NondeterministicSearchAgent;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppFrame;
@@ -31,6 +32,7 @@ public class VacuumController extends AgentAppController {
 	 * Creates a vacuum environment and a corresponding agent based on the
 	 * state of the selectors and finally passes the environment to the viewer.
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void prepare(String changedSelector) {
 		AgentAppFrame.SelectionState selState = frame.getSelection();
@@ -58,16 +60,19 @@ public class VacuumController extends AgentAppController {
 			agent = new ModelBasedReflexVacuumAgent();
 			break;
 		case 4:
-			agent = createNondeterministicVacuumAgent();
+			agent = new NondeterministicSearchAgent<>(percept -> (VacuumEnvironmentState) percept, env);
 			break;
 		}
 		if (env != null && agent != null) {
 			frame.getEnvView().setEnvironment(env);
 			env.addAgent(agent);
-			if (agent instanceof NondeterministicVacuumAgent) {
+			if (agent instanceof NondeterministicSearchAgent) {
+				NondeterministicProblem<VacuumEnvironmentState, Action> problem =
+						new NondeterministicProblem<>((VacuumEnvironmentState) env.getCurrentState(),
+								VacuumWorldFunctions::getActions, VacuumWorldFunctions.createResultsFunction(agent),
+								VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
 				// Set the problem now for this kind of agent
-		        // set the problem and agent
-		        ((NondeterministicVacuumAgent)agent).makePlan(createNondeterministicProblem());
+				((NondeterministicSearchAgent<VacuumEnvironmentState, Action>) agent).makePlan(problem);
 			}
 			isPrepared = true;
 		}
@@ -112,23 +117,6 @@ public class VacuumController extends AgentAppController {
 		} else {
 			frame.setStatus("Task completed.");
 		}
-	}
-	
-	//
-	// PRIVATE METHODS
-	//
-	private NondeterministicVacuumAgent createNondeterministicVacuumAgent() {
-		return new NondeterministicVacuumAgent(percept -> percept); // percept == env state!
-	}
-	
-	private NondeterministicProblem<VacuumEnvironmentState, Action> createNondeterministicProblem() {
-		// create problem
-        return new NondeterministicProblem<>(
-				(VacuumEnvironmentState) env.getCurrentState(),
-                VacuumWorldFunctions::getActions,
-                VacuumWorldFunctions.createResultsFunction(agent),
-				VacuumWorldFunctions::testGoal,
-				(s, a, sPrimed) -> 1.0);
 	}
 }
 

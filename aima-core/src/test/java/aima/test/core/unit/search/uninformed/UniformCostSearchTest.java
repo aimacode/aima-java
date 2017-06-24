@@ -5,7 +5,7 @@ import aima.core.environment.map.*;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctions;
 import aima.core.environment.nqueens.QueenAction;
-import aima.core.search.framework.agent.SearchAgent;
+import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.GoalTest;

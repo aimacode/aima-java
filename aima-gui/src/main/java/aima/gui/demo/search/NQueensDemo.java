@@ -6,7 +6,7 @@ import aima.core.environment.nqueens.NQueensBoard.Config;
 import aima.core.environment.nqueens.NQueensFunctions;
 import aima.core.environment.nqueens.NQueensGenAlgoUtil;
 import aima.core.environment.nqueens.QueenAction;
-import aima.core.search.framework.agent.SearchAgent;
+import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;

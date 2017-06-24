@@ -1,4 +1,4 @@
-package aima.core.search.framework.agent;
+package aima.core.search.agent;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;

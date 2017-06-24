@@ -3,6 +3,7 @@ package aima.gui.fx.applications.agent;
 import aima.core.agent.Action;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.environment.vacuum.*;
+import aima.core.search.agent.NondeterministicSearchAgent;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.core.util.Tasks;
 import aima.gui.fx.framework.IntegrableApplication;
@@ -80,6 +81,7 @@ public class VacuumAgentApp extends IntegrableApplication {
     /**
      * Is called after each parameter selection change.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void initialize() {
         switch (taskPaneCtrl.getParamValueIndex(PARAM_ENV)) {
@@ -105,16 +107,20 @@ public class VacuumAgentApp extends IntegrableApplication {
                 agent = new ModelBasedReflexVacuumAgent();
                 break;
             case 4:
-                agent = createNondeterministicVacuumAgent();
+                agent = new NondeterministicSearchAgent<>(percept -> (VacuumEnvironmentState) percept, env);
                 break;
         }
         if (env != null && agent != null) {
             envViewCtrl.initialize(env);
             env.addEnvironmentView(envViewCtrl);
             env.addAgent(agent);
-            if (agent instanceof NondeterministicVacuumAgent) {
+            if (agent instanceof NondeterministicSearchAgent<?, ?>) {
+                NondeterministicProblem<VacuumEnvironmentState, Action> problem =
+                        new NondeterministicProblem<>((VacuumEnvironmentState) env.getCurrentState(),
+                                VacuumWorldFunctions::getActions, VacuumWorldFunctions.createResultsFunction(agent),
+                                VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
                 // Set the problem now for this kind of agent
-                ((NondeterministicVacuumAgent) agent).makePlan(createNondeterministicProblem());
+                ((NondeterministicSearchAgent<VacuumEnvironmentState, Action>) agent).makePlan(problem);
             }
         }
     }
@@ -134,18 +140,5 @@ public class VacuumAgentApp extends IntegrableApplication {
     @Override
     public void cleanup() {
         taskPaneCtrl.cancelExecution();
-    }
-
-    // helper methods...
-
-    private NondeterministicVacuumAgent createNondeterministicVacuumAgent() {
-        return new NondeterministicVacuumAgent(percept -> percept, env::notifyViews); // percept == env state!
-    }
-
-    private NondeterministicProblem<VacuumEnvironmentState, Action> createNondeterministicProblem() {
-        VacuumEnvironmentState state = (VacuumEnvironmentState) env.getCurrentState();
-        return new NondeterministicProblem<>(state, VacuumWorldFunctions::getActions,
-                VacuumWorldFunctions.createResultsFunction(agent),
-                VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
     }
 }

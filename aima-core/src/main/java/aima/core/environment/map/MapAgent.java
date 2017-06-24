@@ -6,7 +6,7 @@ import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.agent.ProblemSolvingAgent;
+import aima.core.search.agent.ProblemSolvingAgent;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.informed.Informed;
 

@@ -2,6 +2,7 @@ package aima.test.core.unit.search.nondeterministic;
 
 import aima.core.agent.Action;
 import aima.core.environment.vacuum.*;
+import aima.core.search.agent.NondeterministicSearchAgent;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,7 @@ import static aima.core.environment.vacuum.VacuumEnvironment.*;
  */
 public class AndOrSearchTest {
 
-    private NondeterministicVacuumAgent agent;
+    private NondeterministicSearchAgent<VacuumEnvironmentState, Action> agent;
     private NondeterministicVacuumEnvironment world;
 
     /**
@@ -32,25 +33,20 @@ public class AndOrSearchTest {
      */
     @Before
     public void setUp() {
-        
-        agent = new NondeterministicVacuumAgent(percept -> percept); // percept == env state!
-        // create state: both rooms are dirty and the vacuum is in room A
-        VacuumEnvironmentState state = new VacuumEnvironmentState();
-        state.setLocationState(LOCATION_A, LocationState.Dirty);
-        state.setLocationState(LOCATION_B, LocationState.Dirty);
-        state.setAgentLocation(agent, LOCATION_A);
+        // create agent and world (init state: both rooms are dirty and the vacuum is in room A)
+        agent = new NondeterministicSearchAgent<>(percept -> (VacuumEnvironmentState) percept); // percept == env state!
+        world = new NondeterministicVacuumEnvironment(LocationState.Dirty, LocationState.Dirty);
+        world.addAgent(agent, LOCATION_A);
+
         // create problem
         NondeterministicProblem<VacuumEnvironmentState, Action> problem = new NondeterministicProblem<>(
-                state, VacuumWorldFunctions::getActions,
+                (VacuumEnvironmentState) world.getCurrentState(),
+                VacuumWorldFunctions::getActions,
                 VacuumWorldFunctions.createResultsFunction(agent),
                 VacuumWorldFunctions::testGoal,
                 (s, a, sPrimed) -> 1.0);
         // set the problem and agent
         agent.makePlan(problem);
-        
-        // create world
-        world = new NondeterministicVacuumEnvironment(LocationState.Dirty, LocationState.Dirty);
-        world.addAgent(agent, LOCATION_A);
     }
 
     /**
@@ -111,7 +107,7 @@ public class AndOrSearchTest {
         test2.setAgentLocation(agent, LOCATION_B);
         // add to path
         Path<VacuumEnvironmentState> path = new Path<>();
-        path = path.append(Arrays.asList(s1, s2, s3, s4));
+        path.addAll(Arrays.asList(s1, s2, s3, s4));
         // test
         Assert.assertEquals(true, path.contains(test1));
         Assert.assertEquals(false, path.contains(test2));

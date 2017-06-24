@@ -18,7 +18,7 @@ import aima.core.agent.Environment;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.environment.eightpuzzle.*;
-import aima.core.search.framework.agent.SearchAgent;
+import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.BidirectionalSearch;

@@ -1,10 +1,9 @@
-package aima.core.search.framework.agent;
+package aima.core.search.agent;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.NoOpAction;
-import aima.core.search.framework.agent.SimpleProblemSolvingAgent;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.LinkedList;

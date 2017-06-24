@@ -5,7 +5,7 @@ import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.agent.SearchAgent;
+import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.GoalTest;

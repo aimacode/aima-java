@@ -1,7 +1,6 @@
 package aima.core.search.nondeterministic;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Represents the path the agent travels through the AND-OR tree (see figure
@@ -12,27 +11,23 @@ import java.util.List;
  */
 public class Path<S> extends LinkedList<S> {
 
-	private static final long serialVersionUID = 1L;
-
 	/**
-	 * Creating a new path based on this path and the passed in appended states.
-	 * 
-	 * @param states
-	 *            the states to append to a new copy of this path.
-	 * 
-	 * @return a new Path that contains this path's states along with the passed
-	 *         in argument states appended to the end.
+	 * Create a new path containing this path's current states followed by the provided additional state.
+	 *
+	 * @param state
+	 *            the state to be prepended.
+	 * @return a new Path that contains the passed in state along with this
+	 *         path's current states.
 	 */
-	public Path<S> append(List<S> states) {
+	public Path<S> append(S state) {
 		Path<S> appendedPath = new Path<>();
 		appendedPath.addAll(this);
-		appendedPath.addAll(states);
+		appendedPath.add(state);
 		return appendedPath;
 	}
 
 	/**
-	 * Create a new path based on the passed in prepended state and this path's
-	 * current states.
+	 * Create a new path containing the provided additional state followed by this path's current states.
 	 * 
 	 * @param state
 	 *            the state to be prepended.

@@ -2,7 +2,7 @@ package aima.gui.demo.search;
 
 import aima.core.agent.Action;
 import aima.core.environment.eightpuzzle.*;
-import aima.core.search.framework.agent.SearchAgent;
+import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
