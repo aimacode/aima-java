@@ -69,10 +69,10 @@ public class AndOrSearch<S, A> {
 	 *
 	 * @return a conditional plan or empty on failure
 	 */
-	public Optional<Plan> search(NondeterministicProblem<S, A> problem) {
+	public Optional<Plan<S, A>> search(NondeterministicProblem<S, A> problem) {
 		expandedNodes = 0;
 		// OR-SEARCH(problem.INITIAL-STATE, problem, [])
-		Plan plan = orSearch(problem.getInitialState(), problem, new Path<>());
+		Plan<S, A> plan = orSearch(problem.getInitialState(), problem, new Path<>());
 		return plan != null ? Optional.of(plan) : Optional.empty();
 	}
 
@@ -94,12 +94,12 @@ public class AndOrSearch<S, A> {
 	 *
 	 * @return a conditional plan or null on failure
 	 */
-	public Plan orSearch(S state, NondeterministicProblem<S, A> problem, Path<S> path) {
+	public Plan<S, A> orSearch(S state, NondeterministicProblem<S, A> problem, Path<S> path) {
 		// do metrics
 		expandedNodes++;
 		// if problem.GOAL-TEST(state) then return the empty plan
 		if (problem.testGoal(state)) {
-			return new Plan();
+			return new Plan<>();
 		}
 		// if state is on path then return failure
 		if (path.contains(state)) {
@@ -108,7 +108,7 @@ public class AndOrSearch<S, A> {
 		// for each action in problem.ACTIONS(state) do
 		for (A action : problem.getActions(state)) {
 			// plan <- AND-SEARCH(RESULTS(state, action), problem, [state|path])
-			Plan plan = andSearch(
+			Plan<S, A> plan = andSearch(
 					problem.getResults(state, action),
 					problem, path.prepend(state));
 			// if plan != failure then return [action|plan]
@@ -138,27 +138,27 @@ public class AndOrSearch<S, A> {
 	 * @param path
 	 * @return a conditional plan or null on failure
 	 */
-	public Plan andSearch(List<S> states, NondeterministicProblem<S, A> problem, Path<S> path) {
+	public Plan<S, A> andSearch(List<S> states, NondeterministicProblem<S, A> problem, Path<S> path) {
 		// do metrics, setup
 		expandedNodes++;
-		List<Plan> plans = new ArrayList<>(states.size());
+		List<Plan<S, A>> subPlans = new ArrayList<>(states.size());
 		// for each s_i in states do
 		for (S state : states) {
 			// plan_i <- OR-SEARCH(s_i, problem, path)
-			Plan plan = orSearch(state, problem, path);
-			plans.add(plan);
-			if (plan == null)
+			Plan<S, A> subPlan = orSearch(state, problem, path);
+			subPlans.add(subPlan);
+			if (subPlan == null)
 				return null;
 		}
-		if (plans.size() == 1)
+		if (subPlans.size() == 1)
 			// in this case, no if is needed...
-			return plans.get(0);
+			return subPlans.get(0);
 		else {
 			// return [if s_1 then plan_1 else ... if s_n-1 then plan_n-1 else plan_n]
-			Object[] steps = new Object[plans.size()];
-			for (int i = 0; i < plans.size(); i++)
-				steps[i] = new IfStateThenPlan<>(states.get(i), plans.get(i));
-			return new Plan(steps);
+			Plan<S, A> result = new Plan<>();
+			for (int i = 0; i < subPlans.size(); i++)
+				result.addIfStatement(states.get(i), subPlans.get(i));
+			return result;
 		}
 	}
 

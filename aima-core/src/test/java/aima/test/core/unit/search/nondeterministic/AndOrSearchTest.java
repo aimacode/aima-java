@@ -46,7 +46,7 @@ public class AndOrSearchTest {
                 VacuumWorldFunctions::testGoal,
                 (s, a, sPrimed) -> 1.0);
         // set the problem and agent
-        agent.setProblem(problem);
+        agent.makePlan(problem);
         
         // create world
         world = new NondeterministicVacuumEnvironment(LocationState.Dirty, LocationState.Dirty);

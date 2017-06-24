@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.environment.vacuum.VacuumEnvironmentViewActionTracker;
+import aima.core.agent.impl.SimpleActionTracker;
 import aima.core.environment.vacuum.ReflexVacuumAgent;
 import aima.core.environment.vacuum.VacuumEnvironment;
 
@@ -15,12 +15,12 @@ import aima.core.environment.vacuum.VacuumEnvironment;
 public class ReflexVacuumAgentTest {
 	private ReflexVacuumAgent agent;
 
-	private StringBuilder envChanges;
+	private SimpleActionTracker actionTracker;
 
 	@Before
 	public void setUp() {
 		agent = new ReflexVacuumAgent();
-		envChanges = new StringBuilder();
+		actionTracker = new SimpleActionTracker();
 	}
 
 	@Test
@@ -30,13 +30,13 @@ public class ReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(actionTracker);
 
 		tve.step(8);
 
 		Assert.assertEquals(
 				"Action[name=Right], Action[name=Left], Action[name=Right], Action[name=Left], Action[name=Right], Action[name=Left], Action[name=Right], Action[name=Left]",
-				envChanges.toString());
+				actionTracker.getActions());
 	}
 
 	@Test
@@ -46,13 +46,13 @@ public class ReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(actionTracker);
 
 		tve.step(8);
 
 		Assert.assertEquals(
 				"Action[name=Right], Action[name=Suck], Action[name=Left], Action[name=Right], Action[name=Left], Action[name=Right], Action[name=Left], Action[name=Right]",
-				envChanges.toString());
+				actionTracker.getActions());
 	}
 
 	@Test
@@ -62,13 +62,13 @@ public class ReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(actionTracker);
 
 		tve.step(8);
 
 		Assert.assertEquals(
 				"Action[name=Suck], Action[name=Right], Action[name=Left], Action[name=Right], Action[name=Left], Action[name=Right], Action[name=Left], Action[name=Right]",
-				envChanges.toString());
+				actionTracker.getActions());
 	}
 
 	@Test
@@ -78,12 +78,12 @@ public class ReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(new VacuumEnvironmentViewActionTracker(envChanges));
+		tve.addEnvironmentView(actionTracker);
 
 		tve.step(8);
 
 		Assert.assertEquals(
 				"Action[name=Suck], Action[name=Right], Action[name=Suck], Action[name=Left], Action[name=Right], Action[name=Left], Action[name=Right], Action[name=Left]",
-				envChanges.toString());
+				actionTracker.getActions());
 	}
 }

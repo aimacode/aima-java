@@ -1,6 +1,7 @@
 package aima.gui.demo.agent;
 
 import aima.core.agent.Action;
+import aima.core.agent.impl.SimpleActionTracker;
 import aima.core.environment.vacuum.*;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 
@@ -37,15 +38,15 @@ public class NondeterministicVacuumEnvironmentDemo {
                 VacuumWorldFunctions.createResultsFunction(agent),
                 VacuumWorldFunctions::testGoal,
                 (s, a, sPrimed) -> 1.0);
-        agent.setProblem(problem);
-        
-        // execute and show plan
+        agent.makePlan(problem);
+        SimpleActionTracker actionTracker = new SimpleActionTracker();
+        world.addEnvironmentView(actionTracker);
+
+        // show and execute the plan
         System.out.println("Initial Plan: " + agent.getContingencyPlan());
-        StringBuilder sb = new StringBuilder();
-        world.addEnvironmentView(new VacuumEnvironmentViewActionTracker(sb));
         world.stepUntilDone();
-        System.out.println("Remaining Plan: " + agent.getContingencyPlan());
-        System.out.println("Actions Taken: " + sb);
+        System.out.println("Actions Taken: " + actionTracker.getActions());
+        System.out.println("Final Plan: " + agent.getContingencyPlan());
         System.out.println("Final State: " + world.getCurrentState());
 	}
 }

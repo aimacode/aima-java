@@ -114,7 +114,7 @@ public class VacuumAgentApp extends IntegrableApplication {
             env.addAgent(agent);
             if (agent instanceof NondeterministicVacuumAgent) {
                 // Set the problem now for this kind of agent
-                ((NondeterministicVacuumAgent) agent).setProblem(createNondeterministicProblem());
+                ((NondeterministicVacuumAgent) agent).makePlan(createNondeterministicProblem());
             }
         }
     }

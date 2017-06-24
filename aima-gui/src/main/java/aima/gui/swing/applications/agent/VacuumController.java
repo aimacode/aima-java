@@ -67,7 +67,7 @@ public class VacuumController extends AgentAppController {
 			if (agent instanceof NondeterministicVacuumAgent) {
 				// Set the problem now for this kind of agent
 		        // set the problem and agent
-		        ((NondeterministicVacuumAgent)agent).setProblem(createNondeterministicProblem());
+		        ((NondeterministicVacuumAgent)agent).makePlan(createNondeterministicProblem());
 			}
 			isPrepared = true;
 		}
