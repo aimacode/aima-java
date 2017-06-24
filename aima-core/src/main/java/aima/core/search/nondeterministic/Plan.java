@@ -8,11 +8,11 @@ import java.util.List;
  * AIMA3e, the plan must be "a subtree that (1) has a goal node at every leaf,
  * (2) specifies one action at each of its OR nodes, and (3) includes every
  * outcome branch at each of its AND nodes." As demonstrated on page 136, this
- * plan is implemented as a sequence of two steps where the first
+ * plan can be implemented as a sequence of two steps where the first
  * is an action (corresponding to one OR node) and the second is a list
- * of conditioned sub-plans (corresponding to an AND node). Here, we use a
+ * of if-state-then-plan statements (corresponding to an AND node). Here, we use a
  * list of action steps instead of just one action. This allows to simplify conditioned
- * sub-plan steps with just one if-statement and supports a clean representation for empty plans.
+ * steps with just one if-statement and supports a clean representation of empty plans.
  * 
  * @author Ruediger Lunde
  * @author Andrew Brown
@@ -36,12 +36,13 @@ public class Plan<S, A> {
 
 	/**
 	 * Checks whether the specified step (between 0 and size()-1) is an action step or
-	 * a conditional statement.
+	 * a conditional step.
 	 */
 	public boolean isActionStep(int step) {
 		return step < actionSteps.size();
 	}
 
+	/** Returns the corresponding action for the given action step. */
 	public A getAction(int step) {
 		return actionSteps.get(step);
 	}
@@ -75,14 +76,15 @@ public class Plan<S, A> {
 		return this;
 	}
 
+	/** Adds an if-state-then-plan statement at the end of the plan. */
 	public void addIfStatement(S state, Plan<S, A> plan) {
 		ifStatements.add(new IfStatement<>(state, plan));
 	}
 
 	/**
-	 * Returns the string representation of this plan
+	 * Returns a string representation of this plan.
 	 * 
-	 * @return a string representation of this plan.
+	 * @return A string representation of this plan.
 	 */
 	@Override
 	public String toString() {
@@ -108,7 +110,6 @@ public class Plan<S, A> {
 	 * explanation given on page 135 of AIMA3e.
 	 *
 	 * @author Ruediger Lunde
-	 * @author Andrew Brown
 	 */
 	private static class IfStatement<S, A> {
 
@@ -129,9 +130,9 @@ public class Plan<S, A> {
 		}
 
 		/**
-		 * Return string representation of this if-then-else
+		 * Return string representation of this if-state-then-plan statement.
 		 *
-		 * @return a string representation of this if-then-else.
+		 * @return A string representation of this if-state-then-plan statement.
 		 */
 		@Override
 		public String toString() {
