@@ -32,7 +32,10 @@ import java.util.Optional;
  *   for each s<sub>i</sub> in states do
  *      plan<sub>i</sub> <- OR-SEARCH(s<sub>i</sub>, problem, path)
  *      if plan<sub>i</sub> = failure then return failure
- *   return [if s<sub>1</sub> then plan<sub>1</sub> else if s<sub>2</sub> then plan<sub>2</sub> else ... if s<sub>n-1</sub> then plan<sub>n-1</sub> else plan<sub>n</sub>]
+ *   return [if s<sub>1</sub> then plan<sub>1</sub>
+ *           else if s<sub>2</sub> then plan<sub>2</sub> ...
+ *           else if s<sub>n-1</sub> then plan<sub>n-1</sub>
+ *           else plan<sub>n</sub>]
  * </code>
  * </pre>
  * 
@@ -98,19 +101,17 @@ public class AndOrSearch<S, A> {
 		// do metrics
 		expandedNodes++;
 		// if problem.GOAL-TEST(state) then return the empty plan
-		if (problem.testGoal(state)) {
+		if (problem.testGoal(state))
 			return new Plan<>();
-		}
+
 		// if state is on path then return failure
-		if (path.contains(state)) {
+		if (path.contains(state))
 			return null;
-		}
+
 		// for each action in problem.ACTIONS(state) do
 		for (A action : problem.getActions(state)) {
 			// plan <- AND-SEARCH(RESULTS(state, action), problem, [state|path])
-			Plan<S, A> plan = andSearch(
-					problem.getResults(state, action),
-					problem, path.prepend(state));
+			Plan<S, A> plan = andSearch(problem.getResults(state, action), problem, path.prepend(state));
 			// if plan != failure then return [action|plan]
 			if (plan != null)
 				return plan.prepend(action);
@@ -129,7 +130,10 @@ public class AndOrSearch<S, A> {
 	 *   for each s<sub>i</sub> in states do
 	 *      plan<sub>i</sub> <- OR-SEARCH(s<sub>i</sub>, problem, path)
 	 *      if plan<sub>i</sub> = failure then return failure
-	 *   return [if s<sub>1</sub> then plan<sub>1</sub> else if s<sub>2</sub> then plan<sub>2</sub> else ... if s<sub>n-1</sub> then plan<sub>n-1</sub> else plan<sub>n</sub>]
+	 *   return [if s<sub>1</sub> then plan<sub>1</sub>
+	 *           else if s<sub>2</sub> then plan<sub>2</sub> ...
+	 *           else if s<sub>n-1</sub> then plan<sub>n-1</sub>
+	 *           else plan<sub>n</sub>]
 	 * </code>
 	 * </pre>
 	 * 
@@ -150,15 +154,15 @@ public class AndOrSearch<S, A> {
 			if (subPlan == null)
 				return null;
 		}
-		if (subPlans.size() == 1)
-			// in this case, no if is needed...
+		if (subPlans.size() == 1) {
+			// no if is needed in this case...
 			return subPlans.get(0);
-		else {
-			// return [if s_1 then plan_1 else ... if s_n-1 then plan_n-1 else plan_n]
-			Plan<S, A> result = new Plan<>();
+		} else {
+			// return [if s_1 then plan_1 ... else if s_n-1 then plan_n-1 else plan_n]
+			Plan<S, A> plan = new Plan<>();
 			for (int i = 0; i < subPlans.size(); i++)
-				result.addIfStatement(states.get(i), subPlans.get(i));
-			return result;
+				plan.addIfStatement(states.get(i), subPlans.get(i));
+			return plan;
 		}
 	}
 
