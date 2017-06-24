@@ -61,20 +61,12 @@ public class VacuumWorldFunctions {
                     : VacuumEnvironment.LOCATION_A;
             // case: move right
             if (VacuumEnvironment.ACTION_MOVE_RIGHT == action) {
-                VacuumEnvironmentState s = new VacuumEnvironmentState();
-                s.setLocationState(currentLocation,
-                        state.getLocationState(currentLocation));
-                s.setLocationState(adjacentLocation,
-                        state.getLocationState(adjacentLocation));
+                VacuumEnvironmentState s = state.clone();
                 s.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_B);
                 results.add(s);
             } // case: move left
             else if (VacuumEnvironment.ACTION_MOVE_LEFT == action) {
-                VacuumEnvironmentState s = new VacuumEnvironmentState();
-                s.setLocationState(currentLocation,
-                        state.getLocationState(currentLocation));
-                s.setLocationState(adjacentLocation,
-                        state.getLocationState(adjacentLocation));
+                VacuumEnvironmentState s = state.clone();
                 s.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_A);
                 results.add(s);
             } // case: suck
@@ -83,39 +75,22 @@ public class VacuumWorldFunctions {
                 if (VacuumEnvironment.LocationState.Dirty == state
                         .getLocationState(state.getAgentLocation(this.agent))) {
                     // always clean current
-                    VacuumEnvironmentState s1 = new VacuumEnvironmentState();
-                    s1.setLocationState(currentLocation,
-                            VacuumEnvironment.LocationState.Clean);
-                    s1.setLocationState(adjacentLocation,
-                            state.getLocationState(adjacentLocation));
-                    s1.setAgentLocation(agent, currentLocation);
+                    VacuumEnvironmentState s1 = state.clone();
+                    s1.setLocationState(currentLocation, VacuumEnvironment.LocationState.Clean);
                     results.add(s1);
                     // sometimes clean adjacent as well
-                    VacuumEnvironmentState s2 = new VacuumEnvironmentState();
-                    s2.setLocationState(currentLocation,
-                            VacuumEnvironment.LocationState.Clean);
-                    s2.setLocationState(adjacentLocation,
-                            VacuumEnvironment.LocationState.Clean);
-                    s2.setAgentLocation(agent, currentLocation);
+                    VacuumEnvironmentState s2 = s1.clone();
+                    s2.setLocationState(adjacentLocation, VacuumEnvironment.LocationState.Clean);
                     if (!s2.equals(s1))
                         results.add(s2);
                 } // case: square is clean
                 else {
                     // sometimes do nothing
-                    VacuumEnvironmentState s1 = new VacuumEnvironmentState();
-                    s1.setLocationState(currentLocation,
-                            state.getLocationState(currentLocation));
-                    s1.setLocationState(adjacentLocation,
-                            state.getLocationState(adjacentLocation));
-                    s1.setAgentLocation(agent, currentLocation);
+                    VacuumEnvironmentState s1 = state.clone();
                     results.add(s1);
                     // sometimes deposit dirt
-                    VacuumEnvironmentState s2 = new VacuumEnvironmentState();
-                    s2.setLocationState(currentLocation,
-                            VacuumEnvironment.LocationState.Dirty);
-                    s2.setLocationState(adjacentLocation,
-                            state.getLocationState(adjacentLocation));
-                    s2.setAgentLocation(agent, currentLocation);
+                    VacuumEnvironmentState s2 = state.clone();
+                    s2.setLocationState(currentLocation, VacuumEnvironment.LocationState.Dirty);
                     if (!s2.equals(s1))
                         results.add(s2);
                 }
