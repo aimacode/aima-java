@@ -16,6 +16,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.propositional.visitors.SymbolCollector;
+import aima.core.util.Tasks;
 import aima.core.util.Util;
 import aima.core.util.datastructure.Pair;
 
@@ -55,7 +56,7 @@ public class OptimizedDPLL implements DPLL {
 		// NOTE: for optimization reasons we only want to determine the
 		// values of clauses once on each call to dpll
 		boolean allTrue = true;			
-		Set<Clause> unknownClauses = new LinkedHashSet<Clause>();
+		Set<Clause> unknownClauses = new LinkedHashSet<>();
 		for (Clause c : clauses) {
 			Boolean value = model.determineValue(c);
 			if (!Boolean.TRUE.equals(value)) {
@@ -68,7 +69,8 @@ public class OptimizedDPLL implements DPLL {
 		}
 		if (allTrue) {
 			return true;
-		}
+		} else if (Tasks.currIsCancelled())
+			return false;
 		
 		// NOTE: Performance Optimization -
 		// Going forward, algorithm can ignore clauses that are already 

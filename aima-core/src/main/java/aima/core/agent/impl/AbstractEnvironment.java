@@ -14,6 +14,7 @@ import aima.core.agent.EnvironmentObject;
 import aima.core.agent.EnvironmentView;
 import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
+import aima.core.util.Tasks;
 
 /**
  * @author Ravi Mohan
@@ -113,17 +114,18 @@ public abstract class AbstractEnvironment implements Environment,
 	}
 
 	public void stepUntilDone() {
-		while (!isDone()) {
+		while (!isDone())
 			step();
-		}
 	}
 
 	public boolean isDone() {
-		for (Agent agent : agents) {
-			if (agent.isAlive()) {
+		if (Tasks.currIsCancelled())
+			return true;
+
+		for (Agent agent : agents)
+			if (agent.isAlive())
 				return false;
-			}
-		}
+
 		return true;
 	}
 

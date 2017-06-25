@@ -1,17 +1,5 @@
 package aima.core.environment.wumpusworld;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
-import aima.core.agent.Action;
-import aima.core.environment.wumpusworld.action.Climb;
-import aima.core.environment.wumpusworld.action.Forward;
-import aima.core.environment.wumpusworld.action.Grab;
-import aima.core.environment.wumpusworld.action.Shoot;
-import aima.core.environment.wumpusworld.action.TurnLeft;
-import aima.core.environment.wumpusworld.action.TurnRight;
 import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.OptimizedDPLL;
 import aima.core.logic.propositional.kb.KnowledgeBase;
@@ -19,6 +7,11 @@ import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
+
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A Knowledge base tailored to the Wumpus World environment.
@@ -36,28 +29,34 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	public static final String WUMPUS            = "W";
 	public static final String WUMPUS_ALIVE      = "WumpusAlive";
 	public static final String HAVE_ARROW        = "HaveArrow";
-	public static final String FACING_NORTH      = AgentPosition.Orientation.FACING_NORTH.toString();
-	public static final String FACING_SOUTH      = AgentPosition.Orientation.FACING_SOUTH.toString();
-	public static final String FACING_EAST       = AgentPosition.Orientation.FACING_EAST.toString();
-	public static final String FACING_WEST       = AgentPosition.Orientation.FACING_WEST.toString();
+	public static final String FACING_NORTH      = AgentPosition.Orientation.FACING_NORTH.name();
+	public static final String FACING_SOUTH      = AgentPosition.Orientation.FACING_SOUTH.name();
+	public static final String FACING_EAST       = AgentPosition.Orientation.FACING_EAST.name();
+	public static final String FACING_WEST       = AgentPosition.Orientation.FACING_WEST.name();
 	public static final String PERCEPT_STENCH    = "Stench";
 	public static final String PERCEPT_BREEZE    = "Breeze";
 	public static final String PERCEPT_GLITTER   = "Glitter";
 	public static final String PERCEPT_BUMP      = "Bump";
 	public static final String PERCEPT_SCREAM    = "Scream";
-	public static final String ACTION_FORWARD    = Forward.FORWARD_ACTION_NAME;
-	public static final String ACTION_SHOOT      = Shoot.SHOOT_ACTION_NAME;
-	public static final String ACTION_TURN_LEFT  = TurnLeft.TURN_LEFT_ACTION_NAME;
-	public static final String ACTION_TURN_RIGHT = TurnRight.TURN_RIGHT_ACTION_NAME;
+	public static final String ACTION_FORWARD    = WumpusAction.FORWARD.name();
+	public static final String ACTION_SHOOT      = WumpusAction.SHOOT.name();
+	public static final String ACTION_TURN_LEFT  = WumpusAction.TURN_LEFT.name();
+	public static final String ACTION_TURN_RIGHT = WumpusAction.TURN_RIGHT.name();
 	public static final String OK_TO_MOVE_INTO   = "OK";
 	//
 	private int  caveXDimension;
 	private int  caveYDimension;
+	private AgentPosition start;
 	private DPLL dpll;
 
-	public WumpusKnowledgeBase(int caveXandYDimensions) {
-		this(new OptimizedDPLL(), caveXandYDimensions);
+	public WumpusKnowledgeBase(int caveDimensions) {
+		this(new OptimizedDPLL(), caveDimensions);
 	}
+
+	public WumpusKnowledgeBase(DPLL dpll, int caveDimensions) {
+		this(dpll, caveDimensions, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
+	}
+
 	/**
 	 * Create a Knowledge Base that contains the atemporal "wumpus physics" and
 	 * temporal rules with time zero.
@@ -68,9 +67,10 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	 *            x and y dimensions of the wumpus world's cave.
 	 * 
 	 */
-	public WumpusKnowledgeBase(DPLL dpll, int caveDimensions) {
+	public WumpusKnowledgeBase(DPLL dpll, int caveDimensions, AgentPosition start) {
 		super();
-		
+
+		this.start = start;
 		this.dpll = dpll;
 
 		caveXDimension = caveDimensions;
@@ -79,9 +79,9 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		//
 		// 7.7.1 - The current state of the World
 		// The agent knows that the starting square contains no pit
-		tell(new ComplexSentence(Connective.NOT, newSymbol(PIT, 1, 1)));
+		tell(new ComplexSentence(Connective.NOT, newSymbol(PIT, start.getX(), start.getY())));
 		// and no wumpus.
-		tell(new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, 1, 1)));
+		tell(new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, start.getX(), start.getY())));
 
 		// Atemporal rules about breeze and stench
 		// For each square, the agent knows that the square is breezy
@@ -192,13 +192,15 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		
 		for (int x = 1; x <= getCaveXDimension(); x++) {
 			for (int y = 1; y <= getCaveYDimension(); y++) {
-				for (int tPrime = 0; tPrime <= t; tPrime++) {					
-					if (ask(newSymbol(LOCATION, tPrime, x, y))) {
-						break; // i.e. is not false for all t' <= t
-					}
-					if (tPrime == t)
-						unvisited.add(new Room(x, y)); // i.e. is false for all t' <= t
-				}
+				if (!ask(newSymbol(LOCATION, x, y)))
+					unvisited.add(new Room(x, y)); // i.e. is false for all t' <= t
+
+//				for (int tPrime = 0; tPrime <= t; tPrime++) {
+//					if (ask(newSymbol(LOCATION, tPrime, x, y)))
+//						break; // i.e. is not false for all t' <= t
+//					if (tPrime == t)
+//						unvisited.add(new Room(x, y)); // i.e. is false for all t' <= t
+//				}
 			}
 		}
 		
@@ -267,36 +269,13 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	 * @param t
 	 *            current time
 	 */
-	public void makeActionSentence(Action a, int t) {
-		if (a instanceof Climb)
-			tell(newSymbol(Climb.CLIMB_ACTION_NAME, t));
-		else
-			tell(new ComplexSentence(Connective.NOT, newSymbol(Climb.CLIMB_ACTION_NAME, t)));
-
-		if (a instanceof Forward)
-			tell(newSymbol(Forward.FORWARD_ACTION_NAME, t));
-		else
-			tell(new ComplexSentence(Connective.NOT, newSymbol(Forward.FORWARD_ACTION_NAME, t)));
-
-		if (a instanceof Grab)
-			tell(newSymbol(Grab.GRAB_ACTION_NAME, t));
-		else
-			tell(new ComplexSentence(Connective.NOT, newSymbol(Grab.GRAB_ACTION_NAME, t)));
-
-		if (a instanceof Shoot)
-			tell(newSymbol(Shoot.SHOOT_ACTION_NAME, t));
-		else
-			tell(new ComplexSentence(Connective.NOT, newSymbol(Shoot.SHOOT_ACTION_NAME, t)));
-
-		if (a instanceof TurnLeft)
-			tell(newSymbol(TurnLeft.TURN_LEFT_ACTION_NAME, t));
-		else
-			tell(new ComplexSentence(Connective.NOT, newSymbol(TurnLeft.TURN_LEFT_ACTION_NAME, t)));
-
-		if (a instanceof TurnRight)
-			tell(newSymbol(TurnRight.TURN_RIGHT_ACTION_NAME, t));
-		else
-			tell(new ComplexSentence(Connective.NOT, newSymbol(TurnRight.TURN_RIGHT_ACTION_NAME, t)));
+	public void makeActionSentence(WumpusAction a, int t) {
+		for (WumpusAction action : WumpusAction.values()) {
+			if (action.equals(a))
+				tell(newSymbol(action.name(), t));
+			else
+				tell(new ComplexSentence(Connective.NOT, newSymbol(action.name(), t)));
+		}
 	}
 
 	/**
@@ -308,7 +287,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	 * @param time
 	 *            current time
 	 */
-	public void makePerceptSentence(AgentPercept p, int time) {
+	public void makePerceptSentence(WumpusPercept p, int time) {
 		if (p.isStench())
 			tell(newSymbol(PERCEPT_STENCH, time));
 		else
@@ -344,8 +323,10 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	public void tellTemporalPhysicsSentences(int t) {		
 		if (t == 0) {
 			// temporal rules at time zero
-			tell(newSymbol(LOCATION, 0, 1, 1));
-			tell(newSymbol(FACING_EAST, 0));
+			tell(newSymbol(LOCATION, 0, start.getX(), start.getY()));
+			// Optimization to make questions about unvisited locations faster
+			tell(newSymbol(LOCATION, start.getX(), start.getY()));
+			tell(newSymbol(start.getOrientation().name(), 0));
 			tell(newSymbol(HAVE_ARROW, 0));
 			tell(newSymbol(WUMPUS_ALIVE, 0));
 		}
@@ -423,6 +404,12 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 							newSymbol(LOCATION, t+1, x, y),
 							Connective.BICONDITIONAL,
 							Sentence.newDisjunction(locDisjuncts)));
+
+				// Optimization to make questions about unvisited locations faster
+				tell(new ComplexSentence(
+						newSymbol(LOCATION, t+1, x, y),
+						Connective.IMPLICATION,
+						newSymbol(LOCATION, x, y)));
 
 				// The most important question for the agent is whether
 				// a square is OK to move into, that is, the square contains

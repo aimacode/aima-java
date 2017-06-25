@@ -22,34 +22,34 @@ import aima.core.agent.Percept;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class AgentPercept implements Percept {
+public class WumpusPercept implements Percept {
 	private boolean stench;
 	private boolean breeze;
 	private boolean glitter;
 	private boolean bump;
 	private boolean scream;
 
-	public AgentPercept setStench() {
+	public WumpusPercept setStench() {
 		stench = true;
 		return this;
 	}
 
-	public AgentPercept setBreeze() {
+	public WumpusPercept setBreeze() {
 		breeze = true;
 		return this;
 	}
 
-	public AgentPercept setGlitter() {
+	public WumpusPercept setGlitter() {
 		glitter = true;
 		return this;
 	}
 
-	public AgentPercept setBump() {
+	public WumpusPercept setBump() {
 		bump = true;
 		return this;
 	}
 
-	public AgentPercept setScream() {
+	public WumpusPercept setScream() {
 		scream = true;
 		return this;
 	}

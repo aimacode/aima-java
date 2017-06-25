@@ -1,9 +1,6 @@
 package aima.core.environment.wumpusworld;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 236.<br>
@@ -11,18 +8,23 @@ import java.util.Set;
  * The <b>wumpus world</b> is a cave consisting of rooms connected by
  * passageways. The rooms are always organized into a grid. See Figure 7.2 for
  * an example.
- * 
+ *
+ * @author Ruediger Lunde
  * @author Federico Baron
  * @author Alessandro Daniele
  * @author Ciaran O'Reilly
- * @author Ruediger Lunde
  */
 public class WumpusCave {
 
 	private int caveXDimension; // starts bottom left -> right
 	private int caveYDimension; // starts bottom left ^ up
 
-	private Set<AgentPosition> allowedPositions = new HashSet<>();
+	private AgentPosition start = new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH);
+	private Room wumpus;
+	private Room gold;
+	private Set<Room> pits = new LinkedHashSet<>();
+
+	private Set<Room> allowedRooms = new HashSet<>();
 	
 	/**
 	 * Default Constructor. Create a Wumpus Case of default dimensions 4x4.
@@ -41,7 +43,21 @@ public class WumpusCave {
 	 *            the cave's y dimension.
 	 */
 	public WumpusCave(int caveXDimension, int caveYDimension) {
-		this(caveXDimension, caveYDimension, defaultAllowedPositions(caveXDimension, caveYDimension));
+		this(caveXDimension, caveYDimension, defaultAllowedRooms(caveXDimension, caveYDimension));
+	}
+
+	public WumpusCave(int caveXDimension, int caveYDimension, String config) {
+		this(caveXDimension, caveYDimension, defaultAllowedRooms(caveXDimension, caveYDimension));
+		for (int i = 0; i < config.length(); i++) {
+			char c = config.charAt(i);
+			Room r = new Room(i % caveXDimension + 1, caveYDimension - i / caveXDimension);
+			switch (c) {
+				case 'S': start = new AgentPosition(r.getX(), r.getY(), AgentPosition.Orientation.FACING_NORTH); break;
+				case 'W': wumpus = r; break;
+				case 'G': gold = r; break;
+				case 'P': pits.add(r); break;
+			}
+		}
 	}
 
 	/**
@@ -52,19 +68,18 @@ public class WumpusCave {
 	 *            the cave's x dimension.
 	 * @param caveYDimension
 	 *            the cave's y dimension.
-	 * @param allowedPositions
-	 *            the set of legal agent positions that can be reached within
+	 * @param allowedRooms
+	 *            the set of legal rooms that can be reached within
 	 *            the cave.
 	 */
-	public WumpusCave(int caveXDimension, int caveYDimension,
-			Set<AgentPosition> allowedPositions) {
+	public WumpusCave(int caveXDimension, int caveYDimension, Set<Room> allowedRooms) {
 		if (caveXDimension < 1)
 			throw new IllegalArgumentException("Cave must have x dimension >= 1");
 		if (caveYDimension < 1)
 			throw new IllegalArgumentException("Case must have y dimension >= 1");
 		this.caveXDimension = caveXDimension;
 		this.caveYDimension = caveYDimension;
-		this.allowedPositions.addAll(allowedPositions);
+		this.allowedRooms.addAll(allowedRooms);
 	}
 
 	public int getCaveXDimension() {
@@ -75,67 +90,71 @@ public class WumpusCave {
 		return caveYDimension;
 	}
 
-	public List<AgentPosition> getLocationsLinkedTo(AgentPosition fromLocation) {
-
-		int x = fromLocation.getX();
-		int y = fromLocation.getY();
-		AgentPosition.Orientation orientation = fromLocation.getOrientation();
-
-		List<AgentPosition> result = new ArrayList<>();
-
-		AgentPosition currentForwardNorth = new AgentPosition(x, y + 1, AgentPosition.Orientation.FACING_NORTH);
-		AgentPosition currentForwardSouth = new AgentPosition(x, y - 1, AgentPosition.Orientation.FACING_SOUTH);
-		AgentPosition currentForwardEast = new AgentPosition(x + 1, y, AgentPosition.Orientation.FACING_EAST);
-		AgentPosition currentForwardWest = new AgentPosition(x - 1, y, AgentPosition.Orientation.FACING_WEST);
-		AgentPosition currentNorth = new AgentPosition(x, y, AgentPosition.Orientation.FACING_NORTH);
-		AgentPosition currentSouth = new AgentPosition(x, y, AgentPosition.Orientation.FACING_SOUTH);
-		AgentPosition currentEast = new AgentPosition(x, y, AgentPosition.Orientation.FACING_EAST);
-		AgentPosition currentWest = new AgentPosition(x, y, AgentPosition.Orientation.FACING_WEST);
-
-		switch (orientation) {
-		case FACING_NORTH:
-			addIfAllowed(currentForwardNorth, result);
-			addIfAllowed(currentEast, result);
-			addIfAllowed(currentWest, result);
-			break;
-		case FACING_SOUTH:
-			addIfAllowed(currentForwardSouth, result);
-			addIfAllowed(currentEast, result);
-			addIfAllowed(currentWest, result);
-			break;
-		case FACING_EAST:
-			addIfAllowed(currentNorth, result);
-			addIfAllowed(currentSouth, result);
-			addIfAllowed(currentForwardEast, result);
-			break;
-		case FACING_WEST:
-			addIfAllowed(currentNorth, result);
-			addIfAllowed(currentSouth, result);
-			addIfAllowed(currentForwardWest, result);
-			break;
-		}
-
-		return result;
+	public AgentPosition getStart() {
+		return start;
 	}
+
+	public Room getWumpus() {
+		return wumpus;
+	}
+
+	public Room getGold() {
+		return gold;
+	}
+
+	public void setGold(Room room) {
+		gold = room;
+	}
+
+	public boolean isPit(Room room) {
+		return pits.contains(room);
+	}
+
+	public AgentPosition moveForward(AgentPosition position) {
+		int x = position.getX();
+		int y = position.getY();
+		switch (position.getOrientation()) {
+			case FACING_NORTH: y++; break;
+			case FACING_SOUTH: y--; break;
+			case FACING_EAST: x++; break;
+			case FACING_WEST: x--; break;
+		}
+		Room room = new Room(x, y);
+		return allowedRooms.contains(room) ? new AgentPosition(x, y, position.getOrientation()) : position;
+	}
+
+	public AgentPosition turnLeft(AgentPosition position) {
+		AgentPosition.Orientation orientation = null;
+		switch (position.getOrientation()) {
+			case FACING_NORTH: orientation = AgentPosition.Orientation.FACING_WEST; break;
+			case FACING_SOUTH: orientation = AgentPosition.Orientation.FACING_EAST; break;
+			case FACING_EAST: orientation = AgentPosition.Orientation.FACING_NORTH; break;
+			case FACING_WEST: orientation = AgentPosition.Orientation.FACING_SOUTH; break;
+		}
+		return new AgentPosition(position.getX(), position.getY(), orientation);
+	}
+
+	public AgentPosition turnRight(AgentPosition position) {
+		AgentPosition.Orientation orientation = null;
+		switch (position.getOrientation()) {
+			case FACING_NORTH: orientation = AgentPosition.Orientation.FACING_EAST; break;
+			case FACING_SOUTH: orientation = AgentPosition.Orientation.FACING_WEST; break;
+			case FACING_EAST: orientation = AgentPosition.Orientation.FACING_SOUTH; break;
+			case FACING_WEST: orientation = AgentPosition.Orientation.FACING_NORTH; break;
+		}
+		return new AgentPosition(position.getX(), position.getY(), orientation);
+	}
+
 
 	//
 	// PRIVATE
 	//
-	private static Set<AgentPosition> defaultAllowedPositions(
+	private static Set<Room> defaultAllowedRooms(
 			int caveXDimension, int caveYDimension) {
-		Set<AgentPosition> allowedPositions = new HashSet<>();
-		// Create the default set of allowed positions within the cave that
-		// an agent may occupy.
+		Set<Room> allowedRooms = new HashSet<>();
 		for (int x = 1; x <= caveXDimension; x++)
 			for (int y = 1; y <= caveYDimension; y++)
-				for (AgentPosition.Orientation orientation : AgentPosition.Orientation.values())
-					allowedPositions.add(new AgentPosition(x, y, orientation));
-
-		return allowedPositions;
-	}
-
-	private void addIfAllowed(AgentPosition position, List<AgentPosition> positions) {
-		if (allowedPositions.contains(position))
-			positions.add(position);
+				allowedRooms.add(new Room(x, y));
+		return allowedRooms;
 	}
 }

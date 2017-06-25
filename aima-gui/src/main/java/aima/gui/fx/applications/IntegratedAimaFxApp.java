@@ -2,6 +2,7 @@ package aima.gui.fx.applications;
 
 import aima.gui.demo.agent.NondeterministicVacuumEnvironmentDemo;
 import aima.gui.demo.agent.TrivialVacuumDemo;
+import aima.gui.demo.agent.WumpusAgentDemo;
 import aima.gui.demo.logic.DpllDemo;
 import aima.gui.demo.logic.FolDemo;
 import aima.gui.demo.logic.PlFcEntailsDemo;
@@ -74,6 +75,7 @@ public class IntegratedAimaFxApp extends Application {
 
 		builder.registerDemo(TrivialVacuumDemo.class);
 		builder.registerDemo(NondeterministicVacuumEnvironmentDemo.class);
+		builder.registerDemo(WumpusAgentDemo.class);
 		builder.registerDemo(NQueensSearchDemo.class);
 		builder.registerDemo(EightPuzzleDemo.class);
 		builder.registerDemo(TicTacToeDemo.class);

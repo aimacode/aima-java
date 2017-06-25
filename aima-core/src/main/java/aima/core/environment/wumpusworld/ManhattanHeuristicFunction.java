@@ -6,7 +6,6 @@ import aima.core.search.framework.Node;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
 /**
@@ -15,27 +14,25 @@ import java.util.function.ToDoubleFunction;
  * @author Federico Baron
  * @author Alessandro Daniele
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
-public class ManhattanHeuristicFunction implements ToDoubleFunction<Node<AgentPosition, Action>> {
+public class ManhattanHeuristicFunction implements ToDoubleFunction<Node<AgentPosition, WumpusAction>> {
 	
-	List<Room> goals = new ArrayList<>();
+	private List<AgentPosition> goals = new ArrayList<>();
 	
-	public ManhattanHeuristicFunction(Set<Room> goals) {
+	public ManhattanHeuristicFunction(Set<AgentPosition> goals) {
 		this.goals.addAll(goals);
 	}
 	
 	@Override
-	public double applyAsDouble(Node<AgentPosition, Action> node) {
+	public double applyAsDouble(Node<AgentPosition, WumpusAction> node) {
 		AgentPosition pos = node.getState();
 		int nearestGoalDist = Integer.MAX_VALUE;
-		for (Room g : goals) {
+		for (AgentPosition g : goals) {
 			int tmp = evaluateManhattanDistanceOf(pos.getX(), pos.getY(), g.getX(), g.getY());
-			
-			if (tmp < nearestGoalDist) {
+			if (tmp < nearestGoalDist)
 				nearestGoalDist = tmp;
-			}
 		}
-		
 		return (double) nearestGoalDist;
 	}
 
