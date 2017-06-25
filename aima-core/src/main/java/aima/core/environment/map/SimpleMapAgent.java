@@ -82,7 +82,6 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent<String, MoveToActi
 		if (notifier != null)
 			notifier.notifyViews("CurrentLocation=In(" + state.getAttribute(DynAttributeNames.AGENT_LOCATION)
 					+ "), Goal=In(" + goal + ")");
-
 		return goal;
 	}
 
@@ -101,9 +100,8 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent<String, MoveToActi
 	protected void notifyViewOfMetrics() {
 		if (notifier != null) {
 			Set<String> keys = search.getMetrics().keySet();
-			for (String key : keys) {
+			for (String key : keys)
 				notifier.notifyViews("METRIC[" + key + "]=" + search.getMetrics().get(key));
-			}
 		}
 	}
 }

@@ -31,9 +31,7 @@ public class ComplexSentence extends Sentence {
 		
 		this.connective = connective;
 		simplerSentences = new Sentence[sentences.length];
-		for (int i = 0; i < sentences.length; i++) {
-			simplerSentences[i] = sentences[i];
-		}
+		System.arraycopy(sentences, 0, simplerSentences, 0, sentences.length);
 	}
 	
 	/**

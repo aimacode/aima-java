@@ -36,10 +36,9 @@ public class VacuumWorldFunctions {
     }
 
     /**
-     * Returns possible results
+     * Returns possible results.
      */
     private static class VacuumWorldResults implements ResultsFunction<VacuumEnvironmentState, Action> {
-
         private Agent agent;
 
         VacuumWorldResults(Agent agent) {
@@ -47,51 +46,40 @@ public class VacuumWorldFunctions {
         }
 
         /**
-         * Returns a list of possible results for a given state and action
-         *
-         * @return a list of possible results for a given state and action.
+         * Returns a list of possible results for a given state and action.
          */
         @Override
         public List<VacuumEnvironmentState> results(VacuumEnvironmentState state, Action action) {
-            // Ensure order is consistent across platforms.
             List<VacuumEnvironmentState> results = new ArrayList<>();
+            // add clone of state to results, modify later...
+            VacuumEnvironmentState s = state.clone();
+            results.add(s);
+
             String currentLocation = state.getAgentLocation(agent);
-            String adjacentLocation = (currentLocation
-                    .equals(VacuumEnvironment.LOCATION_A)) ? VacuumEnvironment.LOCATION_B
-                    : VacuumEnvironment.LOCATION_A;
-            // case: move right
-            if (VacuumEnvironment.ACTION_MOVE_RIGHT == action) {
-                VacuumEnvironmentState s = state.clone();
-                s.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_B);
-                results.add(s);
-            } // case: move left
-            else if (VacuumEnvironment.ACTION_MOVE_LEFT == action) {
-                VacuumEnvironmentState s = state.clone();
-                s.setAgentLocation(this.agent, VacuumEnvironment.LOCATION_A);
-                results.add(s);
-            } // case: suck
-            else if (VacuumEnvironment.ACTION_SUCK == action) {
-                // case: square is dirty
-                if (VacuumEnvironment.LocationState.Dirty == state
-                        .getLocationState(state.getAgentLocation(this.agent))) {
+            String adjacentLocation = (currentLocation.equals(VacuumEnvironment.LOCATION_A))
+                    ? VacuumEnvironment.LOCATION_B : VacuumEnvironment.LOCATION_A;
+
+            if (action == VacuumEnvironment.ACTION_MOVE_RIGHT) {
+                s.setAgentLocation(agent, VacuumEnvironment.LOCATION_B);
+
+            } else if (action == VacuumEnvironment.ACTION_MOVE_LEFT) {
+                s.setAgentLocation(agent, VacuumEnvironment.LOCATION_A);
+
+            } else if (action == VacuumEnvironment.ACTION_SUCK) {
+                if (state.getLocationState(currentLocation) == VacuumEnvironment.LocationState.Dirty) {
                     // always clean current
-                    VacuumEnvironmentState s1 = state.clone();
-                    s1.setLocationState(currentLocation, VacuumEnvironment.LocationState.Clean);
-                    results.add(s1);
+                    s.setLocationState(currentLocation, VacuumEnvironment.LocationState.Clean);
                     // sometimes clean adjacent as well
-                    VacuumEnvironmentState s2 = s1.clone();
+                    VacuumEnvironmentState s2 = s.clone();
                     s2.setLocationState(adjacentLocation, VacuumEnvironment.LocationState.Clean);
-                    if (!s2.equals(s1))
+                    if (!s2.equals(s))
                         results.add(s2);
-                } // case: square is clean
-                else {
-                    // sometimes do nothing
-                    VacuumEnvironmentState s1 = state.clone();
-                    results.add(s1);
+                } else {
+                    // sometimes do nothing (-> s unchanged)
                     // sometimes deposit dirt
-                    VacuumEnvironmentState s2 = state.clone();
+                    VacuumEnvironmentState s2 = s.clone();
                     s2.setLocationState(currentLocation, VacuumEnvironment.LocationState.Dirty);
-                    if (!s2.equals(s1))
+                    if (!s2.equals(s))
                         results.add(s2);
                 }
             }

@@ -21,7 +21,7 @@ public class WumpusCave {
 	private int caveXDimension; // starts bottom left -> right
 	private int caveYDimension; // starts bottom left ^ up
 
-	private Set<AgentPosition> allowedPositions = new HashSet<AgentPosition>();
+	private Set<AgentPosition> allowedPositions = new HashSet<>();
 	
 	/**
 	 * Default Constructor. Create a Wumpus Case of default dimensions 4x4.
@@ -40,8 +40,7 @@ public class WumpusCave {
 	 *            the cave's y dimension.
 	 */
 	public WumpusCave(int caveXDimension, int caveYDimension) {
-		this(caveXDimension, caveYDimension, defaultAllowedPositions(
-				caveXDimension, caveYDimension));
+		this(caveXDimension, caveYDimension, defaultAllowedPositions(caveXDimension, caveYDimension));
 	}
 
 	/**
@@ -58,14 +57,10 @@ public class WumpusCave {
 	 */
 	public WumpusCave(int caveXDimension, int caveYDimension,
 			Set<AgentPosition> allowedPositions) {
-		if (caveXDimension < 1) {
-			throw new IllegalArgumentException(
-					"Cave must have x dimension >= 1");
-		}
-		if (caveYDimension < 1) {
-			throw new IllegalArgumentException(
-					"Case must have y dimension >= 1");
-		}
+		if (caveXDimension < 1)
+			throw new IllegalArgumentException("Cave must have x dimension >= 1");
+		if (caveYDimension < 1)
+			throw new IllegalArgumentException("Case must have y dimension >= 1");
 		this.caveXDimension = caveXDimension;
 		this.caveYDimension = caveYDimension;
 		this.allowedPositions.addAll(allowedPositions);
@@ -85,7 +80,7 @@ public class WumpusCave {
 		int y = fromLocation.getY();
 		AgentPosition.Orientation orientation = fromLocation.getOrientation();
 
-		List<AgentPosition> result = new ArrayList<AgentPosition>();
+		List<AgentPosition> result = new ArrayList<>();
 
 		AgentPosition currentForwardNorth = new AgentPosition(x, y + 1,
 				AgentPosition.Orientation.FACING_NORTH);
@@ -135,26 +130,20 @@ public class WumpusCave {
 	//
 	private static Set<AgentPosition> defaultAllowedPositions(
 			int caveXDimension, int caveYDimension) {
-		Set<AgentPosition> allowedPositions = new HashSet<AgentPosition>();
+		Set<AgentPosition> allowedPositions = new HashSet<>();
 		// Create the default set of allowed positions within the cave that
 		// an agent may occupy.
 		for (int x = 1; x <= caveXDimension; x++) {
 			for (int y = 1; y <= caveYDimension; y++) {
-				for (AgentPosition.Orientation orientation : AgentPosition.Orientation
-						.values()) {
+				for (AgentPosition.Orientation orientation : AgentPosition.Orientation.values())
 					allowedPositions.add(new AgentPosition(x, y, orientation));
-				}
-
 			}
 		}
 		return allowedPositions;
 	}
 
-	private void addIfAllowed(AgentPosition position,
-			List<AgentPosition> positions) {
-		if (allowedPositions.contains(position)) {
+	private void addIfAllowed(AgentPosition position, List<AgentPosition> positions) {
+		if (allowedPositions.contains(position))
 			positions.add(position);
-		}
 	}
-
 }

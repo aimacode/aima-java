@@ -67,8 +67,8 @@ public class MapAgent extends ProblemSolvingAgent<String, MoveToAction> {
      * @param search Search strategy to be used
      * @param goals List of locations to be visited
      * @param notifier Gets informed about decisions of the agent
-     * @param hFnFactory Factory, mapping goal locations to heuristic functions. When using
-     *                   informed search, the agent must be able to estimate rest costs for
+     * @param hFnFactory Factory, mapping goals to heuristic functions. When using
+     *                   informed search, the agent must be able to estimate remaining costs for
      *                   the goals he has selected.
      */
     public MapAgent(Map map, SearchForActions<String, MoveToAction> search, List<String> goals,
@@ -87,15 +87,18 @@ public class MapAgent extends ProblemSolvingAgent<String, MoveToAction> {
         state.setAttribute(DynAttributeNames.AGENT_LOCATION, dp.getAttribute(DynAttributeNames.PERCEPT_IN));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Optional<Object> formulateGoal() {
         String goal = null;
         if (currGoalIdx < goals.size() - 1) {
             goal = goals.get(++currGoalIdx);
+            if (hFnFactory != null && search instanceof Informed)
+                ((Informed<String, MoveToAction>) search).setHeuristicFunction(hFnFactory.apply(goal));
+
             if (notifier != null)
                 notifier.notifyViews("CurrentLocation=In(" + state.getAttribute(DynAttributeNames.AGENT_LOCATION)
                         + "), Goal=In(" + goal + ")");
-            modifyHeuristicFunction(goal);
         }
         return goal != null ? Optional.of(goal) : Optional.empty();
     }
@@ -119,13 +122,6 @@ public class MapAgent extends ProblemSolvingAgent<String, MoveToAction> {
             for (String key : keys) {
                 notifier.notifyViews("METRIC[" + key + "]=" + search.getMetrics().get(key));
             }
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void modifyHeuristicFunction(String goal) {
-        if (hFnFactory != null && search instanceof Informed) {
-            ((Informed<String, MoveToAction>) search).setHeuristicFunction(hFnFactory.apply(goal));
         }
     }
 }

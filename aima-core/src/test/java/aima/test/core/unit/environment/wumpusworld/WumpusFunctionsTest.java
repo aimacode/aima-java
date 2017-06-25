@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import aima.core.agent.Action;
 import aima.core.environment.wumpusworld.WumpusCave;
-import aima.core.environment.wumpusworld.WumpusFunctionFunctions;
+import aima.core.environment.wumpusworld.WumpusFunctions;
 import aima.core.environment.wumpusworld.AgentPosition;
 import aima.core.environment.wumpusworld.action.Forward;
 import aima.core.environment.wumpusworld.action.TurnLeft;
@@ -32,8 +32,8 @@ public class WumpusFunctionsTest {
 	public void setUp() {
 		WumpusCave completeCave = new WumpusCave(4, 4);
 
-		actionFn = WumpusFunctionFunctions.createActionsFunction(completeCave);
-		resultFn = WumpusFunctionFunctions.createResultFunction();
+		actionFn = WumpusFunctions.createActionsFunction(completeCave);
+		resultFn = WumpusFunctions.createResultFunction();
 	}
 
 	@Test

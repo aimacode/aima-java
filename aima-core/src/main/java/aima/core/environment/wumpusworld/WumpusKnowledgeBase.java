@@ -26,6 +26,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * @author Ciaran O'Reilly
  * @author Federico Baron
  * @author Alessandro Daniele
+ * @author Ruediger Lunde
  */
 public class WumpusKnowledgeBase extends KnowledgeBase {
 	public static final String LOCATION          = "L";
@@ -63,17 +64,17 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	 * 
 	 * @param dpll
 	 *        the dpll implementation to use for answering 'ask' queries.
-	 * @param caveXandYDimensions
+	 * @param caveDimensions
 	 *            x and y dimensions of the wumpus world's cave.
 	 * 
 	 */
-	public WumpusKnowledgeBase(DPLL dpll, int caveXandYDimensions) {
+	public WumpusKnowledgeBase(DPLL dpll, int caveDimensions) {
 		super();
 		
 		this.dpll = dpll;
 
-		this.caveXDimension = caveXandYDimensions;
-		this.caveYDimension = caveXandYDimensions;
+		caveXDimension = caveDimensions;
+		caveYDimension = caveDimensions;
 
 		//
 		// 7.7.1 - The current state of the World
@@ -89,8 +90,8 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		for (int y = 1; y <= caveYDimension; y++) {
 			for (int x = 1; x <= caveXDimension; x++) {
 				
-				List<PropositionSymbol> pitsIn  = new ArrayList<PropositionSymbol>();
-				List<PropositionSymbol> wumpsIn = new ArrayList<PropositionSymbol>();
+				List<PropositionSymbol> pitsIn  = new ArrayList<>();
+				List<PropositionSymbol> wumpsIn = new ArrayList<>();
 				
 				if (x > 1) { // West room exists
 					pitsIn.add(newSymbol(PIT, x-1, y));
@@ -109,14 +110,16 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 					wumpsIn.add(newSymbol(WUMPUS, x, y-1));
 				}
 			
-				tell(new ComplexSentence(newSymbol(BREEZE, x, y), Connective.BICONDITIONAL, Sentence.newDisjunction(pitsIn)));
-				tell(new ComplexSentence(newSymbol(STENCH, x, y), Connective.BICONDITIONAL, Sentence.newDisjunction(wumpsIn)));
+				tell(new ComplexSentence
+						(newSymbol(BREEZE, x, y), Connective.BICONDITIONAL, Sentence.newDisjunction(pitsIn)));
+				tell(new ComplexSentence
+						(newSymbol(STENCH, x, y), Connective.BICONDITIONAL, Sentence.newDisjunction(wumpsIn)));
 			}
 		}
 
 		// The agent also knows there is exactly one wumpus. This is represented
 		// in two parts. First, we have to say that there is at least one wumpus
-		List<PropositionSymbol> wumpsAtLeast = new ArrayList<PropositionSymbol>();
+		List<PropositionSymbol> wumpsAtLeast = new ArrayList<>();
 		for (int x = 1; x <= caveXDimension; x++) {
 			for (int y = 1; y <= caveYDimension; y++) {
 				wumpsAtLeast.add(newSymbol(WUMPUS, x, y));
@@ -131,8 +134,10 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		for (int i = 0; i < numRooms; i++) {
 			for (int j = i+1; j < numRooms; j++) {
 				tell(new ComplexSentence(Connective.OR,
-						new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, (i / caveXDimension)+1, (i % caveYDimension)+1)),
-						new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, (j / caveXDimension)+1, (j % caveYDimension)+1))));
+						new ComplexSentence
+								(Connective.NOT, newSymbol(WUMPUS, (i / caveXDimension)+1, (i % caveYDimension)+1)),
+						new ComplexSentence
+								(Connective.NOT, newSymbol(WUMPUS, (j / caveXDimension)+1, (j % caveYDimension)+1))));
 			}
 		}
 	}
@@ -147,32 +152,27 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 				}
 			}
 		}
-		if (locX == -1 || locY == -1) {
+		if (locX == -1 || locY == -1)
 			throw new IllegalStateException("Inconsistent KB, unable to determine current room position.");
-		}
+
 		AgentPosition current = null;
-		if (ask(newSymbol(FACING_NORTH, t))) {
+		if (ask(newSymbol(FACING_NORTH, t)))
 			current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_NORTH);
-		}
-		else if (ask(newSymbol(FACING_SOUTH, t))) {
+		else if (ask(newSymbol(FACING_SOUTH, t)))
 			current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_SOUTH);
-		}
-		else if (ask(newSymbol(FACING_EAST, t))) {
+		else if (ask(newSymbol(FACING_EAST, t)))
 			current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_EAST);
-		}
-		else if (ask(newSymbol(FACING_WEST, t))) {
+		else if (ask(newSymbol(FACING_WEST, t)))
 			current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_WEST);
-		}
-		else {
+		else
 			throw new IllegalStateException("Inconsistent KB, unable to determine current room orientation.");
-		}
-		
+
 		return current;
 	}
 	
 	// safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
 	public Set<Room> askSafeRooms(int t) {
-		Set<Room> safe = new LinkedHashSet<Room>();
+		Set<Room> safe = new LinkedHashSet<>();
 		for (int x = 1; x <= getCaveXDimension(); x++) {
 			for (int y = 1; y <= getCaveYDimension(); y++) {
 				if (ask(newSymbol(OK_TO_MOVE_INTO, t, x, y))) {
@@ -189,7 +189,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	
 	// unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
 	public Set<Room> askUnvisitedRooms(int t) {
-		Set<Room> unvisited = new LinkedHashSet<Room>();
+		Set<Room> unvisited = new LinkedHashSet<>();
 		
 		for (int x = 1; x <= getCaveXDimension(); x++) {
 			for (int y = 1; y <= getCaveYDimension(); y++) {
@@ -197,9 +197,8 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 					if (ask(newSymbol(LOCATION, tPrime, x, y))) {
 						break; // i.e. is not false for all t' <= t
 					}
-					if (tPrime == t) {
+					if (tPrime == t)
 						unvisited.add(new Room(x, y)); // i.e. is false for all t' <= t
-					}
 				}
 			}
 		}
@@ -214,7 +213,6 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	// possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
 	public Set<Room> askPossibleWumpusRooms(int t) {
 		Set<Room> possible = new LinkedHashSet<Room>();
-		
 		for (int x = 1; x <= getCaveXDimension(); x++) {
 			for (int y = 1; y <= getCaveYDimension(); y++) {
 				if (!ask(new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, x, y)))) {
@@ -222,14 +220,12 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 				}
 			}
 		}
-		
 		return possible;
 	}
 	
 	// not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
 	public Set<Room> askNotUnsafeRooms(int t) {
-		Set<Room> notUnsafe = new LinkedHashSet<Room>();
-		
+		Set<Room> notUnsafe = new LinkedHashSet<>();
 		for (int x = 1; x <= getCaveXDimension(); x++) {
 			for (int y = 1; y <= getCaveYDimension(); y++) {
 				if (!ask(new ComplexSentence(Connective.NOT, newSymbol(OK_TO_MOVE_INTO, t, x, y)))) {
@@ -237,7 +233,6 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 				}
 			}
 		}
-		
 		return notUnsafe;
 	}
 	
@@ -270,46 +265,39 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	 * 
 	 * @param a
 	 *            action that must be added to KB
-	 * @param time
+	 * @param t
 	 *            current time
 	 */
 	public void makeActionSentence(Action a, int t) {
-		if (a instanceof Climb) {
+		if (a instanceof Climb)
 			tell(newSymbol(Climb.CLIMB_ACTION_NAME, t));
-		}
-		else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(Climb.CLIMB_ACTION_NAME, t)));
-		}
-		if (a instanceof Forward) {
+
+		if (a instanceof Forward)
 			tell(newSymbol(Forward.FORWARD_ACTION_NAME, t));
-		}
-		else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(Forward.FORWARD_ACTION_NAME, t)));
-		}
-		if (a instanceof Grab) {
+
+		if (a instanceof Grab)
 			tell(newSymbol(Grab.GRAB_ACTION_NAME, t));
-		}
-		else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(Grab.GRAB_ACTION_NAME, t)));
-		}
-		if (a instanceof Shoot) {
+
+		if (a instanceof Shoot)
 			tell(newSymbol(Shoot.SHOOT_ACTION_NAME, t));
-		}
-		else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(Shoot.SHOOT_ACTION_NAME, t)));
-		}
-		if (a instanceof TurnLeft) {
+
+		if (a instanceof TurnLeft)
 			tell(newSymbol(TurnLeft.TURN_LEFT_ACTION_NAME, t));
-		}
-		else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(TurnLeft.TURN_LEFT_ACTION_NAME, t)));
-		}
-		if (a instanceof TurnRight) {
+
+		if (a instanceof TurnRight)
 			tell(newSymbol(TurnRight.TURN_RIGHT_ACTION_NAME, t));
-		}
-		else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(TurnRight.TURN_RIGHT_ACTION_NAME, t)));
-		}
 	}
 
 	/**
@@ -322,35 +310,30 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	 *            current time
 	 */
 	public void makePerceptSentence(AgentPercept p, int time) {
-		if (p.isStench()) {
+		if (p.isStench())
 			tell(newSymbol(PERCEPT_STENCH, time));
-		} else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_STENCH, time)));
-		}
 
-		if (p.isBreeze()) {
+		if (p.isBreeze())
 			tell(newSymbol(PERCEPT_BREEZE, time));
-		} else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_BREEZE, time)));
-		}
 
-		if (p.isGlitter()) {
+		if (p.isGlitter())
 			tell(newSymbol(PERCEPT_GLITTER, time));
-		} else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_GLITTER, time)));
-		}
 
-		if (p.isBump()) {
+		if (p.isBump())
 			tell(newSymbol(PERCEPT_BUMP, time));
-		} else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_BUMP, time)));
-		}
 
-		if (p.isScream()) {
+		if (p.isScream())
 			tell(newSymbol(PERCEPT_SCREAM, time));
-		} else {
+		else
 			tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_SCREAM, time)));
-		}
 	}
 
 	/**
@@ -392,7 +375,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 			for (int y = 1; y <= caveYDimension; y++) {
 
 				// Location
-				List<Sentence> locDisjuncts = new ArrayList<Sentence>();
+				List<Sentence> locDisjuncts = new ArrayList<>();
 				locDisjuncts.add(new ComplexSentence(
 										newSymbol(LOCATION, t, x, y),
 										Connective.AND,

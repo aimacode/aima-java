@@ -52,10 +52,7 @@ public class Room {
 	public boolean equals(Object o) {
 		if (o != null && o instanceof Room) {
 			Room r = (Room) o;
-			if (x == r.x && y == r.y) {
-				return true;
-			}
-			return false;
+			return x == r.x && y == r.y;
 		}
 		return false;
 	}

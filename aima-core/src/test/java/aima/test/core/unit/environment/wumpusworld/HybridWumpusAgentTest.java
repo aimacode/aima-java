@@ -77,7 +77,7 @@ public class HybridWumpusAgentTest {
 	public void testPlanShot() {
 		HybridWumpusAgent hwa = new HybridWumpusAgent(4);
 		// Should be just shoot as are facing the Wumpus
-		Assert.assertEquals(Arrays.asList(new Shoot()), 
+		Assert.assertEquals(Collections.singletonList(new Shoot()),
 			hwa.planShot(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST), 
 				new LinkedHashSet<Room>() {{
 					add(new Room(3,1));
@@ -117,14 +117,13 @@ public class HybridWumpusAgentTest {
 		Assert.assertTrue(a instanceof Climb);
 	}
 	
-	private static Set<Room> allRooms(int caveXandYDimensions) {
+	private static Set<Room> allRooms(int caveDimensions) {
 		Set<Room> allRooms = new LinkedHashSet<>();
-		for (int x = 1; x <= caveXandYDimensions; x++) {
-			for (int y = 1; y <= caveXandYDimensions; y++) {
+		for (int x = 1; x <= caveDimensions; x++) {
+			for (int y = 1; y <= caveDimensions; y++) {
 				allRooms.add(new Room(x, y));
 			}
 		}
-		
 		return allRooms;
 	}
 }

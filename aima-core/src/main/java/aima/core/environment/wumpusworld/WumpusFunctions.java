@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class WumpusFunctionFunctions {
+public class WumpusFunctions {
 
 	public static ActionsFunction<AgentPosition, Action> createActionsFunction(WumpusCave cave) {
 		return new WumpusActionsFunction(cave);
@@ -58,14 +58,11 @@ public class WumpusFunctionFunctions {
 
 			if (action instanceof Forward) {
 				Forward fa = (Forward) action;
-				
 				return fa.getToPosition();
-			}
-			else if (action instanceof TurnLeft) {
+			} else if (action instanceof TurnLeft) {
 				TurnLeft tLeft = (TurnLeft) action;
 				return new AgentPosition(state.getX(), state.getY(), tLeft.getToOrientation());
-			}
-			else if (action instanceof TurnRight) {
+			} else if (action instanceof TurnRight) {
 				TurnRight tRight = (TurnRight) action;
 				return new AgentPosition(state.getX(), state.getY(), tRight.getToOrientation());
 			}

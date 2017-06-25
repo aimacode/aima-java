@@ -212,8 +212,8 @@ public class HybridWumpusAgent extends AbstractAgent {
 		GoalTest<AgentPosition> goalTest = goalPositions::contains;
 
 		Problem<AgentPosition, Action> problem = new GeneralProblem<>(current,
-				WumpusFunctionFunctions.createActionsFunction(cave),
-				WumpusFunctionFunctions.createResultFunction(), goalTest);
+				WumpusFunctions.createActionsFunction(cave),
+				WumpusFunctions.createResultFunction(), goalTest);
 
 		ToDoubleFunction<Node<AgentPosition, Action>> h = new ManhattanHeuristicFunction(goals);
 
