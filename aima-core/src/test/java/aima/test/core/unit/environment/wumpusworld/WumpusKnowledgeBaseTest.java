@@ -40,7 +40,8 @@ public class WumpusKnowledgeBaseTest {
 	@Test
 	public void testAskCurrentPosition() {
 		// Create very small cave in order to make inference for tests faster.
-		WumpusKnowledgeBase KB =  new WumpusKnowledgeBase(dpll, 2);
+		WumpusKnowledgeBase KB = new WumpusKnowledgeBase
+				(dpll, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		// NOTE: in the 2x2 cave for this set of assertion tests, 
 		// we are going to have no pits and the wumpus in [2,2]
 		// this needs to be correctly set up in order to keep the KB consistent.
@@ -87,26 +88,27 @@ public class WumpusKnowledgeBaseTest {
 		WumpusKnowledgeBase KB;
 		int t = 0;
 		
-		KB =  new WumpusKnowledgeBase(dpll, 2);
+		KB = new WumpusKnowledgeBase(dpll, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		step(KB, new WumpusPercept(), t);
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1)); add(new Room(1,2)); add(new Room(2, 1));}}, KB.askSafeRooms(t));
 		
-		KB =  new WumpusKnowledgeBase(dpll, 2);
+		KB =  new WumpusKnowledgeBase(dpll, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		step(KB, new WumpusPercept().setStench(), t);
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1));}}, KB.askSafeRooms(t));
 
-		KB =  new WumpusKnowledgeBase(dpll, 2);
+		KB =  new WumpusKnowledgeBase(dpll, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		step(KB, new WumpusPercept().setBreeze(), t);
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1));}}, KB.askSafeRooms(t));
 		
-		KB =  new WumpusKnowledgeBase(dpll, 2);
+		KB =  new WumpusKnowledgeBase(dpll, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		step(KB, new WumpusPercept().setStench().setBreeze(), t);
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,1));}}, KB.askSafeRooms(t));
 	}
 	
 	@Test
 	public void testAskGlitter() {
-		WumpusKnowledgeBase KB =  new WumpusKnowledgeBase(dpll, 2); 
+		WumpusKnowledgeBase KB =
+				new WumpusKnowledgeBase(dpll, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		step(KB, new WumpusPercept(), 0);
 		Assert.assertFalse(KB.askGlitter(0));
 		step(KB, new WumpusPercept(), 1);
@@ -123,7 +125,7 @@ public class WumpusKnowledgeBaseTest {
 		WumpusKnowledgeBase KB;
 		int t = 0;
 		
-		KB =  new WumpusKnowledgeBase(dpll, 2);
+		KB =  new WumpusKnowledgeBase(dpll, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		step(KB, new WumpusPercept(), t);
 		Assert.assertEquals(new HashSet<Room>() {{add(new Room(1,2)); add(new Room(2, 1)); add(new Room(2,2));}}, KB.askUnvisitedRooms(t));
 		KB.makeActionSentence(WumpusAction.FORWARD, t); // Move agent to [2,1]
@@ -171,7 +173,8 @@ public class WumpusKnowledgeBaseTest {
 	@Test
 	public void testExampleInSection7_2_described_pg268_AIMA3e() {
 		// Make smaller in order to reduce the inference time required, this still covers all the relevant rooms for the example
-		WumpusKnowledgeBase KB = new WumpusKnowledgeBase(dpll, 3); 
+		WumpusKnowledgeBase KB = new WumpusKnowledgeBase
+				(dpll, 3, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		int t = 0;
 		// 0
 		step(KB, new WumpusPercept(), t);

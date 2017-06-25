@@ -1,7 +1,6 @@
 package aima.core.environment.wumpusworld;
 
 import aima.core.agent.Action;
-import aima.core.agent.EnvironmentView;
 import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
@@ -124,14 +123,14 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 		// Time optimization: Do not ask anything during plan execution (different from pseudo-code)
 		if (plan.isEmpty()) {
-			notifier.notifyViews("KB size: " + kb.size());
+			notifyViews("KB size: " + kb.size());
 
 			current = kb.askCurrentPosition(t);
-			notifier.notifyViews("Position: " + current);
+			notifyViews("Position: " + current);
 
 			// safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
 			safe = kb.askSafeRooms(t);
-			notifier.notifyViews("Safe: " + safe);
+			notifyViews("Safe: " + safe);
 
 			// if ASK(KB, Glitter<sup>t</sup>) = true then
 			if (kb.askGlitter(t)) {
@@ -148,7 +147,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 		if (plan.isEmpty()) {
 			// unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
 			unvisited = kb.askUnvisitedRooms(t);
-			notifier.notifyViews("Unvisited: " + unvisited);
+			notifyViews("Unvisited: " + unvisited);
 			// plan <- PLAN-ROUTE(current, unvisited &cap; safe, safe)
 			plan.addAll(planRouteToRooms(current, SetOps.intersection(unvisited, safe), safe));
 		}
@@ -157,7 +156,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 		if (plan.isEmpty() && kb.askHaveArrow(t)) {
 			// possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
 			Set<Room> possibleWumpus = kb.askPossibleWumpusRooms(t);
-			notifier.notifyViews("Possible Wumpus positions: " + possibleWumpus);
+			notifyViews("Possible Wumpus positions: " + possibleWumpus);
 
 			// plan <- PLAN-SHOT(current, possible_wumpus, safe)
 			plan.addAll(planShot(current, possibleWumpus, safe));
@@ -168,7 +167,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 			// not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) =
 			// false}
 			Set<Room> notUnsafe = kb.askNotUnsafeRooms(t);
-			notifier.notifyViews("Not unsafe: " + notUnsafe);
+			notifyViews("Not unsafe: " + notUnsafe);
 			// plan <- PLAN-ROUTE(current, unvisited &cap; not_unsafe, safe)
 			plan.addAll(planRouteToRooms(current, SetOps.intersection(unvisited, notUnsafe), safe));
 		}
@@ -286,5 +285,10 @@ public class HybridWumpusAgent extends AbstractAgent {
 		actions.addAll(planRoute(current, shootingPositions, allowed));
 		actions.add(WumpusAction.SHOOT);
 		return actions;
+	}
+
+	private void notifyViews(String msg) {
+		if (notifier != null)
+			notifier.notifyViews(msg);
 	}
 }
