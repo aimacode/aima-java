@@ -20,6 +20,7 @@ import aima.core.agent.Percept;
  * @author Federico Baron
  * @author Alessandro Daniele
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
 public class AgentPercept implements Percept {
 	private boolean stench;
@@ -28,81 +29,67 @@ public class AgentPercept implements Percept {
 	private boolean bump;
 	private boolean scream;
 
-	/**
-	 * Default Constructor. All sensor inputs are considered false.
-	 */
-	public AgentPercept() {
-		setStench(false);
-		setBreeze(false);
-		setGlitter(false);
-		setBump(false);
-		setScream(false);
+	public AgentPercept setStench() {
+		stench = true;
+		return this;
 	}
 
-	/**
-	 * Constructor with all 5 sensor inputs explicitly set.
-	 * 
-	 * @param stench
-	 * @param breeze
-	 * @param glitter
-	 * @param bump
-	 * @param scream
-	 */
-	public AgentPercept(boolean stench, boolean breeze, boolean glitter,
-			boolean bump, boolean scream) {
-		setStench(stench);
-		setBreeze(breeze);
-		setGlitter(glitter);
-		setBump(bump);
-		setScream(scream);
+	public AgentPercept setBreeze() {
+		breeze = true;
+		return this;
+	}
+
+	public AgentPercept setGlitter() {
+		glitter = true;
+		return this;
+	}
+
+	public AgentPercept setBump() {
+		bump = true;
+		return this;
+	}
+
+	public AgentPercept setScream() {
+		scream = true;
+		return this;
 	}
 
 	public boolean isStench() {
 		return stench;
 	}
 
-	public void setStench(boolean stench) {
-		this.stench = stench;
-	}
-
 	public boolean isBreeze() {
 		return breeze;
-	}
-
-	public void setBreeze(boolean breeze) {
-		this.breeze = breeze;
 	}
 
 	public boolean isGlitter() {
 		return glitter;
 	}
 
-	public void setGlitter(boolean glitter) {
-		this.glitter = glitter;
-	}
-
 	public boolean isBump() {
 		return bump;
-	}
-
-	public void setBump(boolean bump) {
-		this.bump = bump;
 	}
 
 	public boolean isScream() {
 		return scream;
 	}
 
-	public void setScream(boolean scream) {
-		this.scream = scream;
-	}
-	
 	@Override
 	public String toString() {
-		return "["+ ((stench) ? "Stench" : "None") + ", "
-				  + ((breeze) ? "Breeze" : "None") + ", "
-				  + ((glitter) ? "Glitter" : "None") + ", "
-				  + ((bump) ? "Bump" : "None") + ", "
-				  + ((scream) ? "Scream" : "None") + "]";
+		StringBuilder result = new StringBuilder("{");
+		if (stench)
+			result.append("Stench, ");
+		if (breeze)
+			result.append("Breeze, ");
+		if (glitter)
+			result.append("Glitter, ");
+		if (bump)
+			result.append("Bump, ");
+		if (scream)
+			result.append("Scream, ");
+		if (result.length() > 1)
+			result.delete(result.length() - 2, result.length());
+		result.append("}");
+		return result.toString();
 	}
 }

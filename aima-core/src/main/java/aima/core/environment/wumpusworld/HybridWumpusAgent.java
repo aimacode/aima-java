@@ -1,31 +1,20 @@
 package aima.core.environment.wumpusworld;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
-import java.util.function.ToDoubleFunction;
-
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.environment.wumpusworld.action.Climb;
-import aima.core.environment.wumpusworld.action.Forward;
-import aima.core.environment.wumpusworld.action.Grab;
-import aima.core.environment.wumpusworld.action.Shoot;
-import aima.core.environment.wumpusworld.action.TurnLeft;
-import aima.core.search.framework.Node;
+import aima.core.environment.wumpusworld.action.*;
 import aima.core.search.agent.SearchAgent;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
 import aima.core.util.SetOps;
+
+import java.util.*;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 270.<br>
@@ -35,7 +24,7 @@ import aima.core.util.SetOps;
  * <code>
  * function HYBRID-WUMPUS-AGENT(percept) returns an action
  *   inputs: percept, a list, [stench, breeze, glitter, bump, scream]
- *   persistent: KB, a knowledge base, initially the atemporal "wumpus physics"
+ *   persistent: KB, a knowledge base, initially the temporal "wumpus physics"
  *               t, a counter, initially 0, indicating time
  *               plan, an action sequence, initially empty
  * 
@@ -92,6 +81,16 @@ public class HybridWumpusAgent extends AbstractAgent {
 	// plan, an action sequence, initially empty
 	private Queue<Action> plan = new LinkedList<>(); // FIFOQueue
 
+	public HybridWumpusAgent() {
+		// i.e. default is a 4x4 world as depicted in figure 7.2
+		this(4);
+	}
+
+	public HybridWumpusAgent(int caveDimensions) {
+		kb = new WumpusKnowledgeBase(caveDimensions);
+	}
+	
+	
 	/**
 	 * function HYBRID-WUMPUS-AGENT(percept) returns an action<br>
 	 * 
@@ -128,10 +127,9 @@ public class HybridWumpusAgent extends AbstractAgent {
 		// unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false
 		// for all t' &le; t}
 		Set<Room> unvisited = kb.askUnvisitedRooms(t);
-		if (plan.isEmpty()) {
+		if (plan.isEmpty())
 			// plan <- PLAN-ROUTE(current, unvisited &cap; safe, safe)
 			plan.addAll(planRoute(current, SetOps.intersection(unvisited, safe), safe));
-		}
 
 		// if plan is empty and ASK(KB, HaveArrow<sup>t</sup>) = true then
 		if (plan.isEmpty() && kb.askHaveArrow(t)) {
@@ -190,50 +188,26 @@ public class HybridWumpusAgent extends AbstractAgent {
 		for (Room allowedRoom : allowed) {
 			int x = allowedRoom.getX();
 			int y = allowedRoom.getY();
-
-			allowedPositions.add(new AgentPosition(x, y, AgentPosition.Orientation.FACING_WEST));
-			allowedPositions.add(new AgentPosition(x, y, AgentPosition.Orientation.FACING_EAST));
-			allowedPositions.add(new AgentPosition(x, y, AgentPosition.Orientation.FACING_NORTH));
-			allowedPositions.add(new AgentPosition(x, y, AgentPosition.Orientation.FACING_SOUTH));
+			for (AgentPosition.Orientation orientation : AgentPosition.Orientation.values())
+				allowedPositions.add(new AgentPosition(x, y, orientation));
 		}
 		final Set<AgentPosition> goalPositions = new LinkedHashSet<>();
 		for (Room goalRoom : goals) {
 			int x = goalRoom.getX();
 			int y = goalRoom.getY();
-
-			goalPositions.add(new AgentPosition(x, y, AgentPosition.Orientation.FACING_WEST));
-			goalPositions.add(new AgentPosition(x, y, AgentPosition.Orientation.FACING_EAST));
-			goalPositions.add(new AgentPosition(x, y, AgentPosition.Orientation.FACING_NORTH));
-			goalPositions.add(new AgentPosition(x, y, AgentPosition.Orientation.FACING_SOUTH));
+			for (AgentPosition.Orientation orientation : AgentPosition.Orientation.values())
+				goalPositions.add(new AgentPosition(x, y, orientation));
 		}
 
 		WumpusCave cave = new WumpusCave(kb.getCaveXDimension(), kb.getCaveYDimension(), allowedPositions);
-
-		GoalTest<AgentPosition> goalTest = goalPositions::contains;
-
 		Problem<AgentPosition, Action> problem = new GeneralProblem<>(current,
 				WumpusFunctions.createActionsFunction(cave),
-				WumpusFunctions.createResultFunction(), goalTest);
+				WumpusFunctions.createResultFunction(), goalPositions::contains);
+		SearchForActions<AgentPosition, Action> search =
+				new AStarSearch<>(new GraphSearch<>(), new ManhattanHeuristicFunction(goals));
+		Optional<List<Action>> actions = search.findActions(problem);
 
-		ToDoubleFunction<Node<AgentPosition, Action>> h = new ManhattanHeuristicFunction(goals);
-
-		SearchForActions<AgentPosition, Action> search = new AStarSearch<>(new GraphSearch<>(), h);
-		SearchAgent<AgentPosition, Action> agent;
-		List<Action> actions = null;
-		try {
-			agent = new SearchAgent<>(problem, search);
-			actions = agent.getActions();
-			// Search agent can return a NoOp if already at goal,
-			// in the context of this agent we will just return
-			// no actions.
-			if (actions.size() == 1 && actions.get(0).isNoOp()) {
-				actions = new ArrayList<>();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return actions;
+		return actions.isPresent() ? actions.get() : Collections.EMPTY_LIST;
 	}
 
 	/**
@@ -258,18 +232,14 @@ public class HybridWumpusAgent extends AbstractAgent {
 			int y = p.getY();
 
 			for (int i = 1; i <= kb.getCaveXDimension(); i++) {
-				if (i < x) {
+				if (i < x)
 					shootingPositions.add(new AgentPosition(i, y, AgentPosition.Orientation.FACING_EAST));
-				}
-				if (i > x) {
+				if (i > x)
 					shootingPositions.add(new AgentPosition(i, y, AgentPosition.Orientation.FACING_WEST));
-				}
-				if (i < y) {
+				if (i < y)
 					shootingPositions.add(new AgentPosition(x, i, AgentPosition.Orientation.FACING_NORTH));
-				}
-				if (i > y) {
+				if (i > y)
 					shootingPositions.add(new AgentPosition(x, i, AgentPosition.Orientation.FACING_SOUTH));
-				}
 			}
 		}
 
@@ -280,20 +250,16 @@ public class HybridWumpusAgent extends AbstractAgent {
 				shootingPositions.remove(new AgentPosition(p.getX(), p.getY(), orientation));
 			}
 		}
-
-		Iterator<AgentPosition> it = shootingPositions.iterator();
+		
 		Set<Room> shootingPositionsArray = new LinkedHashSet<>();
-		while (it.hasNext()) {
-			AgentPosition tmp = it.next();
+		for (AgentPosition tmp : shootingPositions)
 			shootingPositionsArray.add(new Room(tmp.getX(), tmp.getY()));
-		}
 
 		List<Action> actions = planRoute(current, shootingPositionsArray, allowed);
 
 		AgentPosition newPos = current;
-		if (actions.size() > 0) {
+		if (actions.size() > 0)
 			newPos = ((Forward) actions.get(actions.size() - 1)).getToPosition();
-		}
 
 		while (!shootingPositions.contains(newPos)) {
 			TurnLeft tLeft = new TurnLeft(newPos.getOrientation());
@@ -303,17 +269,5 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 		actions.add(new Shoot());
 		return actions;
-	}
-
-	//
-	// SUPPORTING CODE
-	//
-	public HybridWumpusAgent() {
-		// i.e. default is a 4x4 world as depicted in figure 7.2
-		this(4);
-	}
-
-	public HybridWumpusAgent(int caveXandYDimensions) {
-		kb = new WumpusKnowledgeBase(caveXandYDimensions);
 	}
 }

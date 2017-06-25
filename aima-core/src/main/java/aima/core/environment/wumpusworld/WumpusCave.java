@@ -15,6 +15,7 @@ import java.util.Set;
  * @author Federico Baron
  * @author Alessandro Daniele
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
 public class WumpusCave {
 
@@ -82,22 +83,14 @@ public class WumpusCave {
 
 		List<AgentPosition> result = new ArrayList<>();
 
-		AgentPosition currentForwardNorth = new AgentPosition(x, y + 1,
-				AgentPosition.Orientation.FACING_NORTH);
-		AgentPosition currentForwardSouth = new AgentPosition(x, y - 1,
-				AgentPosition.Orientation.FACING_SOUTH);
-		AgentPosition currentForwardEast = new AgentPosition(x + 1, y,
-				AgentPosition.Orientation.FACING_EAST);
-		AgentPosition currentForwardWest = new AgentPosition(x - 1, y,
-				AgentPosition.Orientation.FACING_WEST);
-		AgentPosition currentNorth = new AgentPosition(x, y,
-				AgentPosition.Orientation.FACING_NORTH);
-		AgentPosition currentSouth = new AgentPosition(x, y,
-				AgentPosition.Orientation.FACING_SOUTH);
-		AgentPosition currentEast = new AgentPosition(x, y,
-				AgentPosition.Orientation.FACING_EAST);
-		AgentPosition currentWest = new AgentPosition(x, y,
-				AgentPosition.Orientation.FACING_WEST);
+		AgentPosition currentForwardNorth = new AgentPosition(x, y + 1, AgentPosition.Orientation.FACING_NORTH);
+		AgentPosition currentForwardSouth = new AgentPosition(x, y - 1, AgentPosition.Orientation.FACING_SOUTH);
+		AgentPosition currentForwardEast = new AgentPosition(x + 1, y, AgentPosition.Orientation.FACING_EAST);
+		AgentPosition currentForwardWest = new AgentPosition(x - 1, y, AgentPosition.Orientation.FACING_WEST);
+		AgentPosition currentNorth = new AgentPosition(x, y, AgentPosition.Orientation.FACING_NORTH);
+		AgentPosition currentSouth = new AgentPosition(x, y, AgentPosition.Orientation.FACING_SOUTH);
+		AgentPosition currentEast = new AgentPosition(x, y, AgentPosition.Orientation.FACING_EAST);
+		AgentPosition currentWest = new AgentPosition(x, y, AgentPosition.Orientation.FACING_WEST);
 
 		switch (orientation) {
 		case FACING_NORTH:
@@ -133,12 +126,11 @@ public class WumpusCave {
 		Set<AgentPosition> allowedPositions = new HashSet<>();
 		// Create the default set of allowed positions within the cave that
 		// an agent may occupy.
-		for (int x = 1; x <= caveXDimension; x++) {
-			for (int y = 1; y <= caveYDimension; y++) {
+		for (int x = 1; x <= caveXDimension; x++)
+			for (int y = 1; y <= caveYDimension; y++)
 				for (AgentPosition.Orientation orientation : AgentPosition.Orientation.values())
 					allowedPositions.add(new AgentPosition(x, y, orientation));
-			}
-		}
+
 		return allowedPositions;
 	}
 

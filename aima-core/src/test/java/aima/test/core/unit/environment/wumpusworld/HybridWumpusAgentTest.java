@@ -111,9 +111,9 @@ public class HybridWumpusAgentTest {
 	public void testGrabAndClimb() {
 		HybridWumpusAgent hwa = new HybridWumpusAgent(2);
 		// The gold is in the first square
-		Action a = hwa.execute(new AgentPercept(true, true, true, false, false));
+		Action a = hwa.execute(new AgentPercept().setStench().setBreeze().setGlitter());
 		Assert.assertTrue(a instanceof Grab);
-		a = hwa.execute(new AgentPercept(true, true, true, false, false));
+		a = hwa.execute(new AgentPercept().setStench().setBreeze().setGlitter());
 		Assert.assertTrue(a instanceof Climb);
 	}
 	

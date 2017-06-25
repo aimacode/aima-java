@@ -120,11 +120,10 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		// The agent also knows there is exactly one wumpus. This is represented
 		// in two parts. First, we have to say that there is at least one wumpus
 		List<PropositionSymbol> wumpsAtLeast = new ArrayList<>();
-		for (int x = 1; x <= caveXDimension; x++) {
-			for (int y = 1; y <= caveYDimension; y++) {
+		for (int x = 1; x <= caveXDimension; x++)
+			for (int y = 1; y <= caveYDimension; y++)
 				wumpsAtLeast.add(newSymbol(WUMPUS, x, y));
-			}
-		}
+
 		tell(Sentence.newDisjunction(wumpsAtLeast));
 
 		// Then, we have to say that there is at most one wumpus.
@@ -212,7 +211,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	
 	// possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
 	public Set<Room> askPossibleWumpusRooms(int t) {
-		Set<Room> possible = new LinkedHashSet<Room>();
+		Set<Room> possible = new LinkedHashSet<>();
 		for (int x = 1; x <= getCaveXDimension(); x++) {
 			for (int y = 1; y <= getCaveYDimension(); y++) {
 				if (!ask(new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, x, y)))) {
