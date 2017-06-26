@@ -1,6 +1,5 @@
 package aima.core.environment.wumpusworld;
 
-import aima.core.agent.Action;
 import aima.core.search.framework.Node;
 
 import java.util.ArrayList;

@@ -23,6 +23,7 @@ import java.util.Set;
  */
 public class WumpusKnowledgeBase extends KnowledgeBase {
 	public static final String LOCATION          = "L";
+	public static final String LOCATION_VISITED  = "LV"; // tuning...
 	public static final String BREEZE            = "B";
 	public static final String STENCH            = "S";
 	public static final String PIT               = "P";
@@ -117,6 +118,12 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 			}
 		}
 
+		// The Wumpus will never be located in a pit.
+		for (int y = 1; y <= caveYDimension; y++)
+			for (int x = 1; x <= caveXDimension; x++)
+				tell(new ComplexSentence(newSymbol(WUMPUS, x, y), Connective.IMPLICATION,
+						new ComplexSentence(Connective.NOT, newSymbol(PIT, x, y))));
+
 		// The agent also knows there is exactly one wumpus. This is represented
 		// in two parts. First, we have to say that there is at least one wumpus
 		List<PropositionSymbol> wumpsAtLeast = new ArrayList<>();
@@ -142,6 +149,37 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 	}
 	
 	public AgentPosition askCurrentPosition(int t) {
+
+		// There seems to be a bug in OptimizedDPLL (incorrect position computation):
+		// Call with: WumpusAgentDemo, 2x2 cave, OptimizedDPLL (HybridWumpusAgend-Constructor)
+		/*
+		if (t == 4) { // todo
+			System.out.println("Ask L_3_1_1: " + ask(newSymbol(LOCATION, 3, 1, 1))); // false
+			System.out.println("Ask L_3_1_2: " + ask(newSymbol(LOCATION, 3, 1, 2))); // true
+			System.out.println("Ask L_3_2_1: " + ask(newSymbol(LOCATION, 3, 2, 1))); // false
+			System.out.println("Ask L_3_2_2: " + ask(newSymbol(LOCATION, 3, 2, 2))); // false
+			System.out.println("Ask North_3: " + ask(newSymbol(FACING_NORTH, 3))); // false
+			System.out.println("Ask South_3: " + ask(newSymbol(FACING_SOUTH, 3))); // false
+			System.out.println("Ask East_3: " + ask(newSymbol(FACING_EAST, 3))); // true
+			System.out.println("Ask West_3: " + ask(newSymbol(FACING_WEST, 3))); // false
+
+			System.out.println("Ask L_4_1_1: " + ask(newSymbol(LOCATION, 4, 1, 1)) + " !"); // true (incorrect)
+			System.out.println("Ask L_4_2_2: " + ask(newSymbol(LOCATION, 4, 2, 2)) + " !"); // true (correct)
+			System.out.println("Ask North_4: " + ask(newSymbol(FACING_NORTH, 4))); // false
+			System.out.println("Ask South_4: " + ask(newSymbol(FACING_SOUTH, 4))); // false
+			System.out.println("Ask East_4: " + ask(newSymbol(FACING_EAST, 4))); // true
+			System.out.println("Ask West_4: " + ask(newSymbol(FACING_WEST, 4))); // false
+
+			System.out.println("Ask L_5_1_1: " + ask(newSymbol(LOCATION, 5, 1, 1))); // false
+			System.out.println("Ask L_5_1_2: " + ask(newSymbol(LOCATION, 5, 1, 2))); // false
+			System.out.println("Ask L_5_2_1: " + ask(newSymbol(LOCATION, 5, 2, 1))); // false
+			System.out.println("Ask L_5_2_2: " + ask(newSymbol(LOCATION, 5, 2, 2))); // false
+
+			// L_4_1_1 is only constrained by:
+			// L_4_1_1 <=> L_3_1_1 & (~FORWARD_3 | Bump_4) | L_3_1_2 & FACING_SOUTH_3 & FORWARD_3 | L_3_2_1 & FACING_WEST_3 & FORWARD_3
+		}
+		*/
+
 		int locX = -1, locY = -1;
 		for (int x = 1; x <= getCaveXDimension() && locX == -1; x++) {
 			for (int y = 1; y <= getCaveYDimension() && locY == -1; y++) {
@@ -192,9 +230,10 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 		
 		for (int x = 1; x <= getCaveXDimension(); x++) {
 			for (int y = 1; y <= getCaveYDimension(); y++) {
-				if (!ask(newSymbol(LOCATION, x, y)))
+				if (!ask(newSymbol(LOCATION_VISITED, x, y)))
 					unvisited.add(new Room(x, y)); // i.e. is false for all t' <= t
 
+//				to slow:
 //				for (int tPrime = 0; tPrime <= t; tPrime++) {
 //					if (ask(newSymbol(LOCATION, tPrime, x, y)))
 //						break; // i.e. is not false for all t' <= t
@@ -325,12 +364,12 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 			// temporal rules at time zero
 			tell(newSymbol(LOCATION, 0, start.getX(), start.getY()));
 			// Optimization to make questions about unvisited locations faster
-			tell(newSymbol(LOCATION, start.getX(), start.getY()));
+			tell(newSymbol(LOCATION_VISITED, start.getX(), start.getY()));
 			tell(newSymbol(start.getOrientation().name(), 0));
 			tell(newSymbol(HAVE_ARROW, 0));
 			tell(newSymbol(WUMPUS_ALIVE, 0));
 		}
-		
+
 		// We can connect stench and breeze percepts directly
 		// to the properties of the squares where they are experienced
 		// through the location fluent as follows. For any time step t
@@ -348,7 +387,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 						new ComplexSentence(newSymbol(PERCEPT_STENCH, t), Connective.BICONDITIONAL, newSymbol(STENCH, x, y))));
 			}
 		}
-		
+
 		//
 		// Successor state axioms (dependent on location)	
 		for (int x = 1; x <= caveXDimension; x++) {
@@ -409,7 +448,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 				tell(new ComplexSentence(
 						newSymbol(LOCATION, t+1, x, y),
 						Connective.IMPLICATION,
-						newSymbol(LOCATION, x, y)));
+						newSymbol(LOCATION_VISITED, x, y)));
 
 				// The most important question for the agent is whether
 				// a square is OK to move into, that is, the square contains
@@ -426,8 +465,8 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 													Connective.AND,
 													newSymbol(WUMPUS_ALIVE, t))))));
 			}
-		} 
-		
+		}
+
 		//
 		// Successor state axioms (independent of location)
 

@@ -1,7 +1,5 @@
 package aima.gui.demo.agent;
 
-import aima.core.agent.Agent;
-import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentView;
 import aima.core.agent.impl.SimpleEnvironmentView;
 import aima.core.environment.wumpusworld.HybridWumpusAgent;
@@ -16,8 +14,9 @@ import aima.core.environment.wumpusworld.WumpusEnvironment;
 public class WumpusAgentDemo {
     public static void main(String[] args) {
         WumpusCave cave;
-        //cave = createSimpleCave();
-        cave = createTypicalCave();
+        cave = create2x2Cave();
+        // cave = create3x3Cave();
+        // cave = createTypicalCave();
 
         WumpusEnvironment env = new WumpusEnvironment(cave);
         EnvironmentView view = new SimpleEnvironmentView();
@@ -26,15 +25,24 @@ public class WumpusAgentDemo {
         HybridWumpusAgent a = null;
         a = new HybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
 
+        env.notifyViews("The cave:\n" + cave.toString());
         env.addAgent(a);
         env.stepUntilDone();
-        env.notifyViews("KB size: " + a.getKB().size());
+        env.notifyViews("KB (KB.size=" + a.getKB().size() + "):\n" + a.getKB().toString());
     }
 
-    private static WumpusCave createSimpleCave() {
+    private static WumpusCave create2x2Cave() {
+        // Caution: 2x2 caves need a wumpus - otherwise KB becomes inconsistent in step 2...
         return new WumpusCave(2, 2, ""
-                + "G "
-                + "S ");
+                + "W."
+                + "SG");
+    }
+
+    private static WumpusCave create3x3Cave() {
+        return new WumpusCave(3, 3, ""
+                + "P.G"
+                + ".W."
+                + "S.P");
     }
 
     /**
@@ -44,9 +52,9 @@ public class WumpusAgentDemo {
      */
     private static WumpusCave createTypicalCave() {
         return new WumpusCave(4, 4, ""
-                + "   P"
-                + "WGP "
-                + "    "
-                + "S P ");
+                + "...P"
+                + "WGP."
+                + "...."
+                + "S.P.");
     }
 }

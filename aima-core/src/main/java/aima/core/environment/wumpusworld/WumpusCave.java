@@ -145,6 +145,27 @@ public class WumpusCave {
 		return new AgentPosition(position.getX(), position.getY(), orientation);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		for (int y = caveYDimension; y >= 1; y--) {
+			for (int x = 1; x <= caveXDimension; x++) {
+				Room r = new Room(x, y);
+				if (r.equals(start.getRoom()))
+					builder.append("S");
+				else if (r.equals(wumpus))
+					builder.append("W");
+				else if (r.equals(gold))
+					builder.append("G");
+				else if (isPit(r))
+					builder.append("P");
+				else
+					builder.append(".");
+			}
+			builder.append("\n");
+		}
+		return builder.toString();
+	}
 
 	//
 	// PRIVATE

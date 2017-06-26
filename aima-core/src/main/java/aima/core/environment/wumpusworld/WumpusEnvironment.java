@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Implements an environment for the wumpus world.
+ * Implements an environment for the Wumpus World.
  * @author Ruediger Lunde
  */
 public class WumpusEnvironment extends AbstractEnvironment {
@@ -20,6 +20,7 @@ public class WumpusEnvironment extends AbstractEnvironment {
     private boolean wumpusAlive = true;
     private boolean scream;
     /** We assume that only one agent is added to the environment! */
+    private boolean hasArrow;
     private boolean bump;
     private Map<Agent, AgentPosition> agentPositions = new HashMap<>();
 
@@ -41,6 +42,8 @@ public class WumpusEnvironment extends AbstractEnvironment {
             agentPositions.put(agent, newPos);
             if (newPos.equals(pos))
                 bump = true;
+            else if (cave.isPit(pos.getRoom()) || pos.getRoom().equals(cave.getWumpus()) && wumpusAlive)
+                agent.setAlive(false);
         } else if (action == WumpusAction.TURN_LEFT) {
             agentPositions.put(agent, cave.turnLeft(pos));
         } else if (action == WumpusAction.TURN_RIGHT) {
@@ -49,15 +52,30 @@ public class WumpusEnvironment extends AbstractEnvironment {
             if (pos.getRoom().equals(cave.getGold()))
                 cave.setGold(null);
         } else if (action == WumpusAction.SHOOT) {
-            // todo
+            if (isAgentFacingWumpus(pos)) {
+                wumpusAlive = false;
+                scream = true;
+            }
         } else if (action == WumpusAction.CLIMB) {
             agent.setAlive(false);
         }
     }
 
-    /**
-     * Bump not yet implemented...
-     */
+    private boolean isAgentFacingWumpus(AgentPosition pos) {
+        Room wumpus = cave.getWumpus();
+        switch (pos.getOrientation()) {
+            case FACING_NORTH:
+                return pos.getX() == wumpus.getX() && pos.getY() < wumpus.getY();
+            case FACING_SOUTH:
+                return pos.getX() == wumpus.getX() && pos.getY() > wumpus.getY();
+            case FACING_EAST:
+                return pos.getY() == wumpus.getY() && pos.getX() < wumpus.getX();
+            case FACING_WEST:
+                return pos.getY() == wumpus.getY() && pos.getX() > wumpus.getX();
+        }
+        return false;
+    }
+
     @Override
     public Percept getPerceptSeenBy(Agent anAgent) {
         WumpusPercept result = new WumpusPercept();

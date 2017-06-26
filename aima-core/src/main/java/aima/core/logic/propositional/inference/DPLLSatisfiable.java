@@ -16,6 +16,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.propositional.visitors.SymbolCollector;
+import aima.core.util.Tasks;
 import aima.core.util.Util;
 import aima.core.util.datastructure.Pair;
 
@@ -96,13 +97,12 @@ public class DPLLSatisfiable implements DPLL {
 	public boolean dpll(Set<Clause> clauses, List<PropositionSymbol> symbols,
 			Model model) {
 		// if every clause in clauses is true in model then return true
-		if (everyClauseTrue(clauses, model)) {
+		if (everyClauseTrue(clauses, model))
 			return true;
-		}
+
 		// if some clause in clauses is false in model then return false
-		if (someClauseFalse(clauses, model)) {
+		if (someClauseFalse(clauses, model) || Tasks.currIsCancelled())
 			return false;
-		}
 
 		// P, value <- FIND-PURE-SYMBOL(symbols, clauses, model)
 		Pair<PropositionSymbol, Boolean> pAndValue = findPureSymbol(symbols,
