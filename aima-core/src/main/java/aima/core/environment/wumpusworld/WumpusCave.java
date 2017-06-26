@@ -24,7 +24,7 @@ public class WumpusCave {
 	private Room gold;
 	private Set<Room> pits = new LinkedHashSet<>();
 
-	private Set<Room> allowedRooms = new HashSet<>();
+	private Set<Room> allowedRooms;
 	
 	/**
 	 * Default Constructor. Create a Wumpus Case of default dimensions 4x4.
@@ -34,8 +34,7 @@ public class WumpusCave {
 	}
 
 	/**
-	 * Create a grid of rooms of dimensions x and y, representing the wumpus's
-	 * cave.
+	 * Create a grid of rooms of dimensions x and y, representing the wumpus's cave.
 	 * 
 	 * @param caveXDimension
 	 *            the cave's x dimension.
@@ -43,11 +42,28 @@ public class WumpusCave {
 	 *            the cave's y dimension.
 	 */
 	public WumpusCave(int caveXDimension, int caveYDimension) {
-		this(caveXDimension, caveYDimension, defaultAllowedRooms(caveXDimension, caveYDimension));
+		if (caveXDimension < 1)
+			throw new IllegalArgumentException("Cave must have x dimension >= 1");
+		if (caveYDimension < 1)
+			throw new IllegalArgumentException("Case must have y dimension >= 1");
+		this.caveXDimension = caveXDimension;
+		this.caveYDimension = caveYDimension;
+		allowedRooms = getAllRooms();
 	}
 
+	/**
+	 * Create a grid of rooms of dimensions x and y, representing the wumpus's cave.
+	 *
+	 * @param caveXDimension
+	 *            the cave's x dimension.
+	 * @param caveYDimension
+	 *            the cave's y dimension.
+	 * @param config
+	 *            cave specification - one character per square, first line first, then second line etc. Mapping:
+	 *            S=start, W=Wumpus, G=gold, P=pit.
+	 */
 	public WumpusCave(int caveXDimension, int caveYDimension, String config) {
-		this(caveXDimension, caveYDimension, defaultAllowedRooms(caveXDimension, caveYDimension));
+		this(caveXDimension, caveYDimension);
 		for (int i = 0; i < config.length(); i++) {
 			char c = config.charAt(i);
 			Room r = new Room(i % caveXDimension + 1, caveYDimension - i / caveXDimension);
@@ -61,25 +77,14 @@ public class WumpusCave {
 	}
 
 	/**
-	 * Create a grid of rooms of dimensions x and y, representing the wumpus's
-	 * cave.
-	 * 
-	 * @param caveXDimension
-	 *            the cave's x dimension.
-	 * @param caveYDimension
-	 *            the cave's y dimension.
+	 * Limits possible movement within the cave (for search).
 	 * @param allowedRooms
-	 *            the set of legal rooms that can be reached within
-	 *            the cave.
+	 *            the set of legal rooms that can be reached within the cave.
 	 */
-	public WumpusCave(int caveXDimension, int caveYDimension, Set<Room> allowedRooms) {
-		if (caveXDimension < 1)
-			throw new IllegalArgumentException("Cave must have x dimension >= 1");
-		if (caveYDimension < 1)
-			throw new IllegalArgumentException("Case must have y dimension >= 1");
-		this.caveXDimension = caveXDimension;
-		this.caveYDimension = caveYDimension;
+	public WumpusCave setAllowed(Set<Room> allowedRooms) {
+		this.allowedRooms.clear();
 		this.allowedRooms.addAll(allowedRooms);
+		return this;
 	}
 
 	public int getCaveXDimension() {
@@ -145,6 +150,14 @@ public class WumpusCave {
 		return new AgentPosition(position.getX(), position.getY(), orientation);
 	}
 
+	public Set<Room> getAllRooms() {
+		Set<Room> allowedRooms = new HashSet<>();
+		for (int x = 1; x <= caveXDimension; x++)
+			for (int y = 1; y <= caveYDimension; y++)
+				allowedRooms.add(new Room(x, y));
+		return allowedRooms;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -165,17 +178,5 @@ public class WumpusCave {
 			builder.append("\n");
 		}
 		return builder.toString();
-	}
-
-	//
-	// PRIVATE
-	//
-	private static Set<Room> defaultAllowedRooms(
-			int caveXDimension, int caveYDimension) {
-		Set<Room> allowedRooms = new HashSet<>();
-		for (int x = 1; x <= caveXDimension; x++)
-			for (int y = 1; y <= caveYDimension; y++)
-				allowedRooms.add(new Room(x, y));
-		return allowedRooms;
 	}
 }

@@ -127,23 +127,21 @@ public class HybridWumpusAgent extends AbstractAgent {
 		if (plan.isEmpty()) {
 			notifyViews("Reasoning (t=" + t + ", Percept=" + percept + ", KB.size=" + kb.size() +
 					", KB.sym.size=" + kb.getSymbols().size() + ", KB.cnf.size=" + kb.asCNF().size() + ") ...");
-
 			current = kb.askCurrentPosition(t);
 			notifyViews("Ask position -> " + current);
-
 			// safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
 			safe = kb.askSafeRooms(t);
 			notifyViews("Ask safe -> " + safe);
+		}
 
-			// if ASK(KB, Glitter<sup>t</sup>) = true then
-			if (kb.askGlitter(t)) {
-				// plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
-				Set<Room> goals = new LinkedHashSet<>();
-				goals.add(start.getRoom());
-				plan.add(WumpusAction.GRAB);
-				plan.addAll(planRouteToRooms(current, goals, safe));
-				plan.add(WumpusAction.CLIMB);
-			}
+		// if ASK(KB, Glitter<sup>t</sup>) = true then (can only be true when plan is empty!)
+		if (plan.isEmpty() && kb.askGlitter(t)) {
+			// plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
+			Set<Room> goals = new LinkedHashSet<>();
+			goals.add(start.getRoom());
+			plan.add(WumpusAction.GRAB);
+			plan.addAll(planRouteToRooms(current, goals, safe));
+			plan.add(WumpusAction.CLIMB);
 		}
 
 		// if plan is empty then
@@ -160,15 +158,13 @@ public class HybridWumpusAgent extends AbstractAgent {
 			// possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
 			Set<Room> possibleWumpus = kb.askPossibleWumpusRooms(t);
 			notifyViews("Ask possible Wumpus positions -> " + possibleWumpus);
-
 			// plan <- PLAN-SHOT(current, possible_wumpus, safe)
 			plan.addAll(planShot(current, possibleWumpus, safe));
 		}
 
 		// if plan is empty then //no choice but to take a risk
 		if (plan.isEmpty()) {
-			// not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) =
-			// false}
+			// not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
 			Set<Room> notUnsafe = kb.askNotUnsafeRooms(t);
 			notifyViews("Ask not unsafe -> " + notUnsafe);
 			// plan <- PLAN-ROUTE(current, unvisited &cap; not_unsafe, safe)
@@ -233,7 +229,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 	 */
 	public List<WumpusAction> planRoute(AgentPosition current, Set<AgentPosition> goals, Set<Room> allowed) {
 
-		WumpusCave cave = new WumpusCave(kb.getCaveXDimension(), kb.getCaveYDimension(), allowed);
+		WumpusCave cave = new WumpusCave(kb.getCaveXDimension(), kb.getCaveYDimension()).setAllowed(allowed);
 		Problem<AgentPosition, WumpusAction> problem = new GeneralProblem<>(current,
 				WumpusFunctions.createActionsFunction(cave),
 				WumpusFunctions.createResultFunction(cave), goals::contains);
