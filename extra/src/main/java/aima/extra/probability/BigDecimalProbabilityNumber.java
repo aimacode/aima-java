@@ -14,7 +14,7 @@ import java.math.RoundingMode;
  * @author Nagaraj Poti
  *
  */
-public class BigDecimalProbabilityNumber implements ProbabilityNumber {
+public class BigDecimalProbabilityNumber extends ProbabilityNumber {
 
 	// Static members
 
@@ -25,11 +25,9 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	private static final int EXPONENT_MAX = 999999999;
 
 	/**
-	 * Global precision setting for operations. Set to null by default but can
-	 * be overriden to ensure all computation results are specified to this
-	 * precision.
+	 * Precision value corresponding to MathContext.UNLIMITED.
 	 */
-	private static MathContext ARBITRARY_PRECISION = null;
+	private static final Integer UNLIMITED_PRECISION = 0;
 
 	/**
 	 * Constants of UNLIMITED precision.
@@ -59,10 +57,17 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	 *            to be assigned.
 	 */
 	public BigDecimalProbabilityNumber(double value) {
-		if (value < 0 || value > 1) {
-			throw new IllegalArgumentException("Probability value must be between 0 and 1");
-		}
-		this.value = BigDecimal.valueOf(value);
+		this(BigDecimal.valueOf(value), null);
+	}
+
+	/**
+	 * Construct a BigDecimalProbabilityNumber from BigDecimal type.
+	 * 
+	 * @param value
+	 *            to be assigned.
+	 */
+	public BigDecimalProbabilityNumber(BigDecimal value) {
+		this(value, null);
 	}
 
 	/**
@@ -75,24 +80,18 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	 *            MathContext to be associated with value.
 	 */
 	public BigDecimalProbabilityNumber(BigDecimal value, MathContext mc) {
-		if (value.compareTo(BIG_DECIMAL_ZERO) == -1 || value.compareTo(BIG_DECIMAL_ONE) == 1) {
-			throw new IllegalArgumentException("Probability value must be between 0 and 1");
-		} else if (null == mc) {
-			this.value = value;
-		} else {
+		if (null == value) {
+			throw new IllegalArgumentException("A probability value must be specified.");
+		}
+		if (checkRequired) {
+			checkValidityOfArguments(value);
+		}
+		if (null != mc) {
 			this.value = new BigDecimal(value.toString(), mc);
 			this.roundingMode = mc.getRoundingMode();
+		} else {
+			this.value = value;
 		}
-	}
-
-	/**
-	 * Construct a BigDecimalProbabilityNumber from BigDecimal type.
-	 * 
-	 * @param value
-	 *            to be assigned.
-	 */
-	public BigDecimalProbabilityNumber(BigDecimal value) {
-		this(value, null);
 	}
 
 	// Public methods
@@ -195,8 +194,31 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber multiply(ProbabilityNumber that) {
+		return this.multiply(that, null);
+	}
+
+	/**
+	 * Multiply a BigDecimalProbabilityNumber with this
+	 * BigDecimalProbabilityNumber and return a new BigDecimalProbabilityNumber.
+	 * 
+	 * @param that
+	 *            the BigDecimalProbabilityNumber that is to be multiplied to
+	 *            this BigDecimalProbabilityNumber.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @result a new BigDecimalProbabilityNumber that is the result of
+	 *         multiplication.
+	 */
+	@Override
+	public ProbabilityNumber multiply(ProbabilityNumber that, MathContext mc) {
 		BigDecimalProbabilityNumber multiplier = toInternalType(that);
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), multiplier.getMathContext());
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), multiplier.getMathContext());
+		}
 		return new BigDecimalProbabilityNumber(this.value.multiply(multiplier.value, resultMathContext));
 	}
 
@@ -212,11 +234,33 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber divide(ProbabilityNumber that) {
+		return this.divide(that, null);
+	}
+
+	/**
+	 * Divide a BigDecimalProbabilityNumber with this
+	 * BigDecimalProbabilityNumber and return a new BigDecimalProbabilityNumber.
+	 * 
+	 * @param that
+	 *            the BigDecimalProbabilityNumber that is the divisor of this
+	 *            BigDecimalProbabilityNumber.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @return a new BigDecimalProbabilityNumber that is the result of division.
+	 */
+	@Override
+	public ProbabilityNumber divide(ProbabilityNumber that, MathContext mc) {
 		BigDecimalProbabilityNumber divisor = toInternalType(that);
+		MathContext resultMathContext;
 		if (divisor.isZero()) {
-			throw new IllegalArgumentException("Division by 0 not allowed");
+			throw new IllegalArgumentException("Division by 0 not allowed.");
 		}
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), divisor.getMathContext());
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), divisor.getMathContext());
+		}
 		return new BigDecimalProbabilityNumber(this.value.divide(divisor.value, resultMathContext));
 	}
 
@@ -231,10 +275,31 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber pow(int exponent) {
+		return this.pow(exponent, null);
+	}
+
+	/**
+	 * Calculate the BigDecimalProbabilityNumber raised to an integer exponent.
+	 * 
+	 * @param exponent
+	 *            of integer type.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @result a new BigDecimalProbabilityNumber that is this
+	 *         BigDecimalProbabilityNumber raised to the exponent value.
+	 */
+	@Override
+	public ProbabilityNumber pow(int exponent, MathContext mc) {
 		if (exponent > EXPONENT_MAX) {
 			return pow(BigInteger.valueOf(exponent));
 		}
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), MathContext.UNLIMITED);
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), MathContext.UNLIMITED);
+		}
 		return new BigDecimalProbabilityNumber(this.value.pow(exponent, resultMathContext));
 	}
 
@@ -250,19 +315,42 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber pow(BigInteger exponent) {
+		return this.pow(exponent, null);
+	}
+
+	/**
+	 * Calculate the BigDecimalProbabilityNumber raised to a BigInteger
+	 * exponent.
+	 * 
+	 * @param exponent
+	 *            of BigInteger type.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @result a new BigDecimalProbabilityNumber that is this
+	 *         BigDecimalProbabilityNumber raised to the exponent value.
+	 */
+	@Override
+	public ProbabilityNumber pow(BigInteger exponent, MathContext mc) {
 		if (exponent.compareTo(BigInteger.valueOf(EXPONENT_MAX)) <= 0) {
 			int exp = exponent.intValueExact();
 			return pow(exp);
 		} else {
-			MathContext resultMathContext = getResultMathContext(this.getMathContext(), MathContext.UNLIMITED);
+			MathContext resultMathContext;
+			if (null != mc) {
+				resultMathContext = mc;
+			} else {
+				resultMathContext = getResultMathContext(this.getMathContext(), MathContext.UNLIMITED);
+			}
+			BigInteger BIG_INTEGER_TWO = BigInteger.valueOf(2);
 			BigDecimal result = BIG_DECIMAL_ONE;
 			BigDecimal base = value;
-			while (exponent.compareTo(BigInteger.valueOf(0)) == 1) {
-				if (exponent.mod(BigInteger.valueOf(2)).compareTo(BigInteger.valueOf(1)) == 0) {
+			while (exponent.compareTo(BigInteger.ZERO) == 1) {
+				if (exponent.mod(BIG_INTEGER_TWO).compareTo(BigInteger.ONE) == 0) {
 					result = result.multiply(base, resultMathContext);
 				}
 				base = base.multiply(base, resultMathContext);
-				exponent = exponent.divide(BigInteger.valueOf(2));
+				exponent = exponent.divide(BIG_INTEGER_TWO);
 			}
 			return new BigDecimalProbabilityNumber(result);
 		}
@@ -290,17 +378,6 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	}
 
 	/**
-	 * Override the precision of ProbabilityNumber instances returned as a
-	 * result of performing operations.
-	 * 
-	 * @param mc
-	 */
-	@Override
-	public void overrideComputationPrecisionGlobally(MathContext mc) {
-		ARBITRARY_PRECISION = mc;
-	}
-
-	/**
 	 * Checks if argument implementing ProbabilityNumber interface is equal to
 	 * the value of the current BigDecimalProbabilityNumber. The check between
 	 * two ProbabilityNumbers involves a check only upto the minimum precision
@@ -315,6 +392,9 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean equals(Object that) {
+		if (!(that instanceof ProbabilityNumber)) {
+			return false;
+		}
 		BigDecimalProbabilityNumber specificType = toInternalType((ProbabilityNumber) that);
 		return (this.compareTo(specificType) == 0);
 	}
@@ -340,6 +420,19 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 		return getValue().toString();
 	}
 
+	/**
+	 * Check if arguments satisfy criteria to initialize
+	 * BigDecimalProbabilityNumber.
+	 * 
+	 * @param value
+	 *            to be assigned to BigDecimalProbabilityNumber value.
+	 */
+	public static void checkValidityOfArguments(BigDecimal value) {
+		if (value.compareTo(BIG_DECIMAL_ZERO) == -1 || value.compareTo(BIG_DECIMAL_ONE) == 1) {
+			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
+		}
+	}
+
 	// Private methods
 
 	/**
@@ -361,6 +454,7 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	 * 
 	 * @param first
 	 *            of BigDecimal type.
+	 * 
 	 * @param second
 	 *            of BigDecimal type.
 	 * 
@@ -382,31 +476,27 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 
 	/**
 	 * Compare two MathContext objects corresponding to operands and create the
-	 * MathContext object associated with the result. If ARBITRARY_PRECISION is
-	 * overriden, it takes precedence and is returned back. Otherwise return
-	 * MathContext set to minimum of two precision values plus one. If both
-	 * values are 0, then 0 is returned. If either one of the precision values
-	 * is 0, then the other value plus one is returned.
+	 * MathContext object associated with the result. Return MathContext set to
+	 * minimum of two precision values plus one. If both values are 0
+	 * (UNLIMITED_PRECISION), then 0 is returned. If either one of the precision
+	 * values is 0, then the other value plus one is returned.
 	 * 
 	 * @param mcA
 	 *            MathContext object of this instance.
+	 * 
 	 * @param mcB
+	 *            second MathContext object.
 	 * 
 	 * @return resultMathContext with precision set to (min(precisionA,
-	 *         precisionB) + 1) or 0 (if both precision values are 0) or
-	 *         ARBITRARY_PRECISION if not null. The RoundingMode is set to that
-	 *         of mcA.
+	 *         precisionB) + 1) or 0 (if both precision values are 0). The
+	 *         RoundingMode is set to that of mcA.
 	 */
 	private MathContext getResultMathContext(MathContext mcA, MathContext mcB) {
-		if (null == ARBITRARY_PRECISION) {
-			int minPrecision = getMinPrecision(mcA.getPrecision(), mcB.getPrecision());
-			if (minPrecision == 0) {
-				return new MathContext(minPrecision, mcA.getRoundingMode());
-			} else {
-				return new MathContext(minPrecision + 1, mcA.getRoundingMode());
-			}
+		int minPrecision = getMinPrecision(mcA.getPrecision(), mcB.getPrecision());
+		if (minPrecision == UNLIMITED_PRECISION) {
+			return new MathContext(minPrecision, mcA.getRoundingMode());
 		} else {
-			return ARBITRARY_PRECISION;
+			return new MathContext(minPrecision + 1, mcA.getRoundingMode());
 		}
 	}
 
@@ -421,7 +511,7 @@ public class BigDecimalProbabilityNumber implements ProbabilityNumber {
 	 *         non-zero, otherwise max(precisionA, precisionB).
 	 */
 	private int getMinPrecision(int precisionA, int precisionB) {
-		if (precisionA == 0 || precisionB == 0) {
+		if (precisionA == UNLIMITED_PRECISION || precisionB == UNLIMITED_PRECISION) {
 			return Math.max(precisionA, precisionB);
 		} else {
 			return Math.min(precisionA, precisionB);

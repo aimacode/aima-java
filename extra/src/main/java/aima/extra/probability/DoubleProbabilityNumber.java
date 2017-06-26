@@ -15,7 +15,7 @@ import java.math.RoundingMode;
  * @author Nagaraj Poti
  * 
  */
-public class DoubleProbabilityNumber implements ProbabilityNumber {
+public class DoubleProbabilityNumber extends ProbabilityNumber {
 
 	// Static members
 
@@ -25,35 +25,52 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	private static final double DEFAULT_ROUNDING_THRESHOLD = 1e-8;
 
 	/**
+	 * Precision value corresponding to MathContext.UNLIMITED.
+	 */
+	private static final Integer UNLIMITED_PRECISION = 0;
+
+	/**
 	 * Maximum precision constrained by the underlying double primitive type.
 	 * According to the IEEE 754 format, double values have a precision of 15.95
 	 * decimal digits. Here, max_precision is set to 15 digits by default.
 	 */
-	private static Integer MAX_PRECISION = MathContext.DECIMAL64.getPrecision() - 1;
+	private static final Integer MAX_PRECISION = MathContext.DECIMAL64.getPrecision() - 1;
 
 	/**
 	 * RoundingMode.HALF_EVEN statistically minimizes cumulative error when
 	 * applied repeatedly over a sequence of calculations.
 	 */
-	private static RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
+	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 
 	// Internal fields
 
 	private Double value;
 
+	private MathContext currentMathContext = new MathContext(MAX_PRECISION, ROUNDING_MODE);
+
 	// Constructors
 
 	/**
-	 * Construct a DoubleProbabilityNumber from a primitive double type.
+	 * Construct a DoubleProbabilityNumber from a Double type.
 	 * 
 	 * @param value
 	 *            to be assigned to DoubleProbabilityNumber value.
 	 */
-	public DoubleProbabilityNumber(double value) {
-		if (value < 0 || value > 1) {
-			throw new IllegalArgumentException("Probability value must be between 0 and 1");
-		}
-		this.value = value;
+	public DoubleProbabilityNumber(Double value) {
+		this(BigDecimal.valueOf(value), null);
+	}
+
+	/**
+	 * Construct a DoubleProbabilityNumber from a Double type.
+	 * 
+	 * @param value
+	 *            to be assigned to DoubleProbabilityNumber value.
+	 * 
+	 * @param mc
+	 *            MathContext to be associated with value.
+	 */
+	public DoubleProbabilityNumber(Double value, MathContext mc) {
+		this(BigDecimal.valueOf(value), mc);
 	}
 
 	/**
@@ -64,10 +81,30 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 *            to be assigned to DoubleProbabilityNumber value.
 	 */
 	public DoubleProbabilityNumber(BigDecimal value) {
-		if (null == value || value.compareTo(new BigDecimal(0)) == -1 || value.compareTo(new BigDecimal(1)) == 1) {
-			throw new IllegalArgumentException("Probability value must be between 0 and 1");
+		this(value, null);
+	}
+
+	/**
+	 * Construct a DoubleProbabilityNumber from a BigDecimal type (loss of
+	 * precision possible when converting from a BigDecimal to double type).
+	 * 
+	 * @param value
+	 *            to be assigned to DoubleProbabilityNumber value.
+	 * 
+	 * @param mc
+	 *            MathContext to be associated with value.
+	 */
+	public DoubleProbabilityNumber(BigDecimal value, MathContext mc) {
+		if (null == value) {
+			throw new IllegalArgumentException("A probability value must be specified.");
+		}
+		if (checkRequired) {
+			checkValidityOfArguments(value.doubleValue(), mc);
 		}
 		this.value = value.doubleValue();
+		if (null != mc) {
+			this.currentMathContext = mc;
+		}
 	}
 
 	// Public methods
@@ -80,7 +117,7 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public BigDecimal getValue() {
-		return new BigDecimal(this.value, this.getMathContext());
+		return new BigDecimal(this.value, this.currentMathContext);
 	}
 
 	/**
@@ -89,7 +126,7 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public MathContext getMathContext() {
-		return new MathContext(MAX_PRECISION, ROUNDING_MODE);
+		return this.currentMathContext;
 	}
 
 	/**
@@ -138,7 +175,8 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	@Override
 	public ProbabilityNumber add(ProbabilityNumber that) {
 		DoubleProbabilityNumber addend = toInternalType(that);
-		return new DoubleProbabilityNumber(this.value + addend.value);
+		MathContext resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
+		return new DoubleProbabilityNumber(this.value + addend.value, resultMathContext);
 	}
 
 	/**
@@ -154,7 +192,8 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	@Override
 	public ProbabilityNumber subtract(ProbabilityNumber that) {
 		DoubleProbabilityNumber subtrahend = toInternalType(that);
-		return new DoubleProbabilityNumber(this.value - subtrahend.value);
+		MathContext resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
+		return new DoubleProbabilityNumber(this.value - subtrahend.value, resultMathContext);
 	}
 
 	/**
@@ -170,8 +209,33 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber multiply(ProbabilityNumber that) {
+		return this.multiply(that, null);
+	}
+
+	/**
+	 * Multiply a DoubleProbabilityNumber with this DoubleProbabilityNumber and
+	 * return a new DoubleProbabilityNumber.
+	 * 
+	 * @param that
+	 *            the DoubleProbabilityNumber that is to be multiplied to this
+	 *            DoubleProbabilityNumber.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @result a new DoubleProbabilityNumber that is the result of
+	 *         multiplication.
+	 */
+	@Override
+	public ProbabilityNumber multiply(ProbabilityNumber that, MathContext mc) {
 		DoubleProbabilityNumber multiplier = toInternalType(that);
-		return new DoubleProbabilityNumber(this.value * multiplier.value);
+		MathContext resultMathContext;
+		if (null != mc) {
+			checkValidityOfArguments(0.0, mc);
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), multiplier.getMathContext());
+		}
+		return new DoubleProbabilityNumber(this.value * multiplier.value, resultMathContext);
 	}
 
 	/**
@@ -186,11 +250,35 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber divide(ProbabilityNumber that) {
+		return this.divide(that, null);
+	}
+
+	/**
+	 * Divide a DoubleProbabilityNumber with this DoubleProbabilityNumber and
+	 * return a new DoubleProbabilityNumber.
+	 * 
+	 * @param that
+	 *            the DoubleProbabilityNumber that is the divisor of this
+	 *            DoubleProbabilityNumber.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @return a new DoubleProbabilityNumber that is the result of division.
+	 */
+	@Override
+	public ProbabilityNumber divide(ProbabilityNumber that, MathContext mc) {
 		DoubleProbabilityNumber divisor = toInternalType(that);
+		MathContext resultMathContext;
 		if (divisor.isZero()) {
-			throw new IllegalArgumentException("Division by 0 not allowed");
+			throw new IllegalArgumentException("Division by 0 not allowed.");
 		}
-		return new DoubleProbabilityNumber(this.value / divisor.value);
+		if (null != mc) {
+			checkValidityOfArguments(0.0, mc);
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), divisor.getMathContext());
+		}
+		return new DoubleProbabilityNumber(this.value / divisor.value, resultMathContext);
 	}
 
 	/**
@@ -204,7 +292,23 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber pow(int exponent) {
-		return new DoubleProbabilityNumber(Math.pow(this.value, exponent));
+		return this.pow(BigInteger.valueOf(exponent), null);
+	}
+
+	/**
+	 * Calculate the DoubleProbabilityNumber raised to an integer exponent.
+	 * 
+	 * @param exponent
+	 *            of integer type.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @result a new DoubleProbabilityNumber that is this
+	 *         DoubleProbabilityNumber raised to the exponent value.
+	 */
+	@Override
+	public ProbabilityNumber pow(int exponent, MathContext mc) {
+		return this.pow(BigInteger.valueOf(exponent), mc);
 	}
 
 	/**
@@ -220,7 +324,33 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber pow(BigInteger exponent) {
-		return new DoubleProbabilityNumber(Math.pow(this.value, exponent.intValue()));
+		return this.pow(exponent, null);
+	}
+	
+	/**
+	 * Calculate the DoubleProbabilityNumber raised to a BigInteger exponent. If
+	 * the value of the BigInteger is greater than that representable by integer
+	 * type, then the lower order 32 bits are chosen by default.
+	 * 
+	 * @param exponent
+	 *            of BigInteger type.
+	 * @param mc
+	 *            MathContext of result.
+	 *            
+	 * @result a new DoubleProbabilityNumber that is this
+	 *         DoubleProbabilityNumber raised to the exponent value.
+	 */
+	@Override
+	public ProbabilityNumber pow(BigInteger exponent, MathContext mc) {
+		MathContext resultMathContext;
+		if (null != mc) {
+			checkValidityOfArguments(0.0, mc);
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(),
+				new MathContext(MAX_PRECISION, ROUNDING_MODE));
+		}
+		return new DoubleProbabilityNumber(Math.pow(this.value, exponent.intValue()), resultMathContext);
 	}
 
 	/**
@@ -236,27 +366,12 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean sumsToOne(Iterable<ProbabilityNumber> allProbabilities) {
-		DoubleProbabilityNumber sumOfProbabilities = new DoubleProbabilityNumber(0);
+		DoubleProbabilityNumber sumOfProbabilities = new DoubleProbabilityNumber(0.0);
 		for (ProbabilityNumber probability : allProbabilities) {
 			DoubleProbabilityNumber specificType = toInternalType(probability);
 			sumOfProbabilities = (DoubleProbabilityNumber) (sumOfProbabilities.add(specificType));
 		}
 		return this.isOne();
-	}
-
-	/**
-	 * Override the precision of ProbabilityNumber instances returned as a
-	 * result of performing operations.
-	 * 
-	 * @param mc
-	 */
-	@Override
-	public void overrideComputationPrecisionGlobally(MathContext mc) {
-		if (mc.getPrecision() > 15) {
-			throw new IllegalArgumentException("Maximum precision possible for DoubleProbabilityNumber is 15");
-		}
-		MAX_PRECISION = mc.getPrecision();
-		ROUNDING_MODE = mc.getRoundingMode();
 	}
 
 	/**
@@ -271,6 +386,9 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean equals(Object that) {
+		if (!(that instanceof ProbabilityNumber)) {
+			return false;
+		}
 		DoubleProbabilityNumber second = toInternalType((ProbabilityNumber) that);
 		return (compareDouble(this.value, second.value) == 0);
 	}
@@ -294,6 +412,30 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 */
 	public String toString() {
 		return getValue().toString();
+	}
+
+	/**
+	 * Check if arguments satisfy criteria to initialize
+	 * DoubleProbabilityNumber.
+	 * 
+	 * @param value
+	 *            to be assigned to DoubleProbabilityNumber value.
+	 * 
+	 * @param mc
+	 *            MathContext to be associated with value.
+	 */
+	public static void checkValidityOfArguments(Double value, MathContext mc) {
+		if (value < 0 || value > 1) {
+			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
+		}
+		if (null != mc) {
+			if (mc.getPrecision() > MAX_PRECISION) {
+				throw new IllegalArgumentException("Maximum precision possible for DoubleProbabilityNumber is 15.");
+			}
+			if (mc.getPrecision() == UNLIMITED_PRECISION) {
+				throw new IllegalArgumentException("DoubleProbabilityNumber does not support unlimited precision.");
+			}
+		}
 	}
 
 	// Private methods
@@ -320,6 +462,7 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 	 * 
 	 * @param first
 	 *            value of double type.
+	 * 
 	 * @param second
 	 *            value of double type.
 	 * 
@@ -335,5 +478,36 @@ public class DoubleProbabilityNumber implements ProbabilityNumber {
 		} else {
 			return ((first > second) ? 1 : -1);
 		}
+	}
+
+	/**
+	 * Compare two MathContext objects corresponding to operands and create the
+	 * MathContext object associated with the result. Return MathContext set to
+	 * minimum of two precision values plus one.
+	 * 
+	 * @param mcA
+	 *            MathContext object of this instance.
+	 * 
+	 * @param mcB
+	 *            second MathContext object.
+	 * 
+	 * @return resultMathContext with precision set to (min(precisionA,
+	 *         precisionB) + 1). The RoundingMode is set to that of mcA.
+	 */
+	private MathContext getResultMathContext(MathContext mcA, MathContext mcB) {
+		int minPrecision = getMinPrecision(mcA.getPrecision(), mcB.getPrecision());
+		return new MathContext(Math.min(minPrecision + 1, MAX_PRECISION), mcA.getRoundingMode());
+	}
+
+	/**
+	 * Return the minimum of two precision values.
+	 * 
+	 * @param precisionA
+	 * @param precisionB
+	 * 
+	 * @return min(precisionA, precisionB)
+	 */
+	private int getMinPrecision(int precisionA, int precisionB) {
+		return Math.min(precisionA, precisionB);
 	}
 }

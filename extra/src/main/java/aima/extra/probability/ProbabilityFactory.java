@@ -24,6 +24,10 @@ public class ProbabilityFactory {
 		return new DoubleProbabilityNumber(v);
 	}
 
+	public static DoubleProbabilityNumber doubleValueOf(BigDecimal v, MathContext mc) {
+		return new DoubleProbabilityNumber(v, mc);
+	}
+	
 	/**
 	 * Construct BigDecimalProbabilityNumber objects.
 	 */
@@ -35,6 +39,10 @@ public class ProbabilityFactory {
 		return new BigDecimalProbabilityNumber(v);
 	}
 
+	public static BigDecimalProbabilityNumber decimalValueOf(BigDecimal v, MathContext mc) {
+		return new BigDecimalProbabilityNumber(v, mc);
+	}
+	
 	/**
 	 * @param v of BigDecimal type.
 	 * 
@@ -54,6 +62,10 @@ public class ProbabilityFactory {
 
 	public static LogProbabilityNumber logValueOf(BigDecimal v) {
 		return new LogProbabilityNumber(v);
+	}
+	
+	public static LogProbabilityNumber logValueOf(BigDecimal v, MathContext mc) {
+		return new LogProbabilityNumber(v, mc);
 	}
 
 	/**

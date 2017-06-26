@@ -16,7 +16,7 @@ import java.math.RoundingMode;
  * @author Nagaraj Poti
  *
  */
-public class RationalProbabilityNumber implements ProbabilityNumber {
+public class RationalProbabilityNumber extends ProbabilityNumber {
 
 	// Static members
 
@@ -26,9 +26,10 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 */
 	private static final int EXPONENT_MAX = Integer.MAX_VALUE;
 
-	private static final BigInteger BIG_INTEGER_ONE = BigInteger.ONE;
-
-	private static final BigInteger BIG_INTEGER_ZERO = BigInteger.ZERO;
+	/**
+	 * Precision value corresponding to MathContext.UNLIMITED.
+	 */
+	private static final Integer UNLIMITED_PRECISION = 0;
 
 	/**
 	 * IEEE 754R Decimal128 format - Precision of 34 digits and a rounding mode
@@ -42,8 +43,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	/**
 	 * MathContext of BigDecimal value returned by getValue().
 	 */
-	private static MathContext resultMathContext = new MathContext(DEFAULT_MAX_PRECISION,
-			DEFAULT_PRECISION_ROUNDING_MODE);
+	private MathContext currentMathContext = new MathContext(DEFAULT_MAX_PRECISION, DEFAULT_PRECISION_ROUNDING_MODE);
 
 	// Internal fields
 
@@ -69,30 +69,36 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 * 
 	 * @param numerator
 	 *            the rational value's numerator.
+	 * 
 	 * @param denominator
 	 *            the rational value's denominator.
 	 */
 	public RationalProbabilityNumber(BigInteger numerator, BigInteger denominator) {
-		if (this.signum(numerator, denominator) == -1) {
-			throw new IllegalArgumentException("Probability value must be between 0 and 1");
-		} else if (null != denominator && denominator.compareTo(BIG_INTEGER_ZERO) == 0) {
-			throw new IllegalArgumentException();
-		} else if (null == denominator) {
-			if (numerator.compareTo(BIG_INTEGER_ONE) == 1) {
-				throw new IllegalArgumentException("Probability value must be between 0 and 1");
-			}
-			this.numerator = numerator;
-			// Default denominator value is set to 1 if null
-			this.denominator = BIG_INTEGER_ONE;
-		} else {
-			if (numerator.compareTo(denominator) == 1) {
-				throw new IllegalArgumentException("Probability value must be between 0 and 1");
-			}
-			this.numerator = numerator;
-			this.denominator = denominator;
-			// Normalize the numerator and the denominator
-			normalize(numerator, denominator);
+		this(numerator, denominator, null);
+	}
+
+	/**
+	 * Construct a Rational from numerator and denominator of type BigInteger.
+	 * The numerator and denominator values may not be normalized (i.e they have
+	 * common factors, do not follow rules for numerator and denominator values
+	 * set above), and thus must be normalized.
+	 * 
+	 * @param numerator
+	 *            the rational value's numerator.
+	 * @param denominator
+	 *            the rational value's denominator.
+	 * @param mc
+	 *            MathContext of result.
+	 */
+	public RationalProbabilityNumber(BigInteger numerator, BigInteger denominator, MathContext mc) {
+		if (numerator == null || denominator == null) {
+			throw new IllegalArgumentException("The numerator or denominator may not be null.");
 		}
+		if (mc != null) {
+			this.currentMathContext = mc;
+		}
+		// Normalize the numerator and the denominator
+		normalize(numerator, denominator);
 	}
 
 	/**
@@ -102,7 +108,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 *            the rational's numerator.
 	 */
 	public RationalProbabilityNumber(BigInteger numerator) {
-		this(numerator, BIG_INTEGER_ONE);
+		this(numerator, BigInteger.ONE, null);
 	}
 
 	/**
@@ -110,11 +116,12 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 * 
 	 * @param numerator
 	 *            the rational's numerator.
+	 * 
 	 * @param denominator
 	 *            the rational's denominator.
 	 */
 	public RationalProbabilityNumber(long numerator, long denominator) {
-		this(BigInteger.valueOf(numerator), BigInteger.valueOf(denominator));
+		this(BigInteger.valueOf(numerator), BigInteger.valueOf(denominator), null);
 	}
 
 	/**
@@ -124,7 +131,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 *            the rational's numerator.
 	 */
 	public RationalProbabilityNumber(long numerator) {
-		this(BigInteger.valueOf(numerator), BIG_INTEGER_ONE);
+		this(BigInteger.valueOf(numerator), BigInteger.ONE, null);
 	}
 
 	/**
@@ -134,22 +141,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 *            of BigDecimal type.
 	 */
 	public RationalProbabilityNumber(BigDecimal value) {
-		if (null == value || value.compareTo(new BigDecimal(0)) == -1 || value.compareTo(new BigDecimal(1)) == 1) {
-			throw new IllegalArgumentException("Probability value must be between 0 and 1");
-		}
-		String strRational = value.toString();
-		int dot = strRational.indexOf(".");
-		if (dot == -1) {
-			normalize(new BigInteger(strRational), BIG_INTEGER_ONE);
-		} else {
-			int zeroLength = strRational.length() - (dot + 1);
-			strRational = strRational.substring(0, dot) + strRational.substring(dot + 1);
-			String denominatorStr = "1";
-			for (int i = 0; i < zeroLength; i++) {
-				denominatorStr += "0";
-			}
-			normalize(new BigInteger(strRational), new BigInteger(denominatorStr));
-		}
+		this(value, null);
 	}
 
 	/**
@@ -158,9 +150,44 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 * 
 	 * @param value
 	 *            of BigDecimal type.
+	 * @param mc
+	 *            MathContext associated with value.
 	 */
 	public RationalProbabilityNumber(BigDecimal value, MathContext mc) {
-		this(new BigDecimal(value.toString(), mc));
+		if (null == value) {
+			throw new IllegalArgumentException("A probability value must be specified.");
+		}
+		if (null != mc) {
+			value = new BigDecimal(value.toString(), mc);
+			this.currentMathContext = mc;
+		}
+		String strRational = value.toString();
+		BigInteger sign = BigInteger.ONE;
+		switch (strRational.charAt(0)) {
+		case '-':
+			sign = new BigInteger("-1");
+			strRational = strRational.substring(1);
+			break;
+		case '+':
+			strRational = strRational.substring(1);
+			break;
+		}
+		int dot = strRational.indexOf(".");
+		if (dot == -1) {
+			BigInteger numerator = (new BigInteger(strRational)).multiply(sign);
+			BigInteger denominator = BigInteger.ONE;
+			normalize(numerator, denominator);
+		} else {
+			int zeroLength = strRational.length() - (dot + 1);
+			strRational = strRational.substring(0, dot) + strRational.substring(dot + 1);
+			String denominatorStr = "1";
+			for (int i = 0; i < zeroLength; i++) {
+				denominatorStr += "0";
+			}
+			BigInteger numerator = (new BigInteger(strRational)).multiply(sign);
+			BigInteger denominator = new BigInteger(denominatorStr);
+			normalize(numerator, denominator);
+		}
 	}
 
 	// Getter methods
@@ -181,7 +208,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	@Override
 	public BigDecimal getValue() {
 		BigDecimal numerator = new BigDecimal(this.numerator);
-		return numerator.divide(new BigDecimal(denominator), resultMathContext);
+		return numerator.divide(new BigDecimal(denominator), this.currentMathContext);
 	}
 
 	/**
@@ -190,7 +217,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public MathContext getMathContext() {
-		return resultMathContext;
+		return this.currentMathContext;
 	}
 
 	/**
@@ -200,7 +227,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean isZero() {
-		return (this.compareTo(new RationalProbabilityNumber(BIG_INTEGER_ZERO)) == 0);
+		return (this.compareTo(new RationalProbabilityNumber(BigInteger.ZERO)) == 0);
 	}
 
 	/**
@@ -210,7 +237,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean isOne() {
-		return (this.compareTo(new RationalProbabilityNumber(BIG_INTEGER_ONE)) == 0);
+		return (this.compareTo(new RationalProbabilityNumber(BigInteger.ONE)) == 0);
 	}
 
 	/**
@@ -223,8 +250,8 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean isValid() {
-		return (this.compareTo(new RationalProbabilityNumber(BIG_INTEGER_ZERO)) >= 0
-				&& this.compareTo(new RationalProbabilityNumber(BIG_INTEGER_ONE)) <= 0);
+		return (this.compareTo(new RationalProbabilityNumber(BigInteger.ZERO)) >= 0
+				&& this.compareTo(new RationalProbabilityNumber(BigInteger.ONE)) <= 0);
 	}
 
 	/**
@@ -266,9 +293,29 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 * @return a new Rational that is the result of multiplying this with that.
 	 */
 	public ProbabilityNumber multiply(ProbabilityNumber that) {
+		return this.multiply(that, null);
+	}
+
+	/**
+	 * Multiply a Rational to this Rational and return a new Rational.
+	 * 
+	 * @param that
+	 *            the Rational to be multiplied with this Rational.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @return a new Rational that is the result of multiplying this with that.
+	 */
+	public ProbabilityNumber multiply(ProbabilityNumber that, MathContext mc) {
 		RationalProbabilityNumber multiplier = toInternalType(that);
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), multiplier.getMathContext());
+		}
 		return new RationalProbabilityNumber(numerator.multiply(multiplier.numerator),
-				denominator.multiply(multiplier.denominator));
+				denominator.multiply(multiplier.denominator), resultMathContext);
 	}
 
 	/**
@@ -280,12 +327,30 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 * @return a new Rational that is the result of dividing this by that.
 	 */
 	public ProbabilityNumber divide(ProbabilityNumber that) {
+		return this.divide(that, null);
+	}
+
+	/**
+	 * Divide a Rational with this Rational and return a new Rational.
+	 * 
+	 * @param that
+	 *            the Rational to be divided with this Rational.
+	 * 
+	 * @return a new Rational that is the result of dividing this by that.
+	 */
+	public ProbabilityNumber divide(ProbabilityNumber that, MathContext mc) {
 		RationalProbabilityNumber divisor = toInternalType(that);
+		MathContext resultMathContext;
 		if (divisor.isZero()) {
 			throw new IllegalArgumentException("Division by 0 not allowed");
 		}
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), divisor.getMathContext());
+		}
 		return new RationalProbabilityNumber(numerator.multiply(divisor.denominator),
-				denominator.multiply(divisor.numerator));
+				denominator.multiply(divisor.numerator), resultMathContext);
 	}
 
 	/**
@@ -293,9 +358,25 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 *            integer exponent.
 	 */
 	public ProbabilityNumber pow(int exponent) {
+		return this.pow(exponent, null);
+	}
+
+	/**
+	 * @param exponent
+	 *            integer exponent.
+	 * @param mc
+	 *            MathContext of result.
+	 */
+	public ProbabilityNumber pow(int exponent, MathContext mc) {
 		BigInteger numerator = this.numerator.pow(exponent);
 		BigInteger denominator = this.denominator.pow(exponent);
-		return new RationalProbabilityNumber(numerator, denominator);
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), MathContext.UNLIMITED);
+		}
+		return new RationalProbabilityNumber(numerator, denominator, resultMathContext);
 	}
 
 	/**
@@ -308,18 +389,40 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 *         given power.
 	 */
 	public ProbabilityNumber pow(BigInteger exponent) {
+		return this.pow(exponent, null);
+	}
+
+	/**
+	 * Calculate the Rational's power and return a new Rational.
+	 * 
+	 * @param that
+	 *            exponent of type BigInteger.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @return a new Rational that is the result of raising this Rational by the
+	 *         given power.
+	 */
+	public ProbabilityNumber pow(BigInteger exponent, MathContext mc) {
 		if (exponent.compareTo(BigInteger.valueOf(EXPONENT_MAX)) <= 0) {
 			int exp = exponent.intValueExact();
-			return pow(exp);
+			return this.pow(exp);
 		} else {
-			RationalProbabilityNumber result = new RationalProbabilityNumber(BIG_INTEGER_ONE);
-			RationalProbabilityNumber base = this;
-			while (exponent.compareTo(BIG_INTEGER_ZERO) == 1) {
-				if (exponent.mod(BigInteger.valueOf(2)).compareTo(BIG_INTEGER_ONE) == 0) {
-					result = (RationalProbabilityNumber) result.multiply(base);
+			MathContext resultMathContext;
+			if (null != mc) {
+				resultMathContext = mc;
+			} else {
+				resultMathContext = getResultMathContext(this.getMathContext(), MathContext.UNLIMITED);
+			}
+			BigInteger BIG_INTEGER_TWO = BigInteger.valueOf(2);
+			ProbabilityNumber result = new RationalProbabilityNumber(BigInteger.ONE);
+			ProbabilityNumber base = this;
+			while (exponent.compareTo(BigInteger.ZERO) == 1) {
+				if (exponent.mod(BIG_INTEGER_TWO).compareTo(BigInteger.ONE) == 0) {
+					result = result.multiply(base, resultMathContext);
 				}
-				base = (RationalProbabilityNumber) base.multiply(base);
-				exponent = exponent.divide(BigInteger.valueOf(2));
+				base = base.multiply(base, resultMathContext);
+				exponent = exponent.divide(BIG_INTEGER_TWO);
 			}
 			return result;
 		}
@@ -338,7 +441,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean sumsToOne(Iterable<ProbabilityNumber> allProbabilities) {
-		RationalProbabilityNumber sumOfProbabilities = new RationalProbabilityNumber(BIG_INTEGER_ZERO);
+		RationalProbabilityNumber sumOfProbabilities = new RationalProbabilityNumber(BigInteger.ZERO);
 		for (ProbabilityNumber probability : allProbabilities) {
 			RationalProbabilityNumber specificType = toInternalType(probability);
 			sumOfProbabilities = (RationalProbabilityNumber) (sumOfProbabilities.add(specificType));
@@ -346,17 +449,6 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 		return this.isOne();
 	}
 
-	/**
-	 * Override the precision of ProbabilityNumber instances returned as a
-	 * result of performing operations.
-	 * 
-	 * @param mc
-	 */
-	@Override
-	public void overrideComputationPrecisionGlobally(MathContext mc) {
-		resultMathContext = mc;
-	}
-	
 	/**
 	 * Checks if argument implementing ProbabilityNumber interface is equal to
 	 * the value of the current RationalProbabilityNumber. The check is an
@@ -370,6 +462,9 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean equals(Object that) {
+		if (!(that instanceof ProbabilityNumber)) {
+			return false;
+		}
 		RationalProbabilityNumber specificType = toInternalType((ProbabilityNumber) that);
 		return (this.compareTo(specificType) == 0);
 	}
@@ -426,9 +521,18 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 *            of BigInteger type.
 	 */
 	private void normalize(BigInteger numerator, BigInteger denominator) {
-		numerator = numerator.abs();
-		denominator = denominator.abs();
-		BigInteger gcd = gcdCompute(numerator.max(denominator), denominator.min(numerator));
+		if (checkRequired) {
+			checkValidityOfArguments(numerator, denominator);
+		}
+		int sign = signum(numerator, denominator);
+		if (sign == -1) {
+			numerator = numerator.abs().multiply(new BigInteger("-1"));
+			denominator = denominator.abs();
+		} else {
+			numerator = numerator.abs();
+			denominator = denominator.abs();
+		}
+		BigInteger gcd = gcdCompute(numerator.abs().max(denominator.abs()), denominator.abs().min(numerator.abs()));
 		this.numerator = numerator.divide(gcd);
 		this.denominator = denominator.divide(gcd);
 	}
@@ -446,7 +550,7 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 * @return gcd of valA and valB.
 	 */
 	private BigInteger gcdCompute(BigInteger valA, BigInteger valB) {
-		while (valB.compareTo(BIG_INTEGER_ZERO) == 1) {
+		while (valB.compareTo(BigInteger.ZERO) == 1) {
 			BigInteger valC = valA;
 			valA = valB;
 			valB = valC.mod(valB);
@@ -459,11 +563,74 @@ public class RationalProbabilityNumber implements ProbabilityNumber {
 	 * 
 	 * @return -1 (if negative), 0 (if zero), 1 (if positive).
 	 */
-	private int signum(BigInteger... bigIntegers) {
+	private static int signum(BigInteger... bigIntegers) {
 		int sign = 1;
 		for (BigInteger val : bigIntegers) {
 			sign *= val.signum();
 		}
 		return sign;
+	}
+
+	/**
+	 * Check if arguments satisfy criteria to initialize
+	 * RationalProbabilityNumber.
+	 * 
+	 * @param numerator
+	 *            the rational value's numerator.
+	 * @param denominator
+	 *            the rational value's denominator.
+	 */
+	public static void checkValidityOfArguments(BigInteger numerator, BigInteger denominator) {
+		if (signum(numerator, denominator) == -1) {
+			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
+		} else if (denominator.compareTo(BigInteger.ZERO) == 0) {
+			throw new IllegalArgumentException("Denominator cannot be zero.");
+		} else if (numerator.abs().compareTo(denominator.abs()) == 1) {
+			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
+		}
+	}
+
+	/**
+	 * Compare two MathContext objects corresponding to operands and create the
+	 * MathContext object associated with the result. Return MathContext set to
+	 * minimum of two precision values plus one. If both values are 0
+	 * (UNLIMITED_PRECISION), then 0 is returned. If either one of the precision
+	 * values is 0, then the other value plus one is returned.
+	 * 
+	 * @param mcA
+	 *            MathContext object of this instance.
+	 * 
+	 * @param mcB
+	 *            second MathContext object.
+	 * 
+	 * @return resultMathContext with precision set to (min(precisionA,
+	 *         precisionB) + 1) or 0 (if both precision values are 0). The
+	 *         RoundingMode is set to that of mcA.
+	 */
+	private MathContext getResultMathContext(MathContext mcA, MathContext mcB) {
+		int minPrecision = getMinPrecision(mcA.getPrecision(), mcB.getPrecision());
+		if (minPrecision == UNLIMITED_PRECISION) {
+			return new MathContext(minPrecision, mcA.getRoundingMode());
+		} else {
+			return new MathContext(minPrecision + 1, mcA.getRoundingMode());
+		}
+	}
+
+	/**
+	 * Return the minimum of two precision values. If either of the precision
+	 * values is 0, then the other value is returned.
+	 * 
+	 * @param precisionA
+	 * @param precisionB
+	 * 
+	 * @return min(precisionA, precisionB) if both precisionA and precisionB are
+	 *         non-zero, otherwise max(precisionA, precisionB).
+	 */
+	private int getMinPrecision(int precisionA, int precisionB) {
+		if (precisionA == UNLIMITED_PRECISION || precisionB == UNLIMITED_PRECISION) {
+			return Math.max(precisionA, precisionB);
+		} else {
+			return Math.min(precisionA, precisionB);
+		}
 	}
 }

@@ -5,21 +5,30 @@ import java.math.BigInteger;
 import java.math.MathContext;
 
 /**
- * ProbabilityNumber interface defines arithmetic specifically for probability
- * values. A probability value is quantified between 0 and 1. Although a
- * ProbabilityNumber cannot be initialised with a value outside the bounds [0,
- * 1], operations may cause the value represented to exceed these bounds. It is
- * therefore necessary to validate the result obtained from a series of
- * computations to ensure that the result is a valid probability value. This
- * interface is implemented by the various ProbabilityNumber implementations.
+ * ProbabilityNumber abstract class defines arithmetic specifically for
+ * probability values. A probability value is quantified between 0 and 1.
+ * Although a ProbabilityNumber cannot be initialised with a value outside the
+ * bounds [0, 1], operations may cause the value represented to exceed these
+ * bounds. It is therefore necessary to validate the result obtained from a
+ * series of computations to ensure that the result is a valid probability
+ * value. This abstract class is implemented by the various ProbabilityNumber
+ * implementations.
  * 
- * The interface is intended to be immutable. Implementations may implement
+ * The subclasses are intended to be immutable. Implementations may implement
  * overriden versions of equals and hashcode methods.
  * 
  * @author Nagaraj Poti
  *
  */
-public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
+public abstract class ProbabilityNumber implements Comparable<ProbabilityNumber> {
+
+	/**
+	 * checkRequired is true (by default) if ProbabilityNumber should be checked
+	 * for validity, false if checks are to be disabled (required for performing
+	 * a sequence of computations where the intermediary results may temporarily
+	 * lie outside the boundaries of a probability value).
+	 */
+	public static boolean checkRequired = true;
 
 	/**
 	 * Get the probability value represented by the ProbabilityNumber
@@ -27,7 +36,7 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * 
 	 * @return value of BigDecimal type.
 	 */
-	BigDecimal getValue();
+	public abstract BigDecimal getValue();
 
 	/**
 	 * Precision (def.) - the number of significant digits (Zero before decimal
@@ -72,21 +81,21 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * 
 	 * @return MathContext associated with the ProbabilityNumber value.
 	 */
-	MathContext getMathContext();
+	public abstract MathContext getMathContext();
 
 	/**
 	 * Checks if the probability value is zero.
 	 * 
 	 * @return true if zero, false otherwise.
 	 */
-	boolean isZero();
+	public abstract boolean isZero();
 
 	/**
 	 * Checks if the probability value is one.
 	 * 
 	 * @return true if one, false otherwise.
 	 */
-	boolean isOne();
+	public abstract boolean isOne();
 
 	/**
 	 * Checks if the probability value represented is valid i.e it falls within
@@ -96,7 +105,7 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * 
 	 * @return true if a valid probability value, false otherwise.
 	 */
-	boolean isValid();
+	public abstract boolean isValid();
 
 	/**
 	 * Add two ProbabilityNumber types and return a new ProbabilityNumber
@@ -107,7 +116,7 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * @return a new ProbabilityNumber representing the result of addition of
 	 *         two ProbabilityNumber types.
 	 */
-	ProbabilityNumber add(ProbabilityNumber addend);
+	public abstract ProbabilityNumber add(ProbabilityNumber addend);
 
 	/**
 	 * Subtract two ProbabilityNumber types and return a new ProbabilityNumber
@@ -118,7 +127,7 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * @return a new ProbabilityNumber representing the result of subtraction of
 	 *         two ProbabilityNumber types.
 	 */
-	ProbabilityNumber subtract(ProbabilityNumber subtrahend);
+	public abstract ProbabilityNumber subtract(ProbabilityNumber subtrahend);
 
 	/**
 	 * Multiply two ProbabilityNumber types and return a new ProbabilityNumber
@@ -129,7 +138,21 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * @return a new ProbabilityNumber representing the result of multiplication
 	 *         of two ProbabilityNumber types.
 	 */
-	ProbabilityNumber multiply(ProbabilityNumber multiplicand);
+	public abstract ProbabilityNumber multiply(ProbabilityNumber multiplicand);
+
+	/**
+	 * Multiply two ProbabilityNumber types and return a new ProbabilityNumber
+	 * representing the result of multiplication.
+	 * 
+	 * @param multiplicand
+	 * 
+	 * @param mc
+	 *            MathContext for ARBITRARY_PRECISION computation.
+	 * 
+	 * @return a new ProbabilityNumber representing the result of multiplication
+	 *         of two ProbabilityNumber types.
+	 */
+	public abstract ProbabilityNumber multiply(ProbabilityNumber multiplicand, MathContext mc);
 
 	/**
 	 * Divide two ProbabilityNumber types and return a ProbabilityNumber
@@ -140,7 +163,21 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * @return a new ProbabilityNumber representing the result of division of
 	 *         two ProbabilityNumber types.
 	 */
-	ProbabilityNumber divide(ProbabilityNumber divisor);
+	public abstract ProbabilityNumber divide(ProbabilityNumber divisor);
+	
+	/**
+	 * Divide two ProbabilityNumber types and return a ProbabilityNumber
+	 * representing the result of division.
+	 * 
+	 * @param divisor
+	 * 
+	 * @param mc
+	 *            MathContext for ARBITRARY_PRECISION computation.
+	 *            
+	 * @return a new ProbabilityNumber representing the result of division of
+	 *         two ProbabilityNumber types.
+	 */
+	public abstract ProbabilityNumber divide(ProbabilityNumber divisor, MathContext mc);
 
 	/**
 	 * Raise this ProbabilityNumber to an integer exponent.
@@ -150,7 +187,20 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * @return a new ProbabilityNumber representing the result of
 	 *         exponentiation.
 	 */
-	ProbabilityNumber pow(int exponent);
+	public abstract ProbabilityNumber pow(int exponent);
+	
+	/**
+	 * Raise this ProbabilityNumber to an integer exponent.
+	 * 
+	 * @param exponent
+	 * 
+	 * @param mc
+	 *            MathContext for ARBITRARY_PRECISION computation.
+	 *            
+	 * @return a new ProbabilityNumber representing the result of
+	 *         exponentiation.
+	 */
+	public abstract ProbabilityNumber pow(int exponent, MathContext mc);
 
 	/**
 	 * Raise this ProbabilityNumber to a BigInteger exponent.
@@ -160,7 +210,20 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * @return a new ProbabilityNumber representing the result of
 	 *         exponentiation.
 	 */
-	ProbabilityNumber pow(BigInteger exponent);
+	public abstract ProbabilityNumber pow(BigInteger exponent);
+	
+	/**
+	 * Raise this ProbabilityNumber to a BigInteger exponent.
+	 * 
+	 * @param exponent
+	 * 
+	 * @param mc
+	 *            MathContext for ARBITRARY_PRECISION computation.
+	 *            
+	 * @return a new ProbabilityNumber representing the result of
+	 *         exponentiation.
+	 */
+	public abstract ProbabilityNumber pow(BigInteger exponent, MathContext mc);
 
 	/**
 	 * Sum all the ProbabilityNumber elements constituting the iterable and
@@ -170,13 +233,5 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * 
 	 * @return true if the probabilities sum to one, false otherwise.
 	 */
-	boolean sumsToOne(Iterable<ProbabilityNumber> allProbabilities);
-
-	/**
-	 * Override the precision of ProbabilityNumber instances returned as a
-	 * result of performing operations.
-	 * 
-	 * @param mc
-	 */
-	void overrideComputationPrecisionGlobally(MathContext mc);
+	public abstract boolean sumsToOne(Iterable<ProbabilityNumber> allProbabilities);
 }
