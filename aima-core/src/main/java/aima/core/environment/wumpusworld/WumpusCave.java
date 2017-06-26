@@ -87,6 +87,11 @@ public class WumpusCave {
 		return this;
 	}
 
+	public WumpusCave setGold(Room room) {
+		gold = room;
+		return this;
+	}
+
 	public int getCaveXDimension() {
 		return caveXDimension;
 	}
@@ -105,10 +110,6 @@ public class WumpusCave {
 
 	public Room getGold() {
 		return gold;
-	}
-
-	public void setGold(Room room) {
-		gold = room;
 	}
 
 	public boolean isPit(Room room) {

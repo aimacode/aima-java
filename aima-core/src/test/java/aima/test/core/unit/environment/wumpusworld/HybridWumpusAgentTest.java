@@ -21,27 +21,32 @@ public class HybridWumpusAgentTest {
 	@SuppressWarnings("serial")
 	@Test
 	public void testPlanRoute() {
-		HybridWumpusAgent hwa =
-				new HybridWumpusAgent(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
+		HybridWumpusAgent hwa;
+
+		hwa = new HybridWumpusAgent(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		// Should be a NoOp plan as we are already at the goal.
 		Assert.assertEquals(Collections.emptyList(),
-			hwa.planRouteToRooms(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST),
+			hwa.planRouteToRooms(
 				new LinkedHashSet<Room>() {{
 					add(new Room(1,1));
 				}},
 				allRooms(4)
 		));
+
+		hwa = new HybridWumpusAgent(4, new AgentPosition(2, 1, AgentPosition.Orientation.FACING_EAST));
 		Assert.assertEquals(Arrays.asList(WumpusAction.TURN_LEFT, WumpusAction.TURN_LEFT, WumpusAction.FORWARD),
-			hwa.planRouteToRooms(new AgentPosition(2, 1, AgentPosition.Orientation.FACING_EAST),
+			hwa.planRouteToRooms(
 				new LinkedHashSet<Room>() {{
 					add(new Room(1,1));
 				}},
 				allRooms(4)
 		));
+
+		hwa = new HybridWumpusAgent(4, new AgentPosition(3, 1, AgentPosition.Orientation.FACING_EAST));
 		Assert.assertEquals(Arrays.asList(WumpusAction.TURN_LEFT, WumpusAction.FORWARD, WumpusAction.FORWARD,
 				WumpusAction.TURN_LEFT, WumpusAction.FORWARD, WumpusAction.FORWARD, WumpusAction.TURN_LEFT,
 				WumpusAction.FORWARD, WumpusAction.FORWARD),
-			hwa.planRouteToRooms(new AgentPosition(3, 1, AgentPosition.Orientation.FACING_EAST),
+			hwa.planRouteToRooms(
 				new LinkedHashSet<Room>() {{
 					add(new Room(1,1));
 				}},
@@ -56,25 +61,29 @@ public class HybridWumpusAgentTest {
 	@SuppressWarnings("serial")
 	@Test
 	public void testPlanShot() {
-		HybridWumpusAgent hwa =
-				new HybridWumpusAgent(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
+		HybridWumpusAgent hwa;
+		hwa = new HybridWumpusAgent(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		// Should be just shoot as are facing the Wumpus
 		Assert.assertEquals(Collections.singletonList(WumpusAction.SHOOT),
-			hwa.planShot(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST), 
+			hwa.planShot(
 				new LinkedHashSet<Room>() {{
 					add(new Room(3,1));
 				}},
 				allRooms(4)
-		));	
+		));
+
+		hwa = new HybridWumpusAgent(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		Assert.assertEquals(Arrays.asList(WumpusAction.TURN_LEFT, WumpusAction.SHOOT),
-			hwa.planShot(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST), 
+			hwa.planShot(
 				new LinkedHashSet<Room>() {{
 					add(new Room(1,2));
 				}},
 				allRooms(4)
-		));	
+		));
+
+		hwa = new HybridWumpusAgent(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		Assert.assertEquals(Arrays.asList(WumpusAction.FORWARD, WumpusAction.TURN_LEFT, WumpusAction.SHOOT),
-			hwa.planShot(new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST), 
+			hwa.planShot(
 				new LinkedHashSet<Room>() {{
 					add(new Room(2,2));
 				}},
@@ -92,7 +101,7 @@ public class HybridWumpusAgentTest {
 		a = hwa.execute(new WumpusPercept().setStench().setBreeze().setGlitter());
 		Assert.assertEquals(a, WumpusAction.CLIMB);
 	}
-	
+
 	private static Set<Room> allRooms(int caveDimensions) {
 		Set<Room> allRooms = new LinkedHashSet<>();
 		for (int x = 1; x <= caveDimensions; x++) {

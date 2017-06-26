@@ -42,7 +42,7 @@ public class WumpusEnvironment extends AbstractEnvironment {
             agentPositions.put(agent, newPos);
             if (newPos.equals(pos))
                 bump = true;
-            else if (cave.isPit(pos.getRoom()) || pos.getRoom().equals(cave.getWumpus()) && wumpusAlive)
+            else if (cave.isPit(newPos.getRoom()) || newPos.getRoom().equals(cave.getWumpus()) && wumpusAlive)
                 agent.setAlive(false);
         } else if (action == WumpusAction.TURN_LEFT) {
             agentPositions.put(agent, cave.turnLeft(pos));
