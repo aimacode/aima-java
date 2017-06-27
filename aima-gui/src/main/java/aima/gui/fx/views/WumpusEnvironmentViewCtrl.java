@@ -71,7 +71,7 @@ public class WumpusEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
     public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
         super.agentActed(agent, percept, action, source);
         isEditingEnabled = false; // never change the cave when the agent has started his job.
-        Platform.runLater(() -> actionLabel.setText("Percept: " + percept + ", Action: + " + action));
+        Platform.runLater(() -> actionLabel.setText("Percept: " + percept + ", Action: " + action));
     }
 
     /** Updates the view. */
@@ -133,10 +133,10 @@ public class WumpusEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
                 } else if (room.equals(cave.getGold())) {
                     if (this.env.isGoalGrabbed())
                         btn.getLabel().setTextFill(Color.GRAY);
-                    txt = "G";
+                    txt = "Gold";
                 }
                 if (cave.isPit(room))
-                   txt += "P";
+                   txt = txt.isEmpty() ? "Pit" : "Pit " + txt;
                 btn.getLabel().setText(txt);
                 btn.clearAgentMarker();
             }
@@ -184,7 +184,7 @@ public class WumpusEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
             setGraphic(sp);
             markerPane = new StackPane();
             label = new Label();
-            label.setFont(Font.font(60));
+            label.setFont(Font.font(50));
             sp.getChildren().addAll(markerPane, label);
             setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }
