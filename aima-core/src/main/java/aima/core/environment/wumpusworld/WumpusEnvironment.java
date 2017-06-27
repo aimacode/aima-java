@@ -20,7 +20,7 @@ public class WumpusEnvironment extends AbstractEnvironment {
     private boolean wumpusAlive = true;
     private boolean scream;
     /** We assume that only one agent is added to the environment! */
-    private boolean hasArrow;
+    private boolean hasArrow =true;
     private boolean bump;
     private Map<Agent, AgentPosition> agentPositions = new HashMap<>();
 
@@ -52,9 +52,10 @@ public class WumpusEnvironment extends AbstractEnvironment {
             if (pos.getRoom().equals(cave.getGold()))
                 cave.setGold(null);
         } else if (action == WumpusAction.SHOOT) {
-            if (isAgentFacingWumpus(pos)) {
+            if (hasArrow && isAgentFacingWumpus(pos)) {
                 wumpusAlive = false;
                 scream = true;
+                hasArrow = false;
             }
         } else if (action == WumpusAction.CLIMB) {
             agent.setAlive(false);

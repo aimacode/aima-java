@@ -168,23 +168,13 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
         }
         // action <- POP(plan)
         WumpusAction action = plan.remove();
-        modelCave.setAllowed(modelCave.getAllRooms());
-        switch (action) {
-            case FORWARD:
-                currentPosition = modelCave.moveForward(currentPosition);
-                break;
-            case TURN_LEFT:
-                currentPosition = modelCave.turnLeft(currentPosition);
-                break;
-            case TURN_RIGHT:
-                currentPosition = modelCave.turnRight(currentPosition);
-                break;
-        }
-        visitedRooms.add(currentPosition.getRoom());
         // TELL(KB, MAKE-ACTION-SENTENCE(action, t))
         getKB().makeActionSentence(action, t);
         // t <- t+1
         t = t + 1;
+
+        updateAgentPosition(action);
+        visitedRooms.add(currentPosition.getRoom());
         getKB().makePositionSentence(currentPosition, t);
         // return action
         return action;
@@ -212,5 +202,23 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
         Optional<List<WumpusAction>> actions = search.findActions(problem);
 
         return actions.isPresent() ? actions.get() : Collections.EMPTY_LIST;
+    }
+
+    /**
+     * Uses the model cave to update the current agent positon.
+     */
+    private void updateAgentPosition(WumpusAction action) {
+        modelCave.setAllowed(modelCave.getAllRooms());
+        switch (action) {
+            case FORWARD:
+                currentPosition = modelCave.moveForward(currentPosition);
+                break;
+            case TURN_LEFT:
+                currentPosition = modelCave.turnLeft(currentPosition);
+                break;
+            case TURN_RIGHT:
+                currentPosition = modelCave.turnRight(currentPosition);
+                break;
+        }
     }
 }

@@ -24,8 +24,8 @@ public class WumpusAgentDemo {
         env.addEnvironmentView(view);
 
         HybridWumpusAgent a;
-        // a = new HybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
-        a = new EfficientHybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
+        a = new HybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
+        // a = new EfficientHybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
 
         env.notifyViews("The cave:\n" + cave.toString());
         env.addAgent(a);
