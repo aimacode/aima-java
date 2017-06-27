@@ -67,7 +67,7 @@ public class WumpusAgentApp extends IntegrableApplication {
     }
 
     protected List<Parameter> createParameters() {
-        Parameter p1 = new Parameter(PARAM_CAVE, "2x2", "3x3", "Typical");
+        Parameter p1 = new Parameter(PARAM_CAVE, "2x2", "3x3", "4x4");
         p1.setDefaultValueIndex(2);
         Parameter p2 = new Parameter(PARAM_AGENT, "Hybrid Wumpus Agent", "Efficient Wumpus Agent");
         p2.setDefaultValueIndex(1);
