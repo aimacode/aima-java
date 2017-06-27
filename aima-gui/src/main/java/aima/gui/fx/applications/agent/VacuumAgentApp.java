@@ -39,10 +39,6 @@ public class VacuumAgentApp extends IntegrableApplication {
     protected VacuumEnvironment env = null;
     protected AbstractAgent agent = null;
 
-    public VacuumAgentApp() {
-
-    }
-
     @Override
     public String getTitle() {
         return "Vacuum Agent App";

@@ -1,6 +1,9 @@
 package aima.test.core.unit.environment.wumpusworld;
 
 import aima.core.agent.Action;
+import aima.core.agent.EnvironmentView;
+import aima.core.agent.impl.SimpleActionTracker;
+import aima.core.agent.impl.SimpleEnvironmentView;
 import aima.core.environment.wumpusworld.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -100,6 +103,21 @@ public class HybridWumpusAgentTest {
 		Assert.assertEquals(a, WumpusAction.GRAB);
 		a = hwa.execute(new WumpusPercept().setStench().setBreeze().setGlitter());
 		Assert.assertEquals(a, WumpusAction.CLIMB);
+	}
+
+	@Test
+	public void testSimulation2x2Cave() {
+		WumpusCave cave = new WumpusCave(2, 2, ""
+				+ "W."
+				+ "SG");
+		WumpusEnvironment env = new WumpusEnvironment(cave);
+		SimpleActionTracker view = new SimpleActionTracker();
+		env.addEnvironmentView(view);
+		HybridWumpusAgent a = new HybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
+		env.addAgent(a);
+		env.stepUntilDone();
+		Assert.assertEquals(view.getActions(),
+				"SHOOT, FORWARD, TURN_RIGHT, FORWARD, TURN_RIGHT, FORWARD, GRAB, TURN_RIGHT, FORWARD, CLIMB");
 	}
 
 	private static Set<Room> allRooms(int caveDimensions) {

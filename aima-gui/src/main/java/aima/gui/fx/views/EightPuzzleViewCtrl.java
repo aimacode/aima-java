@@ -13,7 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
 /**
- * Controller class which provides functionality for using a stack pane as a
+ * Controller class which provides functionality for using a stack markerPane as a
  * state view for the Eight Puzzle problem.
  *
  * @author Ruediger Lunde
@@ -24,7 +24,7 @@ public class EightPuzzleViewCtrl {
     private EightPuzzleBoard board;
 
     /**
-     * Adds a grid pane to the provided pane and creates a controller class
+     * Adds a grid markerPane to the provided markerPane and creates a controller class
      * instance which is responsible for Eight Puzzle tile positioning on the grid.
      */
     public EightPuzzleViewCtrl(StackPane viewRoot) {

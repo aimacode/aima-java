@@ -114,12 +114,6 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
             }
         }
 
-        // The Wumpus will never be located in a pit.
-        for (int y = 1; y <= caveYDimension; y++)
-            for (int x = 1; x <= caveXDimension; x++)
-                tell(new ComplexSentence(newSymbol(WUMPUS, x, y), Connective.IMPLICATION,
-                        new ComplexSentence(Connective.NOT, newSymbol(PIT, x, y))));
-
         // The agent also knows there is exactly one wumpus. This is represented
         // in two parts. First, we have to say that there is at least one wumpus
         List<PropositionSymbol> wumpsAtLeast = new ArrayList<>();
@@ -215,7 +209,10 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
         Set<Room> safe = new LinkedHashSet<>();
         for (int x = 1; x <= getCaveXDimension(); x++) {
             for (int y = 1; y <= getCaveYDimension(); y++) {
-                if (ask(newSymbol(OK_TO_MOVE_INTO, t, x, y))) {
+                // Already visited rooms are safe! This is important because not all pits can be located by percept.
+                // Not-unsafe planing adds knowledge by surviving dangerous moves but this is not used in OK_TO_MOVE_INTO.
+                if (ask(new ComplexSentence(newSymbol(LOCATION_VISITED, x, y),
+                        Connective.OR, newSymbol(OK_TO_MOVE_INTO, t, x, y)))) {
                     safe.add(new Room(x, y));
                 }
             }

@@ -57,9 +57,6 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	/** Heuristic function to be used when performing informed search. */
 	protected ToDoubleFunction<Node<String, MoveToAction>> heuristic;
 
-	public RouteFindingAgentApp() {
-	}
-
 	@Override
 	public String getTitle() {
 		return "Route Finding Agent App";

@@ -15,6 +15,7 @@ import aima.gui.demo.search.NQueensDemo;
 import aima.gui.demo.search.TicTacToeDemo;
 import aima.gui.fx.applications.agent.RouteFindingAgentApp;
 import aima.gui.fx.applications.agent.VacuumAgentApp;
+import aima.gui.fx.applications.agent.WumpusAgentApp;
 import aima.gui.fx.applications.search.MapColoringCspApp;
 import aima.gui.fx.applications.search.NQueensCspApp;
 import aima.gui.fx.applications.search.NQueensCspDemo;
@@ -57,6 +58,7 @@ public class IntegratedAimaFxApp extends Application {
 	public static void defineContent(IntegratedAppBuilder builder) {
 		builder.registerApp(VacuumAgentApp.class);
 		builder.registerApp(RouteFindingAgentApp.class);
+		builder.registerApp(WumpusAgentApp.class);
 
 		builder.registerApp(MapColoringCspApp.class);
 		builder.registerApp(NQueensCspApp.class);

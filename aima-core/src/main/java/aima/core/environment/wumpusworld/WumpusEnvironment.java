@@ -17,7 +17,8 @@ import java.util.Map;
 public class WumpusEnvironment extends AbstractEnvironment {
 
     private WumpusCave cave;
-    private boolean wumpusAlive = true;
+    private boolean isWumpusAlive = true;
+    private boolean isGoldGrabbed;
     private boolean scream;
     /** We assume that only one agent is added to the environment! */
     private boolean hasArrow =true;
@@ -26,6 +27,22 @@ public class WumpusEnvironment extends AbstractEnvironment {
 
     public WumpusEnvironment(WumpusCave cave) {
         this.cave = cave;
+    }
+
+    public WumpusCave getCave() {
+        return cave;
+    }
+
+    public boolean isWumpusAlive() {
+        return isWumpusAlive;
+    }
+
+    public boolean isGoalGrabbed() {
+        return isGoldGrabbed;
+    }
+
+    public AgentPosition getAgentPosition(Agent agent) {
+        return agentPositions.get(agent);
     }
 
     @Override
@@ -42,18 +59,18 @@ public class WumpusEnvironment extends AbstractEnvironment {
             agentPositions.put(agent, newPos);
             if (newPos.equals(pos))
                 bump = true;
-            else if (cave.isPit(newPos.getRoom()) || newPos.getRoom().equals(cave.getWumpus()) && wumpusAlive)
+            else if (cave.isPit(newPos.getRoom()) || newPos.getRoom().equals(cave.getWumpus()) && isWumpusAlive)
                 agent.setAlive(false);
         } else if (action == WumpusAction.TURN_LEFT) {
             agentPositions.put(agent, cave.turnLeft(pos));
         } else if (action == WumpusAction.TURN_RIGHT) {
             agentPositions.put(agent, cave.turnRight(pos));
         } else if (action == WumpusAction.GRAB) {
-            if (pos.getRoom().equals(cave.getGold()))
-                cave.setGold(null);
+            if (!isGoldGrabbed && pos.getRoom().equals(cave.getGold()))
+                isGoldGrabbed = true;
         } else if (action == WumpusAction.SHOOT) {
             if (hasArrow && isAgentFacingWumpus(pos)) {
-                wumpusAlive = false;
+                isWumpusAlive = false;
                 scream = true;
                 hasArrow = false;
             }

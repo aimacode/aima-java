@@ -87,9 +87,19 @@ public class WumpusCave {
 		return this;
 	}
 
-	public WumpusCave setGold(Room room) {
+	public void setWumpus(Room room) {
+		wumpus = room;
+	}
+
+	public void setGold(Room room) {
 		gold = room;
-		return this;
+	}
+
+	public void setPit(Room room, boolean b) {
+		if (!b)
+			pits.remove(room);
+		else if (!room.equals(start.getRoom()) && !room.equals(gold))
+			pits.add(room);
 	}
 
 	public int getCaveXDimension() {
