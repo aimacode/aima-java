@@ -17,7 +17,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Controller class which provides functionality to visualize a binary CSP state in a markerPane.
+ * Controller class which provides functionality to visualize a binary CSP state in a pane.
  *
  * @author Ruediger Lunde
  */
@@ -126,7 +126,7 @@ public class CspViewCtrl<VAR extends Variable, VAL> {
 
     /**
      * Computes transforms (translations and scaling) and applies them to the environment state view. Those transforms
-     * map logical positions to screen positions in the viewer markerPane. The purpose is to show the graphical state
+     * map logical positions to screen positions in the viewer pane. The purpose is to show the graphical state
      * representation as large as possible.
      *
      * @return The scale value.

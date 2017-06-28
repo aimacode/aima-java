@@ -8,7 +8,7 @@ import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusEnvironment;
 
 /**
- * Demonstrates, how hybrid logic-based agent tries to grab gold in a Wumpus cave.
+ * Demonstrates, how a hybrid search- and logic-based agent tries to find gold in a Wumpus cave.
  *
  * @author Ruediger Lunde
  */
@@ -17,7 +17,7 @@ public class WumpusAgentDemo {
         WumpusCave cave;
         cave = create2x2Cave();
         // cave = create3x3Cave();
-        // cave = createTypicalCave();
+        // cave = create4x4Cave();
 
         WumpusEnvironment env = new WumpusEnvironment(cave);
         EnvironmentView view = new SimpleEnvironmentView();
@@ -36,15 +36,15 @@ public class WumpusAgentDemo {
     private static WumpusCave create2x2Cave() {
         // Caution: 2x2 caves need a wumpus - otherwise KB becomes inconsistent in step 2...
         return new WumpusCave(2, 2, ""
-                + "W."
-                + "SG");
+                + "W . "
+                + "S G ");
     }
 
     private static WumpusCave create3x3Cave() {
         return new WumpusCave(3, 3, ""
-                + "P.G"
-                + ".W."
-                + "S.P");
+                + "P . G "
+                + ". W . "
+                + "S . P ");
     }
 
     /**
@@ -52,11 +52,11 @@ public class WumpusAgentDemo {
      * <br>
      * Figure 7.2 A typical wumpus world. The agent is in the bottom left corner, facing right.
      */
-    private static WumpusCave createTypicalCave() {
+    private static WumpusCave create4x4Cave() {
         return new WumpusCave(4, 4, ""
-                + "...P"
-                + "WGP."
-                + "...."
-                + "S.P.");
+                + ". . . P "
+                + "W G P . "
+                + ". . . . "
+                + "S . P . ");
     }
 }

@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
- * Controller class which provides functionality for using a stack markerPane as a
+ * Controller class which provides functionality for using a stack pane as a
  * state view for the N-Queens problem.
  * 
  * @author Ruediger Lunde
@@ -25,7 +25,7 @@ public class NQueensViewCtrl {
 	private Polygon[] queens = new Polygon[0];
 
 	/**
-	 * Adds a grid markerPane to the provided markerPane and creates a controller class
+	 * Adds a grid pane to the provided pane and creates a controller class
 	 * instance which is responsible for queen symbol positioning on the grid.
 	 */
 	public NQueensViewCtrl(StackPane viewRoot) {

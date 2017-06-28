@@ -59,14 +59,14 @@ public class WumpusCave {
 	 * @param caveYDimension
 	 *            the cave's y dimension.
 	 * @param config
-	 *            cave specification - one character per square, first line first, then second line etc. Mapping:
-	 *            S=start, W=Wumpus, G=gold, P=pit.
+	 *            cave specification - two character per square (unfortunately a Wumpus can reside on top of a pit),
+	 *            first line first, then second line etc. Mapping: S=start, W=Wumpus, G=gold, P=pit.
 	 */
 	public WumpusCave(int caveXDimension, int caveYDimension, String config) {
 		this(caveXDimension, caveYDimension);
 		for (int i = 0; i < config.length(); i++) {
 			char c = config.charAt(i);
-			Room r = new Room(i % caveXDimension + 1, caveYDimension - i / caveXDimension);
+			Room r = new Room(i / 2 % caveXDimension + 1, caveYDimension - i / 2 / caveXDimension);
 			switch (c) {
 				case 'S': start = new AgentPosition(r.getX(), r.getY(), AgentPosition.Orientation.FACING_NORTH); break;
 				case 'W': wumpus = r; break;
@@ -175,16 +175,23 @@ public class WumpusCave {
 		for (int y = caveYDimension; y >= 1; y--) {
 			for (int x = 1; x <= caveXDimension; x++) {
 				Room r = new Room(x, y);
+				String txt = "";
 				if (r.equals(start.getRoom()))
-					builder.append("S");
-				else if (r.equals(wumpus))
-					builder.append("W");
-				else if (r.equals(gold))
-					builder.append("G");
-				else if (isPit(r))
-					builder.append("P");
-				else
-					builder.append(".");
+					txt += "S";
+				if (r.equals(gold))
+					txt += "G";
+				if (r.equals(wumpus))
+					txt += "W";
+				if (isPit(r))
+					txt += "P";
+
+				if (txt.isEmpty())
+					txt = ". ";
+				else if (txt.length() == 1)
+					txt += " ";
+				else if ( txt.length() > 2) // cannot represent...
+					txt = txt.substring(0, 2);
+				builder.append(txt);
 			}
 			builder.append("\n");
 		}

@@ -13,7 +13,7 @@ import java.util.Observable;
  * Controller class for a simple environment view. It logs informations about
  * environment changes on a text area and can be used for any kind of
  * environment. More specific environment views can be created on this base by
- * adding state visualization to the split markerPane of this implementation.
+ * adding state visualization to the split pane of this implementation.
  * 
  * @author Ruediger Lunde
  *
@@ -24,7 +24,7 @@ public class SimpleEnvironmentViewCtrl extends Observable implements Environment
 	protected TextArea textArea;
 
 	/**
-	 * Adds a split markerPane and a text area to the provided markerPane. The result is
+	 * Adds a split pane and a text area to the provided pane. The result is
 	 * an environment view which prints messages about environment changes on
 	 * the text area.
 	 */

@@ -108,8 +108,8 @@ public class HybridWumpusAgentTest {
 	@Test
 	public void testSimulation2x2Cave() {
 		WumpusCave cave = new WumpusCave(2, 2, ""
-				+ "W."
-				+ "SG");
+				+ "W . "
+				+ "S G ");
 		WumpusEnvironment env = new WumpusEnvironment(cave);
 		SimpleActionTracker view = new SimpleActionTracker();
 		env.addEnvironmentView(view);

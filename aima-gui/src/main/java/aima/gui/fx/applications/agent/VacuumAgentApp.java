@@ -110,14 +110,6 @@ public class VacuumAgentApp extends IntegrableApplication {
             envViewCtrl.initialize(env);
             env.addEnvironmentView(envViewCtrl);
             env.addAgent(agent);
-            if (agent instanceof NondeterministicSearchAgent<?, ?>) {
-                NondeterministicProblem<VacuumEnvironmentState, Action> problem =
-                        new NondeterministicProblem<>((VacuumEnvironmentState) env.getCurrentState(),
-                                VacuumWorldFunctions::getActions, VacuumWorldFunctions.createResultsFunction(agent),
-                                VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
-                // Set the problem now for this kind of agent
-                ((NondeterministicSearchAgent<VacuumEnvironmentState, Action>) agent).makePlan(problem);
-            }
         }
     }
 
@@ -125,6 +117,14 @@ public class VacuumAgentApp extends IntegrableApplication {
      * Starts the experiment.
      */
     public void startExperiment() {
+        if (agent instanceof NondeterministicSearchAgent<?, ?>) {
+            NondeterministicProblem<VacuumEnvironmentState, Action> problem =
+                    new NondeterministicProblem<>((VacuumEnvironmentState) env.getCurrentState(),
+                            VacuumWorldFunctions::getActions, VacuumWorldFunctions.createResultsFunction(agent),
+                            VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
+            // Set the problem now for this kind of agent
+            ((NondeterministicSearchAgent<VacuumEnvironmentState, Action>) agent).makePlan(problem);
+        }
         while (!env.isDone() && !Tasks.currIsCancelled()) {
             env.step();
             taskPaneCtrl.setStatus("Performance=" + env.getPerformanceMeasure(agent));

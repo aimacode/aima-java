@@ -117,7 +117,7 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 	/**
 	 * Computes transforms (translations and scaling) and applies them to the
 	 * environment state view. Those transforms map location positions in the
-	 * map to screen positions in the viewer markerPane.
+	 * map to screen positions in the viewer pane.
 	 * @return The scale value.
 	 */
 	private double adjustTransform() {

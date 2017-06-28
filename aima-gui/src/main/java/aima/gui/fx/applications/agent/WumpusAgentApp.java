@@ -29,6 +29,7 @@ public class WumpusAgentApp extends IntegrableApplication {
 
     protected static String PARAM_CAVE = "cave";
     protected static String PARAM_AGENT = "agent";
+    protected static String PARAM_KB = "showKB";
 
     private TaskExecutionPaneCtrl taskPaneCtrl;
     private WumpusEnvironmentViewCtrl envViewCtrl;
@@ -71,7 +72,8 @@ public class WumpusAgentApp extends IntegrableApplication {
         p1.setDefaultValueIndex(2);
         Parameter p2 = new Parameter(PARAM_AGENT, "Hybrid Wumpus Agent", "Efficient Wumpus Agent");
         p2.setDefaultValueIndex(1);
-        return Arrays.asList(p1, p2);
+        Parameter p3 = new Parameter(PARAM_KB, "False", "True");
+        return Arrays.asList(p1, p2, p3);
     }
 
     /** Is called after each parameter selection change. */
@@ -80,22 +82,22 @@ public class WumpusAgentApp extends IntegrableApplication {
         switch (taskPaneCtrl.getParamValueIndex(PARAM_CAVE)) {
             case 0:
                 cave = new WumpusCave(2, 2, ""
-                        + "W."
-                        + "SG");
+                        + "W . "
+                        + "S G ");
                 break;
             case 1:
                 cave = new WumpusCave(3, 3, ""
-                        + "P.G"
-                        + ".W."
-                        + "S.P");
+                        + "P . G "
+                        + ". W . "
+                        + "S . P ");
                 break;
             case 2:
                 // from Figure 7.2 A typical wumpus world.
                 cave = new WumpusCave(4, 4, ""
-                        + "...P"
-                        + "WGP."
-                        + "...."
-                        + "S.P.");
+                        + ". . . P "
+                        + "W G P . "
+                        + ". . . . "
+                        + "S . P . ");
                 break;
         }
         env = new WumpusEnvironment(cave);
@@ -119,6 +121,8 @@ public class WumpusAgentApp extends IntegrableApplication {
             updateStatus();
             taskPaneCtrl.waitAfterStep();
         }
+        if (taskPaneCtrl.getParamValueIndex(PARAM_KB) == 1)
+            env.notifyViews("KB:\n" + agent.getKB().toString());
     }
 
     @Override

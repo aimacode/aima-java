@@ -25,7 +25,7 @@ public class SudokuViewCtrl {
     private List<ComboBox<String>> combos = new ArrayList<>(81);
 
     /**
-     * Adds a grid markerPane with combo boxes to the provided root markerPane and returns
+     * Adds a grid pane with combo boxes to the provided root pane and returns
      * a controller class instance containing application logic.
      */
     public SudokuViewCtrl(StackPane viewRoot) {
