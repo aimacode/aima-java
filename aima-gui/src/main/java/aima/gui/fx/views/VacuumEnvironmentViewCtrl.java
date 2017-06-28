@@ -63,8 +63,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
                 btn.getLabel().setText("dirty");
             else
                 btn.getLabel().setText("clean");
-            char c = (char) ('A' + x - 1);
-            btn.getIdLabel().setText(Character.toString(c));
+            btn.getIdLabel().setText(locations.get((x - 1)));
             btn.getPane().getChildren().clear();
         }
         for (Agent agent : vEnv.getAgents()) {
