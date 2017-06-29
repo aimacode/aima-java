@@ -92,7 +92,6 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
         visitedRooms.add(currentPosition.getRoom());
     }
 
-
     /**
      * function HYBRID-WUMPUS-AGENT(percept) returns an action<br>
      *
@@ -113,16 +112,16 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
         Set<Room> safe = null;
         Set<Room> unvisited = null;
 
-        // Speed optimization: Do not ask anything during plan execution (different from pseudo-code)
+        // Optimization: Do not ask anything during plan execution (different from pseudo-code)
         if (plan.isEmpty()) {
             notifyViews("Reasoning (t=" + t + ", Percept=" + percept + ", Pos=" + currentPosition + ") ...");
-
             // safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
             safe = getKB().askSafeRooms(t, visitedRooms);
             notifyViews("Ask safe -> " + safe);
         }
 
-        // if ASK(KB, Glitter<sup>t</sup>) = true then (can only be true when plan is empty!)
+        // if ASK(KB, Glitter<sup>t</sup>) = true then
+        // Optimization: Use percept (condition can only be true if plan is empty).
         if (plan.isEmpty() && ((WumpusPercept) percept).isGlitter()) {
             // plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
             Set<Room> goals = new LinkedHashSet<>();
@@ -135,6 +134,7 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
         // if plan is empty then
         if (plan.isEmpty()) {
             // unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
+            // Optimization: Agent remembers visited locations, no need to ask.
             unvisited = SetOps.difference(modelCave.getAllRooms(), visitedRooms);
             // plan <- PLAN-ROUTE(current, unvisited &cap; safe, safe)
             plan.addAll(planRouteToRooms(unvisited, safe));
@@ -152,10 +152,12 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
         // if plan is empty then //no choice but to take a risk
         if (plan.isEmpty()) {
             // not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
-            Set<Room> notUnsafe = getKB().askNotUnsafeRooms(t);
+            // Optimization: Do not check visited rooms again.
+            Set<Room> notUnsafe = getKB().askNotUnsafeRooms(t, visitedRooms);
             notifyViews("Ask not unsafe -> " + notUnsafe);
             // plan <- PLAN-ROUTE(current, unvisited &cap; not_unsafe, safe)
-            plan.addAll(planRouteToRooms(unvisited, notUnsafe)); // last argument must be notUnsafe!
+            // Correction: Last argument must be not_unsafe!
+            plan.addAll(planRouteToRooms(unvisited, notUnsafe));
         }
 
         // if plan is empty then
@@ -203,7 +205,7 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
     }
 
     /**
-     * Uses the model cave to update the current agent positon.
+     * Uses the model cave to update the current agent position.
      */
     private void updateAgentPosition(WumpusAction action) {
         modelCave.setAllowed(modelCave.getAllRooms());

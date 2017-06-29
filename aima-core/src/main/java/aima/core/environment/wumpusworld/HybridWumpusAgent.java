@@ -125,7 +125,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 		Set<Room> safe = null;
 		Set<Room> unvisited = null;
 
-		// Speed optimization: Do not ask anything during plan execution (different from pseudo-code)
+		// Optimization: Do not ask anything during plan execution (different from pseudo-code)
 		if (plan.isEmpty()) {
 			notifyViews("Reasoning (t=" + t + ", Percept=" + percept + ") ...");
 			currentPosition = kb.askCurrentPosition(t);
@@ -169,7 +169,8 @@ public class HybridWumpusAgent extends AbstractAgent {
 			Set<Room> notUnsafe = kb.askNotUnsafeRooms(t);
 			notifyViews("Ask not unsafe -> " + notUnsafe);
 			// plan <- PLAN-ROUTE(current, unvisited &cap; not_unsafe, safe)
-			plan.addAll(planRouteToRooms(unvisited, notUnsafe)); // last argument must be notUnsafe!
+			// Correction: Last argument must be not_unsafe!
+			plan.addAll(planRouteToRooms(unvisited, notUnsafe));
 		}
 
 		// if plan is empty then
