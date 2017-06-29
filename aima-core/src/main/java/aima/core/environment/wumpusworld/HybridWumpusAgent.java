@@ -4,7 +4,6 @@ import aima.core.agent.Action;
 import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.logic.propositional.inference.DPLLSatisfiable;
 import aima.core.logic.propositional.inference.OptimizedDPLL;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
@@ -94,8 +93,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 	}
 
 	public HybridWumpusAgent(int caveDimensions, AgentPosition start, EnvironmentViewNotifier notifier) {
-		// kb = new WumpusKnowledgeBase(new OptimizedDPLL(), caveDimensions, start); // buggy?
-		kb = new WumpusKnowledgeBase(new DPLLSatisfiable(), caveDimensions, start);
+		kb = new WumpusKnowledgeBase(new OptimizedDPLL(), caveDimensions, start);
 		this.start = start;
 		this.currentPosition = start;
 		this.notifier = notifier;
@@ -234,7 +232,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 				new AStarSearch<>(new GraphSearch<>(), new ManhattanHeuristicFunction(goals));
 		Optional<List<WumpusAction>> actions = search.findActions(problem);
 
-		return actions.isPresent() ? actions.get() : Collections.EMPTY_LIST;
+		return actions.isPresent() ? actions.get() : Collections.emptyList();
 	}
 
 	/**

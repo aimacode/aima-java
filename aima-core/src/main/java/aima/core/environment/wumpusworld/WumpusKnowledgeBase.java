@@ -146,37 +146,6 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
     }
 
     public AgentPosition askCurrentPosition(int t) {
-
-        // There seems to be a bug in OptimizedDPLL (incorrect position computation):
-        // Call with: WumpusAgentDemo, 2x2 cave, OptimizedDPLL (HybridWumpusAgend-Constructor)
-        /*
-        if (t == 4) { // todo
-			System.out.println("Ask L_3_1_1: " + ask(newSymbol(LOCATION, 3, 1, 1))); // false
-			System.out.println("Ask L_3_1_2: " + ask(newSymbol(LOCATION, 3, 1, 2))); // true
-			System.out.println("Ask L_3_2_1: " + ask(newSymbol(LOCATION, 3, 2, 1))); // false
-			System.out.println("Ask L_3_2_2: " + ask(newSymbol(LOCATION, 3, 2, 2))); // false
-			System.out.println("Ask North_3: " + ask(newSymbol(FACING_NORTH, 3))); // false
-			System.out.println("Ask South_3: " + ask(newSymbol(FACING_SOUTH, 3))); // false
-			System.out.println("Ask East_3: " + ask(newSymbol(FACING_EAST, 3))); // true
-			System.out.println("Ask West_3: " + ask(newSymbol(FACING_WEST, 3))); // false
-
-			System.out.println("Ask L_4_1_1: " + ask(newSymbol(LOCATION, 4, 1, 1)) + " !"); // true (incorrect)
-			System.out.println("Ask L_4_2_2: " + ask(newSymbol(LOCATION, 4, 2, 2)) + " !"); // true (correct)
-			System.out.println("Ask North_4: " + ask(newSymbol(FACING_NORTH, 4))); // false
-			System.out.println("Ask South_4: " + ask(newSymbol(FACING_SOUTH, 4))); // false
-			System.out.println("Ask East_4: " + ask(newSymbol(FACING_EAST, 4))); // true
-			System.out.println("Ask West_4: " + ask(newSymbol(FACING_WEST, 4))); // false
-
-			System.out.println("Ask L_5_1_1: " + ask(newSymbol(LOCATION, 5, 1, 1))); // false
-			System.out.println("Ask L_5_1_2: " + ask(newSymbol(LOCATION, 5, 1, 2))); // false
-			System.out.println("Ask L_5_2_1: " + ask(newSymbol(LOCATION, 5, 2, 1))); // false
-			System.out.println("Ask L_5_2_2: " + ask(newSymbol(LOCATION, 5, 2, 2))); // false
-
-			// L_4_1_1 is only constrained by:
-			// L_4_1_1 <=> L_3_1_1 & (~FORWARD_3 | Bump_4) | L_3_1_2 & FACING_SOUTH_3 & FORWARD_3 | L_3_2_1 & FACING_WEST_3 & FORWARD_3
-		}
-		*/
-
         int locX = -1, locY = -1;
         for (int x = 1; x <= getCaveXDimension() && locX == -1; x++) {
             for (int y = 1; y <= getCaveYDimension() && locY == -1; y++) {

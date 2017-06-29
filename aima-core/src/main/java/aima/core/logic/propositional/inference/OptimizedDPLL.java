@@ -85,8 +85,8 @@ public class OptimizedDPLL implements DPLL {
 		// if P is non-null then
 		if (pAndValue != null) {
 			// return DPLL(clauses, symbols - P, model U {P = value})
-			return dpll(clauses, minus(symbols, pAndValue.getFirst()),
-					model.unionInPlace(pAndValue.getFirst(), pAndValue.getSecond()));
+			return callDPLL(clauses, minus(symbols, pAndValue.getFirst()), model, 
+					pAndValue.getFirst(), pAndValue.getSecond()); 
 		}
 
 		// P, value <- FIND-UNIT-CLAUSE(clauses, model)
@@ -94,8 +94,8 @@ public class OptimizedDPLL implements DPLL {
 		// if P is non-null then
 		if (pAndValue != null) {
 			// return DPLL(clauses, symbols - P, model U {P = value})
-			return dpll(clauses, minus(symbols, pAndValue.getFirst()),
-					model.unionInPlace(pAndValue.getFirst(), pAndValue.getSecond()));
+			return callDPLL(clauses, minus(symbols, pAndValue.getFirst()), model, 
+					pAndValue.getFirst(), pAndValue.getSecond());
 		}
 
 		// P <- FIRST(symbols); rest <- REST(symbols)
