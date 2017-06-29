@@ -4,6 +4,7 @@ import aima.core.agent.Action;
 import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
+import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
 import aima.core.logic.propositional.inference.OptimizedDPLL;
 import aima.core.search.framework.SearchForActions;
@@ -90,12 +91,12 @@ public class HybridWumpusAgent extends AbstractAgent {
 	}
 
 	public HybridWumpusAgent(int caveDimensions, AgentPosition start) {
-		this(caveDimensions, start, null);
+		this(caveDimensions, start, new DPLLSatisfiable(), null);
 	}
 
-	public HybridWumpusAgent(int caveDimensions, AgentPosition start, EnvironmentViewNotifier notifier) {
+	public HybridWumpusAgent(int caveDimensions, AgentPosition start, DPLL dpll, EnvironmentViewNotifier notifier) {
 		// kb = new WumpusKnowledgeBase(new OptimizedDPLL(), caveDimensions, start); // buggy?
-		kb = new WumpusKnowledgeBase(new DPLLSatisfiable(), caveDimensions, start);
+		kb = new WumpusKnowledgeBase(dpll, caveDimensions, start);
 		this.start = start;
 		this.currentPosition = start;
 		this.notifier = notifier;
