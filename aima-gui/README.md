@@ -2,7 +2,7 @@
 
 by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 
-![WumpusAgentApp Demo Application](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-gui/src/main/uml/WumpusDemoApp.png)
+![WumpusAgentApp Demo Application](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-gui/src/main/uml/WumpusAgentApp.png)
 
 This project contains graphical applications and command line demos. The command line demos show
 how to use selected parts of the aima-core API. The applications support interactive experiments with
