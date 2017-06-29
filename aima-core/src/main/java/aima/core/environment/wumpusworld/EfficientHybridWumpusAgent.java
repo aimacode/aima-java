@@ -118,7 +118,7 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
             notifyViews("Reasoning (t=" + t + ", Percept=" + percept + ", Pos=" + currentPosition + ") ...");
 
             // safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
-            safe = getKB().askSafeRooms(t);
+            safe = getKB().askSafeRooms(t, visitedRooms);
             notifyViews("Ask safe -> " + safe);
         }
 

@@ -26,9 +26,8 @@ import java.util.function.ToIntFunction;
  */
 public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 
-    private GridPane gridPane = new GridPane();
-    private List<SquareButton> squareButtons = new ArrayList<>();
     protected Label actionLabel = new Label();
+    protected double fontSizeFactor = 0.3;
     protected boolean isEditingEnabled; // edit cave only after initialization, not during agent simulation!
     protected IntegerProperty xDimension = new SimpleIntegerProperty(-1);
     protected IntegerProperty yDimension = new SimpleIntegerProperty(-1);
@@ -37,6 +36,8 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
     protected Environment env;
     private ToIntFunction<Environment> xDimFn;
     private ToIntFunction<Environment> yDimFn;
+    private GridPane gridPane = new GridPane();
+    private List<SquareButton> squareButtons = new ArrayList<>();
 
     protected AbstractGridEnvironmentViewCtrl(StackPane viewRoot, ToIntFunction<Environment> xDimFn,
                                               ToIntFunction<Environment> yDimFn) {
@@ -53,54 +54,16 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
         //viewRoot.setAlignment(Pos.BOTTOM_CENTER);
         squareSize.bind(Bindings.min(envStateView.widthProperty().subtract(20).divide(xDimension),
                 envStateView.heightProperty().subtract(20).subtract(actionLabel.heightProperty()).divide(yDimension)));
+        squareSize.addListener((obs, o, n) -> updateFontSize());
         gridPane.maxWidthProperty().bind(squareSize.multiply(xDimension));
         gridPane.maxHeightProperty().bind(squareSize.multiply(yDimension));
-        gridPane.setVgap(20);
-        gridPane.setHgap(20);
+        gridPane.vgapProperty().bind(squareSize.divide(20));
+        gridPane.hgapProperty().bind(squareSize.divide(20));
 
         actionLabel.setMaxWidth(Double.MAX_VALUE);
         actionLabel.setAlignment(Pos.CENTER);
         actionLabel.setFont(Font.font(20));
         envStateView.setBottom(actionLabel);
-    }
-
-    /**
-     * Updates the grid structure for a new or changed environment if necessary.
-     */
-    private void updateDimensions() {
-        int xDim = xDimFn.applyAsInt(env);
-        int yDim = yDimFn.applyAsInt(env);
-        if (xDim != xDimension.get() || yDim != yDimension.get()) {
-            xDimension.set(xDim);
-            yDimension.set(yDim);
-
-            gridPane.getChildren().clear();
-            gridPane.getRowConstraints().clear();
-            gridPane.getColumnConstraints().clear();
-
-            RowConstraints rc = new RowConstraints();
-            rc.setPercentHeight(100.0 / yDim);
-            for (int row = 0; row < yDim; row++)
-                gridPane.getRowConstraints().add(rc);
-
-            ColumnConstraints cc = new ColumnConstraints();
-            cc.setPercentWidth(100.0 / xDim);
-            for (int col = 0; col < xDim; col++)
-                gridPane.getColumnConstraints().add(cc);
-
-            squareButtons.clear();
-            for (int y = 1; y <= yDim; y++) {
-                for (int x = 1; x <= xDim; x++) {
-                    final int x1 = x;
-                    final int y1 = y;
-                    SquareButton btn = new SquareButton();
-                    btn.idLabel.setText(x1 + ", " + y1);
-                    btn.setOnAction(ev -> onEdit(x1, y1));
-                    squareButtons.add(btn);
-                    gridPane.add(btn, x - 1, yDim - y);
-                }
-            }
-        }
     }
 
     protected SquareButton getSquareButton(int x, int y) {
@@ -109,12 +72,58 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
 
     @Override
     public void initialize(Environment env) {
-        xDimension.set(-1);
-        yDimension.set(-1);
+        this.env = env;
+        updateDimensions();
         super.initialize(env);
         isEditingEnabled = true;
     }
 
+    /**
+     * Updates the grid structure during initialization.
+     */
+    private void updateDimensions() {
+        int xDim = xDimFn.applyAsInt(env);
+        int yDim = yDimFn.applyAsInt(env);
+        xDimension.set(xDim);
+        yDimension.set(yDim);
+
+        gridPane.getChildren().clear();
+        gridPane.getRowConstraints().clear();
+        gridPane.getColumnConstraints().clear();
+
+        RowConstraints rc = new RowConstraints();
+        rc.setPercentHeight(100.0 / yDim);
+        for (int row = 0; row < yDim; row++)
+            gridPane.getRowConstraints().add(rc);
+
+        ColumnConstraints cc = new ColumnConstraints();
+        cc.setPercentWidth(100.0 / xDim);
+        for (int col = 0; col < xDim; col++)
+            gridPane.getColumnConstraints().add(cc);
+
+        squareButtons.clear();
+        for (int y = 1; y <= yDim; y++) {
+            for (int x = 1; x <= xDim; x++) {
+                final int x1 = x;
+                final int y1 = y;
+                SquareButton btn = new SquareButton();
+                btn.getIdLabel().setText(x1 + ", " + y1);
+                if (squareSize.get() < 80)
+                    btn.getIdLabel().setVisible(false);
+                btn.setOnAction(ev -> onEdit(x1, y1));
+                squareButtons.add(btn);
+                gridPane.add(btn, x - 1, yDim - y);
+            }
+        }
+        updateFontSize();
+    }
+
+    private void updateFontSize() {
+        for (SquareButton btn : squareButtons)
+            btn.getLabel().setFont(Font.font(squareSize.get() * fontSizeFactor));
+    }
+
+    /** Can be called from any thread. */
     @Override
     public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
         super.agentActed(agent, percept, action, source);
@@ -125,8 +134,8 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
     /** Updates the view. */
     @Override
     protected final void updateEnvStateView(Environment env) {
-        this.env =  env;
-        updateDimensions();
+        if (this.env != env)
+            throw new IllegalStateException("Environment can only be changed during initialization.");
         actionLabel.setText("");
         update();
     }
@@ -160,12 +169,11 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
             setGraphic(sp);
             pane = new StackPane();
             label = new Label();
-            label.setFont(Font.font(40));
             idLabel = new Label();
-            idLabel.setFont(Font.font(20));
             StackPane.setAlignment(idLabel, Pos.TOP_LEFT);
             sp.getChildren().addAll(idLabel, pane, label);
             setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            setMinSize(10, 10);
         }
 
         public Pane getPane() {

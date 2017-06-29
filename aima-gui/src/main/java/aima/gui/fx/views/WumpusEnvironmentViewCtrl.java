@@ -2,6 +2,7 @@ package aima.gui.fx.views;
 
 
 import aima.core.agent.Agent;
+import aima.core.agent.Environment;
 import aima.core.environment.wumpusworld.AgentPosition;
 import aima.core.environment.wumpusworld.Room;
 import aima.core.environment.wumpusworld.WumpusCave;
@@ -11,8 +12,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Environment view controller class which is specialized for wumpus environments.
@@ -23,10 +26,18 @@ import java.util.List;
  */
 public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
 
+    private Map<Agent, Shape> agentSymbols = new HashMap<>();
+
     public WumpusEnvironmentViewCtrl(StackPane viewRoot) {
         super(viewRoot,
                 env -> ((WumpusEnvironment) env).getCave().getCaveXDimension(),
                 env -> ((WumpusEnvironment) env).getCave().getCaveYDimension());
+    }
+
+    @Override
+    public void initialize(Environment env) {
+        agentSymbols.clear();
+        super.initialize(env);
     }
 
     protected void update() {
@@ -61,9 +72,10 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         // visualize agent positions
         for (Agent agent : wEnv.getAgents()) {
             AgentPosition pos = wEnv.getAgentPosition(agent);
-            Pane pane = getSquareButton(pos.getX(), pos.getY()).getPane();
-            pane.getChildren().add(createAgentSymbol(pane, agent.isAlive() ? Color.RED : Color.LIGHTGRAY,
-                    pos.getOrientation()));
+            if (pos != null) { // hm...
+                Pane pane = getSquareButton(pos.getX(), pos.getY()).getPane();
+                pane.getChildren().add(getAgentSymbol(agent, pos));
+            }
         }
     }
 
@@ -75,7 +87,7 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
             actionLabel.setText("Cave can only be edited after initialization.");
         else if (!room.equals(cave.getStart().getRoom()) && !room.equals(cave.getGold())) {
             if (cave.isPit(room)) {
-                if (cave.getWumpus().equals(room))
+                if (room.equals(cave.getWumpus()))
                     cave.setPit(room, false);
                 else
                     cave.setWumpus(room);
@@ -86,11 +98,20 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         }
     }
 
-    private Node createAgentSymbol(Pane pane, Color color, AgentPosition.Orientation orientation) {
-        int size = squareSize.get() / 2;
-        Polygon result = new Polygon(-size / 3, size, size / 3, size, 0, 0);
-        result.setFill(color);
-        switch (orientation) {
+    private Node getAgentSymbol(Agent agent, AgentPosition pos) {
+        Shape result = agentSymbols.get(agent);
+        if (result == null) {
+            result = new Polygon(-1.0 / 3, 1, 1.0 / 3, 1, 0, 0);
+            result.scaleXProperty().bind(squareSize.multiply(0.75));
+            result.scaleYProperty().bind(squareSize.multiply(0.75));
+            agentSymbols.put(agent, result);
+        }
+
+        result.setFill(agent.isAlive() ? Color.RED : Color.LIGHTGRAY);
+        switch (pos.getOrientation()) {
+            case FACING_NORTH:
+                result.setRotate(0);
+                break;
             case FACING_EAST:
                 result.setRotate(90);
                 break;

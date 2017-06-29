@@ -116,6 +116,7 @@ public class VacuumAgentApp extends IntegrableApplication {
     /**
      * Starts the experiment.
      */
+    @SuppressWarnings("unchecked")
     public void startExperiment() {
         if (agent instanceof NondeterministicSearchAgent<?, ?>) {
             NondeterministicProblem<VacuumEnvironmentState, Action> problem =

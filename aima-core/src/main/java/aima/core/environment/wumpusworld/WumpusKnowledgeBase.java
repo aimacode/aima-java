@@ -199,6 +199,20 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
         return safe;
     }
 
+    // safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
+    // Optimization: In this version, the agent provides already visited rooms. There is no need to check again.
+    public Set<Room> askSafeRooms(int t, Set<Room> visited) {
+        Set<Room> safe = new LinkedHashSet<>();
+        for (int x = 1; x <= getCaveXDimension(); x++) {
+            for (int y = 1; y <= getCaveYDimension(); y++) {
+                Room r = new Room(x, y);
+                if (visited.contains(r) || ask(newSymbol(OK_TO_MOVE_INTO, t, x, y)))
+                    safe.add(new Room(x, y));
+            }
+        }
+        return safe;
+    }
+
     public boolean askGlitter(int t) {
         return ask(newSymbol(PERCEPT_GLITTER, t));
     }

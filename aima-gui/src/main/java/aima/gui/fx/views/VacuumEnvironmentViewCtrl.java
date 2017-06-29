@@ -12,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Shape;
 
 import java.util.*;
 
@@ -26,6 +27,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
 
     private Set<Agent> agentsInSuckState = new HashSet<>();
     private Map<Agent, Integer> agentOrientations = new HashMap<>();
+    private Map<Agent, Arc> agentSymbols = new HashMap<>();
 
     public VacuumEnvironmentViewCtrl(StackPane viewRoot) {
         super(viewRoot, env -> ((VacuumEnvironment) env).getLocations().size(), env -> 1);
@@ -35,7 +37,13 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
     public void initialize(Environment env) {
         agentsInSuckState.clear();
         agentOrientations.clear();
+        agentSymbols.clear();
         super.initialize(env);
+        List<String> locations = ((VacuumEnvironment) env).getLocations();
+        for (int x = 1; x <= locations.size(); x++) {
+            SquareButton btn = getSquareButton(x, 1);
+            btn.getIdLabel().setText(locations.get((x - 1)));
+        }
     }
 
     @Override
@@ -51,6 +59,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         super.agentActed(agent, percept, action, source);
     }
 
+    @Override
     protected void update() {
         VacuumEnvironment vEnv = ((VacuumEnvironment) env);
         List<String> locations = vEnv.getLocations();
@@ -60,7 +69,6 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
                 btn.getLabel().setText("Dirty");
             else
                 btn.getLabel().setText(""); // "Clean"
-            btn.getIdLabel().setText(locations.get((x - 1)));
             btn.getPane().getChildren().clear();
         }
         for (Agent agent : vEnv.getAgents()) {
@@ -68,7 +76,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
             Integer orientation = agentOrientations.get(agent);
             if (orientation == null)
                 orientation = 0;
-            btn.getPane().getChildren().add(createAgentSymbol(agentsInSuckState.contains(agent), orientation));
+            btn.getPane().getChildren().add(getAgentSymbol(agent, orientation));
         }
     }
 
@@ -86,17 +94,20 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         }
     }
 
+    private Node getAgentSymbol(Agent agent, int orientation) {
+        Arc result = agentSymbols.get(agent);
+        if (result == null) {
+            result = new Arc();
+            result.radiusXProperty().bind(squareSize.multiply(0.75 / 2));
+            result.radiusYProperty().bind(squareSize.multiply(0.75 / 2));
+            result.setStartAngle(45.0f);
+            result.setType(ArcType.ROUND);
+            result.setFill(Color.RED);
+            agentSymbols.put(agent, result);
+        }
 
-
-    protected Node createAgentSymbol(boolean suck, int orientation) {
-        Arc arc = new Arc();
-        arc.radiusXProperty().bind(squareSize.multiply(0.3));
-        arc.radiusYProperty().bind(squareSize.multiply(0.3));
-        arc.setStartAngle(45.0f);
-        arc.setLength(suck ? 360.0f : 270.0f);
-        arc.setType(ArcType.ROUND);
-        arc.setFill(Color.RED);
-        arc.setRotate(orientation);
-        return arc;
+        result.setLength(agentsInSuckState.contains(agent) ? 360.0f : 270.0f);
+        result.setRotate(orientation);
+        return result;
     }
 }
