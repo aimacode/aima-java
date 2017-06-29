@@ -6,6 +6,7 @@ import aima.core.environment.wumpusworld.AgentPosition;
 import aima.core.environment.wumpusworld.Room;
 import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusEnvironment;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -57,12 +58,12 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
             }
         }
 
-        // visualize agent position
-        List<Agent> agents = env.getAgents();
-        if (!agents.isEmpty()) {
-            AgentPosition pos = wEnv.getAgentPosition(agents.get(0));
+        // visualize agent positions
+        for (Agent agent : wEnv.getAgents()) {
+            AgentPosition pos = wEnv.getAgentPosition(agent);
             Pane pane = getSquareButton(pos.getX(), pos.getY()).getPane();
-            addAgentMarker(pane, agents.get(0).isAlive() ? Color.RED : Color.LIGHTGRAY, pos.getOrientation());
+            pane.getChildren().add(createAgentSymbol(pane, agent.isAlive() ? Color.RED : Color.LIGHTGRAY,
+                    pos.getOrientation()));
         }
     }
 
@@ -74,11 +75,10 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
             actionLabel.setText("Cave can only be edited after initialization.");
         else if (!room.equals(cave.getStart().getRoom()) && !room.equals(cave.getGold())) {
             if (cave.isPit(room)) {
-                if (cave.getWumpus().equals(room)) {
+                if (cave.getWumpus().equals(room))
                     cave.setPit(room, false);
-                } else {
+                else
                     cave.setWumpus(room);
-                }
             } else {
                 cave.setPit(room, true);
             }
@@ -86,21 +86,21 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         }
     }
 
-    private void addAgentMarker(Pane pane, Color color, AgentPosition.Orientation orientation) {
+    private Node createAgentSymbol(Pane pane, Color color, AgentPosition.Orientation orientation) {
         int size = squareSize.get() / 2;
-        Polygon marker = new Polygon(-size / 3, size, size / 3, size, 0, 0);
-        marker.setFill(color);
+        Polygon result = new Polygon(-size / 3, size, size / 3, size, 0, 0);
+        result.setFill(color);
         switch (orientation) {
             case FACING_EAST:
-                marker.setRotate(90);
+                result.setRotate(90);
                 break;
             case FACING_SOUTH:
-                marker.setRotate(180);
+                result.setRotate(180);
                 break;
             case FACING_WEST:
-                marker.setRotate(270);
+                result.setRotate(270);
                 break;
         }
-        pane.getChildren().add(marker);
+        return result;
     }
 }

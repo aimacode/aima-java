@@ -7,9 +7,6 @@ import aima.core.agent.Percept;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.environment.vacuum.VacuumEnvironment.LocationState;
 import aima.core.environment.vacuum.VacuumEnvironmentState;
-import aima.core.environment.wumpusworld.Room;
-import aima.core.environment.wumpusworld.WumpusCave;
-import aima.core.environment.wumpusworld.WumpusEnvironment;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -71,7 +68,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
             Integer orientation = agentOrientations.get(agent);
             if (orientation == null)
                 orientation = 0;
-            btn.getPane().getChildren().add(createAgentRep(agentsInSuckState.contains(agent), orientation));
+            btn.getPane().getChildren().add(createAgentSymbol(agentsInSuckState.contains(agent), orientation));
         }
     }
 
@@ -91,7 +88,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
 
 
 
-    protected Node createAgentRep(boolean suck, int orientation) {
+    protected Node createAgentSymbol(boolean suck, int orientation) {
         Arc arc = new Arc();
         arc.radiusXProperty().bind(squareSize.multiply(0.3));
         arc.radiusYProperty().bind(squareSize.multiply(0.3));

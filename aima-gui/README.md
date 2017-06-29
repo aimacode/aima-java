@@ -2,10 +2,13 @@
 
 by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 
-This project contains graphical applications and command line demos, which
-demonstrate the use of some of the aima-core project features. Currently, it
-focuses on search algorithms and agent concepts. Application class names end
-with "App" and command line demo class names end with "Demo".
+![WumpusAgentApp Demo Application](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-gui/src/main/uml/WumpusDemoApp.png)
+
+This project contains graphical applications and command line demos. The command line demos show
+how to use selected parts of the aima-core API. The applications support interactive experiments with
+some of the core algorithms, especially from the search and logic area.
+ 
+Application class names end with "App" and command line demo class names end with "Demo".
 Simple demo command line applications can be found in package `aima.gui.demo`.
 Graphical demo applications are available based on JavaFX (package `aima.gui.fx.applications`) and
 Swing (package `aima.gui.swing.applications`). Each platform-specific root package contains an
