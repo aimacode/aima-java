@@ -109,6 +109,8 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
 
     @Override
     public void initialize(Environment env) {
+        xDimension.set(-1);
+        yDimension.set(-1);
         super.initialize(env);
         isEditingEnabled = true;
     }

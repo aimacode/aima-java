@@ -60,9 +60,9 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         for (int x = 1; x <= locations.size(); x++) {
             SquareButton btn = getSquareButton(x, 1);
             if (vEnv.getLocationState(locations.get(x-1)).equals(LocationState.Dirty))
-                btn.getLabel().setText("dirty");
+                btn.getLabel().setText("Dirty");
             else
-                btn.getLabel().setText("clean");
+                btn.getLabel().setText(""); // "Clean"
             btn.getIdLabel().setText(locations.get((x - 1)));
             btn.getPane().getChildren().clear();
         }

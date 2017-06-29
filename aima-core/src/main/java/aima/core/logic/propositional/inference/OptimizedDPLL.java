@@ -49,8 +49,7 @@ public class OptimizedDPLL implements DPLL {
 	 *         otherwise.
 	 */
 	@Override
-	public boolean dpll(Set<Clause> clauses, List<PropositionSymbol> symbols,
-			Model model) {
+	public boolean dpll(Set<Clause> clauses, List<PropositionSymbol> symbols, Model model) {
 		// if every clause in clauses is true in model then return true
 		// if some clause in clauses is false in model then return false
 		// NOTE: for optimization reasons we only want to determine the
@@ -85,8 +84,8 @@ public class OptimizedDPLL implements DPLL {
 		// if P is non-null then
 		if (pAndValue != null) {
 			// return DPLL(clauses, symbols - P, model U {P = value})
-			return dpll(clauses, minus(symbols, pAndValue.getFirst()),
-					model.unionInPlace(pAndValue.getFirst(), pAndValue.getSecond()));
+			return callDPLL(clauses, minus(symbols, pAndValue.getFirst()), model, 
+					pAndValue.getFirst(), pAndValue.getSecond()); 
 		}
 
 		// P, value <- FIND-UNIT-CLAUSE(clauses, model)
@@ -94,8 +93,8 @@ public class OptimizedDPLL implements DPLL {
 		// if P is non-null then
 		if (pAndValue != null) {
 			// return DPLL(clauses, symbols - P, model U {P = value})
-			return dpll(clauses, minus(symbols, pAndValue.getFirst()),
-					model.unionInPlace(pAndValue.getFirst(), pAndValue.getSecond()));
+			return callDPLL(clauses, minus(symbols, pAndValue.getFirst()), model, 
+					pAndValue.getFirst(), pAndValue.getSecond());
 		}
 
 		// P <- FIRST(symbols); rest <- REST(symbols)
@@ -120,17 +119,17 @@ public class OptimizedDPLL implements DPLL {
 	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
 		// AIMA3e p.g. 260: kb |= alpha, can be done by testing
 		// unsatisfiability of kb & ~alpha.
-		Set<Clause>             kbAndNotAlpha = new LinkedHashSet<Clause>();
+		Set<Clause>             kbAndNotAlpha = new LinkedHashSet<>();
 		Sentence                notQuery      = new ComplexSentence(Connective.NOT, alpha);
-		Set<PropositionSymbol>  symbols       = new LinkedHashSet<PropositionSymbol>();
-		List<PropositionSymbol> querySymbols  = new ArrayList<PropositionSymbol>(SymbolCollector.getSymbolsFrom(notQuery));
+		Set<PropositionSymbol>  symbols       = new LinkedHashSet<>();
+		List<PropositionSymbol> querySymbols  = new ArrayList<>(SymbolCollector.getSymbolsFrom(notQuery));
 		
 		kbAndNotAlpha.addAll(kb.asCNF());
 		kbAndNotAlpha.addAll(ConvertToConjunctionOfClauses.convert(notQuery).getClauses());
 		symbols.addAll(querySymbols);
 		symbols.addAll(kb.getSymbols());
 
-		return !dpll(kbAndNotAlpha, new ArrayList<PropositionSymbol>(symbols), new Model());
+		return !dpll(kbAndNotAlpha, new ArrayList<>(symbols), new Model());
 	}
 	// END-DPLL
 	//
@@ -142,10 +141,7 @@ public class OptimizedDPLL implements DPLL {
 	// Note: Override this method if you wish to change the initial variable
 	// ordering when dpllSatisfiable is called.
 	protected List<PropositionSymbol> getPropositionSymbolsInSentence(Sentence s) {
-		List<PropositionSymbol> result = new ArrayList<PropositionSymbol>(
-				SymbolCollector.getSymbolsFrom(s));
-
-		return result;
+		return new ArrayList<>(SymbolCollector.getSymbolsFrom(s));
 	}
 	
 	protected boolean callDPLL(Set<Clause> clauses, List<PropositionSymbol> symbols,
@@ -187,11 +183,11 @@ public class OptimizedDPLL implements DPLL {
 			List<PropositionSymbol> symbols, Set<Clause> clauses, Model model) {
 		Pair<PropositionSymbol, Boolean> result = null;
 
-		Set<PropositionSymbol> symbolsToKeep = new HashSet<PropositionSymbol>(symbols);
+		Set<PropositionSymbol> symbolsToKeep = new HashSet<>(symbols);
 		// Collect up possible positive and negative candidate sets of pure
 		// symbols
-		Set<PropositionSymbol> candidatePurePositiveSymbols = new HashSet<PropositionSymbol>();
-		Set<PropositionSymbol> candidatePureNegativeSymbols = new HashSet<PropositionSymbol>();
+		Set<PropositionSymbol> candidatePurePositiveSymbols = new HashSet<>();
+		Set<PropositionSymbol> candidatePureNegativeSymbols = new HashSet<>();
 		for (Clause c : clauses) {
 			// Algorithm can ignore clauses that are already known to be true
 			// NOTE: no longer need to do this here as we remove, true clauses
@@ -223,8 +219,7 @@ public class OptimizedDPLL implements DPLL {
 
 		// We have an implicit preference for positive pure symbols
 		if (candidatePurePositiveSymbols.size() > 0) {
-			result = new Pair<PropositionSymbol, Boolean>(
-					candidatePurePositiveSymbols.iterator().next(), true);
+			result = new Pair<>(candidatePurePositiveSymbols.iterator().next(), true);
 		} // We have a negative pure symbol
 		else if (candidatePureNegativeSymbols.size() > 0) {
 			result = new Pair<PropositionSymbol, Boolean>(
@@ -303,7 +298,7 @@ public class OptimizedDPLL implements DPLL {
 			// are not true under the current model as we were
 			// unable to determine a value.
 			if (unassigned != null) {
-				result = new Pair<PropositionSymbol, Boolean>(
+				result = new Pair<>(
 						unassigned.getAtomicSentence(),
 						unassigned.isPositiveLiteral());
 				break;
@@ -316,13 +311,12 @@ public class OptimizedDPLL implements DPLL {
 	// symbols - P
 	protected List<PropositionSymbol> minus(List<PropositionSymbol> symbols,
 			PropositionSymbol p) {
-		List<PropositionSymbol> result = new ArrayList<PropositionSymbol>(
+		List<PropositionSymbol> result = new ArrayList<>(
 				symbols.size());
 		for (PropositionSymbol s : symbols) {
 			// symbols - P
-			if (!p.equals(s)) {
+			if (!p.equals(s))
 				result.add(s);
-			}
 		}
 		return result;
 	}

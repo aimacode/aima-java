@@ -26,7 +26,7 @@ public class HybridWumpusAgentTest {
 	public void testPlanRoute() {
 		HybridWumpusAgent hwa;
 
-		hwa = new HybridWumpusAgent(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
+		hwa = new HybridWumpusAgent(4, 4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		// Should be a NoOp plan as we are already at the goal.
 		Assert.assertEquals(Collections.emptyList(),
 			hwa.planRouteToRooms(
@@ -36,7 +36,7 @@ public class HybridWumpusAgentTest {
 				allRooms(4)
 		));
 
-		hwa = new HybridWumpusAgent(4, new AgentPosition(2, 1, AgentPosition.Orientation.FACING_EAST));
+		hwa = new HybridWumpusAgent(4, 4, new AgentPosition(2, 1, AgentPosition.Orientation.FACING_EAST));
 		Assert.assertEquals(Arrays.asList(WumpusAction.TURN_LEFT, WumpusAction.TURN_LEFT, WumpusAction.FORWARD),
 			hwa.planRouteToRooms(
 				new LinkedHashSet<Room>() {{
@@ -45,7 +45,7 @@ public class HybridWumpusAgentTest {
 				allRooms(4)
 		));
 
-		hwa = new HybridWumpusAgent(4, new AgentPosition(3, 1, AgentPosition.Orientation.FACING_EAST));
+		hwa = new HybridWumpusAgent(4, 4, new AgentPosition(3, 1, AgentPosition.Orientation.FACING_EAST));
 		Assert.assertEquals(Arrays.asList(WumpusAction.TURN_LEFT, WumpusAction.FORWARD, WumpusAction.FORWARD,
 				WumpusAction.TURN_LEFT, WumpusAction.FORWARD, WumpusAction.FORWARD, WumpusAction.TURN_LEFT,
 				WumpusAction.FORWARD, WumpusAction.FORWARD),
@@ -65,7 +65,7 @@ public class HybridWumpusAgentTest {
 	@Test
 	public void testPlanShot() {
 		HybridWumpusAgent hwa;
-		hwa = new HybridWumpusAgent(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
+		hwa = new HybridWumpusAgent(4, 4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		// Should be just shoot as are facing the Wumpus
 		Assert.assertEquals(Collections.singletonList(WumpusAction.SHOOT),
 			hwa.planShot(
@@ -75,7 +75,7 @@ public class HybridWumpusAgentTest {
 				allRooms(4)
 		));
 
-		hwa = new HybridWumpusAgent(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
+		hwa = new HybridWumpusAgent(4, 4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		Assert.assertEquals(Arrays.asList(WumpusAction.TURN_LEFT, WumpusAction.SHOOT),
 			hwa.planShot(
 				new LinkedHashSet<Room>() {{
@@ -84,7 +84,7 @@ public class HybridWumpusAgentTest {
 				allRooms(4)
 		));
 
-		hwa = new HybridWumpusAgent(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
+		hwa = new HybridWumpusAgent(4, 4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_EAST));
 		Assert.assertEquals(Arrays.asList(WumpusAction.FORWARD, WumpusAction.TURN_LEFT, WumpusAction.SHOOT),
 			hwa.planShot(
 				new LinkedHashSet<Room>() {{
@@ -97,7 +97,7 @@ public class HybridWumpusAgentTest {
 	@Test
 	public void testGrabAndClimb() {
 		HybridWumpusAgent hwa =
-				new HybridWumpusAgent(2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
+				new HybridWumpusAgent(2, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
 		// The gold is in the first square
 		Action a = hwa.execute(new WumpusPercept().setStench().setBreeze().setGlitter());
 		Assert.assertEquals(a, WumpusAction.GRAB);
@@ -113,7 +113,8 @@ public class HybridWumpusAgentTest {
 		WumpusEnvironment env = new WumpusEnvironment(cave);
 		SimpleActionTracker view = new SimpleActionTracker();
 		env.addEnvironmentView(view);
-		HybridWumpusAgent a = new HybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
+		HybridWumpusAgent a = new HybridWumpusAgent
+				(cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart());
 		env.addAgent(a);
 		env.stepUntilDone();
 		Assert.assertEquals(view.getActions(),

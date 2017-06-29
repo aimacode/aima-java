@@ -64,6 +64,8 @@ public class WumpusCave {
 	 */
 	public WumpusCave(int caveXDimension, int caveYDimension, String config) {
 		this(caveXDimension, caveYDimension);
+		if (config.length() != 2 * caveXDimension * caveYDimension)
+			throw new IllegalStateException("Wrong configuration length.");
 		for (int i = 0; i < config.length(); i++) {
 			char c = config.charAt(i);
 			Room r = new Room(i / 2 % caveXDimension + 1, caveYDimension - i / 2 / caveXDimension);

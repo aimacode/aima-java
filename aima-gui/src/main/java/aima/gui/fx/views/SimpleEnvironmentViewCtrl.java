@@ -44,7 +44,7 @@ public class SimpleEnvironmentViewCtrl extends Observable implements Environment
 
 	public void initialize(Environment env) {
 		if (!textArea.getText().isEmpty())
-			textArea.appendText("\n");
+			textArea.appendText("\n\n");
 		updateEnvStateView(env);
 	}
 	

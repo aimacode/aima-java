@@ -1,6 +1,9 @@
 package aima.gui.fx.applications.agent;
 
 import aima.core.environment.wumpusworld.*;
+import aima.core.logic.propositional.inference.DPLL;
+import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.OptimizedDPLL;
 import aima.core.util.Tasks;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -29,6 +32,7 @@ public class WumpusAgentApp extends IntegrableApplication {
 
     protected static String PARAM_CAVE = "cave";
     protected static String PARAM_AGENT = "agent";
+    protected static String PARAM_SAT_SOLVER = "satSolver";
     protected static String PARAM_KB = "showKB";
 
     private TaskExecutionPaneCtrl taskPaneCtrl;
@@ -68,12 +72,14 @@ public class WumpusAgentApp extends IntegrableApplication {
     }
 
     protected List<Parameter> createParameters() {
-        Parameter p1 = new Parameter(PARAM_CAVE, "2x2", "3x3", "4x4");
+        Parameter p1 = new Parameter(PARAM_CAVE, "2x2", "3x3", "4x4a", "4x4b");
         p1.setDefaultValueIndex(2);
-        Parameter p2 = new Parameter(PARAM_AGENT, "Hybrid Wumpus Agent", "Efficient Wumpus Agent");
+        Parameter p2 = new Parameter(PARAM_AGENT, "Hybrid Wumpus Agent", "Efficient Hybrid Wumpus Agent");
         p2.setDefaultValueIndex(1);
-        Parameter p3 = new Parameter(PARAM_KB, "False", "True");
-        return Arrays.asList(p1, p2, p3);
+        Parameter p3 = new Parameter(PARAM_SAT_SOLVER, "DPLLSatisfiable", "OptimizedDPLL");
+        p3.setDefaultValueIndex(1);
+        Parameter p4 = new Parameter(PARAM_KB, "False", "True");
+        return Arrays.asList(p1, p2, p3, p4);
     }
 
     /** Is called after each parameter selection change. */
@@ -99,14 +105,34 @@ public class WumpusAgentApp extends IntegrableApplication {
                         + ". . . . "
                         + "S . P . ");
                 break;
+            case 3:
+                cave = new WumpusCave(4, 4, ""
+                        + ". . W G "
+                        + ". . . P "
+                        + ". . . . "
+                        + "S . . . ");
+                break;
         }
         env = new WumpusEnvironment(cave);
-        switch (taskPaneCtrl.getParamValueIndex(PARAM_AGENT)) {
+
+        DPLL dpll = null;
+        switch (taskPaneCtrl.getParamValueIndex(PARAM_SAT_SOLVER)) {
             case 0:
-                agent = new HybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
+                dpll = new DPLLSatisfiable();
                 break;
             case 1:
-                agent = new EfficientHybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
+                dpll = new OptimizedDPLL();
+                break;
+        }
+
+        switch (taskPaneCtrl.getParamValueIndex(PARAM_AGENT)) {
+            case 0:
+                agent = new HybridWumpusAgent(cave.getCaveXDimension(), cave.getCaveYDimension(),
+                        cave.getStart(), dpll, env);
+                break;
+            case 1:
+                agent = new EfficientHybridWumpusAgent(cave.getCaveXDimension(), cave.getCaveYDimension(),
+                        cave.getStart(), dpll, env);
                 break;
         }
         env.addEnvironmentView(envViewCtrl);
@@ -131,8 +157,6 @@ public class WumpusAgentApp extends IntegrableApplication {
     }
 
     private void updateStatus() {
-        WumpusKnowledgeBase kb = agent.getKB();
-        taskPaneCtrl.setStatus("{KB.size=" + kb.size() +
-                ", KB.sym.size=" + kb.getSymbols().size() + ", KB.cnf.size=" + kb.asCNF().size() + "}");
+        taskPaneCtrl.setStatus(agent.getMetrics().toString());
     }
 }

@@ -2,10 +2,11 @@ package aima.gui.demo.agent;
 
 import aima.core.agent.EnvironmentView;
 import aima.core.agent.impl.SimpleEnvironmentView;
-import aima.core.environment.wumpusworld.HybridWumpusAgent;
 import aima.core.environment.wumpusworld.EfficientHybridWumpusAgent;
+import aima.core.environment.wumpusworld.HybridWumpusAgent;
 import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusEnvironment;
+import aima.core.logic.propositional.inference.DPLLSatisfiable;
 
 /**
  * Demonstrates, how a hybrid search- and logic-based agent tries to find gold in a Wumpus cave.
@@ -24,13 +25,16 @@ public class WumpusAgentDemo {
         env.addEnvironmentView(view);
 
         HybridWumpusAgent a;
-        a = new HybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
-        // a = new EfficientHybridWumpusAgent(cave.getCaveXDimension(), cave.getStart(), env);
+        // a = new HybridWumpusAgent
+        a = new EfficientHybridWumpusAgent
+                (cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart(),
+                new DPLLSatisfiable(), env);
 
         env.notifyViews("The cave:\n" + cave.toString());
         env.addAgent(a);
         env.stepUntilDone();
-        env.notifyViews("KB (KB.size=" + a.getKB().size() + "):\n" + a.getKB().toString());
+        env.notifyViews("Metrics: " + a.getMetrics());
+        env.notifyViews("KB:\n" + a.getKB());
     }
 
     private static WumpusCave create2x2Cave() {

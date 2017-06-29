@@ -6,7 +6,7 @@ import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
-import aima.core.logic.propositional.inference.OptimizedDPLL;
+import aima.core.search.framework.Metrics;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
@@ -87,16 +87,16 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 	public HybridWumpusAgent() {
 		// i.e. default is a 4x4 world as depicted in figure 7.2
-		this(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
+		this(4, 4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
 	}
 
-	public HybridWumpusAgent(int caveDimensions, AgentPosition start) {
-		this(caveDimensions, start, new DPLLSatisfiable(), null);
+	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start) {
+		this(caveXDim, caveYDim, start, new DPLLSatisfiable(), null);
 	}
 
-	public HybridWumpusAgent(int caveDimensions, AgentPosition start, DPLL dpll, EnvironmentViewNotifier notifier) {
-		// kb = new WumpusKnowledgeBase(new OptimizedDPLL(), caveDimensions, start); // buggy?
-		kb = new WumpusKnowledgeBase(dpll, caveDimensions, start);
+	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, DPLL satSolver,
+							 EnvironmentViewNotifier notifier) {
+		kb = new WumpusKnowledgeBase(satSolver, caveXDim, caveYDim, start);
 		this.start = start;
 		this.currentPosition = start;
 		this.notifier = notifier;
@@ -127,8 +127,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 		// Speed optimization: Do not ask anything during plan execution (different from pseudo-code)
 		if (plan.isEmpty()) {
-			notifyViews("Reasoning (t=" + t + ", Percept=" + percept + ", KB.size=" + kb.size() +
-					", KB.sym.size=" + kb.getSymbols().size() + ", KB.cnf.size=" + kb.asCNF().size() + ") ...");
+			notifyViews("Reasoning (t=" + t + ", Percept=" + percept + ") ...");
 			currentPosition = kb.askCurrentPosition(t);
 			notifyViews("Ask position -> " + currentPosition);
 			// safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
@@ -235,7 +234,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 				new AStarSearch<>(new GraphSearch<>(), new ManhattanHeuristicFunction(goals));
 		Optional<List<WumpusAction>> actions = search.findActions(problem);
 
-		return actions.isPresent() ? actions.get() : Collections.EMPTY_LIST;
+		return actions.isPresent() ? actions.get() : Collections.emptyList();
 	}
 
 	/**
@@ -280,6 +279,10 @@ public class HybridWumpusAgent extends AbstractAgent {
 		actions.addAll(planRoute(shootingPositions, allowed));
 		actions.add(WumpusAction.SHOOT);
 		return actions;
+	}
+
+	public Metrics getMetrics() {
+		return kb.getMetrics();
 	}
 
 	protected void notifyViews(String msg) {

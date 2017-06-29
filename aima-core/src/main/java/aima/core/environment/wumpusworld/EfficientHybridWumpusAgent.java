@@ -3,6 +3,8 @@ package aima.core.environment.wumpusworld;
 import aima.core.agent.Action;
 import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.Percept;
+import aima.core.logic.propositional.inference.DPLL;
+import aima.core.logic.propositional.inference.DPLLSatisfiable;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
@@ -75,18 +77,18 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
     private Set<Room> visitedRooms = new HashSet<>();
 
     public EfficientHybridWumpusAgent() {
-        // i.e. default is a 4x4 world as depicted in figure 7.2
-        this(4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
+        this(4, 4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
     }
 
-    public EfficientHybridWumpusAgent(int caveDimensions, AgentPosition start) {
-        this(caveDimensions, start, null);
+    public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start) {
+        this(caveXDim, caveYDim, start, new DPLLSatisfiable(), null);
     }
 
-    public EfficientHybridWumpusAgent(int caveDimensions, AgentPosition start, EnvironmentViewNotifier notifier) {
-        super(caveDimensions, start, notifier);
-        getKB().disableNavSentences();
-        modelCave = new WumpusCave(caveDimensions, caveDimensions);
+    public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, DPLL satSolver,
+                                      EnvironmentViewNotifier notifier) {
+        super(caveXDim, caveYDim, start, satSolver, notifier);
+        getKB().disableNavSentences(); // Optimization: Verbosity of produced sentences is reduced.
+        modelCave = new WumpusCave(caveXDim, caveYDim);
         visitedRooms.add(currentPosition.getRoom());
     }
 
@@ -105,16 +107,15 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
         // TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
         getKB().makePerceptSentence((WumpusPercept) percept, t);
         // TELL the KB the temporal "physics" sentences for time t
-        getKB().tellTemporalPhysicsSentences(t);
+        // Optimization: The agent is aware of it's position - the KB can profit from that!
+        getKB().tellTemporalPhysicsSentences(t, currentPosition);
 
         Set<Room> safe = null;
         Set<Room> unvisited = null;
 
         // Speed optimization: Do not ask anything during plan execution (different from pseudo-code)
         if (plan.isEmpty()) {
-            notifyViews("Reasoning (t=" + t + ", Percept=" + percept + ", Pos=" + currentPosition +
-                    ", KB.size=" + getKB().size() + ", KB.sym.size=" + getKB().getSymbols().size() +
-                    ", KB.cnf.size=" + getKB().asCNF().size() + ") ...");
+            notifyViews("Reasoning (t=" + t + ", Percept=" + percept + ", Pos=" + currentPosition + ") ...");
 
             // safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
             safe = getKB().askSafeRooms(t);
@@ -172,10 +173,8 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
         getKB().makeActionSentence(action, t);
         // t <- t+1
         t = t + 1;
-
         updateAgentPosition(action);
         visitedRooms.add(currentPosition.getRoom());
-        getKB().makePositionSentence(currentPosition, t);
         // return action
         return action;
     }
@@ -192,7 +191,6 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
      *         goal from the current position.
      */
     public List<WumpusAction> planRoute(Set<AgentPosition> goals, Set<Room> allowed) {
-
         modelCave.setAllowed(allowed);
         Problem<AgentPosition, WumpusAction> problem = new GeneralProblem<>(currentPosition,
                 WumpusFunctions.createActionsFunction(modelCave),
@@ -201,7 +199,7 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
                 new AStarSearch<>(new GraphSearch<>(), new ManhattanHeuristicFunction(goals));
         Optional<List<WumpusAction>> actions = search.findActions(problem);
 
-        return actions.isPresent() ? actions.get() : Collections.EMPTY_LIST;
+        return actions.isPresent() ? actions.get() : Collections.emptyList();
     }
 
     /**

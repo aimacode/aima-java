@@ -20,13 +20,11 @@ import aima.core.logic.propositional.visitors.SymbolCollector;
  * @author Mike Stampone
  */
 public class KnowledgeBase {
-	private List<Sentence>         sentences = new ArrayList<Sentence>();
-	private ConjunctionOfClauses   asCNF     = new ConjunctionOfClauses(Collections.<Clause>emptySet());
-	private Set<PropositionSymbol> symbols   = new LinkedHashSet<PropositionSymbol>();
+	private List<Sentence>         sentences = new ArrayList<>();
+	private ConjunctionOfClauses   asCNF     = new ConjunctionOfClauses(Collections.emptySet());
+	private Set<PropositionSymbol> symbols   = new LinkedHashSet<>();
 	private PLParser               parser    = new PLParser();
 
-	public KnowledgeBase() {
-	}
 
 	/**
 	 * Adds the specified sentence to the knowledge base.
@@ -61,8 +59,8 @@ public class KnowledgeBase {
 	 *            what the agent perceives
 	 */
 	public void tellAll(String[] percepts) {
-		for (int i = 0; i < percepts.length; i++) {
-			tell(percepts[i]);
+		for (String percept : percepts) {
+			tell(percept);
 		}
 
 	}
@@ -123,11 +121,7 @@ public class KnowledgeBase {
 
 	@Override
 	public String toString() {
-		if (sentences.size() == 0) {
-			return "";
-		} else {
-			return asSentence().toString();
-		}
+		return sentences.isEmpty() ? "" : asSentence().toString();
 	}
 
 	/**

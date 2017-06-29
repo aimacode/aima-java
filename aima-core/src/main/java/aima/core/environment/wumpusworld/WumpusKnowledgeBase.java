@@ -7,6 +7,7 @@ import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.search.framework.Metrics;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -50,28 +51,30 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
     private AgentPosition start;
     private DPLL dpll;
     private boolean disableNavSentences;
+    private long reasoningTime; // in milliseconds
 
-    public WumpusKnowledgeBase(int caveDimensions) {
-        this(new OptimizedDPLL(), caveDimensions);
+    public WumpusKnowledgeBase(int caveXDim, int caveYDim) {
+        this(new OptimizedDPLL(), caveXDim, caveYDim);
     }
 
-    public WumpusKnowledgeBase(DPLL dpll, int caveDimensions) {
-        this(dpll, caveDimensions, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
+    public WumpusKnowledgeBase(DPLL dpll, int caveXDim, int caveYDim) {
+        this(dpll, caveXDim, caveYDim, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
     }
 
     /**
      * Create a Knowledge Base that contains the atemporal "wumpus physics" and
      * temporal rules with time zero.
      *
-     * @param dpll               the dpll implementation to use for answering 'ask' queries.
-     * @param caveDimensions     x and y dimensions of the wumpus world's cave.
+     * @param dpll     the SAT solver implementation to use for answering 'ask' queries.
+     * @param caveXDim x dimensions of the wumpus world's cave.
+     * @param caveYDim y dimensions of the wumpus world's cave.
      */
-    public WumpusKnowledgeBase(DPLL dpll, int caveDimensions, AgentPosition start) {
+    public WumpusKnowledgeBase(DPLL dpll, int caveXDim, int caveYDim, AgentPosition start) {
 
         this.start = start;
         this.dpll = dpll;
-        caveXDimension = caveDimensions;
-        caveYDimension = caveDimensions;
+        caveXDimension = caveXDim;
+        caveYDimension = caveYDim;
 
         //
         // 7.7.1 - The current state of the World
@@ -138,6 +141,14 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
         }
     }
 
+    public int getCaveXDimension() {
+        return caveXDimension;
+    }
+
+    public int getCaveYDimension() {
+        return caveYDimension;
+    }
+
     /**
      * Disables creation of computational expensive temporal navigation sentences.
      */
@@ -146,37 +157,6 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
     }
 
     public AgentPosition askCurrentPosition(int t) {
-
-        // There seems to be a bug in OptimizedDPLL (incorrect position computation):
-        // Call with: WumpusAgentDemo, 2x2 cave, OptimizedDPLL (HybridWumpusAgend-Constructor)
-        /*
-        if (t == 4) { // todo
-			System.out.println("Ask L_3_1_1: " + ask(newSymbol(LOCATION, 3, 1, 1))); // false
-			System.out.println("Ask L_3_1_2: " + ask(newSymbol(LOCATION, 3, 1, 2))); // true
-			System.out.println("Ask L_3_2_1: " + ask(newSymbol(LOCATION, 3, 2, 1))); // false
-			System.out.println("Ask L_3_2_2: " + ask(newSymbol(LOCATION, 3, 2, 2))); // false
-			System.out.println("Ask North_3: " + ask(newSymbol(FACING_NORTH, 3))); // false
-			System.out.println("Ask South_3: " + ask(newSymbol(FACING_SOUTH, 3))); // false
-			System.out.println("Ask East_3: " + ask(newSymbol(FACING_EAST, 3))); // true
-			System.out.println("Ask West_3: " + ask(newSymbol(FACING_WEST, 3))); // false
-
-			System.out.println("Ask L_4_1_1: " + ask(newSymbol(LOCATION, 4, 1, 1)) + " !"); // true (incorrect)
-			System.out.println("Ask L_4_2_2: " + ask(newSymbol(LOCATION, 4, 2, 2)) + " !"); // true (correct)
-			System.out.println("Ask North_4: " + ask(newSymbol(FACING_NORTH, 4))); // false
-			System.out.println("Ask South_4: " + ask(newSymbol(FACING_SOUTH, 4))); // false
-			System.out.println("Ask East_4: " + ask(newSymbol(FACING_EAST, 4))); // true
-			System.out.println("Ask West_4: " + ask(newSymbol(FACING_WEST, 4))); // false
-
-			System.out.println("Ask L_5_1_1: " + ask(newSymbol(LOCATION, 5, 1, 1))); // false
-			System.out.println("Ask L_5_1_2: " + ask(newSymbol(LOCATION, 5, 1, 2))); // false
-			System.out.println("Ask L_5_2_1: " + ask(newSymbol(LOCATION, 5, 2, 1))); // false
-			System.out.println("Ask L_5_2_2: " + ask(newSymbol(LOCATION, 5, 2, 2))); // false
-
-			// L_4_1_1 is only constrained by:
-			// L_4_1_1 <=> L_3_1_1 & (~FORWARD_3 | Bump_4) | L_3_1_2 & FACING_SOUTH_3 & FORWARD_3 | L_3_2_1 & FACING_WEST_3 & FORWARD_3
-		}
-		*/
-
         int locX = -1, locY = -1;
         for (int x = 1; x <= getCaveXDimension() && locX == -1; x++) {
             for (int y = 1; y <= getCaveYDimension() && locY == -1; y++) {
@@ -200,7 +180,6 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
             current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_WEST);
         else
             throw new IllegalStateException("Inconsistent KB, unable to determine current room orientation.");
-
         return current;
     }
 
@@ -242,7 +221,6 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 //				}
             }
         }
-
         return unvisited;
     }
 
@@ -281,37 +259,24 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
     }
 
     public boolean ask(Sentence query) {
-        return dpll.isEntailed(this, query);
-    }
-
-    public int getCaveXDimension() {
-        return caveXDimension;
-    }
-
-    public void setCaveXDimension(int caveXDimension) {
-        this.caveXDimension = caveXDimension;
-    }
-
-    public int getCaveYDimension() {
-        return caveYDimension;
-    }
-
-    public void setCaveYDimension(int caveYDimension) {
-        this.caveYDimension = caveYDimension;
+        long tStart = System.currentTimeMillis();
+        boolean result = dpll.isEntailed(this, query);
+        reasoningTime += System.currentTimeMillis() - tStart;
+        return result;
     }
 
     /**
      * Add to KB sentences that describe the action a
      *
-     * @param a action that must be added to KB
-     * @param t current time
+     * @param a    action that must be added to KB
+     * @param time current time
      */
-    public void makeActionSentence(WumpusAction a, int t) {
+    public void makeActionSentence(WumpusAction a, int time) {
         for (WumpusAction action : WumpusAction.values()) {
             if (action.equals(a))
-                tell(newSymbol(action.name(), t));
+                tell(newSymbol(action.name(), time));
             else
-                tell(new ComplexSentence(Connective.NOT, newSymbol(action.name(), t)));
+                tell(new ComplexSentence(Connective.NOT, newSymbol(action.name(), time)));
         }
     }
 
@@ -350,16 +315,53 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
     }
 
     /**
-     * When navigation sentence creation is disabled, the knowledge base must be informed about agent positions
-     * using this method.
+     * TELL the KB the temporal "physics" sentences for time t.
+     * This version profits from the agent's knowledge about its current position.
+     * Verbosity of the created sentences depends on the value of {@link #disableNavSentences}.
+     *
+     * @param t current time step.
      */
-    public void makePositionSentence(AgentPosition position, int t) {
-        tell(newSymbol(LOCATION, t, position.getX(), position.getY()));
-        tell(newSymbol(LOCATION_VISITED, position.getX(), position.getY()));
+    public void tellTemporalPhysicsSentences(int t, AgentPosition agentPosition) {
+        tell(newSymbol(LOCATION, t, agentPosition.getX(), agentPosition.getY()));
+        tell(newSymbol(agentPosition.getOrientation().name(), t));
+        // Optimization to make questions about unvisited locations faster
+        tell(newSymbol(LOCATION_VISITED, agentPosition.getX(), agentPosition.getY()));
+
+        if (t == 0) {
+            // temporal rules at time zero
+            tell(newSymbol(HAVE_ARROW, 0));
+            tell(newSymbol(WUMPUS_ALIVE, 0));
+        }
+
+        // We can connect stench and breeze percepts directly
+        // to the properties of the squares where they are experienced
+        // through the location fluent as follows. For any time step t
+        // and any square [x,y], we assert
+        tell(new ComplexSentence(
+                newSymbol(LOCATION, t, agentPosition.getX(), agentPosition.getY()),
+                Connective.IMPLICATION,
+                new ComplexSentence(newSymbol(PERCEPT_BREEZE, t), Connective.BICONDITIONAL,
+                        newSymbol(BREEZE, agentPosition.getX(), agentPosition.getY()))));
+
+        tell(new ComplexSentence(
+                newSymbol(LOCATION, t, agentPosition.getX(), agentPosition.getY()),
+                Connective.IMPLICATION,
+                new ComplexSentence(newSymbol(PERCEPT_STENCH, t), Connective.BICONDITIONAL,
+                        newSymbol(STENCH, agentPosition.getX(), agentPosition.getY()))));
+
+        tellCommonTemporalPhysicsSentences(t);
+        if (!disableNavSentences) {
+            tellSuccessorStateLocationAxioms(t, agentPosition.getX(), agentPosition.getY());
+            tellSuccessorStateOrientationAxioms(t);
+        }
     }
 
     /**
-     * TELL the KB the temporal "physics" sentences for time t
+     * TELL the KB the temporal "physics" sentences for time t.
+     * As in this version, the agent does not communicate its current position
+     * to the knowledge base, general navigation axioms are needed, which
+     * entail the current position. Therefore, navigation sentences are always
+     * added, independent of the value of {@link #disableNavSentences}.
      *
      * @param t current time step.
      */
@@ -392,6 +394,14 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
             }
         }
 
+        tellCommonTemporalPhysicsSentences(t);
+        for (int x = 1; x <= caveXDimension; x++)
+            for (int y = 1; y <= caveYDimension; y++)
+                tellSuccessorStateLocationAxioms(t, x, y);
+        tellSuccessorStateOrientationAxioms(t);
+    }
+
+    private void tellCommonTemporalPhysicsSentences(int t) {
         for (int x = 1; x <= caveXDimension; x++) {
             for (int y = 1; y <= caveYDimension; y++) {
                 // The most important question for the agent is whether
@@ -429,76 +439,70 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
                         Connective.AND,
                         new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_SCREAM, t + 1)))));
 
-
-        if (!disableNavSentences)
-            tellSuccessorStateAxioms(t);
     }
 
-    private void tellSuccessorStateAxioms(int t) {
+
+    private void tellSuccessorStateLocationAxioms(int t, int x, int y) {
         // Successor state axioms (dependent on location)
         // Rules about current location
-        for (int x = 1; x <= caveXDimension; x++) {
-            for (int y = 1; y <= caveYDimension; y++) {
-
-                // Location
-                List<Sentence> locDisjuncts = new ArrayList<>();
-                locDisjuncts.add(new ComplexSentence(
-                        newSymbol(LOCATION, t, x, y),
-                        Connective.AND,
-                        new ComplexSentence(
-                                new ComplexSentence(Connective.NOT, newSymbol(ACTION_FORWARD, t)),
-                                Connective.OR,
-                                newSymbol(PERCEPT_BUMP, t + 1))));
-                if (x > 1) { // West room is possible
-                    locDisjuncts.add(new ComplexSentence(
-                            newSymbol(LOCATION, t, x - 1, y),
+        List<Sentence> locDisjuncts = new ArrayList<>();
+        locDisjuncts.add(new ComplexSentence(
+                newSymbol(LOCATION, t, x, y),
+                Connective.AND,
+                new ComplexSentence(
+                        new ComplexSentence(Connective.NOT, newSymbol(ACTION_FORWARD, t)),
+                        Connective.OR,
+                        newSymbol(PERCEPT_BUMP, t + 1))));
+        if (x > 1) { // West room is possible
+            locDisjuncts.add(new ComplexSentence(
+                    newSymbol(LOCATION, t, x - 1, y),
+                    Connective.AND,
+                    new ComplexSentence(
+                            newSymbol(FACING_EAST, t),
                             Connective.AND,
-                            new ComplexSentence(
-                                    newSymbol(FACING_EAST, t),
-                                    Connective.AND,
-                                    newSymbol(ACTION_FORWARD, t))));
-                }
-                if (y < caveYDimension) { // North room is possible
-                    locDisjuncts.add(new ComplexSentence(
-                            newSymbol(LOCATION, t, x, y + 1),
+                            newSymbol(ACTION_FORWARD, t))));
+        }
+        if (y < caveYDimension) { // North room is possible
+            locDisjuncts.add(new ComplexSentence(
+                    newSymbol(LOCATION, t, x, y + 1),
+                    Connective.AND,
+                    new ComplexSentence(
+                            newSymbol(FACING_SOUTH, t),
                             Connective.AND,
-                            new ComplexSentence(
-                                    newSymbol(FACING_SOUTH, t),
-                                    Connective.AND,
-                                    newSymbol(ACTION_FORWARD, t))));
-                }
-                if (x < caveXDimension) { // East room is possible
-                    locDisjuncts.add(new ComplexSentence(
-                            newSymbol(LOCATION, t, x + 1, y),
+                            newSymbol(ACTION_FORWARD, t))));
+        }
+        if (x < caveXDimension) { // East room is possible
+            locDisjuncts.add(new ComplexSentence(
+                    newSymbol(LOCATION, t, x + 1, y),
+                    Connective.AND,
+                    new ComplexSentence(
+                            newSymbol(FACING_WEST, t),
                             Connective.AND,
-                            new ComplexSentence(
-                                    newSymbol(FACING_WEST, t),
-                                    Connective.AND,
-                                    newSymbol(ACTION_FORWARD, t))));
-                }
-                if (y > 1) { // South room is possible
-                    locDisjuncts.add(new ComplexSentence(
-                            newSymbol(LOCATION, t, x, y - 1),
+                            newSymbol(ACTION_FORWARD, t))));
+        }
+        if (y > 1) { // South room is possible
+            locDisjuncts.add(new ComplexSentence(
+                    newSymbol(LOCATION, t, x, y - 1),
+                    Connective.AND,
+                    new ComplexSentence(
+                            newSymbol(FACING_NORTH, t),
                             Connective.AND,
-                            new ComplexSentence(
-                                    newSymbol(FACING_NORTH, t),
-                                    Connective.AND,
-                                    newSymbol(ACTION_FORWARD, t))));
-                }
-
-                tell(new ComplexSentence(
-                        newSymbol(LOCATION, t + 1, x, y),
-                        Connective.BICONDITIONAL,
-                        Sentence.newDisjunction(locDisjuncts)));
-
-                // Optimization to make questions about unvisited locations faster
-                tell(new ComplexSentence(
-                        newSymbol(LOCATION, t + 1, x, y),
-                        Connective.IMPLICATION,
-                        newSymbol(LOCATION_VISITED, x, y)));
-            }
+                            newSymbol(ACTION_FORWARD, t))));
         }
 
+        tell(new ComplexSentence(
+                newSymbol(LOCATION, t + 1, x, y),
+                Connective.BICONDITIONAL,
+                Sentence.newDisjunction(locDisjuncts)));
+
+        // Optimization to make questions about unvisited locations faster
+        tell(new ComplexSentence(
+                newSymbol(LOCATION, t + 1, x, y),
+                Connective.IMPLICATION,
+                newSymbol(LOCATION_VISITED, x, y)));
+    }
+
+    private void tellSuccessorStateOrientationAxioms(int t) {
         //
         // Successor state axioms (independent of location)
         // Rules about current orientation
@@ -589,5 +593,14 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 
     public PropositionSymbol newSymbol(String prefix, int timeStep, int x, int y) {
         return newSymbol(newSymbol(prefix, timeStep).toString(), x, y);
+    }
+
+    public Metrics getMetrics() {
+        Metrics result = new Metrics();
+        result.set("kb.size", size());
+        result.set("kb.sym.size", getSymbols().size());
+        result.set("kb.cnf.size", asCNF().size());
+        result.set("reasoning.time[s]", reasoningTime / 1000);
+        return result;
     }
 }
