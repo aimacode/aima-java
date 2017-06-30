@@ -142,6 +142,7 @@ public class WumpusAgentApp extends IntegrableApplication {
     /** Starts the experiment. */
     public void startExperiment() {
         env.addAgent(agent);
+        taskPaneCtrl.waitAfterStep();
         while (!env.isDone() && !Tasks.currIsCancelled()) {
             env.step();
             updateStatus();
