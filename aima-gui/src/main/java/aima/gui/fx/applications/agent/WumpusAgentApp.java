@@ -35,8 +35,8 @@ public class WumpusAgentApp extends IntegrableApplication {
     protected static String PARAM_SAT_SOLVER = "satSolver";
     protected static String PARAM_KB = "showKB";
 
-    private TaskExecutionPaneCtrl taskPaneCtrl;
-    private WumpusEnvironmentViewCtrl envViewCtrl;
+    protected TaskExecutionPaneCtrl taskPaneCtrl;
+    protected WumpusEnvironmentViewCtrl envViewCtrl;
 
     protected WumpusEnvironment env = null;
     protected HybridWumpusAgent agent = null;

@@ -76,17 +76,18 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
     private WumpusCave modelCave;
     private Set<Room> visitedRooms = new HashSet<>();
 
-    public EfficientHybridWumpusAgent() {
-        this(4, 4, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
-    }
-
     public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start) {
         this(caveXDim, caveYDim, start, new DPLLSatisfiable(), null);
     }
 
     public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, DPLL satSolver,
                                       EnvironmentViewNotifier notifier) {
-        super(caveXDim, caveYDim, start, satSolver, notifier);
+        this(caveXDim, caveYDim, start, new WumpusKnowledgeBase(caveXDim, caveYDim, start, satSolver), notifier);
+    }
+
+    public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, WumpusKnowledgeBase kb,
+                                      EnvironmentViewNotifier notifier) {
+        super(caveXDim, caveYDim, start, kb, notifier);
         getKB().disableNavSentences(); // Optimization: Verbosity of produced sentences is reduced.
         modelCave = new WumpusCave(caveXDim, caveYDim);
         visitedRooms.add(currentPosition.getRoom());

@@ -54,11 +54,11 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
     private long reasoningTime; // in milliseconds
 
     public WumpusKnowledgeBase(int caveXDim, int caveYDim) {
-        this(new OptimizedDPLL(), caveXDim, caveYDim);
+        this(caveXDim, caveYDim, new OptimizedDPLL());
     }
 
-    public WumpusKnowledgeBase(DPLL dpll, int caveXDim, int caveYDim) {
-        this(dpll, caveXDim, caveYDim, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
+    public WumpusKnowledgeBase(int caveXDim, int caveYDim, DPLL dpll) {
+        this(caveXDim, caveYDim, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH), dpll);
     }
 
     /**
@@ -69,7 +69,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
      * @param caveXDim x dimensions of the wumpus world's cave.
      * @param caveYDim y dimensions of the wumpus world's cave.
      */
-    public WumpusKnowledgeBase(DPLL dpll, int caveXDim, int caveYDim, AgentPosition start) {
+    public WumpusKnowledgeBase(int caveXDim, int caveYDim, AgentPosition start, DPLL dpll) {
 
         this.start = start;
         this.dpll = dpll;
@@ -476,7 +476,6 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
                         new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_SCREAM, t + 1)))));
 
     }
-
 
     private void tellSuccessorStateLocationAxiom(int t, int x, int y) {
         // Successor state axiom for square [x, y]

@@ -96,7 +96,12 @@ public class HybridWumpusAgent extends AbstractAgent {
 
 	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, DPLL satSolver,
 							 EnvironmentViewNotifier notifier) {
-		kb = new WumpusKnowledgeBase(satSolver, caveXDim, caveYDim, start);
+		this(caveXDim, caveYDim, start, new WumpusKnowledgeBase(caveXDim, caveYDim, start, satSolver), notifier);
+	}
+
+	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, WumpusKnowledgeBase kb,
+							 EnvironmentViewNotifier notifier) {
+		this.kb = kb;
 		this.start = start;
 		this.currentPosition = start;
 		this.notifier = notifier;
