@@ -19,10 +19,20 @@ import aima.core.agent.Action;
  */
 public enum WumpusAction implements Action {
 
-    FORWARD, TURN_LEFT, TURN_RIGHT, GRAB, SHOOT, CLIMB;
+    FORWARD("Forward"), TURN_LEFT("TurnLeft"), TURN_RIGHT("TurnRight"), GRAB("Grab"), SHOOT("Shoot"), CLIMB("Climb");
+
+    public String getSymbol() {
+        return symbol;
+    }
 
     @Override
     public boolean isNoOp() {
         return false;
+    }
+
+    private String symbol;
+
+    WumpusAction(String sym) {
+        symbol = sym;
     }
 }

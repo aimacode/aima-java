@@ -9,18 +9,15 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.search.framework.Metrics;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A Knowledge base tailored to the Wumpus World environment.
  *
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  * @author Federico Baron
  * @author Alessandro Daniele
- * @author Ruediger Lunde
  */
 public class WumpusKnowledgeBase extends KnowledgeBase {
     public static final String LOCATION = "L";
@@ -31,21 +28,21 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
     public static final String WUMPUS = "W";
     public static final String WUMPUS_ALIVE = "WumpusAlive";
     public static final String HAVE_ARROW = "HaveArrow";
-    public static final String FACING_NORTH = AgentPosition.Orientation.FACING_NORTH.name();
-    public static final String FACING_SOUTH = AgentPosition.Orientation.FACING_SOUTH.name();
-    public static final String FACING_EAST = AgentPosition.Orientation.FACING_EAST.name();
-    public static final String FACING_WEST = AgentPosition.Orientation.FACING_WEST.name();
+    public static final String FACING_NORTH = AgentPosition.Orientation.FACING_NORTH.getSymbol();
+    public static final String FACING_SOUTH = AgentPosition.Orientation.FACING_SOUTH.getSymbol();
+    public static final String FACING_EAST = AgentPosition.Orientation.FACING_EAST.getSymbol();
+    public static final String FACING_WEST = AgentPosition.Orientation.FACING_WEST.getSymbol();
     public static final String PERCEPT_STENCH = "Stench";
     public static final String PERCEPT_BREEZE = "Breeze";
     public static final String PERCEPT_GLITTER = "Glitter";
     public static final String PERCEPT_BUMP = "Bump";
     public static final String PERCEPT_SCREAM = "Scream";
-    public static final String ACTION_FORWARD = WumpusAction.FORWARD.name();
-    public static final String ACTION_SHOOT = WumpusAction.SHOOT.name();
-    public static final String ACTION_TURN_LEFT = WumpusAction.TURN_LEFT.name();
-    public static final String ACTION_TURN_RIGHT = WumpusAction.TURN_RIGHT.name();
+    public static final String ACTION_FORWARD = WumpusAction.FORWARD.getSymbol();
+    public static final String ACTION_SHOOT = WumpusAction.SHOOT.getSymbol();
+    public static final String ACTION_TURN_LEFT = WumpusAction.TURN_LEFT.getSymbol();
+    public static final String ACTION_TURN_RIGHT = WumpusAction.TURN_RIGHT.getSymbol();
     public static final String OK_TO_MOVE_INTO = "OK";
-    //
+
     private int caveXDimension;
     private int caveYDimension;
     private AgentPosition start;
@@ -62,20 +59,214 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
     }
 
     /**
-     * Create a Knowledge Base that contains the atemporal "wumpus physics" and
-     * temporal rules with time zero.
+     * Create a Knowledge Base that contains the atemporal "wumpus physics".
      *
      * @param dpll     the SAT solver implementation to use for answering 'ask' queries.
      * @param caveXDim x dimensions of the wumpus world's cave.
      * @param caveYDim y dimensions of the wumpus world's cave.
      */
     public WumpusKnowledgeBase(int caveXDim, int caveYDim, AgentPosition start, DPLL dpll) {
-
         this.start = start;
         this.dpll = dpll;
         caveXDimension = caveXDim;
         caveYDimension = caveYDim;
+        tellAtemporalPhysicsSentences();
+    }
 
+    public int getCaveXDimension() {
+        return caveXDimension;
+    }
+
+    public int getCaveYDimension() {
+        return caveYDimension;
+    }
+
+    /**
+     * Disables creation of computational expensive temporal navigation sentences.
+     */
+    public void disableNavSentences() {
+        disableNavSentences = true;
+    }
+
+    public AgentPosition askCurrentPosition(int t) {
+        int locX = -1, locY = -1;
+        for (int x = 1; x <= getCaveXDimension() && locX == -1; x++) {
+            for (int y = 1; y <= getCaveYDimension() && locY == -1; y++) {
+                if (ask(newSymbol(LOCATION, t, x, y))) {
+                    locX = x;
+                    locY = y;
+                }
+            }
+        }
+        if (locX == -1 || locY == -1)
+            throw new IllegalStateException("Inconsistent KB, unable to determine current room position.");
+
+        AgentPosition current = null;
+        if (ask(newSymbol(FACING_NORTH, t)))
+            current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_NORTH);
+        else if (ask(newSymbol(FACING_SOUTH, t)))
+            current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_SOUTH);
+        else if (ask(newSymbol(FACING_EAST, t)))
+            current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_EAST);
+        else if (ask(newSymbol(FACING_WEST, t)))
+            current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_WEST);
+        else
+            throw new IllegalStateException("Inconsistent KB, unable to determine current room orientation.");
+        return current;
+    }
+
+    // safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
+    public Set<Room> askSafeRooms(int t) {
+        Set<Room> safe = new LinkedHashSet<>();
+        for (int x = 1; x <= getCaveXDimension(); x++) {
+            for (int y = 1; y <= getCaveYDimension(); y++) {
+                // Correction: Already visited rooms are safe! This is important because not all pits
+                // can be located by percept. Not-unsafe plan execution adds knowledge about pit and wumpus
+                // locations by surviving dangerous moves but this knowledge is not covered by OK_TO_MOVE_INTO.
+                if (ask(new ComplexSentence(newSymbol(LOCATION_VISITED, x, y),
+                        Connective.OR, newSymbol(OK_TO_MOVE_INTO, t, x, y)))) {
+                    safe.add(new Room(x, y));
+                }
+            }
+        }
+        return safe;
+    }
+
+    // safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
+    // Optimization: In this version, the agent can provide information about already visited rooms.
+    // There is no need to check again.
+    public Set<Room> askSafeRooms(int t, Set<Room> visited) {
+        Set<Room> safe = new LinkedHashSet<>();
+        for (int x = 1; x <= getCaveXDimension(); x++) {
+            for (int y = 1; y <= getCaveYDimension(); y++) {
+                Room r = new Room(x, y);
+                if (visited.contains(r) || ask(newSymbol(OK_TO_MOVE_INTO, t, x, y)))
+                    safe.add(new Room(x, y));
+            }
+        }
+        return safe;
+    }
+
+    // not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
+    public Set<Room> askNotUnsafeRooms(int t) {
+        return askNotUnsafeRooms(t, Collections.emptySet());
+    }
+
+    // not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
+    // Optimization: In this version, the agent can provide information about already visited rooms.
+    // There is no need to check again.
+    public Set<Room> askNotUnsafeRooms(int t, Set<Room> visited) {
+        Set<Room> notUnsafe = new LinkedHashSet<>();
+        for (int x = 1; x <= getCaveXDimension(); x++) {
+            for (int y = 1; y <= getCaveYDimension(); y++) {
+                Room r = new Room(x, y);
+                if (visited.contains(r) || !ask(new ComplexSentence
+                        (Connective.NOT, newSymbol(OK_TO_MOVE_INTO, t, x, y))))
+                    notUnsafe.add(r);
+            }
+        }
+        return notUnsafe;
+    }
+
+    public boolean askGlitter(int t) {
+        return ask(newSymbol(PERCEPT_GLITTER, t));
+    }
+
+    public boolean askHaveArrow(int t) {
+        return ask(newSymbol(HAVE_ARROW, t));
+    }
+
+    // possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
+    public Set<Room> askPossibleWumpusRooms(int t) {
+        Set<Room> possible = new LinkedHashSet<>();
+        for (int x = 1; x <= getCaveXDimension(); x++)
+            for (int y = 1; y <= getCaveYDimension(); y++)
+                if (!ask(new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, x, y))))
+                    possible.add(new Room(x, y));
+        return possible;
+    }
+
+    // unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
+    public Set<Room> askUnvisitedRooms(int t) {
+        Set<Room> unvisited = new LinkedHashSet<>();
+
+        for (int x = 1; x <= getCaveXDimension(); x++) {
+            for (int y = 1; y <= getCaveYDimension(); y++) {
+                if (!ask(newSymbol(LOCATION_VISITED, x, y)))
+                    unvisited.add(new Room(x, y)); // i.e. is false for all t' <= t
+
+//				way to slow: (try it out!)
+//				for (int tPrime = 0; tPrime <= t; tPrime++) {
+//					if (ask(newSymbol(LOCATION, tPrime, x, y)))
+//						break; // i.e. is not false for all t' <= t
+//					if (tPrime == t)
+//						unvisited.add(new Room(x, y)); // i.e. is false for all t' <= t
+//				}
+            }
+        }
+        return unvisited;
+    }
+
+    public boolean ask(Sentence query) {
+        long tStart = System.currentTimeMillis();
+        boolean result = dpll.isEntailed(this, query);
+        reasoningTime += System.currentTimeMillis() - tStart;
+        return result;
+    }
+
+    /**
+     * Add to KB sentences that describe the perception p
+     * (only about the current time).
+     *
+     * @param p    perception that must be added to KB
+     * @param time current time
+     */
+    public void makePerceptSentence(WumpusPercept p, int time) {
+        if (p.isStench())
+            tell(newSymbol(PERCEPT_STENCH, time));
+        else
+            tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_STENCH, time)));
+
+        if (p.isBreeze())
+            tell(newSymbol(PERCEPT_BREEZE, time));
+        else
+            tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_BREEZE, time)));
+
+        if (p.isGlitter())
+            tell(newSymbol(PERCEPT_GLITTER, time));
+        else
+            tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_GLITTER, time)));
+
+        if (p.isBump())
+            tell(newSymbol(PERCEPT_BUMP, time));
+        else
+            tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_BUMP, time)));
+
+        if (p.isScream())
+            tell(newSymbol(PERCEPT_SCREAM, time));
+        else
+            tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_SCREAM, time)));
+    }
+
+    /**
+     * Add to KB sentences that describe the action a
+     *
+     * @param a    action that must be added to KB
+     * @param time current time
+     */
+    public void makeActionSentence(WumpusAction a, int time) {
+        for (WumpusAction action : WumpusAction.values()) {
+            if (action.equals(a))
+                tell(newSymbol(action.getSymbol(), time));
+            else
+                tell(new ComplexSentence(Connective.NOT, newSymbol(action.getSymbol(), time)));
+        }
+    }
+
+    /**
+     * TELL the KB the atemporal "physics" sentences (used to initialize the KB).
+     */
+    protected void tellAtemporalPhysicsSentences() {
         //
         // 7.7.1 - The current state of the World
         // The agent knows that the starting square contains no pit
@@ -141,208 +332,6 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
         }
     }
 
-    public int getCaveXDimension() {
-        return caveXDimension;
-    }
-
-    public int getCaveYDimension() {
-        return caveYDimension;
-    }
-
-    /**
-     * Disables creation of computational expensive temporal navigation sentences.
-     */
-    public void disableNavSentences() {
-        disableNavSentences = true;
-    }
-
-    public AgentPosition askCurrentPosition(int t) {
-        int locX = -1, locY = -1;
-        for (int x = 1; x <= getCaveXDimension() && locX == -1; x++) {
-            for (int y = 1; y <= getCaveYDimension() && locY == -1; y++) {
-                if (ask(newSymbol(LOCATION, t, x, y))) {
-                    locX = x;
-                    locY = y;
-                }
-            }
-        }
-        if (locX == -1 || locY == -1)
-            throw new IllegalStateException("Inconsistent KB, unable to determine current room position.");
-
-        AgentPosition current = null;
-        if (ask(newSymbol(FACING_NORTH, t)))
-            current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_NORTH);
-        else if (ask(newSymbol(FACING_SOUTH, t)))
-            current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_SOUTH);
-        else if (ask(newSymbol(FACING_EAST, t)))
-            current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_EAST);
-        else if (ask(newSymbol(FACING_WEST, t)))
-            current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_WEST);
-        else
-            throw new IllegalStateException("Inconsistent KB, unable to determine current room orientation.");
-        return current;
-    }
-
-    // safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
-    public Set<Room> askSafeRooms(int t) {
-        Set<Room> safe = new LinkedHashSet<>();
-        for (int x = 1; x <= getCaveXDimension(); x++) {
-            for (int y = 1; y <= getCaveYDimension(); y++) {
-                // Already visited rooms are safe! This is important because not all pits can be located by percept.
-                // Not-unsafe planing adds knowledge by surviving dangerous moves but this is not used in OK_TO_MOVE_INTO.
-                if (ask(new ComplexSentence(newSymbol(LOCATION_VISITED, x, y),
-                        Connective.OR, newSymbol(OK_TO_MOVE_INTO, t, x, y)))) {
-                    safe.add(new Room(x, y));
-                }
-            }
-        }
-        return safe;
-    }
-
-    // safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
-    // Optimization: In this version, the agent provides already visited rooms. There is no need to check again.
-    public Set<Room> askSafeRooms(int t, Set<Room> visited) {
-        Set<Room> safe = new LinkedHashSet<>();
-        for (int x = 1; x <= getCaveXDimension(); x++) {
-            for (int y = 1; y <= getCaveYDimension(); y++) {
-                Room r = new Room(x, y);
-                if (visited.contains(r) || ask(newSymbol(OK_TO_MOVE_INTO, t, x, y)))
-                    safe.add(new Room(x, y));
-            }
-        }
-        return safe;
-    }
-
-    // not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
-    public Set<Room> askNotUnsafeRooms(int t) {
-        Set<Room> notUnsafe = new LinkedHashSet<>();
-        for (int x = 1; x <= getCaveXDimension(); x++) {
-            for (int y = 1; y <= getCaveYDimension(); y++) {
-                if (!ask(new ComplexSentence(Connective.NOT, newSymbol(OK_TO_MOVE_INTO, t, x, y)))) {
-                    notUnsafe.add(new Room(x, y));
-                }
-            }
-        }
-        return notUnsafe;
-    }
-
-    // not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
-    // Optimization: In this version, the agent provides already visited rooms. There is no need to check again.
-    public Set<Room> askNotUnsafeRooms(int t, Set<Room> visited) {
-        Set<Room> notUnsafe = new LinkedHashSet<>();
-        for (int x = 1; x <= getCaveXDimension(); x++) {
-            for (int y = 1; y <= getCaveYDimension(); y++) {
-                Room r = new Room(x, y);
-                if (visited.contains(r) || !ask(new ComplexSentence
-                        (Connective.NOT, newSymbol(OK_TO_MOVE_INTO, t, x, y))))
-                    notUnsafe.add(r);
-            }
-        }
-        return notUnsafe;
-    }
-
-    public boolean askOK(int t, int x, int y) {
-        return ask(newSymbol(OK_TO_MOVE_INTO, t, x, y));
-    }
-
-    public boolean askGlitter(int t) {
-        return ask(newSymbol(PERCEPT_GLITTER, t));
-    }
-
-    public boolean askHaveArrow(int t) {
-        return ask(newSymbol(HAVE_ARROW, t));
-    }
-
-    // possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
-    public Set<Room> askPossibleWumpusRooms(int t) {
-        Set<Room> possible = new LinkedHashSet<>();
-        for (int x = 1; x <= getCaveXDimension(); x++) {
-            for (int y = 1; y <= getCaveYDimension(); y++) {
-                if (!ask(new ComplexSentence(Connective.NOT, newSymbol(WUMPUS, x, y)))) {
-                    possible.add(new Room(x, y));
-                }
-            }
-        }
-        return possible;
-    }
-
-    // unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
-    public Set<Room> askUnvisitedRooms(int t) {
-        Set<Room> unvisited = new LinkedHashSet<>();
-
-        for (int x = 1; x <= getCaveXDimension(); x++) {
-            for (int y = 1; y <= getCaveYDimension(); y++) {
-                if (!ask(newSymbol(LOCATION_VISITED, x, y)))
-                    unvisited.add(new Room(x, y)); // i.e. is false for all t' <= t
-
-//				to slow:
-//				for (int tPrime = 0; tPrime <= t; tPrime++) {
-//					if (ask(newSymbol(LOCATION, tPrime, x, y)))
-//						break; // i.e. is not false for all t' <= t
-//					if (tPrime == t)
-//						unvisited.add(new Room(x, y)); // i.e. is false for all t' <= t
-//				}
-            }
-        }
-        return unvisited;
-    }
-
-    public boolean ask(Sentence query) {
-        long tStart = System.currentTimeMillis();
-        boolean result = dpll.isEntailed(this, query);
-        reasoningTime += System.currentTimeMillis() - tStart;
-        return result;
-    }
-
-    /**
-     * Add to KB sentences that describe the perception p
-     * (only about the current time).
-     *
-     * @param p    perception that must be added to KB
-     * @param time current time
-     */
-    public void makePerceptSentence(WumpusPercept p, int time) {
-        if (p.isStench())
-            tell(newSymbol(PERCEPT_STENCH, time));
-        else
-            tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_STENCH, time)));
-
-        if (p.isBreeze())
-            tell(newSymbol(PERCEPT_BREEZE, time));
-        else
-            tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_BREEZE, time)));
-
-        if (p.isGlitter())
-            tell(newSymbol(PERCEPT_GLITTER, time));
-        else
-            tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_GLITTER, time)));
-
-        if (p.isBump())
-            tell(newSymbol(PERCEPT_BUMP, time));
-        else
-            tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_BUMP, time)));
-
-        if (p.isScream())
-            tell(newSymbol(PERCEPT_SCREAM, time));
-        else
-            tell(new ComplexSentence(Connective.NOT, newSymbol(PERCEPT_SCREAM, time)));
-    }
-
-    /**
-     * Add to KB sentences that describe the action a
-     *
-     * @param a    action that must be added to KB
-     * @param time current time
-     */
-    public void makeActionSentence(WumpusAction a, int time) {
-        for (WumpusAction action : WumpusAction.values()) {
-            if (action.equals(a))
-                tell(newSymbol(action.name(), time));
-            else
-                tell(new ComplexSentence(Connective.NOT, newSymbol(action.name(), time)));
-        }
-    }
-
     /**
      * TELL the KB the temporal "physics" sentences for time t.
      * As in this version, the agent does not communicate its current position
@@ -356,10 +345,10 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
         if (t == 0) {
             // temporal rules at time zero
             tell(newSymbol(LOCATION, 0, start.getX(), start.getY()));
-            tell(newSymbol(start.getOrientation().name(), 0));
+            tell(newSymbol(start.getOrientation().getSymbol(), 0));
             tell(newSymbol(HAVE_ARROW, 0));
             tell(newSymbol(WUMPUS_ALIVE, 0));
-            // Optimization to make questions about unvisited locations faster
+            // Optimization: Make questions about unvisited locations faster
             tell(newSymbol(LOCATION_VISITED, start.getX(), start.getY()));
         }
 
@@ -403,16 +392,15 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
      * @param t current time step.
      */
     public void tellTemporalPhysicsSentences(int t, AgentPosition agentPosition) {
-        tell(newSymbol(LOCATION, t, agentPosition.getX(), agentPosition.getY()));
-        tell(newSymbol(agentPosition.getOrientation().name(), t));
-        // Optimization to make questions about unvisited locations faster
-        tell(newSymbol(LOCATION_VISITED, agentPosition.getX(), agentPosition.getY()));
-
         if (t == 0) {
             // temporal rules at time zero
             tell(newSymbol(HAVE_ARROW, 0));
             tell(newSymbol(WUMPUS_ALIVE, 0));
         }
+        tell(newSymbol(LOCATION, t, agentPosition.getX(), agentPosition.getY()));
+        tell(newSymbol(agentPosition.getOrientation().getSymbol(), t));
+        // Optimization to make questions about unvisited locations faster
+        tell(newSymbol(LOCATION_VISITED, agentPosition.getX(), agentPosition.getY()));
 
         // We can connect stench and breeze percepts directly
         // to the properties of the squares where they are experienced
@@ -446,6 +434,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
                 tell(new ComplexSentence(
                         newSymbol(OK_TO_MOVE_INTO, t, x, y),
                         Connective.BICONDITIONAL,
+                        // Optimization idea: Do not create OK sentences. Instead, ASK the following sentence
                         new ComplexSentence(
                                 new ComplexSentence(Connective.NOT, newSymbol(PIT, x, y)),
                                 Connective.AND,

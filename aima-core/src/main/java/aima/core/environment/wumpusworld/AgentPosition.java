@@ -14,16 +14,15 @@ public class AgentPosition {
 		FACING_SOUTH("FacingSouth"),
 		FACING_EAST("FacingEast"),
 		FACING_WEST("FacingWest");
-		
-		@Override
-		public String toString() {
-			return name;
+
+		public String getSymbol() {
+			return symbol;
 		}
 		
-		private final String name;
+		private final String symbol;
 		
-		Orientation(String name) {
-			this.name = name;
+		Orientation(String sym) {
+			symbol = sym;
 		}
 	}
 	
@@ -57,7 +56,7 @@ public class AgentPosition {
 
 	@Override
 	public String toString() {
-		return room.toString()+"->"+orientation;
+		return room.toString() + "->" + orientation.getSymbol();
 	}
 
 	@Override
