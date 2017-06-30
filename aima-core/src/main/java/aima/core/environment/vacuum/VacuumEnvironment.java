@@ -1,9 +1,5 @@
 package aima.core.environment.vacuum;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
@@ -11,6 +7,11 @@ import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.agent.impl.DynamicAction;
 import aima.core.search.agent.NondeterministicSearchAgent;
+import aima.core.util.Util;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): pg 58.<br>
@@ -25,6 +26,7 @@ import aima.core.search.agent.NondeterministicSearchAgent;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
 public class VacuumEnvironment extends AbstractEnvironment {
 	// Allowable Actions within the Vacuum Environment
@@ -38,23 +40,21 @@ public class VacuumEnvironment extends AbstractEnvironment {
 		Clean, Dirty
 	}
 
-    //
+    private final List<String> locations;
 	protected VacuumEnvironmentState envState = null;
 	protected boolean isDone = false;
 
 	/**
-	 * Constructs a vacuum environment with two locations, in which dirt is
+	 * Constructs a vacuum environment with two locations A and B, in which dirt is
 	 * placed at random.
 	 */
 	public VacuumEnvironment() {
-		Random r = new Random();
-		envState = new VacuumEnvironmentState(
-				0 == r.nextInt(2) ? LocationState.Clean : LocationState.Dirty,
-				0 == r.nextInt(2) ? LocationState.Clean : LocationState.Dirty);
+		this(Util.randomBoolean() ? LocationState.Clean : LocationState.Dirty,
+				Util.randomBoolean() ? LocationState.Clean : LocationState.Dirty);
 	}
 
 	/**
-	 * Constructs a vacuum environment with two locations, in which dirt is
+	 * Constructs a vacuum environment with two locations A and B, in which dirt is
 	 * placed as specified.
 	 * 
 	 * @param locAState
@@ -65,25 +65,69 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	 *            <em>Clean</em> or <em>Dirty</em>.
 	 */
 	public VacuumEnvironment(LocationState locAState, LocationState locBState) {
-		envState = new VacuumEnvironmentState(locAState, locBState);
+		this(Arrays.asList(LOCATION_A, LOCATION_B), locAState, locBState);
+	}
+
+	protected VacuumEnvironment(List<String> locations, LocationState... locStates) {
+		this.locations = locations;
+		envState = new VacuumEnvironmentState();
+		for (int i = 0; i < locations.size() && i < locStates.length; i++)
+			envState.setLocationState(locations.get(i), locStates[i]);
+	}
+
+	public List<String> getLocations() {
+		return locations;
 	}
 
 	public EnvironmentState getCurrentState() {
 		return envState;
 	}
-	
-	public List<String> getLocations() {
-		return Arrays.asList(LOCATION_A, LOCATION_B);
+
+	public LocationState getLocationState(String location) {
+		return envState.getLocationState(location);
+	}
+
+	public String getAgentLocation(Agent a) {
+		return envState.getAgentLocation(a);
+	}
+
+	@Override
+	public void addAgent(Agent a) {
+		int idx = new Random().nextInt(locations.size());
+		envState.setAgentLocation(a, locations.get(idx));
+		super.addAgent(a);
+	}
+
+	public void addAgent(Agent a, String location) {
+		// Ensure the agent state information is tracked before
+		// adding to super, as super will notify the registered
+		// EnvironmentViews that is was added.
+		envState.setAgentLocation(a, location);
+		super.addAgent(a);
+	}
+
+	@Override
+	public Percept getPerceptSeenBy(Agent anAgent) {
+		if (anAgent instanceof NondeterministicSearchAgent) {
+			// This agent expects a fully observable environment. It gets a clone of the environment state.
+			return envState.clone();
+		}
+		// Other agents get a local percept.
+		String agentLocation = envState.getAgentLocation(anAgent);
+		return new LocalVacuumEnvironmentPercept(agentLocation, envState.getLocationState(agentLocation));
 	}
 
 	@Override
 	public void executeAction(Agent a, Action agentAction) {
-
 		if (ACTION_MOVE_RIGHT == agentAction) {
-			envState.setAgentLocation(a, LOCATION_B);
+			int pos = locations.indexOf(getAgentLocation(a));
+			if (pos < locations.size()-1)
+				envState.setAgentLocation(a, locations.get(pos + 1));
 			updatePerformanceMeasure(a, -1);
 		} else if (ACTION_MOVE_LEFT == agentAction) {
-			envState.setAgentLocation(a, LOCATION_A);
+			int pos = locations.indexOf(getAgentLocation(a));
+			if (pos > 0)
+				envState.setAgentLocation(a, locations.get(pos - 1));
 			updatePerformanceMeasure(a, -1);
 		} else if (ACTION_SUCK == agentAction) {
 			if (LocationState.Dirty == envState.getLocationState(envState
@@ -100,41 +144,33 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public Percept getPerceptSeenBy(Agent anAgent) {
-		if (anAgent instanceof NondeterministicSearchAgent) {
-    		// This agent expects a fully observable environment. It gets a clone of the environment state.
-    		return envState.clone();
-    	}
-    	// Other agents get a local percept.
-		String agentLocation = envState.getAgentLocation(anAgent);
-		return new LocalVacuumEnvironmentPercept(agentLocation, envState.getLocationState(agentLocation));
-	}
-
-	@Override
 	public boolean isDone() {
 		return super.isDone() || isDone;
 	}
 
-	@Override
-	public void addAgent(Agent a) {
-		int idx = new Random().nextInt(2);
-		envState.setAgentLocation(a, idx == 0 ? LOCATION_A : LOCATION_B);
-		super.addAgent(a);
+
+	// Information for grid views...
+
+	public int getXDimension() {
+		return locations.size();
 	}
 
-	public void addAgent(Agent a, String location) {
-		// Ensure the agent state information is tracked before
-		// adding to super, as super will notify the registered
-		// EnvironmentViews that is was added.
-		envState.setAgentLocation(a, location);
-		super.addAgent(a);
+	public int getYDimension() {
+		return 1;
 	}
 
-	public LocationState getLocationState(String location) {
-		return envState.getLocationState(location);
+	// 1 means left
+	public int getX(String location) {
+		return getLocations().indexOf(location) % getXDimension() + 1;
 	}
 
-	public String getAgentLocation(Agent a) {
-		return envState.getAgentLocation(a);
+	// 1 means bottom
+	public int getY(String location) {
+		return getYDimension() - getLocations().indexOf(location) / getXDimension();
+	}
+
+	// (1, 1) is bottom left
+	public String getLocation(int x, int y) {
+		return locations.get((getYDimension() - y) * getXDimension() + x - 1);
 	}
 }

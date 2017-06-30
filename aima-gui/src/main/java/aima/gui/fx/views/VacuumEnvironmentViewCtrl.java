@@ -30,7 +30,8 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
     private Map<Agent, Arc> agentSymbols = new HashMap<>();
 
     public VacuumEnvironmentViewCtrl(StackPane viewRoot) {
-        super(viewRoot, env -> ((VacuumEnvironment) env).getLocations().size(), env -> 1);
+        super(viewRoot, env -> ((VacuumEnvironment) env).getXDimension(),
+                env -> ((VacuumEnvironment) env).getYDimension());
     }
 
     @Override
@@ -39,10 +40,10 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         agentOrientations.clear();
         agentSymbols.clear();
         super.initialize(env);
-        List<String> locations = ((VacuumEnvironment) env).getLocations();
-        for (int x = 1; x <= locations.size(); x++) {
-            SquareButton btn = getSquareButton(x, 1);
-            btn.getIdLabel().setText(locations.get((x - 1)));
+        VacuumEnvironment vEnv = (VacuumEnvironment) env;
+        for (String loc : vEnv.getLocations()) {
+            SquareButton btn = getSquareButton(vEnv.getX(loc), vEnv.getY(loc));
+            btn.getIdLabel().setText(loc);
         }
     }
 
@@ -62,17 +63,17 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
     @Override
     protected void update() {
         VacuumEnvironment vEnv = ((VacuumEnvironment) env);
-        List<String> locations = vEnv.getLocations();
-        for (int x = 1; x <= locations.size(); x++) {
-            SquareButton btn = getSquareButton(x, 1);
-            if (vEnv.getLocationState(locations.get(x-1)).equals(LocationState.Dirty))
+        for (String loc : vEnv.getLocations()) {
+            SquareButton btn = getSquareButton(vEnv.getX(loc), vEnv.getY(loc));
+            if (vEnv.getLocationState(loc).equals(LocationState.Dirty))
                 btn.getLabel().setText("Dirty");
             else
                 btn.getLabel().setText(""); // "Clean"
             btn.getPane().getChildren().clear();
         }
         for (Agent agent : vEnv.getAgents()) {
-            SquareButton btn = getSquareButton(locations.indexOf(vEnv.getAgentLocation(agent)) + 1, 1);
+            String loc = vEnv.getAgentLocation(agent);
+            SquareButton btn = getSquareButton(vEnv.getX(loc), vEnv.getY(loc));
             Integer orientation = agentOrientations.get(agent);
             if (orientation == null)
                 orientation = 0;
@@ -87,7 +88,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         else {
             VacuumEnvironment vEnv = (VacuumEnvironment) env;
             VacuumEnvironmentState state = (VacuumEnvironmentState) vEnv.getCurrentState();
-            String loc = vEnv.getLocations().get(x-1);
+            String loc = vEnv.getLocation(x, y);
             state.setLocationState(loc,
                     state.getLocationState(loc) == LocationState.Clean ? LocationState.Dirty : LocationState.Clean);
             update();

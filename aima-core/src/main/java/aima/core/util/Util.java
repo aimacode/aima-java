@@ -5,12 +5,13 @@ import java.util.stream.Collectors;
 
 /**
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
 public class Util {
 	public static final String NO = "No";
 	public static final String YES = "Yes";
-	//
+
 	private static Random random = new Random();
 
 	private static final double EPSILON = 0.000000000001;
@@ -91,9 +92,12 @@ public class Util {
 		return iterator.next();
 	}
 
+	public static int randomInt(int bound) {
+		return random.nextInt(bound);
+	}
+
 	public static boolean randomBoolean() {
-		int trueOrFalse = random.nextInt(2);
-		return (!(trueOrFalse == 0));
+		return random.nextInt(2) == 1;
 	}
 
 	public static double[] normalize(double[] probDist) {

@@ -27,19 +27,6 @@ public class VacuumEnvironmentState implements EnvironmentState, Percept, Clonea
 		agentLocations = new LinkedHashMap<>();
 	}
 
-	/**
-	 * Constructor
-	 * 
-	 * @param locAState
-	 * @param locBState
-	 */
-	public VacuumEnvironmentState(VacuumEnvironment.LocationState locAState,
-			VacuumEnvironment.LocationState locBState) {
-		this();
-		state.put(VacuumEnvironment.LOCATION_A, locAState);
-		state.put(VacuumEnvironment.LOCATION_B, locBState);
-	}
-
 	public String getAgentLocation(Agent a) {
 		return agentLocations.get(a);
 	}

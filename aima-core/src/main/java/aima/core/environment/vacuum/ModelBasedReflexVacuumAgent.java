@@ -62,7 +62,7 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent {
 	private static Set<Rule> getRuleSet() {
 		// Note: Using a LinkedHashSet so that the iteration order (i.e. implied
 		// precedence) of rules can be guaranteed.
-		Set<Rule> rules = new LinkedHashSet<Rule>();
+		Set<Rule> rules = new LinkedHashSet<>();
 
 		rules.add(new Rule(new ANDCondition(new EQUALCondition(
 				ATTRIBUTE_STATE_LOCATION_A,

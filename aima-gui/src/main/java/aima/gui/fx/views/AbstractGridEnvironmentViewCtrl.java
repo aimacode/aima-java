@@ -51,7 +51,6 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
         splitPane.setStyle("-fx-background-color: white");
         envStateView.setMinWidth(0.0);
         envStateView.setCenter(gridPane);
-        //viewRoot.setAlignment(Pos.BOTTOM_CENTER);
         squareSize.bind(Bindings.min(envStateView.widthProperty().subtract(20).divide(xDimension),
                 envStateView.heightProperty().subtract(20).subtract(actionLabel.heightProperty()).divide(yDimension)));
         squareSize.addListener((obs, o, n) -> updateFontSize());
@@ -66,8 +65,9 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
         envStateView.setBottom(actionLabel);
     }
 
+    /** (1, 1) is bottom left. */
     protected SquareButton getSquareButton(int x, int y) {
-        return squareButtons.get((y - 1) * xDimension.get() + x - 1);
+        return squareButtons.get((yDimension.get() - y) * xDimension.get() + x - 1);
     }
 
     @Override
@@ -102,14 +102,12 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
             gridPane.getColumnConstraints().add(cc);
 
         squareButtons.clear();
-        for (int y = 1; y <= yDim; y++) {
+        for (int y = yDim; y >= 1; y--) {
             for (int x = 1; x <= xDim; x++) {
                 final int x1 = x;
                 final int y1 = y;
                 SquareButton btn = new SquareButton();
                 btn.getIdLabel().setText(x1 + ", " + y1);
-                if (squareSize.get() < 80)
-                    btn.getIdLabel().setVisible(false);
                 btn.setOnAction(ev -> onEdit(x1, y1));
                 squareButtons.add(btn);
                 gridPane.add(btn, x - 1, yDim - y);
@@ -119,8 +117,10 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
     }
 
     private void updateFontSize() {
-        for (SquareButton btn : squareButtons)
+        for (SquareButton btn : squareButtons) {
             btn.getLabel().setFont(Font.font(squareSize.get() * fontSizeFactor));
+            btn.getIdLabel().setVisible(squareSize.get() >= 80);
+        }
     }
 
     /** Can be called from any thread. */
