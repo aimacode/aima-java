@@ -4,20 +4,20 @@ package aima.core.environment.connectfour;
  * Helper class for action ordering.
  * @author Ruediger Lunde
  */
-public class ActionValuePair<ACTION> implements Comparable<ActionValuePair<ACTION>> {
-	private ACTION action;
+public class ActionValuePair<A> implements Comparable<ActionValuePair<A>> {
+	private A action;
 	private double value;
 	
-	public static <ACTION> ActionValuePair<ACTION> createFor(ACTION action, double utility) {
-		return new ActionValuePair<ACTION>(action, utility);
+	public static <A> ActionValuePair<A> createFor(A action, double utility) {
+		return new ActionValuePair<A>(action, utility);
 	}
 	
-	public ActionValuePair(ACTION action, double utility) {
+	public ActionValuePair(A action, double utility) {
 		this.action = action;
 		this.value = utility;
 	}
 	
-	public ACTION getAction() {
+	public A getAction() {
 		return action;
 	}
 
@@ -26,7 +26,7 @@ public class ActionValuePair<ACTION> implements Comparable<ActionValuePair<ACTIO
 	}
 
 	@Override
-	public int compareTo(ActionValuePair<ACTION> pair) {
+	public int compareTo(ActionValuePair<A> pair) {
 		if (value < pair.value)
 			return 1;
 		else if (value > pair.value)

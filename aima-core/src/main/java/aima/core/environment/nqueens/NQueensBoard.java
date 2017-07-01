@@ -24,7 +24,7 @@ public class NQueensBoard {
 	 * X---> increases left to right with zero based index Y increases top to
 	 * bottom with zero based index | | V
 	 */
-	int[][] squares;
+	private int[][] squares;
 
 	/**
 	 * Creates a board with <code>size</code> rows and size columns. Column and
@@ -59,6 +59,10 @@ public class NQueensBoard {
 		}
 	}
 
+	public int getSize() {
+		return squares.length;
+	}
+
 	public void clear() {
 		for (int i = 0; i < getSize(); i++) {
 			for (int j = 0; j < getSize(); j++) {
@@ -67,15 +71,9 @@ public class NQueensBoard {
 		}
 	}
 
-	public void setBoard(List<XYLocation> locations) {
+	public void setQueensAt(List<XYLocation> locations) {
 		clear();
-		for (XYLocation anAl : locations) {
-			addQueenAt(anAl);
-		}
-	}
-
-	public int getSize() {
-		return squares.length;
+		locations.forEach(this::addQueenAt);
 	}
 
 	/** Column and row indices start with 0! */
@@ -94,8 +92,6 @@ public class NQueensBoard {
 	 * Moves the queen in the specified column (x-value of <code>l</code>) to
 	 * the specified row (y-value of <code>l</code>). The action assumes a
 	 * complete-state formulation of the n-queens problem.
-	 * 
-	 * @param l
 	 */
 	public void moveQueenTo(XYLocation l) {
 		for (int i = 0; i < getSize(); i++)

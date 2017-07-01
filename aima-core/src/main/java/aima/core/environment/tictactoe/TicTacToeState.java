@@ -154,14 +154,14 @@ public class TicTacToeState implements Cloneable {
 
 	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder builder = new StringBuilder();
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
-				buffer.append(getValue(col, row)).append(" ");
+				builder.append(getValue(col, row)).append(" ");
 			}
-			buffer.append("\n");
+			builder.append("\n");
 		}
-		return buffer.toString();
+		return builder.toString();
 	}
 
 	//

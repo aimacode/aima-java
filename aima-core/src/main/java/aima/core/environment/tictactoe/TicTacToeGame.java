@@ -15,7 +15,7 @@ import aima.core.util.datastructure.XYLocation;
  */
 public class TicTacToeGame implements Game<TicTacToeState, XYLocation, String> {
 
-	TicTacToeState initialState = new TicTacToeState();
+	private  TicTacToeState initialState = new TicTacToeState();
 
 	@Override
 	public TicTacToeState getInitialState() {

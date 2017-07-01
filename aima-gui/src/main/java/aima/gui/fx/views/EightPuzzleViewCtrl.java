@@ -43,12 +43,12 @@ public class EightPuzzleViewCtrl {
             gridPane.getRowConstraints().add(c1);
             gridPane.getColumnConstraints().add(c2);
         }
-        Font font = Font.font(40);
         for (int i = 0; i < 9; i++) {
             Button btn = new Button();
             btn.setOnAction(this::handleButtonEvent);
-            btn.setFont(font);
             btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            btn.setMinSize(10, 10);
+            btn.widthProperty().addListener((obs, o, n) -> btn.setFont(Font.font(n.intValue() / 2.5)));
             tileBtns[i] = btn;
             gridPane.add(btn, i % 3, i / 3);
         }

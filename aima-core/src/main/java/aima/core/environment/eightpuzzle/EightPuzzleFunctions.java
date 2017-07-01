@@ -70,7 +70,6 @@ public class EightPuzzleFunctions {
                 retVal += evaluateManhattanDistanceOf(i, loc);
             }
             return retVal;
-
         }
 
         private int evaluateManhattanDistanceOf(int i, XYLocation loc) {
@@ -151,9 +150,8 @@ public class EightPuzzleFunctions {
             }
             // Subtract the gap position from the # of misplaced tiles
             // as its not actually a tile (see issue 73).
-            if (numberOfMisplacedTiles > 0) {
+            if (numberOfMisplacedTiles > 0)
                 numberOfMisplacedTiles--;
-            }
             return numberOfMisplacedTiles;
         }
     }

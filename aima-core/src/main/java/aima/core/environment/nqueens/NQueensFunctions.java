@@ -78,7 +78,7 @@ public class NQueensFunctions {
      */
     public static NQueensBoard getResult(NQueensBoard state, QueenAction action) {
         NQueensBoard result = new NQueensBoard(state.getSize());
-        result.setBoard(state.getQueenPositions());
+        result.setQueensAt(state.getQueenPositions());
         if (Objects.equals(action.getName(), QueenAction.PLACE_QUEEN))
             result.addQueenAt(action.getLocation());
         else if (Objects.equals(action.getName(), QueenAction.REMOVE_QUEEN))

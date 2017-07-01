@@ -68,6 +68,11 @@ public class VacuumEnvironment extends AbstractEnvironment {
 		this(Arrays.asList(LOCATION_A, LOCATION_B), locAState, locBState);
 	}
 
+	/**
+	 * Constructor which allows subclasses to define a vacuum environment with an arbitrary number
+	 * of squares. Two-dimensional grid environments can be defined by additionally overriding
+	 * {@link #getXDimension()} and {@link #getYDimension()}.
+	 */
 	protected VacuumEnvironment(List<String> locations, LocationState... locStates) {
 		this.locations = locations;
 		envState = new VacuumEnvironmentState();
@@ -113,30 +118,31 @@ public class VacuumEnvironment extends AbstractEnvironment {
 			return envState.clone();
 		}
 		// Other agents get a local percept.
-		String agentLocation = envState.getAgentLocation(anAgent);
-		return new LocalVacuumEnvironmentPercept(agentLocation, envState.getLocationState(agentLocation));
+		String loc = envState.getAgentLocation(anAgent);
+		return new LocalVacuumEnvironmentPercept(loc, envState.getLocationState(loc));
 	}
 
 	@Override
-	public void executeAction(Agent a, Action agentAction) {
-		if (ACTION_MOVE_RIGHT == agentAction) {
-			int pos = locations.indexOf(getAgentLocation(a));
-			if (pos < locations.size()-1)
-				envState.setAgentLocation(a, locations.get(pos + 1));
+	public void executeAction(Agent a, Action action) {
+		String loc = getAgentLocation(a);
+		if (ACTION_MOVE_RIGHT == action) {
+			int x = getX(loc);
+			if (x < getXDimension())
+				envState.setAgentLocation(a, getLocation(x + 1, getY(loc)));
 			updatePerformanceMeasure(a, -1);
-		} else if (ACTION_MOVE_LEFT == agentAction) {
-			int pos = locations.indexOf(getAgentLocation(a));
-			if (pos > 0)
-				envState.setAgentLocation(a, locations.get(pos - 1));
+		} else if (ACTION_MOVE_LEFT == action) {
+			int x = getX(loc);
+			if (x > 1)
+				envState.setAgentLocation(a, getLocation(x - 1, getY(loc)));
 			updatePerformanceMeasure(a, -1);
-		} else if (ACTION_SUCK == agentAction) {
+		} else if (ACTION_SUCK == action) {
 			if (LocationState.Dirty == envState.getLocationState(envState
 					.getAgentLocation(a))) {
 				envState.setLocationState(envState.getAgentLocation(a),
 						LocationState.Clean);
 				updatePerformanceMeasure(a, 10);
 			}
-		} else if (agentAction.isNoOp()) {
+		} else if (action.isNoOp()) {
 			// In the Vacuum Environment we consider things done if
 			// the agent generates a NoOp.
 			isDone = true;

@@ -39,14 +39,14 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
      * Execute the agent action
      */
     @Override
-    public void executeAction(Agent a, Action agentAction) {
-        if (ACTION_MOVE_RIGHT == agentAction) {
+    public void executeAction(Agent a, Action action) {
+        if (ACTION_MOVE_RIGHT == action) {
             envState.setAgentLocation(a, LOCATION_B);
             updatePerformanceMeasure(a, -1);
-        } else if (ACTION_MOVE_LEFT == agentAction) {
+        } else if (ACTION_MOVE_LEFT == action) {
             envState.setAgentLocation(a, LOCATION_A);
             updatePerformanceMeasure(a, -1);
-        } else if (ACTION_SUCK == agentAction) {
+        } else if (ACTION_SUCK == action) {
             // case: square is dirty
             if (VacuumEnvironment.LocationState.Dirty == envState.getLocationState(envState.getAgentLocation(a))) {
                 String currentLocation = envState.getAgentLocation(a);
@@ -64,7 +64,7 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
                     envState.setLocationState(envState.getAgentLocation(a), VacuumEnvironment.LocationState.Dirty);
                 }
             }
-        } else if (agentAction.isNoOp()) {
+        } else if (action.isNoOp()) {
             isDone = true;
         }
     }

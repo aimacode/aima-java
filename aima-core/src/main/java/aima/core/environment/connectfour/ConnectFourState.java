@@ -219,8 +219,7 @@ public class ConnectFourState implements Cloneable {
 	@Override
 	public int hashCode() {
 		int result = 0;
-		for (int i = 0; i < board.length; i++)
-			result = result * 7 + board[i] + 1;
+		for (byte aBoard : board) result = result * 7 + aBoard + 1;
 		return result;
 	}
 
@@ -239,7 +238,7 @@ public class ConnectFourState implements Cloneable {
 	// ////////////////////////////////////////////////////////////////////
 	// nested classes
 
-	static class WinPositionInfo {
+	private static class WinPositionInfo {
 		int row = -1;
 		int col = -1;
 		int diskCount;

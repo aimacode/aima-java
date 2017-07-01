@@ -15,8 +15,7 @@ import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch;
 public class ConnectFourAIPlayer extends
 		IterativeDeepeningAlphaBetaSearch<ConnectFourState, Integer, String> {
 
-	public ConnectFourAIPlayer(Game<ConnectFourState, Integer, String> game,
-			int time) {
+	public ConnectFourAIPlayer(Game<ConnectFourState, Integer, String> game, int time) {
 		super(game, 0.0, 1.0, time);
 	}
 
@@ -27,8 +26,7 @@ public class ConnectFourAIPlayer extends
 
 	@Override
 	protected boolean hasSafeWinner(double resultUtility) {
-		return Math.abs(resultUtility - (utilMin + utilMax) / 2) > 0.4
-				* utilMax - utilMin;
+		return Math.abs(resultUtility - (utilMin + utilMax) / 2) > 0.4 * utilMax - utilMin;
 	}
 
 	/**
@@ -56,13 +54,13 @@ public class ConnectFourAIPlayer extends
 			List<Integer> actions, String player, int depth) {
 		List<Integer> result = actions;
 		if (depth == 0) {
-			List<ActionValuePair<Integer>> actionEstimates = new ArrayList<ActionValuePair<Integer>>(
+			List<ActionValuePair<Integer>> actionEstimates = new ArrayList<>(
 					actions.size());
 			for (Integer action : actions)
 				actionEstimates.add(ActionValuePair.createFor(action,
 						state.analyzePotentialWinPositions(action)));
 			Collections.sort(actionEstimates);
-			result = new ArrayList<Integer>();
+			result = new ArrayList<>();
 			for (ActionValuePair<Integer> pair : actionEstimates)
 				result.add(pair.getAction());
 		}

@@ -12,9 +12,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
-import javafx.scene.shape.Shape;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Environment view controller class which is specialized for vacuum
@@ -26,12 +29,28 @@ import java.util.*;
 public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
 
     private Set<Agent> agentsInSuckState = new HashSet<>();
-    private Map<Agent, Integer> agentOrientations = new HashMap<>();
+    private Map<Agent, Double> agentOrientations = new HashMap<>();
+    private Function<Action, Double> actionToOrientationFn;
     private Map<Agent, Arc> agentSymbols = new HashMap<>();
 
     public VacuumEnvironmentViewCtrl(StackPane viewRoot) {
+        this(viewRoot, action -> {
+            if (action == VacuumEnvironment.ACTION_MOVE_LEFT) return 270.0;
+            else if (action == VacuumEnvironment.ACTION_MOVE_RIGHT) return 90.0;
+            else return null;
+        });
+    }
+
+    /**
+     * Constructor with additional functional argument to control the rotation of the agent symbol.
+     * @param viewRoot the pane where the button grid is added
+     * @param actionToOrientationFn maps actions to direction values.
+     *                              Value interpretation: 0 = facing up, 90 = facing right, null = no change.
+     */
+    public VacuumEnvironmentViewCtrl(StackPane viewRoot, Function<Action, Double> actionToOrientationFn) {
         super(viewRoot, env -> ((VacuumEnvironment) env).getXDimension(),
                 env -> ((VacuumEnvironment) env).getYDimension());
+        this.actionToOrientationFn = actionToOrientationFn;
     }
 
     @Override
@@ -53,10 +72,9 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
             agentsInSuckState.add(agent);
         else
             agentsInSuckState.remove(agent);
-        if (action == VacuumEnvironment.ACTION_MOVE_LEFT)
-            agentOrientations.put(agent, 180);
-        else if (action == VacuumEnvironment.ACTION_MOVE_RIGHT)
-            agentOrientations.put(agent, 0);
+        Double orientation = actionToOrientationFn.apply(action);
+        if (orientation != null)
+            agentOrientations.put(agent, orientation);
         super.agentActed(agent, percept, action, source);
     }
 
@@ -74,9 +92,9 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         for (Agent agent : vEnv.getAgents()) {
             String loc = vEnv.getAgentLocation(agent);
             SquareButton btn = getSquareButton(vEnv.getX(loc), vEnv.getY(loc));
-            Integer orientation = agentOrientations.get(agent);
+            Double orientation = agentOrientations.get(agent);
             if (orientation == null)
-                orientation = 0;
+                orientation = 90.0;
             btn.getPane().getChildren().add(getAgentSymbol(agent, orientation));
         }
     }
@@ -95,13 +113,13 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         }
     }
 
-    private Node getAgentSymbol(Agent agent, int orientation) {
+    private Node getAgentSymbol(Agent agent, double orientation) {
         Arc result = agentSymbols.get(agent);
         if (result == null) {
             result = new Arc();
             result.radiusXProperty().bind(squareSize.multiply(0.75 / 2));
             result.radiusYProperty().bind(squareSize.multiply(0.75 / 2));
-            result.setStartAngle(45.0f);
+            result.setStartAngle(135.0f);
             result.setType(ArcType.ROUND);
             result.setFill(Color.RED);
             agentSymbols.put(agent, result);

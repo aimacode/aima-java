@@ -2,7 +2,6 @@ package aima.gui.demo.agent;
 
 import aima.core.agent.EnvironmentView;
 import aima.core.agent.impl.SimpleEnvironmentView;
-import aima.core.environment.wumpusworld.EfficientHybridWumpusAgent;
 import aima.core.environment.wumpusworld.HybridWumpusAgent;
 import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusEnvironment;
@@ -25,8 +24,8 @@ public class WumpusAgentDemo {
         env.addEnvironmentView(view);
 
         HybridWumpusAgent a;
-        // a = new HybridWumpusAgent
-        a = new EfficientHybridWumpusAgent
+        a = new HybridWumpusAgent
+        // a = new EfficientHybridWumpusAgent
                 (cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart(),
                 new DPLLSatisfiable(), env);
 

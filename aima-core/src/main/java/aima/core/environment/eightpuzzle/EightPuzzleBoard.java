@@ -62,7 +62,6 @@ public class EightPuzzleBoard {
 			setValue(x, ypos, valueOnRight);
 			setValue(x, ypos + 1, 0);
 		}
-
 	}
 
 	public void moveGapLeft() {
@@ -74,7 +73,6 @@ public class EightPuzzleBoard {
 			setValue(x, ypos, valueOnLeft);
 			setValue(x, ypos - 1, 0);
 		}
-
 	}
 
 	public void moveGapDown() {
@@ -114,8 +112,7 @@ public class EightPuzzleBoard {
 
 	public void setBoard(List<XYLocation> locs) {
 		int count = 0;
-		for (int i = 0; i < locs.size(); i++) {
-			XYLocation loc = locs.get(i);
+		for (XYLocation loc : locs) {
 			this.setValue(loc.getXCoOrdinate(), loc.getYCoOrdinate(), count);
 			count = count + 1;
 		}
@@ -201,17 +198,14 @@ public class EightPuzzleBoard {
 	}
 
 	private int getPositionOf(int val) {
-		for (int i = 0; i < 9; i++) {
-			if (state[i] == val) {
+		for (int i = 0; i < 9; i++)
+			if (state[i] == val)
 				return i;
-			}
-		}
 		return -1;
 	}
 
 	private void setValue(int x, int y, int val) {
 		int absPos = getAbsPosition(x, y);
 		state[absPos] = val;
-
 	}
 }

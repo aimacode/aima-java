@@ -145,7 +145,7 @@ public class WumpusAgentApp extends IntegrableApplication {
         taskPaneCtrl.waitAfterStep();
         while (!env.isDone() && !Tasks.currIsCancelled()) {
             env.step();
-            updateStatus();
+            taskPaneCtrl.setStatus(agent.getMetrics().toString());
             taskPaneCtrl.waitAfterStep();
         }
         if (taskPaneCtrl.getParamValueIndex(PARAM_KB) == 1)
@@ -155,9 +155,5 @@ public class WumpusAgentApp extends IntegrableApplication {
     @Override
     public void cleanup() {
         taskPaneCtrl.cancelExecution();
-    }
-
-    private void updateStatus() {
-        taskPaneCtrl.setStatus(agent.getMetrics().toString());
     }
 }

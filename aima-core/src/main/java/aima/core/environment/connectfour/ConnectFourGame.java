@@ -15,8 +15,8 @@ import aima.core.search.adversarial.Game;
  */
 public class ConnectFourGame implements Game<ConnectFourState, Integer, String> {
 
-	String[] players = new String[] { "red", "yellow" };
-	ConnectFourState initialState = new ConnectFourState(6, 7);
+	private String[] players = new String[] { "red", "yellow" };
+	private ConnectFourState initialState = new ConnectFourState(6, 7);
 
 	@Override
 	public ConnectFourState getInitialState() {
@@ -62,7 +62,7 @@ public class ConnectFourGame implements Game<ConnectFourState, Integer, String> 
 
 	@Override
 	public List<Integer> getActions(ConnectFourState state) {
-		List<Integer> result = new ArrayList<Integer>();
+		List<Integer> result = new ArrayList<>();
 		for (int i = 0; i < state.getCols(); i++)
 			if (state.getPlayerNum(0, i) == 0)
 				result.add(i);
