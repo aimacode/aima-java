@@ -1,11 +1,6 @@
 package aima.core.nlp.parsing;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import aima.core.nlp.parsing.grammars.Rule;
 
@@ -24,27 +19,26 @@ public class Lexicon extends HashMap<String,ArrayList<LexWord>> {
 	private static final long serialVersionUID = 1L;
 
 	public ArrayList<Rule> getTerminalRules( String partOfSpeech ) {
-		ArrayList<LexWord> lexWords = this.get(partOfSpeech.toUpperCase());
-		ArrayList<Rule> rules = new ArrayList<Rule>();
-		if( lexWords.size() > 0) {
-			for( int i=0; i < lexWords.size(); i++ ) {
-				rules.add( new Rule( partOfSpeech.toUpperCase(), 
-						   			    lexWords.get(i).word, 
-						   			    lexWords.get(i).prob));
-			}	
-		}
+		final String partOfSpeechUpperCase = partOfSpeech.toUpperCase();
+		final ArrayList<Rule> rules = new ArrayList<>();
+
+		Optional.ofNullable(this.get(partOfSpeechUpperCase)).ifPresent(lexWords -> {
+			for (LexWord word : lexWords) {
+				rules.add(new Rule(partOfSpeechUpperCase, word.word, word.prob));
+			}
+		});
+
 		return rules;
 	}
 	
 	public ArrayList<Rule> getAllTerminalRules() {
-		ArrayList<Rule> allRules = new ArrayList<Rule>();
-		Set<String> keys = this.keySet();
-		Iterator<String> it = keys.iterator();
-		while( it.hasNext() ) {
-			String key = (String) it.next();
+		final ArrayList<Rule> allRules = new ArrayList<>();
+		final Set<String> keys = this.keySet();
+
+		for (String key : keys) {
 			allRules.addAll( this.getTerminalRules(key));
 		}
-		
+
 		return allRules;
 	}
 	
@@ -53,21 +47,21 @@ public class Lexicon extends HashMap<String,ArrayList<LexWord>> {
 			this.get(category).add( new LexWord( word, prob ));
 		}
 		else {
-			this.put(category, new ArrayList<LexWord>( Arrays.asList(new LexWord(word,prob))));
+			this.put(category, new ArrayList<>( Arrays.asList(new LexWord(word,prob))));
 		}
 		
 		return true;
 	}
 	
 	public boolean addLexWords( String... vargs ) {
-		
-		String key; ArrayList<LexWord> lexWords = new ArrayList<LexWord>();
+		ArrayList<LexWord> lexWords = new ArrayList<>();
 		boolean containsKey = false;
 		// number of arguments must be key (1) + lexWord pairs ( x * 2 )
 		if( vargs.length % 2 != 1 ) {
 			return false;
 		}
-		key = vargs[0].toUpperCase();
+
+		String key = vargs[0].toUpperCase();
 		if( this.containsKey(key)) { containsKey = true; }
 			
 		for( int i=1; i < vargs.length; i++ ) {
@@ -92,19 +86,19 @@ public class Lexicon extends HashMap<String,ArrayList<LexWord>> {
 	/**
 	 * Add words to an lexicon from an existing lexicon. Using this 
 	 * you can combine lexicons.
-	 * @param l
+	 * @param lexicon
 	 */
-	public void addLexWords( Lexicon l ) {
-		Iterator<Map.Entry<String,ArrayList<LexWord>>> it = l.entrySet().iterator();
-		while(it.hasNext()) {
-			Map.Entry<String,ArrayList<LexWord>> pair = it.next();
-			if( this.containsKey( pair.getKey())) {
-				for( int i=0; i < pair.getValue().size(); i++ ) {
-					this.get(pair.getKey()).add(pair.getValue().get(i));
+	public void addLexWords( Lexicon lexicon ) {
+		for (Map.Entry<String, ArrayList<LexWord>> pair : lexicon.entrySet()) {
+			final String key = pair.getKey();
+			final ArrayList<LexWord> lexWords = pair.getValue();
+
+			if (this.containsKey(key)) {
+				for (LexWord word : lexWords) {
+					this.get(key).add(word);
 				}
-			}
-			else {
-				this.put(pair.getKey(), pair.getValue());
+			} else {
+				this.put(key, lexWords);
 			}
 		}
 	}

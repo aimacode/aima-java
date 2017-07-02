@@ -34,18 +34,17 @@ public class Rule {
 	
 	// string split constructor
 	public Rule( String lhs, String rhs, float probability) {
-		if( lhs.equals("")) {
-			this.lhs = new ArrayList<String>();
+		if( "".equals(lhs)) {
+			this.lhs = new ArrayList<>();
 		} else {
-			this.lhs = new ArrayList<String>(Arrays.asList(lhs.split("\\s*,\\s*")));
+			this.lhs = new ArrayList<>(Arrays.asList(lhs.split("\\s*,\\s*")));
 		}
-		if( rhs.equals("")) {
-			this.rhs = new ArrayList<String>();
+		if( "".equals(rhs)) {
+			this.rhs = new ArrayList<>();
 		} else {
-			this.rhs = new ArrayList<String>(Arrays.asList(rhs.split("\\s*,\\s*")));
+			this.rhs = new ArrayList<>(Arrays.asList(rhs.split("\\s*,\\s*")));
 		}
 		this.PROB = validateProb( probability );
-		
 	}
 	
 	/**
@@ -74,10 +73,7 @@ public class Rule {
 	}
 	
 	public boolean derives( String terminal ) {
-		if( this.rhs.size() == 1 && this.rhs.get(0).equals(terminal)) {
-			return true;
-		}
-		return false;
+		return this.rhs.size() == 1 && this.rhs.get(0).equals(terminal);
 	}
 	
 	@Override 
