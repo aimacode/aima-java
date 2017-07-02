@@ -4,6 +4,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.Percept;
+import aima.core.agent.impl.AbstractEnvironment;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -20,13 +21,13 @@ import java.util.function.ToIntFunction;
 
 /**
  * Provides base functionality for implementing views for environments which are based on a grid world.
- * Square (1, 1) is bottom left.
+ * Square (1, 1) is bottom left. Environments are expected to be derived from {@link AbstractEnvironment}.
  *
  * @author Ruediger Lunde
  */
 public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 
-    protected Label actionLabel = new Label();
+    protected Label perceptLabel = new Label();
     protected double fontSizeFactor = 0.3;
     protected boolean isEditingEnabled; // edit cave only after initialization, not during agent simulation!
     protected IntegerProperty xDimension = new SimpleIntegerProperty(-1);
@@ -52,17 +53,17 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
         envStateView.setMinWidth(0.0);
         envStateView.setCenter(gridPane);
         squareSize.bind(Bindings.min(envStateView.widthProperty().subtract(20).divide(xDimension),
-                envStateView.heightProperty().subtract(20).subtract(actionLabel.heightProperty()).divide(yDimension)));
+                envStateView.heightProperty().subtract(20).subtract(perceptLabel.heightProperty()).divide(yDimension)));
         squareSize.addListener((obs, o, n) -> updateFontSize());
         gridPane.maxWidthProperty().bind(squareSize.multiply(xDimension));
         gridPane.maxHeightProperty().bind(squareSize.multiply(yDimension));
         gridPane.vgapProperty().bind(squareSize.divide(20));
         gridPane.hgapProperty().bind(squareSize.divide(20));
 
-        actionLabel.setMaxWidth(Double.MAX_VALUE);
-        actionLabel.setAlignment(Pos.CENTER);
-        actionLabel.setFont(Font.font(20));
-        envStateView.setBottom(actionLabel);
+        perceptLabel.setMaxWidth(Double.MAX_VALUE);
+        perceptLabel.setAlignment(Pos.CENTER);
+        perceptLabel.setFont(Font.font(20));
+        envStateView.setBottom(perceptLabel);
     }
 
     /** (1, 1) is bottom left. */
@@ -73,6 +74,8 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
     @Override
     public void initialize(Environment env) {
         this.env = env;
+        if (!(env instanceof AbstractEnvironment))
+            throw new IllegalStateException("This view expects environments to be derived from AbstractEnvironment.");
         updateDimensions();
         super.initialize(env);
         isEditingEnabled = true;
@@ -123,12 +126,21 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
         }
     }
 
-    /** Can be called from any thread. */
+    /**
+     * Can be called from every thread.
+     */
+    @Override
+    public void agentAdded(Agent agent, Environment source) {
+        super.agentAdded(agent, source);
+        updatePerceptLabel(agent);
+    }
+
+    /** Can be called from every thread. */
     @Override
     public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
         super.agentActed(agent, percept, action, source);
         isEditingEnabled = false; // never change the environment when the agent has started his job.
-        Platform.runLater(() -> actionLabel.setText("Percept: " + percept + ", Action: " + action));
+        updatePerceptLabel(agent);
     }
 
     /** Updates the view. */
@@ -136,8 +148,23 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
     protected final void updateEnvStateView(Environment env) {
         if (this.env != env)
             throw new IllegalStateException("Environment can only be changed during initialization.");
-        actionLabel.setText("");
+        updatePerceptLabel(null);
         update();
+    }
+
+    /** Updates the percept label with the current percept of the agent. Can be called from every thread. */
+    private void updatePerceptLabel(Agent agent) {
+        String agentInfo = null;
+        Percept percept = null;
+        if (agent != null) {
+            agentInfo = env.getAgents().size() > 1 ? " (A" + (env.getAgents().indexOf(agent) + 1) + ")" : "";
+            percept = ((AbstractEnvironment) env).getPerceptSeenBy(agent);
+        }
+        String txt = (agent != null) ? "Percept" + agentInfo + ": " + percept : "";
+        if (Platform.isFxApplicationThread())
+            perceptLabel.setText(txt);
+        else
+            Platform.runLater(() -> perceptLabel.setText(txt));
     }
 
     /**
@@ -151,8 +178,7 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
      * @param x the x coordinate of the button (1 = left).
      * @param y the y coordinate of the button (1 = bottom).
      */
-    protected void onEdit(int x, int y) {
-    }
+    protected void onEdit(int x, int y) {}
 
 
     /**

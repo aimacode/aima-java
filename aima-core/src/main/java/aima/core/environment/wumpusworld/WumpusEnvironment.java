@@ -19,10 +19,12 @@ public class WumpusEnvironment extends AbstractEnvironment {
     private WumpusCave cave;
     private boolean isWumpusAlive = true;
     private boolean isGoldGrabbed;
+    private boolean screamNext;
     private boolean scream;
-    /** We assume that only one agent is added to the environment! */
-    private boolean hasArrow =true;
+    // We assume that only one agent is added to the environment!
+    private boolean bumpNext;
     private boolean bump;
+    private boolean hasArrow =true;
     private Map<Agent, AgentPosition> agentPositions = new HashMap<>();
 
     public WumpusEnvironment(WumpusCave cave) {
@@ -47,8 +49,17 @@ public class WumpusEnvironment extends AbstractEnvironment {
 
     @Override
     public void addAgent(Agent agent) {
-        super.addAgent(agent);
         agentPositions.put(agent, cave.getStart());
+        super.addAgent(agent);
+    }
+
+    @Override
+    public void step() {
+        super.step();
+        bump = bumpNext;
+        scream = screamNext;
+        screamNext = false;
+        bumpNext = false;
     }
 
     @Override
@@ -58,7 +69,7 @@ public class WumpusEnvironment extends AbstractEnvironment {
             AgentPosition newPos = cave.moveForward(pos);
             agentPositions.put(agent, newPos);
             if (newPos.equals(pos))
-                bump = true;
+                bumpNext = true;
             else if (cave.isPit(newPos.getRoom()) || newPos.getRoom().equals(cave.getWumpus()) && isWumpusAlive)
                 agent.setAlive(false);
         } else if (action == WumpusAction.TURN_LEFT) {
@@ -71,7 +82,7 @@ public class WumpusEnvironment extends AbstractEnvironment {
         } else if (action == WumpusAction.SHOOT) {
             if (hasArrow && isAgentFacingWumpus(pos)) {
                 isWumpusAlive = false;
-                scream = true;
+                screamNext = true;
                 hasArrow = false;
             }
         } else if (action == WumpusAction.CLIMB) {
@@ -110,14 +121,10 @@ public class WumpusEnvironment extends AbstractEnvironment {
         }
         if (pos.getRoom().equals(cave.getGold()))
             result.setGlitter();
-        if (bump) {
+        if (bump)
             result.setBump();
-            bump = false;
-        }
-        if (scream) {
+        if (scream)
             result.setScream();
-            scream = false;
-        }
         return result;
     }
 }

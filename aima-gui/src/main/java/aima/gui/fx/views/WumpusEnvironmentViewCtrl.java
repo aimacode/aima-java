@@ -72,10 +72,8 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         // visualize agent positions
         for (Agent agent : wEnv.getAgents()) {
             AgentPosition pos = wEnv.getAgentPosition(agent);
-            if (pos != null) { // hm...
-                Pane pane = getSquareButton(pos.getX(), pos.getY()).getPane();
-                pane.getChildren().add(getAgentSymbol(agent, pos));
-            }
+            Pane pane = getSquareButton(pos.getX(), pos.getY()).getPane();
+            pane.getChildren().add(getAgentSymbol(agent, pos));
         }
     }
 
@@ -84,7 +82,7 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
         WumpusCave cave = ((WumpusEnvironment) env).getCave();
         Room room = new Room(x, y);
         if (!isEditingEnabled)
-            actionLabel.setText("Cave can only be edited after initialization.");
+            perceptLabel.setText("Cave can only be edited after initialization.");
         else if (!room.equals(cave.getStart().getRoom()) && !room.equals(cave.getGold())) {
             if (cave.isPit(room)) {
                 if (room.equals(cave.getWumpus()))

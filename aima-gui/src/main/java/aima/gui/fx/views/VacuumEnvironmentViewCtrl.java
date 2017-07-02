@@ -102,7 +102,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
     @Override
     protected void onEdit(int x, int y) {
         if (!isEditingEnabled)
-            actionLabel.setText("Environment can only be edited after initialization.");
+            perceptLabel.setText("Environment can only be edited after initialization.");
         else {
             VacuumEnvironment vEnv = (VacuumEnvironment) env;
             VacuumEnvironmentState state = (VacuumEnvironmentState) vEnv.getCurrentState();
