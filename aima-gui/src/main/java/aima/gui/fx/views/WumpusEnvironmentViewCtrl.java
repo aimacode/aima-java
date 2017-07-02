@@ -93,6 +93,7 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
                 cave.setPit(room, true);
             }
             update();
+            perceptLabel.setText("");
         }
     }
 

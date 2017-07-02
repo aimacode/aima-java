@@ -110,6 +110,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
             state.setLocationState(loc,
                     state.getLocationState(loc) == LocationState.Clean ? LocationState.Dirty : LocationState.Clean);
             update();
+            perceptLabel.setText("");
         }
     }
 
