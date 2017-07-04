@@ -7,6 +7,7 @@ import aima.core.environment.wumpusworld.AgentPosition;
 import aima.core.environment.wumpusworld.Room;
 import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusEnvironment;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -27,11 +28,25 @@ import java.util.Map;
 public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
 
     private Map<Agent, Shape> agentSymbols = new HashMap<>();
+    private boolean showRoomContent = true;
 
     public WumpusEnvironmentViewCtrl(StackPane viewRoot) {
         super(viewRoot,
                 env -> ((WumpusEnvironment) env).getCave().getCaveXDimension(),
                 env -> ((WumpusEnvironment) env).getCave().getCaveYDimension());
+    }
+
+    /** Can be called from every thread. */
+    public void setShowRoomContent(boolean showRoomContent) {
+        if (this.showRoomContent != showRoomContent) {
+            this.showRoomContent = showRoomContent;
+            if (env != null) {
+                if (Platform.isFxApplicationThread())
+                    update();
+                else
+                    Platform.runLater(() -> update());
+            }
+        }
     }
 
     @Override
@@ -51,19 +66,21 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
                 SquareButton btn = getSquareButton(x, y);
                 btn.getLabel().setTextFill(Color.BLACK);
                 String txt = "";
-                if (room.equals(cave.getStart().getRoom())) {
-                    txt = "S";
-                } else if (room.equals(cave.getWumpus())) {
-                    if (!wEnv.isWumpusAlive())
-                        btn.getLabel().setTextFill(Color.GRAY);
-                    txt = "W";
-                } else if (room.equals(cave.getGold())) {
-                    if (wEnv.isGoalGrabbed())
-                        btn.getLabel().setTextFill(Color.GRAY);
-                    txt = "Gold";
+                if (showRoomContent) {
+                    if (room.equals(cave.getStart().getRoom())) {
+                        txt = "S";
+                    } else if (room.equals(cave.getWumpus())) {
+                        if (!wEnv.isWumpusAlive())
+                            btn.getLabel().setTextFill(Color.GRAY);
+                        txt = "W";
+                    } else if (room.equals(cave.getGold())) {
+                        if (wEnv.isGoalGrabbed())
+                            btn.getLabel().setTextFill(Color.GRAY);
+                        txt = "Gold";
+                    }
+                    if (cave.isPit(room))
+                        txt = txt.isEmpty() ? "Pit" : "Pit " + txt;
                 }
-                if (cave.isPit(room))
-                    txt = txt.isEmpty() ? "Pit" : "Pit " + txt;
                 btn.getLabel().setText(txt);
                 btn.getPane().getChildren().clear();
             }

@@ -33,7 +33,7 @@ public class WumpusAgentApp extends IntegrableApplication {
     protected static String PARAM_CAVE = "cave";
     protected static String PARAM_AGENT = "agent";
     protected static String PARAM_SAT_SOLVER = "satSolver";
-    protected static String PARAM_KB = "showKB";
+    protected static String PARAM_VIEW = "view";
 
     protected TaskExecutionPaneCtrl taskPaneCtrl;
     protected WumpusEnvironmentViewCtrl envViewCtrl;
@@ -78,7 +78,7 @@ public class WumpusAgentApp extends IntegrableApplication {
         p2.setDefaultValueIndex(1);
         Parameter p3 = new Parameter(PARAM_SAT_SOLVER, "DPLLSatisfiable", "OptimizedDPLL");
         p3.setDefaultValueIndex(1);
-        Parameter p4 = new Parameter(PARAM_KB, "False", "True");
+        Parameter p4 = new Parameter(PARAM_VIEW, "Default", "Hide Room Content", "Show KB");
         return Arrays.asList(p1, p2, p3, p4);
     }
 
@@ -137,6 +137,7 @@ public class WumpusAgentApp extends IntegrableApplication {
         }
         env.addEnvironmentView(envViewCtrl);
         envViewCtrl.initialize(env);
+        envViewCtrl.setShowRoomContent(taskPaneCtrl.getParamValueIndex(PARAM_VIEW) != 1);
     }
 
     /** Starts the experiment. */
@@ -148,7 +149,9 @@ public class WumpusAgentApp extends IntegrableApplication {
             taskPaneCtrl.setStatus(agent.getMetrics().toString());
             taskPaneCtrl.waitAfterStep();
         }
-        if (taskPaneCtrl.getParamValueIndex(PARAM_KB) == 1)
+        if (taskPaneCtrl.getParamValueIndex(PARAM_VIEW) == 1)
+            envViewCtrl.setShowRoomContent(true);
+        if (taskPaneCtrl.getParamValueIndex(PARAM_VIEW) == 2)
             env.notifyViews("KB:\n" + agent.getKB().toString());
     }
 

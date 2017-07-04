@@ -5,10 +5,7 @@ import aima.core.agent.Agent;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Implements an environment for the Wumpus World.
@@ -19,13 +16,10 @@ public class WumpusEnvironment extends AbstractEnvironment {
     private WumpusCave cave;
     private boolean isWumpusAlive = true;
     private boolean isGoldGrabbed;
-    private boolean screamNext;
-    private boolean scream;
-    // We assume that only one agent is added to the environment!
-    private boolean bumpNext;
-    private boolean bump;
-    private boolean hasArrow =true;
     private Map<Agent, AgentPosition> agentPositions = new HashMap<>();
+    private Set<Agent> bumpedAgents = new HashSet<>();
+    private Set<Agent> agentsHavingArrow = new HashSet<>();
+    private Agent agentJustKillingWumpus;
 
     public WumpusEnvironment(WumpusCave cave) {
         this.cave = cave;
@@ -50,27 +44,22 @@ public class WumpusEnvironment extends AbstractEnvironment {
     @Override
     public void addAgent(Agent agent) {
         agentPositions.put(agent, cave.getStart());
+        agentsHavingArrow.add(agent);
         super.addAgent(agent);
     }
 
     @Override
-    public void step() {
-        super.step();
-        bump = bumpNext;
-        scream = screamNext;
-        screamNext = false;
-        bumpNext = false;
-    }
-
-    @Override
     public void executeAction(Agent agent, Action action) {
+        bumpedAgents.remove(agent);
+        if (agent == agentJustKillingWumpus)
+            agentJustKillingWumpus = null;
         AgentPosition pos = agentPositions.get(agent);
         if (action == WumpusAction.FORWARD) {
             AgentPosition newPos = cave.moveForward(pos);
             agentPositions.put(agent, newPos);
-            if (newPos.equals(pos))
-                bumpNext = true;
-            else if (cave.isPit(newPos.getRoom()) || newPos.getRoom().equals(cave.getWumpus()) && isWumpusAlive)
+            if (newPos.equals(pos)) {
+                bumpedAgents.add(agent);
+            } else if (cave.isPit(newPos.getRoom()) || newPos.getRoom().equals(cave.getWumpus()) && isWumpusAlive)
                 agent.setAlive(false);
         } else if (action == WumpusAction.TURN_LEFT) {
             agentPositions.put(agent, cave.turnLeft(pos));
@@ -80,10 +69,10 @@ public class WumpusEnvironment extends AbstractEnvironment {
             if (!isGoldGrabbed && pos.getRoom().equals(cave.getGold()))
                 isGoldGrabbed = true;
         } else if (action == WumpusAction.SHOOT) {
-            if (hasArrow && isAgentFacingWumpus(pos)) {
+            if (agentsHavingArrow.contains(agent) && isAgentFacingWumpus(pos)) {
                 isWumpusAlive = false;
-                screamNext = true;
-                hasArrow = false;
+                agentsHavingArrow.remove(agent);
+                agentJustKillingWumpus = agent;
             }
         } else if (action == WumpusAction.CLIMB) {
             agent.setAlive(false);
@@ -121,9 +110,9 @@ public class WumpusEnvironment extends AbstractEnvironment {
         }
         if (pos.getRoom().equals(cave.getGold()))
             result.setGlitter();
-        if (bump)
+        if (bumpedAgents.contains(anAgent))
             result.setBump();
-        if (scream)
+        if (agentJustKillingWumpus != null)
             result.setScream();
         return result;
     }
