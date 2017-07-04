@@ -16,12 +16,14 @@ Simple demo command line applications can be found in package `aima.gui.demo`.
 Graphical demo applications are available based on JavaFX (package `aima.gui.fx.applications`) and
 Swing (package `aima.gui.swing.applications`). Each platform-specific root package contains an
 integrated application providing access to all integrable applications. The individual applications are placed
-in sub-packages. Note that JavaFX and Swing applications are structured quite differently.
+in sub-packages.
+
+Note that JavaFX and Swing applications are structured quite differently.
 They use different frameworks (sub-package framework) and also differ in function. The JavaFX framework
 is the newer of the two. It uses newer technology, its code design is more elegant
 (see the [Wiki](https://github.com/aimacode/aima-java/wiki)), and already now more applications are available.
 Execution of experiments can be controlled with just one button (try Mouse-Right on the Start button to
-toggle between StepMode and VeryFast.
+toggle between StepMode and VeryFast).
 
 ![NQueensCspApp Demo Application](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-gui/src/main/uml/NQueensCspApp.png)
 
