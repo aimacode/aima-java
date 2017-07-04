@@ -19,32 +19,32 @@ public class Rule {
 	public final List<String> rhs; // Right hand side of derivation rule
 	
 	// Basic constructor
-	public Rule( List<String> lhs, List<String> rhs, float probability ) {
+	public Rule(List<String> lhs, List<String> rhs, float probability) {
 		this.lhs = lhs;
 		this.rhs = rhs;
-		this.PROB = validateProb( probability );
+		this.PROB = validateProb(probability);
 	}
 	
 	// null RHS rule constructor
-	public Rule( List<String> lhs, float probability ) {
+	public Rule(List<String> lhs, float probability) {
 		this.lhs = lhs;
 		this.rhs = null;
-		this.PROB = validateProb( probability );
+		this.PROB = validateProb(probability);
 	}
 	
 	// string split constructor
-	public Rule( String lhs, String rhs, float probability) {
-		if( "".equals(lhs)) {
+	public Rule(String lhs, String rhs, float probability) {
+		if( "".equals(lhs))
 			this.lhs = new ArrayList<>();
-		} else {
+		else
 			this.lhs = new ArrayList<>(Arrays.asList(lhs.split("\\s*,\\s*")));
-		}
-		if( "".equals(rhs)) {
+
+		if( "".equals(rhs))
 			this.rhs = new ArrayList<>();
-		} else {
+		else
 			this.rhs = new ArrayList<>(Arrays.asList(rhs.split("\\s*,\\s*")));
-		}
-		this.PROB = validateProb( probability );
+
+		this.PROB = validateProb(probability);
 	}
 	
 	/**
@@ -52,28 +52,24 @@ public class Rule {
 	 * Don't really want to throw an exception.
 	 */
 	private float validateProb(float prob) {
-		if( prob >= 0.0 && prob <= 1.0 ) {
+		if (prob >= 0.0 && prob <= 1.0 )
 			return prob;
-		}
-		else {
+		else
 			return (float) 0.5; // probably should throw exception
-		}
 	}
 	
-	public boolean derives( List<String> sentForm ) {
-		if( this.rhs.size() != sentForm.size() ) {
+	public boolean derives(List<String> sentForm) {
+		if (rhs.size() != sentForm.size())
 			return false;
-		}
-		for( int i=0; i < sentForm.size(); i++ ) {
-			if(!Objects.equals(this.rhs.get(i), sentForm.get(i))) {
+		for (int i=0; i < sentForm.size(); i++ ) {
+			if(!Objects.equals(rhs.get(i), sentForm.get(i)))
 				return false;
-			}
 		}
 		return true;
 	}
 	
-	public boolean derives( String terminal ) {
-		return this.rhs.size() == 1 && this.rhs.get(0).equals(terminal);
+	public boolean derives(String terminal) {
+		return rhs.size() == 1 && rhs.get(0).equals(terminal);
 	}
 	
 	@Override 

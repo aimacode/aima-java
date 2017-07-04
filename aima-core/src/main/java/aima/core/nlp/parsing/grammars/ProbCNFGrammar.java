@@ -28,7 +28,7 @@ public class ProbCNFGrammar extends ProbContextFreeGrammar {
 		rules = new ArrayList<Rule>();
 	}
 	
-	public ProbCNFGrammar( ProbCNFGrammar grammar ) {
+	public ProbCNFGrammar(ProbCNFGrammar grammar) {
 		type = 4;
 		rules = grammar.rules;
 	}
@@ -38,16 +38,14 @@ public class ProbCNFGrammar extends ProbContextFreeGrammar {
 	 * both the restrictions of the Context-free grammar, and all rules 
 	 * or in Chomsky-Normal-Form
 	 */
-	public boolean addRules( List<Rule> ruleList ) {
-		for( int i=0; i < ruleList.size(); i++ ) {
-			if( !validRule(ruleList.get(i)) ) {
+	public boolean addRules(List<Rule> ruleList) {
+		for (Rule aRuleList : ruleList) {
+			if (!validRule(aRuleList))
 				return false;
-			}
 		}
-		if( !validateRuleProbabilities(ruleList)) {
+		if (!validateRuleProbabilities(ruleList))
 			return false;
-		}
-		this.rules = ruleList;
+		rules = ruleList;
 		updateVarsAndTerminals();
 		return true;
 	}
@@ -57,10 +55,9 @@ public class ProbCNFGrammar extends ProbContextFreeGrammar {
 	 * both the restrictions of the Context-free grammar, and the rule is
 	 * in Chomsky Normal Form.
 	 */
-	public boolean addRule( Rule r ) {
-		if( !validRule(r) ) {
+	public boolean addRule(Rule r) {
+		if (!validRule(r))
 			return false;
-		}
 		rules.add(r);
 		updateVarsAndTerminals(r);
 		return true;
@@ -80,20 +77,17 @@ public class ProbCNFGrammar extends ProbContextFreeGrammar {
 	 * @return true, if rule is in CNF. false, otherwise
 	 */
 	public boolean validRule( Rule r ){
-		if( !super.validRule(r) ){
+		if (!super.validRule(r))
 			return false;
-		}
 		// 3. rhs is null
-		if( r.rhs == null || r.rhs.size() == 0) { return true; }
+		if (r.rhs == null || r.rhs.size() == 0)
+			return true;
 		// 2. rhs is a terminal (a)
-		else if( r.rhs.size() == 1 && isTerminal(r.rhs.get(0))) {
+		else if (r.rhs.size() == 1 && isTerminal(r.rhs.get(0)))
 			return true;
-		}
 		// 1. rhs is 2 variables (BC)
-		else if( r.rhs.size() == 2 && isVariable(r.rhs.get(0))
-				  && isVariable(r.rhs.get(1))) { 
+		else if (r.rhs.size() == 2 && isVariable(r.rhs.get(0)) && isVariable(r.rhs.get(1)))
 			return true;
-		}
 		// rule is not in one of the 3 CNF forms
 		return false;
 	}

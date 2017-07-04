@@ -96,7 +96,7 @@ public class HITS {
 	 * @throws UnsupportedEncodingException
 	 */
 	public List<Page> relevantPages(String query) {
-		List<Page> relevantPages = new ArrayList<Page>();
+		List<Page> relevantPages = new ArrayList<>();
 		for (Page p : pTable.values()) {
 			if (matches(query, p.getContent())) {
 				relevantPages.add(p);
@@ -125,33 +125,27 @@ public class HITS {
 	 */
 	public List<Page> expandPages(List<Page> pages) {
 
-		List<Page> expandedPages = new ArrayList<Page>();
-		Set<String> inAndOutLinks = new HashSet<String>();
+		List<Page> expandedPages = new ArrayList<>();
+		Set<String> inAndOutLinks = new HashSet<>();
 		// Go through all pages an build a list of String links
-		for (int i = 0; i < pages.size(); i++) {
-			Page currP = pages.get(i);
-			if (!expandedPages.contains(currP)) {
+		for (Page currP : pages) {
+			if (!expandedPages.contains(currP))
 				expandedPages.add(currP);
-			}
 			List<String> currInlinks = currP.getInlinks();
-			for (int j = 0; j < currInlinks.size(); j++) {
-				inAndOutLinks.add(currInlinks.get(i));
-			}
+			for (String currInlink : currInlinks)
+				inAndOutLinks.add(currInlink);
 			List<String> currOutlinks = currP.getOutlinks();
-			for (int j = 0; j < currOutlinks.size(); j++) {
-				inAndOutLinks.add(currOutlinks.get(i));
-			}
+			for (String currOutlink : currOutlinks)
+				inAndOutLinks.add(currOutlink);
 		}
 		// go through String links and add their respective pages to our return
 		// list
-		Iterator<String> it = inAndOutLinks.iterator();
-		while (it.hasNext()) {
-			String addr = it.next();
+		for (String addr : inAndOutLinks) {
 			Page p = pTable.get(addr);
 			if (p != null && !expandedPages.contains(p)) { // a valid link may
-															// not have an
-															// associated page
-															// in our table
+				// not have an
+				// associated page
+				// in our table
 				expandedPages.add(p);
 			}
 		}
@@ -201,14 +195,11 @@ public class HITS {
 	public double SumInlinkHubScore(Page page) {
 		List<String> inLinks = page.getInlinks();
 		double hubScore = 0;
-		for (int i = 0; i < inLinks.size(); i++) {
-			Page inLink = pTable.get(inLinks.get(i));
-			if (inLink != null) {
+		for (String inLink1 : inLinks) {
+			Page inLink = pTable.get(inLink1);
+			if (inLink != null)
 				hubScore += inLink.hub;
-			} else {
-				// page is linked to by a Page not in our table
-				continue;
-			}
+			// else: page is linked to by a Page not in our table
 		}
 		return hubScore;
 	} // end SumInlinkHubScore()
@@ -224,11 +215,10 @@ public class HITS {
 	public double SumOutlinkAuthorityScore(Page page) {
 		List<String> outLinks = page.getOutlinks();
 		double authScore = 0;
-		for (int i = 0; i < outLinks.size(); i++) {
-			Page outLink = pTable.get(outLinks.get(i));
-			if (outLink != null) {
+		for (String outLink1 : outLinks) {
+			Page outLink = pTable.get(outLink1);
+			if (outLink != null)
 				authScore += outLink.authority;
-			}
 		}
 		return authScore;
 	}
@@ -298,12 +288,10 @@ public class HITS {
 	 * @return
 	 */
 	public Page getMaxHub(List<Page> result) {
-		Page maxHub = result.get(0);
-		for (int i = 1; i < result.size(); i++) {
-			Page currPage = result.get(i);
-			if (currPage.hub > maxHub.hub) {
+		Page maxHub = null;
+		for (Page currPage : result) {
+			if (maxHub == null || currPage.hub > maxHub.hub)
 				maxHub = currPage;
-			}
 		}
 		return maxHub;
 	}
@@ -315,12 +303,10 @@ public class HITS {
 	 * @return
 	 */
 	public Page getMaxAuthority(List<Page> result) {
-		Page maxAuthority = result.get(0);
-		for (int i = 1; i < result.size(); i++) {
-			Page currPage = result.get(i);
-			if (currPage.authority > maxAuthority.authority) {
+		Page maxAuthority = null;
+		for (Page currPage : result) {
+			if (maxAuthority == null || currPage.authority > maxAuthority.authority)
 				maxAuthority = currPage;
-			}
 		}
 		return maxAuthority;
 	}
@@ -375,18 +361,14 @@ public class HITS {
 		// Print Pages out ranked by highest authority
 		sortAuthority(result);
 		System.out.println("AUTHORITY RANKINGS : ");
-		for (int i = 0; i < result.size(); i++) {
-			Page currP = result.get(i);
+		for (Page currP : result)
 			System.out.printf(currP.getLocation() + ": " + "%.5f" + '\n', currP.authority);
-		}
 		System.out.println();
 		// Print Pages out ranked by highest hub
 		sortHub(result);
 		System.out.println("HUB RANKINGS : ");
-		for (int i = 0; i < result.size(); i++) {
-			Page currP = result.get(i);
+		for (Page currP : result)
 			System.out.printf(currP.getLocation() + ": " + "%.5f" + '\n', currP.hub);
-		}
 		System.out.println();
 		// Print Max Authority
 		System.out.println("Page with highest Authority score: " + getMaxAuthority(result).getLocation());

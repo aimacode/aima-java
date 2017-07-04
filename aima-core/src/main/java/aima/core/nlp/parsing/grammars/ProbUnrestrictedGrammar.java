@@ -30,9 +30,9 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 	// default constructor. has no rules
 	public ProbUnrestrictedGrammar() {
 		type = 0;
-		rules = new ArrayList<Rule>();
-		vars =  new ArrayList<String>();
-		terminals = new ArrayList<String>();
+		rules = new ArrayList<>();
+		vars =  new ArrayList<>();
+		terminals = new ArrayList<>();
 	}
 	
 	/**
@@ -42,15 +42,13 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 	 * @return true if rules are valid and incorporated into the grammar. false, otherwise
 	 */
 	public boolean addRules( List<Rule> ruleList ) {
-		for( int i=0; i < ruleList.size(); i++ ) {
-			if( !validRule(ruleList.get(i)) ) {
+		for (Rule aRuleList : ruleList) {
+			if (!validRule(aRuleList))
 				return false;
-			}
 		}
-		if( !validateRuleProbabilities(ruleList)) {
+		if (!validateRuleProbabilities(ruleList))
 			return false;
-		}
-		this.rules = ruleList;
+		rules = ruleList;
 		updateVarsAndTerminals();
 		return true;
 	}
@@ -62,13 +60,12 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 	 * @return true if rule is incorporated. false, otherwise
 	 */
 	// TODO: More sophisticated probability distribution management
-	public boolean addRule( Rule rule ) {
-		if( validRule(rule)) {
+	public boolean addRule(Rule rule) {
+		if (validRule(rule)) {
 			rules.add(rule);
 			updateVarsAndTerminals( rule );
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -79,25 +76,21 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 	 * @param ruleList
 	 * @return true if the probabilities are valid. false, otherwise
 	 */
-	public boolean validateRuleProbabilities( List<Rule> ruleList ) {
+	public boolean validateRuleProbabilities(List<Rule> ruleList) {
 		float probTotal = 0;
-		for( int i=0; i < vars.size(); i++ ) {
-			for( int j=0; j < ruleList.size(); j++ ) {
+		for (String var : vars) {
+			for (int j = 0; j < ruleList.size(); j++) {
 				// reset probTotal at start
-				if( j == 0 ) {
+				if (j == 0)
 					probTotal = (float) 0.0;
-				}
-				if( ruleList.get(i).lhs.get(0).equals(vars.get(i))) {
-					probTotal += ruleList.get(i).PROB;
-				}
+				if (ruleList.get(j).lhs.get(0).equals(var))
+					probTotal += ruleList.get(j).PROB;
 				// check probTotal hasn't exceed max
-				if( probTotal > 1.0 ) {
+				if (probTotal > 1.0)
 					return false;
-				}
 				// check we have correct probability total
-				if( j == ruleList.size() -1 && probTotal != (float) 1.0 ) {
+				if (j == ruleList.size() - 1 && probTotal != (float) 1.0)
 					return false;
-				}
 			}
 		}
 		return true;
@@ -110,13 +103,8 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 	 * @param r ( a rule )
 	 * @return true, if rule has valid form. false, otherwise
 	 */
-	public boolean validRule( Rule r ) {
-		if( r.lhs != null && r.lhs.size() > 0 ) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	public boolean validRule(Rule r) {
+		return r.lhs != null && r.lhs.size() > 0;
 	}
 	
 	/** 
@@ -124,15 +112,13 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 	 * update the list of variables and terminals with any new grammar symbols
 	 */
 	public void updateVarsAndTerminals() {
-		if( rules == null ) {
-			vars =  new ArrayList<String>();
-			terminals = new ArrayList<String>();
+		if (rules == null) {
+			vars =  new ArrayList<>();
+			terminals = new ArrayList<>();
 			return;
 		}
-		for( int i=0; i < rules.size(); i++ ) {
-			Rule r = rules.get(i);
-			updateVarsAndTerminals(r);	// update the variables and terminals for this rule
-		}
+		for (Rule r : rules)
+			updateVarsAndTerminals(r);    // update the variables and terminals for this rule
 	}
 	
 	/**
@@ -140,26 +126,22 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 	 * if there a new symbols
 	 * @param r
 	 */
-	public void updateVarsAndTerminals( Rule r ) {
+	public void updateVarsAndTerminals(Rule r) {
 		// check lhs for new terminals or variables
-		for( int j=0; j < r.lhs.size(); j++ ) {
-			if( isVariable(r.lhs.get(j)) && !vars.contains(r.lhs.get(j))) {
+		for (int j=0; j < r.lhs.size(); j++) {
+			if (isVariable(r.lhs.get(j)) && !vars.contains(r.lhs.get(j)))
 				vars.add(r.lhs.get(j));
-			}
-			else if( isTerminal(r.lhs.get(j)) && !terminals.contains(r.lhs.get(j))) {
+			else if (isTerminal(r.lhs.get(j)) && !terminals.contains(r.lhs.get(j)))
 				terminals.add(r.lhs.get(j));
-			}
 		}
 		// for rhs we must check that this isn't a null-rule
-		if ( r.rhs != null ) {
+		if (r.rhs != null) {
 			// check rhs for new terminals or variables
-			for( int j=0; j < r.rhs.size(); j++ ) {
-				if( isVariable(r.rhs.get(j)) && !vars.contains(r.rhs.get(j))) {
+			for (int j=0; j < r.rhs.size(); j++) {
+				if (isVariable(r.rhs.get(j)) && !vars.contains(r.rhs.get(j)))
 					vars.add(r.rhs.get(j));
-				}
-				else if( isTerminal(r.rhs.get(j)) && !terminals.contains(r.rhs.get(j))) {
+				else if (isTerminal(r.rhs.get(j)) && !terminals.contains(r.rhs.get(j)))
 					terminals.add(r.rhs.get(j));
-				}
 			}
 		}
 		// maintain sorted lists
@@ -174,11 +156,9 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 	 * @return
 	 */
 	public static boolean isVariable(String s) {
-		for (int i=0; i < s.length(); i++)
-		{
-			if (!Character.isUpperCase(s.charAt(i))) {
+		for (int i=0; i < s.length(); i++) {
+			if (!Character.isUpperCase(s.charAt(i)))
 				return false;
-			}
 		}
 		return true;
 	}
@@ -190,10 +170,8 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 	 */
 	public static boolean isTerminal(String s) {
 		for (int i=0; i < s.length(); i++ ) {
-			
-			if( !Character.isLowerCase(s.charAt(i))) {
+			if( !Character.isLowerCase(s.charAt(i)))
 				return false;
-			}
 		}
 		return true;
 	}
@@ -204,18 +182,14 @@ public class ProbUnrestrictedGrammar implements ProbabilisticGrammar {
 		StringBuilder output = new StringBuilder();
 
 		output.append("Variables:  ");
-
-		this.vars.forEach(var -> output.append(var).append(", "));
+		vars.forEach(var -> output.append(var).append(", "));
 
 		output.append('\n');
 		output.append("Terminals:  ");
-
-		this.terminals.forEach(terminal -> output.append(terminal).append(", "));
+		terminals.forEach(terminal -> output.append(terminal).append(", "));
 
 		output.append('\n');
-
-		this.rules.forEach(rule -> output.append(rule.toString()).append('\n'));
-
+		rules.forEach(rule -> output.append(rule.toString()).append('\n'));
 		return output.toString();
 	}
 }

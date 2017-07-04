@@ -44,14 +44,14 @@ import aima.core.nlp.parsing.grammars.Rule;
  */
 public class CYK {
 	
-	public float[][][] parse( List<String> words, ProbCNFGrammar grammar ) {
+	public float[][][] parse(List<String> words, ProbCNFGrammar grammar) {
 		final int N = length(words);
 		final int M = grammar.vars.size(); 
 		float[][][] P = new float[M][N][N]; // initialised to 0.0
-		for( int i=0; i < N; i++ ) {
+		for (int i=0; i < N; i++) {
 		   //for each rule of form( X -> words<sub>i</sub>[p]) do
 			//   P[X,i,1] <- p
-			for( int j=0; j < grammar.rules.size(); j++ ) {
+			for (int j=0; j < grammar.rules.size(); j++) {
 				Rule r = (Rule) grammar.rules.get(j);
 				if( r.derives(words.get(i))) { 				 	// rule is of form X -> w, where w = words[i]
 					int x = grammar.vars.indexOf(r.lhs.get(0)); // get the index of rule's LHS variable
@@ -59,14 +59,13 @@ public class CYK {
 				}
 			}
 		}
-		for( int length=2; length <= N; length++ ) {
-			for( int start=1; start <= N - length + 1; start++ ) {
-				for( int len1=1; len1 <= length -1; len1++ ) { // N.B. the book incorrectly has N-1 instead of length-1
+		for (int length=2; length <= N; length++) {
+			for (int start=1; start <= N - length + 1; start++) {
+				for (int len1=1; len1 <= length -1; len1++) { // N.B. the book incorrectly has N-1 instead of length-1
 					int len2 = length - len1;
 					// for each rule of the form X -> Y Z, where Y,Z are variables of the grammar
-					for( int j=0; j < grammar.rules.size(); j++ ) {
-						Rule r = grammar.rules.get(j);
-						if( r.rhs.size() == 2 ) {
+					for (Rule r : grammar.rules) {
+						if(r.rhs.size() == 2) {
 							// get index of rule's variables X, Y, and Z
 							int x = grammar.vars.indexOf(r.lhs.get(0));
 							int y = grammar.vars.indexOf(r.rhs.get(0));
@@ -87,7 +86,7 @@ public class CYK {
 	 * @param ls
 	 * @return the length of the list
 	 */
-	public int length( List<String> ls ) {
+	public int length(List<String> ls) {
 		return ls.size();
 	}
 	
@@ -97,17 +96,16 @@ public class CYK {
 	 * @param words
 	 * @param g
 	 */
-	public void printProbTable( float[][][] probTable, List<String> words, ProbUnrestrictedGrammar g ) {
+	public void printProbTable(float[][][] probTable, List<String> words, ProbUnrestrictedGrammar g) {
 		final int N = words.size();
 		final int M = g.vars.size(); // num non-terminals in grammar
 		
-		for( int i=0; i < M; i++ ) {
+		for (int i=0; i < M; i++) {
 			System.out.println("Table For : " + g.vars.get(i) + "(" + i + ")");
-			for( int j=0; j < N; j++ ) {
+			for (int j=0; j < N; j++) {
 				System.out.print(j + "| ");
-				for( int k=0; k < N; k++ ) {
+				for (int k=0; k < N; k++)
 					System.out.print(probTable[i][j][k] + " | ");
-				}
 				System.out.println();
 			}
 			System.out.println();
@@ -121,7 +119,7 @@ public class CYK {
 	 * @param g
 	 * @return
 	 */
-	public ArrayList<String> getMostProbableDerivation( float[][][] probTable, ProbUnrestrictedGrammar g ) {
+	public ArrayList<String> getMostProbableDerivation(float[][][] probTable, ProbUnrestrictedGrammar g) {
 		// TODO
 		return null;
 	}

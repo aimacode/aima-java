@@ -21,16 +21,14 @@ public class ProbContextSensitiveGrammar extends ProbUnrestrictedGrammar impleme
 	 * both the restrictions of the parent grammar (unrestricted) and
 	 * this grammar's restrictions.
 	 */
-	public boolean addRules( ArrayList<Rule> ruleList ) {
-		for( int i=0; i < ruleList.size(); i++ ) {
-			if( !super.validRule(ruleList.get(i)) ) {
+	public boolean addRules(ArrayList<Rule> ruleList) {
+		for (Rule aRuleList : ruleList) {
+			if (!super.validRule(aRuleList))
 				return false;
-			}
-			if( !validRule(ruleList.get(i)) ) {
+			if (!validRule(aRuleList))
 				return false;
-			}
 		}
-		this.rules = ruleList;
+		rules = ruleList;
 		updateVarsAndTerminals();
 		return true;
 	}
@@ -40,13 +38,12 @@ public class ProbContextSensitiveGrammar extends ProbUnrestrictedGrammar impleme
 	 * both the restrictions of the parent grammar (unrestricted) and
 	 * this grammar's restrictions.
 	 */
-	public boolean addRule( Rule r ) {
-		if( !super.validRule(r) ) {
+	public boolean addRule(Rule r) {
+		if (!super.validRule(r))
 			return false;
-		}
-		else if( !validRule(r) ) {
+		else if (!validRule(r))
 			return false;
-		}
+
 		rules.add(r);
 		updateVarsAndTerminals(r);
 		return true;
@@ -58,17 +55,16 @@ public class ProbContextSensitiveGrammar extends ProbUnrestrictedGrammar impleme
 	 * and the number of RHS symbols must be equal or greater than the number
 	 * of LHS symbols.
 	 */
-	public boolean validRule( Rule r ){
-		if( !super.validRule(r) ){
+	public boolean validRule(Rule r) {
+		if (!super.validRule(r))
 			return false;
-		}
+
 		// len(rhs) >= len(lhs) must hold in context-sensitive.
-		else if( r.rhs == null ) {
+		else if (r.rhs == null)
 			return false;
-		}
-		else if( r.rhs.size() < r.lhs.size() ) {
+
+		else if (r.rhs.size() < r.lhs.size())
 			return false;
-		}
 
 		return true;
 	}
