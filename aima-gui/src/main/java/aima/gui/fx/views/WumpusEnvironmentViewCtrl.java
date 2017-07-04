@@ -44,7 +44,7 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
                 if (Platform.isFxApplicationThread())
                     update();
                 else
-                    Platform.runLater(() -> update());
+                    Platform.runLater(this::update);
             }
         }
     }
