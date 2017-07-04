@@ -6,10 +6,9 @@ by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 
 This project contains graphical applications and command line demos. The command line demos show
 how to use selected parts of the aima-core API. Their code is structured as simple as possible
-to be easy to read and understand. The graphical applications support interactive experiments with
+and should be easy to read and understand. The graphical applications support interactive experiments with
 some of the core algorithms, especially from the search and logic area. Based on practical application
-scenarios, different algorithms can be tested with various parameter settings to measure and compare
-their performance.
+scenarios, different algorithms can be tested and compared with various parameter settings.
  
 Application class names end with "App" and command line demo class names end with "Demo".
 Simple demo command line applications can be found in package `aima.gui.demo`.
