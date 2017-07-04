@@ -71,7 +71,8 @@ public class OsmOnlineAgentApp extends IntegrableApplication {
 	
 	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_WAY_SELECTION, "Use any way", "Travel by car", "Travel by bicycle");
-		Parameter p2 = new Parameter(PARAM_STRATEGY, "LRTA* agent", "Online DFS agent");
+		Parameter p2 = new Parameter(PARAM_STRATEGY, "Online DFS agent", "LRTA* agent");
+		p2.setDefaultValueIndex(1);
 		Parameter p3 = new Parameter(PARAM_HEURISTIC, "0", "SLD");
 		p3.setDefaultValueIndex(1);
         p3.setDependency(PARAM_STRATEGY, "LRTA* agent");
@@ -95,9 +96,9 @@ public class OsmOnlineAgentApp extends IntegrableApplication {
 
 		Agent agent;
 		if (simPaneCtrl.getParamValueIndex(PARAM_STRATEGY) == 0)
-			agent = new LRTAStarAgent<>(osp, MapFunctions.createPerceptToStateFunction(), heuristic);
-		else
 			agent = new OnlineDFSAgent<>(osp, MapFunctions.createPerceptToStateFunction());
+		else
+			agent = new LRTAStarAgent<>(osp, MapFunctions.createPerceptToStateFunction(), heuristic);
 		return agent;
 	}
 	

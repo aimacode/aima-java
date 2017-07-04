@@ -5,8 +5,11 @@ by Ruediger Lunde (Ruediger.Lunde@gmail.com)
 ![WumpusAgentApp Demo Application](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-gui/src/main/uml/WumpusAgentApp.png)
 
 This project contains graphical applications and command line demos. The command line demos show
-how to use selected parts of the aima-core API. The applications support interactive experiments with
-some of the core algorithms, especially from the search and logic area.
+how to use selected parts of the aima-core API. Their code is structured as simple as possible
+to be easy to read and understand. The graphical applications support interactive experiments with
+some of the core algorithms, especially from the search and logic area. Based on practical application
+scenarios, different algorithms can be tested with various parameter settings to measure and compare
+their performance.
  
 Application class names end with "App" and command line demo class names end with "Demo".
 Simple demo command line applications can be found in package `aima.gui.demo`.
@@ -14,7 +17,11 @@ Graphical demo applications are available based on JavaFX (package `aima.gui.fx.
 Swing (package `aima.gui.swing.applications`). Each platform-specific root package contains an
 integrated application providing access to all integrable applications. The individual applications are placed
 in sub-packages. Note that JavaFX and Swing applications are structured quite differently.
-They use different frameworks (sub-package framework) and also differ in function.
+They use different frameworks (sub-package framework) and also differ in function. The JavaFX framework
+is the newer of the two. It uses newer technology, its code design is more elegant
+(see the [Wiki](https://github.com/aimacode/aima-java/wiki)), and already now more applications are available.
+Execution of experiments can be controlled with just one button (try Mouse-Right on the Start button to
+toggle between StepMode and VeryFast.
 
 ![NQueensCspApp Demo Application](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-gui/src/main/uml/NQueensCspApp.png)
 
