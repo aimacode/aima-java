@@ -22,7 +22,7 @@ Note that JavaFX and Swing applications are structured quite differently.
 They use different frameworks (sub-package framework) and also differ in function. The JavaFX framework
 is the newer of the two. It uses newer technology, its code design is more elegant
 (see the [Wiki](https://github.com/aimacode/aima-java/wiki)), and already now more applications are available.
-Execution of experiments can be controlled with just one button (try Mouse-Right on the rightmost button to
+Experiment execution can be controlled with just one button (try Mouse-Right on the rightmost button to
 toggle between StepMode and VeryFast).
 
 ![NQueensCspApp Demo Application](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-gui/src/main/uml/NQueensCspApp.png)
