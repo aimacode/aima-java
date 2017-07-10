@@ -26,14 +26,14 @@ import java.util.function.ToDoubleFunction;
 /**
  * Integrable application which demonstrates how different kinds of search
  * algorithms perform in a route finding scenario based on a real OSM map. This
- * implementation extends <code>OsmAgentBaseApp</code> by two aspects: Map
+ * implementation extends {@link RouteFindingAgentOsmApp} by two aspects: Map
  * locations corresponding to expanded nodes are highlighted in green. The user
  * can define several goals by placing more then two markers on the map.
  *
  * @author Ruediger Lunde
  *
  */
-public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
+public class ExtendedRouteFindingAgentOsmApp extends RouteFindingAgentOsmApp {
 
 	public static void main(String[] args) {
 		launch(args);
@@ -47,7 +47,7 @@ public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 
 	@Override
 	public String getTitle() {
-		return "OSM Route Finding Agent App";
+		return "Extended Route Finding Agent OSM App";
 	}
 
 	/**
@@ -99,8 +99,8 @@ public class OsmRouteFindingAgentApp extends OsmAgentBaseApp {
 	// helper classes...
 
 	/**
-	 * Variant of the <code>DefaultMapEntityRenderer</code> which highlights way
-	 * nodes mentioned in {@link SearchDemoOsmAgentApp#visitedStates}.
+	 * Variant of the {@link DefaultEntityRenderer} which highlights way
+	 * nodes mentioned in {@link ExtendedRouteFindingAgentOsmApp#visitedStates}.
 	 */
 	private static class SDMapEntityRenderer extends DefaultEntityRenderer {
 		DefaultEntityViewInfo highlightProp = new MapStyleFactory().createPoiInfo(0, 0, 5, UColor.GREEN,

@@ -120,7 +120,7 @@ public class OsmViewerPlusApp implements ActionListener {
 		
 		Locale.setDefault(Locale.US);
 		OsmViewerPlusApp demo = new OsmViewerPlusApp(args);
-		demo.getFrame().readMap(DataResource.getULMFileResource());
+		demo.getFrame().readMap(DataResource.getUlmFileResource());
 		demo.showFrame();
 	}
 }

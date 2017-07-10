@@ -170,7 +170,7 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 
 		SearchDemoOsmAgentApp demo = new SearchDemoOsmAgentApp();
-		demo.readMap(DataResource.getULMFileResource());
+		demo.readMap(DataResource.getUlmFileResource());
 		demo.startApplication();
 	}
 }

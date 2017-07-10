@@ -19,7 +19,7 @@ import java.util.Locale;
  *
  * @author Ruediger Lunde
  */
-public class SimpleOsmViewerApp extends Application {
+public class SimpleMapViewerOsmApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -34,7 +34,7 @@ public class SimpleOsmViewerApp extends Application {
         Locale.setDefault(Locale.US);
 
         UnifiedMapDrawer<Canvas> mapDrawer = new UnifiedMapDrawer<>(new FXImageBuilder());
-        mapDrawer.loadMap(DataResource.getULMFileResource());
+        mapDrawer.loadMap(DataResource.getUlmFileResource());
 
         Canvas canvas = new Canvas(600, 400);
         mapDrawer.drawMap(canvas, true);
@@ -42,7 +42,7 @@ public class SimpleOsmViewerApp extends Application {
         root.getChildren().add(canvas);
         Scene scene = new Scene(root, Color.BLACK);
 
-        primaryStage.setTitle("Simple Osm Viewer App");
+        primaryStage.setTitle("Simple Map Viewer OSM App");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

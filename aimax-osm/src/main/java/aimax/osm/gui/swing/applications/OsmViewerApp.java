@@ -24,7 +24,7 @@ public class OsmViewerApp {
 		
 		Locale.setDefault(Locale.US);
 		MapViewFrame frame = new MapViewFrame(args);
-		frame.readMap(DataResource.getULMFileResource());
+		frame.readMap(DataResource.getUlmFileResource());
 		frame.setTitle("OSM Viewer");
 		frame.setSize(800, 600);
 		frame.setVisible(true);

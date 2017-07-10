@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author Ruediger Lunde
  */
-public class OsmRoutePlannerApp extends IntegrableApplication {
+public class RoutePlannerOsmApp extends IntegrableApplication {
 
     public static void main(String[] args) {
         launch(args);
@@ -69,7 +69,7 @@ public class OsmRoutePlannerApp extends IntegrableApplication {
         StackPane mapPane = new StackPane();
         mapPaneCtrl = new MapPaneCtrl(mapPane);
         mapPaneCtrl.getMap().addMapDataEventListener(ev -> updateEnabledState());
-        mapPaneCtrl.loadMap(DataResource.getULMFileResource());
+        mapPaneCtrl.loadMap(DataResource.getUlmFileResource());
 
         root.setCenter(mapPane);
 

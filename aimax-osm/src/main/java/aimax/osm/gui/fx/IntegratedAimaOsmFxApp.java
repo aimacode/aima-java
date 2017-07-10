@@ -2,10 +2,10 @@ package aimax.osm.gui.fx;
 
 import aima.gui.fx.applications.IntegratedAimaFxApp;
 import aima.gui.fx.framework.IntegratedAppBuilder;
-import aimax.osm.gui.fx.applications.OsmOnlineAgentApp;
-import aimax.osm.gui.fx.applications.OsmRouteFindingAgentApp;
-import aimax.osm.gui.fx.applications.OsmRoutePlannerApp;
-import aimax.osm.gui.fx.applications.OsmAgentBaseApp;
+import aimax.osm.gui.fx.applications.OnlineAgentOsmApp;
+import aimax.osm.gui.fx.applications.ExtendedRouteFindingAgentOsmApp;
+import aimax.osm.gui.fx.applications.RoutePlannerOsmApp;
+import aimax.osm.gui.fx.applications.RouteFindingAgentOsmApp;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -35,9 +35,9 @@ public class IntegratedAimaOsmFxApp extends Application {
 	public static void defineContent(IntegratedAppBuilder builder) {
 		IntegratedAimaFxApp.defineContent(builder);
 
-		builder.registerApp(OsmRoutePlannerApp.class);
-		builder.registerApp(OsmAgentBaseApp.class);
-		builder.registerApp(OsmRouteFindingAgentApp.class);
-		builder.registerApp(OsmOnlineAgentApp.class);
+		builder.registerApp(RoutePlannerOsmApp.class);
+		builder.registerApp(RouteFindingAgentOsmApp.class);
+		builder.registerApp(ExtendedRouteFindingAgentOsmApp.class);
+		builder.registerApp(OnlineAgentOsmApp.class);
 	}
 }

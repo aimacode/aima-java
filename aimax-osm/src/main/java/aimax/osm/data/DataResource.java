@@ -7,7 +7,7 @@ import java.io.InputStream;
  * @author Ruediger Lunde
  */
 public class DataResource {
-	public static InputStream getULMFileResource() {
+	public static InputStream getUlmFileResource() {
 		return DataResource.class.getResourceAsStream("ulm.osm");
 	}
 }

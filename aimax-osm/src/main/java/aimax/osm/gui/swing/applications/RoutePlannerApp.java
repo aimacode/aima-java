@@ -78,7 +78,7 @@ public class RoutePlannerApp implements ActionListener {
 	 */
 	public MapViewFrame constructApplicationFrame() {
 		if (frame.getMap().isEmpty())
-			frame.readMap(DataResource.getULMFileResource());
+			frame.readMap(DataResource.getUlmFileResource());
 		return frame;
 	}
 
@@ -123,7 +123,7 @@ public class RoutePlannerApp implements ActionListener {
 
 		Locale.setDefault(Locale.US);
 		RoutePlannerApp demo = new RoutePlannerApp(args);
-		demo.getFrame().readMap(DataResource.getULMFileResource());
+		demo.getFrame().readMap(DataResource.getUlmFileResource());
 		demo.showFrame();
 	}
 }

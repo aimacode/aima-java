@@ -41,7 +41,7 @@ import java.util.function.ToDoubleFunction;
  * @author Ruediger Lunde
  *
  */
-public class OsmOnlineAgentApp extends IntegrableApplication {
+public class OnlineAgentOsmApp extends IntegrableApplication {
 
 	public static String PARAM_STRATEGY = "strategy";
 
@@ -61,12 +61,12 @@ public class OsmOnlineAgentApp extends IntegrableApplication {
 
 	@Override
 	public String getTitle() {
-		return "OSM Online Agent App";
+		return "Online Agent OSM App";
 	}
 	
 	/** Loads a map of the city of Ulm, Germany. Override to change the map. */
 	protected void loadMap() {
-		mapPaneCtrl.loadMap(DataResource.getULMFileResource());
+		mapPaneCtrl.loadMap(DataResource.getUlmFileResource());
 	}
 	
 	protected List<Parameter> createParameters() {

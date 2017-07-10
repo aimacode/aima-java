@@ -11,12 +11,12 @@ This project provides a framework for building intelligent Open Street Map
 and search concepts from the AIMA library in a non-trivial
 application area and provide an interesting coding environment for student
 projects. Typical programming challenges include:
-* Extend the `OsmRoutePlannerApp` and provide additional options, e.g. to optimize
+* Extend the `RoutePlannerOsmApp` and provide additional options, e.g. to optimize
   time for a driver, to optimize fun for a cyclist, ...
-* Extend the `OsmLRTAStarAgentApp` and add variants of the original LRTAStar-based
+* Extend the `OnlineAgentOsmApp` and add variants of the original LRTAStar-based
   agent which try to perform better than the original in this special environment, e.g.
   by increasing greediness.
-* Extend the `OsmAgentBaseApp` and add a new agent which is able to react on unforeseen
+* Extend the `RouteFindingAgentOsmApp` and add a new agent which is able to react on unforeseen
   events, e.g. on a road blocking defined by additional markers.
 * Develop an agent which plans the Saturday morning shopping tour for you. Try to
   create an optimal tour (the typical greedy TSP implementation is not that challenging...).

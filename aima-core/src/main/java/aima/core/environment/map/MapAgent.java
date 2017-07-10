@@ -97,8 +97,8 @@ public class MapAgent extends ProblemSolvingAgent<String, MoveToAction> {
                 ((Informed<String, MoveToAction>) search).setHeuristicFunction(hFnFactory.apply(goal));
 
             if (notifier != null)
-                notifier.notifyViews("CurrentLocation=In(" + state.getAttribute(DynAttributeNames.AGENT_LOCATION)
-                        + "), Goal=In(" + goal + ")");
+                notifier.notifyViews("Current location: In(" + state.getAttribute(DynAttributeNames.AGENT_LOCATION)
+                        + "), Goal: In(" + goal + ")");
         }
         return goal != null ? Optional.of(goal) : Optional.empty();
     }
@@ -117,11 +117,7 @@ public class MapAgent extends ProblemSolvingAgent<String, MoveToAction> {
     }
 
     protected void notifyViewOfMetrics() {
-        if (notifier != null) {
-            Set<String> keys = search.getMetrics().keySet();
-            for (String key : keys) {
-                notifier.notifyViews("METRIC[" + key + "]=" + search.getMetrics().get(key));
-            }
-        }
+        if (notifier != null)
+            notifier.notifyViews("Search metrics: " + search.getMetrics());
     }
 }

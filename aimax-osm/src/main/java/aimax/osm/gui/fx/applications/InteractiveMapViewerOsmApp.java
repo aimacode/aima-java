@@ -17,7 +17,7 @@ import java.util.Locale;
  *
  * @author Ruediger Lunde
  */
-public class OsmViewerApp extends Application {
+public class InteractiveMapViewerOsmApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
@@ -32,13 +32,13 @@ public class OsmViewerApp extends Application {
 
         StackPane mapPane = new StackPane();
         MapPaneCtrl mapPaneCtrl = new MapPaneCtrl(mapPane);
-        mapPaneCtrl.loadMap(DataResource.getULMFileResource());
+        mapPaneCtrl.loadMap(DataResource.getUlmFileResource());
 
         BorderPane root = new BorderPane();
         root.setCenter(mapPane);
         Scene scene = new Scene(root, 800, 600);
 
-        primaryStage.setTitle("Osm Viewer App");
+        primaryStage.setTitle("Interactive Map Viewer OSM App");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

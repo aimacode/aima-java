@@ -62,7 +62,7 @@ public class OsmAgentApp extends SimpleAgentApp {
 	@Override
 	public AgentAppFrame constructApplicationFrame() {
 		if (map == null)
-			readMap(DataResource.getULMFileResource());
+			readMap(DataResource.getUlmFileResource());
 		return super.constructApplicationFrame();
 	}
 	

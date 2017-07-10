@@ -309,7 +309,7 @@ public class MiniNaviApp implements ActionListener {
 		// System.setProperty(MiniNaviApp.MAP_CLASS_PROPERTY,
 		// "rl.osm.data.perst.PerstMap");
 		MiniNaviApp demo = new MiniNaviApp(args);
-		demo.getFrame().readMap(DataResource.getULMFileResource());
+		demo.getFrame().readMap(DataResource.getUlmFileResource());
 		// demo.getFrame().readMap(new File("maps/ulm.osm"));
 		demo.showFrame();
 	}
