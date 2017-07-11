@@ -14,7 +14,7 @@ import java.math.RoundingMode;
  * @author Nagaraj Poti
  *
  */
-public class LogProbabilityNumber implements ProbabilityNumber {
+public class LogProbabilityNumber extends AbstractProbabilityNumber {
 
 	// Constants
 
@@ -24,49 +24,76 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	private static final double DEFAULT_ROUNDING_THRESHOLD = 1e-8;
 
 	/**
+	 * Precision value corresponding to MathContext.UNLIMITED.
+	 */
+	private static final Integer UNLIMITED_PRECISION = 0;
+
+	/**
 	 * Maximum precision constrained by the underlying double primitive type.
 	 * According to the IEEE 754 format, double values have a precision of 15.95
 	 * decimal digits. Here, max_precision is set to 15 digits by default.
 	 */
-	private static Integer MAX_PRECISION = MathContext.DECIMAL64.getPrecision() - 1;
+	private static final Integer MAX_PRECISION = MathContext.DECIMAL64.getPrecision() - 1;
 
 	/**
 	 * RoundingMode.HALF_EVEN statistically minimizes cumulative error when
 	 * applied repeatedly over a sequence of calculations.
 	 */
-	private static RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
+	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 
 	// Internal fields
 
 	private Double value;
 
+	private MathContext currentMathContext = new MathContext(MAX_PRECISION, ROUNDING_MODE);
+
 	// Constructors
 
 	/**
-	 * Construct a LogProbabilityNumber from a primitive double type.
+	 * Construct a LogProbabilityNumber from a Double type.
 	 * 
 	 * @param value
 	 *            to be assigned to LogProbabilityNumber value.
 	 */
-	public LogProbabilityNumber(double value) {
-		if (value < 0 || value > 1) {
-			throw new IllegalArgumentException("Probability value must be between 0 and 1");
-		}
-		this.value = Math.log(value);
+	public LogProbabilityNumber(Double value) {
+		this(BigDecimal.valueOf(value), null);
 	}
 
 	/**
-	 * Construct a DoubleProbabilityNumber from a BigDecimal type (loss of
+	 * Construct a LogProbabilityNumber from a BigDecimal type (loss of
 	 * precision possible when converting from a BigDecimal to double type).
 	 * 
 	 * @param value
-	 *            to be assigned to DoubleProbabilityNumber value.
+	 *            to be assigned to LogProbabilityNumber value.
 	 */
 	public LogProbabilityNumber(BigDecimal value) {
-		if (null == value || value.compareTo(new BigDecimal(0)) == -1 || value.compareTo(new BigDecimal(1)) == 1) {
-			throw new IllegalArgumentException("Probability value must be between 0 and 1");
+		this(value, null);
+	}
+
+	/**
+	 * Construct a LogProbabilityNumber from a BigDecimal type (loss of
+	 * precision possible when converting from a BigDecimal to double type).
+	 * 
+	 * @param value
+	 *            to be assigned to LogProbabilityNumber value.
+	 * @param mc
+	 *            MathContext to be associated with value.
+	 */
+	public LogProbabilityNumber(BigDecimal value, MathContext mc) {
+		if (null == value) {
+			throw new IllegalArgumentException("A probability value must be specified.");
 		}
-		this.value = Math.log(value.doubleValue());
+		init(value.doubleValue(), mc, false);
+	}
+
+	/**
+	 * Construct a LogProbabilityNumber from a ProbabilityNumber type.
+	 * 
+	 * @param that
+	 *            ProbabilityNumber.
+	 */
+	public LogProbabilityNumber(ProbabilityNumber that) {
+		this(that.getValue(), null);
 	}
 
 	// Private constructor
@@ -77,15 +104,17 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 * 
 	 * @param value
 	 *            to be assigned to the LogProbabilityNumber value.
-	 * 
+	 * @param mc
+	 *            MathContext to be associated with value.
 	 * @param isLogValue
 	 *            true.
 	 */
-	private LogProbabilityNumber(double value, boolean isLogValue) {
-		this.value = value;
+	private LogProbabilityNumber(Double value, MathContext mc, boolean isLogValue) {
+		init(value, mc, isLogValue);
 	}
 
 	// Public methods
+	// START-ProbabilityNumber
 
 	/**
 	 * The BigDecimal value returned represents the double value represented by
@@ -95,16 +124,17 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public BigDecimal getValue() {
-		return new BigDecimal(Math.exp(this.value), this.getMathContext());
+		BigDecimal actualValue = new BigDecimal(Math.exp(this.value), this.currentMathContext);
+		return actualValue;
 	}
 
 	/**
-	 * @return MathContext set to DECIMAL64 - 1 (15 digits) precision
-	 *         and HALF_EVEN RoundingMode by default.
+	 * @return MathContext set to DECIMAL64 - 1 (15 digits) precision and
+	 *         HALF_EVEN RoundingMode by default.
 	 */
 	@Override
 	public MathContext getMathContext() {
-		return new MathContext(MAX_PRECISION, ROUNDING_MODE);
+		return this.currentMathContext;
 	}
 
 	/**
@@ -116,7 +146,8 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean isZero() {
-		return (compareLog(this.value, Double.NEGATIVE_INFINITY) == 0);
+		boolean result = (compareLog(this.value, Double.NEGATIVE_INFINITY) == 0);
+		return result;
 	}
 
 	/**
@@ -128,7 +159,8 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean isOne() {
-		return (compareLog(this.value, 0.0) == 0);
+		boolean result = (compareLog(this.value, 0.0) == 0);
+		return result;
 	}
 
 	/**
@@ -141,7 +173,8 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean isValid() {
-		return (compareLog(this.value, Double.NEGATIVE_INFINITY) >= 0 && compareLog(this.value, 0.0) <= 0);
+		boolean result = (compareLog(this.value, Double.NEGATIVE_INFINITY) >= 0 && compareLog(this.value, 0.0) <= 0);
+		return result;
 	}
 
 	/**
@@ -159,7 +192,10 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	@Override
 	public ProbabilityNumber add(ProbabilityNumber that) {
 		LogProbabilityNumber addend = toInternalType(that);
-		return new LogProbabilityNumber(this.value + Math.log(1 + Math.exp(addend.value - this.value)), true);
+		MathContext resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
+		ProbabilityNumber result = new LogProbabilityNumber(
+				this.value + Math.log(1 + Math.exp(addend.value - this.value)), resultMathContext, true);
+		return result;
 	}
 
 	/**
@@ -177,7 +213,10 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	@Override
 	public ProbabilityNumber subtract(ProbabilityNumber that) {
 		LogProbabilityNumber subtrahend = toInternalType(that);
-		return new LogProbabilityNumber(this.value + Math.log(1 - Math.exp(subtrahend.value - this.value)), true);
+		MathContext resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
+		ProbabilityNumber result = new LogProbabilityNumber(
+				this.value + Math.log(1 - Math.exp(subtrahend.value - this.value)), resultMathContext, true);
+		return result;
 	}
 
 	/**
@@ -194,8 +233,36 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber multiply(ProbabilityNumber that) {
+		ProbabilityNumber result = this.multiply(that, null);
+		return result;
+	}
+
+	/**
+	 * Multiply a LogProbabilityNumber with this LogProbabilityNumber and return
+	 * a new LogProbabilityNumber.
+	 * 
+	 * log(x * y) = log(x) + log(y)
+	 * 
+	 * @param that
+	 *            the LogProbabilityNumber that is to be multiplied to this
+	 *            LogProbabilityNumber.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @result a new LogProbabilityNumber that is the result of multiplication.
+	 */
+	@Override
+	public ProbabilityNumber multiply(ProbabilityNumber that, MathContext mc) {
 		LogProbabilityNumber multiplier = toInternalType(that);
-		return new LogProbabilityNumber(this.value + multiplier.value, true);
+		MathContext resultMathContext;
+		if (null != mc) {
+			checkValidityOfArguments(0.0, mc, false);
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), multiplier.getMathContext());
+		}
+		ProbabilityNumber result = new LogProbabilityNumber(this.value + multiplier.value, resultMathContext, true);
+		return result;
 	}
 
 	/**
@@ -212,8 +279,39 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber divide(ProbabilityNumber that) {
+		ProbabilityNumber result = this.divide(that, null);
+		return result;
+	}
+
+	/**
+	 * Divide a LogProbabilityNumber with this LogProbabilityNumber and return a
+	 * new LogProbabilityNumber.
+	 * 
+	 * log(x / y) = log(x) - log(y)
+	 * 
+	 * @param that
+	 *            the LogProbabilityNumber that is the divisor of this
+	 *            LogProbabilityNumber.
+	 * @param mc
+	 *            MathContext of result.
+	 * 
+	 * @return a new LogProbabilityNumber that is the result of division.
+	 */
+	@Override
+	public ProbabilityNumber divide(ProbabilityNumber that, MathContext mc) {
 		LogProbabilityNumber divisor = toInternalType(that);
-		return new LogProbabilityNumber(this.value - divisor.value, true);
+		MathContext resultMathContext;
+		if (divisor.isZero()) {
+			throw new IllegalArgumentException("Division by 0 not allowed.");
+		}
+		if (null != mc) {
+			checkValidityOfArguments(0.0, mc, false);
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), divisor.getMathContext());
+		}
+		ProbabilityNumber result = new LogProbabilityNumber(this.value - divisor.value, resultMathContext, true);
+		return result;
 	}
 
 	/**
@@ -229,7 +327,27 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber pow(int exponent) {
-		return new LogProbabilityNumber(exponent * this.value, true);
+		ProbabilityNumber result = this.pow(BigInteger.valueOf(exponent), null);
+		return result;
+	}
+
+	/**
+	 * Calculate the LogProbabilityNumber raised to an integer exponent.
+	 * 
+	 * log(x<sup>b</sup>) = b * log(x)
+	 * 
+	 * @param exponent
+	 *            of integer type.
+	 * @param mc
+	 *            MathContext of result;
+	 * 
+	 * @result a new LogProbabilityNumber that is this LogProbabilityNumber
+	 *         raised to the exponent value.
+	 */
+	@Override
+	public ProbabilityNumber pow(int exponent, MathContext mc) {
+		ProbabilityNumber result = this.pow(BigInteger.valueOf(exponent), mc);
+		return result;
 	}
 
 	/**
@@ -245,7 +363,35 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber pow(BigInteger exponent) {
-		return new LogProbabilityNumber(exponent.intValue() * this.value, true);
+		ProbabilityNumber result = this.pow(exponent, null);
+		return result;
+	}
+
+	/**
+	 * Calculate the LogProbabilityNumber raised to a BigInteger exponent. If
+	 * the value of the BigInteger is greater than that representable by integer
+	 * type, then the lower order 32 bits are chosen by default.
+	 * 
+	 * @param exponent
+	 *            of BigInteger type.
+	 * @param mc
+	 *            MathContext of result;
+	 * 
+	 * @result a new LogProbabilityNumber that is this LogProbabilityNumber
+	 *         raised to the exponent value.
+	 */
+	@Override
+	public ProbabilityNumber pow(BigInteger exponent, MathContext mc) {
+		MathContext resultMathContext;
+		if (null != mc) {
+			checkValidityOfArguments(0.0, mc, false);
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(),
+					new MathContext(MAX_PRECISION, ROUNDING_MODE));
+		}
+		ProbabilityNumber result = new LogProbabilityNumber(exponent.intValue() * this.value, resultMathContext, true);
+		return result;
 	}
 
 	/**
@@ -260,30 +406,17 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 *         false otherwise.
 	 */
 	@Override
-	public boolean sumsToOne(Iterable<ProbabilityNumber> allProbabilities) {
-		LogProbabilityNumber sumOfProbabilities = new LogProbabilityNumber(0);
+	public Boolean sumsToOne(Iterable<ProbabilityNumber> allProbabilities) {
+		LogProbabilityNumber sumOfProbabilities = new LogProbabilityNumber(0.0);
 		for (ProbabilityNumber probability : allProbabilities) {
 			LogProbabilityNumber specificType = toInternalType(probability);
 			sumOfProbabilities = (LogProbabilityNumber) (sumOfProbabilities.add(specificType));
 		}
 		return this.isOne();
 	}
-	
-	/**
-	 * Override the precision of ProbabilityNumber instances returned as a
-	 * result of performing operations.
-	 * 
-	 * @param mc
-	 */
-	@Override
-	public void overrideComputationPrecisionGlobally(MathContext mc) {
-		if (mc.getPrecision() > 15) {
-			throw new IllegalArgumentException("Maximum precision possible for LogProbabilityNumber is 15");
-		}
-		MAX_PRECISION = mc.getPrecision();
-		ROUNDING_MODE = mc.getRoundingMode();
-	}
-	
+
+	// END-ProbabilityNumber
+
 	/**
 	 * Checks if argument implementing ProbabilityNumber interface is equal to
 	 * the value of the current LogProbabilityNumber. The first check is an
@@ -299,8 +432,14 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 */
 	@Override
 	public boolean equals(Object that) {
-		LogProbabilityNumber specificType = toInternalType((ProbabilityNumber) that);
-		return (this.compareTo(specificType) == 0);
+		boolean result;
+		if (!(that instanceof ProbabilityNumber)) {
+			result = false;
+		} else {
+			LogProbabilityNumber specificType = toInternalType((ProbabilityNumber) that);
+			result = (this.compareTo(specificType) == 0);
+		}
+		return result;
 	}
 
 	/**
@@ -314,18 +453,61 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	@Override
 	public int compareTo(ProbabilityNumber that) {
 		LogProbabilityNumber specificType = toInternalType(that);
-		return compareLog(this.value, specificType.value);
-
-	}
-
-	/**
-	 * @return string representation of value.
-	 */
-	public String toString() {
-		return getValue().toString();
+		int result = compareLog(this.value, specificType.value);
+		return result;
 	}
 
 	// Private methods
+
+	/**
+	 * Constructor invoked initialization method.
+	 * 
+	 * @param value
+	 *            to be assigned to the LogProbabilityNumber value.
+	 * @param mc
+	 *            MathContext to be associated with value.
+	 * @param isLogValue
+	 *            is true if value is already a log value, otherwise false.
+	 */
+	private void init(Double value, MathContext mc, boolean isLogValue) {
+		if (null == value) {
+			throw new IllegalArgumentException("A probability value must be specified.");
+		}
+		checkValidityOfArguments(value, mc, isLogValue);
+		if (isLogValue) {
+			this.value = value;
+		} else {
+			this.value = Math.log(value);
+		}
+		if (null != mc) {
+			this.currentMathContext = mc;
+		}
+	}
+
+	/**
+	 * Check if arguments satisfy criteria to initialize LogProbabilityNumber.
+	 * 
+	 * @param value
+	 *            to be assigned to LogProbabilityNumber value.
+	 * @param mc
+	 *            MathContext to be associated with value.
+	 * @param isLogValue
+	 */
+	private static void checkValidityOfArguments(Double value, MathContext mc, boolean isLogValue) {
+		if (isLogValue && value > 0) {
+			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
+		} else if (!isLogValue && (value < 0 || value > 1)) {
+			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
+		}
+		if (null != mc) {
+			if (mc.getPrecision() > MAX_PRECISION) {
+				throw new IllegalArgumentException("Maximum precision possible for LogProbabilityNumber is 15.");
+			}
+			if (mc.getPrecision() == UNLIMITED_PRECISION) {
+				throw new IllegalArgumentException("LogProbabilityNumber does not support unlimited precision.");
+			}
+		}
+	}
 
 	/**
 	 * Covert other implementations of the ProbabilityNumber interface to a
@@ -335,10 +517,13 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 *            LogProbabilityNumber.
 	 */
 	private LogProbabilityNumber toInternalType(ProbabilityNumber that) {
+		LogProbabilityNumber converted;
 		if (that instanceof LogProbabilityNumber) {
-			return (LogProbabilityNumber) that;
+			converted = (LogProbabilityNumber) that;
+		} else {
+			converted = new LogProbabilityNumber(that.getValue());
 		}
-		return new LogProbabilityNumber(that.getValue());
+		return converted;
 	}
 
 	/**
@@ -355,22 +540,60 @@ public class LogProbabilityNumber implements ProbabilityNumber {
 	 * @return 1 if first > second, 0 if first == second, -1 if first < second.
 	 */
 	private int compareLog(Double first, Double second) {
-		boolean result;
+		int result;
 		if (first == second) {
-			return 0;
-		} else if (first.isInfinite()) {
-			// Convert value from logspace to decimal and perform approximation
-			// check with 0
-			result = (Math.abs(Math.exp(second) - 0) <= DEFAULT_ROUNDING_THRESHOLD);
-		} else if (second.isInfinite()) {
-			result = Math.abs(Math.exp(first) - 0) <= DEFAULT_ROUNDING_THRESHOLD;
+			result = 0;
 		} else {
-			result = Math.abs(first - second) <= DEFAULT_ROUNDING_THRESHOLD;
+			boolean withinThreshold;
+			if (first.isInfinite()) {
+				// Convert value from logspace to decimal and perform
+				// approximation
+				// check with 0
+				withinThreshold = (Math.abs(Math.exp(second) - 0) <= DEFAULT_ROUNDING_THRESHOLD);
+			} else if (second.isInfinite()) {
+				withinThreshold = Math.abs(Math.exp(first) - 0) <= DEFAULT_ROUNDING_THRESHOLD;
+			} else {
+				withinThreshold = Math.abs(first - second) <= DEFAULT_ROUNDING_THRESHOLD;
+			}
+			if (withinThreshold) {
+				result = 0;
+			} else {
+				result = ((first > second) ? 1 : -1);
+			}
 		}
-		if (result == true) {
-			return 0;
-		} else {
-			return ((first > second) ? 1 : -1);
-		}
+		return result;
+	}
+
+	/**
+	 * Compare two MathContext objects corresponding to operands and create the
+	 * MathContext object associated with the result. Return MathContext set to
+	 * minimum of two precision values plus one.
+	 * 
+	 * @param mcA
+	 *            MathContext object of this instance.
+	 * @param mcB
+	 *            second MathContext object.
+	 * 
+	 * @return resultMathContext with precision set to (min(precisionA,
+	 *         precisionB) + 1). The RoundingMode is set to that of mcA.
+	 */
+	private MathContext getResultMathContext(MathContext mcA, MathContext mcB) {
+		int minPrecision = getMinPrecision(mcA.getPrecision(), mcB.getPrecision());
+		MathContext resultMathContext = new MathContext(Math.min(minPrecision + 1, MAX_PRECISION),
+				mcA.getRoundingMode());
+		return resultMathContext;
+	}
+
+	/**
+	 * Return the minimum of two precision values.
+	 * 
+	 * @param precisionA
+	 * @param precisionB
+	 * 
+	 * @return min(precisionA, precisionB)
+	 */
+	private int getMinPrecision(int precisionA, int precisionB) {
+		int result = Math.min(precisionA, precisionB);
+		return result;
 	}
 }

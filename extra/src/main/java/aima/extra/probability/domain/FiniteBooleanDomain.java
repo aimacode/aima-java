@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * @author Nagaraj Poti
  */
-public class FiniteBooleanDomain extends AbstractFiniteDomain {
+public class FiniteBooleanDomain extends AbstractFiniteDomain<Boolean> {
 
 	// PRIVATE
 
@@ -24,7 +24,8 @@ public class FiniteBooleanDomain extends AbstractFiniteDomain {
 	 * Set of possible values for boolean domain consists of {true, false}.
 	 * Consistent order is ensured.
 	 */
-	private Set<Boolean> possibleValues = new LinkedHashSet<Boolean>(Arrays.asList(Boolean.TRUE, Boolean.FALSE));
+	private static final Set<Boolean> possibleValues = Collections
+			.unmodifiableSet(new LinkedHashSet<Boolean>(Arrays.asList(Boolean.TRUE, Boolean.FALSE)));
 
 	// Private Constructor (singleton)
 	private FiniteBooleanDomain() {

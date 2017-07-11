@@ -1,6 +1,5 @@
 package aima.extra.probability.domain;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,8 +17,8 @@ public class FiniteDomainFactory {
 	 * 
 	 * @return FiniteArbitraryTokenDomain instance.
 	 */
-	public FiniteArbitraryTokenDomain createOrderedArbitraryTokenDomain(Object... pValues) {
-		return new FiniteArbitraryTokenDomain(true, Arrays.asList(pValues));
+	public <T> FiniteArbitraryTokenDomain<T> createOrderedArbitraryTokenDomain(List<T> pValues) {
+		return new FiniteArbitraryTokenDomain<T>(true, pValues);
 	}
 
 	/**
@@ -30,8 +29,8 @@ public class FiniteDomainFactory {
 	 * 
 	 * @return FiniteArbitraryTokenDomain instance.
 	 */
-	public FiniteArbitraryTokenDomain createUnorderedArbitraryTokenDomain(Object... pValues) {
-		return new FiniteArbitraryTokenDomain(Arrays.asList(pValues));
+	public <T> FiniteArbitraryTokenDomain<T> createUnorderedArbitraryTokenDomain(List<T> pValues) {
+		return new FiniteArbitraryTokenDomain<T>(pValues);
 	}
 
 	/**

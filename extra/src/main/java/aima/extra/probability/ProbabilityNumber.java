@@ -13,11 +13,10 @@ import java.math.MathContext;
  * computations to ensure that the result is a valid probability value. This
  * interface is implemented by the various ProbabilityNumber implementations.
  * 
- * The interface is intended to be immutable. Implementations may implement
+ * The subclasses are intended to be immutable. Implementations may implement
  * overriden versions of equals and hashcode methods.
  * 
  * @author Nagaraj Poti
- *
  */
 public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 
@@ -132,6 +131,20 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	ProbabilityNumber multiply(ProbabilityNumber multiplicand);
 
 	/**
+	 * Multiply two ProbabilityNumber types and return a new ProbabilityNumber
+	 * representing the result of multiplication.
+	 * 
+	 * @param multiplicand
+	 * 
+	 * @param mc
+	 *            MathContext for DEFINED_PRECISION computation.
+	 * 
+	 * @return a new ProbabilityNumber representing the result of multiplication
+	 *         of two ProbabilityNumber types.
+	 */
+	ProbabilityNumber multiply(ProbabilityNumber multiplicand, MathContext mc);
+
+	/**
 	 * Divide two ProbabilityNumber types and return a ProbabilityNumber
 	 * representing the result of division.
 	 * 
@@ -141,6 +154,20 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 *         two ProbabilityNumber types.
 	 */
 	ProbabilityNumber divide(ProbabilityNumber divisor);
+
+	/**
+	 * Divide two ProbabilityNumber types and return a ProbabilityNumber
+	 * representing the result of division.
+	 * 
+	 * @param divisor
+	 * 
+	 * @param mc
+	 *            MathContext for DEFINED_PRECISION computation.
+	 * 
+	 * @return a new ProbabilityNumber representing the result of division of
+	 *         two ProbabilityNumber types.
+	 */
+	ProbabilityNumber divide(ProbabilityNumber divisor, MathContext mc);
 
 	/**
 	 * Raise this ProbabilityNumber to an integer exponent.
@@ -153,6 +180,19 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	ProbabilityNumber pow(int exponent);
 
 	/**
+	 * Raise this ProbabilityNumber to an integer exponent.
+	 * 
+	 * @param exponent
+	 * 
+	 * @param mc
+	 *            MathContext for DEFINED_PRECISION computation.
+	 * 
+	 * @return a new ProbabilityNumber representing the result of
+	 *         exponentiation.
+	 */
+	ProbabilityNumber pow(int exponent, MathContext mc);
+
+	/**
 	 * Raise this ProbabilityNumber to a BigInteger exponent.
 	 * 
 	 * @param exponent
@@ -163,6 +203,19 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	ProbabilityNumber pow(BigInteger exponent);
 
 	/**
+	 * Raise this ProbabilityNumber to a BigInteger exponent.
+	 * 
+	 * @param exponent
+	 * 
+	 * @param mc
+	 *            MathContext for DEFINED_PRECISION computation.
+	 * 
+	 * @return a new ProbabilityNumber representing the result of
+	 *         exponentiation.
+	 */
+	ProbabilityNumber pow(BigInteger exponent, MathContext mc);
+
+	/**
 	 * Sum all the ProbabilityNumber elements constituting the iterable and
 	 * check if they sum to one.
 	 * 
@@ -170,13 +223,5 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * 
 	 * @return true if the probabilities sum to one, false otherwise.
 	 */
-	boolean sumsToOne(Iterable<ProbabilityNumber> allProbabilities);
-
-	/**
-	 * Override the precision of ProbabilityNumber instances returned as a
-	 * result of performing operations.
-	 * 
-	 * @param mc
-	 */
-	void overrideComputationPrecisionGlobally(MathContext mc);
+	Boolean sumsToOne(Iterable<ProbabilityNumber> allProbabilities);
 }
