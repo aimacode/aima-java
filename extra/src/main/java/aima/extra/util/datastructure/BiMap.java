@@ -13,7 +13,7 @@ import java.util.Map;
  * 
  * @author Nagaraj Poti
  */
-public class BiMap<K extends Object, V extends Object> {
+public class BiMap<K, V> {
 
 	// Forward map
 	private Map<K, V> forward = new HashMap<K, V>();
@@ -33,11 +33,11 @@ public class BiMap<K extends Object, V extends Object> {
 	 *            for the forward map.
 	 */
 	public void put(K key, V value) {
-		if (forward.containsKey(key)) {
-			backward.remove(value);
+		if (this.forward.containsKey(key)) {
+			this.backward.remove(value);
 		}
-		forward.put(key, value);
-		backward.put(value, key);
+		this.forward.put(key, value);
+		this.backward.put(value, key);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class BiMap<K extends Object, V extends Object> {
 	 * @return value associated with the key in the forward map.
 	 */
 	public V getForward(K key) {
-		return forward.get(key);
+		return this.forward.get(key);
 	}
 
 	/**
@@ -61,6 +61,13 @@ public class BiMap<K extends Object, V extends Object> {
 	 * @return value associated with the key in the inverse map.
 	 */
 	public K getBackward(V key) {
-		return backward.get(key);
+		return this.backward.get(key);
+	}
+
+	/**
+	 * @return the number of key-value mappings in this map
+	 */
+	public int size() {
+		return this.forward.size();
 	}
 }

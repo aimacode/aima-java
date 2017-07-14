@@ -13,12 +13,12 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * @author Nagaraj Poti
  */
-public class FiniteArbitraryTokenDomain extends AbstractFiniteDomain {
+public class FiniteArbitraryTokenDomain<T> extends AbstractFiniteDomain<T> {
 
 	/**
 	 * Set of all possible values for the domain.
 	 */
-	private Set<Object> possibleValues = null;
+	private Set<T> possibleValues = null;
 
 	private boolean ordered = false;
 
@@ -29,7 +29,7 @@ public class FiniteArbitraryTokenDomain extends AbstractFiniteDomain {
 	 * 
 	 * @param pValues
 	 */
-	public FiniteArbitraryTokenDomain(List<Object> pValues) {
+	public FiniteArbitraryTokenDomain(List<T> pValues) {
 		this(false, pValues);
 	}
 
@@ -43,10 +43,11 @@ public class FiniteArbitraryTokenDomain extends AbstractFiniteDomain {
 	 *            is the list of all possible values that the domain can take
 	 *            on.
 	 */
-	public FiniteArbitraryTokenDomain(boolean ordered, List<Object> pValues) {
+	public FiniteArbitraryTokenDomain(boolean ordered, List<T> pValues) {
 		this.ordered = ordered;
-		possibleValues = new LinkedHashSet<Object>();
+		possibleValues = new LinkedHashSet<T>();
 		pValues.forEach((value) -> possibleValues.add(value));
+		possibleValues = Collections.unmodifiableSet(possibleValues);
 		indexPossibleValues(possibleValues);
 	}
 
@@ -61,7 +62,7 @@ public class FiniteArbitraryTokenDomain extends AbstractFiniteDomain {
 	}
 
 	@Override
-	public Set<Object> getPossibleValues() {
-		return Collections.unmodifiableSet(possibleValues);
+	public Set<T> getPossibleValues() {
+		return possibleValues;
 	}
 }

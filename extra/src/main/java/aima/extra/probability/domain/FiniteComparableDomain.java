@@ -13,7 +13,7 @@ import java.util.Set;
  * 
  * @author Nagaraj Poti
  */
-public class FiniteComparableDomain<T extends Comparable<T>> extends AbstractFiniteDomain {
+public class FiniteComparableDomain<T extends Comparable<T>> extends AbstractFiniteDomain<T> {
 
 	// Class members
 	
@@ -37,6 +37,7 @@ public class FiniteComparableDomain<T extends Comparable<T>> extends AbstractFin
 	public FiniteComparableDomain(List<T> pValues) {
 		possibleValues = new TreeSet<T>();
 		pValues.forEach((value) -> possibleValues.add(value));
+		possibleValues = Collections.unmodifiableSet(possibleValues);
 		indexPossibleValues(possibleValues);
 	}
 
@@ -55,6 +56,6 @@ public class FiniteComparableDomain<T extends Comparable<T>> extends AbstractFin
 
 	@Override
 	public Set<T> getPossibleValues() {
-		return Collections.unmodifiableSet(possibleValues);
+		return possibleValues;
 	}
 }

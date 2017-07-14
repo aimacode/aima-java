@@ -8,13 +8,13 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * 
  */
-public interface FiniteDomain extends DiscreteDomain {
+public interface FiniteDomain<T> extends Domain {
 	/**
 	 * 
 	 * @return a consistent unmodifiable ordered Set (e.g. LinkedHashSet,
 	 *         TreeSet) of the possible values this domain can take on.
 	 */
-	Set<?> getPossibleValues();
+	Set<T> getPossibleValues();
 
 	/**
 	 * The possible values for a finite domain are to have a consistent ordering
@@ -30,7 +30,7 @@ public interface FiniteDomain extends DiscreteDomain {
 	 * @exception IllegalArgumentException
 	 *                if the value is not valid for the domain.
 	 */
-	int getOffset(Object value);
+	int getOffset(T value);
 
 	/**
 	 * 
@@ -41,5 +41,5 @@ public interface FiniteDomain extends DiscreteDomain {
 	 *         ordered set of values. null if the offset does not index the
 	 *         domain correctly.
 	 */
-	Object getValueAt(int offset);
+	T getValueAt(int offset);
 }

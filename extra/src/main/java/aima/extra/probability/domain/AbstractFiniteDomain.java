@@ -2,14 +2,16 @@ package aima.extra.probability.domain;
 
 import aima.extra.util.datastructure.BiMap;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Abstract base class of FiniteDomain implementations.
  * 
+ * @param <T>
+ * 
+ * @author Ciaran O'Reilly
  * @author Nagaraj Poti
  */
-public abstract class AbstractFiniteDomain implements FiniteDomain {
+public abstract class AbstractFiniteDomain<T> implements FiniteDomain<T> {
 
 	// Class members
 
@@ -17,11 +19,11 @@ public abstract class AbstractFiniteDomain implements FiniteDomain {
 	 * Mapping of domain values to their respective indices in subclass
 	 * datastructures.
 	 */
-	private BiMap<Object, Integer> valueToIdx = new BiMap<Object, Integer>();
+	private BiMap<T, Integer> valueToIdx = new BiMap<T, Integer>();
 
 	// PUBLIC
 
-	// DiscreteDomain methods
+	// START-Domain
 
 	@Override
 	public boolean isFinite() {
@@ -39,13 +41,15 @@ public abstract class AbstractFiniteDomain implements FiniteDomain {
 	@Override
 	public abstract boolean isOrdered();
 
-	// FiniteDomain methods
+	// END-Domain
+
+	// START-FiniteDomain
 
 	@Override
-	public abstract Set<?> getPossibleValues();
+	public abstract Set<T> getPossibleValues();
 
 	@Override
-	public int getOffset(Object value) {
+	public int getOffset(T value) {
 		Integer idx = valueToIdx.getForward(value);
 		if (null == idx) {
 			throw new IllegalArgumentException("Value [" + value + "] is not a legal value for this domain.");
@@ -54,9 +58,11 @@ public abstract class AbstractFiniteDomain implements FiniteDomain {
 	}
 
 	@Override
-	public Object getValueAt(int offset) {
+	public T getValueAt(int offset) {
 		return valueToIdx.getBackward(offset);
 	}
+
+	// END-FiniteDomain
 
 	/**
 	 * Check for equality of AbstractFiniteDomain instances. Two domains are
@@ -68,10 +74,10 @@ public abstract class AbstractFiniteDomain implements FiniteDomain {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (!(o instanceof AbstractFiniteDomain)) {
+		if (!(o instanceof AbstractFiniteDomain<?>)) {
 			return false;
 		}
-		AbstractFiniteDomain other = (AbstractFiniteDomain) o;
+		AbstractFiniteDomain<?> other = (AbstractFiniteDomain<?>) o;
 		if (this.isOrdered() != other.isOrdered()) {
 			return false;
 		} else if (this.isOrdered() == other.isOrdered() && this.isOrdered() == false) {
@@ -88,8 +94,7 @@ public abstract class AbstractFiniteDomain implements FiniteDomain {
 
 	// PROTECTED
 
-	protected void indexPossibleValues(Set<?> possibleValues) {
-		final AtomicInteger count = new AtomicInteger(0);
-		possibleValues.forEach((value) -> valueToIdx.put(value, count.incrementAndGet()));
+	protected void indexPossibleValues(Set<T> possibleValues) {
+		possibleValues.forEach((value) -> valueToIdx.put(value, valueToIdx.size()));
 	}
 }
