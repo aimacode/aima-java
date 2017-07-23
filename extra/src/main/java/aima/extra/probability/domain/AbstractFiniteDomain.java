@@ -6,12 +6,10 @@ import java.util.Set;
 /**
  * Abstract base class of FiniteDomain implementations.
  * 
- * @param <T>
- * 
  * @author Ciaran O'Reilly
  * @author Nagaraj Poti
  */
-public abstract class AbstractFiniteDomain<T> implements FiniteDomain<T> {
+public abstract class AbstractFiniteDomain implements FiniteDomain {
 
 	// Class members
 
@@ -19,9 +17,9 @@ public abstract class AbstractFiniteDomain<T> implements FiniteDomain<T> {
 	 * Mapping of domain values to their respective indices in subclass
 	 * datastructures.
 	 */
-	private BiMap<T, Integer> valueToIdx = new BiMap<T, Integer>();
+	private BiMap<Object, Integer> valueToIdx = new BiMap<Object, Integer>();
 
-	// PUBLIC
+	// Public methods
 
 	// START-Domain
 
@@ -35,21 +33,12 @@ public abstract class AbstractFiniteDomain<T> implements FiniteDomain<T> {
 		return false;
 	}
 
-	@Override
-	public abstract int size();
-
-	@Override
-	public abstract boolean isOrdered();
-
 	// END-Domain
 
 	// START-FiniteDomain
 
 	@Override
-	public abstract Set<T> getPossibleValues();
-
-	@Override
-	public int getOffset(T value) {
+	public int getOffset(Object value) {
 		Integer idx = valueToIdx.getForward(value);
 		if (null == idx) {
 			throw new IllegalArgumentException("Value [" + value + "] is not a legal value for this domain.");
@@ -58,8 +47,12 @@ public abstract class AbstractFiniteDomain<T> implements FiniteDomain<T> {
 	}
 
 	@Override
-	public T getValueAt(int offset) {
-		return valueToIdx.getBackward(offset);
+	public Object getValueAt(int offset) {
+		Object value = valueToIdx.getBackward(offset);
+		if (null == value) {
+			throw new IllegalArgumentException("Offset index [" + offset + "] is not valid.");
+		}
+		return value;
 	}
 
 	// END-FiniteDomain
@@ -74,10 +67,13 @@ public abstract class AbstractFiniteDomain<T> implements FiniteDomain<T> {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (!(o instanceof AbstractFiniteDomain<?>)) {
+		if (o == this) {
+			return true;
+		}
+		else if (!(o instanceof AbstractFiniteDomain)) {
 			return false;
 		}
-		AbstractFiniteDomain<?> other = (AbstractFiniteDomain<?>) o;
+		AbstractFiniteDomain other = (AbstractFiniteDomain) o;
 		if (this.isOrdered() != other.isOrdered()) {
 			return false;
 		} else if (this.isOrdered() == other.isOrdered() && this.isOrdered() == false) {
@@ -87,14 +83,17 @@ public abstract class AbstractFiniteDomain<T> implements FiniteDomain<T> {
 		}
 	}
 	
+	/**
+	 * @return hashCode() of the underlying set structure. 
+	 */
 	@Override
 	public int hashCode() {
 		return this.getPossibleValues().hashCode();
 	}
 
-	// PROTECTED
+	// Protected methods
 
-	protected void indexPossibleValues(Set<T> possibleValues) {
+	protected void indexPossibleValues(Set<?> possibleValues) {
 		possibleValues.forEach((value) -> valueToIdx.put(value, valueToIdx.size()));
 	}
 }

@@ -17,8 +17,8 @@ public class FiniteDomainFactory {
 	 * 
 	 * @return FiniteArbitraryTokenDomain instance.
 	 */
-	public <T> FiniteArbitraryTokenDomain<T> createOrderedArbitraryTokenDomain(List<T> pValues) {
-		return new FiniteArbitraryTokenDomain<T>(true, pValues);
+	public FiniteArbitraryTokenDomain createOrderedArbitraryTokenDomain(List<?> pValues) {
+		return new FiniteArbitraryTokenDomain(true, pValues);
 	}
 
 	/**
@@ -29,8 +29,8 @@ public class FiniteDomainFactory {
 	 * 
 	 * @return FiniteArbitraryTokenDomain instance.
 	 */
-	public <T> FiniteArbitraryTokenDomain<T> createUnorderedArbitraryTokenDomain(List<T> pValues) {
-		return new FiniteArbitraryTokenDomain<T>(pValues);
+	public FiniteArbitraryTokenDomain createUnorderedArbitraryTokenDomain(List<?> pValues) {
+		return new FiniteArbitraryTokenDomain(pValues);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class FiniteDomainFactory {
 	 * 
 	 * @return FiniteComparableDomain instance.
 	 */
-	public <T extends Comparable<T>> FiniteComparableDomain<T> createComparableDomain(List<T> pValues) {
-		return new FiniteComparableDomain<T>(pValues);
+	public <T extends Comparable<T>> FiniteOrdinalDomain<T> createComparableDomain(List<T> pValues) {
+		return new FiniteOrdinalDomain<T>(pValues);
 	}
 }

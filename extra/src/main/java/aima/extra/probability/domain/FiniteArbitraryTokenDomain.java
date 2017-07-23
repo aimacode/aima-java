@@ -13,56 +13,65 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * @author Nagaraj Poti
  */
-public class FiniteArbitraryTokenDomain<T> extends AbstractFiniteDomain<T> {
+public class FiniteArbitraryTokenDomain extends AbstractFiniteDomain {
 
 	/**
 	 * Set of all possible values for the domain.
 	 */
-	private Set<T> possibleValues = null;
+	private Set<Object> possibleValues = null;
 
 	private boolean ordered = false;
 
-	// PUBLIC
+	// Public constructors
 
 	/**
-	 * Constructor accepting unordered list of domain values.
+	 * Constructor accepting unordered set of domain values.
 	 * 
 	 * @param pValues
 	 */
-	public FiniteArbitraryTokenDomain(List<T> pValues) {
+	public FiniteArbitraryTokenDomain(List<?> pValues) {
 		this(false, pValues);
 	}
 
 	/**
-	 * Constructor accepting list of domain values.
+	 * Constructor accepting set of domain values.
 	 * 
 	 * @param ordered
 	 *            true if pValues is an ordered list, false otherwise.
-	 * 
 	 * @param pValues
 	 *            is the list of all possible values that the domain can take
 	 *            on.
 	 */
-	public FiniteArbitraryTokenDomain(boolean ordered, List<T> pValues) {
+	public FiniteArbitraryTokenDomain(boolean ordered, List<?> pValues) {
 		this.ordered = ordered;
-		possibleValues = new LinkedHashSet<T>();
-		pValues.forEach((value) -> possibleValues.add(value));
-		possibleValues = Collections.unmodifiableSet(possibleValues);
-		indexPossibleValues(possibleValues);
+		this.possibleValues = new LinkedHashSet<Object>();
+		pValues.forEach((value) -> this.possibleValues.add(value));
+		this.possibleValues = Collections.unmodifiableSet(this.possibleValues);
+		indexPossibleValues(this.possibleValues);
 	}
 
+	// Public methods
+	
+	// START-Domain
+	
 	@Override
 	public int size() {
-		return possibleValues.size();
+		return this.possibleValues.size();
 	}
 
 	@Override
 	public boolean isOrdered() {
-		return ordered;
+		return this.ordered;
 	}
+	
+	// END-Domain
 
+	// START-FiniteDomain
+	
 	@Override
-	public Set<T> getPossibleValues() {
-		return possibleValues;
+	public Set<?> getPossibleValues() {
+		return this.possibleValues;
 	}
+	
+	// END-FiniteDomain
 }

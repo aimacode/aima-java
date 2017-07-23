@@ -1,4 +1,4 @@
-package aima.extra.probability.constructs;
+package aima.extra.probability;
 
 import java.math.BigInteger;
 import java.math.MathContext;

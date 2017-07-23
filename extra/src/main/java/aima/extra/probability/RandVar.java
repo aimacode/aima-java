@@ -1,5 +1,6 @@
-package aima.extra.probability.constructs;
+package aima.extra.probability;
 
+import aima.extra.probability.constructs.ProbabilityUtilities;
 import aima.extra.probability.domain.Domain;
 import aima.extra.probability.domain.FiniteDomain;
 
@@ -9,7 +10,7 @@ import aima.extra.probability.domain.FiniteDomain;
  * @author Ciaran O'Reilly
  * @author Nagaraj Poti
  */
-public class FiniteRandomVariable implements RandomVariable {
+public class RandVar implements RandomVariable {
 
 	/**
 	 * Name associated with the random variable.
@@ -19,26 +20,25 @@ public class FiniteRandomVariable implements RandomVariable {
 	/**
 	 * FiniteDomain associated with a finite, discrete random variable.
 	 */
-	private FiniteDomain<?> domain;
+	private FiniteDomain domain;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param name
 	 *            of the random variable.
-	 * 
 	 * @param domain
 	 *            of FiniteDomain type.
 	 */
-	public FiniteRandomVariable(String name, Domain domain) {
+	public RandVar(String name, Domain domain) {
 		ProbabilityUtilities.checkValidRandomVariableName(name);
 		if (null == domain) {
-			throw new IllegalArgumentException("Domain of FiniteRandomVariable must be specified.");
-		} else if (!(domain instanceof FiniteDomain<?>)) {
+			throw new IllegalArgumentException("Domain of RandVar must be specified.");
+		} else if (!(domain instanceof FiniteDomain)) {
 			throw new IllegalArgumentException("Domain must be of type FiniteDomain.");
 		}
 		this.name = name;
-		this.domain = (FiniteDomain<?>) domain;
+		this.domain = (FiniteDomain) domain;
 	}
 
 	// START-RandomVariable
@@ -49,7 +49,7 @@ public class FiniteRandomVariable implements RandomVariable {
 	}
 
 	@Override
-	public FiniteDomain<?> getDomain() {
+	public FiniteDomain getDomain() {
 		return this.domain;
 	}
 
@@ -61,13 +61,13 @@ public class FiniteRandomVariable implements RandomVariable {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (!(o instanceof FiniteRandomVariable)) {
+		if (o == this) {
+			return true;
+		} else if (!(o instanceof RandVar)) {
 			return false;
 		}
-		FiniteRandomVariable other = (FiniteRandomVariable) o;
-		if (this.name.equals(other.name) && this.domain.equals(other.domain)) {
-			return true;
-		}
-		return false;
+		RandVar other = (RandVar) o;
+		boolean result = this.name.equals(other.name) && this.domain.equals(other.domain);
+		return result;
 	}
 }

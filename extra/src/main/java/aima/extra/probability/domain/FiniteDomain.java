@@ -6,15 +6,16 @@ import java.util.Set;
  * A Domain over a countable/discrete and finite set of objects.
  * 
  * @author Ciaran O'Reilly
- * 
+ * @author Nagaraj Poti
  */
-public interface FiniteDomain<T> extends Domain {
+public interface FiniteDomain extends Domain {
+	
 	/**
 	 * 
 	 * @return a consistent unmodifiable ordered Set (e.g. LinkedHashSet,
 	 *         TreeSet) of the possible values this domain can take on.
 	 */
-	Set<T> getPossibleValues();
+	Set<?> getPossibleValues();
 
 	/**
 	 * The possible values for a finite domain are to have a consistent ordering
@@ -30,7 +31,7 @@ public interface FiniteDomain<T> extends Domain {
 	 * @exception IllegalArgumentException
 	 *                if the value is not valid for the domain.
 	 */
-	int getOffset(T value);
+	int getOffset(Object value);
 
 	/**
 	 * 
@@ -41,5 +42,5 @@ public interface FiniteDomain<T> extends Domain {
 	 *         ordered set of values. null if the offset does not index the
 	 *         domain correctly.
 	 */
-	T getValueAt(int offset);
+	Object getValueAt(int offset);
 }
