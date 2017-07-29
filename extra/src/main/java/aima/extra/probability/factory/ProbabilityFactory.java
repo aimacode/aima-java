@@ -1,10 +1,10 @@
 package aima.extra.probability.factory;
 
+import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-
-import aima.extra.probability.*;
+import aima.extra.probability.ProbabilityNumber;
 
 /**
  * ProbabilityFactory is a generic factory class for constructing instances of
@@ -17,10 +17,21 @@ public class ProbabilityFactory<T extends ProbabilityNumber> {
 	// Internal fields
 
 	/**
+	 * Constructors.
+	 */
+	final private Constructor<T> doubleConstructor;
+	
+	final private Constructor<T> bigDecimalConstructor;
+	
+	final private Constructor<T> mathContextConstructor;
+	
+	final private Constructor<T> conversionConstructor;
+	
+	/**
 	 * Class type of the ProbabilityNumber implementation for which the factory
 	 * is to be created.
 	 */
-	private Class<T> clazz;
+	private Class<T> clazz; 
 
 	// Constructor
 
@@ -31,6 +42,14 @@ public class ProbabilityFactory<T extends ProbabilityNumber> {
 	 */
 	public ProbabilityFactory(Class<T> clazz) {
 		this.clazz = clazz;
+		try {
+			doubleConstructor = this.clazz.getDeclaredConstructor(Double.class);
+			bigDecimalConstructor = this.clazz.getDeclaredConstructor(BigDecimal.class);
+			mathContextConstructor = this.clazz.getDeclaredConstructor(BigDecimal.class, MathContext.class);
+			conversionConstructor = this.clazz.getDeclaredConstructor(ProbabilityNumber.class);
+		} catch (Exception ex) {
+			throw new IllegalArgumentException(ex.getCause());
+		}
 	}
 
 	// PUBLIC
@@ -58,7 +77,7 @@ public class ProbabilityFactory<T extends ProbabilityNumber> {
 	public ProbabilityNumber valueOf(Double value) {
 		ProbabilityNumber output = null;
 		try {
-			output = this.clazz.getDeclaredConstructor(Double.class).newInstance(value);
+			output = doubleConstructor.newInstance(value);
 		} catch (Exception ex) {
 			throw new IllegalArgumentException(ex.getCause());
 		}
@@ -77,7 +96,7 @@ public class ProbabilityFactory<T extends ProbabilityNumber> {
 	public ProbabilityNumber valueOf(BigDecimal value) {
 		ProbabilityNumber output = null;
 		try {
-			output = this.clazz.getDeclaredConstructor(BigDecimal.class).newInstance(value);
+			output = bigDecimalConstructor.newInstance(value);
 		} catch (Exception ex) {
 			throw new IllegalArgumentException(ex.getCause());
 		}
@@ -98,7 +117,7 @@ public class ProbabilityFactory<T extends ProbabilityNumber> {
 	public ProbabilityNumber valueOf(BigDecimal value, MathContext mc) {
 		ProbabilityNumber output = null;
 		try {
-			output = this.clazz.getDeclaredConstructor(BigDecimal.class, MathContext.class).newInstance(value, mc);
+			output = mathContextConstructor.newInstance(value, mc);
 		} catch (Exception ex) {
 			throw new IllegalArgumentException(ex.getCause());
 		}
@@ -121,7 +140,7 @@ public class ProbabilityFactory<T extends ProbabilityNumber> {
 		MathContext mc = new MathContext(precision, RoundingMode.HALF_EVEN);
 		ProbabilityNumber output = null;
 		try {
-			output = this.clazz.getDeclaredConstructor(BigDecimal.class, MathContext.class).newInstance(value, mc);
+			output = mathContextConstructor.newInstance(value, mc);
 		} catch (Exception ex) {
 			throw new IllegalArgumentException(ex.getCause());
 		}
@@ -140,7 +159,7 @@ public class ProbabilityFactory<T extends ProbabilityNumber> {
 	public ProbabilityNumber convert(ProbabilityNumber that) {
 		ProbabilityNumber output = null;
 		try {
-			output = this.clazz.getDeclaredConstructor(ProbabilityNumber.class).newInstance(that);
+			output = conversionConstructor.newInstance(that);
 		} catch (Exception ex) {
 			throw new IllegalArgumentException(ex.getCause());
 		}
@@ -158,8 +177,7 @@ public class ProbabilityFactory<T extends ProbabilityNumber> {
 	public Boolean sumsToOne(Iterable<ProbabilityNumber> allProbabilities) {
 		Boolean result = null;
 		try {
-			ProbabilityNumber dummyValue = this.clazz.getDeclaredConstructor(BigDecimal.class)
-					.newInstance(BigDecimal.ZERO);
+			ProbabilityNumber dummyValue = bigDecimalConstructor.newInstance(BigDecimal.ZERO);
 			result = dummyValue.sumsToOne(allProbabilities);
 		} catch (Exception ex) {
 			throw new IllegalArgumentException(ex.getCause());

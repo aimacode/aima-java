@@ -11,9 +11,7 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * @author Nagaraj Poti
  */
-public class FiniteBooleanDomain extends AbstractFiniteDomain<Boolean> {
-
-	// PRIVATE
+public class FiniteBooleanDomain extends AbstractFiniteDomain {
 
 	/**
 	 * Single instance of FiniteBooleanDomain.
@@ -27,13 +25,40 @@ public class FiniteBooleanDomain extends AbstractFiniteDomain<Boolean> {
 	private static final Set<Boolean> possibleValues = Collections
 			.unmodifiableSet(new LinkedHashSet<Boolean>(Arrays.asList(Boolean.TRUE, Boolean.FALSE)));
 
-	// Private Constructor (singleton)
+	// Private Constructor
+
+	/**
+	 * Constructor for the singleton instance.
+	 */
 	private FiniteBooleanDomain() {
 		indexPossibleValues(possibleValues);
 	}
 
-	// PUBLIC
+	// Public methods
 
+	// START-Domain
+	
+	@Override
+	public int size() {
+		return 2;
+	}
+
+	@Override
+	public boolean isOrdered() {
+		return false;
+	}
+
+	// END-Domain
+	
+	// START-FiniteDomain
+	
+	@Override
+	public Set<Boolean> getPossibleValues() {
+		return possibleValues;
+	}
+	
+	// END-FiniteDomain
+	
 	/**
 	 * Instantiate onlyInstance for the first time only.
 	 * 
@@ -48,20 +73,5 @@ public class FiniteBooleanDomain extends AbstractFiniteDomain<Boolean> {
 			}
 		}
 		return onlyInstance;
-	}
-
-	@Override
-	public int size() {
-		return 2;
-	}
-
-	@Override
-	public boolean isOrdered() {
-		return false;
-	}
-
-	@Override
-	public Set<Boolean> getPossibleValues() {
-		return Collections.unmodifiableSet(possibleValues);
 	}
 }

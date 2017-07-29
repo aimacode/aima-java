@@ -1,7 +1,7 @@
 package aima.test.unit.probability;
 
 import aima.extra.probability.*;
-import aima.extra.probability.constructs.ProbabilityComputation;
+import aima.extra.probability.ProbabilityComputation;
 import aima.extra.probability.factory.ProbabilityFactory;
 import static org.junit.Assert.*;
 import java.math.BigDecimal;

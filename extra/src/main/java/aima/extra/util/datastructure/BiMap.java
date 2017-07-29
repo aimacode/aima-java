@@ -21,6 +21,8 @@ public class BiMap<K, V> {
 	// Inverse map
 	private Map<V, K> backward = new HashMap<V, K>();
 
+	// Public methods
+	
 	/**
 	 * Associates the specified key with the specified value in the forward map
 	 * and vice versa in the inverse map. If the forward map previously
@@ -46,7 +48,8 @@ public class BiMap<K, V> {
 	 * @param key
 	 *            to be searched for in the forward map.
 	 * 
-	 * @return value associated with the key in the forward map.
+	 * @return value associated with the key in the forward map if it exists,
+	 *         null otherwise.
 	 */
 	public V getForward(K key) {
 		return this.forward.get(key);
@@ -65,9 +68,30 @@ public class BiMap<K, V> {
 	}
 
 	/**
-	 * @return the number of key-value mappings in this map
+	 * @return the number of key-value mappings in this BiMap.
 	 */
 	public int size() {
 		return this.forward.size();
+	}
+
+	/**
+	 * Compares the specified object with this BiMap for equality. Returns
+	 * <tt>true</tt> if the given object is also a BiMap and the two BiMaps
+	 * represent the same mappings.
+	 *
+	 * @param o
+	 *            object to be compared for equality with this BiMap
+	 * 
+	 * @return <tt>true</tt> if the specified object is equal to this BiMap
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		} else if (!(o instanceof BiMap<?, ?>)) {
+			return false;
+		}
+		BiMap<?, ?> other = (BiMap<?, ?>) o;
+		return this.forward.equals(other.forward);
 	}
 }

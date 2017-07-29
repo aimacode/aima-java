@@ -16,9 +16,9 @@ public class ListOps {
 	 * Union of two lists. The resultant list contains all elements of l1
 	 * followed by elements of l2. No duplicate entries will exist.
 	 * 
-	 * @param <T>
 	 * @param l1
 	 * @param l2
+	 * @param <T>
 	 * 
 	 * @return the union of l1 and l2. (The union of two lists is the list
 	 *         containing all of the elements contained in either list.)
@@ -36,9 +36,9 @@ public class ListOps {
 	 * in both l1 and l2. No duplicate entries will exist. The elements in the
 	 * resultant list retain their relative order as in l1.
 	 * 
-	 * @param <T>
 	 * @param l1
 	 * @param l2
+	 * @param <T>
 	 * 
 	 * @return the intersection of l1 and l2. (The intersection of two lists is
 	 *         the list containing only the elements contained in both lists.)
@@ -56,9 +56,9 @@ public class ListOps {
 	 * l1 only (i.e not present in l2). No duplicate entries will exist. The
 	 * elements in the resultant list retain their relative order as in l1.
 	 * 
-	 * @param <T>
 	 * @param l1
 	 * @param l2
+	 * @param <T>
 	 * 
 	 * @return the difference of l1 and l2. (The difference of two lists is the
 	 *         list containing only the elements unique to l1 and not in l2.)

@@ -13,7 +13,7 @@ import java.util.Set;
  * 
  * @author Nagaraj Poti
  */
-public class FiniteComparableDomain<T extends Comparable<T>> extends AbstractFiniteDomain<T> {
+public class FiniteOrdinalDomain<T extends Comparable<T>> extends AbstractFiniteDomain {
 
 	// Class members
 	
@@ -22,7 +22,7 @@ public class FiniteComparableDomain<T extends Comparable<T>> extends AbstractFin
 	 */
 	private Set<T> possibleValues = null;
 
-	// PUBLIC
+	// Public constructor
 	
 	/**
 	 * Instantiates possibleValues with all possible domain values for this
@@ -34,16 +34,20 @@ public class FiniteComparableDomain<T extends Comparable<T>> extends AbstractFin
 	 *            is the list of all possible values that the domain can take
 	 *            on.
 	 */
-	public FiniteComparableDomain(List<T> pValues) {
-		possibleValues = new TreeSet<T>();
-		pValues.forEach((value) -> possibleValues.add(value));
-		possibleValues = Collections.unmodifiableSet(possibleValues);
-		indexPossibleValues(possibleValues);
+	public FiniteOrdinalDomain(List<T> pValues) {
+		this.possibleValues = new TreeSet<T>();
+		pValues.forEach((value) -> this.possibleValues.add(value));
+		this.possibleValues = Collections.unmodifiableSet(this.possibleValues);
+		indexPossibleValues(this.possibleValues);
 	}
 
+	// Public methods
+	
+	// START-Domain
+	
 	@Override
 	public int size() {
-		return possibleValues.size();
+		return this.possibleValues.size();
 	}
 
 	/**
@@ -53,9 +57,15 @@ public class FiniteComparableDomain<T extends Comparable<T>> extends AbstractFin
 	public boolean isOrdered() {
 		return true;
 	}
+	
+	// END-Domain
+	
+	// START-FiniteDomain
 
 	@Override
 	public Set<T> getPossibleValues() {
-		return possibleValues;
+		return this.possibleValues;
 	}
+	
+	// END-FiniteDomain
 }
