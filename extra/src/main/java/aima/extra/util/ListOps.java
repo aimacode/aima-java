@@ -1,5 +1,6 @@
 package aima.extra.util;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -14,7 +15,8 @@ public class ListOps {
 
 	/**
 	 * Union of two lists. The resultant list contains all elements of l1
-	 * followed by elements of l2. No duplicate entries will exist.
+	 * followed by elements of l2. No duplicate entries will exist, unless l1 or
+	 * l2 themselves contain duplicate elements.
 	 * 
 	 * @param l1
 	 * @param l2
@@ -26,6 +28,8 @@ public class ListOps {
 	public static <T> List<T> union(List<T> l1, List<T> l2) {
 		if (l1 == l2) {
 			return l1;
+		} else if (null == l1 || null == l2) {
+			return (l1 == null ? l2 : l1);
 		}
 		List<T> union = Stream.concat(l1.stream(), l2.stream()).distinct().collect(Collectors.toList());
 		return union;
@@ -33,8 +37,9 @@ public class ListOps {
 
 	/**
 	 * Intersection of two lists. The resultant list contains elements present
-	 * in both l1 and l2. No duplicate entries will exist. The elements in the
-	 * resultant list retain their relative order as in l1.
+	 * in both l1 and l2. No duplicate entries will exist, unless l1 or l2
+	 * themselves contain duplicate elements. The elements in the resultant
+	 * list retain their relative order as in l1.
 	 * 
 	 * @param l1
 	 * @param l2
@@ -46,6 +51,8 @@ public class ListOps {
 	public static <T> List<T> intersection(List<T> l1, List<T> l2) {
 		if (l1 == l2) {
 			return l1;
+		} else if (null == l1 || null == l2) {
+			return null;
 		}
 		List<T> intersection = l1.stream().filter(l2::contains).collect(Collectors.toList());
 		return intersection;
@@ -64,6 +71,11 @@ public class ListOps {
 	 *         list containing only the elements unique to l1 and not in l2.)
 	 */
 	public static <T> List<T> difference(List<T> l1, List<T> l2) {
+		if (l1 == l2 || null == l1) {
+			return null;
+		} else if (null == l2) {
+			return l1;
+		}
 		List<T> difference = l1.stream().filter(elem -> !l2.contains(elem)).collect(Collectors.toList());
 		return difference;
 	}
@@ -80,6 +92,9 @@ public class ListOps {
 	 * @return list of indices of common elements in both lists in sorted order.
 	 */
 	public static <T> List<Integer> getIntersectionIdx(List<T> source, List<T> target) {
+		if (null == source || null == target) {
+			return null;
+		}
 		List<Integer> result = IntStream.range(0, source.size()).filter(idx -> target.contains(source.get(idx))).boxed()
 				.sorted().collect(Collectors.toList());
 		return result;
@@ -98,8 +113,26 @@ public class ListOps {
 	 *         order.
 	 */
 	public static <T> List<Integer> getDifferenceIdx(List<T> source, List<T> target) {
-		List<Integer> result = IntStream.range(0, source.size()).filter(idx -> !target.contains(source.get(idx))).boxed()
-				.sorted().collect(Collectors.toList());
+		if (source == target || source == null) {
+			return null;
+		} else if (target == null) {
+			List<Integer> result = IntStream.range(0, source.size()).boxed().sorted().collect(Collectors.toList());
+			return result;
+		}
+		List<Integer> result = IntStream.range(0, source.size()).filter(idx -> !target.contains(source.get(idx)))
+				.boxed().sorted().collect(Collectors.toList());
 		return result;
+	}
+
+	/**
+	 * Return an unmodifiable version of a list.
+	 * 
+	 * @param list
+	 * @param <T>
+	 * 
+	 * @return an unmodifiable list.
+	 */
+	public static <T> List<T> protectListFromModification(List<T> list) {
+		return Collections.unmodifiableList(list);
 	}
 }

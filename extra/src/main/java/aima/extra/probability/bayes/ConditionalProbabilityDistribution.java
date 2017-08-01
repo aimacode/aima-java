@@ -24,8 +24,8 @@ public interface ConditionalProbabilityDistribution extends ProbabilityDistribut
 	RandomVariable getOn();
 
 	/**
-	 * @return a consistent ordered list of the parent random variables for this
-	 *         conditional distribution.
+	 * @return a consistent ordered list of the parent random variables for
+	 *         this conditional distribution.
 	 */
 	List<RandomVariable> getParents();
 
@@ -53,12 +53,12 @@ public interface ConditionalProbabilityDistribution extends ProbabilityDistribut
 	 * set of cases for the random variable.
 	 * 
 	 * @param parentWorldProposition
-	 *            is specified by a functional interface that takes an array of
-	 *            objects that represent values corresponding to parent random
-	 *            variables as input. When constructing the proposition, it is
-	 *            MANDATORY to respect the SIZE and ORDER of parent random
-	 *            variables as specified by the probability distribution.
-	 *            Skipping or changing the order of random variables in the
+	 *            is specified by a functional interface that takes a map of
+	 *            random variables to objects that represent values
+	 *            corresponding to parent random variables as input. When
+	 *            constructing the proposition, it is MANDATORY to respect the
+	 *            SIZE of parent random variables as specified by the
+	 *            probability distribution. Skipping of random variables in the
 	 *            proposition would result in undefined behaviour.<br>
 	 *            <br>
 	 *            The function interface evaluates input values with the
@@ -67,5 +67,5 @@ public interface ConditionalProbabilityDistribution extends ProbabilityDistribut
 	 * @return the probability distribution for the random variable the
 	 *         conditional probability distribution is on.
 	 */
-	ProbabilityDistribution getConditioningCase(Predicate<List<Object>> parentWorldProposition);
+	ProbabilityDistribution getConditioningCase(Predicate<Map<RandomVariable, Object>> parentWorldProposition);
 }

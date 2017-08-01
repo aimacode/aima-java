@@ -13,7 +13,7 @@ import aima.extra.probability.RandomVariable;
 public interface Factor {
 
 	/**
-	 * @return a consistent ordered List of the argument variables for this
+	 * @return a consistent ordered list of the argument variables for this
 	 *         Factor.
 	 */
 	List<RandomVariable> getArgumentVariables();
@@ -28,10 +28,10 @@ public interface Factor {
 	boolean contains(RandomVariable var);
 
 	/**
-	 * <b>Note:</b> Do not modify the list returned by this method directly as
-	 * it is intended to be read only.
+	 * <b>Note:</b> An immutable list is returned by this method and thus its
+	 * values cannot be changed.
 	 * 
-	 * @return the list of values used to represent the Factor.
+	 * @return the array of values used to represent the Factor.
 	 */
 	List<ProbabilityNumber> getValues();
 
@@ -45,14 +45,14 @@ public interface Factor {
 	 * variables.
 	 * 
 	 * @param vars
-	 *            is the list of random variables to be summed out (need NOT be
+	 *            is the array of random variables to be summed out (need NOT be
 	 *            in order).
 	 * 
 	 * @return a new Factor with updated probability values, excluding the
 	 *         summed out random variables. The random variables retain their
 	 *         original order.
 	 */
-	Factor sumOut(List<RandomVariable> vars);
+	Factor sumOut(RandomVariable... vars);
 
 	/**
 	 * Pointwise multiplication of this Factor by a given multiplier, creating a
@@ -83,7 +83,7 @@ public interface Factor {
 	 *         product factor is the ordered union of the left term (this) and
 	 *         the right term (multiplier).
 	 * 
-	 * @see Factor#pointwiseProductPOS(Factor, RandomVariable...)
+	 * @see Factor#pointwiseProductPOS(Factor, List<RandomVariable>)
 	 */
 	Factor pointwiseProduct(Factor multiplier);
 

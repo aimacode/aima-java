@@ -7,7 +7,7 @@ import aima.extra.probability.bayes.ConditionalProbabilityTable;
  * 
  * @author Ciaran O'Reilly
  */
-public interface FiniteNode {
+public interface FiniteNode extends Node{
 
 	/**
 	 * @return the Conditional Probability Table detailing the finite set of
