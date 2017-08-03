@@ -1,6 +1,7 @@
 package aima.extra.probability.bayes;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
@@ -39,13 +40,14 @@ public interface ProbabilityDistribution {
 	 * proposition for the random variables comprising the distribution.
 	 * 
 	 * @param eventProposition
-	 *            is specified by a functional interface that takes an array of
-	 *            objects that represent values corresponding to random
-	 *            variables as input. When constructing the proposition, it is
-	 *            MANDATORY to respect the SIZE and ORDER of random variables as
-	 *            specified by the probability distribution. Skipping or
-	 *            changing the order of random variables in the proposition
-	 *            would result in undefined behaviour.<br>
+	 *            is specified by a functional interface that takes an map of
+	 *            random variables to objects that represent values
+	 *            corresponding to random variables as input. When constructing
+	 *            the proposition, the order of random variables does not
+	 *            matter, but the size of the event must equal the random
+	 *            variables specified by the distribution. Skipping random
+	 *            variables in the proposition would result in undefined
+	 *            behaviour.<br>
 	 *            <br>
 	 *            The function interface evaluates input values with the
 	 *            provided proposition, and returns true / false.
@@ -55,5 +57,5 @@ public interface ProbabilityDistribution {
 	 *         actual proposition specified) that satisfy the constraints of the
 	 *         proposition for the random variables comprising the distribution.
 	 */
-	ProbabilityNumber getValue(Predicate<List<Object>> eventProposition);
+	ProbabilityNumber getValue(Predicate<Map<RandomVariable, Object>> eventProposition);
 }

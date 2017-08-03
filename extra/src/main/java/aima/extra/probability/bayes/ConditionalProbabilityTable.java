@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
+
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
 import aima.extra.util.ListOps;
@@ -64,26 +66,79 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 		}
 	}
 
-	// Public methods 
-	
-	// START-CategoricalDistribution
-	
-	/**
-	 * 
-	 */
+	// Private constructor
+
+	private ConditionalProbabilityTable(RandomVariable on, List<RandomVariable> conditionedOn,
+			Class<? extends ProbabilityNumber> clazz) {
+		super(ListOps.union(Arrays.asList(on), conditionedOn), clazz);
+	}
+
+	// Public methods
+
+	// START-ProbabilityMass
+
 	@Override
-	public ConditionalProbabilityTable normalize() {
-		return null;
+	public ConditionalProbabilityTable setValue(ProbabilityNumber value, Object... eventValues) {
+		List<ProbabilityNumber> newValues = new ArrayList<ProbabilityNumber>(this.values);
+		int idx = this.getIndex(eventValues);
+		newValues.set(idx, value);
+		ConditionalProbabilityTable newTable = new ConditionalProbabilityTable(this.on, newValues, this.randomVariables,
+				this.clazz);
+		return newTable;
 	}
 
 	@Override
-	public ConditionalProbabilityTable marginalize(List<RandomVariable> vars) {
-		// TODO Auto-generated method stub
+	public ConditionalProbabilityTable setValue(ProbabilityNumber value, Map<RandomVariable, Object> event) {
+		List<ProbabilityNumber> newValues = new ArrayList<ProbabilityNumber>(this.values);
+		int idx = this.getIndex(event);
+		newValues.set(idx, value);
+		ConditionalProbabilityTable newTable = new ConditionalProbabilityTable(this.on, newValues, this.randomVariables,
+				this.clazz);
+		return newTable;
+	}
+
+	// END-ProbabilityMass
+
+	// START-CategoricalDistribution
+
+	@Override
+	public ConditionalProbabilityTable normalize() {
+		// TODO
 		return null;
 	}
-	
+
+	/**
+	 * Marginalization of the query random variable alone results in a
+	 * meaningful outcome. The operation is UNDEFINED on parent random
+	 * variables.
+	 * 
+	 * @param varsToMarginalize
+	 *            is the list of random variables to marginalize. Should only
+	 *            contain the query variable.
+	 */
+	@Override
+	public ConditionalProbabilityTable marginalize(RandomVariable... varsToMarginalize) {
+		// TODO - Check if vars randomvariables exist
+		List<RandomVariable> varsToMarginalizeList = Arrays.asList(varsToMarginalize);
+		List<RandomVariable> remainingVars = ListOps.difference(this.randomVariables, varsToMarginalizeList);
+		List<Integer> remainingVarIdx = ListOps.getIntersectionIdx(this.randomVariables, remainingVars);
+		// TODO - check for null
+		ConditionalProbabilityTable marginalized = new ConditionalProbabilityTable(null, remainingVars, this.clazz);
+		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
+			int[] summedOutNumerals = IntStream.range(0, possibleWorldNumerals.length).filter(remainingVarIdx::contains)
+					.sorted().toArray();
+			int newValueIdx = marginalized.queryMRI.getValueFor(summedOutNumerals).intValue();
+			int addendIdx = queryMRI.getValueFor(possibleWorldNumerals).intValue();
+			ProbabilityNumber augend = marginalized.values.get(newValueIdx);
+			ProbabilityNumber addend = this.values.get(addendIdx);
+			marginalized.setValue(newValueIdx, augend.add(addend));
+		});
+		marginalized.values = ListOps.protectListFromModification(marginalized.values);
+		return marginalized;
+	}
+
 	// END-CategoricalDistribution
-	
+
 	// START-ConditionalProbabilityDistribution
 
 	@Override
@@ -97,17 +152,17 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 	}
 
 	@Override
-	public ProbabilityDistribution getConditioningCase(Map<RandomVariable, Object> parentValues) {
-		// TODO Auto-generated method stub
+	public ProbabilityTable getConditioningCase(Map<RandomVariable, Object> parentWorld) {
+		// TODO
 		return null;
 	}
 
 	@Override
-	public ProbabilityDistribution getConditioningCase(Predicate<List<Object>> proposition) {
-		// TODO Auto-generated method stub
+	public ProbabilityTable getConditioningCase(Predicate<Map<RandomVariable, Object>> parentWorldProposition) {
+		// TODO
 		return null;
 	}
-	
+
 	// END-ConditionalProbabilityDistribution
 
 	// Private methods
@@ -119,7 +174,7 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 	 * @return true if each row adds upto one, false otherwise.
 	 */
 	private boolean checkEachRowTotalsOne() {
-		ConditionalProbabilityTable summedOut = this.marginalize(Arrays.asList(this.on));
+		ConditionalProbabilityTable summedOut = this.marginalize(this.on);
 		boolean check = summedOut.values.stream().allMatch(value -> value.isOne());
 		return check;
 	}

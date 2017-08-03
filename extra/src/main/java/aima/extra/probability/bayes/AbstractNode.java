@@ -2,7 +2,6 @@ package aima.extra.probability.bayes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import aima.extra.probability.RandomVariable;
 
 public class AbstractNode implements Node {
@@ -19,15 +18,15 @@ public class AbstractNode implements Node {
 		this(var, null);
 	}
 
-	public AbstractNode(RandomVariable var, List<? extends Node> parents) {
-		this.nodeVariable = var;
-		parents.stream().forEach(e -> ((AbstractNode) e).addChild(this));
-		this.parents = parents.stream().collect(Collectors.toCollection(ArrayList<Node>::new));
+	public AbstractNode(RandomVariable var, List<Node> parents) {
+		nodeVariable = var;
+		parents.stream().forEach(e -> ((AbstractNode)e).addChild(this));
+		this.parents = new ArrayList<Node>(parents);
 	}
 
 	@Override
 	public RandomVariable getNodeVariable() {
-		return this.nodeVariable;
+		return nodeVariable;
 	}
 
 	@Override
@@ -53,12 +52,10 @@ public class AbstractNode implements Node {
 
 	@Override
 	public ConditionalProbabilityDistribution getCPD() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	protected void addChild(Node childNode) {
-
 	}
 
 }

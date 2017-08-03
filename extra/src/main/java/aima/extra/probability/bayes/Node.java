@@ -26,7 +26,9 @@ public interface Node {
 	/**
 	 * @return true if this Node has no parents.
 	 */
-	boolean isRoot();
+	default boolean isRoot() {
+		 return (0 == getParents().size());
+	}
 
 	/**
 	 * @return the parent Nodes for this Node.

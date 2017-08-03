@@ -18,27 +18,20 @@ import aima.extra.probability.RandomVariable;
 public interface CategoricalDistribution extends ProbabilityMass {
 
 	/**
-	 * Set the value at a specifed index within the distribution.
+	 * <b>Note:</b> An immutable list is returned by this method and thus its
+	 * values cannot be changed. Instead use setValue() as this method is
+	 * intended to be for read only purposes.
 	 * 
-	 * @param idx
-	 * @param value
-	 */
-	void setValue(int idx, ProbabilityNumber value);
-
-	/**
-	 * <b>Note:</b> Do not modify the list returned by this method directly.
-	 * Instead use setValue() as this method is intended to be for read only
-	 * purposes.
-	 * 
-	 * @return the list used to represent the CategoricalDistribution.
+	 * @return the array of values used to represent the
+	 *         CategoricalDistribution.
 	 * 
 	 * @see CategoricalDistribution#setValue(int, ProbabilityNumber)
 	 */
 	List<ProbabilityNumber> getValues();
 
 	/**
-	 * Retrieve the index into the CategoricalDistribution for the provided list
-	 * of values for the random variables comprising the distribution.
+	 * Retrieve the index into the CategoricalDistribution for the provided
+	 * array of values for the random variables comprising the distribution.
 	 * 
 	 * @param eventValues
 	 *            the values for the random variables comprising the
@@ -49,7 +42,7 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	 * 
 	 * @return the index within the distribution for the values specified.
 	 */
-	int getIndex(List<Object> eventValues);
+	int getIndex(Object... eventValues);
 
 	/**
 	 * Retrieve the index into the CategoricalDistribution for the provided map
@@ -77,7 +70,7 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	 * are NOT a part of the supplied list (vars). The returned distribution has
 	 * the values updated with the summed out random variables.
 	 * 
-	 * @param vars
+	 * @param varsToMarginalize
 	 *            the random variables to marginalize/sum out. Ordering of
 	 *            random variables does not matter.
 	 * 
@@ -85,5 +78,5 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	 *         summed out and a new set of values updated with the summed out
 	 *         values.
 	 */
-	CategoricalDistribution marginalize(List<RandomVariable> vars);
+	CategoricalDistribution marginalize(RandomVariable... varsToMarginalize);
 }

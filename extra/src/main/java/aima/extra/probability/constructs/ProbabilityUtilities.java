@@ -46,7 +46,7 @@ public class ProbabilityUtilities {
 	 * @return the size that the probability table will need to be in order to
 	 *         represent the specified random variables.
 	 */
-	public static int expectedSizeofProbabilityTable(List<?> vars) {
+	public static int expectedSizeofProbabilityTable(List<RandomVariable> vars) {
 		Long expectedSize = 1L;
 		if (null != vars) {
 			boolean isValid = ProbabilityUtilities.checkIfFiniteRandomVariables(vars);
