@@ -1,5 +1,6 @@
 package aima.extra.probability.domain;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -25,27 +26,49 @@ public class FiniteArbitraryTokenDomain extends AbstractFiniteDomain {
 	// Public constructors
 
 	/**
-	 * Constructor accepting unordered set of domain values.
+	 * Constructor accepting unordered array of domain values.
 	 * 
-	 * @param pValues
+	 * @param dValues
 	 */
-	public FiniteArbitraryTokenDomain(List<?> pValues) {
-		this(false, pValues);
+	public FiniteArbitraryTokenDomain(Object... dValues) {
+		this(false, Arrays.asList(dValues));
+	}
+	
+	/**
+	 * Constructor accepting unordered list of domain values.
+	 * 
+	 * @param dValues
+	 */
+	public FiniteArbitraryTokenDomain(List<?> dValues) {
+		this(false, dValues);
 	}
 
 	/**
 	 * Constructor accepting set of domain values.
 	 * 
 	 * @param ordered
-	 *            true if pValues is an ordered list, false otherwise.
-	 * @param pValues
+	 *            true if dValues is an ordered array, false otherwise.
+	 * @param dValues
+	 *            is the array of all possible values that the domain can take
+	 *            on.
+	 */
+	public FiniteArbitraryTokenDomain(boolean ordered, Object... dValues) {
+		this(ordered, Arrays.asList(dValues));
+	}
+	
+	/**
+	 * Constructor accepting set of domain values.
+	 * 
+	 * @param ordered
+	 *            true if dValues is an ordered list, false otherwise.
+	 * @param dValues
 	 *            is the list of all possible values that the domain can take
 	 *            on.
 	 */
-	public FiniteArbitraryTokenDomain(boolean ordered, List<?> pValues) {
+	public FiniteArbitraryTokenDomain(boolean ordered, List<?> dValues) {
 		this.ordered = ordered;
 		this.possibleValues = new LinkedHashSet<Object>();
-		pValues.forEach((value) -> this.possibleValues.add(value));
+		dValues.forEach((value) -> this.possibleValues.add(value));
 		this.possibleValues = Collections.unmodifiableSet(this.possibleValues);
 		indexPossibleValues(this.possibleValues);
 	}

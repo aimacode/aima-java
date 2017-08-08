@@ -96,7 +96,8 @@ public interface Factor {
 	 * 
 	 * @param multiplier
 	 * @param prodVarOrder
-	 *            the order the variables comprising the product are to be in.
+	 *            is the list of random variables comprising the product in a
+	 *            given order.
 	 * 
 	 * @return a new Factor representing the pointwise product of this and the
 	 *         passed in multiplier. The order of the variables comprising the

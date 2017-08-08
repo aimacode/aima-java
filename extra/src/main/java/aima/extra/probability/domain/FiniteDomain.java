@@ -9,9 +9,8 @@ import java.util.Set;
  * @author Nagaraj Poti
  */
 public interface FiniteDomain extends Domain {
-	
+
 	/**
-	 * 
 	 * @return a consistent unmodifiable ordered Set (e.g. LinkedHashSet,
 	 *         TreeSet) of the possible values this domain can take on.
 	 */
@@ -34,7 +33,6 @@ public interface FiniteDomain extends Domain {
 	int getOffset(Object value);
 
 	/**
-	 * 
 	 * @param offset
 	 *            an offset into the consistent ordering for this domain.
 	 * 
