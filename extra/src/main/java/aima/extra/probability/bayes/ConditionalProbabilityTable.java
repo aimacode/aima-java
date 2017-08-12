@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
-
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
+import aima.extra.probability.domain.FiniteDomain;
 import aima.extra.util.ListOps;
 
 /**
@@ -66,13 +66,6 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 		}
 	}
 
-	// Private constructor
-
-	private ConditionalProbabilityTable(RandomVariable on, List<RandomVariable> conditionedOn,
-			Class<? extends ProbabilityNumber> clazz) {
-		super(ListOps.union(Arrays.asList(on), conditionedOn), clazz);
-	}
-
 	// Public methods
 
 	// START-ProbabilityMass
@@ -101,10 +94,26 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 
 	// START-CategoricalDistribution
 
+	/**
+	 * Normalization of a conditional probability table is done independently
+	 * for each row of the CPT, where each row corresponds to a conditioning
+	 * case.
+	 */
 	@Override
 	public ConditionalProbabilityTable normalize() {
-		// TODO
-		return null;
+		ProbabilityTable summedOut = this.marginalize(this.on);
+		List<ProbabilityNumber> normalizedValues = new ArrayList<ProbabilityNumber>(this.values);
+		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
+			int[] summedOutNumerals = IntStream.range(1, possibleWorldNumerals.length).toArray();
+			int summedOutIdx = summedOut.queryMRI.getValueFor(summedOutNumerals).intValue();
+			ProbabilityNumber sum = summedOut.values.get(summedOutIdx);
+			int normalizedIdx = this.queryMRI.getValueFor(possibleWorldNumerals).intValue();
+			ProbabilityNumber normalizedValue = this.values.get(normalizedIdx).divide(sum);
+			normalizedValues.set(normalizedIdx, normalizedValue);
+		});
+		ConditionalProbabilityTable normalized = new ConditionalProbabilityTable(this.on, normalizedValues,
+				this.parents, this.clazz);
+		return normalized;
 	}
 
 	/**
@@ -117,24 +126,8 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 	 *            contain the query variable.
 	 */
 	@Override
-	public ConditionalProbabilityTable marginalize(RandomVariable... varsToMarginalize) {
-		// TODO - Check if vars randomvariables exist
-		List<RandomVariable> varsToMarginalizeList = Arrays.asList(varsToMarginalize);
-		List<RandomVariable> remainingVars = ListOps.difference(this.randomVariables, varsToMarginalizeList);
-		List<Integer> remainingVarIdx = ListOps.getIntersectionIdx(this.randomVariables, remainingVars);
-		// TODO - check for null
-		ConditionalProbabilityTable marginalized = new ConditionalProbabilityTable(null, remainingVars, this.clazz);
-		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
-			int[] summedOutNumerals = IntStream.range(0, possibleWorldNumerals.length).filter(remainingVarIdx::contains)
-					.sorted().toArray();
-			int newValueIdx = marginalized.queryMRI.getValueFor(summedOutNumerals).intValue();
-			int addendIdx = queryMRI.getValueFor(possibleWorldNumerals).intValue();
-			ProbabilityNumber augend = marginalized.values.get(newValueIdx);
-			ProbabilityNumber addend = this.values.get(addendIdx);
-			marginalized.setValue(newValueIdx, augend.add(addend));
-		});
-		marginalized.values = ListOps.protectListFromModification(marginalized.values);
-		return marginalized;
+	public ProbabilityTable marginalize(RandomVariable... varsToMarginalize) {
+		return super.marginalize(varsToMarginalize);
 	}
 
 	// END-CategoricalDistribution
@@ -153,14 +146,35 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 
 	@Override
 	public ProbabilityTable getConditioningCase(Map<RandomVariable, Object> parentWorld) {
-		// TODO
-		return null;
+		int[] conditionedWorldNumerals = new int[this.randomVariables.size()];
+		IntStream.range(1, this.randomVariables.size()).forEach(idx -> {
+			RandomVariable var = this.randomVariables.get(idx);
+			conditionedWorldNumerals[idx] = ((FiniteDomain) (var.getDomain())).getOffset(parentWorld.get(var));
+		});
+		int conditionedOnDomainSize = this.on.getDomain().size();
+		ProbabilityNumber[] conditionedValues = new ProbabilityNumber[conditionedOnDomainSize];
+		IntStream.range(0, this.randomVariables.size()).forEach(domainIdx -> {
+			conditionedWorldNumerals[0] = domainIdx;
+			conditionedValues[domainIdx] = this.values.get(this.queryMRI.getValueFor(conditionedWorldNumerals).intValue());
+		});
+		ProbabilityTable conditioned = new ProbabilityTable(new RandomVariable[]{this.on}, conditionedValues, this.clazz);
+		return conditioned;
 	}
 
 	@Override
 	public ProbabilityTable getConditioningCase(Predicate<Map<RandomVariable, Object>> parentWorldProposition) {
-		// TODO
-		return null;
+		int conditionedOnDomainSize = this.on.getDomain().size();
+		ProbabilityNumber[] conditionedValues = new ProbabilityNumber[conditionedOnDomainSize];
+		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
+			int[] parentWorldNumerals = Arrays.copyOfRange(possibleWorldNumerals, 1, possibleWorldNumerals.length);
+			Map<RandomVariable, Object> conditionedWorld = this.mapNumeralsToProposition(parentWorldNumerals);
+			int domainIdx = parentWorldNumerals[0];
+			if (parentWorldProposition.test(conditionedWorld) == true) {
+				conditionedValues[domainIdx] = this.values.get(this.queryMRI.getValueFor(possibleWorldNumerals).intValue());
+			}
+		});
+		ProbabilityTable conditioned = new ProbabilityTable(new RandomVariable[]{this.on}, conditionedValues, this.clazz);
+		return conditioned;
 	}
 
 	// END-ConditionalProbabilityDistribution
@@ -174,7 +188,7 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 	 * @return true if each row adds upto one, false otherwise.
 	 */
 	private boolean checkEachRowTotalsOne() {
-		ConditionalProbabilityTable summedOut = this.marginalize(this.on);
+		ProbabilityTable summedOut = this.marginalize(this.on);
 		boolean check = summedOut.values.stream().allMatch(value -> value.isOne());
 		return check;
 	}

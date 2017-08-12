@@ -1,5 +1,7 @@
 package aima.extra.probability;
 
+import java.util.Objects;
+
 import aima.extra.probability.constructs.ProbabilityUtilities;
 import aima.extra.probability.domain.Domain;
 import aima.extra.probability.domain.FiniteDomain;
@@ -56,8 +58,7 @@ public class RandVar implements RandomVariable {
 	// END-RandomVariable
 
 	/**
-	 * Two random variables are equal if they have the same name and same
-	 * domain.
+	 * Two RandVar objects are equal if they have the same name and same domain.
 	 */
 	@Override
 	public boolean equals(Object o) {
@@ -69,5 +70,18 @@ public class RandVar implements RandomVariable {
 		RandVar other = (RandVar) o;
 		boolean result = this.name.equals(other.name) && this.domain.equals(other.domain);
 		return result;
+	}
+
+	/**
+	 * Two RandVar objects have the same hashcode if they have the same names.
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
+
+	@Override
+	public String toString() {
+		return this.name;
 	}
 }

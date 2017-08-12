@@ -1,5 +1,6 @@
 package aima.extra.probability.domain;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
@@ -30,13 +31,27 @@ public class FiniteOrdinalDomain<T extends Comparable<T>> extends AbstractFinite
 	 * elements according to supplied Comparator. If no comparator is supplied,
 	 * elements will be placed in their natural ascending order.
 	 * 
-	 * @param pValues
+	 * @param dValues
+	 *            is the array of all possible values that the domain can take
+	 *            on.
+	 */
+	public FiniteOrdinalDomain(T[] dValues) {
+		this(Arrays.asList(dValues));
+	}
+	
+	/**
+	 * Instantiates possibleValues with all possible domain values for this
+	 * domain. The ordering of elements is consistent. TreeSet orders the
+	 * elements according to supplied Comparator. If no comparator is supplied,
+	 * elements will be placed in their natural ascending order.
+	 * 
+	 * @param dValues
 	 *            is the list of all possible values that the domain can take
 	 *            on.
 	 */
-	public FiniteOrdinalDomain(List<T> pValues) {
+	public FiniteOrdinalDomain(List<T> dValues) {
 		this.possibleValues = new TreeSet<T>();
-		pValues.forEach((value) -> this.possibleValues.add(value));
+		dValues.forEach((value) -> this.possibleValues.add(value));
 		this.possibleValues = Collections.unmodifiableSet(this.possibleValues);
 		indexPossibleValues(this.possibleValues);
 	}

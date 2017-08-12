@@ -453,7 +453,7 @@ public class BigDecimalProbabilityNumber extends AbstractProbabilityNumber {
 		}
 		checkValidityOfArguments(value);
 		if (null != mc) {
-			this.value = new BigDecimal(value.toString(), mc);
+			this.value = new BigDecimal(value.unscaledValue(), value.scale(), mc);
 			this.roundingMode = mc.getRoundingMode();
 		} else {
 			this.value = value;
