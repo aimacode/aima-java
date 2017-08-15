@@ -193,8 +193,15 @@ public class LogProbabilityNumber extends AbstractProbabilityNumber {
 	public ProbabilityNumber add(ProbabilityNumber that) {
 		LogProbabilityNumber addend = toInternalType(that);
 		MathContext resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
-		ProbabilityNumber result = new LogProbabilityNumber(
-				this.value + Math.log(1 + Math.exp(addend.value - this.value)), resultMathContext, true);
+		ProbabilityNumber result;
+		if (this.isZero()) {
+			result = new LogProbabilityNumber(addend.value, resultMathContext, true);
+		} else if (addend.isZero()) {
+			result = new LogProbabilityNumber(this.value, resultMathContext, true);
+		} else {
+			result = new LogProbabilityNumber(this.value + Math.log1p(Math.exp(addend.value - this.value)),
+					resultMathContext, true);
+		}
 		return result;
 	}
 
@@ -213,9 +220,17 @@ public class LogProbabilityNumber extends AbstractProbabilityNumber {
 	@Override
 	public ProbabilityNumber subtract(ProbabilityNumber that) {
 		LogProbabilityNumber subtrahend = toInternalType(that);
+		if (this.compareTo(subtrahend) == -1) {
+			throw new IllegalArgumentException("Subtrahend must be smaller than the minuend.");
+		}
 		MathContext resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
-		ProbabilityNumber result = new LogProbabilityNumber(
-				this.value + Math.log(1 - Math.exp(subtrahend.value - this.value)), resultMathContext, true);
+		ProbabilityNumber result;
+		if (this.isZero() && subtrahend.isZero()) {
+			result = new LogProbabilityNumber(this.value, resultMathContext, true);
+		} else {
+			result = new LogProbabilityNumber(
+				this.value + Math.log1p(-Math.exp(subtrahend.value - this.value)), resultMathContext, true);
+		}
 		return result;
 	}
 
@@ -494,10 +509,8 @@ public class LogProbabilityNumber extends AbstractProbabilityNumber {
 	 * @param isLogValue
 	 */
 	private static void checkValidityOfArguments(Double value, MathContext mc, boolean isLogValue) {
-		if (isLogValue && value > 0) {
-			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
-		} else if (!isLogValue && (value < 0 || value > 1)) {
-			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
+		if (!isLogValue && value < 0) {
+			throw new IllegalArgumentException("ProbabilityNumber must be non-negative.");
 		}
 		if (null != mc) {
 			if (mc.getPrecision() > MAX_PRECISION) {
@@ -547,8 +560,7 @@ public class LogProbabilityNumber extends AbstractProbabilityNumber {
 			boolean withinThreshold;
 			if (first.isInfinite()) {
 				// Convert value from logspace to decimal and perform
-				// approximation
-				// check with 0
+				// approximation check with 0
 				withinThreshold = (Math.abs(Math.exp(second) - 0) <= DEFAULT_ROUNDING_THRESHOLD);
 			} else if (second.isInfinite()) {
 				withinThreshold = Math.abs(Math.exp(first) - 0) <= DEFAULT_ROUNDING_THRESHOLD;

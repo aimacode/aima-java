@@ -1,16 +1,12 @@
 package aima.extra.probability.bayes;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import aima.core.util.math.MixedRadixInterval;
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
@@ -152,7 +148,9 @@ public abstract class AbstractProbabilityTable implements CategoricalDistributio
 
 	@Override
 	public int getIndex(Object... eventValues) {
-		// TODO - Check list sizes equality
+		if (this.randomVariables.size() != eventValues.length) {
+			throw new IllegalArgumentException("Size of eventValues does not match size of randomVariables.");
+		}
 		int radixSize = this.randomVariables.size();
 		int[] radixValues = new int[radixSize];
 		for (int idx = 0; idx < radixSize; idx++) {
@@ -168,30 +166,6 @@ public abstract class AbstractProbabilityTable implements CategoricalDistributio
 	public int getIndex(Map<RandomVariable, Object> event) {
 		Object[] eventValues = this.randomVariables.stream().map(var -> event.get(var)).toArray();
 		return this.getIndex(eventValues);
-	}
-
-	@Override
-	public ProbabilityTable marginalize(RandomVariable... varsToMarginalize) {
-		// TODO - Check if vars randomvariables exist
-		List<RandomVariable> varsToMarginalizeList = Arrays.asList(varsToMarginalize);
-		List<RandomVariable> remainingVars = ListOps.difference(this.randomVariables, varsToMarginalizeList);
-		List<Integer> remainingVarIdx = ListOps.getIntersectionIdx(this.randomVariables, remainingVars);
-		int[] marginalizedRadices = remainingVars.stream().mapToInt(var -> var.getDomain().size()).toArray();
-		MixedRadixInterval marginalizedQueryMRI = new MixedRadixInterval(marginalizedRadices);
-		int marginalizedValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(remainingVars);
-		List<ProbabilityNumber> marginalizedValues = new ArrayList<ProbabilityNumber>(
-				Collections.nCopies(marginalizedValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
-		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
-			int[] summedOutNumerals = IntStream.range(0, possibleWorldNumerals.length).filter(remainingVarIdx::contains)
-					.sorted().toArray();
-			int newValueIdx = marginalizedQueryMRI.getValueFor(summedOutNumerals).intValue();
-			int addendIdx = queryMRI.getValueFor(possibleWorldNumerals).intValue();
-			ProbabilityNumber augend = marginalizedValues.get(newValueIdx);
-			ProbabilityNumber addend = this.values.get(addendIdx);
-			marginalizedValues.set(newValueIdx, augend.add(addend));
-		});
-		ProbabilityTable marginalized = new ProbabilityTable(remainingVars, marginalizedValues, this.clazz);
-		return marginalized;
 	}
 
 	// END-CategoricalDistribution
@@ -267,6 +241,9 @@ public abstract class AbstractProbabilityTable implements CategoricalDistributio
 		this.values = values.stream().map(val -> this.probFactory.convert(val)).collect(Collectors.toList());
 		this.values = ListOps.protectListFromModification(this.values);
 		int[] radices = this.randomVariables.stream().mapToInt(var -> var.getDomain().size()).toArray();
+		if (radices.length == 0) {
+			radices = new int[] { 1 };
+		}
 		this.queryMRI = new MixedRadixInterval(radices);
 	}
 }

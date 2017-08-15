@@ -119,7 +119,7 @@ public class RationalProbabilityNumber extends AbstractProbabilityNumber {
 	 *            of BigDecimal type.
 	 */
 	public RationalProbabilityNumber(BigDecimal value) {
-		this(value, null);
+		init(value, null);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class RationalProbabilityNumber extends AbstractProbabilityNumber {
 	 *            of BigDecimal type.
 	 */
 	public RationalProbabilityNumber(Double value) {
-		this(BigDecimal.valueOf(value), null);
+		init(BigDecimal.valueOf(value), null);
 	}
 
 	/**
@@ -142,16 +142,7 @@ public class RationalProbabilityNumber extends AbstractProbabilityNumber {
 	 *            MathContext associated with value.
 	 */
 	public RationalProbabilityNumber(BigDecimal value, MathContext mc) {
-		if (null == value) {
-			throw new IllegalArgumentException("A probability value must be specified.");
-		}
-		if (null != mc) {
-			value = new BigDecimal(value.unscaledValue(), value.scale(), mc);
-			this.currentMathContext = mc;
-		}
-		BigInteger numerator = value.unscaledValue();
-		BigInteger denominator = BigInteger.valueOf(10).pow(value.scale());
-		normalize(numerator, denominator);
+		init(value, mc);
 	}
 
 	/**
@@ -161,7 +152,12 @@ public class RationalProbabilityNumber extends AbstractProbabilityNumber {
 	 *            ProbabilityNumber.
 	 */
 	public RationalProbabilityNumber(ProbabilityNumber that) {
-		this(that.getValue(), null);
+		if (that instanceof RationalProbabilityNumber) {
+			RationalProbabilityNumber other = (RationalProbabilityNumber) that;
+			init(other.numerator, other.denominator, other.getMathContext());
+		} else {
+			init(that.getValue(), that.getMathContext());
+		}
 	}
 
 	// Getter methods
@@ -474,6 +470,7 @@ public class RationalProbabilityNumber extends AbstractProbabilityNumber {
 	 * 
 	 * @return 1 if this > that, 0 if this == that, -1 if this < that.
 	 */
+	@Override
 	public int compareTo(ProbabilityNumber that) {
 		int result;
 		RationalProbabilityNumber specificType = toInternalType(that);
@@ -515,6 +512,29 @@ public class RationalProbabilityNumber extends AbstractProbabilityNumber {
 	}
 
 	/**
+	 * Constructor invoked initialization method.
+	 * 
+	 * @param value
+	 *            of BigDecimal type.
+	 * @param mc
+	 *            MathContext associated with value.
+	 */
+	private void init(BigDecimal value, MathContext mc) {
+		if (null == value) {
+			throw new IllegalArgumentException("A probability value must be specified.");
+		}
+		if (null != mc) {
+			value = new BigDecimal(value.unscaledValue(), value.scale(), mc);
+			this.currentMathContext = mc;
+		} else {
+			this.currentMathContext = new MathContext(value.precision(), DEFAULT_PRECISION_ROUNDING_MODE);
+		}
+		BigInteger numerator = value.unscaledValue();
+		BigInteger denominator = BigInteger.valueOf(10).pow(value.scale());
+		normalize(numerator, denominator);
+	}
+
+	/**
 	 * Check if arguments satisfy criteria to initialize
 	 * RationalProbabilityNumber.
 	 * 
@@ -525,11 +545,9 @@ public class RationalProbabilityNumber extends AbstractProbabilityNumber {
 	 */
 	private static void checkValidityOfArguments(BigInteger numerator, BigInteger denominator) {
 		if (signum(numerator, denominator) == -1) {
-			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
+			throw new IllegalArgumentException("Probability value must be non-negative.");
 		} else if (denominator.compareTo(BigInteger.ZERO) == 0) {
 			throw new IllegalArgumentException("Denominator cannot be zero.");
-		} else if (numerator.abs().compareTo(denominator.abs()) == 1) {
-			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
 		}
 	}
 

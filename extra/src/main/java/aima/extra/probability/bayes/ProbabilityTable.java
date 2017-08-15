@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import aima.extra.probability.ProbabilityNumber;
@@ -112,6 +113,38 @@ public class ProbabilityTable extends AbstractProbabilityTable implements Factor
 		return result;
 	}
 
+	@Override
+	public ProbabilityTable marginalize(List<RandomVariable> varsToMarginalize) {
+		Objects.requireNonNull(varsToMarginalize,
+				"varsToMarginalize must specify valid random variables to marginalize out");
+		boolean isValid = varsToMarginalize.stream().allMatch(this.randomVariables::contains);
+		if (!isValid) {
+			throw new IllegalArgumentException(
+					"varsToMarginalize must be a subset of randomVariables of the probability table.");
+		}
+		if (ListOps.difference(this.randomVariables, varsToMarginalize).size() == 0) {
+			return new ProbabilityTable(new RandomVariable[] {}, new ProbabilityNumber[] { this.getSum() }, this.clazz);
+		}
+		List<RandomVariable> remainingVars = ListOps.difference(this.randomVariables, varsToMarginalize);
+		List<Integer> remainingVarIdx = ListOps.getIntersectionIdx(this.randomVariables, remainingVars);
+		int[] marginalizedRadices = remainingVars.stream().mapToInt(var -> var.getDomain().size()).toArray();
+		MixedRadixInterval marginalizedQueryMRI = new MixedRadixInterval(marginalizedRadices);
+		int marginalizedValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(remainingVars);
+		List<ProbabilityNumber> marginalizedValues = new ArrayList<ProbabilityNumber>(
+				Collections.nCopies(marginalizedValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
+		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
+			int[] summedOutNumerals = IntStream.range(0, possibleWorldNumerals.length).filter(remainingVarIdx::contains)
+					.sorted().map(idx -> possibleWorldNumerals[idx]).toArray();
+			int newValueIdx = marginalizedQueryMRI.getValueFor(summedOutNumerals).intValue();
+			int addendIdx = queryMRI.getValueFor(possibleWorldNumerals).intValue();
+			ProbabilityNumber augend = marginalizedValues.get(newValueIdx);
+			ProbabilityNumber addend = this.values.get(addendIdx);
+			marginalizedValues.set(newValueIdx, augend.add(addend));
+		});
+		ProbabilityTable marginalized = new ProbabilityTable(remainingVars, marginalizedValues, this.clazz);
+		return marginalized;
+	}
+
 	// END-CategoricalDistribution
 
 	/**
@@ -122,8 +155,8 @@ public class ProbabilityTable extends AbstractProbabilityTable implements Factor
 	}
 
 	/**
-	 * Lazy computation of sum (recompute sum only if any probability value is
-	 * changed).
+	 * Compute sum only the first time getSum is called (due to immutability of
+	 * ProbabilityTable).
 	 * 
 	 * @return sum of all ProbabilityTable values.
 	 */
@@ -143,31 +176,40 @@ public class ProbabilityTable extends AbstractProbabilityTable implements Factor
 		return this.randomVariables;
 	}
 
-	public ProbabilityTable sumOut(RandomVariable... sumOutVars) {
+	public ProbabilityTable sumOut(List<RandomVariable> sumOutVars) {
 		return this.marginalize(sumOutVars);
 	}
 
 	public ProbabilityTable pointwiseProduct(Factor multiplier) {
-		// TODO - Check if random variables are valid
-		ProbabilityTable secondFactor = (ProbabilityTable) multiplier;
-		List<RandomVariable> productRandomVariables = ListOps.union(this.randomVariables, secondFactor.randomVariables);
-		return this.pointwiseProductPOS(multiplier, productRandomVariables);
+		return this.pointwiseProductPOS(multiplier, null);
 	}
 
 	@Override
 	public ProbabilityTable pointwiseProductPOS(Factor multiplier, List<RandomVariable> prodVarOrder) {
 		ProbabilityTable secondFactor = (ProbabilityTable) multiplier;
+		if (null == prodVarOrder) {
+			prodVarOrder = ListOps.union(this.randomVariables, secondFactor.randomVariables);
+		} else {
+			List<RandomVariable> vars = ListOps.union(this.randomVariables, secondFactor.randomVariables);
+			boolean isValid = prodVarOrder.stream().allMatch(vars::contains);
+			if (!isValid) {
+				throw new IllegalArgumentException(
+						"prodVarOrder must contain random variables present in either of the factors.");
+			}
+		}
 		List<Integer> term1Idx = ListOps.getIntersectionIdx(prodVarOrder, this.randomVariables);
 		List<Integer> term2Idx = ListOps.getIntersectionIdx(prodVarOrder, secondFactor.randomVariables);
 		int[] productRadices = prodVarOrder.stream().mapToInt(var -> var.getDomain().size()).toArray();
+		// Check productRadices for empty
 		MixedRadixInterval productQueryMRI = new MixedRadixInterval(productRadices);
 		int productValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(prodVarOrder);
-		List<ProbabilityNumber> productValues = new ArrayList<ProbabilityNumber>(Collections.nCopies(productValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
+		List<ProbabilityNumber> productValues = new ArrayList<ProbabilityNumber>(
+				Collections.nCopies(productValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
 		productQueryMRI.stream().forEach(possibleWorldNumerals -> {
 			int[] term1Numerals = IntStream.range(0, possibleWorldNumerals.length).filter(term1Idx::contains).sorted()
-					.toArray();
+					.map(idx -> possibleWorldNumerals[idx]).toArray();
 			int[] term2Numerals = IntStream.range(0, possibleWorldNumerals.length).filter(term2Idx::contains).sorted()
-					.toArray();
+					.map(idx -> possibleWorldNumerals[idx]).toArray();
 			int resultIdx = productQueryMRI.getValueFor(possibleWorldNumerals).intValue();
 			int term1ValueIdx = this.queryMRI.getValueFor(term1Numerals).intValue();
 			int term2ValueIdx = secondFactor.queryMRI.getValueFor(term2Numerals).intValue();

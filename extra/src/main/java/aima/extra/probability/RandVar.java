@@ -1,7 +1,5 @@
 package aima.extra.probability;
 
-import java.util.Objects;
-
 import aima.extra.probability.constructs.ProbabilityUtilities;
 import aima.extra.probability.domain.Domain;
 import aima.extra.probability.domain.FiniteDomain;
@@ -77,7 +75,7 @@ public class RandVar implements RandomVariable {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return name.hashCode();
 	}
 
 	@Override
