@@ -1,13 +1,19 @@
 package aima.extra.probability.bayes;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
+
+import aima.core.util.math.MixedRadixInterval;
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
+import aima.extra.probability.constructs.ProbabilityUtilities;
 import aima.extra.probability.domain.FiniteDomain;
 import aima.extra.util.ListOps;
 
@@ -101,7 +107,7 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 	 */
 	@Override
 	public ConditionalProbabilityTable normalize() {
-		ProbabilityTable summedOut = this.marginalize(this.on);
+		ProbabilityTable summedOut = this.marginalize(Arrays.asList(this.on));
 		List<ProbabilityNumber> normalizedValues = new ArrayList<ProbabilityNumber>(this.values);
 		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
 			int[] summedOutNumerals = IntStream.range(1, possibleWorldNumerals.length).toArray();
@@ -126,8 +132,32 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 	 *            contain the query variable.
 	 */
 	@Override
-	public ProbabilityTable marginalize(RandomVariable... varsToMarginalize) {
-		return super.marginalize(varsToMarginalize);
+	public ProbabilityTable marginalize(List<RandomVariable> varsToMarginalize) {
+		Objects.requireNonNull(varsToMarginalize,
+				"varsToMarginalize must specify valid random variables to marginalize out");
+		boolean isValid = varsToMarginalize.stream().allMatch(this.randomVariables::contains);
+		if (!isValid) {
+			throw new IllegalArgumentException(
+					"varsToMarginalize must be a subset of randomVariables of the probability table.");
+		}
+		List<RandomVariable> remainingVars = ListOps.difference(this.randomVariables, varsToMarginalize);
+		List<Integer> remainingVarIdx = ListOps.getIntersectionIdx(this.randomVariables, remainingVars);
+		int[] marginalizedRadices = remainingVars.stream().mapToInt(var -> var.getDomain().size()).toArray();
+		MixedRadixInterval marginalizedQueryMRI = new MixedRadixInterval(marginalizedRadices);
+		int marginalizedValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(remainingVars);
+		List<ProbabilityNumber> marginalizedValues = new ArrayList<ProbabilityNumber>(
+				Collections.nCopies(marginalizedValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
+		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
+			int[] summedOutNumerals = IntStream.range(0, possibleWorldNumerals.length).filter(remainingVarIdx::contains)
+					.sorted().map(idx -> possibleWorldNumerals[idx]).toArray();
+			int newValueIdx = marginalizedQueryMRI.getValueFor(summedOutNumerals).intValue();
+			int addendIdx = queryMRI.getValueFor(possibleWorldNumerals).intValue();
+			ProbabilityNumber augend = marginalizedValues.get(newValueIdx);
+			ProbabilityNumber addend = this.values.get(addendIdx);
+			marginalizedValues.set(newValueIdx, augend.add(addend));
+		});
+		ProbabilityTable marginalized = new ProbabilityTable(remainingVars, marginalizedValues, this.clazz);
+		return marginalized;	
 	}
 
 	// END-CategoricalDistribution
@@ -188,7 +218,7 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 	 * @return true if each row adds upto one, false otherwise.
 	 */
 	private boolean checkEachRowTotalsOne() {
-		ProbabilityTable summedOut = this.marginalize(this.on);
+		ProbabilityTable summedOut = this.marginalize(Arrays.asList(this.on));
 		boolean check = summedOut.values.stream().allMatch(value -> value.isOne());
 		return check;
 	}

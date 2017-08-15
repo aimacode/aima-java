@@ -45,14 +45,14 @@ public interface Factor {
 	 * variables.
 	 * 
 	 * @param vars
-	 *            is the array of random variables to be summed out (need NOT be
+	 *            is the list of random variables to be summed out (need NOT be
 	 *            in order).
 	 * 
 	 * @return a new Factor with updated probability values, excluding the
 	 *         summed out random variables. The random variables retain their
 	 *         original order.
 	 */
-	Factor sumOut(RandomVariable... vars);
+	Factor sumOut(List<RandomVariable> vars);
 
 	/**
 	 * Pointwise multiplication of this Factor by a given multiplier, creating a

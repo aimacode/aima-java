@@ -17,9 +17,10 @@ public class DoubleTypeTest {
 
 	private ProbabilityFactory<?> probFactory = ProbabilityFactory.make(DoubleProbabilityNumber.class);
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidProbabilityNumber1() {
+	@Test
+	public void testValidProbabilityNumber1() {
 		new DoubleProbabilityNumber(4.0);
+		assertTrue(true);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -159,27 +160,27 @@ public class DoubleTypeTest {
 
 	// Check if valid ProbabilityNumber or not
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testIfValid1() {
 		ProbabilityComputation adder = new ProbabilityComputation();
 		ProbabilityNumber testValue1 = probFactory.valueOf(0.8);
 		ProbabilityNumber testValue2 = probFactory.valueOf(0.7);
-		adder.add(testValue1, testValue2).isValid();
+		assertFalse(adder.add(testValue1, testValue2).isValid());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testIfValid2() {
 		ProbabilityComputation compute = new ProbabilityComputation();
 		ProbabilityNumber testValue1 = probFactory.valueOf(0.8);
 		ProbabilityNumber testValue2 = probFactory.valueOf(0.7);
 		ProbabilityNumber testValue3 = probFactory.valueOf(0.5);
-		compute.sub(compute.add(testValue1, testValue2), testValue3).isValid();
+		assertTrue(compute.sub(compute.add(testValue1, testValue2), testValue3).isValid());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testIfValid3() {
 		ProbabilityNumber testValue1 = probFactory.valueOf(0.8);
 		ProbabilityNumber testValue2 = probFactory.valueOf(0.7);
-		testValue1.add(testValue2).isValid();
+		testValue2.subtract(testValue1);
 	}
 }

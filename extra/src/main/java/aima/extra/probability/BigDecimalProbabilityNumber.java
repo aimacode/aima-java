@@ -468,8 +468,8 @@ public class BigDecimalProbabilityNumber extends AbstractProbabilityNumber {
 	 *            to be assigned to BigDecimalProbabilityNumber value.
 	 */
 	private static void checkValidityOfArguments(BigDecimal value) {
-		if (value.compareTo(BIG_DECIMAL_ZERO) == -1 || value.compareTo(BIG_DECIMAL_ONE) == 1) {
-			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
+		if (value.compareTo(BIG_DECIMAL_ZERO) == -1) {
+			throw new IllegalArgumentException("ProbabilityNumber must be non-negative.");
 		}
 	}
 

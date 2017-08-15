@@ -459,8 +459,8 @@ public class DoubleProbabilityNumber extends AbstractProbabilityNumber {
 	 *            MathContext to be associated with value.
 	 */
 	private static void checkValidityOfArguments(Double value, MathContext mc) {
-		if (value < 0 || value > 1) {
-			throw new IllegalArgumentException("Probability value must be in the interval [0,1].");
+		if (value < 0) {
+			throw new IllegalArgumentException("ProbabilityNumber must be non-negative.");
 		}
 		if (null != mc) {
 			if (mc.getPrecision() > MAX_PRECISION) {

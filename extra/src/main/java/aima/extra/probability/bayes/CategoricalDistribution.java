@@ -78,5 +78,5 @@ public interface CategoricalDistribution extends ProbabilityMass {
 	 *         summed out and a new set of values updated with the summed out
 	 *         values.
 	 */
-	CategoricalDistribution marginalize(RandomVariable... varsToMarginalize);
+	CategoricalDistribution marginalize(List<RandomVariable> varsToMarginalize);
 }
