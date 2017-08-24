@@ -19,7 +19,7 @@ public class ProbabilityComputation {
 	 * Global mechanism for overriding precision of ProbabilityNumber
 	 * computations.
 	 */
-	public MathContext OVERRIDE_PRECISION = null;
+	private MathContext OVERRIDE_PRECISION = null;
 
 	/**
 	 * Add two ProbabilityNumber operands and return the result.
@@ -30,7 +30,12 @@ public class ProbabilityComputation {
 	 * @return ProbabilityNumber
 	 */
 	public ProbabilityNumber add(ProbabilityNumber operand1, ProbabilityNumber operand2) {
-		ProbabilityNumber result = operand1.add(operand2);
+		ProbabilityNumber result;
+		if (null != OVERRIDE_PRECISION) {
+			result = operand1.add(operand2, OVERRIDE_PRECISION);
+		} else {
+			result = operand1.add(operand2);
+		}
 		return result;
 	}
 
@@ -43,7 +48,12 @@ public class ProbabilityComputation {
 	 * @return ProbabilityNumber
 	 */
 	public ProbabilityNumber sub(ProbabilityNumber operand1, ProbabilityNumber operand2) {
-		ProbabilityNumber result = operand1.subtract(operand2);
+		ProbabilityNumber result;
+		if (null != OVERRIDE_PRECISION) {
+			result = operand1.subtract(operand2, OVERRIDE_PRECISION);
+		} else {
+			result = operand1.subtract(operand2);
+		}
 		return result;
 	}
 

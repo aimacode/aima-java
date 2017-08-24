@@ -1,6 +1,7 @@
 package aima.extra.probability.bayes;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -126,12 +127,14 @@ public class ProbabilityTable extends AbstractProbabilityTable implements Factor
 			return new ProbabilityTable(new RandomVariable[] {}, new ProbabilityNumber[] { this.getSum() }, this.clazz);
 		}
 		List<RandomVariable> remainingVars = ListOps.difference(this.randomVariables, varsToMarginalize);
-		List<Integer> remainingVarIdx = ListOps.getIntersectionIdx(this.randomVariables, remainingVars);
+		List<Integer> remainingVarIdx = ListOps.getIntersectionIdxInSource(this.randomVariables, remainingVars);
 		int[] marginalizedRadices = remainingVars.stream().mapToInt(var -> var.getDomain().size()).toArray();
 		MixedRadixInterval marginalizedQueryMRI = new MixedRadixInterval(marginalizedRadices);
 		int marginalizedValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(remainingVars);
 		List<ProbabilityNumber> marginalizedValues = new ArrayList<ProbabilityNumber>(
 				Collections.nCopies(marginalizedValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
+		ProbabilityComputation adder = new ProbabilityComputation();
+		adder.overrideComputationPrecision(MathContext.UNLIMITED);
 		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
 			int[] summedOutNumerals = IntStream.range(0, possibleWorldNumerals.length).filter(remainingVarIdx::contains)
 					.sorted().map(idx -> possibleWorldNumerals[idx]).toArray();
@@ -139,7 +142,7 @@ public class ProbabilityTable extends AbstractProbabilityTable implements Factor
 			int addendIdx = queryMRI.getValueFor(possibleWorldNumerals).intValue();
 			ProbabilityNumber augend = marginalizedValues.get(newValueIdx);
 			ProbabilityNumber addend = this.values.get(addendIdx);
-			marginalizedValues.set(newValueIdx, augend.add(addend));
+			marginalizedValues.set(newValueIdx, adder.add(augend, addend));
 		});
 		ProbabilityTable marginalized = new ProbabilityTable(remainingVars, marginalizedValues, this.clazz);
 		return marginalized;
@@ -197,8 +200,8 @@ public class ProbabilityTable extends AbstractProbabilityTable implements Factor
 						"prodVarOrder must contain random variables present in either of the factors.");
 			}
 		}
-		List<Integer> term1Idx = ListOps.getIntersectionIdx(prodVarOrder, this.randomVariables);
-		List<Integer> term2Idx = ListOps.getIntersectionIdx(prodVarOrder, secondFactor.randomVariables);
+		List<Integer> term1Idx = ListOps.getIntersectionIdxInTarget(this.randomVariables, prodVarOrder);
+		List<Integer> term2Idx = ListOps.getIntersectionIdxInTarget(secondFactor.randomVariables, prodVarOrder);
 		int[] productRadices = prodVarOrder.stream().mapToInt(var -> var.getDomain().size()).toArray();
 		// Check productRadices for empty
 		MixedRadixInterval productQueryMRI = new MixedRadixInterval(productRadices);
@@ -206,10 +209,8 @@ public class ProbabilityTable extends AbstractProbabilityTable implements Factor
 		List<ProbabilityNumber> productValues = new ArrayList<ProbabilityNumber>(
 				Collections.nCopies(productValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
 		productQueryMRI.stream().forEach(possibleWorldNumerals -> {
-			int[] term1Numerals = IntStream.range(0, possibleWorldNumerals.length).filter(term1Idx::contains).sorted()
-					.map(idx -> possibleWorldNumerals[idx]).toArray();
-			int[] term2Numerals = IntStream.range(0, possibleWorldNumerals.length).filter(term2Idx::contains).sorted()
-					.map(idx -> possibleWorldNumerals[idx]).toArray();
+			int[] term1Numerals = term1Idx.stream().mapToInt(idx -> possibleWorldNumerals[idx]).toArray();
+			int[] term2Numerals = term2Idx.stream().mapToInt(idx -> possibleWorldNumerals[idx]).toArray();
 			int resultIdx = productQueryMRI.getValueFor(possibleWorldNumerals).intValue();
 			int term1ValueIdx = this.queryMRI.getValueFor(term1Numerals).intValue();
 			int term2ValueIdx = secondFactor.queryMRI.getValueFor(term2Numerals).intValue();

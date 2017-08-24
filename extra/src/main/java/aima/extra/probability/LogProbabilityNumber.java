@@ -191,9 +191,34 @@ public class LogProbabilityNumber extends AbstractProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber add(ProbabilityNumber that) {
+		ProbabilityNumber result = this.add(that, null);
+		return result;
+	}
+
+	/**
+	 * Add a LogProbabilityNumber to this LogProbabilityNumber and return a new
+	 * LogProbabilityNumber. <br/>
+	 * 
+	 * log(x + y) = log(x) + log(1 + e<sup>(log(y) - log(x))</sup>)
+	 * 
+	 * @param that
+	 *            the LogProbabilityNumber that is to be added to this
+	 *            LogProbabilityNumber.
+	 * @param mc
+	 *            MathContext of computation.
+	 * 
+	 * @return a new LogProbabilityNumber that is the result of addition.
+	 */
+	@Override
+	public ProbabilityNumber add(ProbabilityNumber that, MathContext mc) {
 		LogProbabilityNumber addend = toInternalType(that);
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
 		ProbabilityNumber result;
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
+		}
 		if (this.isZero()) {
 			result = new LogProbabilityNumber(addend.value, resultMathContext, true);
 		} else if (addend.isZero()) {
@@ -219,17 +244,42 @@ public class LogProbabilityNumber extends AbstractProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber subtract(ProbabilityNumber that) {
+		ProbabilityNumber result = this.subtract(that, null);
+		return result;
+	}
+
+	/**
+	 * Subtract a LogProbabilityNumber from this LogProbabilityNumber and return
+	 * a new LogProbabilityNumber.
+	 * 
+	 * log(x - y) = log(x) + log(1 - e<sup>(log(y) - log(x))</sup>)
+	 * 
+	 * @param that
+	 *            the LogProbabilityNumber that is to be subtracted from this
+	 *            LogProbabilityNumber.
+	 * @param mc
+	 *            MathContext of computation.
+	 * 
+	 * @return a new LogProbabilityNumber that is the result of subtraction.
+	 */
+	@Override
+	public ProbabilityNumber subtract(ProbabilityNumber that, MathContext mc) {
 		LogProbabilityNumber subtrahend = toInternalType(that);
 		if (this.compareTo(subtrahend) == -1) {
 			throw new IllegalArgumentException("Subtrahend must be smaller than the minuend.");
 		}
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
 		ProbabilityNumber result;
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
+		}
 		if (this.isZero() && subtrahend.isZero()) {
 			result = new LogProbabilityNumber(this.value, resultMathContext, true);
 		} else {
-			result = new LogProbabilityNumber(
-				this.value + Math.log1p(-Math.exp(subtrahend.value - this.value)), resultMathContext, true);
+			result = new LogProbabilityNumber(this.value + Math.log1p(-Math.exp(subtrahend.value - this.value)),
+					resultMathContext, true);
 		}
 		return result;
 	}
@@ -495,7 +545,12 @@ public class LogProbabilityNumber extends AbstractProbabilityNumber {
 			this.value = Math.log(value);
 		}
 		if (null != mc) {
-			this.currentMathContext = mc;
+			if (mc.getPrecision() == UNLIMITED_PRECISION) {
+				// Defaults MathContext setting to MAX_PRECISION
+				this.currentMathContext = new MathContext(MAX_PRECISION, ROUNDING_MODE);
+			} else {
+				this.currentMathContext = mc;
+			}
 		}
 	}
 
@@ -515,9 +570,6 @@ public class LogProbabilityNumber extends AbstractProbabilityNumber {
 		if (null != mc) {
 			if (mc.getPrecision() > MAX_PRECISION) {
 				throw new IllegalArgumentException("Maximum precision possible for LogProbabilityNumber is 15.");
-			}
-			if (mc.getPrecision() == UNLIMITED_PRECISION) {
-				throw new IllegalArgumentException("LogProbabilityNumber does not support unlimited precision.");
 			}
 		}
 	}

@@ -38,8 +38,8 @@ public class ListOps {
 	/**
 	 * Intersection of two lists. The resultant list contains elements present
 	 * in both l1 and l2. No duplicate entries will exist, unless l1 or l2
-	 * themselves contain duplicate elements. The elements in the resultant
-	 * list retain their relative order as in l1.
+	 * themselves contain duplicate elements. The elements in the resultant list
+	 * retain their relative order as in l1.
 	 * 
 	 * @param l1
 	 * @param l2
@@ -76,51 +76,49 @@ public class ListOps {
 		} else if (null == l2) {
 			return l1;
 		}
-		List<T> difference = l1.stream().filter(elem -> !l2.contains(elem)).collect(Collectors.toList());
+		List<T> difference = l1.stream().filter(elem -> !l2.contains(elem)).distinct().collect(Collectors.toList());
 		return difference;
 	}
 
 	/**
 	 * Intersection indices of two lists. Retrieve the indices from the source
-	 * list that whose elements are present in the target list.
+	 * list whose elements are present in the target list.
 	 * 
 	 * @param source
 	 *            list containing random variables.
 	 * @param target
 	 *            list containing random variables.
 	 * 
-	 * @return list of indices of common elements in both lists in sorted order.
+	 * @return list of source list indices of common elements in both lists in
+	 *         the order of occurence in the source list.
 	 */
-	public static <T> List<Integer> getIntersectionIdx(List<T> source, List<T> target) {
+	public static <T> List<Integer> getIntersectionIdxInSource(List<T> source, List<T> target) {
 		if (null == source || null == target) {
 			return null;
 		}
 		List<Integer> result = IntStream.range(0, source.size()).filter(idx -> target.contains(source.get(idx))).boxed()
-				.sorted().collect(Collectors.toList());
+				.collect(Collectors.toList());
 		return result;
 	}
 
 	/**
-	 * Difference indices of two lists. Retrieve the indices from the source
-	 * list whose elements are not present in the target list.
+	 * Intersection indices of two lists. Retrieve the indices from the target
+	 * list whose elements are present in the source list.
 	 * 
 	 * @param source
 	 *            list containing random variables.
 	 * @param target
 	 *            list containing random variables.
 	 * 
-	 * @return list of indices of elements unique to the source list in sorted
-	 *         order.
+	 * @return list of target list indices of common elements in both lists in
+	 *         the order of occurence in the source list.
 	 */
-	public static <T> List<Integer> getDifferenceIdx(List<T> source, List<T> target) {
-		if (source == target || source == null) {
+	public static <T> List<Integer> getIntersectionIdxInTarget(List<T> source, List<T> target) {
+		if (null == source || null == target) {
 			return null;
-		} else if (target == null) {
-			List<Integer> result = IntStream.range(0, source.size()).boxed().sorted().collect(Collectors.toList());
-			return result;
 		}
-		List<Integer> result = IntStream.range(0, source.size()).filter(idx -> !target.contains(source.get(idx)))
-				.boxed().sorted().collect(Collectors.toList());
+		List<Integer> result = IntStream.range(0, source.size()).filter(idx -> target.contains(source.get(idx)))
+				.map(idx -> target.indexOf(source.get(idx))).boxed().collect(Collectors.toList());
 		return result;
 	}
 

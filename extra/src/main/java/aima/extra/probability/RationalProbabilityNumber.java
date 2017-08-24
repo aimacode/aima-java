@@ -238,8 +238,28 @@ public class RationalProbabilityNumber extends AbstractProbabilityNumber {
 	 * @return a new Rational that is the result of adding to that.
 	 */
 	public ProbabilityNumber add(ProbabilityNumber that) {
+		ProbabilityNumber result = this.add(that, null);
+		return result;
+	}
+
+	/**
+	 * Add a Rational to this Rational and return a new Rational.
+	 * 
+	 * @param that
+	 *            the Rational to be added to this Rational.
+	 * @param mc
+	 *            MathContext of computation.
+	 * 
+	 * @return a new Rational that is the result of adding to that.
+	 */
+	public ProbabilityNumber add(ProbabilityNumber that, MathContext mc) {
 		RationalProbabilityNumber addend = toInternalType(that);
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
+		}
 		ProbabilityNumber result = new RationalProbabilityNumber(
 				numerator.multiply(addend.denominator).add(addend.numerator.multiply(denominator)),
 				denominator.multiply(addend.denominator), resultMathContext);
@@ -255,8 +275,28 @@ public class RationalProbabilityNumber extends AbstractProbabilityNumber {
 	 * @return a new Rational that is the result of subtracting away that.
 	 */
 	public ProbabilityNumber subtract(ProbabilityNumber that) {
+		ProbabilityNumber result = this.subtract(that, null);
+		return result;
+	}
+
+	/**
+	 * Subtract a Rational with this Rational and return a new Rational.
+	 * 
+	 * @param that
+	 *            the Rational to be subtracted away from this Rational.
+	 * @param mc
+	 *            MathContext of computation.
+	 * 
+	 * @return a new Rational that is the result of subtracting away that.
+	 */
+	public ProbabilityNumber subtract(ProbabilityNumber that, MathContext mc) {
 		RationalProbabilityNumber subtrahend = toInternalType(that);
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
+		}
 		ProbabilityNumber result = new RationalProbabilityNumber(
 				numerator.multiply(subtrahend.denominator).subtract(subtrahend.numerator.multiply(denominator)),
 				denominator.multiply(subtrahend.denominator), resultMathContext);
@@ -331,8 +371,8 @@ public class RationalProbabilityNumber extends AbstractProbabilityNumber {
 		} else {
 			resultMathContext = getResultMathContext(this.getMathContext(), divisor.getMathContext());
 		}
-		ProbabilityNumber result = new RationalProbabilityNumber(numerator.multiply(divisor.denominator),
-				denominator.multiply(divisor.numerator), resultMathContext);
+		ProbabilityNumber result = new RationalProbabilityNumber(this.numerator.multiply(divisor.denominator),
+				this.denominator.multiply(divisor.numerator), resultMathContext);
 		return result;
 	}
 
