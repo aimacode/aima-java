@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -66,6 +67,10 @@ public class FiniteArbitraryTokenDomain extends AbstractFiniteDomain {
 	 *            on.
 	 */
 	public FiniteArbitraryTokenDomain(boolean ordered, List<?> dValues) {
+		Objects.requireNonNull(dValues, "Atleast one value must be specified.");
+		if (dValues.size() == 0) {
+			throw new IllegalArgumentException("At least one value must be specified.");
+		}
 		this.ordered = ordered;
 		this.possibleValues = new LinkedHashSet<Object>();
 		dValues.forEach((value) -> this.possibleValues.add(value));

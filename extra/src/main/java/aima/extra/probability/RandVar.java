@@ -1,5 +1,7 @@
 package aima.extra.probability;
 
+import java.util.Objects;
+
 import aima.extra.probability.constructs.ProbabilityUtilities;
 import aima.extra.probability.domain.Domain;
 import aima.extra.probability.domain.FiniteDomain;
@@ -32,9 +34,8 @@ public class RandVar implements RandomVariable {
 	 */
 	public RandVar(String name, Domain domain) {
 		ProbabilityUtilities.checkValidRandomVariableName(name);
-		if (null == domain) {
-			throw new IllegalArgumentException("Domain of RandVar must be specified.");
-		} else if (!(domain instanceof FiniteDomain)) {
+		Objects.requireNonNull("Domain of RandVar must be specified.");
+		if (!(domain instanceof FiniteDomain)) {
 			throw new IllegalArgumentException("Domain must be of type FiniteDomain.");
 		}
 		this.name = name;
