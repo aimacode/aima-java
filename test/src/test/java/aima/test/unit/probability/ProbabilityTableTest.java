@@ -741,7 +741,7 @@ public class ProbabilityTableTest {
 		}
 	}
 
-	// Testcase 8
+	// Testcase 9
 	@RunWith(Parameterized.class)
 	public static class PointwiseProductPOSTest {
 
@@ -861,6 +861,144 @@ public class ProbabilityTableTest {
 			ProbabilityTable factor1 = new ProbabilityTable(vars1, values1, clazz);
 			ProbabilityTable factor2 = new ProbabilityTable(vars2, values2, clazz);
 			ProbabilityTable result = factor1.pointwiseProductPOS(factor2, prodVarOrder);
+			assertThat(result.getValues(), is(expected));
+		}
+	}
+	
+	// Testcase 10
+	@RunWith(Parameterized.class)
+	public static class DivideByTest {
+
+		@Parameter
+		public List<RandomVariable> vars1;
+
+		@Parameter(1)
+		public List<ProbabilityNumber> values1;
+
+		@Parameter(2)
+		public List<RandomVariable> vars2;
+
+		@Parameter(3)
+		public List<ProbabilityNumber> values2;
+
+		@Parameter(4)
+		public Class<? extends ProbabilityNumber> clazz;
+
+		@Parameter(5)
+		public List<ProbabilityNumber> expected;
+
+		@Parameters
+		public static Collection<Object[]> data() {
+			Domain booleanDomain = FiniteBooleanDomain.getFiniteBooleanDomain();
+			RandomVariable rv1 = new RandVar("X", booleanDomain);
+			RandomVariable rv2 = new RandVar("Y", booleanDomain);
+			RandomVariable rv3 = new RandVar("Z", booleanDomain);
+			Collection<Object[]> testCases = new ArrayList<>();
+			for (Class<? extends ProbabilityNumber> clazz : clazzes) {
+				ProbabilityFactory<?> probFactory = ProbabilityFactory.make(clazz);
+				List<RandomVariable> vars1Test1 = Arrays.asList(rv1, rv2, rv3);
+				List<ProbabilityNumber> values1Test1 = Arrays.asList(
+						// X = true, Y = true, Z = true
+						probFactory.valueOf(0.2),
+						// X = true, Y = true, Z = false
+						probFactory.valueOf(0.2),
+						// X = true, Y = false, Z = true
+						probFactory.valueOf(0.1),
+						// X = true, Y = false, Z = false
+						probFactory.valueOf(0.1),
+						// X = false, Y = true, Z = true
+						probFactory.valueOf(0.1),
+						// X = false, Y = true, Z = false
+						probFactory.valueOf(0.1),
+						// X = false, Y = false, Z = true
+						probFactory.valueOf(0.1),
+						// X = false, Y = false, Z = false
+						probFactory.valueOf(0.1));
+				List<RandomVariable> vars2Test1 = Arrays.asList(rv3);
+				List<ProbabilityNumber> values2Test1 = Arrays.asList(
+						// Z = true
+						probFactory.valueOf(0.5),
+						// Z = false
+						probFactory.valueOf(0.5));
+				List<ProbabilityNumber> expectedValuesTest1 = Arrays.asList(
+						// X = true, Y = true, Z = true
+						probFactory.valueOf(0.4),
+						// X = true, Y = true, Z = false
+						probFactory.valueOf(0.4),
+						// X = true, Y = false, Z = true
+						probFactory.valueOf(0.2),
+						// X = true, Y = false, Z = false
+						probFactory.valueOf(0.2),
+						// X = false, Y = true, Z = true
+						probFactory.valueOf(0.2),
+						// X = false, Y = true, Z = false
+						probFactory.valueOf(0.2),
+						// X = false, Y = false, Z = true
+						probFactory.valueOf(0.2),
+						// X = false, Y = false, Z = false
+						probFactory.valueOf(0.2));
+				List<RandomVariable> vars1Test2 = Arrays.asList(rv2, rv3, rv1);
+				List<ProbabilityNumber> values1Test2 = Arrays.asList(
+						// Y = true, Z = true, X = true
+						probFactory.valueOf(0.2),
+						// Y = true, Z = true, X = false
+						probFactory.valueOf(0.1),
+						// Y = true, Z = false, X = true
+						probFactory.valueOf(0.2),
+						// Y = true, Z = false, X = false
+						probFactory.valueOf(0.1),
+						// Y = false, Z = true, X = true
+						probFactory.valueOf(0.1),
+						// Y = false, Z = true, X = false
+						probFactory.valueOf(0.1),
+						// Y = false, Z = false, X = true
+						probFactory.valueOf(0.1),
+						// Y = false, Z = false, X = false
+						probFactory.valueOf(0.1));
+				List<RandomVariable> vars2Test2 = Arrays.asList(rv3);
+				List<ProbabilityNumber> values2Test2 = Arrays.asList(
+						// Z = true
+						probFactory.valueOf(0.5),
+						// Z = false
+						probFactory.valueOf(0.5));
+				List<ProbabilityNumber> expectedValuesTest2 = Arrays.asList(
+						// X = true, Y = true, Z = true
+						probFactory.valueOf(0.4),
+						// X = true, Y = true, Z = false
+						probFactory.valueOf(0.2),
+						// X = true, Y = false, Z = true
+						probFactory.valueOf(0.4),
+						// X = true, Y = false, Z = false
+						probFactory.valueOf(0.2),
+						// X = false, Y = true, Z = true
+						probFactory.valueOf(0.2),
+						// X = false, Y = true, Z = false
+						probFactory.valueOf(0.2),
+						// X = false, Y = false, Z = true
+						probFactory.valueOf(0.2),
+						// X = false, Y = false, Z = false
+						probFactory.valueOf(0.2));
+				List<RandomVariable> vars2Test3 = Arrays.asList(rv1);
+				List<ProbabilityNumber> values2Test3 = Arrays.asList(
+						// X = true
+						probFactory.valueOf(0.5),
+						// X = false
+						probFactory.valueOf(0.5));
+				testCases.add(new Object[] { vars1Test1, values1Test1, vars2Test1, values2Test1, clazz,
+						expectedValuesTest1 });
+				testCases.add(new Object[] { vars1Test2, values1Test2, vars2Test2, values2Test2, clazz,
+						expectedValuesTest2 });
+				testCases.add(new Object[] { vars1Test2, values1Test2, vars2Test3, values2Test3, clazz,
+						expectedValuesTest2 });
+			}
+			return testCases;
+		}
+	
+		@Test
+		public void testDivideBy() {
+			ProbabilityTable dividend = new ProbabilityTable(vars1, values1, clazz);
+			ProbabilityTable divisor = new ProbabilityTable(vars2, values2, clazz);
+			ProbabilityTable result = dividend.divideBy(divisor);
 			assertThat(result.getValues(), is(expected));
 		}
 	}

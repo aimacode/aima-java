@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import aima.extra.probability.RandomVariable;
 
+/**
+ * Base implementation of the Node interface.
+ * 
+ * @author Ciaran O'Reilly
+ * @author Ravi Mohan
+ * @author Nagaraj Poti
+ */
 public class AbstractNode implements Node {
 
 	// Internal fields
@@ -14,14 +21,20 @@ public class AbstractNode implements Node {
 
 	private List<Node> children;
 
+	// Constructors
+	
 	public AbstractNode(RandomVariable var) {
 		this(var, null);
 	}
 
 	public AbstractNode(RandomVariable var, List<Node> parents) {
 		nodeVariable = var;
-		parents.stream().forEach(e -> ((AbstractNode)e).addChild(this));
-		this.parents = new ArrayList<Node>(parents);
+		if (null != parents) {
+			parents.stream().forEach(e -> ((AbstractNode)e).addChild(this));
+			this.parents = new ArrayList<Node>(parents);
+		} else {
+			this.parents = new ArrayList<Node>();
+		}
 	}
 
 	@Override

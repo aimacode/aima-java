@@ -28,7 +28,8 @@ import aima.extra.util.ListOps;
  * @author Ciaran O'Reilly
  * @author Nagaraj Poti
  */
-public class ProbabilityTable extends AbstractProbabilityTable implements Factor {
+public class ProbabilityTable extends AbstractProbabilityTable
+		implements Factor, Iterable<Map<RandomVariable, Object>> {
 
 	// Internal fields
 
@@ -150,28 +151,6 @@ public class ProbabilityTable extends AbstractProbabilityTable implements Factor
 
 	// END-CategoricalDistribution
 
-	/**
-	 * @return size (number of values) of the probability table.
-	 */
-	public int size() {
-		return this.values.size();
-	}
-
-	/**
-	 * Compute sum only the first time getSum is called (due to immutability of
-	 * ProbabilityTable).
-	 * 
-	 * @return sum of all ProbabilityTable values.
-	 */
-	public ProbabilityNumber getSum() {
-		if (null == this.sumOfValues) {
-			ProbabilityComputation adder = new ProbabilityComputation();
-			ProbabilityNumber initValue = this.probFactory.valueOf(BigDecimal.ZERO);
-			this.sumOfValues = this.values.stream().reduce(initValue, adder::add);
-		}
-		return this.sumOfValues;
-	}
-
 	// START-Factor
 
 	@Override
@@ -208,6 +187,7 @@ public class ProbabilityTable extends AbstractProbabilityTable implements Factor
 		int productValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(prodVarOrder);
 		List<ProbabilityNumber> productValues = new ArrayList<ProbabilityNumber>(
 				Collections.nCopies(productValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
+		ProbabilityComputation compute = new ProbabilityComputation();
 		productQueryMRI.stream().forEach(possibleWorldNumerals -> {
 			int[] term1Numerals = term1Idx.stream().mapToInt(idx -> possibleWorldNumerals[idx]).toArray();
 			int[] term2Numerals = term2Idx.stream().mapToInt(idx -> possibleWorldNumerals[idx]).toArray();
@@ -216,13 +196,73 @@ public class ProbabilityTable extends AbstractProbabilityTable implements Factor
 			int term2ValueIdx = secondFactor.queryMRI.getValueFor(term2Numerals).intValue();
 			ProbabilityNumber operand1 = this.values.get(term1ValueIdx);
 			ProbabilityNumber operand2 = multiplier.getValues().get(term2ValueIdx);
-			productValues.set(resultIdx, operand1.multiply(operand2));
+			productValues.set(resultIdx, compute.mul(operand1, operand2));
 		});
 		ProbabilityTable product = new ProbabilityTable(prodVarOrder, productValues, this.clazz);
 		return product;
 	}
 
 	// END-Factor
+
+	/**
+	 * @return size (number of values) of the probability table.
+	 */
+	public int size() {
+		return this.values.size();
+	}
+
+	/**
+	 * Compute sum only the first time getSum is called (due to immutability of
+	 * ProbabilityTable).
+	 * 
+	 * @return sum of all ProbabilityTable values.
+	 */
+	public ProbabilityNumber getSum() {
+		if (null == this.sumOfValues) {
+			ProbabilityComputation adder = new ProbabilityComputation();
+			ProbabilityNumber initValue = this.probFactory.valueOf(BigDecimal.ZERO);
+			this.sumOfValues = this.values.stream().reduce(initValue, adder::add);
+		}
+		return this.sumOfValues;
+	}
+
+	/**
+	 * Divide this ProbabilityTable (dividend) with another ProbabilityTable
+	 * (divisor) whose random variables form a subset of the dividend.
+	 * 
+	 * @param divisor
+	 *            a ProbabilityTable whose random variables form a subset of
+	 *            this.randomVariables.
+	 * 
+	 * @return a new ProbabilityTable formed by dividing the values in the
+	 *         dividend with corresponding values in the divisor.
+	 */
+	public ProbabilityTable divideBy(ProbabilityTable divisor) {
+		Objects.requireNonNull(divisor, "Divisor ProbabilityTable must be specified.");
+		if (!this.randomVariables.containsAll(divisor.randomVariables)) {
+			throw new IllegalArgumentException("Divisor must be a subset of the dividend.");
+		}
+		ProbabilityComputation compute = new ProbabilityComputation();
+		List<ProbabilityNumber> newValues;
+		if (divisor.randomVariables.size() == 0) {
+			ProbabilityNumber divisorValue = divisor.values.get(0);
+			newValues = this.values.stream().map(value -> compute.div(value, divisorValue))
+					.collect(Collectors.toList());
+		} else {
+			List<Integer> divisorIdx = ListOps.getIntersectionIdxInTarget(divisor.randomVariables,
+					this.randomVariables);
+			newValues = this.queryMRI.stream().map(possibleWorldNumerals -> {
+				int[] divisorNumerals = divisorIdx.stream().mapToInt(idx -> possibleWorldNumerals[idx]).toArray();
+				int dividendValuesIdx = this.queryMRI.getValueFor(possibleWorldNumerals).intValue();
+				int divisorValuesIdx = divisor.queryMRI.getValueFor(divisorNumerals).intValue();
+				ProbabilityNumber operand1 = this.values.get(dividendValuesIdx);
+				ProbabilityNumber operand2 = divisor.values.get(divisorValuesIdx);
+				return compute.div(operand1, operand2);
+			}).collect(Collectors.toList());
+		}
+		ProbabilityTable quotient = new ProbabilityTable(this.randomVariables, newValues, this.clazz);
+		return quotient;
+	}
 
 	/**
 	 * String representation of ProbabilityTable.

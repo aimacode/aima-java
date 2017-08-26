@@ -1,14 +1,22 @@
 package aima.extra.probability.bayes;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 import aima.core.util.math.MixedRadixInterval;
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
@@ -24,7 +32,7 @@ import aima.extra.util.ListOps;
  * 
  * @author Nagaraj Poti
  */
-public abstract class AbstractProbabilityTable implements CategoricalDistribution {
+public abstract class AbstractProbabilityTable implements CategoricalDistribution, Iterable<Map<RandomVariable, Object>> {
 
 	// Internal fields
 
@@ -173,6 +181,28 @@ public abstract class AbstractProbabilityTable implements CategoricalDistributio
 
 	// END-CategoricalDistribution
 
+	// START-Iterable
+
+	@Override
+	public Iterator<Map<RandomVariable, Object>> iterator() {
+		return Spliterators.iterator(spliterator());
+	}
+
+	@Override
+	public Spliterator<Map<RandomVariable, Object>> spliterator() {
+		return new ProbabilityTableSpliterator(this.queryMRI, BigInteger.valueOf(this.values.size()));
+	}
+
+	// END-Iterable
+
+	public Stream<Map<RandomVariable, Object>> stream() {
+		return StreamSupport.stream(spliterator(), false);
+	}
+
+	public Stream<Map<RandomVariable, Object>> parallelStream() {
+		return StreamSupport.stream(spliterator(), true);
+	}
+	
 	// Protected methods
 
 	/**
@@ -248,5 +278,81 @@ public abstract class AbstractProbabilityTable implements CategoricalDistributio
 			radices = new int[] { 1 };
 		}
 		this.queryMRI = new MixedRadixInterval(radices);
+	}
+
+	/**
+	 * Spliterator implementation for the AbstractProbabilityTable class.
+	 */
+	private class ProbabilityTableSpliterator implements Spliterator<Map<RandomVariable, Object>> {
+
+		// Constants
+
+		private static final int baseCharacteristics = DISTINCT | NONNULL | IMMUTABLE | ORDERED | SIZED | SUBSIZED;
+		private final BigInteger TWO = BigInteger.valueOf(2);
+		private final BigInteger ONE = BigInteger.ONE;
+
+		// Internal fields
+
+		private MixedRadixInterval mri;
+		private Iterator<int[]> mriIterator;
+		private Map<RandomVariable, Object> current;
+		private BigInteger estSize;
+
+		private ProbabilityTableSpliterator(MixedRadixInterval mri, BigInteger size) {
+			this.estSize = size;
+			this.mri = mri;
+			this.mriIterator = mri.iterator();
+		}
+
+		// START-Spliterator
+
+		@Override
+		public boolean tryAdvance(Consumer<? super Map<RandomVariable, Object>> action) {
+			if (mriIterator.hasNext()) {
+				int[] numerals = mriIterator.next();
+				current = mapNumeralsToProposition(numerals);
+				action.accept(current);
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		public Spliterator<Map<RandomVariable, Object>> trySplit() {
+			// No split by default.
+			Spliterator<Map<RandomVariable, Object>> result = null;
+			// We'll split if we have more than 1 item remaining
+			Iterator<int[]> tempMRI = mriIterator;
+			BigInteger currentValue = tempMRI.hasNext() ? mri.getValueFor(tempMRI.next())
+					: ONE.add(mri.getRightEndPointValue());
+			BigInteger remainingSize = ONE.add(mri.getRightEndPointValue().subtract(currentValue));
+			if (ONE.compareTo(remainingSize) < 0) {
+				BigInteger splitSize = remainingSize.divide(TWO);
+				BigInteger splitPos = currentValue.add(splitSize).subtract(ONE);
+				// Take care of the first split
+				MixedRadixInterval prefix = new MixedRadixInterval(mri.getRadices(), mri.getNumeralsFor(currentValue),
+						mri.getNumeralsFor(splitPos));
+				BigInteger prefixSize = splitPos.subtract(currentValue).add(ONE);
+				// Update the second split 
+				this.estSize = mri.getRightEndPointValue().subtract(splitPos);
+				mri = new MixedRadixInterval(mri.getRadices(), mri.getNumeralsFor(splitPos.add(ONE)),
+						mri.getNumeralsFor(mri.getRightEndPointValue()));
+				mriIterator = mri.iterator();
+				result = new ProbabilityTableSpliterator(prefix, prefixSize);
+			}
+			return result;
+		}
+
+		@Override
+		public long estimateSize() {
+			return estSize.longValueExact();
+		}
+
+		@Override
+		public int characteristics() {
+			return baseCharacteristics;
+		}
+
+		// END-Spliterator
 	}
 }

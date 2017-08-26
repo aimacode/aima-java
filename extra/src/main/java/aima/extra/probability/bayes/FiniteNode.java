@@ -6,6 +6,7 @@ import aima.extra.probability.bayes.ConditionalProbabilityTable;
  * A node over a Random Variable that has a finite countable domain.
  * 
  * @author Ciaran O'Reilly
+ * @author Nagaraj Poti
  */
 public interface FiniteNode extends Node{
 
