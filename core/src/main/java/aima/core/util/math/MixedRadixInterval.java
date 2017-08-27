@@ -58,6 +58,10 @@ public class MixedRadixInterval implements Iterable<int[]> {
 		}
 		return last;
 	}
+	
+	public int[] getRadices() {
+		return Arrays.copyOf(radices, radices.length);
+	}
 
 	public BigInteger getLeftEndPointValue() {
 		return leftEndPoint;

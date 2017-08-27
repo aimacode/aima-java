@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Objects;
+
 import aima.extra.probability.ProbabilityNumber;
 
 /**
@@ -40,8 +42,8 @@ public class ProbabilityFactory<T extends ProbabilityNumber> {
 	 * 
 	 * @param clazz
 	 */
-	public ProbabilityFactory(Class<T> clazz) {
-		this.clazz = clazz;
+	protected ProbabilityFactory(Class<T> clazz) {
+		this.clazz = Objects.requireNonNull(clazz, "ProbabilityNumber class type must be specified.");
 		try {
 			doubleConstructor = this.clazz.getDeclaredConstructor(Double.class);
 			bigDecimalConstructor = this.clazz.getDeclaredConstructor(BigDecimal.class);

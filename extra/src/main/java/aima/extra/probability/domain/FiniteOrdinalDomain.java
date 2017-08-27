@@ -3,6 +3,7 @@ package aima.extra.probability.domain;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.TreeSet;
 import java.util.Set;
 
@@ -50,6 +51,10 @@ public class FiniteOrdinalDomain<T extends Comparable<T>> extends AbstractFinite
 	 *            on.
 	 */
 	public FiniteOrdinalDomain(List<T> dValues) {
+		Objects.requireNonNull(dValues, "Atleast one value must be specified.");
+		if (dValues.size() == 0) {
+			throw new IllegalArgumentException("At least one value must be specified.");
+		}
 		this.possibleValues = new TreeSet<T>();
 		dValues.forEach((value) -> this.possibleValues.add(value));
 		this.possibleValues = Collections.unmodifiableSet(this.possibleValues);
