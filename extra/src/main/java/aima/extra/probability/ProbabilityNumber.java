@@ -109,6 +109,19 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	ProbabilityNumber add(ProbabilityNumber addend);
 
 	/**
+	 * Add two ProbabilityNumber types and return a new ProbabilityNumber
+	 * representing the result of addition.
+	 * 
+	 * @param addend
+	 * @param mc
+	 *            MathContext for computation.
+	 * 
+	 * @return a new ProbabilityNumber representing the result of addition of
+	 *         two ProbabilityNumber types.
+	 */
+	ProbabilityNumber add(ProbabilityNumber addend, MathContext mc);
+
+	/**
 	 * Subtract two ProbabilityNumber types and return a new ProbabilityNumber
 	 * representing the result of subtraction.
 	 * 
@@ -118,6 +131,19 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 *         two ProbabilityNumber types.
 	 */
 	ProbabilityNumber subtract(ProbabilityNumber subtrahend);
+
+	/**
+	 * Subtract two ProbabilityNumber types and return a new ProbabilityNumber
+	 * representing the result of subtraction.
+	 * 
+	 * @param subtrahend
+	 * @param mc
+	 *            MathContext for computation.
+	 * 
+	 * @return a new ProbabilityNumber representing the result of subtraction of
+	 *         two ProbabilityNumber types.
+	 */
+	ProbabilityNumber subtract(ProbabilityNumber subtrahend, MathContext mc);
 
 	/**
 	 * Multiply two ProbabilityNumber types and return a new ProbabilityNumber
@@ -135,9 +161,8 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * representing the result of multiplication.
 	 * 
 	 * @param multiplicand
-	 * 
 	 * @param mc
-	 *            MathContext for DEFINED_PRECISION computation.
+	 *            MathContext for computation.
 	 * 
 	 * @return a new ProbabilityNumber representing the result of multiplication
 	 *         of two ProbabilityNumber types.
@@ -160,9 +185,8 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * representing the result of division.
 	 * 
 	 * @param divisor
-	 * 
 	 * @param mc
-	 *            MathContext for DEFINED_PRECISION computation.
+	 *            MathContext for computation.
 	 * 
 	 * @return a new ProbabilityNumber representing the result of division of
 	 *         two ProbabilityNumber types.
@@ -183,9 +207,8 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * Raise this ProbabilityNumber to an integer exponent.
 	 * 
 	 * @param exponent
-	 * 
 	 * @param mc
-	 *            MathContext for DEFINED_PRECISION computation.
+	 *            MathContext for computation.
 	 * 
 	 * @return a new ProbabilityNumber representing the result of
 	 *         exponentiation.
@@ -206,9 +229,8 @@ public interface ProbabilityNumber extends Comparable<ProbabilityNumber> {
 	 * Raise this ProbabilityNumber to a BigInteger exponent.
 	 * 
 	 * @param exponent
-	 * 
 	 * @param mc
-	 *            MathContext for DEFINED_PRECISION computation.
+	 *            MathContext for computation.
 	 * 
 	 * @return a new ProbabilityNumber representing the result of
 	 *         exponentiation.

@@ -1,6 +1,7 @@
 package aima.extra.probability.bayes;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import aima.core.util.math.MixedRadixInterval;
+import aima.extra.probability.ProbabilityComputation;
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
 import aima.extra.probability.constructs.ProbabilityUtilities;
@@ -64,11 +66,16 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 		// of the conditioning variable first followed by the conditionedOn
 		// variables.
 		super(ListOps.union(Arrays.asList(on), conditionedOn), values, clazz);
+		Objects.requireNonNull(on, "Query random variable must be specified!");
+		if (conditionedOn == null || conditionedOn.size() == 0) {
+			throw new IllegalArgumentException("Atleast one conditionedOn variable must be specified");
+		}
 		this.on = on;
 		this.parents = new ArrayList<RandomVariable>(conditionedOn);
 		boolean isValid = checkEachRowTotalsOne();
 		if (!isValid) {
-			throw new IllegalArgumentException("Probability values of each row of the CPT do not sum to 1.0");
+			ConditionalProbabilityTable normalized = this.normalize();
+			this.values = ListOps.protectListFromModification(normalized.values);
 		}
 	}
 
@@ -109,12 +116,13 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 	public ConditionalProbabilityTable normalize() {
 		ProbabilityTable summedOut = this.marginalize(Arrays.asList(this.on));
 		List<ProbabilityNumber> normalizedValues = new ArrayList<ProbabilityNumber>(this.values);
+		ProbabilityComputation compute = new ProbabilityComputation();
 		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
-			int[] summedOutNumerals = IntStream.range(1, possibleWorldNumerals.length).toArray();
+			int[] summedOutNumerals = Arrays.copyOfRange(possibleWorldNumerals, 1, possibleWorldNumerals.length);
 			int summedOutIdx = summedOut.queryMRI.getValueFor(summedOutNumerals).intValue();
 			ProbabilityNumber sum = summedOut.values.get(summedOutIdx);
 			int normalizedIdx = this.queryMRI.getValueFor(possibleWorldNumerals).intValue();
-			ProbabilityNumber normalizedValue = this.values.get(normalizedIdx).divide(sum);
+			ProbabilityNumber normalizedValue = compute.div(this.values.get(normalizedIdx), sum);
 			normalizedValues.set(normalizedIdx, normalizedValue);
 		});
 		ConditionalProbabilityTable normalized = new ConditionalProbabilityTable(this.on, normalizedValues,
@@ -134,19 +142,20 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 	@Override
 	public ProbabilityTable marginalize(List<RandomVariable> varsToMarginalize) {
 		Objects.requireNonNull(varsToMarginalize,
-				"varsToMarginalize must specify valid random variables to marginalize out");
-		boolean isValid = varsToMarginalize.stream().allMatch(this.randomVariables::contains);
+				"varsToMarginalize must specify valid random variables to marginalize out (in this case only the query random variable is valid).");
+		boolean isValid = varsToMarginalize.stream().allMatch(this.on::equals);
 		if (!isValid) {
-			throw new IllegalArgumentException(
-					"varsToMarginalize must be a subset of randomVariables of the probability table.");
+			throw new IllegalArgumentException("varsToMarginalize must contain the query variable alone.");
 		}
 		List<RandomVariable> remainingVars = ListOps.difference(this.randomVariables, varsToMarginalize);
-		List<Integer> remainingVarIdx = ListOps.getIntersectionIdx(this.randomVariables, remainingVars);
+		List<Integer> remainingVarIdx = ListOps.getIntersectionIdxInSource(this.randomVariables, remainingVars);
 		int[] marginalizedRadices = remainingVars.stream().mapToInt(var -> var.getDomain().size()).toArray();
 		MixedRadixInterval marginalizedQueryMRI = new MixedRadixInterval(marginalizedRadices);
 		int marginalizedValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(remainingVars);
 		List<ProbabilityNumber> marginalizedValues = new ArrayList<ProbabilityNumber>(
 				Collections.nCopies(marginalizedValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
+		ProbabilityComputation adder = new ProbabilityComputation();
+		adder.overrideComputationPrecision(MathContext.UNLIMITED);
 		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
 			int[] summedOutNumerals = IntStream.range(0, possibleWorldNumerals.length).filter(remainingVarIdx::contains)
 					.sorted().map(idx -> possibleWorldNumerals[idx]).toArray();
@@ -154,10 +163,10 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 			int addendIdx = queryMRI.getValueFor(possibleWorldNumerals).intValue();
 			ProbabilityNumber augend = marginalizedValues.get(newValueIdx);
 			ProbabilityNumber addend = this.values.get(addendIdx);
-			marginalizedValues.set(newValueIdx, augend.add(addend));
+			marginalizedValues.set(newValueIdx, adder.add(augend, addend));
 		});
 		ProbabilityTable marginalized = new ProbabilityTable(remainingVars, marginalizedValues, this.clazz);
-		return marginalized;	
+		return marginalized;
 	}
 
 	// END-CategoricalDistribution
@@ -183,11 +192,13 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 		});
 		int conditionedOnDomainSize = this.on.getDomain().size();
 		ProbabilityNumber[] conditionedValues = new ProbabilityNumber[conditionedOnDomainSize];
-		IntStream.range(0, this.randomVariables.size()).forEach(domainIdx -> {
+		IntStream.range(0, conditionedOnDomainSize).forEach(domainIdx -> {
 			conditionedWorldNumerals[0] = domainIdx;
-			conditionedValues[domainIdx] = this.values.get(this.queryMRI.getValueFor(conditionedWorldNumerals).intValue());
+			conditionedValues[domainIdx] = this.values
+					.get(this.queryMRI.getValueFor(conditionedWorldNumerals).intValue());
 		});
-		ProbabilityTable conditioned = new ProbabilityTable(new RandomVariable[]{this.on}, conditionedValues, this.clazz);
+		ProbabilityTable conditioned = new ProbabilityTable(new RandomVariable[] { this.on }, conditionedValues,
+				this.clazz);
 		return conditioned;
 	}
 
@@ -196,14 +207,15 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 		int conditionedOnDomainSize = this.on.getDomain().size();
 		ProbabilityNumber[] conditionedValues = new ProbabilityNumber[conditionedOnDomainSize];
 		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
-			int[] parentWorldNumerals = Arrays.copyOfRange(possibleWorldNumerals, 1, possibleWorldNumerals.length);
-			Map<RandomVariable, Object> conditionedWorld = this.mapNumeralsToProposition(parentWorldNumerals);
-			int domainIdx = parentWorldNumerals[0];
+			Map<RandomVariable, Object> conditionedWorld = this.mapNumeralsToProposition(possibleWorldNumerals);
+			int domainIdx = possibleWorldNumerals[0];
 			if (parentWorldProposition.test(conditionedWorld) == true) {
-				conditionedValues[domainIdx] = this.values.get(this.queryMRI.getValueFor(possibleWorldNumerals).intValue());
+				conditionedValues[domainIdx] = this.values
+						.get(this.queryMRI.getValueFor(possibleWorldNumerals).intValue());
 			}
 		});
-		ProbabilityTable conditioned = new ProbabilityTable(new RandomVariable[]{this.on}, conditionedValues, this.clazz);
+		ProbabilityTable conditioned = new ProbabilityTable(new RandomVariable[] { this.on }, conditionedValues,
+				this.clazz);
 		return conditioned;
 	}
 

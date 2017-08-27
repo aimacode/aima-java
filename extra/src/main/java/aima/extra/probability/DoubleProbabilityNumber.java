@@ -10,7 +10,9 @@ import java.math.RoundingMode;
  * datatype. The maximum precision achievable is that supported by double
  * datatype (approximately 15.95 digits). The double primitive type conforms to
  * the IEEE 754 standard's 64 bit double precision format (1 sign bit, 11 bits
- * for the exponent and 52 bits for the significand). The class is immutable.
+ * for the exponent and 52 bits for the significand). Unlimited precision
+ * computations default to the maximum precision achievable by double type. The
+ * class is immutable.
  * 
  * @author Nagaraj Poti
  * 
@@ -178,8 +180,31 @@ public class DoubleProbabilityNumber extends AbstractProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber add(ProbabilityNumber that) {
+		ProbabilityNumber result = this.add(that, null);
+		return result;
+	}
+
+	/**
+	 * Add a DoubleProbabilityNumber to this DoubleProbabilityNumber and return
+	 * a new DoubleProbabilityNumber.
+	 * 
+	 * @param that
+	 *            the DoubleProbabilityNumber that is to be added to this
+	 *            DoubleProbabilityNumber.
+	 * @param mc
+	 *            MathContext of computation.
+	 * 
+	 * @return a new DoubleProbabilityNumber that is the result of addition.
+	 */
+	@Override
+	public ProbabilityNumber add(ProbabilityNumber that, MathContext mc) {
 		DoubleProbabilityNumber addend = toInternalType(that);
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
+		}
 		ProbabilityNumber result = new DoubleProbabilityNumber(this.value + addend.value, resultMathContext);
 		return result;
 	}
@@ -196,8 +221,31 @@ public class DoubleProbabilityNumber extends AbstractProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber subtract(ProbabilityNumber that) {
+		ProbabilityNumber result = this.subtract(that, null);
+		return result;
+	}
+
+	/**
+	 * Subtract a DoubleProbabilityNumber from this DoubleProbabilityNumber and
+	 * return a new DoubleProbabilityNumber.
+	 * 
+	 * @param that
+	 *            the DoubleProbabilityNumber that is to be subtracted from this
+	 *            DoubleProbabilityNumber.
+	 * @param mc
+	 *            MathContext of computation.
+	 * 
+	 * @return a new DoubleProbabilityNumber that is the result of subtraction
+	 */
+	@Override
+	public ProbabilityNumber subtract(ProbabilityNumber that, MathContext mc) {
 		DoubleProbabilityNumber subtrahend = toInternalType(that);
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
+		}
 		ProbabilityNumber result = new DoubleProbabilityNumber(this.value - subtrahend.value, resultMathContext);
 		return result;
 	}
@@ -445,7 +493,12 @@ public class DoubleProbabilityNumber extends AbstractProbabilityNumber {
 		checkValidityOfArguments(value.doubleValue(), mc);
 		this.value = value.doubleValue();
 		if (null != mc) {
-			this.currentMathContext = mc;
+			if (mc.getPrecision() == UNLIMITED_PRECISION) {
+				// Defaults MathContext setting to MAX_PRECISION
+				this.currentMathContext = new MathContext(MAX_PRECISION, ROUNDING_MODE);
+			} else {
+				this.currentMathContext = mc;
+			}
 		}
 	}
 
@@ -465,9 +518,6 @@ public class DoubleProbabilityNumber extends AbstractProbabilityNumber {
 		if (null != mc) {
 			if (mc.getPrecision() > MAX_PRECISION) {
 				throw new IllegalArgumentException("Maximum precision possible for DoubleProbabilityNumber is 15.");
-			}
-			if (mc.getPrecision() == UNLIMITED_PRECISION) {
-				throw new IllegalArgumentException("DoubleProbabilityNumber does not support unlimited precision.");
 			}
 		}
 	}

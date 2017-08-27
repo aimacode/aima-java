@@ -1,5 +1,7 @@
 package aima.extra.probability.bayes;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -114,7 +116,8 @@ public abstract class AbstractProbabilityTable implements CategoricalDistributio
 	@Override
 	public ProbabilityNumber getValue(Predicate<Map<RandomVariable, Object>> eventProposition) {
 		ProbabilityComputation adder = new ProbabilityComputation();
-		ProbabilityNumber result = this.probFactory.valueOf(0.0);
+		adder.overrideComputationPrecision(MathContext.UNLIMITED);
+		ProbabilityNumber result = this.probFactory.valueOf(BigDecimal.ZERO);
 		result = this.queryMRI.stream().map(possibleWorld -> mapNumeralsToProposition(possibleWorld))
 				.filter(eventProposition).map(event -> this.values.get(this.getIndex(event)))
 				.reduce(result, adder::add);
