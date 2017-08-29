@@ -133,4 +133,22 @@ public class ListOps {
 	public static <T> List<T> protectListFromModification(List<T> list) {
 		return Collections.unmodifiableList(list);
 	}
+
+	/**
+	 * @param list
+	 * 
+	 * @return first element of the list.
+	 */
+	public static <T> T first(List<T> list) {
+		return list.get(0);
+	}
+
+	/**
+	 * @param list
+	 * 
+	 * @return a new list excluding the first element of the original list.
+	 */
+	public static <T> List<T> rest(List<T> list) {
+		return list.subList(1, list.size());
+	}
 }

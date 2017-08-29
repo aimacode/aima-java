@@ -124,28 +124,28 @@ public class ProbabilityTable extends AbstractProbabilityTable
 			throw new IllegalArgumentException(
 					"varsToMarginalize must be a subset of randomVariables of the probability table.");
 		}
+		ProbabilityTable marginalized;
 		if (ListOps.difference(this.randomVariables, varsToMarginalize).size() == 0) {
-			return new ProbabilityTable(new RandomVariable[] {}, new ProbabilityNumber[] { this.getSum() }, this.clazz);
+			marginalized = new ProbabilityTable(new RandomVariable[] {}, new ProbabilityNumber[] { this.getSum() }, this.clazz);
+		} else {
+			List<RandomVariable> remainingVars = ListOps.difference(this.randomVariables, varsToMarginalize);
+			List<Integer> remainingVarIdx = ListOps.getIntersectionIdxInSource(this.randomVariables, remainingVars);
+			int marginalizedValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(remainingVars);
+			List<ProbabilityNumber> marginalizedValues = new ArrayList<ProbabilityNumber>(
+					Collections.nCopies(marginalizedValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
+			marginalized = new ProbabilityTable(remainingVars, marginalizedValues, this.clazz);
+			ProbabilityComputation adder = new ProbabilityComputation();
+			adder.overrideComputationPrecision(MathContext.UNLIMITED);
+			this.queryMRI.stream().forEach(possibleWorldNumerals -> {
+				int[] summedOutNumerals = IntStream.range(0, possibleWorldNumerals.length).filter(remainingVarIdx::contains)
+						.sorted().map(idx -> possibleWorldNumerals[idx]).toArray();
+				int newValueIdx = marginalized.queryMRI.getValueFor(summedOutNumerals).intValue();
+				int addendIdx = this.queryMRI.getValueFor(possibleWorldNumerals).intValue();
+				ProbabilityNumber augend = marginalized.values.get(newValueIdx);
+				ProbabilityNumber addend = this.values.get(addendIdx);
+				marginalized.modifyValue(newValueIdx, adder.add(augend, addend));
+			});
 		}
-		List<RandomVariable> remainingVars = ListOps.difference(this.randomVariables, varsToMarginalize);
-		List<Integer> remainingVarIdx = ListOps.getIntersectionIdxInSource(this.randomVariables, remainingVars);
-		int[] marginalizedRadices = remainingVars.stream().mapToInt(var -> var.getDomain().size()).toArray();
-		MixedRadixInterval marginalizedQueryMRI = new MixedRadixInterval(marginalizedRadices);
-		int marginalizedValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(remainingVars);
-		List<ProbabilityNumber> marginalizedValues = new ArrayList<ProbabilityNumber>(
-				Collections.nCopies(marginalizedValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
-		ProbabilityComputation adder = new ProbabilityComputation();
-		adder.overrideComputationPrecision(MathContext.UNLIMITED);
-		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
-			int[] summedOutNumerals = IntStream.range(0, possibleWorldNumerals.length).filter(remainingVarIdx::contains)
-					.sorted().map(idx -> possibleWorldNumerals[idx]).toArray();
-			int newValueIdx = marginalizedQueryMRI.getValueFor(summedOutNumerals).intValue();
-			int addendIdx = queryMRI.getValueFor(possibleWorldNumerals).intValue();
-			ProbabilityNumber augend = marginalizedValues.get(newValueIdx);
-			ProbabilityNumber addend = this.values.get(addendIdx);
-			marginalizedValues.set(newValueIdx, adder.add(augend, addend));
-		});
-		ProbabilityTable marginalized = new ProbabilityTable(remainingVars, marginalizedValues, this.clazz);
 		return marginalized;
 	}
 
@@ -181,24 +181,21 @@ public class ProbabilityTable extends AbstractProbabilityTable
 		}
 		List<Integer> term1Idx = ListOps.getIntersectionIdxInTarget(this.randomVariables, prodVarOrder);
 		List<Integer> term2Idx = ListOps.getIntersectionIdxInTarget(secondFactor.randomVariables, prodVarOrder);
-		int[] productRadices = prodVarOrder.stream().mapToInt(var -> var.getDomain().size()).toArray();
-		// Check productRadices for empty
-		MixedRadixInterval productQueryMRI = new MixedRadixInterval(productRadices);
 		int productValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(prodVarOrder);
 		List<ProbabilityNumber> productValues = new ArrayList<ProbabilityNumber>(
 				Collections.nCopies(productValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
+		ProbabilityTable product = new ProbabilityTable(prodVarOrder, productValues, this.clazz);
 		ProbabilityComputation compute = new ProbabilityComputation();
-		productQueryMRI.stream().forEach(possibleWorldNumerals -> {
+		product.queryMRI.stream().forEach(possibleWorldNumerals -> {
 			int[] term1Numerals = term1Idx.stream().mapToInt(idx -> possibleWorldNumerals[idx]).toArray();
 			int[] term2Numerals = term2Idx.stream().mapToInt(idx -> possibleWorldNumerals[idx]).toArray();
-			int resultIdx = productQueryMRI.getValueFor(possibleWorldNumerals).intValue();
+			int resultIdx = product.queryMRI.getValueFor(possibleWorldNumerals).intValue();
 			int term1ValueIdx = this.queryMRI.getValueFor(term1Numerals).intValue();
 			int term2ValueIdx = secondFactor.queryMRI.getValueFor(term2Numerals).intValue();
 			ProbabilityNumber operand1 = this.values.get(term1ValueIdx);
 			ProbabilityNumber operand2 = multiplier.getValues().get(term2ValueIdx);
-			productValues.set(resultIdx, compute.mul(operand1, operand2));
+			product.modifyValue(resultIdx, compute.mul(operand1, operand2));
 		});
-		ProbabilityTable product = new ProbabilityTable(prodVarOrder, productValues, this.clazz);
 		return product;
 	}
 

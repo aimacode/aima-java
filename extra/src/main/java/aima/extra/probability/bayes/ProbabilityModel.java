@@ -1,10 +1,9 @@
 package aima.extra.probability.bayes;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
+import aima.extra.probability.proposition.Proposition;
 
 /**
  * A fully specified probability model associates a numerical probability
@@ -38,7 +37,7 @@ public interface ProbabilityModel {
 	 * 
 	 * @return the probability of the proposition &phi;.
 	 */
-	ProbabilityNumber prior(Predicate<Map<RandomVariable, Object>> phi);
+	ProbabilityNumber prior(Proposition phi);
 
 	/**
 	 * Unlike unconditional or prior probabilities, most of the time we have
@@ -72,8 +71,7 @@ public interface ProbabilityModel {
 	 * 
 	 * @return the probability of the proposition &phi; given evidence.
 	 */
-	ProbabilityNumber posterior(Predicate<Map<RandomVariable, Object>> phi,
-			Predicate<Map<RandomVariable, Object>> evidence);
+	ProbabilityNumber posterior(Proposition phi, Proposition evidence);
 
 	/**
 	 * @return a consistent ordered list of the random variables describing the

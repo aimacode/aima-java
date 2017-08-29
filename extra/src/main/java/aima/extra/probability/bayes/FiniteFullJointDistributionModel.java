@@ -4,13 +4,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Predicate;
 import aima.extra.probability.ProbabilityComputation;
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
 import aima.extra.probability.factory.ProbabilityFactory;
+import aima.extra.probability.proposition.Proposition;
 import aima.extra.util.ListOps;
 
 /**
@@ -73,18 +71,17 @@ public class FiniteFullJointDistributionModel implements FiniteProbabilityModel 
 	}
 
 	@Override
-	public ProbabilityNumber prior(Predicate<Map<RandomVariable, Object>> phi) {
-		ProbabilityNumber result = this.jointDistribution.getValue(phi);
+	public ProbabilityNumber prior(Proposition phi) {
+		ProbabilityNumber result = this.jointDistribution.getValue(phi.getStatement());
 		return result;
 	}
 
 	@Override
-	public ProbabilityNumber posterior(Predicate<Map<RandomVariable, Object>> phi,
-			Predicate<Map<RandomVariable, Object>> evidence) {
-		ProbabilityNumber probabilityOfPhi = this.jointDistribution.getValue(phi.and(evidence));
-		ProbabilityNumber probabilityOfEvidence = this.jointDistribution.getValue(evidence);
+	public ProbabilityNumber posterior(Proposition phi, Proposition evidence) {
+		ProbabilityNumber probabilityOfPhiAndEvidence = this.jointDistribution.getValue(phi.getStatement().and(evidence.getStatement()));
+		ProbabilityNumber probabilityOfEvidence = this.jointDistribution.getValue(evidence.getStatement());
 		ProbabilityComputation compute = new ProbabilityComputation();
-		ProbabilityNumber result = compute.div(probabilityOfPhi, probabilityOfEvidence);
+		ProbabilityNumber result = compute.div(probabilityOfPhiAndEvidence, probabilityOfEvidence);
 		return result;
 	}
 
@@ -98,36 +95,30 @@ public class FiniteFullJointDistributionModel implements FiniteProbabilityModel 
 	// START-FiniteProbabilityModel
 
 	@Override
-	public ProbabilityTable priorDistribution(Predicate<Map<RandomVariable, Object>> phi,
-			List<RandomVariable> unscopedTerms) {
-		ProbabilityTable result = probabilityOf(phi, unscopedTerms);
+	public ProbabilityTable priorDistribution(Proposition phi) {
+		ProbabilityTable result = probabilityOf(phi);
 		return result;
 	}
 
 	@Override
-	public CategoricalDistribution posteriorDistribution(Predicate<Map<RandomVariable, Object>> phi,
-			List<RandomVariable> unscopedPhi, Predicate<Map<RandomVariable, Object>> evidence,
-			List<RandomVariable> unscopedEvidence) {
-		Objects.requireNonNull(unscopedPhi, "To specify 0 unscoped variables, pass a blank list (not null).");
-		Objects.requireNonNull(unscopedEvidence, "To specify 0 unscoped variables, pass a blank list (not null).");
+	public CategoricalDistribution posteriorDistribution(Proposition phi, Proposition evidence) {
 		List<RandomVariable> dividendRandomVariables = this.jointDistribution.getVariables();
 		List<ProbabilityNumber> dividendValues = new ArrayList<ProbabilityNumber>(
 				Collections.nCopies(this.jointDistribution.size(), this.probFactory.valueOf(BigDecimal.ZERO)));
-		jointDistribution.stream().filter(phi.and(evidence)).forEach(
+		jointDistribution.stream().filter(phi.getStatement().and(evidence.getStatement())).forEach(
 				world -> dividendValues.set(jointDistribution.getIndex(world), jointDistribution.getValue(world)));
 		ProbabilityTable dividend = new ProbabilityTable(dividendRandomVariables, dividendValues, this.clazz);
-		ProbabilityTable divisor = priorDistribution(evidence, unscopedEvidence);
+		ProbabilityTable divisor = priorDistribution(evidence);
 		ProbabilityTable posterior = dividend.divideBy(divisor);
 		List<RandomVariable> varsToMarginalize = ListOps.difference(dividendRandomVariables,
-				ListOps.union(unscopedPhi, unscopedEvidence));
+				ListOps.union(phi.getUnscopedTerms(), evidence.getUnscopedTerms()));
 		ProbabilityTable result = posterior.marginalize(varsToMarginalize);
 		return result;
 	}
 
 	@Override
-	public CategoricalDistribution jointDistribution(Predicate<Map<RandomVariable, Object>> proposition,
-			List<RandomVariable> unscopedTerms) {
-		ProbabilityTable result = probabilityOf(proposition, unscopedTerms);
+	public CategoricalDistribution jointDistribution(Proposition phi) {
+		ProbabilityTable result = probabilityOf(phi);
 		return result;
 	}
 
@@ -140,19 +131,17 @@ public class FiniteFullJointDistributionModel implements FiniteProbabilityModel 
 	 * 
 	 * @param proposition
 	 *            for which the probability distribution is to be returned.
-	 * @param unscopedTerms
-	 *            is the list of unscoped random variables.
+	 * 
 	 * @return ProbabilityTable corresponding to the specified proposition and
 	 *         unscopedTerms.
 	 */
-	private ProbabilityTable probabilityOf(Predicate<Map<RandomVariable, Object>> proposition,
-			List<RandomVariable> unscopedTerms) {
+	private ProbabilityTable probabilityOf(Proposition phi) {
 		List<RandomVariable> randomVariables = this.jointDistribution.getVariables();
 		List<ProbabilityNumber> values = new ArrayList<ProbabilityNumber>(
 				Collections.nCopies(this.jointDistribution.size(), this.probFactory.valueOf(BigDecimal.ZERO)));
-		jointDistribution.stream().filter(proposition)
+		jointDistribution.stream().filter(phi.getStatement())
 				.forEach(world -> values.set(jointDistribution.getIndex(world), jointDistribution.getValue(world)));
-		List<RandomVariable> varsToMarginalize = ListOps.difference(randomVariables, unscopedTerms);
+		List<RandomVariable> varsToMarginalize = ListOps.difference(randomVariables, phi.getUnscopedTerms());
 		ProbabilityTable newTable = new ProbabilityTable(randomVariables, values, clazz);
 		ProbabilityTable result = newTable.marginalize(varsToMarginalize);
 		return result;

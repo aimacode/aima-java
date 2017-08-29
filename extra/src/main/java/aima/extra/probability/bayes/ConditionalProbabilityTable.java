@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
-
-import aima.core.util.math.MixedRadixInterval;
 import aima.extra.probability.ProbabilityComputation;
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
@@ -75,7 +73,7 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 		boolean isValid = checkEachRowTotalsOne();
 		if (!isValid) {
 			ConditionalProbabilityTable normalized = this.normalize();
-			this.values = ListOps.protectListFromModification(normalized.values);
+			this.values = normalized.values;
 		}
 	}
 
@@ -149,23 +147,21 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 		}
 		List<RandomVariable> remainingVars = ListOps.difference(this.randomVariables, varsToMarginalize);
 		List<Integer> remainingVarIdx = ListOps.getIntersectionIdxInSource(this.randomVariables, remainingVars);
-		int[] marginalizedRadices = remainingVars.stream().mapToInt(var -> var.getDomain().size()).toArray();
-		MixedRadixInterval marginalizedQueryMRI = new MixedRadixInterval(marginalizedRadices);
 		int marginalizedValuesSize = ProbabilityUtilities.expectedSizeofProbabilityTable(remainingVars);
 		List<ProbabilityNumber> marginalizedValues = new ArrayList<ProbabilityNumber>(
 				Collections.nCopies(marginalizedValuesSize, this.probFactory.valueOf(BigDecimal.ZERO)));
+		ProbabilityTable marginalized = new ProbabilityTable(remainingVars, marginalizedValues, this.clazz);
 		ProbabilityComputation adder = new ProbabilityComputation();
 		adder.overrideComputationPrecision(MathContext.UNLIMITED);
 		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
 			int[] summedOutNumerals = IntStream.range(0, possibleWorldNumerals.length).filter(remainingVarIdx::contains)
 					.sorted().map(idx -> possibleWorldNumerals[idx]).toArray();
-			int newValueIdx = marginalizedQueryMRI.getValueFor(summedOutNumerals).intValue();
-			int addendIdx = queryMRI.getValueFor(possibleWorldNumerals).intValue();
-			ProbabilityNumber augend = marginalizedValues.get(newValueIdx);
+			int newValueIdx = marginalized.queryMRI.getValueFor(summedOutNumerals).intValue();
+			int addendIdx = this.queryMRI.getValueFor(possibleWorldNumerals).intValue();
+			ProbabilityNumber augend = marginalized.values.get(newValueIdx);
 			ProbabilityNumber addend = this.values.get(addendIdx);
-			marginalizedValues.set(newValueIdx, adder.add(augend, addend));
+			marginalized.modifyValue(newValueIdx, adder.add(augend, addend));
 		});
-		ProbabilityTable marginalized = new ProbabilityTable(remainingVars, marginalizedValues, this.clazz);
 		return marginalized;
 	}
 
@@ -190,9 +186,9 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 			RandomVariable var = this.randomVariables.get(idx);
 			conditionedWorldNumerals[idx] = ((FiniteDomain) (var.getDomain())).getOffset(parentWorld.get(var));
 		});
-		int conditionedOnDomainSize = this.on.getDomain().size();
-		ProbabilityNumber[] conditionedValues = new ProbabilityNumber[conditionedOnDomainSize];
-		IntStream.range(0, conditionedOnDomainSize).forEach(domainIdx -> {
+		int onDomainSize = this.on.getDomain().size();
+		ProbabilityNumber[] conditionedValues = new ProbabilityNumber[onDomainSize];
+		IntStream.range(0, onDomainSize).forEach(domainIdx -> {
 			conditionedWorldNumerals[0] = domainIdx;
 			conditionedValues[domainIdx] = this.values
 					.get(this.queryMRI.getValueFor(conditionedWorldNumerals).intValue());
@@ -204,8 +200,8 @@ public class ConditionalProbabilityTable extends AbstractProbabilityTable
 
 	@Override
 	public ProbabilityTable getConditioningCase(Predicate<Map<RandomVariable, Object>> parentWorldProposition) {
-		int conditionedOnDomainSize = this.on.getDomain().size();
-		ProbabilityNumber[] conditionedValues = new ProbabilityNumber[conditionedOnDomainSize];
+		int onDomainSize = this.on.getDomain().size();
+		ProbabilityNumber[] conditionedValues = new ProbabilityNumber[onDomainSize];
 		this.queryMRI.stream().forEach(possibleWorldNumerals -> {
 			Map<RandomVariable, Object> conditionedWorld = this.mapNumeralsToProposition(possibleWorldNumerals);
 			int domainIdx = possibleWorldNumerals[0];

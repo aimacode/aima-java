@@ -3,6 +3,7 @@ package aima.extra.probability.bayes;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,7 +17,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
 import aima.core.util.math.MixedRadixInterval;
 import aima.extra.probability.ProbabilityNumber;
 import aima.extra.probability.RandomVariable;
@@ -32,7 +32,8 @@ import aima.extra.util.ListOps;
  * 
  * @author Nagaraj Poti
  */
-public abstract class AbstractProbabilityTable implements CategoricalDistribution, Iterable<Map<RandomVariable, Object>> {
+public abstract class AbstractProbabilityTable
+		implements CategoricalDistribution, Iterable<Map<RandomVariable, Object>> {
 
 	// Internal fields
 
@@ -112,7 +113,7 @@ public abstract class AbstractProbabilityTable implements CategoricalDistributio
 
 	@Override
 	public List<RandomVariable> getVariables() {
-		return this.randomVariables;
+		return ListOps.protectListFromModification(this.randomVariables);
 	}
 
 	@Override
@@ -195,25 +196,42 @@ public abstract class AbstractProbabilityTable implements CategoricalDistributio
 
 	// END-Iterable
 
+	/**
+	 * @return serial stream.
+	 */
 	public Stream<Map<RandomVariable, Object>> stream() {
 		return StreamSupport.stream(spliterator(), false);
 	}
 
+	/**
+	 * @return parallel stream.
+	 */
 	public Stream<Map<RandomVariable, Object>> parallelStream() {
 		return StreamSupport.stream(spliterator(), true);
 	}
-	
-	// Protected methods
 
 	/**
-	 * Set the value at a specifed index within the distribution.
+	 * Modify the value at a specifed index within the distribution.
 	 * 
 	 * @param idx
 	 * @param value
 	 */
-	protected void setValue(int idx, ProbabilityNumber value) {
+	public void modifyValue(int idx, ProbabilityNumber value) {
 		this.values.set(idx, value);
 	}
+
+	/**
+	 * Modify the value for the specified event within the distribution.
+	 * 
+	 * @param value
+	 * @param event
+	 */
+	public void modifyValue(ProbabilityNumber value, Map<RandomVariable, Object> event) {
+		int idx = this.getIndex(event);
+		this.values.set(idx, value);
+	}
+
+	// Protected methods
 
 	/**
 	 * Convert radix numeral values to a mapping of random variables and their
@@ -270,9 +288,8 @@ public abstract class AbstractProbabilityTable implements CategoricalDistributio
 		}
 		this.clazz = Objects.requireNonNull(clazz, "ProbabilityNumber class type must be specified.");
 		this.probFactory = ProbabilityFactory.make(this.clazz);
-		this.randomVariables = ListOps.protectListFromModification(vars);
+		this.randomVariables = new ArrayList<RandomVariable>(vars);
 		this.values = values.stream().map(val -> this.probFactory.convert(val)).collect(Collectors.toList());
-		this.values = ListOps.protectListFromModification(this.values);
 		int[] radices = this.randomVariables.stream().mapToInt(var -> var.getDomain().size()).toArray();
 		if (radices.length == 0) {
 			radices = new int[] { 1 };
@@ -333,7 +350,7 @@ public abstract class AbstractProbabilityTable implements CategoricalDistributio
 				MixedRadixInterval prefix = new MixedRadixInterval(mri.getRadices(), mri.getNumeralsFor(currentValue),
 						mri.getNumeralsFor(splitPos));
 				BigInteger prefixSize = splitPos.subtract(currentValue).add(ONE);
-				// Update the second split 
+				// Update the second split
 				this.estSize = mri.getRightEndPointValue().subtract(splitPos);
 				mri = new MixedRadixInterval(mri.getRadices(), mri.getNumeralsFor(splitPos.add(ONE)),
 						mri.getNumeralsFor(mri.getRightEndPointValue()));

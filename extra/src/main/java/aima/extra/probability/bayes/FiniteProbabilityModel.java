@@ -1,9 +1,6 @@
 package aima.extra.probability.bayes;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
-import aima.extra.probability.RandomVariable;
+import aima.extra.probability.proposition.Proposition;
 
 /**
  * A probability model on a discrete, countable set of worlds. The proper
@@ -23,17 +20,13 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	 * 
 	 * @param phi
 	 *            the proposition of interest.
-	 * @param unscopedTerms
-	 *            the list of unbound random variables comprising the returned
-	 *            distribution.
 	 * 
 	 * @return all the possible probability values corresponding to the unbound
 	 *         random variables of the proposition &phi;. This is essentially a
 	 *         vector of probability values, where we assume a predefined
 	 *         ordering of the domain of the relevant random variables.
 	 */
-	CategoricalDistribution priorDistribution(Predicate<Map<RandomVariable, Object>> phi,
-			List<RandomVariable> unscopedTerms);
+	CategoricalDistribution priorDistribution(Proposition phi);
 
 	/**
 	 * Get a conditional distribution. Example:<br>
@@ -44,19 +37,12 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	 * @param phi
 	 *            the proposition for which a probability distribution is to be
 	 *            returned.
-	 * @param unscopedPhi
-	 *            the list of unbound random variables in the phi proposition.
 	 * @param evidence
 	 *            information we already have.
-	 * @param unscopedEvidence
-	 *            the list of unbound random variables in the evidence
-	 *            proposition.
 	 * 
 	 * @return the conditional distribution for <b>P</b>(&phi; | evidence).
 	 */
-	CategoricalDistribution posteriorDistribution(Predicate<Map<RandomVariable, Object>> phi,
-			List<RandomVariable> unscopedPhi, Predicate<Map<RandomVariable, Object>> evidence,
-			List<RandomVariable> unscopedEvidence);
+	CategoricalDistribution posteriorDistribution(Proposition phi, Proposition evidence);
 
 	/**
 	 * Get a distribution on multiple variables. Example, the product rule:<br>
@@ -64,14 +50,11 @@ public interface FiniteProbabilityModel extends ProbabilityModel {
 	 * <b>P</b>(X, Y) gives the values of P(X = x<sub>i</sub> | Y =
 	 * y<sub>j</sub>)P(Y = y<sub>j</sub>) for each possible i, j pair.
 	 * 
-	 * @param proposition
-	 *            the propositions for which a joint probability distribution is
+	 * @param phi
+	 *            the proposition for which a joint probability distribution is
 	 *            to be returned.
-	 * @param unscopedTerms
-	 *            the list of unbound random variables in the proposition.
 	 * 
 	 * @return the joint distribution for <b>P</b>(X, Y, ...).
 	 */
-	CategoricalDistribution jointDistribution(Predicate<Map<RandomVariable, Object>> proposition,
-			List<RandomVariable> unscopedTerms);
+	CategoricalDistribution jointDistribution(Proposition phi);
 }
