@@ -1,9 +1,6 @@
 package aima.core.learning.framework;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import aima.core.util.Util;
 
@@ -16,12 +13,11 @@ public class DataSet {
 
 	}
 
-	public List<Example> examples;
+	public List<Example> examples = new LinkedList<>();
 
 	public DataSetSpecification specification;
 
 	public DataSet(DataSetSpecification spec) {
-		examples = new LinkedList<Example>();
 		this.specification = spec;
 	}
 
@@ -49,7 +45,8 @@ public class DataSet {
 
 	public double getInformationFor() {
 		String attributeName = specification.getTarget();
-		Hashtable<String, Integer> counts = new Hashtable<String, Integer>();
+		Hashtable<String, Integer> counts;
+		counts = new Hashtable<String, Integer>();
 		for (Example e : examples) {
 
 			String val = e.getAttributeValueAsString(attributeName);
@@ -71,7 +68,8 @@ public class DataSet {
 	}
 
 	public Hashtable<String, DataSet> splitByAttribute(String attributeName) {
-		Hashtable<String, DataSet> results = new Hashtable<String, DataSet>();
+		Hashtable<String, DataSet> results;
+		results = new Hashtable<String, DataSet>();
 		for (Example e : examples) {
 			String val = e.getAttributeValueAsString(attributeName);
 			if (results.containsKey(val)) {
@@ -127,7 +125,7 @@ public class DataSet {
 		return ds;
 	}
 
-	public List<String> getAttributeNames() {
+	private List<String> getAttributeNames() {
 		return specification.getAttributeNames();
 	}
 
@@ -161,6 +159,36 @@ public class DataSet {
 			}
 		}
 		return ds;
+	}
+
+	public class PartitionOfSets {
+		DataSet trainingSet;
+		DataSet validationSet;
+
+		PartitionOfSets(DataSet trainingSet, DataSet validationSet) {
+			this.trainingSet = trainingSet;
+			this.validationSet = validationSet;
+		}
+
+		public DataSet getTrainingSet() {
+			return trainingSet;
+		}
+
+		public DataSet getValidationSet() {
+			return validationSet;
+		}
+	}
+
+	public PartitionOfSets createPartitionOfDataSet(int fold, int k) {
+		DataSet dsT = new DataSet(specification);
+		DataSet dsV = new DataSet(specification);
+
+		Collections.shuffle(examples, new Random(fold));
+
+		dsT.examples = (ArrayList)examples.subList(0, examples.size()/k);
+		dsV.examples = (ArrayList)examples.subList(examples.size()/k+1, examples.size());
+
+		return new PartitionOfSets(dsT, dsV);
 	}
 
 	public List<String> getNonTargetAttributes() {
