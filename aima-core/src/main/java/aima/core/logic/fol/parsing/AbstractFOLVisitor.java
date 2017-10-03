@@ -20,9 +20,6 @@ import aima.core.logic.fol.parsing.ast.Variable;
  */
 public class AbstractFOLVisitor implements FOLVisitor {
 
-	public AbstractFOLVisitor() {
-	}
-
 	protected Sentence recreate(Object ast) {
 		return ((Sentence) ast).copy();
 	}

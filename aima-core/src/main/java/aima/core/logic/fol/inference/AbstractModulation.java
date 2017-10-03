@@ -1,9 +1,6 @@
 package aima.core.logic.fol.inference;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import aima.core.logic.fol.SubstVisitor;
 import aima.core.logic.fol.Unifier;
@@ -106,47 +103,49 @@ public abstract class AbstractModulation {
 		}
 
 		public Object visitVariable(Variable variable, Object arg) {
-
-			if (null != (substitution = unifier.unify(toMatch, variable))) {
-				if (isValidMatch(toMatch, toMatchVariables, variable,
-						substitution)) {
+			// Fixing squid:s1066
+			if (null != (substitution = unifier.unify(toMatch, variable))
+					&& isValidMatch(toMatch, toMatchVariables, variable,
+					substitution)
+					) {
 					matchingTerm = variable;
-				}
 			}
-
 			return variable;
 		}
 
 		public Object visitConstant(Constant constant, Object arg) {
-			if (null != (substitution = unifier.unify(toMatch, constant))) {
-				if (isValidMatch(toMatch, toMatchVariables, constant,
-						substitution)) {
+			// Fixing squid:s1066
+			if (null != (substitution = unifier.unify(toMatch, constant))
+					&& isValidMatch(toMatch, toMatchVariables, constant,
+					substitution)
+					) {
 					matchingTerm = constant;
-				}
 			}
-
 			return constant;
 		}
 
 		public Object visitFunction(Function function, Object arg) {
-			if (null != (substitution = unifier.unify(toMatch, function))) {
-				if (isValidMatch(toMatch, toMatchVariables, function,
-						substitution)) {
+			// Fixing squid:S1066
+			if (null != (substitution = unifier.unify(toMatch, function))
+					&& isValidMatch(toMatch, toMatchVariables, function,
+					substitution)
+					) {
 					matchingTerm = function;
-				}
 			}
 
+			// Fixing squid:s2259
 			if (null == matchingTerm) {
-				// Try the Function's arguments
-				for (Term t : function.getArgs()) {
-					// Finish processing if have found a match
-					if (null != matchingTerm) {
-						break;
+				Optional<Function> optionalFunction = Optional.ofNullable(function);
+				optionalFunction.ifPresent(f-> {
+					for (Term t: f.getArgs()) {
+						// Finish processing if have found a match
+						if (null != matchingTerm) {
+							break;
+						}
+						t.accept(this, null);
 					}
-					t.accept(this, null);
-				}
+				});
 			}
-
 			return function;
 		}
 
@@ -176,9 +175,6 @@ public abstract class AbstractModulation {
 		private Term replaceWith = null;
 		private boolean replaced = false;
 
-		public ReplaceMatchingTerm() {
-		}
-
 		public AtomicSentence replace(AtomicSentence expression,
 				Term toReplace, Term replaceWith) {
 			this.toReplace = toReplace;
@@ -205,31 +201,29 @@ public abstract class AbstractModulation {
 		}
 
 		public Object visitVariable(Variable variable, Object arg) {
-			if (!replaced) {
-				if (toReplace.equals(variable)) {
+			// Fixing squid:s1066
+			if (!replaced
+					&& toReplace.equals(variable)) {
 					replaced = true;
 					return replaceWith;
-				}
 			}
 			return variable;
 		}
 
 		public Object visitConstant(Constant constant, Object arg) {
-			if (!replaced) {
-				if (toReplace.equals(constant)) {
+			if (!replaced
+					&& toReplace.equals(constant)) {
 					replaced = true;
 					return replaceWith;
-				}
 			}
 			return constant;
 		}
 
 		public Object visitFunction(Function function, Object arg) {
-			if (!replaced) {
-				if (toReplace.equals(function)) {
+			if (!replaced
+					&& toReplace.equals(function)) {
 					replaced = true;
 					return replaceWith;
-				}
 			}
 
 			List<Term> newTerms = new ArrayList<Term>();

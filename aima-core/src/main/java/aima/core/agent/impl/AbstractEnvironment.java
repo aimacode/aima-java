@@ -129,7 +129,8 @@ public abstract class AbstractEnvironment implements Environment,
 	public double getPerformanceMeasure(Agent forAgent) {
 		Double pm = performanceMeasures.get(forAgent);
 		if (null == pm) {
-			pm = new Double(0);
+			// Fixing squid:s2129
+			pm = Double.valueOf(0);
 			performanceMeasures.put(forAgent, pm);
 		}
 
