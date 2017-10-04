@@ -1,286 +1,245 @@
-package aima.core.search.framework.qsearch;
 
-import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
-import aima.core.search.framework.problem.BidirectionalProblem;
-import aima.core.search.framework.problem.Problem;
-import aima.core.util.Tasks;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.LinkedList;
+import java.util.Queue;
 
-import java.util.*;
-
-/**
- * Artificial Intelligence A Modern Approach (3rd Edition): page 90.<br>
- * <br>
- * Bidirectional search.<br>
- * <br>
- * The strategy of this search implementation is inspired by the description of
- * the bidirectional search algorithm i.e. 'Bidirectional search is implemented
- * by replacing the goal test with a check to see whether the frontiers of the
- * two searches intersect;'. But to gain some worst-case guarantees with respect
- * to solution quality (see below), the goal test of the original and the
- * reverse problem are replaced by a check, whether the node's state was already
- * explored in the other problem. Only one frontier is used which allows to use
- * the same queue search interface as known from other search implementations.
- * This implementation can be combined with many abstractions of search, e.g.
- * BreadthFirstSearch, UniformCostSearch, or even AStarSearch.
- *
- * @param <S> The type used to represent states
- * @param <A> The type of the actions to be used to navigate through the state space
- *
- * @author Ruediger Lunde
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
+/**
+ *
+ * @author mti
+ */
+public class Map {
 
-	private final static int ORG_P_IDX = 0;
-	private final static int REV_P_IDX = 1;
+    Queue<Integer> queue_start = new LinkedList();//for start to destination
+    Queue<Integer> queue_destination = new LinkedList();//for destination to start
 
-	/**
-	 * Controls whether all actions of the reverse problem are tested to be
-	 * reversible. This shouldn't be necessary for a correctly implemented
-	 * bidirectional problem. But in case this is not guaranteed, the test is
-	 * helpful to avoid failures.
-	 */
-	private boolean isReverseActionTestEnabled = true;
+    int graph_matrix[][];
+    int cities;//number of cities
+    int roads;//number of roads
+    boolean[] visited_start;//for start to des nodes
+    boolean[] visited_destination;//for dest to start nodes
+    String city_list[];//city name list
+    String start;//start city name
+    String destination;//destination city name
+    int parent_start[];//to keep track of parent for start
+    int parent_destination[];//to keep track of parent for desti
 
-	// index 0: original problem, index 2: reverse problem
-	private List<Map<S, ExtendedNode<S, A>>> explored;
-	private ExtendedNode<S, A> goalStateNode;
+    String visited_node_for_start[];//keep new visited node and 
+    String visited_node_for_desti[];//check if collision happens
+    int sCounter = 0;
+    int dCounter = 0;
+    int cityValueToAssigned;//city value assign counter
+    String collisionCity;
+    
+    //set and initialize the full graph
+    public void setGraph() throws Exception {
+        FileReader fileReader = new FileReader("sample.txt");
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-	public BidirectionalSearch() {
-		this(new NodeExpander<>());
-	}
+        String stringLine = bufferedReader.readLine();
 
-	public BidirectionalSearch(NodeExpander<S, A> nodeExpander) {
-		super(nodeExpander);
-		explored = new ArrayList<>(2);
-		explored.add(new HashMap<>());
-		explored.add(new HashMap<>());
-	}
+        String lineArray[] = stringLine.split(", ");
+        cities = Integer.parseInt(lineArray[0]);
+        roads = Integer.parseInt(lineArray[1]);
 
-	/**
-	 * Implements an approximation algorithm for bidirectional problems with
-	 * exactly one initial and one goal state. The algorithm guarantees the
-	 * following: If the queue is ordered by path costs (uniform cost search),
-	 * the path costs of the solution will be less or equal to the costs of the
-	 * best solution multiplied with two. Especially, if all step costs are
-	 * equal and the reverse problem provides reverse actions for all actions of
-	 * the original problem, the path costs of the result will exceed the
-	 * optimal path by the costs of one step at maximum.
-	 * 
-	 * @param problem
-	 *            a bidirectional search problem
-	 * @param frontier
-	 *            the data structure to be used to decide which node to be
-	 *            expanded next
-	 * 
-	 * @return a list of actions to the goal if the goal was found, a list
-	 *         containing a single NoOp Action if already at the goal, or an
-	 *         empty list if the goal could not be found.
-	 */
-	@SuppressWarnings("unchecked")
-	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
-		assert (problem instanceof BidirectionalProblem);
+        //initializations
+        graph_matrix = new int[cities][cities];
+        city_list = new String[cities];
+        visited_start = new boolean[cities];
+        visited_destination = new boolean[cities];
+        parent_start = new int[cities];
+        parent_destination = new int[cities];
 
-		nodeExpander.useParentLinks(true); // bidirectional search needs parents!
-		this.frontier = frontier;
-		clearMetrics();
-		explored.get(ORG_P_IDX).clear();
-		explored.get(REV_P_IDX).clear();
+        visited_node_for_start = new String[cities];
+        visited_node_for_desti = new String[cities];
 
-		Problem<S, A> orgP = ((BidirectionalProblem<S, A>) problem).getOriginalProblem();
-		Problem<S, A> revP = ((BidirectionalProblem<S, A>) problem).getReverseProblem();
-		ExtendedNode<S, A> initStateNode;
-		initStateNode = new ExtendedNode<>(nodeExpander.createRootNode(orgP.getInitialState()), ORG_P_IDX);
-		goalStateNode = new ExtendedNode<>(nodeExpander.createRootNode(revP.getInitialState()), REV_P_IDX);
+        //input start and destination city names
+        start = bufferedReader.readLine();
+        destination = bufferedReader.readLine();
+        
+        //input all other pair of city names and assign unique values
+        cityValueToAssigned = 0;
+        for (int i = 0; i < roads; i++) {
+            stringLine = bufferedReader.readLine();
+            lineArray = stringLine.split(", ");
 
-		if (orgP.getInitialState().equals(revP.getInitialState()))
-			return getSolution(orgP, initStateNode, goalStateNode);
+            int row = cityValueToAssigned;
+            int cityValue = checkCityValueAssigned(lineArray[0]);
 
-		// initialize the frontier using the initial state of the problem
-		addToFrontier(initStateNode);
-		addToFrontier(goalStateNode);
+            if (cityValue < 0) {//cityValue not assigned yet
+                city_list[cityValueToAssigned] = lineArray[0];
+                cityValueToAssigned++;
+            } else {//assigned
+                row = cityValue;
+            }
 
-		while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
-			// choose a leaf node and remove it from the frontier
-			ExtendedNode<S, A> nodeToExpand = (ExtendedNode) removeFromFrontier();
-			ExtendedNode<S, A> nodeFromOtherProblem;
+            int col = cityValueToAssigned;
+            cityValue = checkCityValueAssigned(lineArray[1]);
 
-			// if the node contains a goal state then return the
-			// corresponding solution
-			if (!earlyGoalTest && (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(nodeToExpand)) != null)
-				return getSolution(orgP, nodeToExpand, nodeFromOtherProblem);
+            if (cityValue < 0) {
+                city_list[cityValueToAssigned] = lineArray[1];
+                cityValueToAssigned++;
+            } else {
+                col = cityValue;
+            }
 
-			// expand the chosen node, adding the resulting nodes to the
-			// frontier
-			for (Node<S, A> s : nodeExpander.expand(nodeToExpand, problem)) {
-				ExtendedNode<S, A> successor = new ExtendedNode<>(s, nodeToExpand.getProblemIndex());
-				if (!isReverseActionTestEnabled || nodeToExpand.getProblemIndex() == ORG_P_IDX
-						|| getReverseAction(orgP, successor) != null) {
+            graph_matrix[row][col] = 1;
+            graph_matrix[col][row] = 1;
+        }
+    }
 
-					if (earlyGoalTest
-							&& (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(successor)) != null)
-						return getSolution(orgP, successor, nodeFromOtherProblem);
+    public void Bidirectional_Search() {
+        int startLoc = checkCityValueAssigned(start);
+        int destiLoc = checkCityValueAssigned(destination);
 
-					addToFrontier(successor);
-				}
-			}
-		}
-		// if the frontier is empty then return failure
-		return Optional.empty();
-	}
+        queue_start.add(startLoc);
+        visited_start[startLoc] = true;
 
-	/**
-	 * Enables a check for all actions offered by the reverse problem whether
-	 * there exists a corresponding action of the original problem. Default
-	 * value is true.
-	 */
-	public void setReverseActionTestEnabled(boolean b) {
-		isReverseActionTestEnabled = b;
-	}
+        queue_destination.add(destiLoc);
+        visited_destination[destiLoc] = true;
 
-	/**
-	 * Inserts the node at the tail of the frontier if the corresponding state
-	 * is not yet explored.
-	 */
-	@Override
-	protected void addToFrontier(Node<S, A> node) {
-		if (!isExplored(node)) {
-			frontier.add(node);
-			updateMetrics(frontier.size());
-		}
-	}
+        visited_node_for_start[0] = start;
+        visited_node_for_desti[0] = destination;
 
-	/**
-	 * Cleans up the head of the frontier, removes the first node of a
-	 * non-explored state from the head of the frontier, adds it to the
-	 * corresponding explored map, and returns the node.
-	 * 
-	 * @return A node of a not yet explored state.
-	 */
-	@Override
-	protected Node<S, A> removeFromFrontier() {
-		cleanUpFrontier(); // not really necessary because isFrontierEmpty
-							// should be called before...
-		Node<S, A> result = frontier.remove();
-		updateMetrics(frontier.size());
-		// add the node to the explored set of the corresponding problem
-		setExplored(result);
-		return result;
-	}
+        Bidirectional_Search_visit();
+        if (collisionCity != null) {
+            printShortestPath();
+        } else {
+            System.out.println("No direct route found");
+        }
 
-	/**
-	 * Pops nodes of already explored states from the head of the frontier and
-	 * checks whether there are still some nodes left.
-	 */
-	@Override
-	protected boolean isFrontierEmpty() {
-		cleanUpFrontier();
-		updateMetrics(frontier.size());
-		return frontier.isEmpty();
-	}
+    }
 
-	/**
-	 * Helper method which removes nodes of already explored states from the
-	 * head of the frontier.
-	 */
-	private void cleanUpFrontier() {
-		while (!frontier.isEmpty() && isExplored(frontier.element()))
-			frontier.remove();
-	}
+    //run Bidirectional_Search_visit from both start and destination side of the map
+    public void Bidirectional_Search_visit() {
+        boolean collisionChecker = false;
 
-	/**
-	 * Computes a node whose sequence of recursive parents corresponds to a
-	 * sequence of actions which leads from the initial state of the original
-	 * problem to the state of node1 and then to the initial state of the
-	 * reverse problem, following reverse actions to parents of node2. Note that
-	 * both nodes must be linked to the same state. Success is not guaranteed if
-	 * some actions cannot be reversed.
-	 */
-	private Optional<Node<S, A>> getSolution(Problem<S, A> orgP, ExtendedNode<S, A> node1, ExtendedNode<S, A> node2) {
-		assert node1.getState().equals(node2.getState());
-		
-		Node<S, A> orgNode = node1.getProblemIndex() == ORG_P_IDX ? node1 : node2;
-		Node<S, A> revNode = node1.getProblemIndex() == REV_P_IDX ? node1 : node2;
+        while (!queue_start.isEmpty() && !queue_destination.isEmpty() && !collisionChecker) {
+            int fromQ_start = queue_start.poll();
+            int fromQ_desti = queue_destination.poll();
 
-		while (revNode.getParent() != null) {
-			A action = getReverseAction(orgP, revNode);
-			if (action != null) {
-				S nextState = revNode.getParent().getState();
-				double stepCosts = orgP.getStepCosts(revNode.getState(), action, nextState);
-				orgNode = nodeExpander.createNode(nextState, orgNode, action, stepCosts);
-				revNode = revNode.getParent();
-			} else {
-				return Optional.empty();
-			}
-		}
-		metrics.set(METRIC_PATH_COST, orgNode.getPathCost());
-		return Optional.of(orgNode);
-	}
+            for (int i = 0; i < cities; i++) {
+                if (!visited_start[i] & graph_matrix[fromQ_start][i] > 0) {
+                    queue_start.add(i);
+                    //System.out.println(1 + " " + city_list[i] + " " + i);
+                    visited_start[i] = true;
+                    parent_start[i] = fromQ_start;
 
-	/**
-	 * Returns the action which leads from the state of <code>node</code> to the
-	 * state of the node's parent, if such an action exists in problem
-	 * <code>orgP</code>.
-	 */
-	private A getReverseAction(Problem<S, A> orgP, Node<S, A> node) {
-		S currState = node.getState();
-		S nextState = node.getParent().getState();
+                    visited_node_for_start[sCounter++] = city_list[i];
+                }
+            }
+            for (int i = 0; i < cities; i++) {
+                if (!visited_destination[i] & graph_matrix[fromQ_desti][i] > 0) {
+                    queue_destination.add(i);
+                    //System.out.println(2 + " " + city_list[i] + " " + i);
+                    visited_destination[i] = true;
+                    parent_destination[i] = fromQ_desti;
 
-		for (A action : orgP.getActions(currState)) {
-			S aResult = orgP.getResult(currState, action);
-			if (nextState.equals(aResult))
-				return action;
-		}
-		return null;
-	}
+                    visited_node_for_desti[dCounter++] = city_list[i];
+                }
+            }
+            //after finding each neighbors road of a city, check for collision
+            for (int i = 0; i < sCounter; i++) {
+                for (int j = 0; j < dCounter; j++) {
+                    if (visited_node_for_start[i] != null && visited_node_for_desti[j] != null) {
+                        if (visited_node_for_start[i].equals(visited_node_for_desti[j])) {
+                            //System.out.println("Found collision at " + visited_node_for_start[i]);
+                            collisionChecker = true;
+                            collisionCity = visited_node_for_start[i];
+                            break;
+                        }
+                    }
+                    if (collisionChecker) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	private boolean isExplored(Node<S, A> node) {
-		ExtendedNode<S, A> eNode =  (ExtendedNode) node;
-		return explored.get(eNode.getProblemIndex()).containsKey(eNode.getState());
-	}
+    //take a city name and check if it is already assigned with a value
+    //if assigned, return the assigned number, otherwise return -1
+    public int checkCityValueAssigned(String city_name) {
+        for (int i = 0; i < cityValueToAssigned; i++) {
+            if (city_list[i] != null) {
+                if (city_list[i].equals(city_name)) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+    
+    //print shortest path, collision area and road number to reach collision from forward start
+    public void printShortestPath() {
+        int collisionVal = 0;
+        int length = 0;
 
-	@SuppressWarnings("unchecked")
-	private void setExplored(Node<S, A> node) {
-		ExtendedNode<S, A> eNode = (ExtendedNode) node;
-		explored.get(eNode.getProblemIndex()).put(eNode.getState(), eNode);
-	}
+        for (int i = 0; i < cities; i++) {//find collision city value
+            if (city_list[i].equals(collisionCity)) {
+                collisionVal = i;
+                break;
+            }
+        }
+        int destinationVal = 0;
+        for (int i = 0; i < cities; i++) {//find the destination city value
+            if (city_list[i].equals(destination)) {
+                destinationVal = i;
+                break;
+            }
+        }
 
-	private ExtendedNode<S, A> getCorrespondingNodeFromOtherProblem(ExtendedNode<S, A> node) {
-		ExtendedNode<S, A> result = explored.get(1 - node.getProblemIndex()).get(node.getState());
+        int cVal = collisionVal;
 
-		// Caution: The goal test of the original problem should always include
-		// the root node of the reverse problem as that node might not yet have
-		// been explored yet. This is important if the reverse problem does not
-		// provide reverse actions for all original problem actions.
-		if (result == null && node.getProblemIndex() == ORG_P_IDX && node.getState() == goalStateNode.getState())
-			result = goalStateNode;
-		return result;
-	}
+        String box[] = new String[cities];
 
-	/**
-	 * Maintains the usual node data and additionally the index of the problem
-	 * to which the node belongs.
-	 * 
-	 * @author Ruediger Lunde
-	 *
-	 */
-	private static class ExtendedNode<S, A> extends Node<S, A> {
+        int i = 0;
+        cVal = collisionVal;//city to array for reverse print
+        while (cVal != 0) {//o is the start city value
+            box[i] = city_list[cVal];
+            cVal = parent_start[cVal];
+            i++;
+        }
+        box[i] = city_list[0];
 
-		int problemIndex;
+        System.out.print("Route: ");
+        for (int j = i; j >= 0; j--) {//print fro start to collision
+            System.out.print(box[j] + "->");
+            length++;
+        }
+        while (collisionVal != destinationVal) {//print from collision to destination
 
-		ExtendedNode(Node<S, A> node, int problemIndex) {
-			super(node.getState(), node.getParent(), node.getAction(), node.getPathCost());
-			this.problemIndex = problemIndex;
-		}
+            collisionVal = parent_destination[collisionVal];
+            length++;
 
-		int getProblemIndex() {
-			return problemIndex;
-		}
+            if (collisionVal == destinationVal) {
+                System.out.println(city_list[collisionVal]);
+            } else {
+                System.out.print(city_list[collisionVal] + "->");
+            }
 
-		@Override
-		public String toString() {
-			return "[" + getState() + ":" + problemIndex + "]";
-		}
-	}
+        }
+        System.out.println("Length: " + (length - 1));
+        System.out.println("Direction: Forward City: " + collisionCity+" #Roads(start to collision): "+(i));
+    }
+
+    public void print() {
+        System.out.println("Assigned values to cities:");
+        for (int i = 0; i < cities; i++) {
+            System.out.println(city_list[i] + " " + i);
+        }
+//        System.out.println("grap_matrix values:");
+//        for (int i = 0; i < cities; i++) {
+//            for (int j = 0; j < cities; j++) {
+//                System.out.print(graph_matrix[i][j]);
+//            }
+//            System.out.println();
+//        }
+    }
+
 }
