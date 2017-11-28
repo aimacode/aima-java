@@ -380,8 +380,8 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
                         Connective.IMPLICATION,
                         newSymbol(LOCATION_VISITED, x, y)));
             }
-            tellSuccessorStateOrientationAxioms(t);
         }
+        tellSuccessorStateOrientationAxioms(t);
     }
 
     /**
