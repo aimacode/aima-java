@@ -31,7 +31,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |2.10|49|Simple-Reflex-Agent|[SimpleReflexAgentProgram](/aima-core/src/main/java/aima/core/agent/impl/aprog/SimpleReflexAgentProgram.java)|
 |2.12|51|Model-Based-Reflex-Agent|[ModelBasedReflexAgentProgram](/aima-core/src/main/java/aima/core/agent/impl/aprog/ModelBasedReflexAgentProgram.java)|
 |3|66|Problem|[Problem](/aima-core/src/main/java/aima/core/search/framework/problem/Problem.java)|
-|3.1|67|Simple-Problem-Solving-Agent|[SimpleProblemSolvingAgent](/aima-core/src/main/java/aima/core/search/framework/SimpleProblemSolvingAgent.java)|
+|3.1|67|Simple-Problem-Solving-Agent|[SimpleProblemSolvingAgent](/aima-core/src/main/java/aima/core/search/agent/SimpleProblemSolvingAgent.java)|
 |3.2|68|Romania|[SimplifiedRoadMapOfPartOfRomania](/aima-core/src/main/java/aima/core/environment/map/SimplifiedRoadMapOfPartOfRomania.java)|
 |3.7|77|Tree-Search|[TreeSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/TreeSearch.java)|
 |3.7|77|Graph-Search|[GraphSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/GraphSearch.java)|
