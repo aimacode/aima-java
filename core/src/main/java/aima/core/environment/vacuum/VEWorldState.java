@@ -69,7 +69,7 @@ public class VEWorldState {
 	}
 	
 	public boolean isClean(String location) {
-		return locationLocalStateMap.get(currentLocation).status == VacuumEnvironment.Status.Clean;
+		return locationLocalStateMap.get(location).status == VacuumEnvironment.Status.Clean;
 	}
 
 	public boolean isAllClean() {
