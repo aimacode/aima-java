@@ -12,11 +12,10 @@ import java.util.Map;
  * <b>Note:</b> This definition corresponds to that given in AIMA4e pg. ??, for
  * a Probability Distribution.
  *
- * @see <a href="http://en.wikipedia.org/wiki/Probability_distribution"
- *      >Probability Distribution</a>
- *
  * @author Ciaran O'Reilly
  * @author samagra
+ * @see <a href="http://en.wikipedia.org/wiki/Probability_distribution"
+ * >Probability Distribution</a>
  */
 
 public interface CategoricalDistribution extends ProbabilityDistribution {
@@ -26,19 +25,15 @@ public interface CategoricalDistribution extends ProbabilityDistribution {
          * Called for each possible assignment for the Random Variables
          * comprising this CategoricalDistribution.
          *
-         * @param possibleAssignment
-         *            a possible assignment, &omega;, of variable/value pairs.
-         * @param probability
-         *            the probability associated with &omega;
+         * @param possibleAssignment a possible assignment, &omega;, of variable/value pairs.
+         * @param probability        the probability associated with &omega;
          */
         void iterate(Map<RandomVariable, Object> possibleAssignment,
                      double probability);
     }
 
     /**
-     *
      * @return the double[] used to represent the CategoricalDistribution.
-     *
      * @see CategoricalDistribution#setValue(int, double)
      */
     double[] getValues();
@@ -52,7 +47,6 @@ public interface CategoricalDistribution extends ProbabilityDistribution {
     void setValue(int idx, double value);
 
     /**
-     *
      * @return the summation of all of the elements within the Distribution.
      */
     double getSum();
@@ -68,12 +62,10 @@ public interface CategoricalDistribution extends ProbabilityDistribution {
      * Retrieve the index into the CategoricalDistribution for the provided set
      * of values for the random variables comprising the Distribution.
      *
-     * @param values
-     *            an ordered set of values for the random variables comprising
-     *            the Distribution (<b>Note:</b> the order must match the order
-     *            of the random variables describing the distribution)
+     * @param values an ordered set of values for the random variables comprising
+     *               the Distribution (<b>Note:</b> the order must match the order
+     *               of the random variables describing the distribution)
      * @return the index within the Distribution for the values specified.
-     *
      * @see CategoricalDistribution#getValues()
      * @see ProbabilityDistribution#getFor()
      */
@@ -86,11 +78,10 @@ public interface CategoricalDistribution extends ProbabilityDistribution {
      * <br>
      * <br>
      *
-     * @param vars
-     *            the random variables to marginalize/sum out.
+     * @param vars the random variables to marginalize/sum out.
      * @return a new Distribution containing any remaining random variables not
-     *         summed out and a new set of values updated with the summed out
-     *         values.
+     * summed out and a new set of values updated with the summed out
+     * values.
      */
     CategoricalDistribution marginal(RandomVariable... vars);
 
@@ -105,10 +96,9 @@ public interface CategoricalDistribution extends ProbabilityDistribution {
      *
      * @param divisor
      * @return a new Distribution representing the quotient of the dividend
-     *         (this) divided by the divisor.
-     * @throws IllegalArgumentException
-     *             if the variables of the divisor distribution are not a subset
-     *             of the dividend.
+     * (this) divided by the divisor.
+     * @throws IllegalArgumentException if the variables of the divisor distribution are not a subset
+     *                                  of the dividend.
      */
     CategoricalDistribution divideBy(CategoricalDistribution divisor);
 
@@ -145,14 +135,12 @@ public interface CategoricalDistribution extends ProbabilityDistribution {
      * To override the default order of the product use multiplyByPOS().
      *
      * @param multiplier
-     *
      * @return a new Distribution representing the product of this and the
-     *         passed in multiplier. The order of the variables comprising the
-     *         product distribution is the ordered union of the left term (this)
-     *         and the right term (multiplier).
-     *
+     * passed in multiplier. The order of the variables comprising the
+     * product distribution is the ordered union of the left term (this)
+     * and the right term (multiplier).
      * @see CategoricalDistribution#multiplyByPOS(CategoricalDistribution,
-     *      RandomVariable...)
+     * RandomVariable...)
      */
     CategoricalDistribution multiplyBy(CategoricalDistribution multiplier);
 
@@ -171,13 +159,10 @@ public interface CategoricalDistribution extends ProbabilityDistribution {
      * is true when the correct product order is specified.
      *
      * @param multiplier
-     * @param prodVarOrder
-     *            the order the variables comprising the product are to be in.
-     *
+     * @param prodVarOrder the order the variables comprising the product are to be in.
      * @return a new Distribution representing the product of this and the
-     *         passed in multiplier. The order of the variables comprising the
-     *         product distribution is the order specified.
-     *
+     * passed in multiplier. The order of the variables comprising the
+     * product distribution is the order specified.
      * @see CategoricalDistribution#multiplyBy(CategoricalDistribution)
      */
     CategoricalDistribution multiplyByPOS(CategoricalDistribution multiplier,
@@ -187,8 +172,7 @@ public interface CategoricalDistribution extends ProbabilityDistribution {
      * Iterate over all the possible value assignments for the Random Variables
      * comprising this CategoricalDistribution.
      *
-     * @param cdi
-     *            the CategoricalDistribution Iterator to iterate.
+     * @param cdi the CategoricalDistribution Iterator to iterate.
      */
     void iterateOver(Iterator cdi);
 
@@ -198,11 +182,9 @@ public interface CategoricalDistribution extends ProbabilityDistribution {
      * values. This allows you to iterate over a subset of possible
      * combinations.
      *
-     * @param cdi
-     *            the CategoricalDistribution Iterator to iterate
-     * @param fixedValues
-     *            Fixed values for a subset of the Random Variables comprising
-     *            this CategoricalDistribution.
+     * @param cdi         the CategoricalDistribution Iterator to iterate
+     * @param fixedValues Fixed values for a subset of the Random Variables comprising
+     *                    this CategoricalDistribution.
      */
     void iterateOver(Iterator cdi, AssignmentProposition... fixedValues);
 }
