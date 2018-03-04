@@ -16,7 +16,7 @@ import aima.core.probability.mdp.TransitionProbabilityFunction;
 import aima.core.probability.mdp.impl.MDP;
 
 /**
- * 
+ *
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  */
@@ -25,7 +25,7 @@ public class MDPFactory {
 	/**
 	 * Constructs an MDP that can be used to generate the utility values
 	 * detailed in Fig 17.3.
-	 * 
+	 *
 	 * @param cw
 	 *            the cell world from figure 17.1.
 	 * @return an MDP that can be used to generate the utility values detailed
@@ -43,7 +43,7 @@ public class MDPFactory {
 	/**
 	 * Returns the allowed actions from a specified cell within the cell world
 	 * described in Fig 17.1.
-	 * 
+	 *
 	 * @param cw
 	 *            the cell world from figure 17.1.
 	 * @return the set of actions allowed at a particular cell. This set will be
@@ -75,7 +75,7 @@ public class MDPFactory {
 	 * the 'intended' outcome occurs with probability 0.8, but with probability
 	 * 0.2 the agent moves at right angles to the intended direction. A
 	 * collision with a wall results in no movement.
-	 * 
+	 *
 	 * @param cw
 	 *            the cell world from figure 17.1.
 	 * @return the transition probability function as described in figure 17.1.
@@ -106,7 +106,7 @@ public class MDPFactory {
 
 				return prob;
 			}
-			
+
 			private List<Cell<Double>> possibleOutcomes(Cell<Double> c,
 					CellWorldAction a) {
 				// There can be three possible outcomes for the planned action
@@ -124,17 +124,12 @@ public class MDPFactory {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the reward function which takes the content of the cell as being
 	 *         the reward value.
 	 */
 	public static RewardFunction<Cell<Double>> createRewardFunctionForFigure17_1() {
-		RewardFunction<Cell<Double>> rf = new RewardFunction<Cell<Double>>() {
-			@Override
-			public double reward(Cell<Double> s) {
-				return s.getContent();
-			}
-		};
-		return rf;
+		RewardFunction<Cell<Double>> rewardfn = s -> s.getContent();
+		return rewardfn;
 	}
 }

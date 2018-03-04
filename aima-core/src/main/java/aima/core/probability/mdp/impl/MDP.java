@@ -10,12 +10,12 @@ import aima.core.probability.mdp.TransitionProbabilityFunction;
 
 /**
  * Default implementation of the MarkovDecisionProcess<S, A> interface.
- * 
+ *
  * @param <S>
  *            the state type.
  * @param <A>
  *            the action type.
- * 
+ *
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  */
@@ -61,7 +61,7 @@ public class MDP<S, A extends Action> implements MarkovDecisionProcess<S, A> {
 
 	@Override
 	public double reward(S s) {
-		return rewardFunction.reward(s);
+		return rewardFunction.apply(s);
 	}
 
 	// END-MarkovDecisionProcess
