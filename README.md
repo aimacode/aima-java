@@ -21,8 +21,8 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 
 ### Index of Implemented Algorithms
 
-|Fig|Page|Name (in book)|Code|
-| -------- |:--------:| :-----| :----- |
+|Fig|Page|Name (in book)|Code|Test|Notebook
+| -------- |:--------:| :-----| :----- |:----- |:----- |
 |2|34|Environment|[Environment](/aima-core/src/main/java/aima/core/agent/Environment.java)|
 |2.1|35|Agent|[Agent](/aima-core/src/main/java/aima/core/agent/Agent.java)|
 |2.3|36|Table-Driven-Vacuum-Agent|[TableDrivenVacuumAgent](/aima-core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java)|
