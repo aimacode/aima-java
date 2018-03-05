@@ -50,7 +50,6 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |4.5|126|Simulated-Annealing|[SimulatedAnnealingSearch](/aima-core/src/main/java/aima/core/search/local/SimulatedAnnealingSearch.java)|
 |4.8|129|Genetic-Algorithm|[GeneticAlgorithm](/aima-core/src/main/java/aima/core/search/local/GeneticAlgorithm.java)|
 |4.11|136|And-Or-Graph-Search|[AndOrSearch](/aima-core/src/main/java/aima/core/search/nondeterministic/AndOrSearch.java)|
-|4|147|Online search problem|[OnlineSearchProblem](/aima-core/src/main/java/aima/core/search/online/OnlineSearchProblem.java)|
 |4.21|150|Online-DFS-Agent|[OnlineDFSAgent](/aima-core/src/main/java/aima/core/search/online/OnlineDFSAgent.java)|
 |4.24|152|LRTA\*-Agent|[LRTAStarAgent](/aima-core/src/main/java/aima/core/search/online/LRTAStarAgent.java)|
 |5.3|166|Minimax-Decision|[MinimaxSearch](/aima-core/src/main/java/aima/core/search/adversarial/MinimaxSearch.java)|
