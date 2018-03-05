@@ -21,7 +21,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 
 ### Index of Implemented Algorithms
 
-|Figure|Page|Name (in 3rd edition)|Code|Test|Notebook
+|Figure|Page|Name (in 3<sup>rd</sup> edition)|Code|Test|Notebook
 | -------- |:--------:| :-----| :----- |:----- |:----- |
 |2|34|Environment|[Environment](/aima-core/src/main/java/aima/core/agent/Environment.java)|
 |2.1|35|Agent|[Agent](/aima-core/src/main/java/aima/core/agent/Agent.java)|
