@@ -48,6 +48,7 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  * 
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
 public class LRTAStarAgent<S, A extends Action> extends AbstractAgent {
 
@@ -211,7 +212,7 @@ public class LRTAStarAgent<S, A extends Action> extends AbstractAgent {
 	private double lrtaCost(S s, A action, S sDelta) {
 		// if s' is undefined then return h(s)
 		if (null == sDelta) {
-			return getHeuristicFunction().applyAsDouble(s);
+			return h.applyAsDouble(s);
 		}
 		// else return c(s, a, s') + H[s']
 		return problem.getStepCosts(s, action, sDelta)
