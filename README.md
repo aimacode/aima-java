@@ -175,9 +175,19 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        </td>
    </tr>
    <tr>
-       <td>3?</td>
-       <td>??</td>
-       <td>Depth-first Search</td>
+       <td rowspan="3">3.?</td>
+       <td rowspan="3">??</td>
+       <td rowspan="3">Depth-first Search</td>
+       <td>
+       <a href="core/src/main/java/aima/core/search/basic/uninformed/DepthFirstSearch.java">DepthFirstSearch</a>
+       </td>
+   </tr>
+   <tr>
+       <td>
+       Alternative(s)
+       </td>
+   </tr>
+   <tr>
        <td>
        <a href="extra/src/main/java/aima/extra/search/pqueue/uninformed/DepthFirstQueueSearch.java">DepthFirstQueueSearch</a>
        </td>
