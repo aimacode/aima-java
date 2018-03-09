@@ -163,8 +163,31 @@ public class BigDecimalProbabilityNumber extends AbstractProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber add(ProbabilityNumber that) {
+		ProbabilityNumber result = this.add(that, null);
+		return result;
+	}
+
+	/**
+	 * Add a BigDecimalProbabilityNumber to this BigDecimalProbabilityNumber and
+	 * return a new BigDecimalProbabilityNumber.
+	 * 
+	 * @param that
+	 *            the BigDecimalProbabilityNumber that is to be added to this
+	 *            BigDecimalProbabilityNumber.
+	 * @param mc
+	 *            MathContext of computation.
+	 * 
+	 * @return a new BigDecimalProbabilityNumber that is the result of addition.
+	 */
+	@Override
+	public ProbabilityNumber add(ProbabilityNumber that, MathContext mc) {
 		BigDecimalProbabilityNumber addend = toInternalType(that);
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), addend.getMathContext());
+		}
 		ProbabilityNumber result = new BigDecimalProbabilityNumber(this.value.add(addend.value, resultMathContext));
 		return result;
 	}
@@ -182,8 +205,32 @@ public class BigDecimalProbabilityNumber extends AbstractProbabilityNumber {
 	 */
 	@Override
 	public ProbabilityNumber subtract(ProbabilityNumber that) {
+		ProbabilityNumber result = this.subtract(that, null);
+		return result;
+	}
+
+	/**
+	 * Subtract a BigDecimalProbabilityNumber from this
+	 * BigDecimalProbabilityNumber and return a new BigDecimalProbabilityNumber.
+	 * 
+	 * @param that
+	 *            the BigDecimalProbabilityNumber that is to be subtracted from
+	 *            this BigDecimalProbabilityNumber.
+	 * @param mc
+	 *            MathContext of computation.
+	 * 
+	 * @return a new BigDecimalProbabilityNumber that is the result of
+	 *         subtraction.
+	 */
+	@Override
+	public ProbabilityNumber subtract(ProbabilityNumber that, MathContext mc) {
 		BigDecimalProbabilityNumber subtrahend = toInternalType(that);
-		MathContext resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
+		MathContext resultMathContext;
+		if (null != mc) {
+			resultMathContext = mc;
+		} else {
+			resultMathContext = getResultMathContext(this.getMathContext(), subtrahend.getMathContext());
+		}
 		ProbabilityNumber result = new BigDecimalProbabilityNumber(
 				this.value.subtract(subtrahend.value, resultMathContext));
 		return result;

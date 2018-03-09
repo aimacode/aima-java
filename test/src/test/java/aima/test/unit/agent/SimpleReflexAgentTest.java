@@ -45,7 +45,7 @@ public class SimpleReflexAgentTest {
 	}
 
 	@Test
-	public void tetDrinkTea() {
+	public void testDrinkTea() {
 		Assert.assertEquals("Drink Tea", agent.perceive(new TestPercept("A", false)));
 	}
 }
