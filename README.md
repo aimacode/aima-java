@@ -439,6 +439,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td></td>
        <td></td>
    </tr>
+   <tr>
+       <td>7.?</td>
+       <td>?</td>
+       <td>Propositional-Logic-Sentence</td>
+       <td><a href="core/src/main/java/aima/core/logic/basic/propositional/parsing/ast/Sentence.java">Sentence</a></td>
+   </tr>
    </tbody>
 </table>
 
