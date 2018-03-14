@@ -1,7 +1,7 @@
 package aima.core.Probability.Bayes;
 
 import java.util.List;
-
+import aima.core.Probability.Bayes.Node;
 import aima.core.Probability.RandomVariable;
 
 /**
