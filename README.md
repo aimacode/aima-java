@@ -388,6 +388,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    <tr>
        <td>7.?</td>
        <td>??</td>
+       <td>KnowledgeBase</td>
+       <td><a href="core/src/main/java/aima/core/logic/api/propositional/KnowledgeBase.java">KnowledgeBase</a></td>
+   </tr>
+   <tr>
+       <td>7.?</td>
+       <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/KB-Agent.md">KB-Agent</a></td>
        <td><a href="core/src/main/java/aima/core/agent/basic/KBAgent.java">KBAgent</a></td>
    </tr>
@@ -438,12 +444,6 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td></td>
        <td></td>
        <td></td>
-   </tr>
-   <tr>
-       <td>14.?</td>
-       <td>??</td>
-       <td>Bayesian Network</td>
-       <td><a href="core/src/main/java/aima/core/Probability/Bayes/BayesianNetwork.java"</a>BayesianNetwork</td>
    </tr>
    </tbody>
 </table>
