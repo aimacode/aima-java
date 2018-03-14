@@ -17,6 +17,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    <tr>
        <td>2.?</td>
        <td>??</td>
+       <td>Environment</td>
+       <td><a href="core/src/main/java/aima/core/agent/basic/Environment.java">Environment</a></td>
+   </tr>
+   <tr>
+       <td>2.?</td>
+       <td>??</td>
        <td>Agent</td>
        <td><a href="core/src/main/java/aima/core/agent/api/Agent.java">Agent</a></td>
    </tr>
@@ -384,6 +390,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td></td>
        <td></td>
        <td></td>
+   </tr>
+   <tr>
+       <td>7.?</td>
+       <td>??</td>
+       <td>KnowledgeBase</td>
+       <td><a href="core/src/main/java/aima/core/logic/api/propositional/KnowledgeBase.java">KnowledgeBase</a></td>
    </tr>
    <tr>
        <td>7.?</td>
