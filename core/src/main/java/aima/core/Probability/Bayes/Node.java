@@ -1,8 +1,8 @@
-package aima.core.probability.bayes;
+package aima.core.Probability.bayes;
 
 import java.util.Set;
 
-import aima.core.probability.RandomVariable;
+import aima.core.Probability.RandomVariable;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 511.<br>
