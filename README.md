@@ -439,7 +439,6 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td></td>
        <td></td>
    </tr>
-   </tr>
    <tr>
        <td>14.?</td>
        <td>??</td>
