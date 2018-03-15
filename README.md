@@ -439,6 +439,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td></td>
        <td></td>
    </tr>
+   <tr>
+       <td>13.?</td>
+       <td>??</td>
+       <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/DT-Agent.md">DT-Agent</a></td>
+       <td><a href="core/src/main/java/aima/core/agent/basic/DecisionTheoreticAgent.java">DT-Agent</a></td>
+   </tr>
    </tbody>
 </table>
 
