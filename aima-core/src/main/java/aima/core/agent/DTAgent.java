@@ -10,7 +10,7 @@ import aima.core.agent.Agent;
  * 
  * @author Ritwik Sharma
  */
-public interface DTAgent extends Agent {
+public abstract class DTAgent<Action,Percept> implements Agent<Action,Percept> {
 	/**
 	 * @param belief_state
 	 *            		 probabilistic beliefs about the current state of the world.
