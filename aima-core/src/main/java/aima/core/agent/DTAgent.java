@@ -35,7 +35,7 @@ public abstract class DTAgent<Action,Percept> implements Agent<Action,Percept> {
 		Action faction; /** @return faction
                                 *                 final action to be returned.  
 		                */ 
-		 return faction;
+		return faction;
 	}
 	
 }
