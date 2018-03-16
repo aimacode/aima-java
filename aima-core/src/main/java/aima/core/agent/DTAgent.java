@@ -21,18 +21,19 @@ public abstract class DTAgent<Action,Percept> implements Agent<Action,Percept> {
 	Action action;
 	List<Action> action_descriptions;
 
-	Action perceive(Percept percept);
+	public Action perceive(Percept percept) {
 
-	// update belief_state based on action and percept
-	belief_state.update(action,percept);
-	/** 
-	 * calculate outcome probabilities for actions,
-   	 *		given action descriptions and current belief_state 	
-	 *
-	 * select action with highest expected utility
-   	 *		given probabilities of outcomes and utility information
-	 */
+		// update belief_state based on action and percept
+		belief_state.update(action,percept);
+		/** 
+		 * calculate outcome probabilities for actions,
+	   	 *		given action descriptions and current belief_state 	
+		 *
+		 * select action with highest expected utility
+	   	 *		given probabilities of outcomes and utility information
+		 */
 
-	 return action;
+		 return action;
+	}
 	
 }
