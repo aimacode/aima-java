@@ -32,8 +32,10 @@ public abstract class DTAgent<Action,Percept> implements Agent<Action,Percept> {
 		 * select action with highest expected utility
 	   	 *		given probabilities of outcomes and utility information
 		 */
-
-		 return action;
+		Action faction; /** @return faction
+                                *                 final action to be returned.  
+		                */ 
+		 return faction;
 	}
 	
 }
