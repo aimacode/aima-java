@@ -51,7 +51,7 @@ public abstract class DTAgent extends AbstractAgent {
      *					 current belief state of the agent about the world
      * @return The next action to be taken.
      */
-	 abstract List<Action,Double> cal_action_probabilities(List<Action> action_description, BeliefState belief_state);
+	 abstract List<Action> cal_action_probabilities(List<Action> action_description, BeliefState belief_state);
 
     /**
      * @param action_probabilities 
