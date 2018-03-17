@@ -34,14 +34,14 @@ public abstract class DTAgent extends AbstractAgent {
 		 * calculate outcome probabilities for actions,
 	   	 *		given action descriptions and current belief_state 
 		*/	
-		List<Action,Double> action_probabilities = cal_action_probabilities(action_descriptions,belief_state);
+		List<Action> action_probabilities = cal_action_probabilities(action_descriptions,belief_state);
 		/**  
 		 * select action with highest expected utility
 	   	 *		given probabilities of outcomes and utility information
 		 */
 		Action finalAction = action_with_highest_expected_utility(action_probabilities);
 
-		return finalaction;
+		return finalAction;
 	}
 
 	/**
@@ -58,5 +58,5 @@ public abstract class DTAgent extends AbstractAgent {
      *							 Probabilities of various outcomes
      * @return Action with the highest probability.
      */
-	public abstract Action action_with_highest_expected_utility(List<Action,Double> action_probabilities);
+	public abstract Action action_with_highest_expected_utility(List<Action> action_probabilities);
 }
