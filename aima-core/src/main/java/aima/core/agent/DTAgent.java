@@ -22,7 +22,7 @@ public abstract class DTAgent extends AbstractAgent {
 	 * @param action
 	 *             the agent's action
 	 */
-	BeliefState belief_state;
+	BeliefState<Action,Percept> belief_state;
 	Action action;
 	List<Action> action_descriptions;
 
