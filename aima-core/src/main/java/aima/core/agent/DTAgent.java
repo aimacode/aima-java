@@ -6,6 +6,8 @@ import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.probability.BeliefState;
 
+import java.util.List;
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 13.1, page 484.<br>
  * 
