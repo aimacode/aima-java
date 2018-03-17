@@ -32,7 +32,7 @@ public abstract class DTAgent extends AbstractAgent {
 		 * calculate outcome probabilities for actions,
 	   	 *		given action descriptions and current belief_state 
 		*/	
-		List<Action,Double>> action_probabilities = cal_action_probabilities(action_descriptions,belief_state);
+		List<Action,Double> action_probabilities = cal_action_probabilities(action_descriptions,belief_state);
 		/**  
 		 * select action with highest expected utility
 	   	 *		given probabilities of outcomes and utility information
