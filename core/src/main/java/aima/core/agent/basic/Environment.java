@@ -9,26 +9,27 @@ import java.util.List;
  * @author Ritwik Sharma
  */
 public interface Environment {
-	 
-	List<Agent> getAgents();
-
+	
 	/**
 	 * Returns the Agent(s) belonging to this Environment.
+	 */ 
+	List<Agent> getAgents();
+	
+	/**
+	 * Add an agent to the Environment.
 	 */
 	void addAgent(Agent agent);
 
 	/**
-	 * Add an agent to the Environment.
+	 * Remove an agent from the environment.
 	 */
 	void removeAgent(Agent agent);
 
 	/**
-	 * Remove an agent from the environment.
+	 * Returns "true" if the Environment is finished with its current task(s).
 	 */
 	boolean isDone();
 
-	/**
-	 * Returns "true" if the Environment is finished with its current task(s).
-	 */
+	
 
 }
