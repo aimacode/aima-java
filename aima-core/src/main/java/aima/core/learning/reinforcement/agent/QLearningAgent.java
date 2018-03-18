@@ -20,11 +20,11 @@ import aima.core.util.datastructure.Pair;
  *               N<sub>sa</sub>, a table of frequencies for state-action pairs, initially zero
  *               s,a,r, the previous state, action, and reward, initially null
  *               
- *   if TERMAINAL?(s) then Q[s,None] <- r'
+ *   if TERMAINAL?(s) then Q[s,None] &larr; r'
  *   if s is not null then
  *       increment N<sub>sa</sub>[s,a]
- *       Q[s,a] <- Q[s,a] + &alpha;(N<sub>sa</sub>[s,a])(r + &gamma;max<sub>a'</sub>Q[s',a'] - Q[s,a])
- *   s,a,r <- s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'
+ *       Q[s,a] &larr; Q[s,a] + &alpha;(N<sub>sa</sub>[s,a])(r + &gamma;max<sub>a'</sub>Q[s',a'] - Q[s,a])
+ *   s,a,r &larr; s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'
  *   return a
  * </pre>
  * 
@@ -36,17 +36,17 @@ import aima.core.util.datastructure.Pair;
  * <br>
  * <b>Note:</b> There appears to be two minor defects in the algorithm outlined
  * in the book:<br>
- * if TERMAINAL?(s) then Q[s,None] <- r'<br>
+ * if TERMAINAL?(s) then Q[s,None] &larr; r'<br>
  * should be:<br>
- * if TERMAINAL?(s') then Q[s',None] <- r'<br>
+ * if TERMAINAL?(s') then Q[s',None] &larr; r'<br>
  * so that the correct value for Q[s',a'] is used in the Q[s,a] update rule when
  * a terminal state is reached.<br>
  * <br>
- * s,a,r <- s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'<br>
+ * s,a,r &larr; s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'<br>
  * should be:
  * 
  * <pre>
- * if s'.TERMINAL? then s,a,r <- null else s,a,r <- s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'
+ * if s'.TERMINAL? then s,a,r &larr; null else s,a,r &larr; s',argmax<sub>a'</sub>f(Q[s',a'],N<sub>sa</sub>[s',a']),r'
  * </pre>
  * 
  * otherwise at the beginning of a consecutive trial, s will be the prior

@@ -18,11 +18,11 @@ import java.util.function.ToDoubleFunction;
  * <pre>
  * function HILL-CLIMBING(problem) returns a state that is a local maximum
  *
- *   current &lt;- MAKE-NODE(problem.INITIAL-STATE)
+ *   current &larr; MAKE-NODE(problem.INITIAL-STATE)
  *   loop do
- *     neighbor &lt;- a highest-valued successor of current
+ *     neighbor &larr; a highest-valued successor of current
  *     if neighbor.VALUE &lt;= current.VALUE then return current.STATE
- *     current &lt;- neighbor
+ *     current &larr; neighbor
  * </pre>
  * <p>
  * Figure 4.2 The hill-climbing search algorithm, which is the most basic local

@@ -20,7 +20,7 @@ import aima.core.probability.mdp.PolicyEvaluation;
  * <br>
  * 
  * <pre>
- * U<sub>i+1</sub>(s) <- R(s) + &gamma;&Sigma;<sub>s'</sub>P(s'|s,&pi;<sub>i</sub>(s))U<sub>i</sub>(s')
+ * U<sub>i+1</sub>(s) &larr; R(s) + &gamma;&Sigma;<sub>s'</sub>P(s'|s,&pi;<sub>i</sub>(s))U<sub>i</sub>(s')
  * </pre>
  * 
  * and this is repeated k times to produce the next utility estimate. The

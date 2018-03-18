@@ -19,11 +19,11 @@ import aima.core.util.FrequencyCounter;
  *               N<sub>s</sub>, a table of frequencies for states, initially zero
  *               s,a,r, the previous state, action, and reward, initially null
  *               
- *   if s' is new then U[s'] <- r'
+ *   if s' is new then U[s'] &larr; r'
  *   if s is not null then
  *        increment N<sub>s</sub>[s]
- *        U[s] <- U[s] + &alpha;(N<sub>s</sub>[s])(r + &gamma;U[s'] - U[s])
- *   if s'.TERMINAL? then s,a,r <- null else s,a,r <- s',&pi;[s'],r'
+ *        U[s] &larr; U[s] + &alpha;(N<sub>s</sub>[s])(r + &gamma;U[s'] - U[s])
+ *   if s'.TERMINAL? then s,a,r &larr; null else s,a,r &larr; s',&pi;[s'],r'
  *   return a
  * </pre>
  * 

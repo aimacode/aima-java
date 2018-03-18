@@ -22,9 +22,9 @@ import aima.core.agent.impl.aprog.simplerule.Rule;
  *               rules, a set of condition-action rules
  *               action, the most recent action, initially none
  *               
- *   state  <- UPDATE-STATE(state, action, percept, model)
- *   rule   <- RULE-MATCH(state, rules)
- *   action <- rule.ACTION
+ *   state  &larr; UPDATE-STATE(state, action, percept, model)
+ *   rule   &larr; RULE-MATCH(state, rules)
+ *   action &larr; rule.ACTION
  *   return action
  * </pre>
  * 

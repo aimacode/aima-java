@@ -22,17 +22,17 @@ import java.util.stream.Collectors;
  *
  * function RBFS(problem, node, f_limit) returns a solution, or failure and a new f-cost limit
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
- *   successors &lt;- []
+ *   successors &larr; []
  *   for each action in problem.ACTION(node.STATE) do
  *       add CHILD-NODE(problem, node, action) into successors
  *   if successors is empty then return failure, infinity
  *   for each s in successors do // update f with value from previous search, if any
- *     s.f &lt;- max(s.g + s.h, node.f)
+ *     s.f &larr; max(s.g + s.h, node.f)
  *   repeat
- *     best &lt;- the lowest f-value node in successors
+ *     best &larr; the lowest f-value node in successors
  *     if best.f &gt; f_limit then return failure, best.f
- *     alternative &lt;- the second-lowest f-value among successors
- *     result, best.f &lt;- RBFS(problem, best, min(f_limit, alternative))
+ *     alternative &larr; the second-lowest f-value among successors
+ *     result, best.f &larr; RBFS(problem, best, min(f_limit, alternative))
  *     if result != failure then return result
  * </pre>
  * <p>

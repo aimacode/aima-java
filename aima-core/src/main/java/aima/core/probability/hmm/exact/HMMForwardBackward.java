@@ -21,12 +21,12 @@ import aima.core.util.math.Matrix;
  *                    b, a representation of the backward message, initially all 1s
  *                    sv, a vector of smoothed estimates for steps 1,...,t
  *                    
- *   fv[0] <- prior
+ *   fv[0] &larr; prior
  *   for i = 1 to t do
- *       fv[i] <- FORWARD(fv[i-1], ev[i])
+ *       fv[i] &larr; FORWARD(fv[i-1], ev[i])
  *   for i = t downto 1 do
- *       sv[i] <- NORMALIZE(fv[i] * b)
- *       b <- BACKWARD(b, ev[i])
+ *       sv[i] &larr; NORMALIZE(fv[i] * b)
+ *       b &larr; BACKWARD(b, ev[i])
  *   return sv
  * </pre>
  * 

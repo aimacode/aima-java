@@ -16,7 +16,7 @@ import java.util.function.Consumer;
  * <pre>
  * function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or failure
  *   for depth = 0 to infinity  do
- *     result &lt;- DEPTH-LIMITED-SEARCH(problem, depth)
+ *     result &larr; DEPTH-LIMITED-SEARCH(problem, depth)
  *     if result != cutoff then return result
  * </pre>
  * 

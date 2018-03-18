@@ -22,9 +22,9 @@ import aima.core.probability.util.ProbabilityTable;
  *   local variables: <b>N</b>, a vector of counts for each value of X, initially zero
  *   
  *   for j = 1 to N do
- *       <b>x</b> <- PRIOR-SAMPLE(bn)
+ *       <b>x</b> &larr; PRIOR-SAMPLE(bn)
  *       if <b>x</b> is consistent with e then
- *          <b>N</b>[x] <- <b>N</b>[x] + 1 where x is the value of X in <b>x</b>
+ *          <b>N</b>[x] &larr; <b>N</b>[x] + 1 where x is the value of X in <b>x</b>
  *   return NORMALIZE(<b>N</b>)
  * </pre>
  * 

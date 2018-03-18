@@ -23,12 +23,12 @@ import aima.core.util.Util;
  *                    &pi;, a policy vector indexed by state, initially random
  *                    
  *   repeat
- *      U <- POLICY-EVALUATION(&pi;, U, mdp)
- *      unchanged? <- true
+ *      U &larr; POLICY-EVALUATION(&pi;, U, mdp)
+ *      unchanged? &larr; true
  *      for each state s in S do
  *          if max<sub>a &isin; A(s)</sub> &Sigma;<sub>s'</sub>P(s'|s,a)U[s'] > &Sigma;<sub>s'</sub>P(s'|s,&pi;[s])U[s'] then do
- *             &pi;[s] <- argmax<sub>a &isin; A(s)</sub> &Sigma;<sub>s'</sub>P(s'|s,a)U[s']
- *             unchanged? <- false
+ *             &pi;[s] &larr; argmax<sub>a &isin; A(s)</sub> &Sigma;<sub>s'</sub>P(s'|s,a)U[s']
+ *             unchanged? &larr; false
  *   until unchanged?
  *   return &pi;
  * </pre>

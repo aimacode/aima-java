@@ -28,15 +28,15 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  *               s, a, the previous state and action, initially null
  *    
  *   if GOAL-TEST(s') then return stop
- *   if s' is a new state (not in untried) then untried[s'] &lt;- ACTIONS(s')
+ *   if s' is a new state (not in untried) then untried[s'] &larr; ACTIONS(s')
  *   if s is not null then
- *       result[s, a] &lt;- s'
+ *       result[s, a] &larr; s'
  *       add s to the front of the unbacktracked[s']
  *   if untried[s'] is empty then
  *       if unbacktracked[s'] is empty then return stop
- *       else a &lt;- an action b such that result[s', b] = POP(unbacktracked[s'])
- *   else a &lt;- POP(untried[s'])
- *   s &lt;- s'
+ *       else a &larr; an action b such that result[s', b] = POP(unbacktracked[s'])
+ *   else a &larr; POP(untried[s'])
+ *   s &larr; s'
  *   return a
  * </pre>
  * 

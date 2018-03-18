@@ -22,7 +22,7 @@ import java.util.Optional;
  *   if problem.GOAL-TEST(state) then return the empty plan
  *   if state is on path then return failure
  *   for each action in problem.ACTIONS(state) do
- *       plan <- AND-SEARCH(RESULTS(state, action), problem, [state | path])
+ *       plan &larr; AND-SEARCH(RESULTS(state, action), problem, [state | path])
  *       if plan != failure then return [action | plan]
  *   return failure
  * 
@@ -30,7 +30,7 @@ import java.util.Optional;
  * 
  * function AND-SEARCH(states, problem, path) returns a conditional plan, or failure
  *   for each s<sub>i</sub> in states do
- *      plan<sub>i</sub> <- OR-SEARCH(s<sub>i</sub>, problem, path)
+ *      plan<sub>i</sub> &larr; OR-SEARCH(s<sub>i</sub>, problem, path)
  *      if plan<sub>i</sub> = failure then return failure
  *   return [if s<sub>1</sub> then plan<sub>1</sub>
  *           else if s<sub>2</sub> then plan<sub>2</sub> ...
@@ -89,7 +89,7 @@ public class AndOrSearch<S, A> {
 	 *   if problem.GOAL-TEST(state) then return the empty plan
 	 *   if state is on path then return failure
 	 *   for each action in problem.ACTIONS(state) do
-	 *       plan <- AND-SEARCH(RESULTS(state, action), problem, [state | path])
+	 *       plan &larr; AND-SEARCH(RESULTS(state, action), problem, [state | path])
 	 *       if plan != failure then return [action | plan]
 	 *   return failure
 	 * </code>
@@ -128,7 +128,7 @@ public class AndOrSearch<S, A> {
 	 * <code>
 	 * function AND-SEARCH(states, problem, path) returns a conditional plan, or failure
 	 *   for each s<sub>i</sub> in states do
-	 *      plan<sub>i</sub> <- OR-SEARCH(s<sub>i</sub>, problem, path)
+	 *      plan<sub>i</sub> &larr; OR-SEARCH(s<sub>i</sub>, problem, path)
 	 *      if plan<sub>i</sub> = failure then return failure
 	 *   return [if s<sub>1</sub> then plan<sub>1</sub>
 	 *           else if s<sub>2</sub> then plan<sub>2</sub> ...

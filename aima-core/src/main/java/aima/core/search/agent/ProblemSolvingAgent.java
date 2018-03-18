@@ -27,18 +27,18 @@ import java.util.Queue;
  *   inputs: percept, a percept
  *   static: state, some description of current agent and world state
  *           
- *   state <- UPDATE-STATE(state, percept)
+ *   state &larr; UPDATE-STATE(state, percept)
  *   while (state.plan is empty) do
- *     goal <- FORMULATE-GOAL(state)
+ *     goal &larr; FORMULATE-GOAL(state)
  *     if (goal != null) then
- *       problem    <- FORMULATE-PROBLEM(state, goal)
- *       state.plan <- SEARCH(problem)
+ *       problem    &larr; FORMULATE-PROBLEM(state, goal)
+ *       state.plan &larr; SEARCH(problem)
  *       if (state.plan is empty and !tryWithAnotherGoal()) then
  *         add NO_OP to plan         // failure
  *     else
  *       add NO_OP to plan           // success
- *   action <- FIRST(state.plan)
- *   plan <- REST(state.plan)
+ *   action &larr; FIRST(state.plan)
+ *   plan &larr; REST(state.plan)
  *   return action
  * </code>
  * </pre>

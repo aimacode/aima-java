@@ -31,15 +31,15 @@ import aima.core.logic.fol.parsing.ast.Variable;
  *   local variables: new, the new sentences inferred on each iteration
  *   
  *   repeat until new is empty
- *      new &lt;- {}
+ *      new &larr; {}
  *      for each rule in KB do
- *          (p1 &circ; ... &circ; pn =&gt; q) &lt;- STANDARDIZE-VARAIBLES(rule)
+ *          (p1 &circ; ... &circ; pn =&gt; q) &larr; STANDARDIZE-VARAIBLES(rule)
  *          for each theta such that SUBST(theta, p1 &circ; ... &circ; pn) = SUBST(theta, p'1 &circ; ... &circ; p'n)
  *                         for some p'1,...,p'n in KB
- *              q' &lt;- SUBST(theta, q)
+ *              q' &larr; SUBST(theta, q)
  *              if q' does not unify with some sentence already in KB or new then
  *                   add q' to new
- *                   theta &lt;- UNIFY(q', alpha)
+ *                   theta &larr; UNIFY(q', alpha)
  *                   if theta is not fail then return theta
  *      add new to KB
  *   return false

@@ -21,21 +21,21 @@ import java.util.Random;
  *           FITNESS-FN, a function that measures the fitness of an individual
  *           
  *   repeat
- *     new_population &lt;- empty set
+ *     new_population &larr; empty set
  *     for i = 1 to SIZE(population) do
- *       x &lt;- RANDOM-SELECTION(population, FITNESS-FN)
- *       y &lt;- RANDOM-SELECTION(population, FITNESS-FN)
- *       child &lt;- REPRODUCE(x, y)
- *       if (small random probability) then child &lt;- MUTATE(child)
+ *       x &larr; RANDOM-SELECTION(population, FITNESS-FN)
+ *       y &larr; RANDOM-SELECTION(population, FITNESS-FN)
+ *       child &larr; REPRODUCE(x, y)
+ *       if (small random probability) then child &larr; MUTATE(child)
  *       add child to new_population
- *     population &lt;- new_population
+ *     population &larr; new_population
  *   until some individual is fit enough, or enough time has elapsed
  *   return the best individual in population, according to FITNESS-FN
  * --------------------------------------------------------------------------------
  * function REPRODUCE(x, y) returns an individual
  *   inputs: x, y, parent individuals
  *   
- *   n &lt;- LENGTH(x); c &lt;- random number from 1 to n
+ *   n &larr; LENGTH(x); c &larr; random number from 1 to n
  *   return APPEND(SUBSTRING(x, 1, c), SUBSTRING(y, c+1, n))
  * </pre>
  * 

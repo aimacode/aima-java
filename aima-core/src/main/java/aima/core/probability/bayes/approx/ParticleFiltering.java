@@ -29,9 +29,9 @@ import aima.core.util.Util;
  *   local variables: W, a vector of weights of size N
  *   
  *   for i = 1 to N do
- *       S[i] <- sample from <b>P</b>(<b>X</b><sub>1</sub> | <b>X</b><sub>0</sub> = S[i]) /* step 1 
- *       W[i] <- <b>P</b>(<b>e</b> | <b>X</b><sub>1</sub> = S[i]) /* step 2
- *   S <- WEIGHTED-SAMPLE-WITH-REPLACEMENT(N, S, W) /* step 3
+ *       S[i] &larr; sample from <b>P</b>(<b>X</b><sub>1</sub> | <b>X</b><sub>0</sub> = S[i]) /* step 1 
+ *       W[i] &larr; <b>P</b>(<b>e</b> | <b>X</b><sub>1</sub> = S[i]) /* step 2
+ *   S &larr; WEIGHTED-SAMPLE-WITH-REPLACEMENT(N, S, W) /* step 3
  *   return S
  * </pre>
  * 

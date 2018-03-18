@@ -13,20 +13,20 @@ import aima.core.nlp.parsing.grammars.Rule;
  * 
  * <pre>
  * function CYK-PARSE(words, grammar) returns P, a table of probabilities
- *   N <- LENGTH(words)
- *   M <- the number of nonterminal symbols in grammar
- *   P <- an array of size[M,N,N], initially all 0
+ *   N &larr; LENGTH(words)
+ *   M &larr; the number of nonterminal symbols in grammar
+ *   P &larr; an array of size[M,N,N], initially all 0
  *   /* Insert Lexical rules for each word *\
  *   for i = 1 to N do
  *   	for each rule of form( X -> words<sub>i</sub>[p]) do
- *   		P[X,i,1] <- p
+ *   		P[X,i,1] &larr; p
  *   /* Combine first and second parts of right-hand sides of rules, from short to long *\
  *   for length = 2 to N do
  *   	for start = 1 to N - length + 1 do
  *   		for len1 = 1 to N -1 do 
- *   			len2 <- length - len1
+ *   			len2 &larr; length - len1
  *   		for each rule of the form( X -> Y Z [p] ) do
- *   			p[X, start, length] <- MAX(P[X, start, length],
+ *   			p[X, start, length] &larr; MAX(P[X, start, length],
  *   						P[Y, start, len1] * P[Z, start + len1, len2] * p)
  *   return P
  * </pre>

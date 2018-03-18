@@ -20,7 +20,7 @@ import aima.core.util.datastructure.Table;
  *               table, a table of actions, indexed by percept sequences, initially fully specified
  *           
  *   append percept to end of percepts
- *   action <- LOOKUP(percepts, table)
+ *   action &larr; LOOKUP(percepts, table)
  *   return action
  * </pre>
  * 

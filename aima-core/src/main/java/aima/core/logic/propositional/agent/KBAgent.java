@@ -17,9 +17,9 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  *               t, a counter, initially 0, indicating time
  *           
  *   TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
- *   action &lt;- ASK(KB, MAKE-ACTION-QUERY(t))
+ *   action &larr; ASK(KB, MAKE-ACTION-QUERY(t))
  *   TELL(KB, MAKE-ACTION-SENTENCE(action, t))
- *   t &lt;- t + 1
+ *   t &larr; t + 1
  *   return action
  * 
  * </pre>

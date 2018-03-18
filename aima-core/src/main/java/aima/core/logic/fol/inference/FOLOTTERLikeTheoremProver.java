@@ -40,7 +40,7 @@ import aima.core.logic.fol.parsing.ast.Variable;
  *   usable, background knowledge potentially relevant to the problem
  *   
  *   repeat
- *      clause <- the lightest member of sos
+ *      clause &larr; the lightest member of sos
  *      move clause from sos to usable
  *      PROCESS(INFER(clause, usable), sos)
  *   until sos = [] or a refutation has been found
@@ -57,10 +57,10 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * procedure PROCESS(clauses, sos)
  * 
  *   for each clause in clauses do
- *       clause <- SIMPLIFY(clause)
+ *       clause &larr; SIMPLIFY(clause)
  *       merge identical literals
  *       discard clause if it is a tautology
- *       sos <- [clause | sos]
+ *       sos &larr; [clause | sos]
  *       if clause has no literals then a refutation has been found
  *       if clause has one literal then look for unit refutation
  * </pre>
