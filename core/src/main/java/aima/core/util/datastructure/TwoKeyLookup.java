@@ -112,7 +112,7 @@ public class TwoKeyLookup<K1, K2, V> {
 		V value = null;
 		Map<K2, V> k2Map = k1Map.remove(key1);
 		if (k2Map != null) {
-			value = k2Map.remove(k1Map);
+			value = k2Map.remove(key2);
 		}
 		return value;
 	}
