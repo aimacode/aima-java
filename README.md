@@ -433,6 +433,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/SATPlan.md">SATPlan</a></td>
        <td><a href="core/src/main/java/aima/core/logic/basic/propositional/inference/SATPlan.java">SATPlan</a></td>
    </tr>
+    <tr>
+       <td>17.?</td>
+       <td>??</td>
+       <td>Markov Decision Process</td>
+       <td><a href="core/src/main/java/aima/core/Probability/MarkovDecisionProcess.java">MarkovDecisionProcess</a></td>
+   </tr>
    <tr>
        <td></td>
        <td></td>
