@@ -31,17 +31,17 @@ public class NQueensGenAlgoUtilTest {
 
 	@Test
 	public void test_getValue() {
-		Assert.assertTrue(0.0 == fitnessFunction
-				.apply(new Individual<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0))));
-		Assert.assertTrue(0.0 == fitnessFunction
-				.apply(new Individual<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7))));
-		Assert.assertTrue(0.0 == fitnessFunction
-				.apply(new Individual<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 0))));
+		Assert.assertEquals(0.0, fitnessFunction
+				.apply(new Individual<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0))), 0.0);
+		Assert.assertEquals(0.0, fitnessFunction
+				.apply(new Individual<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7))), 0.0);
+		Assert.assertEquals(0.0, fitnessFunction
+				.apply(new Individual<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 0))), 0.0);
 
-		Assert.assertTrue(23.0 == fitnessFunction
-				.apply(new Individual<>(Arrays.asList(5, 6, 1, 3, 6, 4, 7, 7))));
-		Assert.assertTrue(28.0 == fitnessFunction
-				.apply(new Individual<>(Arrays.asList(0, 4, 7, 5, 2, 6, 1, 3))));
+		Assert.assertEquals(23.0, fitnessFunction
+				.apply(new Individual<>(Arrays.asList(5, 6, 1, 3, 6, 4, 7, 7))), 0.0);
+		Assert.assertEquals(28.0, fitnessFunction
+				.apply(new Individual<>(Arrays.asList(0, 4, 7, 5, 2, 6, 1, 3))), 0.0);
 	}
 
 	@Test

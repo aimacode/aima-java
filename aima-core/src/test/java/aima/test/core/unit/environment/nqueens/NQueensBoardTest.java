@@ -13,7 +13,7 @@ import aima.core.util.datastructure.XYLocation;
  */
 public class NQueensBoardTest {
 
-	NQueensBoard board;
+	private NQueensBoard board;
 
 	@Before
 	public void setUp() {
@@ -42,77 +42,54 @@ public class NQueensBoardTest {
 	public void testCornerQueenAttack1() {
 
 		board.addQueenAt(new XYLocation(0, 0));
-		Assert.assertEquals(false,
-				board.isSquareUnderAttack(new XYLocation(0, 0)));
+		Assert.assertFalse(board.isSquareUnderAttack(new XYLocation(0, 0)));
 		// queen on square not included
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(1, 0)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(7, 0)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(0, 7)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(1, 1)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(2, 2)));
-		Assert.assertEquals(false,
-				board.isSquareUnderAttack(new XYLocation(2, 1)));
-		Assert.assertEquals(false,
-				board.isSquareUnderAttack(new XYLocation(1, 2)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(1, 0)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(7, 0)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(0, 7)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(1, 1)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(2, 2)));
+		Assert.assertFalse(board.isSquareUnderAttack(new XYLocation(2, 1)));
+		Assert.assertFalse(board.isSquareUnderAttack(new XYLocation(1, 2)));
 	}
 
 	@Test
 	public void testCornerQueenAttack2() {
 
 		board.addQueenAt(new XYLocation(7, 7));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(0, 0)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(7, 0)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(0, 7)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(7, 0)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(6, 6)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(5, 5)));
-		Assert.assertEquals(false,
-				board.isSquareUnderAttack(new XYLocation(6, 5)));
-		Assert.assertEquals(false,
-				board.isSquareUnderAttack(new XYLocation(5, 6)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(0, 0)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(7, 0)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(0, 7)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(7, 0)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(6, 6)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(5, 5)));
+		Assert.assertFalse(board.isSquareUnderAttack(new XYLocation(6, 5)));
+		Assert.assertFalse(board.isSquareUnderAttack(new XYLocation(5, 6)));
 	}
 
 	@Test
 	public void testEdgeQueenAttack() {
 
 		board.addQueenAt(new XYLocation(0, 3));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(0, 0)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(0, 7)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(7, 3)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(3, 0)));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(4, 7)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(0, 0)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(0, 7)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(7, 3)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(3, 0)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(4, 7)));
 	}
 
 	@Test
 	public void testAttack2() {
 
 		board.addQueenAt(new XYLocation(7, 0));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(6, 1)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(6, 1)));
 	}
 
 	@Test
 	public void testAttack3() {
 
 		board.addQueenAt(new XYLocation(0, 0));
-		Assert.assertEquals(true,
-				board.isSquareUnderAttack(new XYLocation(0, 1)));
+		Assert.assertTrue(board.isSquareUnderAttack(new XYLocation(0, 1)));
 	}
 
 	@Test
@@ -208,7 +185,7 @@ public class NQueensBoardTest {
 		Assert.assertEquals(board, board2);
 		NQueensBoard board3 = new NQueensBoard(8);
 		board3.addQueenAt(new XYLocation(0, 1));
-		Assert.assertFalse(board.equals(board3));
+		Assert.assertNotEquals(board, board3);
 	}
 
 	@Test
