@@ -11,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.agent.Action;
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.search.framework.problem.ActionsFunction;
 import aima.core.search.framework.problem.ResultFunction;
