@@ -16,7 +16,16 @@ import java.util.Random;
  */
 public class NQueensBoard {
 
+    /**
+     * X---> increases left to right with zero based index Y increases top to
+     * bottom with zero based index | | V
+     */
     private boolean[][] board;
+
+    /** Parameters for initialization. */
+    public enum Configuration{
+        RANDOM_QUEENS_IN_EVERY_COL, EMPTY
+    }
 
     /**
      * Default constructor. Creates a square board of side given by boardSize.
@@ -32,9 +41,44 @@ public class NQueensBoard {
                 board[i][j] = false;
             }
         }
+    }
+
+    /**
+     * A constructor that specifies the initial configuration of the board.
+     * @param boardSize the length of the side of the square board.
+     * @param config the initial configuration of the board
+     */
+    public NQueensBoard(int boardSize,Configuration config) {
+        board = new boolean[boardSize][boardSize];
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                board[i][j] = false;
+            }
+        }
+        if (config == Configuration.EMPTY) {
+            return;
+        }
+        else if (config == Configuration.RANDOM_QUEENS_IN_EVERY_COL){
         Random r = new Random();
         for (int i = 0; i < boardSize; i++)
             addQueenAt(new GridLocation2D(i, r.nextInt(boardSize)));
+        }
+
+    }
+
+    /**
+     * This constructor can be used to specify the initial location of the board.
+     * @param boardSize the length of the side of the square board.
+     * @param locations A list of location where the queens are initially located.
+     */
+    public NQueensBoard(int boardSize,List<GridLocation2D> locations) {
+        board = new boolean[boardSize][boardSize];
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                board[i][j] = false;
+            }
+        }
+        setQueensAt(locations);
     }
 
     /**
@@ -53,6 +97,16 @@ public class NQueensBoard {
     public void addQueenAt(GridLocation2D location){
         if (!queenExistsAt(location))
             board[location.getX()][location.getY()] = true;
+    }
+
+    /**
+     * This method moves a queen from one location to another.
+     * @param initialLocation The initial position of the queen.
+     * @param finalLocation The final position of the queen.
+     */
+    public void moveQueen(GridLocation2D initialLocation, GridLocation2D finalLocation){
+        removeQueenFrom(initialLocation);
+        addQueenAt(finalLocation);
     }
 
     /**
@@ -93,7 +147,7 @@ public class NQueensBoard {
      * @param locations A list of locations specifying the configuration of the
      *                  board.
      */
-    public void setQueensAt(List<GridLocation2D> locations){
+    private void setQueensAt(List<GridLocation2D> locations){
         clear();
         locations.forEach(this::addQueenAt);
     }
@@ -103,7 +157,7 @@ public class NQueensBoard {
      * @param location specifies the location of the cell to be checked
      * @return true if queen is present at the location else false
      */
-    private boolean queenExistsAt(GridLocation2D location) {
+    public boolean queenExistsAt(GridLocation2D location) {
         return board[location.getX()][location.getY()];
     }
 

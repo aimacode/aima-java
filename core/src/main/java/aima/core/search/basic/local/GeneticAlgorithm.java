@@ -24,8 +24,8 @@ import aima.core.util.Util;
  *   repeat
  *     new_population &lt;- empty set
  *     repeat
- *       x &lt;- RANDOM-SELECTION(population, FITNESS-FN)
- *       y &lt;- RANDOM-SELECTION(population, FITNESS-FN)
+ *       x &lt;- RANDOM_QUEENS_IN_EVERY_COL-SELECTION(population, FITNESS-FN)
+ *       y &lt;- RANDOM_QUEENS_IN_EVERY_COL-SELECTION(population, FITNESS-FN)
  *       child &lt;- REPRODUCE(x, y)
  *       if (small random probability) then child &lt;- MUTATE(child)
  *       add child to new_population
@@ -73,9 +73,9 @@ public class GeneticAlgorithm<A> {
 			Set<Individual<A>> new_population = new HashSet<Individual<A>>(population.size());
 			// repeat
 			do {
-				// x <- RANDOM-SELECTION(population, FITNESS-FN)
+				// x <- RANDOM_QUEENS_IN_EVERY_COL-SELECTION(population, FITNESS-FN)
 				Individual<A> x = randomSelection(population, fitnessFN);
-				// y <- RANDOM-SELECTION(population, FITNESS-FN)
+				// y <- RANDOM_QUEENS_IN_EVERY_COL-SELECTION(population, FITNESS-FN)
 				Individual<A> y = randomSelection(population, fitnessFN);
 				// child <- REPRODUCE(x, y)
 				Individual<A> child = reproduce(x, y);
