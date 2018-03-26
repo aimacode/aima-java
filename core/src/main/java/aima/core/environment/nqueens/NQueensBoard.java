@@ -12,6 +12,8 @@ import java.util.Random;
  * such that no queen attacks any other. A queen attacks any piece in the same
  * row, column or diagonal.
  *
+ * @author Ruediger Lunde
+ * @author Ciaran O'Reilly
  * @author samagra
  */
 public class NQueensBoard {
