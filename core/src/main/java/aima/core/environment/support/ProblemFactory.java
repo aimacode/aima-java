@@ -46,8 +46,8 @@ public class ProblemFactory {
 
 		return new BasicProblem<>(new InState(initialState),
 				Map2DFunctionFactory.getActionsFunction(simplifidRoadMapOfPartOfRomania),
-				Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
-				Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocations),
+				Map2DFunctionFactory.getResultFunction(),
+				Map2DFunctionFactory.getGoalTestPredicate(goalLocations),
 				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania));
 	}
 
@@ -60,13 +60,13 @@ public class ProblemFactory {
 		}
 		return new Pair<>(new BasicProblem<>(new InState(initialState),
 				Map2DFunctionFactory.getActionsFunction(simplifidRoadMapOfPartOfRomania),
-				Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
-				Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocation),
+				Map2DFunctionFactory.getResultFunction(),
+				Map2DFunctionFactory.getGoalTestPredicate(goalLocation),
 				Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania)),
 				new BasicProblem<>(new InState(goalLocation),
 						Map2DFunctionFactory.getActionsFunction(simplifidRoadMapOfPartOfRomania),
-						Map2DFunctionFactory.getResultFunction(simplifidRoadMapOfPartOfRomania),
-						Map2DFunctionFactory.getGoalTestPredicate(simplifidRoadMapOfPartOfRomania, goalLocation),
+						Map2DFunctionFactory.getResultFunction(),
+						Map2DFunctionFactory.getGoalTestPredicate(goalLocation),
 						Map2DFunctionFactory.getStepCostFunction(simplifidRoadMapOfPartOfRomania)));
 	}
 
