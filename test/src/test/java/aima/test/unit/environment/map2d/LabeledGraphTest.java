@@ -15,8 +15,9 @@ import java.util.List;
  * @author samagra
  */
 public class LabeledGraphTest {
-    // In this graph all non-co-prime pairs of integers
-    // are connected
+    // In this graph, all non-co-prime pairs of integers
+    // are connected with an edge directed from the smaller number
+    //towards the larger number
     private LabeledGraph<Integer,Pair<Integer,Integer>> graph;
     @Before
     public void setup(){
@@ -61,6 +62,13 @@ public class LabeledGraphTest {
         Assert.assertEquals(4,graph.getVertexLabels().size());
         graph.set(6,12, new Pair<>(6,12));
         Assert.assertEquals(4,graph.getVertexLabels().size());
+        //checking edges
+        Assert.assertNull(graph.get(2,3));
+        Assert.assertEquals(new Pair<>(2,6),graph.get(2,6));
+        Assert.assertEquals(new Pair<>(2,12),graph.get(2,12));
+        Assert.assertEquals(new Pair<>(3,6),graph.get(3,6));
+        Assert.assertEquals(new Pair<>(3,12),graph.get(3,12));
+        Assert.assertEquals(new Pair<>(6,12),graph.get(6,12));
     }
 
     @Test
