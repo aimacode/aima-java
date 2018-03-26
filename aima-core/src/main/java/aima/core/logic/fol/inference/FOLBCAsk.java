@@ -17,28 +17,33 @@ import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 /**
- * Artificial Intelligence A Modern Approach (2nd Edition): Figure 9.6, page
- * 288.<br>
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.6, page
+ * 338.<br>
  * <br>
  * 
  * <pre>
- * function FOL-BC-ASK(KB, goals, theta) returns a set of substitutions
- *   input: KB, a knowledge base
- *          goals, a list of conjuncts forming a query (theta already applied)
- *          theta, the current substitution, initially the empty substitution {}
- *   local variables: answers, a set of substitutions, initially empty
- *   
- *   if goals is empty then return {theta}
- *   qDelta &lt;- SUBST(theta, FIRST(goals))
- *   for each sentence r in KB where STANDARDIZE-APART(r) = (p1 &circ; ... &circ; pn =&gt; q)
- *          and thetaDelta &lt;- UNIFY(q, qDelta) succeeds
- *       new_goals &lt;- [p1,...,pn|REST(goals)]
- *       answers &lt;- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta, theta)) U answers
- *   return answers
+ * function FOL-BC-ASK(KB, query) returns a generator of substitutions
+ *   return FOL-BC-OR(KB, query, { })
+ *
+ * generator FOL-BC-OR(KB, goal, θ) yeilds a substitution
+ *   for each rule (lhs ⇒ rhs) in FETCH-RULES-FOR-GOAL(KB, goal) do
+ *        (lhs, rhs) ← STANDARDIZE-VARIABLES((lhs, rhs))
+ *  	  for each θ' in FOL-BC-AND(KB, lhs, UNIFY(rhs, goal, θ)) do
+ *    	       yeild θ'
+ *
+ * generator FOL-BC-AND(KB, goals, θ) yeilds a substitution
+ *   if θ = failure then return
+ *   else if LENGTH(goals) = 0 then yeild θ
+ *   else do
+ *        first, rest ← FIRST(goals), REST(goals)
+ *        for each θ' in FOL-BC-OR(KB, SUBST(θ, first), θ) do
+ *             for each θ'' in FOL-BC-AND(KB, rest, θ') do
+ *                  yeild θ'
  * </pre>
  * 
- * Figure 9.6 A simple backward-chaining algorithm.
+ * Figure 9.6 A simple backward-chaining algorithm for first-order knowledge bases.
  * 
+ * @author Ritwik Sharma
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  */
@@ -140,7 +145,7 @@ public class FOLBCAsk implements InferenceProcedure {
 		return thisLevelProofSteps;
 	}
 
-	// Artificial Intelligence A Modern Approach (2nd Edition): page 288.
+	// Artificial Intelligence A Modern Approach (3rd Edition): page 338.
 	// COMPOSE(delta, tau) is the substitution whose effect is identical to
 	// the effect of applying each substitution in turn. That is,
 	// SUBST(COMPOSE(theta1, theta2), p) = SUBST(theta2, SUBST(theta1, p))
