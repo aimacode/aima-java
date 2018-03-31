@@ -35,7 +35,7 @@ public abstract class InformationGatheringAgent extends AbstractAgent {
 	Action action;
 	Action real;
 	 
-	public RandomVariable BayesianNetwork(BayesianNetwork D) {
+	public BayesianNetwork BayesianNetwork(BayesianNetwork D) {
 		this.D = D;
 	}
 	
