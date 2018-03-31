@@ -81,7 +81,14 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |9|354|Demodulation|[Demodulation](/aima-core/src/main/java/aima/core/logic/fol/inference/Demodulation.java)|
 |9|354|Paramodulation|[Paramodulation](/aima-core/src/main/java/aima/core/logic/fol/inference/Paramodulation.java)|
 |9|345|Subsumption|[SubsumptionElimination](/aima-core/src/main/java/aima/core/logic/fol/SubsumptionElimination.java)|
+|9.8|341|Append|---|
+|10.1|369|AIR-CARGO-TRANSPORT-PROBLEM|---|
+|10.2|370|SPARE-TIRE-PROBLEM|---|
+|10.3|371|BLOCKS-WORLD |---|
+|10.7|380|HAVE-CAKE-AND-EAT-CAKE-TOO-PROBLEM|---|
 |10.9|383|Graphplan|---|
+|11.1|402|JOB-SHOP-SCHEDULING-PROBLEM|---|
+|11.4|407|REFINEMENT-HIGH-LEVEL-ACTIONS|---|
 |11.5|409|Hierarchical-Search|---|
 |11.8|414|Angelic-Search|---|
 |13.1|484|DT-Agent|---|
@@ -119,6 +126,9 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |21.8|844|Q-Learning-Agent|[QLearningAgent](/aima-core/src/main/java/aima/core/learning/reinforcement/agent/QLearningAgent.java)|
 |22.1|871|HITS|[HITS](/aima-core/src/main/java/aima/core/nlp/ranking/HITS.java)|
 |23.5|894|CYK-Parse|[CYK](/aima-core/src/main/java/aima/core/nlp/parsing/CYK.java)|
-|25.9|982|Monte-Carlo-Localization|[MonteCarloLocalization](/aima-core/src/main/java/aima/core/robotics/MonteCarloLocalization.java)|
+|23.6|895|SENTENCE-TREE|---|
+|25.9|982|Monte-Carlo-Localization|[MonteCarloLocalization](/aima-core/src/main/java/aima/core/robotics
+|29.1|1062|POWERS-OF-2|---|
+/MonteCarloLocalization.java)|
 
 ###  "---" indicates algorithms yet to be implemented.
