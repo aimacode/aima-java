@@ -37,7 +37,7 @@ public abstract class InformationGatheringAgent extends AbstractAgent {
 	 
 	
 
-	public InformationGatheringAgent(BayesianNetwork D,Percept percept,Action real) {
+	public InformationGatheringAgent(Percept percept) {
 		this.D = D;
 		/** get maximum value(best action) from D.
 		 *  @para real
