@@ -45,7 +45,7 @@ public abstract class InformationGatheringAgent extends AbstractAgent {
 		 *  @para real
 		 *	      the best action from D	
 		 */	          
-		real = D.getMaximumValue(percept); // the value that maximizes VPI (Ej) / Cost (Ej )
+		real = D.getMaximumValue(D, percept); // the value that maximizes VPI (Ej) / Cost (Ej )
 
 		List<RandomVariable> ej; // observable evidence variable
 		
@@ -68,6 +68,6 @@ public abstract class InformationGatheringAgent extends AbstractAgent {
 	public abstract Action VPI();
 	public abstract Action Cost();
 	public abstract Action REQUEST();
-	public abstract Percept getMaximumValue(Percept percept);
+	public abstract Percept getMaximumValue(BayesianNetwork D, Percept percept);
 
 }
