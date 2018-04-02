@@ -45,7 +45,7 @@ public abstract class InformationGatheringAgent extends AbstractAgent {
 		 *  @para real
 		 *	      the best action from D	
 		 */	          
-		real = D.getMaximumValue(D, percept); // the value that maximizes VPI (Ej) / Cost (Ej )
+		Action real = D.getMaximumValue(D, percept); // the value that maximizes VPI (Ej) / Cost (Ej )
 
 		List<RandomVariable> ej; // observable evidence variable
 		
