@@ -72,7 +72,7 @@ public class SubstVisitor extends AbstractFOLVisitor {
 		Sentence quantified = sentence.getQuantified();
 		Sentence quantifiedAfterSubs = (Sentence) quantified.accept(this, arg);
 
-		List<Variable> variables = new ArrayList<Variable>();
+		List<Variable> variables = new ArrayList<>();
 		for (Variable v : sentence.getVariables()) {
 			Term st = substitution.get(v);
 			if (null != st) {
