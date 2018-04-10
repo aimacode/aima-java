@@ -25,4 +25,13 @@ public interface Clause {
      * @return the consequence of the implication clause
      */
     Literal getConsequence();
+
+    boolean isDefiniteClause();
+
+    boolean isUnitClause();
+
+    boolean isImplicationDefiniteClause();
+
+    boolean isHornClause();
+
 }
