@@ -34,4 +34,5 @@ public interface Clause {
 
     boolean isHornClause();
 
+    int size();
 }

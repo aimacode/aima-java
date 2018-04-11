@@ -2,6 +2,12 @@ package aima.core.logic.basic.firstorder.kb.data;
 
 import java.util.*;
 
+/**
+ * @author Ciaran O' Reilly
+ * @author Anurag Rai
+ * @author samagra
+ */
+
 public class Clause implements aima.core.logic.api.firstorderlogic.Clause {
 
     private Set<Literal> literals = new LinkedHashSet<>();
@@ -36,6 +42,9 @@ public class Clause implements aima.core.logic.api.firstorderlogic.Clause {
 
     @Override
     public Literal getConsequence() {
+        if (isImplicationDefiniteClause()){
+            return positiveLiterals.iterator().next();
+        }
         return null;
     }
 
@@ -57,6 +66,11 @@ public class Clause implements aima.core.logic.api.firstorderlogic.Clause {
     @Override
     public boolean isHornClause() {
         return (positiveLiterals.size()<=1);
+    }
+
+    @Override
+    public int size() {
+        return literals.size();
     }
 
 }
