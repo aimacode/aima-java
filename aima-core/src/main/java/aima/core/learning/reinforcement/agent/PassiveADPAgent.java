@@ -29,13 +29,13 @@ import aima.core.util.datastructure.Pair;
  *               N<sub>s'|sa</sub>, a table of outcome frequencies give state-action pairs, initially zero
  *               s, a, the previous state and action, initially null
  *
- *   if s' is new then U[s'] <- r'; R[s'] <- r'
+ *   if s' is new then U[s'] &larr; r'; R[s'] &larr; r'
  *   if s is not null then
  *        increment N<sub>sa</sub>[s,a] and N<sub>s'|sa</sub>[s',s,a]
  *        for each t such that N<sub>s'|sa</sub>[t,s,a] is nonzero do
- *            P(t|s,a) <-  N<sub>s'|sa</sub>[t,s,a] / N<sub>sa</sub>[s,a]
- *   U <- POLICY-EVALUATION(&pi;, U, mdp)
- *   if s'.TERMINAL? then s,a <- null else s,a <- s',&pi;[s']
+ *            P(t|s,a) &larr;  N<sub>s'|sa</sub>[t,s,a] / N<sub>sa</sub>[s,a]
+ *   U &larr; POLICY-EVALUATION(&pi;, U, mdp)
+ *   if s'.TERMINAL? then s,a &larr; null else s,a &larr; s',&pi;[s']
  *   return a
  * </pre>
  *

@@ -24,14 +24,14 @@ import aima.core.util.math.Matrix;
  *   local variables: <b>O</b><sub>t-d</sub>, <b>O</b><sub>t</sub>, diagonal matrices containing the sensor model information
  *   
  *   add e<sub>t</sub> to the end of e<sub>t-d:t</sub>
- *   <b>O</b><sub>t</sub> <- diagonal matrix containing <b>P</b>(e<sub>t</sub> | X<sub>t</sub>)
+ *   <b>O</b><sub>t</sub> &larr; diagonal matrix containing <b>P</b>(e<sub>t</sub> | X<sub>t</sub>)
  *   if t > d then
- *        <b>f</b> <- FORWARD(<b>f</b>, e<sub>t</sub>)
+ *        <b>f</b> &larr; FORWARD(<b>f</b>, e<sub>t</sub>)
  *        remove e<sub>t-d-1</sub> from the beginning of e<sub>t-d:t</sub>
- *        <b>O</b><sub>t-d</sub> <- diagonal matrix containing <b>P</b>(e<sub>t-d</sub> | X<sub>t-d</sub>)
- *        <b>B</b> <- <b>O</b><sup>-1</sup><sub>t-d</sub><b>B</b><b>T</b><b>O</b><sub>t</sub>
- *   else <b>B</b> <- <b>BTO</b><sub>t</sub>
- *   t <- t + 1
+ *        <b>O</b><sub>t-d</sub> &larr; diagonal matrix containing <b>P</b>(e<sub>t-d</sub> | X<sub>t-d</sub>)
+ *        <b>B</b> &larr; <b>O</b><sup>-1</sup><sub>t-d</sub><b>B</b><b>T</b><b>O</b><sub>t</sub>
+ *   else <b>B</b> &larr; <b>BTO</b><sub>t</sub>
+ *   t &larr; t + 1
  *   if t > d then return NORMALIZE(<b>f</b> * <b>B1</b>) else return null
  * </pre>
  * 
@@ -43,13 +43,13 @@ import aima.core.util.math.Matrix;
  * <br>
  * <b>Note:</b> There appears to be two minor defects in the algorithm outlined
  * in the book:<br>
- * <b>f</b> <- FORWARD(<b>f</b>, e<sub>t</sub>)<br>
+ * <b>f</b> &larr; FORWARD(<b>f</b>, e<sub>t</sub>)<br>
  * should be:<br>
- * <b>f</b> <- FORWARD(<b>f</b>, e<sub>t-d</sub>)<br>
+ * <b>f</b> &larr; FORWARD(<b>f</b>, e<sub>t-d</sub>)<br>
  * as we are returning a smoothed step for t-d and not the current time t. <br>
  * <br>
  * The update of:<br>
- * t <- t + 1<br>
+ * t &larr; t + 1<br>
  * should occur after the return value is calculated. Otherwise when t == d the
  * value returned is based on HMM.prior in the calculation as opposed to a
  * correctly calculated forward message. Comments welcome.

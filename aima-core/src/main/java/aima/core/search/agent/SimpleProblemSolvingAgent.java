@@ -22,14 +22,14 @@ import java.util.Queue;
  *               goal, a goal, initially null
  *               problem, a problem formulation
  *           
- *   state &lt;- UPDATE-STATE(state, percept)
+ *   state &larr; UPDATE-STATE(state, percept)
  *   if seq is empty then
- *     goal    &lt;- FORMULATE-GOAL(state)
- *     problem &lt;- FORMULATE-PROBLEM(state, goal)
- *     seq     &lt;- SEARCH(problem)
+ *     goal    &larr; FORMULATE-GOAL(state)
+ *     problem &larr; FORMULATE-PROBLEM(state, goal)
+ *     seq     &larr; SEARCH(problem)
  *     if seq = failure then return a null action
- *   action &lt;- FIRST(seq)
- *   seq &lt;- REST(seq)
+ *   action &larr; FIRST(seq)
+ *   seq &larr; REST(seq)
  *   return action
  * </pre>
  * 

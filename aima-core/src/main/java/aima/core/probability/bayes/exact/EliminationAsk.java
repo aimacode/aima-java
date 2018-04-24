@@ -28,10 +28,10 @@ import aima.core.probability.util.ProbabilityTable;
  *           e, observed values for variables E
  *           bn, a Bayesian network specifying joint distribution P(X<sub>1</sub>, ..., X<sub>n</sub>)
  *   
- *   factors <- []
+ *   factors &larr; []
  *   for each var in ORDER(bn.VARS) do
- *       factors <- [MAKE-FACTOR(var, e) | factors]
- *       if var is hidden variable the factors <- SUM-OUT(var, factors)
+ *       factors &larr; [MAKE-FACTOR(var, e) | factors]
+ *       if var is hidden variable the factors &larr; SUM-OUT(var, factors)
  *   return NORMALIZE(POINTWISE-PRODUCT(factors))
  * </pre>
  * 

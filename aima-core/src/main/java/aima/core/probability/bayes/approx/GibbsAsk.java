@@ -29,7 +29,7 @@ import aima.core.util.Randomizer;
  *   for j = 1 to N do
  *       for each Z<sub>i</sub> in Z do
  *           set the value of Z<sub>i</sub> in <b>x</b> by sampling from <b>P</b>(Z<sub>i</sub>|mb(Z<sub>i</sub>))
- *           <b>N</b>[x] <- <b>N</b>[x] + 1 where x is the value of X in <b>x</b>
+ *           <b>N</b>[x] &larr; <b>N</b>[x] + 1 where x is the value of X in <b>x</b>
  *   return NORMALIZE(<b>N</b>)
  * </pre>
  * 

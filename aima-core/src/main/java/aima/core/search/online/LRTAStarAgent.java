@@ -24,13 +24,13 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  *               s, a, the previous state and action, initially null
  *           
  *   if GOAL-TEST(s') then return stop
- *   if s' is a new state (not in H) then H[s'] &lt;- h(s')
+ *   if s' is a new state (not in H) then H[s'] &larr; h(s')
  *   if s is not null
- *     result[s, a] &lt;- s'
- *     H[s] &lt;-        min LRTA*-COST(s, b, result[s, b], H)
+ *     result[s, a] &larr; s'
+ *     H[s] &larr;        min LRTA*-COST(s, b, result[s, b], H)
  *             b (element of) ACTIONS(s)
- *   a &lt;- an action b in ACTIONS(s') that minimizes LRTA*-COST(s', b, result[s', b], H)
- *   s &lt;- s'
+ *   a &larr; an action b in ACTIONS(s') that minimizes LRTA*-COST(s', b, result[s', b], H)
+ *   s &larr; s'
  *   return a
  *   
  * function LRTA*-COST(s, a, s', H) returns a cost estimate
@@ -43,7 +43,7 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  * space.<br>
  * <br>
  * <b>Note:</b> This algorithm fails to exit if the goal does not exist (e.g.
- * A<->B Goal=X), this could be an issue with the implementation. Comments
+ * A&harr;B Goal=X), this could be an issue with the implementation. Comments
  * welcome.
  * 
  * @author Ciaran O'Reilly

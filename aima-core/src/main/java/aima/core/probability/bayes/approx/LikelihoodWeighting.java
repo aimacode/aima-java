@@ -27,17 +27,17 @@ import aima.core.util.datastructure.Pair;
  *   local variables: W, a vector of weighted counts for each value of X, initially zero
  *   
  *   for j = 1 to N do
- *       <b>x</b>,w <- WEIGHTED-SAMPLE(bn,e)
- *       W[x] <- W[x] + w where x is the value of X in <b>x</b>
+ *       <b>x</b>,w &larr; WEIGHTED-SAMPLE(bn,e)
+ *       W[x] &larr; W[x] + w where x is the value of X in <b>x</b>
  *   return NORMALIZE(W)
  * --------------------------------------------------------------------------------------
  * function WEIGHTED-SAMPLE(bn, e) returns an event and a weight
  *   
- *    w <- 1; <b>x</b> <- an event with n elements initialized from e
+ *    w &larr; 1; <b>x</b> &larr; an event with n elements initialized from e
  *    foreach variable X<sub>i</sub> in X<sub>1</sub>,...,X<sub>n</sub> do
  *        if X<sub>i</sub> is an evidence variable with value x<sub>i</sub> in e
- *            then w <- w * P(X<sub>i</sub> = x<sub>i</sub> | parents(X<sub>i</sub>))
- *            else <b>x</b>[i] <- a random sample from <b>P</b>(X<sub>i</sub> | parents(X<sub>i</sub>))
+ *            then w &larr; w * P(X<sub>i</sub> = x<sub>i</sub> | parents(X<sub>i</sub>))
+ *            else <b>x</b>[i] &larr; a random sample from <b>P</b>(X<sub>i</sub> | parents(X<sub>i</sub>))
  *    return <b>x</b>, w
  * </pre>
  * 

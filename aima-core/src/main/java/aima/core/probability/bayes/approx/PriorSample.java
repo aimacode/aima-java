@@ -18,9 +18,9 @@ import aima.core.util.Randomizer;
  * function PRIOR-SAMPLE(bn) returns an event sampled from the prior specified by bn
  *   inputs: bn, a Bayesian network specifying joint distribution <b>P</b>(X<sub>1</sub>,...,X<sub>n</sub>)
  * 
- *   x <- an event with n elements
+ *   x &larr; an event with n elements
  *   foreach variable X<sub>i</sub> in X<sub>1</sub>,...,X<sub>n</sub> do
- *      x[i] <- a random sample from <b>P</b>(X<sub>i</sub> | parents(X<sub>i</sub>))
+ *      x[i] &larr; a random sample from <b>P</b>(X<sub>i</sub> | parents(X<sub>i</sub>))
  *   return x
  * </pre>
  * 

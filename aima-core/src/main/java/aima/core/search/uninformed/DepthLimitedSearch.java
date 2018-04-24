@@ -21,11 +21,11 @@ import java.util.function.Consumer;
  *   if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
  *   else if limit = 0 then return cutoff
  *   else
- *       cutoff_occurred? &lt;- false
+ *       cutoff_occurred? &larr; false
  *       for each action in problem.ACTIONS(node.STATE) do
- *           child &lt;- CHILD-NODE(problem, node, action)
- *           result &lt;- RECURSIVE-DLS(child, problem, limit - 1)
- *           if result = cutoff then cutoff_occurred? &lt;- true
+ *           child &larr; CHILD-NODE(problem, node, action)
+ *           result &larr; RECURSIVE-DLS(child, problem, limit - 1)
+ *           if result = cutoff then cutoff_occurred? &larr; true
  *           else if result != failure then return result
  *       if cutoff_occurred? then return cutoff else return failure
  * </pre>

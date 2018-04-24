@@ -29,11 +29,11 @@ import aima.core.logic.fol.parsing.ast.Variable;
  *   local variables: answers, a set of substitutions, initially empty
  *   
  *   if goals is empty then return {theta}
- *   qDelta &lt;- SUBST(theta, FIRST(goals))
+ *   qDelta &larr; SUBST(theta, FIRST(goals))
  *   for each sentence r in KB where STANDARDIZE-APART(r) = (p1 &circ; ... &circ; pn =&gt; q)
- *          and thetaDelta &lt;- UNIFY(q, qDelta) succeeds
- *       new_goals &lt;- [p1,...,pn|REST(goals)]
- *       answers &lt;- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta, theta)) U answers
+ *          and thetaDelta &larr; UNIFY(q, qDelta) succeeds
+ *       new_goals &larr; [p1,...,pn|REST(goals)]
+ *       answers &larr; FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta, theta)) U answers
  *   return answers
  * </pre>
  * 

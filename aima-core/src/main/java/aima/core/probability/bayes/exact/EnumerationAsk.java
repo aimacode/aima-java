@@ -26,9 +26,9 @@ import aima.core.util.Util;
  *           e, observed values for variables E
  *           bn, a Bayes net with variables {X} &cup; E &cup; Y /* Y = hidden variables //
  *           
- *   Q(X) <- a distribution over X, initially empty
+ *   Q(X) &larr; a distribution over X, initially empty
  *   for each value x<sub>i</sub> of X do
- *       Q(x<sub>i</sub>) <- ENUMERATE-ALL(bn.VARS, e<sub>x<sub>i</sub></sub>)
+ *       Q(x<sub>i</sub>) &larr; ENUMERATE-ALL(bn.VARS, e<sub>x<sub>i</sub></sub>)
  *          where e<sub>x<sub>i</sub></sub> is e extended with X = x<sub>i</sub>
  *   return NORMALIZE(Q(X))
  *   
@@ -36,7 +36,7 @@ import aima.core.util.Util;
  * 
  * function ENUMERATE-ALL(vars, e) returns a real number
  *   if EMPTY?(vars) then return 1.0
- *   Y <- FIRST(vars)
+ *   Y &larr; FIRST(vars)
  *   if Y has value y in e
  *       then return P(y | parents(Y)) * ENUMERATE-ALL(REST(vars), e)
  *       else return &sum;<sub>y</sub> P(y | parents(Y)) * ENUMERATE-ALL(REST(vars), e<sub>y</sub>)

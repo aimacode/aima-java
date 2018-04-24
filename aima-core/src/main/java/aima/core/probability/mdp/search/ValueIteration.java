@@ -20,10 +20,10 @@ import aima.core.util.Util;
  *                    &delta; the maximum change in the utility of any state in an iteration
  *                    
  *   repeat
- *       U <- U'; &delta; <- 0
+ *       U &larr; U'; &delta; &larr; 0
  *       for each state s in S do
- *           U'[s] <- R(s) + &gamma;  max<sub>a &isin; A(s)</sub> &Sigma;<sub>s'</sub>P(s' | s, a) U[s']
- *           if |U'[s] - U[s]| > &delta; then &delta; <- |U'[s] - U[s]|
+ *           U'[s] &larr; R(s) + &gamma;  max<sub>a &isin; A(s)</sub> &Sigma;<sub>s'</sub>P(s' | s, a) U[s']
+ *           if |U'[s] - U[s]| > &delta; then &delta; &larr; |U'[s] - U[s]|
  *   until &delta; < &epsilon;(1 - &gamma;)/&gamma;
  *   return U
  * </pre>

@@ -19,9 +19,9 @@ import aima.core.agent.impl.aprog.simplerule.Rule;
  * function SIMPLE-RELEX-AGENT(percept) returns an action
  *   persistent: rules, a set of condition-action rules
  *   
- *   state  <- INTERPRET-INPUT(percept);
- *   rule   <- RULE-MATCH(state, rules);
- *   action <- rule.ACTION;
+ *   state  &larr; INTERPRET-INPUT(percept);
+ *   rule   &larr; RULE-MATCH(state, rules);
+ *   action &larr; rule.ACTION;
  *   return action
  * </pre>
  * 

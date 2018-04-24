@@ -23,10 +23,10 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  *           p, the probability of choosing to do a "random walk" move, typically around 0.5
  *           max_flips, number of flips allowed before giving up
  *           
- *   model <- a random assignment of true/false to the symbols in clauses
+ *   model &larr; a random assignment of true/false to the symbols in clauses
  *   for i = 1 to max_flips do
  *       if model satisfies clauses then return model
- *       clause <- a randomly selected clause from clauses that is false in model
+ *       clause &larr; a randomly selected clause from clauses that is false in model
  *       with probability p flip the value in model of a randomly selected symbol from clause
  *       else flip whichever symbol in clause maximizes the number of satisfied clauses
  *   return failure

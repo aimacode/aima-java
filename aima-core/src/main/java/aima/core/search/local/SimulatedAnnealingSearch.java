@@ -19,14 +19,14 @@ import java.util.function.ToDoubleFunction;
  * <pre>
  * function SIMULATED-ANNEALING(problem, schedule) returns a solution state
  *                    
- *   current &lt;- MAKE-NODE(problem.INITIAL-STATE)
+ *   current &larr; MAKE-NODE(problem.INITIAL-STATE)
  *   for t = 1 to INFINITY do
- *     T &lt;- schedule(t)
+ *     T &larr; schedule(t)
  *     if T = 0 then return current
- *     next &lt;- a randomly selected successor of current
- *     /\E &lt;- next.VALUE - current.value
- *     if /\E &gt; 0 then current &lt;- next
- *     else current &lt;- next only with probability e&circ;(/\E/T)
+ *     next &larr; a randomly selected successor of current
+ *     /\E &larr; next.VALUE - current.value
+ *     if /\E &gt; 0 then current &larr; next
+ *     else current &larr; next only with probability e&circ;(/\E/T)
  * </pre>
  * 
  * Figure 4.5 The simulated annealing search algorithm, a version of stochastic

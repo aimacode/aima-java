@@ -28,23 +28,23 @@ import java.util.*;
  *
  *   TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
  *   TELL the KB the temporal "physics" sentences for time t
- *   safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
+ *   safe &larr; {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
  *   if ASK(KB, Glitter<sup>t</sup>) = true then
- *      plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
+ *      plan &larr; [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
  *   if plan is empty then
- *      unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
- *      plan <- PLAN-ROUTE(current, unvisited &cap; safe, safe)
+ *      unvisited &larr; {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
+ *      plan &larr; PLAN-ROUTE(current, unvisited &cap; safe, safe)
  *   if plan is empty and ASK(KB, HaveArrow<sup>t</sup>) = true then
- *      possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
- *      plan <- PLAN-SHOT(current, possible_wumpus, safe)
+ *      possible_wumpus &larr; {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
+ *      plan &larr; PLAN-SHOT(current, possible_wumpus, safe)
  *   if plan is empty then //no choice but to take a risk
- *      not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
- *      plan <- PLAN-ROUTE(current, unvisited &cap; not_unsafe, safe)
+ *      not_unsafe &larr; {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
+ *      plan &larr; PLAN-ROUTE(current, unvisited &cap; not_unsafe, safe)
  *   if plan is empty then
- *      plan <- PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
- *   action <- POP(plan)
+ *      plan &larr; PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
+ *   action &larr; POP(plan)
  *   TELL(KB, MAKE-ACTION-SENTENCE(action, t))
- *   t <- t+1
+ *   t &larr; t+1
  *   return action
  *
  * --------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ import java.util.*;
  *           goals, a set of squares; try to plan a route to one of them
  *           allowed, a set of squares that can form part of the route
  *
- *   problem <- ROUTE-PROBLEM(current, goals, allowed)
+ *   problem &larr; ROUTE-PROBLEM(current, goals, allowed)
  *   return A*-GRAPH-SEARCH(problem)
  * </code>
  * </pre>

@@ -20,7 +20,7 @@ import aima.core.util.Util;
  *   inputs: KB, the knowledge base, a sentence in propositional logic
  *           &alpha;, the query, a sentence in propositional logic
  *           
- *   symbols <- a list of proposition symbols in KB and &alpha
+ *   symbols &larr; a list of proposition symbols in KB and &alpha
  *   return TT-CHECK-ALL(KB, &alpha; symbols, {})
  *   
  * --------------------------------------------------------------------------------
@@ -30,8 +30,8 @@ import aima.core.util.Util;
  *     if PL-TRUE?(KB, model) then return PL-TRUE?(&alpha;, model)
  *     else return true // when KB is false, always return true
  *   else do
- *     P <- FIRST(symbols)
- *     rest <- REST(symbols)
+ *     P &larr; FIRST(symbols)
+ *     rest &larr; REST(symbols)
  *     return (TT-CHECK-ALL(KB, &alpha;, rest, model &cup; { P = true })
  *            and
  *            TT-CHECK-ALL(KB, &alpha;, rest, model &cup; { P = false }))
