@@ -11,9 +11,5 @@ public class UtilsTest {
     public void parserTest() {
         String precondition = "At(C1,JFK) ^ At(C2,SFO)";
         ArrayList<Literal> literals = (ArrayList<Literal>) Utils.parse(precondition);
-        for (Literal literal :
-                literals) {
-            System.out.println(literal.toString());
-        }
     }
 }
