@@ -1,20 +1,20 @@
 package aima.core.logic.planning;
 
-import aima.core.logic.fol.parsing.ast.AtomicSentence;
+import aima.core.logic.fol.kb.data.Literal;
 import aima.core.logic.fol.parsing.ast.Variable;
 
 import java.util.List;
 
 public class ActionSchema {
-    private String name;
     List<Variable> variables;
-    List<AtomicSentence> precondition; //treated as a conjucntion of fluents
-    List<AtomicSentence> effect;//treated as a conjunction of fluents
-    List<AtomicSentence> effectsPositiveLiterals;
-    List<AtomicSentence> effectsNegativeLiterals;
+    List<Literal> precondition; //treated as a conjucntion of fluents
+    List<Literal> effect;//treated as a conjunction of fluents
+    List<Literal> effectsPositiveLiterals;
+    List<Literal> effectsNegativeLiterals;
+    private String name;
 
     public ActionSchema(String name, List<Variable> variables,
-                        List<AtomicSentence> precondition, List<AtomicSentence> effect) {
+                        List<Literal> precondition, List<Literal> effect) {
         this.name = name;
         this.variables = variables;
         this.precondition = precondition;
@@ -29,19 +29,19 @@ public class ActionSchema {
         return variables;
     }
 
-    public List<AtomicSentence> getPrecondition() {
+    public List<Literal> getPrecondition() {
         return precondition;
     }
 
-    public List<AtomicSentence> getEffect() {
+    public List<Literal> getEffect() {
         return effect;
     }
 
-    public List<AtomicSentence> getEffectsPositiveLiterals() {
+    public List<Literal> getEffectsPositiveLiterals() {
         return effectsPositiveLiterals;
     }
 
-    public List<AtomicSentence> getEffectsNegativeLiterals() {
+    public List<Literal> getEffectsNegativeLiterals() {
         return effectsNegativeLiterals;
     }
 }
