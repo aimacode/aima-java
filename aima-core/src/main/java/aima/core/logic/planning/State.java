@@ -11,6 +11,8 @@ public class State {
     public State(List<Literal> fluents) {
         this.fluents = fluents;
     }
+    public State(String fluents){
+        this(Utils.parse(fluents));}
 
     State result(State s, ActionSchema a){
         s.fluents.removeAll(a.getEffectsNegativeLiterals());
