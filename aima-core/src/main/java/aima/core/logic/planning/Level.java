@@ -12,33 +12,44 @@ public class Level {
     HashMap<Object,List<Object>> prevLinks;
     Problem problem;
     public Level(Level prevLevel, Problem problem){
-        HashMap<Object,List<Object>> linksFromPreviousLevel = prevLevel.getNextLinks();
-        this.problem = problem;
-        levelObjects = new ArrayList<>();
-        mutexLinks = new HashMap<>();
-        nextLinks = new HashMap<>();
-        prevLinks = new HashMap<>();
-        for (Object node :
-                linksFromPreviousLevel.keySet()) {
-            List<Object> thisLevelObjects = linksFromPreviousLevel.get(node);
-            for (Object nextNode :
-                    thisLevelObjects) {
-                if(levelObjects.contains(nextNode)){
-                    List<Object> tempPrevLink = prevLinks.get(nextNode);
-                    tempPrevLink.add(node);
-                    prevLinks.put(nextNode,tempPrevLink);
-                }
-                else{
-                    levelObjects.add(nextNode);
-                    prevLinks.put(nextNode, new ArrayList<>(Collections.singletonList(node)));
+        if(prevLevel!=null) {
+            HashMap<Object, List<Object>> linksFromPreviousLevel = prevLevel.getNextLinks();
+            this.problem = problem;
+            levelObjects = new ArrayList<>();
+            mutexLinks = new HashMap<>();
+            nextLinks = new HashMap<>();
+            prevLinks = new HashMap<>();
+            for (Object node :
+                    linksFromPreviousLevel.keySet()) {
+                List<Object> thisLevelObjects = linksFromPreviousLevel.get(node);
+                for (Object nextNode :
+                        thisLevelObjects) {
+                    if (levelObjects.contains(nextNode)) {
+                        List<Object> tempPrevLink = prevLinks.get(nextNode);
+                        tempPrevLink.add(node);
+                        prevLinks.put(nextNode, tempPrevLink);
+                    } else {
+                        levelObjects.add(nextNode);
+                        prevLinks.put(nextNode, new ArrayList<>(Collections.singletonList(node)));
+                    }
+
                 }
 
             }
-
+            addPersistentActions(linksFromPreviousLevel);
+            calculateNextLinks();
+            calculateMutexLinks(prevLevel);
         }
-        addPersistentActions(linksFromPreviousLevel);
-        calculateNextLinks();
-        calculateMutexLinks();
+        else{
+            levelObjects = new ArrayList<>();
+            levelObjects.addAll(problem.getInitialState().getFluents());
+            for (Object obj :
+                    levelObjects) {
+                prevLinks.put(obj, new ArrayList<>());
+            }
+            calculateNextLinks();
+            calculateMutexLinks(null);
+        }
     }
 
     public List<Object> getLevelObjects() {
@@ -78,7 +89,6 @@ public class Level {
         if(levelObjects.get(0) instanceof Literal) {
             Literal firstLiteral,secondLiteral;
             List<Object> possibleActionsFirst, possibleActionsSecond;
-            List<Object> tempList;
             for (int i = 0; i < levelObjects.size(); i++) {
                 firstLiteral= (Literal)levelObjects.get(i);
                 possibleActionsFirst = prevLinks.get(firstLiteral);
@@ -94,7 +104,7 @@ public class Level {
                         addToHashMap(firstLiteral, secondLiteral, mutexLinks);
                         addToHashMap(secondLiteral, secondLiteral, mutexLinks);
                     }
-                    else {
+                    else if(prevLevel!=null) {
                         boolean eachPossiblePairExclusive = true;
                         HashMap<Object,List<Object>> prevMutexes = prevLevel.getMutexLinks();
                         for (Object firstAction :
@@ -115,9 +125,78 @@ public class Level {
             }
         }
         else if (levelObjects.get(0) instanceof ActionSchema){
+            ActionSchema firstAction, secondAction;
+            boolean checkMutex;
 
+            for (int i = 0; i < levelObjects.size(); i++) {
+                firstAction = (ActionSchema) levelObjects.get(i);
+                List<Literal> firstActionEffects = firstAction.getEffects();
+                List<Literal> firstActionPositiveEffects = firstAction.getEffectsPositiveLiterals();
+                List<Literal> firstActionPreconditions = firstAction.getPrecondition();
+                for (int j = i; j < levelObjects.size(); j++) {
+                    checkMutex = false;
+                    secondAction = (ActionSchema) levelObjects.get(j);
+                    List<Literal> secondActionEffects = secondAction.getEffects();
+                    List<Literal> secondActionNegatedLiterals = secondAction.getEffectsNegativeLiterals();
+                    List<Literal> secondActionPreconditions = secondAction.getPrecondition();
+                    //check for inconsistent effects
+                    for (Literal posLiteral :
+                            firstActionPositiveEffects) {
+                        for (Literal negatedLit :
+                                secondActionNegatedLiterals) {
+                            if (posLiteral.getAtomicSentence().getSymbolicName().equals(
+                                    negatedLit.getAtomicSentence().getSymbolicName()
+                            ))
+                                checkMutex = true;
+                        }
+                    }
+                    if(!checkMutex){
+                        //check for interference
+                        //one of the effects of one action is the negation of the precondition of other
+                        if (checkInterference(secondActionPreconditions, firstActionEffects))
+                            checkMutex = true;
+                        if(checkInterference(firstActionPreconditions, secondActionEffects))
+                            checkMutex= true;
+                    }
+                    if(!checkMutex && prevLevel !=null){
+                        HashMap<Object,List<Object>> prevMutex = prevLevel.getMutexLinks();
+                        for (Literal firstActionPrecondition :
+                                firstActionPreconditions) {
+                            for (Literal secondActionPrecondition :
+                                    secondActionPreconditions) {
+                                if(prevMutex.get(firstActionPrecondition).contains(secondActionPrecondition))
+                                    checkMutex = true;
+                            }
+                        }
+                    }
+                    if(checkMutex) {
+                        addToHashMap(firstAction, secondAction, mutexLinks);
+                        addToHashMap(firstAction,secondAction,mutexLinks);
+                    }
+                }
 
+            }
         }
+    }
+
+    private boolean checkInterference(List<Literal> firstActionPreconditions, List<Literal> secondActionEffects) {
+        boolean checkMutex = false;
+        for (Literal secondActionEffect :
+                secondActionEffects) {
+            for (Literal firstActionPrecondition :
+                    firstActionPreconditions) {
+                if (secondActionEffect.getAtomicSentence().getSymbolicName().equals(
+                        firstActionPrecondition.getAtomicSentence().getSymbolicName()
+                )){
+                    if((secondActionEffect.isNegativeLiteral()
+                            &&firstActionPrecondition.isPositiveLiteral())||
+                            secondActionEffect.isPositiveLiteral()&&firstActionPrecondition.isNegativeLiteral()){
+                        checkMutex = true;
+                    }
+                }
+            }
+        }
+        return checkMutex;
     }
 
     private void addToHashMap(Object firstObject, Object secondObject, HashMap<Object,List<Object>> map) {

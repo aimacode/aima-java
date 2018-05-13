@@ -39,11 +39,28 @@ public class GraphPlanAlgorithm {
         }
     }
 
+    private boolean extractSolution(Graph graph, List<Literal> goals, int i, Hashtable<Object, Object> nogoods) {
+        return false;
+    }
+
+    private Graph expandGraph(Graph graph, Problem problem) {
+        return graph.addLevel();
+    }
+
+    private boolean leveledOff(Hashtable<Object, Object> nogoods) {
+        return false;
+    }
+
+    private boolean levelledOff(Graph graph) {
+        return graph.levels.get(graph.numLevels()).equals(graph.levels.get(graph.numLevels() - 1));
+    }
+
     private List<Literal> conjuncts(State goalState) {
         return goalState.getFluents();
     }
 
     private Graph initialPlanningGraph(Problem problem) {
-        Level initialLevel = new Level();
+        Level initialLevel = new Level(null,problem);
+        return new Graph(problem,initialLevel);
     }
 }

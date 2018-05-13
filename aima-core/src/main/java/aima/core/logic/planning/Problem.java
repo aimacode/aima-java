@@ -18,4 +18,16 @@ public class Problem {
     public Problem(State initialState, State goalState, ActionSchema... actions){
         this(initialState,goalState,new HashSet<>(Arrays.asList(actions)));
     }
+
+    public State getInitialState() {
+        return initialState;
+    }
+
+    public Set<ActionSchema> getActionSchemas() {
+        return actionSchemas;
+    }
+
+    public State getGoalState() {
+        return goalState;
+    }
 }
