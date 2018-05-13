@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Utils {
     public static List<Literal> parse(String s) {
-        if(s.isEmpty())
+        if (s.isEmpty())
             return null;
         s = s.replaceAll("\\s+", "");
         String[] tokens = s.split("\\^");

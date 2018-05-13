@@ -1,7 +1,6 @@
 package aima.core.logic.planning;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Graph {
     ArrayList<Level> levels;
@@ -13,12 +12,21 @@ public class Graph {
         levels.add(initialLevel);
     }
 
-    public int numLevels(){
+    public int numLevels() {
         return levels.size();
     }
-    public Graph addLevel(){
-        Level lastLevel = levels.get(levels.size()-1);
-        Level level = new Level(lastLevel,this.problem);
+
+    public ArrayList<Level> getLevels() {
+        return levels;
+    }
+
+    public Problem getProblem() {
+        return problem;
+    }
+
+    public Graph addLevel() {
+        Level lastLevel = levels.get(levels.size() - 1);
+        Level level = new Level(lastLevel, this.problem);
         this.levels.add(level);
         return this;
     }

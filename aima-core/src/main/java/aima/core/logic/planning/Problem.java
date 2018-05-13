@@ -9,14 +9,14 @@ public class Problem {
     Set<ActionSchema> actionSchemas;
     State goalState;
 
-    public Problem(State initialState, State goalState,Set<ActionSchema> actionSchemas) {
+    public Problem(State initialState, State goalState, Set<ActionSchema> actionSchemas) {
         this.initialState = initialState;
         this.actionSchemas = actionSchemas;
         this.goalState = goalState;
     }
 
-    public Problem(State initialState, State goalState, ActionSchema... actions){
-        this(initialState,goalState,new HashSet<>(Arrays.asList(actions)));
+    public Problem(State initialState, State goalState, ActionSchema... actions) {
+        this(initialState, goalState, new HashSet<>(Arrays.asList(actions)));
     }
 
     public State getInitialState() {
