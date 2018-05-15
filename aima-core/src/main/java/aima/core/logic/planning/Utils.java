@@ -12,7 +12,7 @@ import java.util.List;
 public class Utils {
     public static List<Literal> parse(String s) {
         if (s.isEmpty())
-            return null;
+            return new ArrayList<>();
         s = s.replaceAll("\\s+", "");
         String[] tokens = s.split("\\^");
         Literal literal;

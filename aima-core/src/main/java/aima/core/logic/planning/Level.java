@@ -15,12 +15,11 @@ public class Level {
 
     public Level(Level prevLevel, Problem problem) {
         this.prevLevel = prevLevel;
+        this.problem = problem;
         if (prevLevel != null) {
             HashMap<Object, List<Object>> linksFromPreviousLevel = prevLevel.getNextLinks();
             this.problem = problem;
             levelObjects = new ArrayList<>();
-            mutexLinks = new HashMap<>();
-            nextLinks = new HashMap<>();
             prevLinks = new HashMap<>();
             for (Object node :
                     linksFromPreviousLevel.keySet()) {
@@ -44,6 +43,7 @@ public class Level {
             calculateMutexLinks(prevLevel);
         } else {
             levelObjects = new ArrayList<>();
+            prevLinks = new HashMap<>();
             levelObjects.addAll(problem.getInitialState().getFluents());
             for (Object obj :
                     levelObjects) {
@@ -88,6 +88,7 @@ public class Level {
     }
 
     private void calculateMutexLinks(Level prevLevel) {
+        mutexLinks = new HashMap<>();
         if (levelObjects.get(0) instanceof Literal) {
             Literal firstLiteral, secondLiteral;
             List<Object> possibleActionsFirst, possibleActionsSecond;
