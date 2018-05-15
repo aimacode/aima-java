@@ -206,7 +206,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	// else current <- next only with probability e^(/\E/T)
 	private boolean shouldAccept(double temperature, double deltaE) {
 		return (deltaE > 0.0)
-				|| (new Random().nextDouble() <= probabilityOfAcceptance(temperature, deltaE));
+				|| (Math.random() <= probabilityOfAcceptance(temperature, deltaE));
 	}
 
 	private double getValue(Node<S, A> n) {
