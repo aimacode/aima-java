@@ -1,15 +1,18 @@
 package aima.core.logic.planning;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Graph {
     ArrayList<Level> levels;
     Problem problem;
+    List<ActionSchema> propositionalisedActions = new ArrayList<>();
 
     public Graph(Problem problem, Level initialLevel) {
         this.problem = problem;
         levels = new ArrayList<>();
         levels.add(initialLevel);
+        propositionalisedActions = problem.getPropositionalisedActions();
     }
 
     public int numLevels() {

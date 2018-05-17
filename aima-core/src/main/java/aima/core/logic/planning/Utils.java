@@ -44,4 +44,8 @@ public class Utils {
         }
         return literals;
     }
+
+    public static <T> List<List<T>> getAllCombinations(List<T> list, int numItems){
+            return null;
+    }
 }

@@ -13,6 +13,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 public class ProblemTest {
     private Problem testProblem;
@@ -48,5 +49,15 @@ public class ProblemTest {
         Assert.assertTrue(testProblem.getActionSchemas().contains(removeAction));
         Assert.assertTrue(testProblem.getActionSchemas().contains(putOnAction));
         Assert.assertTrue(testProblem.getActionSchemas().contains(leaveOvernightAction));
+    }
+    @Test
+    public void constantTest(){
+        List<Constant> testList = testProblem.getProblemConstants();
+        Assert.assertEquals(5,testList.size());
+        Assert.assertTrue(testList.contains(new Constant("Spare")));
+        Assert.assertTrue(testList.contains(new Constant("Ground")));
+        Assert.assertTrue(testList.contains(new Constant("Trunk")));
+        Assert.assertTrue(testList.contains(new Constant("Flat")));
+        Assert.assertTrue(testList.contains(new Constant("Axle")));
     }
 }

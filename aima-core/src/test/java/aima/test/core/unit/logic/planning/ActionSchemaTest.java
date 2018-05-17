@@ -16,6 +16,7 @@ import java.util.List;
 
 public class ActionSchemaTest {
     private List<Term> flyVars;
+    ActionSchema concreteFlyAction;
 
     @Before
     public void setup() {
@@ -65,7 +66,7 @@ public class ActionSchemaTest {
 
     @Test
     public void concreteActionTest(){
-        ActionSchema concreteFlyAction = new ActionSchema("Fly",null,
+        concreteFlyAction = new ActionSchema("Fly",null,
                 "At(P1,SFO)^Plane(P1)^Airport(SFO)^Airport(JFK)",
                 "~At(P1,SFO)^At(P1,JFK)");
         Literal preCondOne = new Literal(new Predicate("At",
@@ -96,5 +97,20 @@ public class ActionSchemaTest {
         Assert.assertEquals(posEffects,concreteFlyAction.getEffectsPositiveLiterals());
         Assert.assertEquals(negEffects,concreteFlyAction.getEffectsNegativeLiterals());
 
+    }
+
+    @Test
+    public void actionSubstitutionTest(){
+        ActionSchema flyAction = new ActionSchema("Fly", flyVars,
+                "At(p,from)^Plane(p)^Airport(from)^Airport(to)",
+                "~At(p,from)^At(p,to)");
+        Constant P1 = new Constant("P1");
+        Constant SFO = new Constant("SFO");
+        Constant JFK = new Constant("JFK");
+        concreteFlyAction = new ActionSchema("Fly",null,
+                "At(P1,SFO)^Plane(P1)^Airport(SFO)^Airport(JFK)",
+                "~At(P1,SFO)^At(P1,JFK)");
+        ActionSchema newAction = flyAction.getActionBySubstitution(Arrays.asList(P1,SFO,JFK));
+        Assert.assertEquals(concreteFlyAction,newAction);
     }
 }

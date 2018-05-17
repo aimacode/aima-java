@@ -38,7 +38,6 @@ public class Level {
                 }
 
             }
-            addPersistentActions(linksFromPreviousLevel);
             calculateNextLinks();
             calculateMutexLinks(prevLevel);
         } else {
@@ -52,6 +51,24 @@ public class Level {
             calculateNextLinks();
             calculateMutexLinks(null);
         }
+        addPersistentActions();
+    }
+
+    public Level(Level prevLevel, Problem problem, String extraLiterals){
+        this(prevLevel, problem);
+        this.addExtraLiterals(extraLiterals);
+    }
+
+    public void addExtraLiterals(String s){
+        for (Literal literal :
+                Utils.parse(s)) {
+            if(!levelObjects.contains(literal)){
+                levelObjects.add(literal);
+            }
+        }
+        calculateNextLinks();
+        calculateMutexLinks(getPrevLevel());
+        addPersistentActions();
     }
 
     public List<Object> getLevelObjects() {
@@ -74,21 +91,23 @@ public class Level {
         return problem;
     }
 
-    private void addPersistentActions(HashMap<Object, List<Object>> linksFromPreviousLevel) {
-        Object[] keys = linksFromPreviousLevel.keySet().toArray();
-        if (keys[0] instanceof Literal) {
-            for (Object literal :
-                    keys) {
-                ActionSchema action = new ActionSchema("No-op", null,
-                        Collections.singletonList((Literal) literal),
-                        Collections.singletonList((Literal) literal));
-                levelObjects.add(action);
-            }
-        }
+    private void addPersistentActions() {
+       if(getLevelObjects().get(0) instanceof Literal){
+           for (Object literal :
+                   getLevelObjects()) {
+               ActionSchema action = new ActionSchema("No-op", null,
+                       Collections.singletonList((Literal) literal),
+                       Collections.singletonList((Literal) literal));
+               addToHashMap(literal,action,nextLinks);
+           }
+       }
     }
+
+
 
     private void calculateMutexLinks(Level prevLevel) {
         mutexLinks = new HashMap<>();
+        if(prevLevel == null) return;
         if (levelObjects.get(0) instanceof Literal) {
             Literal firstLiteral, secondLiteral;
             List<Object> possibleActionsFirst, possibleActionsSecond;
@@ -214,12 +233,16 @@ public class Level {
     private void calculateNextLinks() {
         nextLinks = new HashMap<>();
         if (levelObjects.get(0) instanceof Literal) {
+            System.out.println("Inside Level");
             for (ActionSchema action :
-                    problem.actionSchemas) {
+                    problem.getActionSchemas()) {
+                System.out.println(action.toString());
                 if (levelObjects.containsAll(action.getPrecondition())) {
+                    System.out.println("Bool true");
                     List<Object> nextLevelNodes;
                     for (Literal literal :
                             action.getPrecondition()) {
+                        System.out.println(literal.toString());
                         if (nextLinks.containsKey(literal)) {
                             nextLevelNodes = nextLinks.get(literal);
                             nextLevelNodes.add(action);
