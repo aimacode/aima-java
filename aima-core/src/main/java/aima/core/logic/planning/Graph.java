@@ -6,7 +6,7 @@ import java.util.List;
 public class Graph {
     ArrayList<Level> levels;
     Problem problem;
-    List<ActionSchema> propositionalisedActions = new ArrayList<>();
+    List<ActionSchema> propositionalisedActions ;
 
     public Graph(Problem problem, Level initialLevel) {
         this.problem = problem;
@@ -25,6 +25,10 @@ public class Graph {
 
     public Problem getProblem() {
         return problem;
+    }
+
+    public List<ActionSchema> getPropositionalisedActions() {
+        return propositionalisedActions;
     }
 
     public Graph addLevel() {

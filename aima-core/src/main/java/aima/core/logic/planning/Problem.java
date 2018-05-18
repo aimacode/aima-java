@@ -3,6 +3,7 @@ package aima.core.logic.planning;
 import aima.core.logic.fol.kb.data.Literal;
 import aima.core.logic.fol.parsing.ast.Constant;
 import aima.core.logic.fol.parsing.ast.Term;
+import aima.core.util.math.permute.PermutationGenerator;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import java.util.*;
@@ -69,11 +70,15 @@ public class Problem {
     public List<ActionSchema> getPropositionalisedActions(){
       List<Constant> problemConstants = getProblemConstants();
       List<ActionSchema> propositionalisedActions = new ArrayList<>();
+      List<ActionSchema> result = new ArrayList<>();
         for (ActionSchema actionSchema :
                 getActionSchemas()) {
             int numberOfVars = actionSchema.getVariables().size();
-
+            for (List<Constant> constants :
+                    PermutationGenerator.generatePermutations(problemConstants, numberOfVars)) {
+                result.add(actionSchema.getActionBySubstitution(constants));
+            }
         }
-        return null;
+        return result;
      }
 }
