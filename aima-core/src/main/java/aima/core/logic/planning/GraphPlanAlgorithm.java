@@ -5,40 +5,37 @@ import aima.core.logic.fol.kb.data.Literal;
 import java.util.*;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 10,0 page
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 10.9 page
  * 383.<br>
  * <br>
  *
  * <pre>
  *
- *function GRAPHPLAN(problem) returns solution or failure
+ * function GRAPHPLAN(problem) returns solution or failure
  *
- * graph ← INITIAL-PLANNING-GRAPH(problem)
- * goals ← CONJUNCTS(problem.GOAL)
- * nogoods ← an empty hash table
- * for tl = 0 to ∞ do
- *   if goals all non-mutex in St of graph then
- *     solution ← EXTRACT-SOLUTION(graph, goals, NUMLEVELS(graph), nogoods)
- *     if solution ≠ failure then return solution
- *   if graph and nogoods have both leveled off then return failure
- *   graph ← EXPAND-GRAPH(graph, problem)
+ *  graph ← INITIAL-PLANNING-GRAPH(problem)
+ *  goals ← CONJUNCTS(problem.GOAL)
+ *  nogoods ← an empty hash table
+ *  for tl = 0 to ∞ do
+ *    if goals all non-mutex in St of graph then
+ *      solution ← EXTRACT-SOLUTION(graph, goals, NUMLEVELS(graph), nogoods)
+ *      if solution ≠ failure then return solution
+ *    if graph and nogoods have both leveled off then return failure
+ *    graph ← EXPAND-GRAPH(graph, problem)
  * </pre>
- *
+ * <p>
  * Figure 10.9 The GRAPHPLAN algorithm. GRAPHPLAN calls EXPAND-GRAPH to add a
  * level until either a solution is found by EXTRACT-SOLUTION, or no solution
  * is possible.
  *
  * @author samagra
- *
  */
 public class GraphPlanAlgorithm {
 
     /**
      * function GRAPHPLAN(problem) returns solution or failure
      *
-     * @param problem
-     *          the planning problem for which the plan is to be created
-     *
+     * @param problem the planning problem for which the plan is to be created
      * @return a solution or null
      */
     public List<List<ActionSchema>> graphPlan(Problem problem) {
@@ -54,11 +51,11 @@ public class GraphPlanAlgorithm {
             //St
             state = graph.getLevels().get(2 * tl);
             // if goals all non-mutex in St of graph then
-            if (checkAllGoalsNonMutex(state,goals)) {
+            if (checkAllGoalsNonMutex(state, goals)) {
                 // solution ← EXTRACT-SOLUTION(graph, goals, NUMLEVELS(graph), nogoods)
                 List<List<ActionSchema>> solution = extractSolution(graph, goals, graph.numLevels(), nogoods);
                 //if solution ≠ failure then return solution
-                if (solution != null && solution.size()!=0)
+                if (solution != null && solution.size() != 0)
                     return solution;
             }
             // if graph and nogoods have both leveled off then return failure
@@ -71,34 +68,28 @@ public class GraphPlanAlgorithm {
     }
 
     /**
-     *
      * This method extracts a solution from the planning graph.
-     *
+     * <p>
      * Artificial Intelligence A Modern Approach (3rd Edition): page 384.<br>
+     * <p>
+     * We can define EXTRACT -SOLUTION as a backward search problem, where
+     * each state in the search contains a pointer to a level in the planning graph and a set of unsat-
+     * isfied goals. We define this search problem as follows:
+     * • The initial state is the last level of the planning graph, S n , along with the set of goals
+     * from the planning problem.
+     * • The actions available in a state at level S i are to select any conflict-free subset of the
+     * actions in A i−1 whose effects cover the goals in the state. The resulting state has level
+     * S i−1 and has as its set of goals the preconditions for the selected set of actions. By
+     * “conflict free,” we mean a set of actions such that no two of them are mutex and no two
+     * of their preconditions are mutex.
+     * • The goal is to reach a state at level S 0 such that all the goals are satisfied.
+     * • The cost of each action is 1.
      *
-     *  We can define EXTRACT -SOLUTION as a backward search problem, where
-     *  each state in the search contains a pointer to a level in the planning graph and a set of unsat-
-     *  isfied goals. We define this search problem as follows:
-     *      • The initial state is the last level of the planning graph, S n , along with the set of goals
-     *          from the planning problem.
-     *      • The actions available in a state at level S i are to select any conflict-free subset of the
-     *          actions in A i−1 whose effects cover the goals in the state. The resulting state has level
-     *          S i−1 and has as its set of goals the preconditions for the selected set of actions. By
-     *          “conflict free,” we mean a set of actions such that no two of them are mutex and no two
-     *           of their preconditions are mutex.
-     *       • The goal is to reach a state at level S 0 such that all the goals are satisfied.
-     *       • The cost of each action is 1.
-     *
-     * @param graph
-     *          The planning graph.
-     * @param goals
-     *          Goals of the planning problem.
-     * @param numLevel
-     *          Number of levels in the graph.
-     * @param nogoods
-     *          A hash table to store previously calculated results.
-     * @return
-     *      a solution if found else null
+     * @param graph    The planning graph.
+     * @param goals    Goals of the planning problem.
+     * @param numLevel Number of levels in the graph.
+     * @param nogoods  A hash table to store previously calculated results.
+     * @return a solution if found else null
      */
     private List<List<ActionSchema>> extractSolution(Graph graph, List<Literal> goals, int numLevel,
                                                      Hashtable<Integer, List<Literal>> nogoods) {
@@ -141,7 +132,7 @@ public class GraphPlanAlgorithm {
                     break;
                 }
             }
-            if (setToBeTaken==null) {
+            if (setToBeTaken == null) {
                 nogoods.put(level, goalsCurr);
                 return null;
             }
@@ -166,14 +157,12 @@ public class GraphPlanAlgorithm {
     /**
      * This method is used to check if all goals are present in a particular state
      * and none of them has a mutex link.
-     * @param level
-     *          The current level in which to check for the goals.
-     * @param goals
-     *          List of goals to be checked
-     * @return
-     *      Boolean representing if goals all non mutex in St
+     *
+     * @param level The current level in which to check for the goals.
+     * @param goals List of goals to be checked
+     * @return Boolean representing if goals all non mutex in St
      */
-    private boolean checkAllGoalsNonMutex(Level level, List<Literal> goals){
+    private boolean checkAllGoalsNonMutex(Level level, List<Literal> goals) {
         if (!level.getLevelObjects().containsAll(goals)) {
             return false;
         }
@@ -196,10 +185,9 @@ public class GraphPlanAlgorithm {
 
     /**
      * This method adds a new state (a state level and an action level both) to the planning graph.
-     * @param graph
-     *          The planning graph.
-     * @return
-     *      The expanded graph.
+     *
+     * @param graph The planning graph.
+     * @return The expanded graph.
      */
     private Graph expandGraph(Graph graph) {
         return graph.addLevel().addLevel();
@@ -207,34 +195,33 @@ public class GraphPlanAlgorithm {
 
     /**
      * A graph is said to be levelled off if two consecutive levels are identical.
+     *
      * @param nogoods
-     * @return
-     *      Boolean stating if the hashtable is levelled off.
+     * @return Boolean stating if the hashtable is levelled off.
      */
     private boolean leveledOff(Hashtable<Integer, List<Literal>> nogoods) {
-        if (nogoods.size()<2)
+        if (nogoods.size() < 2)
             return false;
-        return nogoods.get(nogoods.size()-1).equals(nogoods.get(nogoods.size() - 2));
+        return nogoods.get(nogoods.size() - 1).equals(nogoods.get(nogoods.size() - 2));
     }
 
     /**
      * A graph is said to be levelled off if two consecutive levels are identical.
      *
      * @param graph
-     * @return
-     *      Boolean stating if the graph is levelled off.
+     * @return Boolean stating if the graph is levelled off.
      */
     private boolean levelledOff(Graph graph) {
-        if (graph.numLevels()<2)
+        if (graph.numLevels() < 2)
             return false;
-        return graph.levels.get(graph.numLevels()-1).equals(graph.levels.get(graph.numLevels() - 2));
+        return graph.levels.get(graph.numLevels() - 1).equals(graph.levels.get(graph.numLevels() - 2));
     }
 
     /**
      * Returns a list of literals in a state.
+     *
      * @param goalState
-     * @return
-     *      List of literals.
+     * @return List of literals.
      */
     private List<Literal> conjuncts(State goalState) {
         return goalState.getFluents();
@@ -242,10 +229,9 @@ public class GraphPlanAlgorithm {
 
     /**
      * This method initialises the planning graph for a particular problem.
-     * @param problem
-     *          The planning problem.
-     * @return
-     *      Graph for the planning problem.
+     *
+     * @param problem The planning problem.
+     * @return Graph for the planning problem.
      */
     private Graph initialPlanningGraph(Problem problem) {
         Level initialLevel = new Level(null, problem);

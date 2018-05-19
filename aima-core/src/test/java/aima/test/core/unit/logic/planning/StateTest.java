@@ -11,12 +11,14 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
+/**
+ * @author samagra
+ */
 public class StateTest {
-    private Literal testFluentOne, testFluentTwo, testFluentThree,testFluentFour;
+    private Literal testFluentOne, testFluentTwo, testFluentThree, testFluentFour;
     private State testState;
-    private ActionSchema flyActionOne,flyActionTwo;
+    private ActionSchema flyActionOne, flyActionTwo;
 
     @Before
     public void setup() {
@@ -30,29 +32,30 @@ public class StateTest {
                 Arrays.asList(new Constant("P1"), new Constant("JFK"))));
         testState = new State("At(C1,SFO)^At(C2,JFK)^At(P1,SFO)^At(P2,JFK)" +
                 "^Cargo(C1)^Cargo(C2)^Plane(P1)^Plane(P2)^Airport(JFK)^Airport(SFO)");
-        flyActionOne = new ActionSchema("Fly",null,
+        flyActionOne = new ActionSchema("Fly", null,
                 "At(P1,SFO)^Plane(P1)^Airport(SFO)^Airport(JFK)",
                 "~At(P1,SFO)^At(P1,JFK)");
-        flyActionTwo = new ActionSchema("Fly",null,
+        flyActionTwo = new ActionSchema("Fly", null,
                 "At(P1,JFK)^Plane(P1)^Airport(SFO)^Airport(JFK)",
                 "~At(P1,JFK)^At(P1,SFO)");
     }
 
     @Test
-    public void constructorTest(){
+    public void constructorTest() {
         Assert.assertTrue(testState.getFluents().contains(testFluentOne));
         Assert.assertTrue(testState.getFluents().contains(testFluentTwo));
         Assert.assertTrue(testState.getFluents().contains(testFluentThree));
         Assert.assertFalse(testState.getFluents().contains(testFluentFour));
     }
+
     @Test
-    public void isApplicableTest(){
+    public void isApplicableTest() {
         Assert.assertTrue(testState.isApplicable(flyActionOne));
         Assert.assertFalse(testState.isApplicable(flyActionTwo));
     }
 
     @Test
-    public void resultTest(){
+    public void resultTest() {
         State initState = new State("At(C1,SFO)^At(C2,JFK)^At(P1,SFO)^At(P2,JFK)" +
                 "^Cargo(C1)^Cargo(C2)^Plane(P1)^Plane(P2)^Airport(JFK)^Airport(SFO)");
         State finalState = new State("At(C1,SFO)^At(C2,JFK)^At(P1,JFK)^At(P2,JFK)" +
@@ -62,8 +65,8 @@ public class StateTest {
         Assert.assertEquals(initState, newState);
         newState = testState.result(flyActionOne);
         Assert.assertEquals(finalState, newState);
-        Assert.assertNotEquals(initState,newState);
+        Assert.assertNotEquals(initState, newState);
         newState = testState.result(flyActionTwo);
-        Assert.assertEquals(initState,newState);
+        Assert.assertEquals(initState, newState);
     }
 }

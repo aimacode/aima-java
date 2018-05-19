@@ -4,14 +4,28 @@ import aima.core.logic.fol.kb.data.Literal;
 import aima.core.logic.fol.parsing.ast.Constant;
 import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.util.math.permute.PermutationGenerator;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import java.util.*;
 
+/**
+ * Artificial Intelligence A Modern Approach (3rd Edition): page
+ * 383.<br>
+ * <br>
+ * <p>
+ * A set of action schemas serves as a definition of a planning domain. A specific problem
+ * within the domain is defined with the addition of an initial state and a goal. The initial
+ * state is a conjunction of ground atoms.The goal is just like a
+ * precondition: a conjunction of literals (positive or negative) that may contain variables, such
+ * as At(p, SFO ) ∧ Plane(p). Any variables are treated as existentially quantified, so this goal
+ * is to have any plane at SFO. The problem is solved when we can find a sequence of actions
+ * that end in a state s that entails the goal.
+ *
+ * @author samagra
+ */
 public class Problem {
-    State initialState;
-    Set<ActionSchema> actionSchemas;
-    State goalState;
+    State initialState;// initialState
+    Set<ActionSchema> actionSchemas;// Planning Domain
+    State goalState;// goalState
 
 
     public Problem(State initialState, State goalState, Set<ActionSchema> actionSchemas) {
@@ -35,15 +49,19 @@ public class Problem {
     public State getGoalState() {
         return goalState;
     }
-    public List<Constant> getProblemConstants(){
+
+    /**
+     * @return Constants for a particular problem domain.
+     */
+    public List<Constant> getProblemConstants() {
         List<Constant> constants = new ArrayList<>();
         for (Literal literal :
                 getInitialState().getFluents()) {
             for (Term term :
                     literal.getAtomicSentence().getArgs()) {
-                if (term instanceof Constant){
-                    if (!constants.contains((Constant)term))
-                    constants.add((Constant) term);
+                if (term instanceof Constant) {
+                    if (!constants.contains((Constant) term))
+                        constants.add((Constant) term);
                 }
             }
         }
@@ -51,14 +69,14 @@ public class Problem {
                 getGoalState().getFluents()) {
             for (Term term :
                     literal.getAtomicSentence().getArgs()) {
-                if (term instanceof Constant){
-                    if (!constants.contains((Constant)term))
-                    constants.add((Constant) term);
+                if (term instanceof Constant) {
+                    if (!constants.contains((Constant) term))
+                        constants.add((Constant) term);
                 }
             }
         }
         for (ActionSchema actionSchema :
-             getActionSchemas()) {
+                getActionSchemas()) {
             for (Constant constant :
                     actionSchema.getConstants()) {
                 if (!constants.contains(constant))
@@ -67,10 +85,13 @@ public class Problem {
         }
         return constants;
     }
-    public List<ActionSchema> getPropositionalisedActions(){
-      List<Constant> problemConstants = getProblemConstants();
-      List<ActionSchema> propositionalisedActions = new ArrayList<>();
-      List<ActionSchema> result = new ArrayList<>();
+
+    /**
+     * @return Propositionalises all the actionschemas to return a set of possible ground actions
+     */
+    public List<ActionSchema> getPropositionalisedActions() {
+        List<Constant> problemConstants = getProblemConstants();
+        List<ActionSchema> result = new ArrayList<>();
         for (ActionSchema actionSchema :
                 getActionSchemas()) {
             int numberOfVars = actionSchema.getVariables().size();
@@ -80,5 +101,5 @@ public class Problem {
             }
         }
         return result;
-     }
+    }
 }

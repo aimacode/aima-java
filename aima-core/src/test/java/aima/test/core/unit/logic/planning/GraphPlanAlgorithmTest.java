@@ -10,9 +10,12 @@ import org.junit.Test;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author samagra
+ */
 public class GraphPlanAlgorithmTest {
     @Test
-    public void test(){
+    public void test() {
         GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
         Problem spareTireProblem = PlanningProblemFactory.spareTireProblem();
         List<List<ActionSchema>> solution = algorithm.graphPlan(spareTireProblem);
@@ -26,7 +29,7 @@ public class GraphPlanAlgorithmTest {
         ActionSchema putOnSpareAxle = new ActionSchema("PutOn", null,
                 "Tire(Spare)^At(Spare,Ground)^~At(Flat,Axle)",
                 "~At(Spare,Ground)^At(Spare,Axle)");
-        Assert.assertEquals(2,solution.size());
+        Assert.assertEquals(2, solution.size());
         Assert.assertTrue(solution.get(0).contains(removeFlatAxle));
         Assert.assertTrue(solution.get(0).contains(removeSpareTrunk));
         Assert.assertTrue(solution.get(1).contains(putOnSpareAxle));

@@ -8,23 +8,27 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * @author samagra
+ */
 public class GraphTest {
     Problem problem;
     Level firstLevel, secondLevel, thirdLevel;
+
     @Before
-    public void setup(){
-       problem = PlanningProblemFactory.spareTireProblem();
-       firstLevel = new Level(null,problem,"At(Spare,Trunk)^At(Flat,Axle) ^~At(Spare,Axle)^~At(Flat,Ground)^~At(Spare,Ground)");
-       secondLevel = new Level(firstLevel,problem);
-       thirdLevel = new Level(thirdLevel,problem);
+    public void setup() {
+        problem = PlanningProblemFactory.spareTireProblem();
+        firstLevel = new Level(null, problem, "At(Spare,Trunk)^At(Flat,Axle) ^~At(Spare,Axle)^~At(Flat,Ground)^~At(Spare,Ground)");
+        secondLevel = new Level(firstLevel, problem);
+        thirdLevel = new Level(thirdLevel, problem);
     }
 
     @Test
-    public void addLevelTest(){
-        Graph graph = new Graph(problem,firstLevel);
+    public void addLevelTest() {
+        Graph graph = new Graph(problem, firstLevel);
         graph.addLevel();
-        Assert.assertEquals(2,graph.getLevels().size());
+        Assert.assertEquals(2, graph.getLevels().size());
         graph.addLevel();
-        Assert.assertEquals(3,graph.getLevels().size());
+        Assert.assertEquals(3, graph.getLevels().size());
     }
 }

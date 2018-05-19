@@ -4,7 +4,11 @@ import aima.core.logic.fol.kb.data.Literal;
 
 import java.util.*;
 
-
+/**
+ * The data structure for calculating and holding the levels of a planning graph.
+ *
+ * @author samagra
+ */
 public class Level {
     List<Object> levelObjects;
     HashMap<Object, List<Object>> mutexLinks;//can be planned alternatively
@@ -162,18 +166,15 @@ public class Level {
 
             for (int i = 0; i < levelObjects.size(); i++) {
                 firstAction = (ActionSchema) levelObjects.get(i);
-                String nameOne = firstAction.getName();
                 List<Literal> firstActionEffects = firstAction.getEffects();
                 List<Literal> firstActionPositiveEffects = firstAction.getEffectsPositiveLiterals();
                 List<Literal> firstActionPreconditions = firstAction.getPrecondition();
                 for (int j = i+1; j < levelObjects.size(); j++) {
                     checkMutex = false;
                     secondAction = (ActionSchema) levelObjects.get(j);
-                    String nameTwo = secondAction.getName();
                     List<Literal> secondActionEffects = secondAction.getEffects();
                     List<Literal> secondActionNegatedLiterals = secondAction.getEffectsNegativeLiterals();
                     List<Literal> secondActionPreconditions = secondAction.getPrecondition();
-                    //check for inconsistent effects
                     for (Literal posLiteral :
                             firstActionPositiveEffects) {
                         for (Literal negatedLit :
@@ -181,23 +182,15 @@ public class Level {
                             if (posLiteral.equals(new Literal(negatedLit.getAtomicSentence(),false))
                             ) {
                                 checkMutex = true;
-                                /*if (nameOne.equals("LeaveOvernight")||nameTwo.equals("LeaveOvernight"))
-                                    System.out.println("One"+"\t"+nameOne+"\t"+nameTwo);*/
                             }
                         }
                     }
                     if (!checkMutex) {
-                        //check for interference
-                        //one of the effects of one action is the negation of the precondition of other
                         if (checkInterference(secondActionPreconditions, firstActionEffects)) {
                             checkMutex = true;
-                            /*if (nameOne.equals("LeaveOvernight")||nameTwo.equals("LeaveOvernight"))
-                                System.out.println("Two"+"\t"+nameOne+"\t"+nameTwo);*/
                         }
                         if (checkInterference(firstActionPreconditions, secondActionEffects)) {
                             checkMutex = true;
-                            /*if (nameOne.equals("LeaveOvernight")||nameTwo.equals("LeaveOvernight"))
-                                System.out.println("Three"+"\t"+nameOne+"\t"+nameTwo);*/
                         }
                     }
                     if (!checkMutex) {
@@ -209,8 +202,6 @@ public class Level {
                                         secondActionPreconditions) {
                                     if (prevMutex.get(firstActionPrecondition) != null && prevMutex.get(firstActionPrecondition).contains(secondActionPrecondition)) {
                                         checkMutex = true;
-                                        /*if (nameOne.equals("LeaveOvernight")||nameTwo.equals("LeaveOvernight"))
-                                            System.out.println("Four"+"\t"+nameOne+"\t"+nameTwo);*/
                                     }
                                 }
 
@@ -236,7 +227,6 @@ public class Level {
                 if (secondActionEffect.equals(new Literal(firstActionPrecondition.getAtomicSentence(),firstActionPrecondition.isPositiveLiteral())))
                 {
                         checkMutex = true;
-                        /*System.out.println(secondActionEffect.toString()+"\t"+firstActionPrecondition.toString());*/
                 }
 
             }
