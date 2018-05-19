@@ -38,7 +38,7 @@ public class ProblemTest {
                 "~At(obj,loc)^At(obj,Ground)");
         ActionSchema putOnAction = new ActionSchema("PutOn", putOnVars,
                 "Tire(t)^At(t,Ground)^~At(Flat,Axle)",
-                "At(t,Ground)^At(t,Axle)");
+                "~At(t,Ground)^At(t,Axle)");
         ActionSchema leaveOvernightAction = new ActionSchema("LeaveOvernight", null,
                 "",
                 "~At(Spare,Ground)^~At(Spare,Axle)^At(Spare,Trunk)" +
