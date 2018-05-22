@@ -75,7 +75,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |9|323|Subst|[SubstVisitor](/aima-core/src/main/java/aima/core/logic/fol/SubstVisitor.java)|
 |9.1|328|Unify|[Unifier](/aima-core/src/main/java/aima/core/logic/fol/Unifier.java)|
 |9.3|332|FOL-FC-Ask|[FOLFCAsk](/aima-core/src/main/java/aima/core/logic/fol/inference/FOLFCAsk.java)|
-|9.3|332|FOL-BC-Ask|[FOLBCAsk](/aima-core/src/main/java/aima/core/logic/fol/inference/FOLBCAsk.java)|
+|9.6|338|FOL-BC-Ask|[FOLBCAsk](/aima-core/src/main/java/aima/core/logic/fol/inference/FOLBCAsk.java)|
 |9|345|CNF|[CNFConverter](/aima-core/src/main/java/aima/core/logic/fol/CNFConverter.java)|
 |9|347|Resolution|[FOLTFMResolution](/aima-core/src/main/java/aima/core/logic/fol/inference/FOLTFMResolution.java)|
 |9|354|Demodulation|[Demodulation](/aima-core/src/main/java/aima/core/logic/fol/inference/Demodulation.java)|
