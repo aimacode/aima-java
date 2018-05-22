@@ -13,7 +13,7 @@ public class InState {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj != null && obj instanceof InState) {
+		if (obj instanceof InState) {
 			return this.getLocation().equals(((InState) obj).getLocation());
 		}
 		return super.equals(obj);
