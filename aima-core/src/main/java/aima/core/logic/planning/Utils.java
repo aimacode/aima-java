@@ -9,10 +9,16 @@ import aima.core.logic.fol.parsing.ast.Variable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utils for parsing planning problems.
+ *
+ * @author samagra
+ */
 public class Utils {
+
     public static List<Literal> parse(String s) {
         if (s.isEmpty())
-            return null;
+            return new ArrayList<>();
         s = s.replaceAll("\\s+", "");
         String[] tokens = s.split("\\^");
         Literal literal;

@@ -6,7 +6,32 @@ import aima.core.logic.fol.parsing.ast.Variable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * A problem factory to generate planning problems.
+ *
+ * @author samagra
+ */
 public class PlanningProblemFactory {
+
+    /**
+     * Generates air cargo problem. Artificial Intelligence A Modern Approach (3rd Edition):Figure 10.1 page 369.<br>
+     * <p>
+     * Init(At(C1, SFO) ∧ At(C2, JFK) ∧ At(P1, SFO) ∧ At(P2, JFK)
+     *   ∧ Cargo(C1) ∧ Cargo(C2) ∧ Plane(P1) ∧ Plane(P2)
+     *   ∧ Airport(JFK) ∧ Airport(SFO))
+     * Goal(At(C1, JFK) ∧ At(C2, SFO))
+     * Action(Load(c, p, a),
+     *  PRECOND: At(c, a) ∧ At(p, a) ∧ Cargo(c) ∧ Plane(p) ∧ Airport(a)
+     *  EFFECT: ¬ At(c, a) ∧ In(c, p))
+     * Action(Unload(c, p, a),
+     *  PRECOND: In(c, p) ∧ At(p, a) ∧ Cargo(c) ∧ Plane(p) ∧ Airport(a)
+     *  EFFECT: At(c, a) ∧ ¬ In(c, p))
+     * Action(Fly(p, from, to),
+     *  PRECOND: At(p, from) ∧ Plane(p) ∧ Airport(from) ∧ Airport(to)
+     *  EFFECT: ¬ At(p, from) ∧ At(p, to))
+     *
+     * @return A PDDL description of an air cargo transportation planning problem.
+     */
     public static Problem airCargoTransportProblem() {
         State initialState = new State("At(C1,SFO)^At(C2,JFK)^At(P1,SFO)" +
                 "^At(P2,JFK)^Cargo(C1)^Cargo(C2)^Plane(P1)^Plane(P2)^Airport(JFK)^Airport(SFO)");
@@ -31,6 +56,24 @@ public class PlanningProblemFactory {
         return new Problem(initialState, goalState, loadAction, unloadAction, flyAction);
     }
 
+    /**
+     * Generates spare tire problem. Artificial Intelligence A Modern Approach (3rd Edition): Figure 10.2 page 370.<br>
+     * <p>
+     * Init(Tire(Flat) ∧ Tire(Spare) ∧ At(Flat, Axle) ∧ At(Spare, Trunk))
+     * Goal(At(Spare, Axle))
+     * Action(Remove(obj, loc),
+     *  PRECOND: At(obj, loc)
+     *  EFFECT: ¬ At(obj, loc) ∧ At(obj, Ground))
+     * Action(PutOn(t, Axle),
+     *  PRECOND: Tire(t) ∧ At(t, Ground) ∧ ¬ At(Flat, Axle)
+     *  EFFECT: ¬ At(t, Ground) ∧ At(t, Axle))
+     * Action(LeaveOvernight,
+     *  PRECOND:
+     *  EFFECT: ¬ At(Spare, Ground) ∧ ¬ At(Spare, Axle) ∧ ¬ At(Spare, Trunk)
+     *      ∧ ¬ At(Flat, Ground) ∧ ¬ At(Flat, Axle) ∧ ¬ At(Flat, Trunk))
+     *
+     * @return The spare tire problem.
+     */
     public static Problem spareTireProblem() {
         State initialState = new State("Tire(Flat)^Tire(Spare)^At(Flat,Axle)" +
                 "^At(Spare,Trunk)");
@@ -46,7 +89,7 @@ public class PlanningProblemFactory {
                 "~At(obj,loc)^At(obj,Ground)");
         ActionSchema putOnAction = new ActionSchema("PutOn", putOnVars,
                 "Tire(t)^At(t,Ground)^~At(Flat,Axle)",
-                "At(t,Ground)^At(t,Axle)");
+                "~At(t,Ground)^At(t,Axle)");
         ActionSchema leaveOvernightAction = new ActionSchema("LeaveOvernight", null,
                 "",
                 "~At(Spare,Ground)^~At(Spare,Axle)^At(Spare,Trunk)" +
