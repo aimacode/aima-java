@@ -34,7 +34,7 @@ import aima.extra.logic.firstorder.parser.FirstOrderVisitor;
  */
 public class FOLParserTest {
 	
-	FirstOrderLogicParser parser;
+	private FirstOrderLogicParser parser;
 	
 	@Test
 	public void testAtomicSentenceTrueParse() {
@@ -80,13 +80,13 @@ public class FOLParserTest {
 	}
 
 	@Test
-	public void testExtraParanthizedSentence() {
+	public void testExtraParenthesizedSentence() {
 		Sentence ps = (Sentence) parseToSentence("(((~ King(John))))");
 		Assert.assertEquals(ps, new NotSentence(getKingPredicate(new Constant("John"))));
 	}
 
 	@Test
-	public void testParseComplexParanthizedSentence() {
+	public void testParseComplexParenthesizedSentence() {
 		Sentence ps = (Sentence) parseToSentence("(~ BrotherOf(John) = EnemyOf(Saladin))");
 		Assert.assertEquals(ps,
 				new NotSentence(new TermEquality(getBrotherOfFunction(new Constant("John")), getEnemyOfFunction())));
@@ -145,7 +145,7 @@ public class FOLParserTest {
 	@Test
 	public void testQuantifiedSentenceWithSingleVariable() {
 		Sentence qs = (Sentence) parseToSentence("FORALL x  King(x)");
-		List<Variable> vars = new ArrayList<Variable>();
+		List<Variable> vars = new ArrayList<>();
 		vars.add(new Variable("x"));
 		Assert.assertEquals(qs, new QuantifiedSentence("FORALL", vars, getKingPredicate(new Variable("x"))));
 		
@@ -164,7 +164,7 @@ public class FOLParserTest {
 	@Test
 	public void testQuantifiedSentenceWithTwoVariables() {
 		Sentence qs = (Sentence) parseToSentence("EXISTS x,y  (King(x) & BrotherOf(x) = y)");
-		List<Variable> vars = new ArrayList<Variable>();
+		List<Variable> vars = new ArrayList<>();
 		vars.add(new Variable("x"));
 		vars.add(new Variable("y"));
 		ConnectedSentence cse = new ConnectedSentence("&", getKingPredicate(new Variable("x")),
@@ -185,9 +185,9 @@ public class FOLParserTest {
 	}
 
 	@Test
-	public void testQuantifiedSentenceWithPathologicalParanthising() {
+	public void testQuantifiedSentenceWithPathologicalParenthesising() {
 		Sentence qs = (Sentence) parseToSentence("(( (EXISTS x,y  (King(x) & (BrotherOf(x) = y)) ) ))");
-		List<Variable> vars = new ArrayList<Variable>();
+		List<Variable> vars = new ArrayList<>();
 		vars.add(new Variable("x"));
 		vars.add(new Variable("y"));
 		ConnectedSentence cse = new ConnectedSentence("&", getKingPredicate(new Variable("x")),
@@ -235,13 +235,13 @@ public class FOLParserTest {
 	}
 
 	private Function getBrotherOfFunction(Term t) {
-		List<Term> l = new ArrayList<Term>();
+		List<Term> l = new ArrayList<>();
 		l.add(t);
 		return new Function("BrotherOf", l);
 	}
 
 	private Function getEnemyOfFunction() {
-		List<Term> l = new ArrayList<Term>();
+		List<Term> l = new ArrayList<>();
 		l.add(new Constant("Saladin"));
 		return new Function("EnemyOf", l);
 	}
@@ -255,7 +255,7 @@ public class FOLParserTest {
 //	}
 
 	private Predicate getKingPredicate(Term t) {
-		List<Term> l = new ArrayList<Term>();
+		List<Term> l = new ArrayList<>();
 		l.add(t);
 		return new Predicate("King", l);
 	}
