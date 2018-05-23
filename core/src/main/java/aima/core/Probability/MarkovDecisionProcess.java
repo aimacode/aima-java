@@ -52,7 +52,7 @@ public interface MarkovDecisionProcess<Stype, Atype> {
 	 *            the state.
 	 * @return the set of actions for state s.
 	 */
-	Set<Atype> ACTIONS(Stype s);
+	Set<Atype> Actions(Stype s);
 
 	/**
 	 * Return the probability of going from state s using action a to s' based
