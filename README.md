@@ -400,6 +400,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    <tr>
        <td>7.?</td>
        <td>??</td>
+       <td>ConvertToCNF</td>
+       <td><a href="core/src/main/java/aima/core/logic/basic/propositional/visitors/ConvertToCNF.java">ConvertToCNF</a></td>
+   </tr>
+   <tr>
+       <td>7.?</td>
+       <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/PL-Resolution.md">PL-Resolution</a></td>
        <td><a href="core/src/main/java/aima/core/logic/basic/propositional/inference/PLResolution.java">PLResolution</a></td>
    </tr>
