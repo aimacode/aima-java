@@ -45,40 +45,27 @@ import java.util.Set;
  * expansion.
  */
 public class DepthFirstSearch<A, S> implements SearchForActionsFunction<A, S> {
-  // function DEPTH-FIRST-SEARCH(problem) returns a solution, or failure
+
   @Override
   public List<A> apply(Problem<A, S> problem) {
-    // node <- a node with STATE = problem.INITIAL-STATE, PATH-COST=0
     Node<A, S> node = newRootNode(problem.initialState(), 0);
-    // if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
     if (isGoalState(node, problem)) {
       return solution(node);
     }
-    // frontier <- a LIFO queue with node as the only element
     Queue<Node<A, S>> frontier = newLIFOQueue(node);
-    // explored <- an empty set
     Set<S> explored = newExploredSet();
-    // loop do
     while (true) {
-      // if EMPTY?(frontier) then return failure
       if (frontier.isEmpty()) {
         return failure();
       }
-      // node <- POP(frontier) // chooses the deepest unexplored node in the frontier
       node = frontier.remove();
-      // add node.STATE to explored
       explored.add(node.state());
-      // for each action in problem.ACTIONS(node.STATE) do
       for (A action : problem.actions(node.state())) {
-        // child <- CHILD-NODE(problem, node, action)
         Node<A, S> child = newChildNode(problem, node, action);
-        // if child.STATE is not in explored or frontier then
         if (!(explored.contains(child.state()) || containsState(frontier, child.state()))) {
-          // if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
           if (isGoalState(child, problem)) {
             return solution(child);
           }
-          // frontier <- INSERT(child, frontier)
           frontier.add(child);
         }
       }
