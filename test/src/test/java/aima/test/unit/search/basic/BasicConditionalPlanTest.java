@@ -12,7 +12,7 @@ import aima.core.util.datastructure.Pair;
 
 public class BasicConditionalPlanTest {
 	@Test
-	public void testBasicConfitionalPlan() {
+	public void testBasicConditionalPlan() {
 		BasicConditionalPlan<String, Integer> cp = new BasicConditionalPlan<>();
 		Assert.assertEquals("[]", cp.toString());
 
