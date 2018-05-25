@@ -122,3 +122,18 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |25.9|982|Monte-Carlo-Localization|[MonteCarloLocalization](/aima-core/src/main/java/aima/core/robotics/MonteCarloLocalization.java)|
 
 ###  "---" indicates algorithms yet to be implemented.
+
+### Index of data structures
+Here is a table of the data structures yet to be implemented.
+
+|Fig|Page|Name (in book)|Code|
+| -------- |:--------:| :-----| :----- |
+|9.8|341|Append|---|
+|10.1|369|AIR-CARGO-TRANSPORT-PROBLEM|---|
+|10.2|370|SPARE-TIRE-PROBLEM|---|
+|10.3|371|BLOCKS-WORLD |---|
+|10.7|380|HAVE-CAKE-AND-EAT-CAKE-TOO-PROBLEM|---|
+|11.1|402|JOB-SHOP-SCHEDULING-PROBLEM|---|
+|11.4|407|REFINEMENT-HIGH-LEVEL-ACTIONS|---|
+|23.6|895|SENTENCE-TREE|---|
+|29.1|1062|POWERS-OF-2|---|
