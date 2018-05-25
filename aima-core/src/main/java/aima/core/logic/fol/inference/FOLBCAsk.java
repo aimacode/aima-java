@@ -1,10 +1,8 @@
 package aima.core.logic.fol.inference;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import aima.core.logic.fol.Unifier;
 import aima.core.logic.fol.inference.proof.Proof;
 import aima.core.logic.fol.inference.proof.ProofFinal;
 import aima.core.logic.fol.inference.proof.ProofStepBwChGoal;
@@ -15,6 +13,7 @@ import aima.core.logic.fol.parsing.ast.AtomicSentence;
 import aima.core.logic.fol.parsing.ast.Sentence;
 import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
+import aima.core.logic.propositional.kb.KnowledgeBase;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.6, page
@@ -25,225 +24,156 @@ import aima.core.logic.fol.parsing.ast.Variable;
  * function FOL-BC-ASK(KB, query) returns a generator of substitutions
  *   return FOL-BC-OR(KB, query, { })
  *
- * generator FOL-BC-OR(KB, goal, θ) yeilds a substitution
+ * generator FOL-BC-OR(KB, goal, θ) yields a substitution
  *   for each rule (lhs ⇒ rhs) in FETCH-RULES-FOR-GOAL(KB, goal) do
  *        (lhs, rhs) ← STANDARDIZE-VARIABLES((lhs, rhs))
  *  	  for each θ' in FOL-BC-AND(KB, lhs, UNIFY(rhs, goal, θ)) do
- *    	       yeild θ'
+ *    	       yield θ'
  *
- * generator FOL-BC-AND(KB, goals, θ) yeilds a substitution
+ * generator FOL-BC-AND(KB, goals, θ) yields a substitution
  *   if θ = failure then return
- *   else if LENGTH(goals) = 0 then yeild θ
+ *   else if LENGTH(goals) = 0 then yield θ
  *   else do
  *        first, rest ← FIRST(goals), REST(goals)
  *        for each θ' in FOL-BC-OR(KB, SUBST(θ, first), θ) do
  *             for each θ'' in FOL-BC-AND(KB, rest, θ') do
- *                  yeild θ'
+ *                  yield θ'
  * </pre>
  * 
  * Figure 9.6 A simple backward-chaining algorithm for first-order knowledge bases.
- * 
+ *
+ * @author samagra
  * @author Ritwik Sharma
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  */
-public class FOLBCAsk implements InferenceProcedure {
+public class FOLBCAsk{
+	List<List<Literal>> finalAnswer;// to store the final result
+	List<Literal> substitutedLiterals;
 
 	public FOLBCAsk() {
-
+		finalAnswer = new ArrayList<>();
+		substitutedLiterals = new ArrayList<>();
 	}
 
+	public List<Literal> getSubstitutedLiterals() {
+		return substitutedLiterals;
+	}
 	//
 	// START-InferenceProcedure
 	/**
 	 * Returns a set of substitutions
-	 * 
-	 * @param KB
+	 * function FOL-BC-ASK(KB, query) returns a generator of substitutions
+	 * @param kb
 	 *            a knowledge base
 	 * @param query
 	 *            goals, a list of conjuncts forming a query
 	 * 
 	 * @return a set of substitutions
 	 */
-	public InferenceResult ask(FOLKnowledgeBase KB, Sentence query) {
-		// Assertions on the type queries this Inference procedure
-		// supports
-		if (!(query instanceof AtomicSentence)) {
-			throw new IllegalArgumentException(
-					"Only Atomic Queries are supported.");
-		}
-
-		List<Literal> goals = new ArrayList<Literal>();
-		goals.add(new Literal((AtomicSentence) query));
-
-		BCAskAnswerHandler ansHandler = new BCAskAnswerHandler();
-
-		List<List<ProofStepBwChGoal>> allProofSteps = folbcask(KB, ansHandler,
-				goals, new HashMap<Variable, Term>());
-
-		ansHandler.setAllProofSteps(allProofSteps);
-
-		return ansHandler;
+	public List<HashMap<Variable,Term>> ask(FOLKnowledgeBase kb, Literal query){
+		//return FOL-BC-OR(KB, query, { })
+		return folBcOr(kb,query, new HashMap<>());
 	}
-
-	// END-InferenceProcedure
-	//
-
-	//
-	// PRIVATE METHODS
-	//
 
 	/**
-	 * <code>
-	 * function FOL-BC-ASK(KB, goals, theta) returns a set of substitutions
-	 *   input: KB, a knowledge base
-	 *          goals, a list of conjuncts forming a query (theta already applied)
-	 *          theta, the current substitution, initially the empty substitution {}
-	 * </code>
+	 * generator FOL-BC-OR(KB, goal, θ) yields a substitution
+	 * @param kb
+	 * 			The knowleadge base
+	 * @param goal
+	 * 			The goals at the or node to be achieved
+	 * @param theta
+	 * 			Substitution
+	 * @return
+	 * 		a list of substitutions
 	 */
-	private List<List<ProofStepBwChGoal>> folbcask(FOLKnowledgeBase KB,
-			BCAskAnswerHandler ansHandler, List<Literal> goals,
-			Map<Variable, Term> theta) {
-		List<List<ProofStepBwChGoal>> thisLevelProofSteps = new ArrayList<List<ProofStepBwChGoal>>();
-		// local variables: answers, a set of substitutions, initially empty
-
-		// if goals is empty then return {theta}
-		if (goals.isEmpty()) {
-			thisLevelProofSteps.add(new ArrayList<ProofStepBwChGoal>());
-			return thisLevelProofSteps;
-		}
-
-		// qDelta <- SUBST(theta, FIRST(goals))
-		Literal qDelta = KB.subst(theta, goals.get(0));
-
-		// for each sentence r in KB where
-		// STANDARDIZE-APART(r) = (p1 ^ ... ^ pn => q)
-		for (Clause r : KB.getAllDefiniteClauses()) {
-			r = KB.standardizeApart(r);
-			// and thetaDelta <- UNIFY(q, qDelta) succeeds
-			Map<Variable, Term> thetaDelta = KB.unify(r.getPositiveLiterals()
-					.get(0).getAtomicSentence(), qDelta.getAtomicSentence());
-			if (null != thetaDelta) {
-				// new_goals <- [p1,...,pn|REST(goals)]
-				List<Literal> newGoals = new ArrayList<Literal>(
-						r.getNegativeLiterals());
-				newGoals.addAll(goals.subList(1, goals.size()));
-				// answers <- FOL-BC-ASK(KB, new_goals, COMPOSE(thetaDelta,
-				// theta)) U answers
-				Map<Variable, Term> composed = compose(KB, thetaDelta, theta);
-				List<List<ProofStepBwChGoal>> lowerLevelProofSteps = folbcask(
-						KB, ansHandler, newGoals, composed);
-
-				ansHandler.addProofStep(lowerLevelProofSteps, r, qDelta,
-						composed);
-
-				thisLevelProofSteps.addAll(lowerLevelProofSteps);
+	private List<HashMap<Variable, Term>> folBcOr(FOLKnowledgeBase kb, Literal goal, HashMap<Variable, Term> theta) {
+		List<HashMap<Variable,Term>> result = new ArrayList<>();
+		finalAnswer.add(new ArrayList<>(Collections.singletonList(goal)));
+		// for each rule (lhs ⇒ rhs) in FETCH-RULES-FOR-GOAL(KB, goal) do
+		for (Clause rule :
+				fetchRulesForGoal(kb,goal)) {
+			//(lhs, rhs) ← STANDARDIZE-VARIABLES((lhs, rhs))
+			Clause tempClause = kb.standardizeApart(rule);
+			Literal rhs = tempClause.getPositiveLiterals().get(0);
+			List<Literal> lhs = new ArrayList<>();
+			for (Literal literal :
+					tempClause.getNegativeLiterals() ){
+				lhs.add(new Literal(literal.getAtomicSentence(),!literal.isNegativeLiteral()));
 			}
+			//for each θ' in FOL-BC-AND(KB, lhs, UNIFY(rhs, goal, θ)) do
+			// yield θ'
+			result.addAll(folBcAnd(kb, lhs, new Unifier().unify(rhs.getAtomicSentence(), goal.getAtomicSentence(), theta)));
 		}
-
-		// return answers
-		return thisLevelProofSteps;
+		return result;
 	}
 
-	// Artificial Intelligence A Modern Approach (3rd Edition): page 338.
-	// COMPOSE(delta, tau) is the substitution whose effect is identical to
-	// the effect of applying each substitution in turn. That is,
-	// SUBST(COMPOSE(theta1, theta2), p) = SUBST(theta2, SUBST(theta1, p))
-	private Map<Variable, Term> compose(FOLKnowledgeBase KB,
-			Map<Variable, Term> theta1, Map<Variable, Term> theta2) {
-		Map<Variable, Term> composed = new HashMap<Variable, Term>();
-
-		// So that it behaves like:
-		// SUBST(theta2, SUBST(theta1, p))
-		// There are two steps involved here.
-		// See: http://logic.stanford.edu/classes/cs157/2008/notes/chap09.pdf
-		// for a detailed discussion:
-
-		// 1. Apply theta2 to the range of theta1.
-		for (Variable v : theta1.keySet()) {
-			composed.put(v, KB.subst(theta2, theta1.get(v)));
+	/**
+	 * generator FOL-BC-AND(KB, goals, θ) yields a substitution
+	 * @param kb
+	 * @param goals
+	 * @param theta
+	 * @return
+	 */
+	private List<HashMap<Variable, Term>> folBcAnd(FOLKnowledgeBase kb, List<Literal> goals, Map<Variable, Term> theta) {
+		List<HashMap<Variable,Term>> result = new ArrayList<>();
+		finalAnswer.add(new ArrayList<>(goals));
+		// if θ = failure then return
+		if (theta==null)
+			return result;
+		// else if LENGTH(goals) = 0 then yield θ
+		else if (goals.size()==0){
+			result.add((HashMap<Variable, Term>) theta);
+			return result;
 		}
-
-		// 2. Adjoin to delta all pairs from tau with different
-		// domain variables.
-		for (Variable v : theta2.keySet()) {
-			if (!theta1.containsKey(v)) {
-				composed.put(v, theta2.get(v));
+		// else do
+		else {
+			// first, rest ← FIRST(goals), REST(goals)
+			Literal first = goals.get(0);
+			List<Literal> rest = new ArrayList<>(goals);
+			rest.remove(0);
+			// for each θ' in FOL-BC-OR(KB, SUBST(θ, first), θ) do
+			for (HashMap<Variable, Term> thetaPrime :
+					folBcOr(kb,kb.subst(theta,first),(HashMap<Variable,Term>)theta)) {
+				substitutedLiterals.add(kb.subst(theta,first));
+				// for each θ'' in FOL-BC-AND(KB, rest, θ') do
+				// yield θ'
+				result.addAll(folBcAnd(kb, rest, thetaPrime));
 			}
 		}
-
-		return cascadeSubstitutions(KB, composed);
+		return result;
 	}
 
-	// See:
-	// http://logic.stanford.edu/classes/cs157/2008/miscellaneous/faq.html#jump165
-	// for need for this.
-	private Map<Variable, Term> cascadeSubstitutions(FOLKnowledgeBase KB,
-			Map<Variable, Term> theta) {
-		for (Variable v : theta.keySet()) {
-			Term t = theta.get(v);
-			theta.put(v, KB.subst(theta, t));
-		}
-
-		return theta;
-	}
-
-	class BCAskAnswerHandler implements InferenceResult {
-
-		private List<Proof> proofs = new ArrayList<Proof>();
-
-		public BCAskAnswerHandler() {
-
-		}
-
-		//
-		// START-InferenceResult
-		public boolean isPossiblyFalse() {
-			return proofs.size() == 0;
-		}
-
-		public boolean isTrue() {
-			return proofs.size() > 0;
-		}
-
-		public boolean isUnknownDueToTimeout() {
-			return false;
-		}
-
-		public boolean isPartialResultDueToTimeout() {
-			return false;
-		}
-
-		public List<Proof> getProofs() {
-			return proofs;
-		}
-
-		// END-InferenceResult
-		//
-
-		public void setAllProofSteps(List<List<ProofStepBwChGoal>> allProofSteps) {
-			for (List<ProofStepBwChGoal> steps : allProofSteps) {
-				ProofStepBwChGoal lastStep = steps.get(steps.size() - 1);
-				Map<Variable, Term> theta = lastStep.getBindings();
-				proofs.add(new ProofFinal(lastStep, theta));
+	/**
+	 * Fetches all those implication clauses whose rhs meet with the goal
+	 * @param kb
+	 * @param goal
+	 * @return
+	 */
+	private List<Clause> fetchRulesForGoal(FOLKnowledgeBase kb, Literal goal){
+		List<Clause> result = new ArrayList<>();
+		for (Clause clause :
+				kb.getAllDefiniteClauseImplications()) {
+			Literal rhs = clause.getPositiveLiterals().get(0);
+			if (rhs.getAtomicSentence().getSymbolicName().equals(goal.getAtomicSentence().getSymbolicName())){
+				result.add(clause);
 			}
 		}
-
-		public void addProofStep(
-				List<List<ProofStepBwChGoal>> currentLevelProofSteps,
-				Clause toProve, Literal currentGoal,
-				Map<Variable, Term> bindings) {
-
-			if (currentLevelProofSteps.size() > 0) {
-				ProofStepBwChGoal predecessor = new ProofStepBwChGoal(toProve,
-						currentGoal, bindings);
-				for (List<ProofStepBwChGoal> steps : currentLevelProofSteps) {
-					if (steps.size() > 0) {
-						steps.get(0).setPredecessor(predecessor);
+		for (Clause clause :
+				kb.getAllClauses()) {
+			if (clause.isUnitClause()){
+				for (Literal l :
+						clause.getLiterals()) {
+					if (l.getAtomicSentence().getSymbolicName().equals(goal.getAtomicSentence().getSymbolicName())) {
+						result.add(clause);
 					}
-					steps.add(0, predecessor);
-				}
+					}
 			}
 		}
+		return result;
+	}
+
+	public List<List<Literal>> getFinalAnswer() {
+		return finalAnswer;
 	}
 }
