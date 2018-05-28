@@ -22,4 +22,19 @@ public class HighLevelAction extends ActionSchema {
     public List<List<ActionSchema>> getRefinements() {
         return refinements;
     }
+
+    @Override
+    public String toString() {
+        String result =  super.toString();
+        result = result+"\n"+"REFINEMENTS : \n";
+        for (List<ActionSchema> refinement :
+                this.getRefinements()) {
+            result+="\n";
+            for (ActionSchema action :
+                    refinement) {
+                result = result +"\n"+(action.getName());
+            }
+        }
+        return result;
+    }
 }

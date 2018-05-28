@@ -52,6 +52,15 @@ public class State {
         return this;
     }
 
+    public State result(List<ActionSchema> actions){
+        State resultState = new State(this.getFluents());
+        for (ActionSchema action :
+                actions) {
+            resultState = resultState.result(action);
+        }
+        return resultState;
+    }
+
 
     /**
      * Checks if the action is applicable in a state.

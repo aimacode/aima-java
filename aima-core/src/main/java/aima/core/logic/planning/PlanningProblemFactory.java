@@ -103,7 +103,7 @@ public class PlanningProblemFactory {
         List<List<ActionSchema>> refinements  = new ArrayList<>();
         HighLevelAction act = new HighLevelAction("Act",null,"","",refinements);
         for (ActionSchema primitiveAction :
-               problem.getActionSchemas()) {
+               problem.getPropositionalisedActions()) {
             act.addRefinement(new ArrayList<>(Arrays.asList(primitiveAction,act)));
         }
         act.addRefinement(new ArrayList<>());

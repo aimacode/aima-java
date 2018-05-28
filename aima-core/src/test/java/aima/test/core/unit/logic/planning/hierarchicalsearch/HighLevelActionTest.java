@@ -9,12 +9,5 @@ import org.junit.Test;
 public class HighLevelActionTest {
     @Test
     public void inheritanceTest(){
-        ActionSchema actionOne = new ActionSchema("Go",null,"At(A)","At(B)^~At(A)");
-        ActionSchema hla = new HighLevelAction("Go",null,"","",actionOne);
-
-        Assert.assertTrue(hla instanceof HighLevelAction);
-        Assert.assertTrue(hla instanceof ActionSchema);
-        Assert.assertFalse(actionOne instanceof HighLevelAction);
-
     }
 }
