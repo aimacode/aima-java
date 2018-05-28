@@ -2,9 +2,11 @@ package aima.core.logic.planning;
 
 import aima.core.logic.fol.parsing.ast.Constant;
 import aima.core.logic.fol.parsing.ast.Variable;
+import aima.core.logic.planning.hierarchicalsearch.HighLevelAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A problem factory to generate planning problems.
@@ -95,5 +97,16 @@ public class PlanningProblemFactory {
                 "~At(Spare,Ground)^~At(Spare,Axle)^At(Spare,Trunk)" +
                         "^~At(Flat,Ground)^~At(Flat,Axle)^~At(Flat,Trunk)");
         return new Problem(initialState, goalState, removeAction, putOnAction, leaveOvernightAction);
+    }
+
+    public static HighLevelAction getHlaAct(Problem problem){
+        List<List<ActionSchema>> refinements  = new ArrayList<>();
+        HighLevelAction act = new HighLevelAction("Act",null,"","",refinements);
+        for (ActionSchema primitiveAction :
+               problem.getActionSchemas()) {
+            act.addRefinement(new ArrayList<>(Arrays.asList(primitiveAction,act)));
+        }
+        act.addRefinement(new ArrayList<>());
+        return act;
     }
 }
