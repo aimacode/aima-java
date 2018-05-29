@@ -81,8 +81,8 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |9|354|Demodulation|[Demodulation](/aima-core/src/main/java/aima/core/logic/fol/inference/Demodulation.java)|
 |9|354|Paramodulation|[Paramodulation](/aima-core/src/main/java/aima/core/logic/fol/inference/Paramodulation.java)|
 |9|345|Subsumption|[SubsumptionElimination](/aima-core/src/main/java/aima/core/logic/fol/SubsumptionElimination.java)|
-|10.9|383|Graphplan|---|
-|11.5|409|Hierarchical-Search|---|
+|10.9|383|Graphplan|[GraphPlan](/aima-core/src/main/java/aima/core/logic/planning/GraphPlanAlgorithm.java)|
+|11.5|409|Hierarchical-Search|[HierarchicalSearchAlgorithm](/aima-core/src/main/java/aima/core/logic/planning/hierarchicalsearch/HierarchicalSearchAlgorithm.java)|
 |11.8|414|Angelic-Search|---|
 |13.1|484|DT-Agent|---|
 |13|484|Probability-Model|[ProbabilityModel](/aima-core/src/main/java/aima/core/probability/ProbabilityModel.java)|
@@ -106,7 +106,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |17.7|657|Policy-Iteration|[PolicyIteration](/aima-core/src/main/java/aima/core/probability/mdp/search/PolicyIteration.java)|
 |17.9|663|POMDP-Value-Iteration|---|
 |18.5|702|Decision-Tree-Learning|[DecisionTreeLearner](/aima-core/src/main/java/aima/core/learning/learners/DecisionTreeLearner.java)|
-|18.8|710|Cross-Validation-Wrapper|---|
+|18.8|710|Cross-Validation-Wrapper|[CrossValidation](/aima-core/src/main/java/aima/core/learning/inductive/CrossValidation.java)|
 |18.11|717|Decision-List-Learning|[DecisionListLearner](/aima-core/src/main/java/aima/core/learning/learners/DecisionListLearner.java)|
 |18.24|734|Back-Prop-Learning|[BackPropLearning](/aima-core/src/main/java/aima/core/learning/neural/BackPropLearning.java)|
 |18.34|751|AdaBoost|[AdaBoostLearner](/aima-core/src/main/java/aima/core/learning/learners/AdaBoostLearner.java)|
