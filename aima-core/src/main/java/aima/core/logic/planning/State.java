@@ -2,6 +2,7 @@ package aima.core.logic.planning;
 
 import aima.core.logic.fol.kb.data.Literal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,8 +53,16 @@ public class State {
         return this;
     }
 
-    public State result(List<ActionSchema> actions){
-        State resultState = new State(this.getFluents());
+    /**
+     * Returns the state obtained by the application of a list of applicable actions to
+     * the current state. This method does not change the original state and in fact returns
+     * a new state representing the changed state.
+     *
+     * @param actions
+     * @return
+     */
+    public State result(List<ActionSchema> actions) {
+        State resultState = new State(new ArrayList<>(this.getFluents()));
         for (ActionSchema action :
                 actions) {
             resultState = resultState.result(action);
