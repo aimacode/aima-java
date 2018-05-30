@@ -5,10 +5,14 @@ import aima.core.logic.fol.parsing.ast.Constant;
 import aima.core.logic.fol.parsing.ast.Predicate;
 import aima.core.logic.planning.ActionSchema;
 import aima.core.logic.planning.State;
+import aima.core.logic.planning.Utils;
+import aima.core.logic.planning.angelicsearch.AngelicHLA;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.sound.midi.SysexMessage;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -68,5 +72,20 @@ public class StateTest {
         Assert.assertNotEquals(initState, newState);
         newState = testState.result(flyActionTwo);
         Assert.assertEquals(initState, newState);
+    }
+
+    @Test
+    public void optimisticReachTest(){
+        Literal a = new Literal(new Predicate("A",new ArrayList<>()));
+        Literal b = new Literal(new Predicate("B",new ArrayList<>()));
+        Literal c = new Literal(new Predicate("C",new ArrayList<>()));
+        AngelicHLA h1 = new AngelicHLA("h1",null,"~A","A^~-B");
+        AngelicHLA h2 = new AngelicHLA("h2",null,"~B","~+A^~+-C");
+        State stateOne = new State(Utils.parse("~A"));
+        State stateTwo = new State(Utils.parse("~B"));
+        for (State state :
+                stateOne.optimisticReach(h1)) {
+            System.out.println(state);
+        }
     }
 }

@@ -1,7 +1,10 @@
 package aima.core.logic.planning;
 
 import aima.core.logic.fol.kb.data.Literal;
+import aima.core.logic.planning.angelicsearch.AngelicHLA;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -65,6 +68,10 @@ public class State {
         return this.getFluents().containsAll(a.getPrecondition());
     }
 
+    public boolean isApplicable(AngelicHLA angelicHLA){
+        return this.getFluents().containsAll(angelicHLA.getPrecondition());
+    }
+
     public List<Literal> getFluents() {
         return fluents;
     }
@@ -85,5 +92,76 @@ public class State {
             hashCode = 37 * hashCode + fluent.hashCode();
         }
         return hashCode;
+    }
+
+    public HashSet<State> optimisticReach(AngelicHLA angelicAction){
+        HashSet<State> result = new HashSet<>();
+        State thisStateCopy = new State(new ArrayList<>(this.getFluents()));
+        result.add(new State(new ArrayList<>(this.getFluents())));
+        if (this.isApplicable(angelicAction)) {
+            for (Literal fluent :
+                    angelicAction.getEffectsNegativeLiterals()) {
+                Literal tempFluent = new Literal(fluent.getAtomicSentence());
+                thisStateCopy.fluents.remove(tempFluent);
+            }
+            thisStateCopy.fluents.addAll(angelicAction.getEffectsPositiveLiterals());
+            result.add(new State(new ArrayList<>(thisStateCopy.getFluents())));
+            for (Literal literal :
+                    angelicAction.getEffectsMaybePositiveLiterals()) {
+                List<State> listToAdd = new ArrayList<>();
+                for (State state :
+                        result) {
+                    State tempCopyState = new State(new ArrayList<>(state.getFluents()));
+                    if (!tempCopyState.getFluents().contains(literal)) {
+                        tempCopyState.getFluents().add(literal);
+                        listToAdd.add(new State(new ArrayList<>(tempCopyState.getFluents())));
+                    }
+                }
+                result.addAll(listToAdd);
+            }
+            for (Literal literal :
+                    angelicAction.getEffectsMaybeNegativeLiterals()) {
+                List<State> listToAdd = new ArrayList<>();
+                for (State state :
+                        result) {
+                    State tempCopyState = new State(new ArrayList<>(state.getFluents()));
+                    if (tempCopyState.getFluents().contains(literal)) {
+                        tempCopyState.getFluents().remove(literal);
+                        listToAdd.add(new State(new ArrayList<>(tempCopyState.getFluents())));
+                    }
+                }
+                result.addAll(listToAdd);
+            }
+        }
+        return result;
+    }
+
+    public HashSet<State> pessimisticReach(AngelicHLA angelicAction){
+        HashSet<State> result = new HashSet<>();
+        State thisStateCopy = new State(new ArrayList<>(this.getFluents()));
+        result.add(new State(new ArrayList<>(this.getFluents())));
+        if (this.isApplicable(angelicAction)){
+            for (Literal fluent :
+                    angelicAction.getEffectsNegativeLiterals()) {
+                Literal tempFluent = new Literal(fluent.getAtomicSentence());
+                thisStateCopy.fluents.remove(tempFluent);
+            }
+            thisStateCopy.fluents.addAll(angelicAction.getEffectsPositiveLiterals());
+        }
+        return result;
+    }
+
+    public HashSet<State> optimisticReach(List<Object> plan){
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder("State:");
+        for (Literal literal :
+                this.getFluents()) {
+            result.append("\n").append(literal.toString());
+        }
+        return result.toString();
     }
 }
