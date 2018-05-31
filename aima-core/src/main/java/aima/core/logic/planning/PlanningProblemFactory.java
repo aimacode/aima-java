@@ -2,9 +2,11 @@ package aima.core.logic.planning;
 
 import aima.core.logic.fol.parsing.ast.Constant;
 import aima.core.logic.fol.parsing.ast.Variable;
+import aima.core.logic.planning.hierarchicalsearch.HighLevelAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A problem factory to generate planning problems.
@@ -92,8 +94,52 @@ public class PlanningProblemFactory {
                 "~At(t,Ground)^At(t,Axle)");
         ActionSchema leaveOvernightAction = new ActionSchema("LeaveOvernight", null,
                 "",
-                "~At(Spare,Ground)^~At(Spare,Axle)^At(Spare,Trunk)" +
+                "~At(Spare,Ground)^~At(Spare,Axle)^~At(Spare,Trunk)" +
                         "^~At(Flat,Ground)^~At(Flat,Axle)^~At(Flat,Trunk)");
         return new Problem(initialState, goalState, removeAction, putOnAction, leaveOvernightAction);
+    }
+
+    /**
+     * Generates go to SanFrancisco airport . Artificial Intelligence A Modern Approach (3rd Edition): Figure 11.4 page 407.<br>
+     * <p>
+     * Refinement(Go(Home, SFO),
+     * STEPS : [Drive(Home, SFOLongTermParking),
+     * Shuttle(SFOLongTermParking, SFO)] )
+     * Refinement(Go(Home, SFO),
+     * STEPS : [Taxi (Home, SFO)] )
+     *
+     * @return The San Francisco Airport problem.
+     */
+    public static Problem goHomeToSFOProblem() {
+        State initialState = new State("At(Home)");
+        State goalState = new State("At(SFO)");
+        ActionSchema driveAction = new ActionSchema("Drive", null,
+                "At(Home)",
+                "~At(Home)^At(SFOLongTermParking)");
+        ActionSchema shuttleAction = new ActionSchema("Shuttle", null,
+                "At(SFOLongTermParking)",
+                "~At(SFOLongTermParking)^At(SFO)");
+        ActionSchema taxiAction = new ActionSchema("Taxi", null,
+                "At(Home)",
+                "~At(Home)^At(SFO)");
+        return new Problem(initialState, goalState, driveAction, shuttleAction, taxiAction);
+
+    }
+
+    /**
+     * Generates the Act HLA for a problem.
+     *
+     * @param problem
+     * @return The Act HLA.
+     */
+    public static HighLevelAction getHlaAct(Problem problem) {
+        List<List<ActionSchema>> refinements = new ArrayList<>();
+        HighLevelAction act = new HighLevelAction("Act", null, "", "", refinements);
+        for (ActionSchema primitiveAction :
+                problem.getPropositionalisedActions()) {
+            act.addRefinement(new ArrayList<>(Arrays.asList(primitiveAction, act)));
+        }
+        act.addRefinement(new ArrayList<>());
+        return act;
     }
 }

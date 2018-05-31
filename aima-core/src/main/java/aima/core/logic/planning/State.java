@@ -55,6 +55,23 @@ public class State {
         return this;
     }
 
+    /**
+     * Returns the state obtained by the application of a list of applicable actions to
+     * the current state. This method does not change the original state and in fact returns
+     * a new state representing the changed state.
+     *
+     * @param actions
+     * @return
+     */
+    public State result(List<ActionSchema> actions) {
+        State resultState = new State(new ArrayList<>(this.getFluents()));
+        for (ActionSchema action :
+                actions) {
+            resultState = resultState.result(action);
+        }
+        return resultState;
+    }
+
 
     /**
      * Checks if the action is applicable in a state.
@@ -198,12 +215,12 @@ public class State {
             if (action instanceof ActionSchema) {
                 for (State state :
                         result) {
-                        currResult.add(state.result((ActionSchema) action));
+                    currResult.add(state.result((ActionSchema) action));
                 }
             } else if (action instanceof AngelicHLA) {
                 for (State state :
                         result) {
-                        currResult.addAll(state.optimisticReach((AngelicHLA) action));
+                    currResult.addAll(state.optimisticReach((AngelicHLA) action));
                 }
             }
             result = currResult;
@@ -211,7 +228,7 @@ public class State {
         return result;
     }
 
-    public HashSet<State> pessimisticReach(List<Object> plan){
+    public HashSet<State> pessimisticReach(List<Object> plan) {
         HashSet<State> result = new HashSet<>();
         result.add(new State(this.getFluents()));
         if (plan.isEmpty()) {
@@ -223,12 +240,12 @@ public class State {
             if (action instanceof ActionSchema) {
                 for (State state :
                         result) {
-                        currResult.add(state.result((ActionSchema) action));
+                    currResult.add(state.result((ActionSchema) action));
                 }
             } else if (action instanceof AngelicHLA) {
                 for (State state :
                         result) {
-                        currResult.addAll(state.pessimisticReach((AngelicHLA) action));
+                    currResult.addAll(state.pessimisticReach((AngelicHLA) action));
                 }
             }
             result = currResult;

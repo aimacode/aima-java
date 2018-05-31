@@ -5,7 +5,6 @@ import aima.core.logic.fol.parsing.ast.Constant;
 import aima.core.logic.fol.parsing.ast.Predicate;
 import aima.core.logic.planning.ActionSchema;
 import aima.core.logic.planning.State;
-import aima.core.logic.planning.Utils;
 import aima.core.logic.planning.angelicsearch.AngelicHLA;
 import org.junit.Assert;
 import org.junit.Before;
@@ -114,9 +113,9 @@ public class StateTest {
     }
 
     @Test
-    public void optimisticReachListTest(){
+    public void optimisticReachListTest() {
         HashSet<State> resultingStates = stateOne.optimisticReach(Arrays.asList(h1, h2));
-        Assert.assertEquals(4,resultingStates.size());
+        Assert.assertEquals(4, resultingStates.size());
         Assert.assertTrue(resultingStates.contains(new State("A")));
         Assert.assertTrue(resultingStates.contains(new State("A^~B")));
         Assert.assertTrue(resultingStates.contains(new State("A^~B^C")));
@@ -124,9 +123,9 @@ public class StateTest {
     }
 
     @Test
-    public void pessimisticReachTestList(){
-        HashSet<State> resultStates = stateOne.pessimisticReach(Arrays.asList(h1,h2));
-        Assert.assertEquals(1,resultStates.size());
+    public void pessimisticReachTestList() {
+        HashSet<State> resultStates = stateOne.pessimisticReach(Arrays.asList(h1, h2));
+        Assert.assertEquals(1, resultStates.size());
         Assert.assertTrue(resultStates.contains(new State("A")));
     }
 }

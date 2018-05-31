@@ -4,7 +4,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import aima.test.core.unit.logic.fol.inference.DemodulationTest;
-import aima.test.core.unit.logic.fol.inference.FOLBCAskTest;
 import aima.test.core.unit.logic.fol.inference.FOLFCAskTest;
 import aima.test.core.unit.logic.fol.inference.FOLModelEliminationTest;
 import aima.test.core.unit.logic.fol.inference.FOLOTTERLikeTheoremProverTest;
@@ -17,7 +16,7 @@ import aima.test.core.unit.logic.fol.parsing.FOLLexerTest;
 import aima.test.core.unit.logic.fol.parsing.FOLParserTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ DemodulationTest.class, FOLBCAskTest.class,
+@Suite.SuiteClasses({ DemodulationTest.class,
 		FOLFCAskTest.class, FOLModelEliminationTest.class,
 		FOLOTTERLikeTheoremProverTest.class, FOLTFMResolutionTest.class,
 		ParamodulationTest.class, ChainTest.class, ClauseTest.class,
