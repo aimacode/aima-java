@@ -83,9 +83,21 @@ public class StateTest {
         AngelicHLA h2 = new AngelicHLA("h2",null,"~B","~+A^~+-C");
         State stateOne = new State(Utils.parse("~A"));
         State stateTwo = new State(Utils.parse("~B"));
-        for (State state :
-                stateOne.optimisticReach(h1)) {
-            System.out.println(state);
-        }
+        // States obtained after applying h1 to stateOne
+        State stateOneResultOne = new State(Utils.parse("A^~B"));
+        State stateOneResultTwo = new State(Utils.parse("A"));
+        Assert.assertTrue(stateOne.optimisticReach(h1).containsAll(Arrays.asList(stateOneResultTwo,stateOneResultOne)));
+        Assert.assertEquals(2,stateOne.optimisticReach(h1).size());
+        // States obtained after applying h2 to stateTwo
+        Assert.assertEquals(6,stateTwo.optimisticReach(h2).size());
+        State [] statesResultTwo = {
+                stateTwo,
+                new State(Utils.parse("~B^~C")),
+                new State(Utils.parse("~B^A^C")),
+                new State(Utils.parse("~B^A")),
+                new State(Utils.parse("~B^C")),
+                new State(Utils.parse("~B^A^~C"))
+        };
+        Assert.assertTrue(stateTwo.optimisticReach(h2).containsAll(Arrays.asList(statesResultTwo)));
     }
 }

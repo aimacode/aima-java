@@ -68,7 +68,7 @@ public class State {
         return this.getFluents().containsAll(a.getPrecondition());
     }
 
-    public boolean isApplicable(AngelicHLA angelicHLA){
+    public boolean isApplicable(AngelicHLA angelicHLA) {
         return this.getFluents().containsAll(angelicHLA.getPrecondition());
     }
 
@@ -94,17 +94,31 @@ public class State {
         return hashCode;
     }
 
-    public HashSet<State> optimisticReach(AngelicHLA angelicAction){
+    public HashSet<State> optimisticReach(AngelicHLA angelicAction) {
         HashSet<State> result = new HashSet<>();
         State thisStateCopy = new State(new ArrayList<>(this.getFluents()));
-        result.add(new State(new ArrayList<>(this.getFluents())));
-        if (this.isApplicable(angelicAction)) {
+        if (!this.isApplicable(angelicAction)) {
+            result.add(new State(new ArrayList<>(this.getFluents())));
+            return result;
+        } else {
             for (Literal fluent :
                     angelicAction.getEffectsNegativeLiterals()) {
                 Literal tempFluent = new Literal(fluent.getAtomicSentence());
                 thisStateCopy.fluents.remove(tempFluent);
+                tempFluent = new Literal(fluent.getAtomicSentence(), true);
+                if (!thisStateCopy.fluents.contains(tempFluent))
+                    thisStateCopy.fluents.add(tempFluent);
             }
-            thisStateCopy.fluents.addAll(angelicAction.getEffectsPositiveLiterals());
+            for (Literal fluent :
+                    angelicAction.getEffectsPositiveLiterals()) {
+                Literal tempFluent = new Literal(fluent.getAtomicSentence(), true);
+                tempFluent = new Literal(tempFluent.getAtomicSentence());
+                if (!thisStateCopy.fluents.contains(tempFluent)) {
+                    thisStateCopy.fluents.add(tempFluent);
+                    tempFluent = new Literal(tempFluent.getAtomicSentence(),true);
+                    thisStateCopy.fluents.remove(tempFluent);
+                }
+            }
             result.add(new State(new ArrayList<>(thisStateCopy.getFluents())));
             for (Literal literal :
                     angelicAction.getEffectsMaybePositiveLiterals()) {
@@ -113,6 +127,8 @@ public class State {
                         result) {
                     State tempCopyState = new State(new ArrayList<>(state.getFluents()));
                     if (!tempCopyState.getFluents().contains(literal)) {
+                        Literal tempFluent = new Literal(literal.getAtomicSentence(), true);
+                        tempCopyState.fluents.remove(tempFluent);
                         tempCopyState.getFluents().add(literal);
                         listToAdd.add(new State(new ArrayList<>(tempCopyState.getFluents())));
                     }
@@ -125,8 +141,12 @@ public class State {
                 for (State state :
                         result) {
                     State tempCopyState = new State(new ArrayList<>(state.getFluents()));
-                    if (tempCopyState.getFluents().contains(literal)) {
-                        tempCopyState.getFluents().remove(literal);
+                    Literal tempFluent = new Literal(literal.getAtomicSentence(), true);
+                    if (!tempCopyState.getFluents().contains(tempFluent)) {
+                        tempFluent = new Literal(tempFluent.getAtomicSentence());
+                        tempCopyState.getFluents().remove(tempFluent);
+                        tempFluent = new Literal(tempFluent.getAtomicSentence(), true);
+                        tempCopyState.fluents.add(tempFluent);
                         listToAdd.add(new State(new ArrayList<>(tempCopyState.getFluents())));
                     }
                 }
@@ -136,11 +156,11 @@ public class State {
         return result;
     }
 
-    public HashSet<State> pessimisticReach(AngelicHLA angelicAction){
+    public HashSet<State> pessimisticReach(AngelicHLA angelicAction) {
         HashSet<State> result = new HashSet<>();
         State thisStateCopy = new State(new ArrayList<>(this.getFluents()));
         result.add(new State(new ArrayList<>(this.getFluents())));
-        if (this.isApplicable(angelicAction)){
+        if (this.isApplicable(angelicAction)) {
             for (Literal fluent :
                     angelicAction.getEffectsNegativeLiterals()) {
                 Literal tempFluent = new Literal(fluent.getAtomicSentence());
@@ -151,7 +171,7 @@ public class State {
         return result;
     }
 
-    public HashSet<State> optimisticReach(List<Object> plan){
+    public HashSet<State> optimisticReach(List<Object> plan) {
         return null;
     }
 
