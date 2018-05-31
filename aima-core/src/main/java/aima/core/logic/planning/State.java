@@ -115,7 +115,7 @@ public class State {
                 tempFluent = new Literal(tempFluent.getAtomicSentence());
                 if (!thisStateCopy.fluents.contains(tempFluent)) {
                     thisStateCopy.fluents.add(tempFluent);
-                    tempFluent = new Literal(tempFluent.getAtomicSentence(),true);
+                    tempFluent = new Literal(tempFluent.getAtomicSentence(), true);
                     thisStateCopy.fluents.remove(tempFluent);
                 }
             }
@@ -159,20 +159,81 @@ public class State {
     public HashSet<State> pessimisticReach(AngelicHLA angelicAction) {
         HashSet<State> result = new HashSet<>();
         State thisStateCopy = new State(new ArrayList<>(this.getFluents()));
-        result.add(new State(new ArrayList<>(this.getFluents())));
-        if (this.isApplicable(angelicAction)) {
+        if (!this.isApplicable(angelicAction)) {
+            result.add(new State(new ArrayList<>(this.getFluents())));
+            return result;
+        } else {
             for (Literal fluent :
                     angelicAction.getEffectsNegativeLiterals()) {
                 Literal tempFluent = new Literal(fluent.getAtomicSentence());
                 thisStateCopy.fluents.remove(tempFluent);
+                tempFluent = new Literal(fluent.getAtomicSentence(), true);
+                if (!thisStateCopy.fluents.contains(tempFluent))
+                    thisStateCopy.fluents.add(tempFluent);
             }
-            thisStateCopy.fluents.addAll(angelicAction.getEffectsPositiveLiterals());
+            for (Literal fluent :
+                    angelicAction.getEffectsPositiveLiterals()) {
+                Literal tempFluent = new Literal(fluent.getAtomicSentence(), true);
+                tempFluent = new Literal(tempFluent.getAtomicSentence());
+                if (!thisStateCopy.fluents.contains(tempFluent)) {
+                    thisStateCopy.fluents.add(tempFluent);
+                    tempFluent = new Literal(tempFluent.getAtomicSentence(), true);
+                    thisStateCopy.fluents.remove(tempFluent);
+                }
+            }
+            result.add(new State(new ArrayList<>(thisStateCopy.getFluents())));
+            return result;
+        }
+    }
+
+    public HashSet<State> optimisticReach(List<Object> plan) {
+        HashSet<State> result = new HashSet<>();
+        result.add(new State(this.getFluents()));
+        if (plan.isEmpty()) {
+            return result;
+        }
+        for (Object action :
+                plan) {
+            HashSet<State> currResult = new HashSet<>();
+            if (action instanceof ActionSchema) {
+                for (State state :
+                        result) {
+                        currResult.add(state.result((ActionSchema) action));
+                }
+            } else if (action instanceof AngelicHLA) {
+                for (State state :
+                        result) {
+                        currResult.addAll(state.optimisticReach((AngelicHLA) action));
+                }
+            }
+            result = currResult;
         }
         return result;
     }
 
-    public HashSet<State> optimisticReach(List<Object> plan) {
-        return null;
+    public HashSet<State> pessimisticReach(List<Object> plan){
+        HashSet<State> result = new HashSet<>();
+        result.add(new State(this.getFluents()));
+        if (plan.isEmpty()) {
+            return result;
+        }
+        for (Object action :
+                plan) {
+            HashSet<State> currResult = new HashSet<>();
+            if (action instanceof ActionSchema) {
+                for (State state :
+                        result) {
+                        currResult.add(state.result((ActionSchema) action));
+                }
+            } else if (action instanceof AngelicHLA) {
+                for (State state :
+                        result) {
+                        currResult.addAll(state.pessimisticReach((AngelicHLA) action));
+                }
+            }
+            result = currResult;
+        }
+        return result;
     }
 
     @Override

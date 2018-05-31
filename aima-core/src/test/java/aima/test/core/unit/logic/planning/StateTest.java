@@ -11,18 +11,18 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.sound.midi.SysexMessage;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * @author samagra
  */
 public class StateTest {
     private Literal testFluentOne, testFluentTwo, testFluentThree, testFluentFour;
-    private State testState;
+    private State stateOne, stateTwo, testState;
     private ActionSchema flyActionOne, flyActionTwo;
+    private AngelicHLA h1, h2;
 
     @Before
     public void setup() {
@@ -42,6 +42,11 @@ public class StateTest {
         flyActionTwo = new ActionSchema("Fly", null,
                 "At(P1,JFK)^Plane(P1)^Airport(SFO)^Airport(JFK)",
                 "~At(P1,JFK)^At(P1,SFO)");
+
+        h1 = new AngelicHLA("h1", null, "~A", "A^~-B");
+        h2 = new AngelicHLA("h2", null, "~B", "~+A^~+-C");
+        stateOne = new State("~A");
+        stateTwo = new State("~B");
     }
 
     @Test
@@ -56,6 +61,10 @@ public class StateTest {
     public void isApplicableTest() {
         Assert.assertTrue(testState.isApplicable(flyActionOne));
         Assert.assertFalse(testState.isApplicable(flyActionTwo));
+        Assert.assertTrue(stateOne.isApplicable(h1));
+        Assert.assertFalse(stateOne.isApplicable(h2));
+        Assert.assertTrue(stateTwo.isApplicable(h2));
+        Assert.assertFalse(stateTwo.isApplicable(h1));
     }
 
     @Test
@@ -75,29 +84,49 @@ public class StateTest {
     }
 
     @Test
-    public void optimisticReachTest(){
-        Literal a = new Literal(new Predicate("A",new ArrayList<>()));
-        Literal b = new Literal(new Predicate("B",new ArrayList<>()));
-        Literal c = new Literal(new Predicate("C",new ArrayList<>()));
-        AngelicHLA h1 = new AngelicHLA("h1",null,"~A","A^~-B");
-        AngelicHLA h2 = new AngelicHLA("h2",null,"~B","~+A^~+-C");
-        State stateOne = new State(Utils.parse("~A"));
-        State stateTwo = new State(Utils.parse("~B"));
+    public void optimisticReachTest() {
         // States obtained after applying h1 to stateOne
-        State stateOneResultOne = new State(Utils.parse("A^~B"));
-        State stateOneResultTwo = new State(Utils.parse("A"));
-        Assert.assertTrue(stateOne.optimisticReach(h1).containsAll(Arrays.asList(stateOneResultTwo,stateOneResultOne)));
-        Assert.assertEquals(2,stateOne.optimisticReach(h1).size());
+        State stateOneResultOne = new State("A^~B");
+        State stateOneResultTwo = new State("A");
+        Assert.assertTrue(stateOne.optimisticReach(h1).containsAll(Arrays.asList(stateOneResultTwo, stateOneResultOne)));
+        Assert.assertEquals(2, stateOne.optimisticReach(h1).size());
         // States obtained after applying h2 to stateTwo
-        Assert.assertEquals(6,stateTwo.optimisticReach(h2).size());
-        State [] statesResultTwo = {
+        Assert.assertEquals(6, stateTwo.optimisticReach(h2).size());
+        State[] statesResultTwo = {
                 stateTwo,
-                new State(Utils.parse("~B^~C")),
-                new State(Utils.parse("~B^A^C")),
-                new State(Utils.parse("~B^A")),
-                new State(Utils.parse("~B^C")),
-                new State(Utils.parse("~B^A^~C"))
+                new State("~B^~C"),
+                new State("~B^A^C"),
+                new State("~B^A"),
+                new State("~B^C"),
+                new State("~B^A^~C")
         };
         Assert.assertTrue(stateTwo.optimisticReach(h2).containsAll(Arrays.asList(statesResultTwo)));
+    }
+
+    @Test
+    public void pessimisticReachTest() {
+        Assert.assertEquals(1, stateOne.pessimisticReach(h1).size());
+        Assert.assertTrue(stateOne.pessimisticReach(h1).
+                contains(new State("A")));
+        Assert.assertEquals(1, stateTwo.pessimisticReach(h2).size());
+        Assert.assertTrue(stateTwo.pessimisticReach(h2).
+                contains(new State("~B")));
+    }
+
+    @Test
+    public void optimisticReachListTest(){
+        HashSet<State> resultingStates = stateOne.optimisticReach(Arrays.asList(h1, h2));
+        Assert.assertEquals(4,resultingStates.size());
+        Assert.assertTrue(resultingStates.contains(new State("A")));
+        Assert.assertTrue(resultingStates.contains(new State("A^~B")));
+        Assert.assertTrue(resultingStates.contains(new State("A^~B^C")));
+        Assert.assertTrue(resultingStates.contains(new State("A^~B^~C")));
+    }
+
+    @Test
+    public void pessimisticReachTestList(){
+        HashSet<State> resultStates = stateOne.pessimisticReach(Arrays.asList(h1,h2));
+        Assert.assertEquals(1,resultStates.size());
+        Assert.assertTrue(resultStates.contains(new State("A")));
     }
 }
