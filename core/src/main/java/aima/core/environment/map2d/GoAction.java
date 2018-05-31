@@ -13,7 +13,7 @@ public class GoAction {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj != null && obj instanceof GoAction) {
+		if (obj instanceof GoAction) {
 			return this.getGoTo().equals(((GoAction) obj).getGoTo());
 		}
 		return super.equals(obj);

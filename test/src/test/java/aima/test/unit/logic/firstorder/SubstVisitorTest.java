@@ -41,7 +41,7 @@ public class SubstVisitorTest {
 		Sentence expectedAfterSubstCopy = expectedAfterSubst.copy();
 
 		Assert.assertEquals(expectedAfterSubst, expectedAfterSubstCopy);
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("x"), new Constant("John"));
 
 		Sentence afterSubst = sv.subst(p, beforeSubst);
@@ -54,7 +54,7 @@ public class SubstVisitorTest {
 		Sentence beforeSubst = parseToSentence("King(x)");
 		Sentence expectedAfterSubst = parseToSentence(" King(x) ");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("y"), new Constant("John"));
 
 		Sentence afterSubst = sv.subst(p, beforeSubst);
@@ -67,7 +67,7 @@ public class SubstVisitorTest {
 		Sentence beforeSubst = parseToSentence("King(x,y)");
 		Sentence expectedAfterSubst = parseToSentence(" King(John ,England) ");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("x"), new Constant("John"));
 		p.put(new Variable("y"), new Constant("England"));
 
@@ -81,7 +81,7 @@ public class SubstVisitorTest {
 		Sentence beforeSubst = parseToSentence("King(x,y)");
 		Sentence expectedAfterSubst = parseToSentence(" King(John ,y) ");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("x"), new Constant("John"));
 		p.put(new Variable("z"), new Constant("England"));
 
@@ -95,7 +95,7 @@ public class SubstVisitorTest {
 		Sentence beforeSubst = parseToSentence("BrotherOf(x) = EnemyOf(y)");
 		Sentence expectedAfterSubst = parseToSentence("BrotherOf(John) = EnemyOf(Saladin)");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("x"), new Constant("John"));
 		p.put(new Variable("y"), new Constant("Saladin"));
 
@@ -109,7 +109,7 @@ public class SubstVisitorTest {
 		Sentence beforeSubst = parseToSentence("BrotherOf(John) = x");
 		Sentence expectedAfterSubst = parseToSentence("BrotherOf(John) = Richard");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("x"), new Constant("Richard"));
 		p.put(new Variable("y"), new Constant("Saladin"));
 
@@ -123,7 +123,7 @@ public class SubstVisitorTest {
 		Sentence beforeSubst = parseToSentence("FORALL x King(x)");
 		Sentence expectedAfterSubst = parseToSentence("King(John)");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("x"), new Constant("John"));
 
 		Sentence afterSubst = sv.subst(p, beforeSubst);
@@ -136,7 +136,7 @@ public class SubstVisitorTest {
 		Sentence beforeSubst = parseToSentence("FORALL x King(x)");
 		Sentence expectedAfterSubst = parseToSentence("FORALL x King(x)");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("y"), new Constant("John"));
 
 		Sentence afterSubst = sv.subst(p, beforeSubst);
@@ -149,7 +149,7 @@ public class SubstVisitorTest {
 		Sentence beforeSubst = parseToSentence("FORALL x,y King(x,y)");
 		Sentence expectedAfterSubst = parseToSentence("FORALL x King(x,John)");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("y"), new Constant("John"));
 
 		Sentence afterSubst = sv.subst(p, beforeSubst);
@@ -162,7 +162,7 @@ public class SubstVisitorTest {
 		Sentence beforeSubst = parseToSentence("EXISTS x King(x)");
 		Sentence expectedAfterSubst = parseToSentence("King(John)");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("x"), new Constant("John"));
 
 		Sentence afterSubst = sv.subst(p, beforeSubst);
@@ -176,7 +176,7 @@ public class SubstVisitorTest {
 		Sentence beforeSubst = parseToSentence("~ King(x)");
 		Sentence expectedAfterSubst = parseToSentence("~ King(John)");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("x"), new Constant("John"));
 
 		Sentence afterSubst = sv.subst(p, beforeSubst);
@@ -185,11 +185,11 @@ public class SubstVisitorTest {
 	}
 
 	@Test
-	public void testConnectiveANDSentenceAndSngleVariable() {
+	public void testConnectiveANDSentenceAndSingleVariable() {
 		Sentence beforeSubst = parseToSentence("EXISTS x ( King(x) & BrotherOf(x) = EnemyOf(y) )");
 		Sentence expectedAfterSubst = parseToSentence("( King(John) & BrotherOf(John) = EnemyOf(Saladin) )");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("x"), new Constant("John"));
 		p.put(new Variable("y"), new Constant("Saladin"));
 
@@ -199,11 +199,11 @@ public class SubstVisitorTest {
 	}
 
 	@Test
-	public void testParanthisedSingleVariable() {
+	public void testParenthesisedSingleVariable() {
 		Sentence beforeSubst = parseToSentence("((( King(x) )))");
 		Sentence expectedAfterSubst = parseToSentence("King(John) ");
 
-		Map<Variable, Term> p = new LinkedHashMap<Variable, Term>();
+		Map<Variable, Term> p = new LinkedHashMap<>();
 		p.put(new Variable("x"), new Constant("John"));
 
 		Sentence afterSubst = sv.subst(p, beforeSubst);

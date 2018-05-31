@@ -23,7 +23,7 @@ import aima.core.logic.basic.firstorder.parsing.ast.Variable;
  *           
  *   if theta = failure then return failure
  *   else if x = y the return theta
- *   else if VARIABLE?(x) then return UNIVY-VAR(x, y, theta)
+ *   else if VARIABLE?(x) then return UNIFY-VAR(x, y, theta)
  *   else if VARIABLE?(y) then return UNIFY-VAR(y, x, theta)
  *   else if COMPOUND?(x) and COMPOUND?(y) then
  *       return UNIFY(x.ARGS, y.ARGS, UNIFY(x.OP, y.OP, theta))
@@ -76,7 +76,7 @@ public class Unifier {
 	 *         failure to unify.
 	 */
 	public Map<Variable, Term> unify(FOLNode x, FOLNode y) {
-		return unify(x, y, new LinkedHashMap<Variable, Term>());
+		return unify(x, y, new LinkedHashMap<>());
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class Unifier {
 			// else if x = y then return theta
 			return theta;
 		} else if (x instanceof Variable) {
-			// else if VARIABLE?(x) then return UNIVY-VAR(x, y, theta)
+			// else if VARIABLE?(x) then return UNIFY-VAR(x, y, theta)
 			return unifyVar((Variable) x, y, theta);
 		} else if (y instanceof Variable) {
 			// else if VARIABLE?(y) then return UNIFY-VAR(y, x, theta)
@@ -143,9 +143,9 @@ public class Unifier {
 			return null;
 		} else if (x.size() != y.size()) {
 			return null;
-		} else if (x.size() == 0 && y.size() == 0) {
+		} else if (x.size() == 0) {
 			return theta;
-		} else if (x.size() == 1 && y.size() == 1) {
+		} else if (x.size() == 1) {
 			return unify(x.get(0), y.get(0), theta);
 		} else {
 			return unify(x.subList(1, x.size()), y.subList(1, y.size()),

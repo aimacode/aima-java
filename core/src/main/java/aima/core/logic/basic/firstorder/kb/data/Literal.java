@@ -13,7 +13,7 @@ import aima.core.logic.basic.firstorder.parsing.ast.Term;
  * 
  */
 public class Literal {
-	private AtomicSentence atom = null;
+	private AtomicSentence atom;
 	private boolean negativeLiteral = false;
 	private String strRep = null;
 	private int hashCode = 0;

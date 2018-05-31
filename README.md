@@ -388,6 +388,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
    <tr>
        <td>7.?</td>
        <td>??</td>
+       <td>KnowledgeBase</td>
+       <td><a href="core/src/main/java/aima/core/logic/api/propositional/KnowledgeBase.java">KnowledgeBase</a></td>
+   </tr>
+   <tr>
+       <td>7.?</td>
+       <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/KB-Agent.md">KB-Agent</a></td>
        <td><a href="core/src/main/java/aima/core/agent/basic/KBAgent.java">KBAgent</a></td>
    </tr>
@@ -396,6 +402,12 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/TT-Entails.md">TT-Entails</a></td>
        <td><a href="core/src/main/java/aima/core/logic/basic/propositional/inference/TTEntails.java">TTEntails</a></td>
+   </tr>
+   <tr>
+       <td>7.?</td>
+       <td>??</td>
+       <td>ConvertToCNF</td>
+       <td><a href="core/src/main/java/aima/core/logic/basic/propositional/visitors/ConvertToCNF.java">ConvertToCNF</a></td>
    </tr>
    <tr>
        <td>7.?</td>
@@ -444,6 +456,10 @@ Java implementation of algorithms from Russell and Norvig's "Artificial Intellig
        <td>??</td>
        <td><a href="https://github.com/aimacode/aima-pseudocode/blob/master/md/DT-Agent.md">DT-Agent</a></td>
        <td><a href="core/src/main/java/aima/core/agent/basic/DecisionTheoreticAgent.java">DT-Agent</a></td>
+       <td>7.?</td>
+       <td>?</td>
+       <td>Propositional-Logic-Sentence</td>
+       <td><a href="core/src/main/java/aima/core/logic/basic/propositional/parsing/ast/Sentence.java">Sentence</a></td>
    </tr>
    </tbody>
 </table>

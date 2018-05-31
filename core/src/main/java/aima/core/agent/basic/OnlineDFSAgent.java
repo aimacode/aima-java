@@ -75,7 +75,15 @@ public class OnlineDFSAgent<A, P, S> implements Agent<A, P> {
 		}
 		// if s' is a new state (not in untried) then untried[s'] <- ACTIONS(s')
 		untried.computeIfAbsent(sPrime, state -> actions(state));
+		
 		// if s is not null and s' != result[s, a] then do
+		// s: previous state
+		// s': current new state
+		// only if a previous state exists (s is not null and we can backtrack to s) and our current state is different from
+		// the previous state (s' != s), only then should we backtrack from our current state to a previous state 
+		// and assign the previous (now current) state and its actions as having already taken place whilst updating our then current
+		// (now previous) state to one that we can now backtrack to. If we don't add this check we will fall into an infinite loop.
+		
 		if (s != null && !sPrime.equals(result.get(s, a))) {
 			// result[s, a] <- s'
 			result.put(s, a, sPrime);

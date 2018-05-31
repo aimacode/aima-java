@@ -109,7 +109,7 @@ public class SearchForAdversarialActionFunctionTest {
 	public void testAIMA3eFig5_2() {
 		Game<InState, GoAction, String> game = new BasicGame<>(() -> new InState("A"), aima3eFig5_2PlayerFn,
 				Map2DFunctionFactory.getActionsFunction(aima3eFig5_2),
-				Map2DFunctionFactory.getResultFunction(aima3eFig5_2), aima3eFig5_2TerminalTestPredicate,
+				Map2DFunctionFactory.getResultFunction(), aima3eFig5_2TerminalTestPredicate,
 				aima3eFig5_2UtilityFn);
 
 		Assert.assertEquals(new GoAction("B"), searchForAdversarialAction(game, 100, 0, 200));

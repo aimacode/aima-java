@@ -41,7 +41,7 @@ public class UnifierTest {
 	public void setUp() {
 		//parser = new FOLParser(DomainFactory.knowsDomain());
 		unifier = new Unifier();
-		theta = new Hashtable<Variable, Term>();
+		theta = new Hashtable<>();
 	}
 	
 	@Test
@@ -89,11 +89,11 @@ public class UnifierTest {
 	@Test
 	public void testSimpleVariableUnification() {
 		Variable var1 = new Variable("x");
-		List<Term> terms1 = new ArrayList<Term>();
+		List<Term> terms1 = new ArrayList<>();
 		terms1.add(var1);
 		Predicate p1 = new Predicate("King", terms1); // King(x)
 
-		List<Term> terms2 = new ArrayList<Term>();
+		List<Term> terms2 = new ArrayList<>();
 		terms2.add(new Constant("John"));
 		Predicate p2 = new Predicate("King", terms2); // King(John)
 
@@ -138,7 +138,7 @@ public class UnifierTest {
 
 		Assert.assertEquals(2, result.size());
 
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("John"));
 		Function mother = new Function("Mother", terms);
 		Assert.assertEquals(mother, theta.get(new Variable("x")));

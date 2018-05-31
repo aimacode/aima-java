@@ -14,7 +14,7 @@ import aima.core.logic.basic.firstorder.parsing.FOLLexer;
  * @author Anurag Rai
  */
 public class FOLLexerTest {
-	FOLLexer lexer;
+	private FOLLexer lexer;
 
 	@Before
 	public void setUp() {
