@@ -8,6 +8,7 @@ import aima.core.logic.planning.Utils;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class AngelicHLA {
     List<Term> variables;// list of variables
@@ -18,9 +19,22 @@ public class AngelicHLA {
     HashSet<Literal> effectsMaybePositiveLiterals;
     HashSet<Literal> effectsMaybeNegativeLiterals;
     private String name;//action name
+    List<List<Object>> refinements = new ArrayList<>();
+
+    public void setRefinements(List<List<Object>> refinements) {
+        this.refinements = refinements;
+    }
+
+    public void addRefinement(List<Object> newRefinement){
+        this.refinements.add(newRefinement);
+    }
+
+    public List<List<Object>> getRefinements() {
+        return refinements;
+    }
 
     public AngelicHLA(String name, List<Term> variables,
-                        List<Literal> precondition, List<HashSet<Literal>> effects) {
+                      List<Literal> precondition, List<HashSet<Literal>> effects) {
         if (variables == null)
             variables = new ArrayList<>();
         this.name = name;

@@ -2,6 +2,7 @@ package aima.core.logic.planning;
 
 import aima.core.logic.fol.parsing.ast.Constant;
 import aima.core.logic.fol.parsing.ast.Variable;
+import aima.core.logic.planning.angelicsearch.AngelicHLA;
 import aima.core.logic.planning.hierarchicalsearch.HighLevelAction;
 
 import java.util.ArrayList;
@@ -141,5 +142,9 @@ public class PlanningProblemFactory {
         }
         act.addRefinement(new ArrayList<>());
         return act;
+    }
+
+    public static List<Object> getAngelicInitialPlan(List<AngelicHLA> list){
+        AngelicHLA act = new AngelicHLA("act",null,"","");
     }
 }
