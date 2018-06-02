@@ -2,6 +2,7 @@ package aima.core.learning.knowledge;
 
 import java.util.List;
 
+import aima.core.learning.framework.Example;
 import aima.core.logic.fol.kb.FOLKnowledgeBase;
 
 /**
@@ -38,36 +39,17 @@ import aima.core.logic.fol.kb.FOLKnowledgeBase;
  * 
  */
 public class CurrentBestLearning {
-	@SuppressWarnings("unused")
-	private FOLDataSetDomain folDSDomain = null;
-	private FOLKnowledgeBase kbForLearning = null;
+	public Hypothesis currentBestLearning(List<LogicalExample> examples,Hypothesis h){
+		if (examples.isEmpty())
+			return h;
+		LogicalExample e = examples.get(0);
+		if (h.isConsistent(e))
+			return currentBestLearning(examples.subList(1,examples.size()),h);
+		else if ((h.predict(e))&&(!e.getGoal())){
+			for (Hypothesis hypothesis :
+					) {
 
-	//
-	// PUBLIC METHODS
-	//
-	public CurrentBestLearning(FOLDataSetDomain folDSDomain,
-			FOLKnowledgeBase kbForLearning) {
-		this.folDSDomain = folDSDomain;
-		this.kbForLearning = kbForLearning;
+			}
+		}
 	}
-
-	// TODO - Implement!!!
-	public Hypothesis currentBestLearning(List<FOLExample> examples) {
-
-		// TODO-use the default from pg 769 for now.
-		String c1 = "patrons(v,Some)";
-		String c2 = "patrons(v,Full) AND (hungry(v) AND type(v,French))";
-		String c3 = "patrons(v,Full) AND (hungry(v) AND (type(v,Thai) AND fri_sat(v)))";
-		String c4 = "patrons(v,Full) AND (hungry(v) AND type(v,Burger))";
-		String sh = "FORALL v (will_wait(v) <=> (" + c1 + " OR (" + c2
-				+ " OR (" + c3 + " OR (" + c4 + ")))))";
-
-		Hypothesis h = new Hypothesis(kbForLearning.tell(sh));
-
-		return h;
-	}
-
-	//
-	// PRIVATE METHODS
-	//
 }
