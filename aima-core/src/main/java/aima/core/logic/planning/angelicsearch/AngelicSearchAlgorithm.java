@@ -13,21 +13,37 @@ public class AngelicSearchAlgorithm {
         while (true) {
             if (frontier.isEmpty())
                 return null;
+            for (List<Object> obj :
+                    frontier) {
+                System.out.println("Frontier list");
+                for (Object object:
+                        obj) {
+                    System.out.println(object.toString());
+                }
+            }
             List<Object> plan = frontier.poll();
-
             boolean flag = false;
             for (State state :
                     problem.getInitialState().optimisticReach(plan)) {
                 if (state.getFluents().containsAll(problem.getGoalState().getFluents()))
                     flag = true;
             }
+            System.out.println("Flag ========"+flag);
             if (flag) {
                 if (checkPrimitive(plan))
                     return plan;
-                HashSet<State> guaranteed = problem.getInitialState().pessimisticReach(plan);
-                guaranteed.add(problem.getGoalState());
+                HashSet<State> guaranteed = new HashSet<>();
+                for (State state :
+                        problem.getInitialState().pessimisticReach(plan)) {
+                    if (state.getFluents().containsAll(problem.getGoalState().getFluents())){
+                        guaranteed.add(state);
+                        System.out.println("guaranteed state== "+ state.toString() );
+                    }
+                }
+                System.out.println( makingProgress(plan, initialPlan) );
                 if ((!guaranteed.isEmpty()) && makingProgress(plan, initialPlan)) {
                     State finalState = guaranteed.iterator().next();
+                    System.out.println("BOOOOOYEAHHHH");
                     return decompose(problem.getInitialState(), plan, finalState);
                 }
                 int i = 0;
@@ -44,6 +60,8 @@ public class AngelicSearchAlgorithm {
                 for (int j = 0; j < i; j++) {
                     prefix.add( plan.get(j));
                 }
+                System.out.println("Prefix ===== "+prefix.size());
+                System.out.println("Prefix");
                 for (int j = i + 1; j < plan.size(); j++) {
                     suffix.add(plan.get(j));
                 }
@@ -58,7 +76,6 @@ public class AngelicSearchAlgorithm {
                     ((LinkedList<List<Object>>) frontier).addLast(new ArrayList<>(tempInsertionList));
                 }
             }
-            return plan;
         }
     }
 

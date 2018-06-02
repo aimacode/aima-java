@@ -8,7 +8,6 @@ import aima.core.logic.planning.Utils;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 public class AngelicHLA {
     List<Term> variables;// list of variables
@@ -18,20 +17,8 @@ public class AngelicHLA {
     HashSet<Literal> effectsNegativeLiterals;
     HashSet<Literal> effectsMaybePositiveLiterals;
     HashSet<Literal> effectsMaybeNegativeLiterals;
-    private String name;//action name
     List<List<Object>> refinements = new ArrayList<>();
-
-    public void setRefinements(List<List<Object>> refinements) {
-        this.refinements = refinements;
-    }
-
-    public void addRefinement(List<Object> newRefinement){
-        this.refinements.add(newRefinement);
-    }
-
-    public List<List<Object>> getRefinements() {
-        return refinements;
-    }
+    private String name;//action name
 
     public AngelicHLA(String name, List<Term> variables,
                       List<Literal> precondition, List<HashSet<Literal>> effects) {
@@ -50,6 +37,18 @@ public class AngelicHLA {
 
     public AngelicHLA(String name, List<Term> variables, String precondition, String effects) {
         this(name, variables, Utils.parse(precondition), Utils.angelicParse(effects));
+    }
+
+    public void addRefinement(List<Object> newRefinement) {
+        this.refinements.add(newRefinement);
+    }
+
+    public List<List<Object>> getRefinements() {
+        return refinements;
+    }
+
+    public void setRefinements(List<List<Object>> refinements) {
+        this.refinements = refinements;
     }
 
     private void sortEffects() {
@@ -120,6 +119,14 @@ public class AngelicHLA {
         for (Literal effect :
                 getEffectsMaybeNegativeLiterals()) {
             result.append("^~-").append(effect.toString());
+        }
+        for (List<Object> refinement :
+                this.getRefinements()) {
+            result.append("\n");
+            for (Object act :
+                    refinement) {
+                result.append("\n").append(((AngelicHLA) act).getName());
+            }
         }
 
 

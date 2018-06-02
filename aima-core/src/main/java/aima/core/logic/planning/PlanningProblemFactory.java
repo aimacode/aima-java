@@ -1,13 +1,12 @@
 package aima.core.logic.planning;
 
+import aima.core.logic.fol.kb.data.Literal;
 import aima.core.logic.fol.parsing.ast.Constant;
 import aima.core.logic.fol.parsing.ast.Variable;
 import aima.core.logic.planning.angelicsearch.AngelicHLA;
 import aima.core.logic.planning.hierarchicalsearch.HighLevelAction;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * A problem factory to generate planning problems.
@@ -144,7 +143,21 @@ public class PlanningProblemFactory {
         return act;
     }
 
-    public static List<Object> getAngelicInitialPlan(List<AngelicHLA> list){
-        AngelicHLA act = new AngelicHLA("act",null,"","");
+    public static Problem getAngelicABProblem(){
+        return new Problem(new State("~A"),
+                new State("A^C"),
+        new HashSet<>());
+    }
+
+    public static List<Object> getAngelicInitialPlan(List<Object> refinements,Problem problem,String goal){
+        List<HashSet> effects = new ArrayList<>();
+        AngelicHLA act = new AngelicHLA("act",null,problem.getInitialState().getFluents(),
+                Utils.angelicParse(goal));
+        for (Object obj :
+                refinements) {
+            act.addRefinement(Arrays.asList(obj, act));
+        }
+        act.addRefinement(new ArrayList<>());
+        return Collections.singletonList(act);
     }
 }
