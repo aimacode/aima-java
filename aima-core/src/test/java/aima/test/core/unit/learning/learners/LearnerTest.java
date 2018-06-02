@@ -133,7 +133,7 @@ public class LearnerTest {
 		Assert.assertEquals(0, result[1]);
 	}
 
-	@Test
+	/*@Test
 	public void testCurrentBestLearnerOnRestaurantDataSet() throws Exception {
 		DataSet ds = DataSetFactory.getRestaurantDataSet();
 		CurrentBestLearner learner = new CurrentBestLearner("Yes");
@@ -142,5 +142,5 @@ public class LearnerTest {
 		int[] result = learner.test(ds);
 		Assert.assertEquals(12, result[0]);
 		Assert.assertEquals(0, result[1]);
-	}
+	}*/
 }

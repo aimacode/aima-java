@@ -19,7 +19,21 @@ import aima.core.logic.fol.kb.FOLKnowledgeBase;
  * 
  */
 public class CurrentBestLearner implements Learner {
-	private String trueGoalValue = null;
+	@Override
+	public void train(DataSet ds) {
+
+	}
+
+	@Override
+	public String predict(Example e) {
+		return null;
+	}
+
+	@Override
+	public int[] test(DataSet ds) {
+		return new int[0];
+	}
+	/*private String trueGoalValue = null;
 	private FOLDataSetDomain folDSDomain = null;
 	private FOLKnowledgeBase kb = null;
 	private Hypothesis currentBestHypothesis = null;
@@ -86,5 +100,5 @@ public class CurrentBestLearner implements Learner {
 		return results;
 	}
 	// END-Learner
-	//
+	//*/
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import aima.core.learning.framework.Example;
 import aima.core.logic.fol.kb.FOLKnowledgeBase;
+import sun.rmi.runtime.Log;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 19.2, page
@@ -47,9 +48,10 @@ public class CurrentBestLearning {
 			return currentBestLearning(examples.subList(1,examples.size()),h);
 		else if ((h.predict(e))&&(!e.getGoal())){
 			for (Hypothesis hypothesis :
-					) {
+					h.specialisations( examples.subList(0,examples.indexOf(e)+1))){
 
 			}
 		}
+		return null;
 	}
 }
