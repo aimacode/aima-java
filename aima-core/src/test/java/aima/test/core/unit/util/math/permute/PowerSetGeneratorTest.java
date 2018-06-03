@@ -8,15 +8,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author samagra
+ */
 public class PowerSetGeneratorTest {
     @Test
-    public void powerSetGeneratorTest(){
-        List<String> list = new ArrayList<>(Arrays.asList("alpha","beta","gamma"));
+    public void powerSetGeneratorTest() {
+        List<String> list = new ArrayList<>(Arrays.asList("alpha", "beta", "gamma"));
         int i = 0;
         for (List<String> strings :
                 PowerSetGenerator.powerSet(list)) {
             i++;
         }
-        Assert.assertEquals(7,i);
+        Assert.assertEquals(7, i);
     }
 }

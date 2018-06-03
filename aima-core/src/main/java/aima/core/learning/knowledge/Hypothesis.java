@@ -37,12 +37,11 @@ public class Hypothesis {
         for (String attributeName :
                 conjunction.keySet()) {
             String value = conjunction.get(attributeName);
-            if (value.charAt(0)=='!'){
-                if(example.getAttributes().get(attributeName).equals(value.substring(1))) {
+            if (value.charAt(0) == '!') {
+                if (example.getAttributes().get(attributeName).equals(value.substring(1))) {
                     return false;
                 }
-            }
-            else if (!example.getAttributes().get(attributeName).equals(conjunction.get(attributeName))) {
+            } else if (!example.getAttributes().get(attributeName).equals(conjunction.get(attributeName))) {
                 return false;
             }
         }
@@ -74,28 +73,28 @@ public class Hypothesis {
 
     public List<Hypothesis> specialisations(List<LogicalExample> examplesSoFar) {
         List<Hypothesis> result = new ArrayList<>();
-        LogicalExample lastExample = examplesSoFar.get(examplesSoFar.size()-1);
+        LogicalExample lastExample = examplesSoFar.get(examplesSoFar.size() - 1);
 
 
         for (String key :
                 lastExample.getAttributes().keySet()) {
-            List<HashMap<String,String>> satisfiedDisjuncts = new ArrayList<>();
+            List<HashMap<String, String>> satisfiedDisjuncts = new ArrayList<>();
             for (HashMap<String, String> disjunct :
                     this.getHypothesis()) {
                 if (this.satisfiesConjunction(lastExample, disjunct))
                     satisfiedDisjuncts.add(new HashMap<>(disjunct));
             }
-            List<HashMap<String,String>> tempDisjuncts = new ArrayList<>(this.getHypothesis());
+            List<HashMap<String, String>> tempDisjuncts = new ArrayList<>(this.getHypothesis());
             tempDisjuncts.removeAll(satisfiedDisjuncts);
             for (HashMap<String, String> falseDisjunct :
                     satisfiedDisjuncts) {
                 if (falseDisjunct.containsKey(key))
                     continue;
                 else
-                    falseDisjunct.put(key,"!"+lastExample.getAttributes().get(key));
+                    falseDisjunct.put(key, "!" + lastExample.getAttributes().get(key));
             }
             tempDisjuncts.addAll(new ArrayList<>(satisfiedDisjuncts));
-            Hypothesis newHypo = new Hypothesis(this.getGoal(),new ArrayList<>(tempDisjuncts));
+            Hypothesis newHypo = new Hypothesis(this.getGoal(), new ArrayList<>(tempDisjuncts));
             result.add(newHypo);
         }
         Collections.shuffle(result);
@@ -111,24 +110,24 @@ public class Hypothesis {
         return true;
     }
 
-    public List<Hypothesis> generalisations(List<LogicalExample> examplesSoFar){
+    public List<Hypothesis> generalisations(List<LogicalExample> examplesSoFar) {
         List<Hypothesis> result = new ArrayList<>();
-        LogicalExample lastExample = examplesSoFar.get(examplesSoFar.size()-1);
+        LogicalExample lastExample = examplesSoFar.get(examplesSoFar.size() - 1);
         for (List<String> possibledisjunct :
                 PowerSetGenerator.powerSet(new ArrayList<>(lastExample.getAttributes().keySet()))) {
             boolean temp = true;
-            for (HashMap<String,String> availableKeys :
+            for (HashMap<String, String> availableKeys :
                     this.getHypothesis()) {
-                if (availableKeys.keySet().containsAll(possibledisjunct)&&possibledisjunct.containsAll(availableKeys.keySet()))
-                        temp = false;
+                if (availableKeys.keySet().containsAll(possibledisjunct) && possibledisjunct.containsAll(availableKeys.keySet()))
+                    temp = false;
             }
-            if (temp){
-                HashMap<String,String> disjunct = new HashMap<>();
+            if (temp) {
+                HashMap<String, String> disjunct = new HashMap<>();
                 for (String s :
                         possibledisjunct) {
-                    disjunct.put(s,lastExample.getAttributes().get(s));
+                    disjunct.put(s, lastExample.getAttributes().get(s));
                 }
-                Hypothesis toAdd = new Hypothesis(this.goal,new ArrayList<>(this.getHypothesis()));
+                Hypothesis toAdd = new Hypothesis(this.goal, new ArrayList<>(this.getHypothesis()));
                 toAdd.getHypothesis().add(disjunct);
                 result.add(toAdd);
             }

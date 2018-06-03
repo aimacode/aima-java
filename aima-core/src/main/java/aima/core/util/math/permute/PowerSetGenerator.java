@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * This is used to generate the powerset of a given list of items.
+ * @author samagra
+ */
 public class PowerSetGenerator {
     public static <T> Iterable<List<T>> powerSet(List<T> list){
         int total = (int) Math.pow(2,list.size());
