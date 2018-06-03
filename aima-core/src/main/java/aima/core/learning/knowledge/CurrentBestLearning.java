@@ -40,18 +40,36 @@ import sun.rmi.runtime.Log;
  * 
  */
 public class CurrentBestLearning {
-	public Hypothesis currentBestLearning(List<LogicalExample> examples,Hypothesis h){
+	public Hypothesis currentBestLearning(List<LogicalExample> examples,Hypothesis h,List<LogicalExample> examplesSoFar){
 		if (examples.isEmpty())
 			return h;
 		LogicalExample e = examples.get(0);
-		if (h.isConsistent(e))
-			return currentBestLearning(examples.subList(1,examples.size()),h);
+        examplesSoFar.add(e);
+		if (h.isConsistent(e)) {
+            return currentBestLearning(examples.subList(1, examples.size()), h,examplesSoFar);
+        }
 		else if ((h.predict(e))&&(!e.getGoal())){
 			for (Hypothesis hypothesis :
-					h.specialisations( examples.subList(0,examples.indexOf(e)+1))){
-
+					h.specialisations( examplesSoFar)){
+			    if (hypothesis.isConsistent(examplesSoFar)) {
+                    Hypothesis newHypothesis = currentBestLearning(examples.subList(1, examples.size()), hypothesis,examplesSoFar);
+                    if (newHypothesis != null) {
+                        return newHypothesis;
+                    }
+                }
 			}
 		}
+		else if ((!h.predict(e))&&(e.getGoal())){
+            for (Hypothesis hypothesis :
+                    h.generalisations(examplesSoFar)) {
+                if (hypothesis.isConsistent(examplesSoFar)) {
+                    Hypothesis newHypothesis = currentBestLearning(examples.subList(1, examples.size()), hypothesis,examplesSoFar);
+                    if (newHypothesis != null) {
+                        return newHypothesis;
+                    }
+                }
+            }
+        }
 		return null;
 	}
 }
