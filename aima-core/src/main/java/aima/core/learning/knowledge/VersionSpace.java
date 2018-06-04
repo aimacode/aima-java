@@ -5,6 +5,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * We can represent the entire version space using just two boundary sets: a most general boundary (the G-set) and a most
+ * specific boundary (the S-set). Everything in between is guaranteed to be consistent with the
+ * examples.
+ *
+ * @author samagra
+ */
 public class VersionSpace {
 
     private HashSet<Hypothesis> mostGeneralSet = new HashSet<>();
