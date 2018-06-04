@@ -45,9 +45,36 @@ public class VersionSpace {
             return false;
         for (Hypothesis hypothesis :
                 this.mostSpecificSet) {
-            if (hypothesis.predict())
+            if (hypothesis.predict(example))
                 return true;
         }
         return false;
+    }
+
+    public HashSet<Hypothesis> getMostGeneralSet() {
+        return mostGeneralSet;
+    }
+
+    public void setMostGeneralSet(HashSet<Hypothesis> mostGeneralSet) {
+        this.mostGeneralSet = mostGeneralSet;
+    }
+
+    public void setMostSpecificSet(HashSet<Hypothesis> mostSpecificSet) {
+        this.mostSpecificSet = mostSpecificSet;
+    }
+
+    public HashSet<Hypothesis> getMostSpecificSet() {
+        return mostSpecificSet;
+    }
+
+    public boolean predict(LogicalExample example){
+        boolean fromGeneral = this.predictFromGeneralisedSet(example);
+        boolean fromSpecific = this.predictFromSpecialisedSet(example);
+        if (fromGeneral==fromSpecific)
+            return fromGeneral;
+        if (Math.random()<0.5)
+            return fromGeneral;
+        else
+            return fromSpecific;
     }
 }
