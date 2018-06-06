@@ -112,7 +112,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |18.34|751|AdaBoost|[AdaBoostLearner](/aima-core/src/main/java/aima/core/learning/learners/AdaBoostLearner.java)|
 |19.2|771|Current-Best-Learning|[CurrentBestLearning](/aima-core/src/main/java/aima/core/learning/knowledge/CurrentBestLearning.java)|
 |19.3|773|Version-Space-Learning|---|
-|19.8|786|Minimal-Consistent-Det|---|
+|19.8|786|Minimal-Consistent-Det|[MinimalConsistentDet](/aima-core/src/main/java/aima/core/learning/knowledge/MinimalConsistentDet.java)|
 |19.12|793|FOIL|---|
 |21.2|834|Passive-ADP-Agent|[PassiveADPAgent](/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveADPAgent.java)|
 |21.4|837|Passive-TD-Agent|[PassiveTDAgent](/aima-core/src/main/java/aima/core/learning/reinforcement/agent/PassiveTDAgent.java)|
