@@ -8,27 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CombinationGeneratorTest {
-    @Test
-    public void combinationTest(){
-        for (List<Integer> arr :
-                CombinationGenerator.combination(3, 5)) {
-            for (int a: arr){
-                System.out.print(a);
-            }
-            System.out.println();
-        }
-    }
-
-    @Test
-    public void permutationTest(){
-        for (List<Integer> arr :
-                PermutationGenerator.permutations(4)) {
-            for (int a: arr){
-                System.out.print(a);
-            }
-            System.out.println();
-        }
-    }
 
     @Test
     public void generateCombinationsTest(){
