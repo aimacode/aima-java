@@ -10,6 +10,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * @author samagra
+ */
 public class MinimalConsistentDetTest {
     @Test
     public void minimalConsistentDetTest(){
