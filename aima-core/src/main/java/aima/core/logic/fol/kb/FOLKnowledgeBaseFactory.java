@@ -188,6 +188,7 @@ public class FOLKnowledgeBaseFactory {
 		domain.addPredicate("Married");
 		domain.addPredicate("Male");
 		domain.addPredicate("Female");
+		domain.addPredicate("Grandfather");
 		//male
 		FOLKnowledgeBase kb = new FOLKnowledgeBase(domain);
 		kb.tell("Male(George)");

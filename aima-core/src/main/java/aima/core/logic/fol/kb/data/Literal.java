@@ -1,7 +1,9 @@
 package aima.core.logic.fol.kb.data;
 
-import aima.core.logic.fol.parsing.ast.AtomicSentence;
-import aima.core.logic.fol.parsing.ast.Term;
+import aima.core.logic.fol.parsing.ast.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 244.<br>
@@ -91,5 +93,18 @@ public class Literal {
 			}
 		}
 		return hashCode;
+	}
+
+	public Literal substitute(List<Constant> constants){
+		List<Term> terms = new ArrayList<>();
+		for (int i = 0; i < this.getAtomicSentence().getArgs().size(); i++) {
+			if (this.getAtomicSentence().getArgs().get(i) instanceof Variable){
+				if (constants.size()>i){
+					terms.add(constants.get(i));
+				}
+			}
+		}
+		List<Term> toAdd = new ArrayList<>(constants);
+		return new Literal(new Predicate(this.getAtomicSentence().getSymbolicName(),toAdd),this.isNegativeLiteral());
 	}
 }
