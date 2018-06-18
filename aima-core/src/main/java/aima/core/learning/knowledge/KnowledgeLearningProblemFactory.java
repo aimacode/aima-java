@@ -40,10 +40,33 @@ public class KnowledgeLearningProblemFactory {
         return result;
     }
 
+    public static List<LogicalExample> getConductanceMeasurementProblem(){
+        String[] attrs = {"Sample", "Mass", "Temperature", "Material", "Size", "Goal"};
+        List<String> attributes = Arrays.asList(attrs);
+        List<LogicalExample> result = new ArrayList<>();
+        result.add(getExample(attributes,"S1","12","26","Copper","3","0.59"));
+        result.add(getExample(attributes,"S1","12","100","Copper","3","0.57"));
+        result.add(getExample(attributes,"S2","24","26","Copper","6","0.59"));
+        result.add(getExample(attributes, "S3","12","26","Lead","2","0.05"));
+        result.add(getExample(attributes, "S3","12","100","Lead","2","0.04"));
+        result.add(getExample(attributes,"S4","24","26","Lead","4","0.05"));
+        result.add(getExample(attributes,"S5","28","26","Iron","4","0.55"));
+        return result;
+    }
+
     public static LogicalExample getExample(List<String> attrs,
                                             boolean goal, String... values) {
         try {
             return new LogicalExample(attrs, new ArrayList<>(Arrays.asList(values)), goal);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static LogicalExample getExample(List<String> attrs, String... values) {
+        try {
+            return new LogicalExample(attrs, new ArrayList<>(Arrays.asList(values)));
         } catch (Exception e) {
             e.printStackTrace();
             return null;

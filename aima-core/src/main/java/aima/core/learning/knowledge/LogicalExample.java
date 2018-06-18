@@ -20,6 +20,10 @@ public class LogicalExample {
         this.goal = goal;
     }
 
+    public LogicalExample(List<String> attributeNames,List<String> attributeValus) throws Exception {
+        this(attributeNames,attributeValus,false);
+    }
+
     public HashMap<String, String> getAttributes() {
         return attributes;
     }

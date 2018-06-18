@@ -1,67 +1,43 @@
 package aima.core.util.math.permute;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author samagra
  */
 public class CombinationGenerator {
-    public static <T> List<List<T>> generateCombinations(List<T> list, int r) {
-        List<List<T>> result = new ArrayList<>();
-        List<List<Integer>> mappings = combination(r, list.size());
-        List<T> tempList;
-        for (List<Integer> singleCombination :
-                mappings) {
-            tempList = new ArrayList<>();
-            for (int a :
-                    singleCombination) {
-                tempList.add(list.get(a - 1));
+    public static <T> Iterable<List<T>> generateCombinations(List<T> list, int r) {
+        return () -> new Iterator<List<T>>() {
+            int index = -1;
+            int total = (int) CombinationGenerator.nCr(list.size(), r);
+            int[] currCombination = new int[r];
+
+            @Override
+            public boolean hasNext() {
+                index++;
+                return index < total;
             }
-            result.add(tempList);
-        }
-        return result;
+
+            @Override
+            public List<T> next() {
+                if (index == 0) {
+                    for (int i = 0; i < currCombination.length; i++) {
+                        currCombination[i] = i + 1;
+                    }
+                } else
+                    currCombination = CombinationGenerator.generateNextCombination(currCombination, list.size(), r);
+                List<T> result = new ArrayList<>();
+                for (int aCurrCombination : currCombination) {
+                    result.add(list.get(aCurrCombination - 1));
+                }
+                return result;
+            }
+        };
     }
 
-    public static List<List<Integer>> combination(int r, int n) {
-        int numberOfCombinations = (int) nCr(n, r);
-        List<Integer> tempList;
-        List<List<Integer>> result = new ArrayList<>();
-        int[] temp = new int[r];
-        for (int i = 0; i < r; i++) {
-            temp[i] = i + 1;
-        }
-        tempList = new ArrayList<>();
-        int x;
-        for (int i = 0; i < r; i++) {
-            x = temp[i];
-            tempList.add(x);
-        }
-        result.add(tempList);
-        int m, maxVal;
-        for (int i = 1; i < numberOfCombinations; i++) {
-            m = r;
-            maxVal = n;
-            while (temp[m - 1] == maxVal) {
-                m = m - 1;
-                maxVal--;
-            }
-            temp[m - 1]++;
-            for (int j = m; j < r; j++) {
-                temp[j] = temp[j - 1] + 1;
-            }
-            tempList = new ArrayList<>();
-            for (int k = 0; k < r; k++) {
-                x = temp[k];
-                tempList.add(x);
-            }
-            result.add(tempList);
-        }
-
-        return result;
-    }
-
-    static double nCr(int n, int r) {
+    public static double nCr(int n, int r) {
         int rfact = 1, nfact = 1, nrfact = 1, temp1 = n - r, temp2 = r;
         if (r > n - r) {
             temp1 = r;
@@ -77,5 +53,19 @@ public class CombinationGenerator {
             nfact *= i;
         }
         return nfact / (double) (rfact * nrfact);
+    }
+
+    public static int[] generateNextCombination(int[] temp, int n, int r) {
+        int m = r;
+        int maxVal = n;
+        while (temp[m - 1] == maxVal) {
+            m = m - 1;
+            maxVal--;
+        }
+        temp[m - 1]++;
+        for (int j = m; j < r; j++) {
+            temp[j] = temp[j - 1] + 1;
+        }
+        return temp;
     }
 }

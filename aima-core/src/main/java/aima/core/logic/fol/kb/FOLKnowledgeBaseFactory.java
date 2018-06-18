@@ -156,4 +156,105 @@ public class FOLKnowledgeBaseFactory {
 
 		return kb;
 	}
+
+	public static FOLKnowledgeBase familyKnowledgeBase(){
+		FOLDomain domain = new FOLDomain();
+		domain.addConstant("George");
+		domain.addConstant("Mum");
+		domain.addConstant("Spencer");
+		domain.addConstant("Kydd");
+		domain.addConstant("Elizabeth");
+		domain.addConstant("Philip");
+		domain.addConstant("Margaret");
+		domain.addConstant("Diana");
+		domain.addConstant("Charles");
+		domain.addConstant("Anne");
+		domain.addConstant("Mark");
+		domain.addConstant("Andrew");
+		domain.addConstant("Sarah");
+		domain.addConstant("Edward");
+		domain.addConstant("Sophie");
+		domain.addConstant("William");
+		domain.addConstant("Harry");
+		domain.addConstant("Peter");
+		domain.addConstant("Zara");
+		domain.addConstant("Beatrice");
+		domain.addConstant("Eugenie");
+		domain.addConstant("Louise");
+		domain.addConstant("James");
+		// Now predicates
+		domain.addPredicate("Mother");
+		domain.addPredicate("Father");
+		domain.addPredicate("Married");
+		domain.addPredicate("Male");
+		domain.addPredicate("Female");
+		//male
+		FOLKnowledgeBase kb = new FOLKnowledgeBase(domain);
+		kb.tell("Male(George)");
+		kb.tell("Male(Spencer)");
+		kb.tell("Male(Philip)");
+		kb.tell("Male(Charles)");
+		kb.tell("Male(Mark)");
+		kb.tell("Male(Andrew)");
+		kb.tell("Male(Edward)");
+		kb.tell("Male(William)");
+		kb.tell("Male(Harry)");
+		kb.tell("Male(Peter)");
+		kb.tell("Male(James)");
+		kb.tell("Male(Louise)");
+		// female
+		kb.tell("Female(Mum)");
+		kb.tell("Female(Kydd)");
+		kb.tell("Female(Elizabeth)");
+		kb.tell("Female(Margaret)");
+		kb.tell("Female(Diana)");
+		kb.tell("Female(Anne)");
+		kb.tell("Female(Sarah)");
+		kb.tell("Female(Sophie)");
+		kb.tell("Female(Zara)");
+		kb.tell("Female(Beatrice)");
+		kb.tell("Female(Eugenie)");
+		//married
+		kb.tell("Married(George,Mum)");
+		kb.tell("Married(Spencer,Kydd)");
+		kb.tell("Married(Elizabeth,Philip)");
+		kb.tell("Married(Diana,Charles)");
+		kb.tell("Married(Anne,Mark)");
+		kb.tell("Married(Andrew,Sarah)");
+		kb.tell("Married(Edward,Sophie)");
+		kb.tell("(Married(x,y) => Married(y,x))");
+		//Mother
+		kb.tell("Mother(Mum,Elizabeth)");
+		kb.tell("Mother(Mum,Margaret)");
+		kb.tell("Mother(Kydd,Diana)");
+		kb.tell("Mother(Elizabeth,Charles)");
+		kb.tell("Mother(Elizabeth,Anne)");
+		kb.tell("Mother(Elizabeth,Andrew)");
+		kb.tell("Mother(Elizabeth,Edward)");
+		kb.tell("Mother(Diana,William)");
+		kb.tell("Mother(Diana,Harry)");
+		kb.tell("Mother(Anne,Peter)");
+		kb.tell("Mother(Anne,Zara)");
+		kb.tell("Mother(Sarah,Beatrice)");
+		kb.tell("Mother(Sarah,Eugenie)");
+		kb.tell("Mother(Sophie,Louise)");
+		kb.tell("Mother(Sophie,James)");
+		//father
+		kb.tell("Father(George,Elizabeth)");
+		kb.tell("Father(George,Margaret)");
+		kb.tell("Father(Spencer,Diana)");
+		kb.tell("Father(Philip,Charles)");
+		kb.tell("Father(Philip,Anne)");
+		kb.tell("Father(Philip,Andrew)");
+		kb.tell("Father(Philip,Edward)");
+		kb.tell("Father(William,Charles)");
+		kb.tell("Father(William,Harry)");
+		kb.tell("Father(Mark,Peter)");
+		kb.tell("Father(Mark,Zara)");
+		kb.tell("Father(Andrew,Beatrice)");
+		kb.tell("Father(Andrew,Eugenie)");
+		kb.tell("Father(Edward,Louise)");
+		kb.tell("Father(Edward,James)");
+		return kb;
+	}
 }

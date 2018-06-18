@@ -43,7 +43,7 @@ public class ProblemTest {
                 "~At(t,Ground)^At(t,Axle)");
         ActionSchema leaveOvernightAction = new ActionSchema("LeaveOvernight", null,
                 "",
-                "~At(Spare,Ground)^~At(Spare,Axle)^At(Spare,Trunk)" +
+                "~At(Spare,Ground)^~At(Spare,Axle)^~At(Spare,Trunk)" +
                         "^~At(Flat,Ground)^~At(Flat,Axle)^~At(Flat,Trunk)");
         Assert.assertEquals(initState, testProblem.getInitialState());
         Assert.assertEquals(goalState, testProblem.getGoalState());
