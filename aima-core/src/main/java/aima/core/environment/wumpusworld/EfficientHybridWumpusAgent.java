@@ -202,7 +202,7 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
                 new AStarSearch<>(new GraphSearch<>(), new ManhattanHeuristicFunction(goals));
         Optional<List<WumpusAction>> actions = search.findActions(problem);
 
-        return actions.isPresent() ? actions.get() : Collections.emptyList();
+        return actions.orElse(Collections.emptyList());
     }
 
     /**
