@@ -35,7 +35,7 @@ public abstract class AbstractEnvironment implements Environment,
 	protected Map<Agent, Double> performanceMeasures = new LinkedHashMap<>();
 
 	//
-	// PRUBLIC METHODS
+	// PUBLIC METHODS
 	//
 	
 	//
