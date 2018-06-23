@@ -47,7 +47,7 @@ import aima.core.logic.propositional.kb.KnowledgeBase;
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  */
-public class FOLBCAsk{
+public class FOLBCAsk implements InferenceProcedure{
 	List<List<Literal>> finalAnswer;// to store the final result
 	List<Literal> substitutedLiterals;
 
@@ -175,5 +175,10 @@ public class FOLBCAsk{
 
 	public List<List<Literal>> getFinalAnswer() {
 		return finalAnswer;
+	}
+
+	@Override
+	public InferenceResult ask(FOLKnowledgeBase kb, Sentence query) {
+		return null;
 	}
 }
