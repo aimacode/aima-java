@@ -3,9 +3,7 @@ package aima.core.logic.fol.inference;
 import java.util.*;
 
 import aima.core.logic.fol.Unifier;
-import aima.core.logic.fol.inference.proof.Proof;
-import aima.core.logic.fol.inference.proof.ProofFinal;
-import aima.core.logic.fol.inference.proof.ProofStepBwChGoal;
+import aima.core.logic.fol.inference.proof.*;
 import aima.core.logic.fol.kb.FOLKnowledgeBase;
 import aima.core.logic.fol.kb.data.Clause;
 import aima.core.logic.fol.kb.data.Literal;
@@ -50,6 +48,7 @@ import aima.core.logic.propositional.kb.KnowledgeBase;
 public class FOLBCAsk implements InferenceProcedure{
 	List<List<Literal>> finalAnswer;// to store the final result
 	List<Literal> substitutedLiterals;
+	BCASKHandler bcaskHandler = new BCASKHandler();
 
 	public FOLBCAsk() {
 		finalAnswer = new ArrayList<>();
@@ -71,7 +70,7 @@ public class FOLBCAsk implements InferenceProcedure{
 	 * 
 	 * @return a set of substitutions
 	 */
-	public List<HashMap<Variable,Term>> ask(FOLKnowledgeBase kb, Literal query){
+	public List<HashMap<Variable,Term>> folBcAsk(FOLKnowledgeBase kb, Literal query){
 		//return FOL-BC-OR(KB, query, { })
 		return folBcOr(kb,query, new HashMap<>());
 	}
@@ -172,6 +171,11 @@ public class FOLBCAsk implements InferenceProcedure{
 					}
 			}
 		}
+		for (Clause clause :
+				result) {
+			ProofStep step = new BCProofStep(clause,this.bcaskHandler.proof.getSteps(),goal);
+			this.bcaskHandler.addProofStep(step);
+		}
 		return result;
 	}
 
@@ -181,12 +185,29 @@ public class FOLBCAsk implements InferenceProcedure{
 
 	@Override
 	public InferenceResult ask(FOLKnowledgeBase kb, Sentence query) {
-		return null;
+		Literal l = new Literal(((AtomicSentence) query));
+		List<HashMap<Variable, Term>> substitutes = this.folBcAsk(kb, l);
+		if (l.getAtomicSentence().getArgs().get(0) instanceof Variable) {
+			Variable x = (Variable) l.getAtomicSentence().getArgs().get(0);
+			HashMap<Variable, Term> toadd = new HashMap<>();
+			for (HashMap<Variable, Term> subs :
+					substitutes) {
+				toadd.put(x, subs.get(x));
+			}
+			this.bcaskHandler.proof.replaceAnswerBindings(toadd);
+		}
+		return this.bcaskHandler;
 	}
 
 	class BCASKHandler implements InferenceResult{
 
+		private ProofStep stepFinal = null;
 		private List<Proof> proofs = new ArrayList<>();
+		Proof proof = new BCProof();
+
+		public BCASKHandler(){
+			proofs.add(proof);
+		}
 		@Override
 		public boolean isPossiblyFalse() {
 			return proofs.size() == 0;
@@ -210,6 +231,69 @@ public class FOLBCAsk implements InferenceProcedure{
 		@Override
 		public List<Proof> getProofs() {
 			return proofs;
+		}
+
+		public void addProofStep(ProofStep step){
+			((BCProof)this.proofs.get(0)).addProofStep(step);
+		}
+
+
+	}
+
+	class BCProof implements Proof{
+		List<ProofStep> proofSteps = new ArrayList<>();
+		Map<Variable, Term> answerBindings = new HashMap<>();
+		public BCProof(){
+		}
+
+		public void addProofStep(ProofStep step){
+			proofSteps.add(step);
+		}
+		@Override
+		public List<ProofStep> getSteps() {
+			return proofSteps;
+		}
+
+		@Override
+		public Map<Variable, Term> getAnswerBindings() {
+			return answerBindings;
+		}
+
+		@Override
+		public void replaceAnswerBindings(Map<Variable, Term> updatedBindings) {
+			answerBindings = updatedBindings;
+		}
+	}
+
+	class BCProofStep extends AbstractProofStep{
+		List<ProofStep> predecessors = new ArrayList<>();
+		Clause implication ;
+		Literal goal;
+
+		public BCProofStep(Clause implication, List<ProofStep> predecessors, Literal goal){
+			this.implication = implication;
+			this.predecessors = predecessors;
+			this.goal = goal;
+		}
+
+		@Override
+		public List<ProofStep> getPredecessorSteps() {
+			return predecessors;
+		}
+
+		@Override
+		public String getProof() {
+			return implication.toString();
+		}
+
+		@Override
+		public String toString() {
+			return implication.toString();
+		}
+
+		@Override
+		public String getJustification() {
+			return "To Prove Backwards :" + goal.toString();
 		}
 	}
 }
