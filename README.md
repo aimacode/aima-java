@@ -8,7 +8,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
   * [Demo Applications that can be run from your browser](http://aimacode.github.io/aima-java/aima3e/aima3ejavademos.html).
   * [Comments on architecture and design](https://github.com/aimacode/aima-java/wiki/AIMA3e-Architecture-and-Design).
   * [Javadoc for the aima-core project](http://aimacode.github.io/aima-java/aima3e/javadoc/aima-core/index.html).
-  * [Download the latest official version  = 1.9.1 (Dec 18 2016)](https://github.com/aimacode/aima-java/releases/tag/aima3e-v1.9.1).
+  * [Download the latest official (but outdated) version  = 1.9.1 (Dec 18 2016)](https://github.com/aimacode/aima-java/releases/tag/aima3e-v1.9.1).
   * Latest Maven Information (for integration as a third party library)<br>
   
       ```
