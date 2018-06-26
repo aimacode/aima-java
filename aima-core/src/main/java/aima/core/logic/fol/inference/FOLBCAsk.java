@@ -90,6 +90,7 @@ public class FOLBCAsk implements InferenceProcedure{
 	private List<HashMap<Variable, Term>> folBcOr(FOLKnowledgeBase kb, Literal goal, HashMap<Variable, Term> theta) {
 		List<HashMap<Variable,Term>> result = new ArrayList<>();
 		finalAnswer.add(new ArrayList<>(Collections.singletonList(goal)));
+		System.out.println("Or Goal == " + goal.toString());
 		// for each rule (lhs ⇒ rhs) in FETCH-RULES-FOR-GOAL(KB, goal) do
 		for (Clause rule :
 				fetchRulesForGoal(kb,goal)) {
@@ -118,6 +119,7 @@ public class FOLBCAsk implements InferenceProcedure{
 	private List<HashMap<Variable, Term>> folBcAnd(FOLKnowledgeBase kb, List<Literal> goals, Map<Variable, Term> theta) {
 		List<HashMap<Variable,Term>> result = new ArrayList<>();
 		finalAnswer.add(new ArrayList<>(goals));
+		System.out.println("And Goal == " + goals.toString());
 		// if θ = failure then return
 		if (theta==null)
 			return result;
@@ -180,5 +182,34 @@ public class FOLBCAsk implements InferenceProcedure{
 	@Override
 	public InferenceResult ask(FOLKnowledgeBase kb, Sentence query) {
 		return null;
+	}
+
+	class BCASKHandler implements InferenceResult{
+
+		private List<Proof> proofs = new ArrayList<>();
+		@Override
+		public boolean isPossiblyFalse() {
+			return proofs.size() == 0;
+		}
+
+		@Override
+		public boolean isTrue() {
+			return proofs.size() > 0;
+		}
+
+		@Override
+		public boolean isUnknownDueToTimeout() {
+			return false;
+		}
+
+		@Override
+		public boolean isPartialResultDueToTimeout() {
+			return false;
+		}
+
+		@Override
+		public List<Proof> getProofs() {
+			return proofs;
+		}
 	}
 }

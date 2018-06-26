@@ -31,5 +31,11 @@ public class FOLBCAskTests {
         Assert.assertTrue(substituted.contains(Utils.parse("Sells(West,M1,Nono)").get(0)));
         Assert.assertTrue(substituted.contains(Utils.parse("Enemy(Nono,America)").get(0)));
         Assert.assertTrue(substituted.contains(Utils.parse("Hostile(Nono)").get(0)));
+        for (Literal l :
+                substituted) {
+            weaponsKb.tell(l.getAtomicSentence());
+        }
+        System.out.println(weaponsKb.fetch(query));
+        System.out.println(weaponsKb.toString());
     }
 }
