@@ -17,27 +17,27 @@ import aima.core.logic.propositional.kb.KnowledgeBase;
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 9.6, page
  * 338.<br>
  * <br>
- * 
+ *
  * <pre>
  * function FOL-BC-ASK(KB, query) returns a generator of substitutions
- *   return FOL-BC-OR(KB, query, { })
+  *   return FOL-BC-OR(KB, query, { })
  *
  * generator FOL-BC-OR(KB, goal, θ) yields a substitution
- *   for each rule (lhs ⇒ rhs) in FETCH-RULES-FOR-GOAL(KB, goal) do
- *        (lhs, rhs) ← STANDARDIZE-VARIABLES((lhs, rhs))
- *  	  for each θ' in FOL-BC-AND(KB, lhs, UNIFY(rhs, goal, θ)) do
- *    	       yield θ'
+  *   for each rule (lhs ⇒ rhs) in FETCH-RULES-FOR-GOAL(KB, goal) do
+  *        (lhs, rhs) ← STANDARDIZE-VARIABLES((lhs, rhs))
+  *  	  for each θ' in FOL-BC-AND(KB, lhs, UNIFY(rhs, goal, θ)) do
+  *    	       yield θ'
  *
  * generator FOL-BC-AND(KB, goals, θ) yields a substitution
- *   if θ = failure then return
- *   else if LENGTH(goals) = 0 then yield θ
- *   else do
- *        first, rest ← FIRST(goals), REST(goals)
- *        for each θ' in FOL-BC-OR(KB, SUBST(θ, first), θ) do
- *             for each θ'' in FOL-BC-AND(KB, rest, θ') do
- *                  yield θ'
+  *   if θ = failure then return
+  *   else if LENGTH(goals) = 0 then yield θ
+  *   else do
+  *        first, rest ← FIRST(goals), REST(goals)
+  *        for each θ' in FOL-BC-OR(KB, SUBST(θ, first), θ) do
+  *             for each θ'' in FOL-BC-AND(KB, rest, θ') do
+  *                  yield θ'
  * </pre>
- * 
+ *
  * Figure 9.6 A simple backward-chaining algorithm for first-order knowledge bases.
  *
  * @author samagra
@@ -67,7 +67,7 @@ public class FOLBCAsk implements InferenceProcedure{
 	 *            a knowledge base
 	 * @param query
 	 *            goals, a list of conjuncts forming a query
-	 * 
+	 *
 	 * @return a set of substitutions
 	 */
 	public List<HashMap<Variable,Term>> folBcAsk(FOLKnowledgeBase kb, Literal query){
@@ -122,7 +122,7 @@ public class FOLBCAsk implements InferenceProcedure{
 		// if θ = failure then return
 		if (theta==null)
 			return result;
-		// else if LENGTH(goals) = 0 then yield θ
+			// else if LENGTH(goals) = 0 then yield θ
 		else if (goals.size()==0){
 			result.add((HashMap<Variable, Term>) theta);
 			return result;
@@ -168,7 +168,7 @@ public class FOLBCAsk implements InferenceProcedure{
 					if (l.getAtomicSentence().getSymbolicName().equals(goal.getAtomicSentence().getSymbolicName())) {
 						result.add(clause);
 					}
-					}
+				}
 			}
 		}
 		for (Clause clause :
@@ -200,7 +200,7 @@ public class FOLBCAsk implements InferenceProcedure{
 			}
 		}
 		if (this.bcaskHandler.proofs.size()>1)
-		this.bcaskHandler.proofs.remove(0);
+			this.bcaskHandler.proofs.remove(0);
 		return this.bcaskHandler;
 	}
 
@@ -301,7 +301,7 @@ public class FOLBCAsk implements InferenceProcedure{
 					result.append((new Literal(l.getAtomicSentence())).toString());
 					i++;
 					if (i<implication.getNegativeLiterals().size())
-					result.append(" AND ");
+						result.append(" AND ");
 				}
 				result.append(" => ");
 				result.append(implication.getPositiveLiterals().get(0));
