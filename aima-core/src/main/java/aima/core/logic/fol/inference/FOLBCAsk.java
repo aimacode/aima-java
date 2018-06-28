@@ -89,12 +89,13 @@ public class FOLBCAsk implements InferenceProcedure{
 	private List<HashMap<Variable, Term>> folBcOr(FOLKnowledgeBase kb, Literal goal, HashMap<Variable, Term> theta) {
 		List<HashMap<Variable,Term>> result = new ArrayList<>();
 		finalAnswer.add(new ArrayList<>(Collections.singletonList(goal)));
-		System.out.println("Or Goal == " + goal.toString());
+		HashMap<Variable,Term> temp;
 		// for each rule (lhs ⇒ rhs) in FETCH-RULES-FOR-GOAL(KB, goal) do
 		for (Clause rule :
 				fetchRulesForGoal(kb,goal)) {
 			//(lhs, rhs) ← STANDARDIZE-VARIABLES((lhs, rhs))
 			Clause tempClause = kb.standardizeApart(rule);
+			temp = new HashMap<>(theta);
 			Literal rhs = tempClause.getPositiveLiterals().get(0);
 			List<Literal> lhs = new ArrayList<>();
 			for (Literal literal :
@@ -103,7 +104,7 @@ public class FOLBCAsk implements InferenceProcedure{
 			}
 			//for each θ' in FOL-BC-AND(KB, lhs, UNIFY(rhs, goal, θ)) do
 			// yield θ'
-			result.addAll(folBcAnd(kb, lhs, new Unifier().unify(rhs.getAtomicSentence(), goal.getAtomicSentence(), theta)));
+			result.addAll(folBcAnd(kb, lhs, new Unifier().unify(rhs.getAtomicSentence(), goal.getAtomicSentence(), temp)));
 		}
 		return result;
 	}
@@ -118,7 +119,6 @@ public class FOLBCAsk implements InferenceProcedure{
 	private List<HashMap<Variable, Term>> folBcAnd(FOLKnowledgeBase kb, List<Literal> goals, Map<Variable, Term> theta) {
 		List<HashMap<Variable,Term>> result = new ArrayList<>();
 		finalAnswer.add(new ArrayList<>(goals));
-		System.out.println("And Goal == " + goals.toString());
 		// if θ = failure then return
 		if (theta==null)
 			return result;
@@ -173,7 +173,7 @@ public class FOLBCAsk implements InferenceProcedure{
 		}
 		for (Clause clause :
 				result) {
-			ProofStep step = new BCProofStep(clause,this.bcaskHandler.proof.getSteps(),goal);
+			ProofStep step = new BCProofStep(clause,this.bcaskHandler.proofs.get(0).getSteps(),goal);
 			this.bcaskHandler.addProofStep(step);
 		}
 		return result;
@@ -189,13 +189,18 @@ public class FOLBCAsk implements InferenceProcedure{
 		List<HashMap<Variable, Term>> substitutes = this.folBcAsk(kb, l);
 		if (l.getAtomicSentence().getArgs().get(0) instanceof Variable) {
 			Variable x = (Variable) l.getAtomicSentence().getArgs().get(0);
-			HashMap<Variable, Term> toadd = new HashMap<>();
 			for (HashMap<Variable, Term> subs :
 					substitutes) {
-				toadd.put(x, subs.get(x));
+				HashMap<Variable, Term> toadd = new HashMap<>();
+				toadd.put(new Variable(x.getValue()), subs.get(x));
+				Proof proof = new BCProof();
+				proof.replaceAnswerBindings(new HashMap<>(toadd));
+				((BCProof) proof).proofSteps = new ArrayList<>(this.bcaskHandler.proofs.get(0).getSteps());
+				this.bcaskHandler.proofs.add(proof);
 			}
-			this.bcaskHandler.proof.replaceAnswerBindings(toadd);
 		}
+		if (this.bcaskHandler.proofs.size()>1)
+		this.bcaskHandler.proofs.remove(0);
 		return this.bcaskHandler;
 	}
 
@@ -203,10 +208,9 @@ public class FOLBCAsk implements InferenceProcedure{
 
 		private ProofStep stepFinal = null;
 		private List<Proof> proofs = new ArrayList<>();
-		Proof proof = new BCProof();
 
 		public BCASKHandler(){
-			proofs.add(proof);
+			proofs.add(new BCProof());
 		}
 		@Override
 		public boolean isPossiblyFalse() {
@@ -274,6 +278,7 @@ public class FOLBCAsk implements InferenceProcedure{
 			this.implication = implication;
 			this.predecessors = predecessors;
 			this.goal = goal;
+			this.setStepNumber(this.predecessors.size()+1);
 		}
 
 		@Override
@@ -283,12 +288,27 @@ public class FOLBCAsk implements InferenceProcedure{
 
 		@Override
 		public String getProof() {
-			return implication.toString();
+			return this.toString();
 		}
 
 		@Override
 		public String toString() {
-			return implication.toString();
+			StringBuilder result = new StringBuilder();
+			if (implication.getLiterals().size()>1){
+				int i =0;
+				for (Literal l :
+						implication.getNegativeLiterals()) {
+					result.append((new Literal(l.getAtomicSentence())).toString());
+					i++;
+					if (i<implication.getNegativeLiterals().size())
+					result.append(" AND ");
+				}
+				result.append(" => ");
+				result.append(implication.getPositiveLiterals().get(0));
+				return result.toString();
+			}
+			result.append(implication.getLiterals().toString());
+			return result.toString();
 		}
 
 		@Override
