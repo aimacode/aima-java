@@ -24,10 +24,11 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  * 
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
 public class Model implements PLVisitor<Boolean, Boolean> {
 
-	private HashMap<PropositionSymbol, Boolean> assignments = new HashMap<PropositionSymbol, Boolean>();
+	private HashMap<PropositionSymbol, Boolean> assignments = new HashMap<>();
 
 	/**
 	 * Default Constructor.
@@ -103,9 +104,8 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 	public boolean satisfies(Set<Clause> clauses) {
 		for (Clause c : clauses) {
 			// All must to be true
-			if (!Boolean.TRUE.equals(determineValue(c))) {
+			if (!Boolean.TRUE.equals(determineValue(c)))
 				return false;
-			}
 		}
 		return true;
 	}
@@ -126,49 +126,28 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 
 		if (c.isTautology()) { // Test independent of the model's assignments.
 			result = Boolean.TRUE;
-		} else if (c.isFalse()) { // Test independent of the model's
-									// assignments.
+		} else if (c.isFalse()) { // Test independent of the model's assignments.
 			result = Boolean.FALSE;
 		} else {
 			boolean unassignedSymbols = false;
-			Boolean value             = null;
-			for (PropositionSymbol positive : c.getPositiveSymbols()) {
-				value = assignments.get(positive);
-				if (value != null) {
-					if (Boolean.TRUE.equals(value)) {
-						result = Boolean.TRUE;
-						break;
-					}
-				} else {
+			for (Literal literal : c.getLiterals()) {
+				PropositionSymbol symbol = literal.getAtomicSentence();
+				Boolean value = assignments.get(symbol);
+				if (value == null) {
 					unassignedSymbols = true;
+				} else if (value.equals(literal.isPositiveLiteral())) {
+					result = Boolean.TRUE;
+					break;
 				}
 			}
-			// If truth not determined, continue checking negative symbols
-			if (result == null) {
-				for (PropositionSymbol negative : c.getNegativeSymbols()) {
-					value = assignments.get(negative);
-					if (value != null) {
-						if (Boolean.FALSE.equals(value)) {
-							result = Boolean.TRUE;
-							break;
-						}
-					} else {
-						unassignedSymbols = true;
-					}
-				}
-
-				if (result == null) {
-					// If truth not determined and there are no
-					// unassigned symbols then we can determine falsehood
-					// (i.e. all of its literals are assigned false under the
-					// model)
-					if (!unassignedSymbols) {
-						result = Boolean.FALSE;
-					}
-				}
+			if (result == null && !unassignedSymbols) {
+				// If truth not determined and there are no
+				// unassigned symbols then we can determine falsehood
+				// (i.e. all of its literals are assigned false under the
+				// model)
+				result = Boolean.FALSE;
 			}
 		}
-
 		return result;
 	}
 
@@ -201,7 +180,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 	public Boolean visitUnarySentence(ComplexSentence fs, Boolean arg) {
 		Object negatedValue = fs.getSimplerSentence(0).accept(this, null);
 		if (negatedValue != null) {
-			return new Boolean(!((Boolean) negatedValue).booleanValue());
+			return !(Boolean) negatedValue;
 		} else {
 			return null;
 		}
@@ -209,28 +188,26 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 
 	@Override
 	public Boolean visitBinarySentence(ComplexSentence bs, Boolean arg) {
-		Boolean firstValue = (Boolean) bs.getSimplerSentence(0).accept(this,
-				null);
-		Boolean secondValue = (Boolean) bs.getSimplerSentence(1).accept(this,
-				null);
-		if ((firstValue == null) || (secondValue == null)) {
-			// strictly not true for or/and
-			// -FIX later
-			return null;
-		} else {
-			Connective connective = bs.getConnective();
-			if (connective.equals(Connective.AND)) {
-				return firstValue && secondValue;
-			} else if (connective.equals(Connective.OR)) {
-				return firstValue || secondValue;
-			} else if (connective.equals(Connective.IMPLICATION)) {
-				return !(firstValue && !secondValue);
-			} else if (connective.equals(Connective.BICONDITIONAL)) {
-				return firstValue.equals(secondValue);
-			}
-			return null;
+		Boolean firstValue = (Boolean) bs.getSimplerSentence(0).accept(this, null);
+		Boolean secondValue = (Boolean) bs.getSimplerSentence(1).accept(this, null);
+		boolean bothValuesKnown = firstValue != null && secondValue != null;
+		Connective connective = bs.getConnective();
+
+		if (connective.equals(Connective.AND)) {
+			return Boolean.FALSE.equals(firstValue) || Boolean.FALSE.equals(secondValue) ?
+					Boolean.FALSE : (bothValuesKnown ? Boolean.TRUE : null);
+		} else if (connective.equals(Connective.OR)) {
+			return Boolean.TRUE.equals(firstValue) || Boolean.TRUE.equals(secondValue) ?
+					Boolean.TRUE : (bothValuesKnown ? Boolean.FALSE : null);
+		} else if (connective.equals(Connective.IMPLICATION)) {
+			return Boolean.FALSE.equals(firstValue) || Boolean.TRUE.equals(secondValue) ?
+					Boolean.TRUE : (bothValuesKnown ? Boolean.FALSE : null);
+		} else if (connective.equals(Connective.BICONDITIONAL)) {
+			return bothValuesKnown ? firstValue.equals(secondValue) : null;
 		}
+		return null;
 	}
+
 	// END-PLVisitor
 	//
 }
