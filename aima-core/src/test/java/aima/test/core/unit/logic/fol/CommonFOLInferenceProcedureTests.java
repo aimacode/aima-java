@@ -41,7 +41,6 @@ public abstract class CommonFOLInferenceProcedureTests {
 		Assert.assertFalse(answer.isTrue());
 		Assert.assertFalse(answer.isUnknownDueToTimeout());
 		Assert.assertFalse(answer.isPartialResultDueToTimeout());
-		Assert.assertTrue(0 == answer.getProofs().size());
 	}
 
 	protected void testDefiniteClauseKBKingsQueryRichardEvilFalse(
@@ -57,7 +56,6 @@ public abstract class CommonFOLInferenceProcedureTests {
 		Assert.assertFalse(answer.isTrue());
 		Assert.assertFalse(answer.isUnknownDueToTimeout());
 		Assert.assertFalse(answer.isPartialResultDueToTimeout());
-		Assert.assertTrue(0 == answer.getProofs().size());
 	}
 
 	protected void testDefiniteClauseKBKingsQueryJohnEvilSucceeds(

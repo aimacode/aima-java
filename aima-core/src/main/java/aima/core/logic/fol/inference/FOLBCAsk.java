@@ -48,7 +48,9 @@ import aima.core.logic.propositional.kb.KnowledgeBase;
 public class FOLBCAsk implements InferenceProcedure{
 	List<List<Literal>> finalAnswer;// to store the final result
 	List<Literal> substitutedLiterals;
+	List<HashMap<Variable,Term>> finalList;
 	BCASKHandler bcaskHandler = new BCASKHandler();
+	public boolean maybeFalse = false;
 
 	public FOLBCAsk() {
 		finalAnswer = new ArrayList<>();
@@ -90,6 +92,8 @@ public class FOLBCAsk implements InferenceProcedure{
 		List<HashMap<Variable,Term>> result = new ArrayList<>();
 		finalAnswer.add(new ArrayList<>(Collections.singletonList(goal)));
 		HashMap<Variable,Term> temp;
+		if (fetchRulesForGoal(kb,goal).isEmpty())
+			maybeFalse = true;
 		// for each rule (lhs ⇒ rhs) in FETCH-RULES-FOR-GOAL(KB, goal) do
 		for (Clause rule :
 				fetchRulesForGoal(kb,goal)) {
@@ -187,6 +191,7 @@ public class FOLBCAsk implements InferenceProcedure{
 	public InferenceResult ask(FOLKnowledgeBase kb, Sentence query) {
 		Literal l = new Literal(((AtomicSentence) query));
 		List<HashMap<Variable, Term>> substitutes = this.folBcAsk(kb, l);
+		this.finalList = substitutes;
 		if (l.getAtomicSentence().getArgs().get(0) instanceof Variable) {
 			Variable x = (Variable) l.getAtomicSentence().getArgs().get(0);
 			for (HashMap<Variable, Term> subs :
@@ -214,12 +219,12 @@ public class FOLBCAsk implements InferenceProcedure{
 		}
 		@Override
 		public boolean isPossiblyFalse() {
-			return proofs.size() == 0;
+			return finalList.isEmpty();
 		}
 
 		@Override
 		public boolean isTrue() {
-			return proofs.size() > 0;
+			return (!finalList.isEmpty());
 		}
 
 		@Override
