@@ -9,6 +9,7 @@ import aima.core.probability.domain.FiniteDomain;
 import aima.core.probability.proposition.AssignmentProposition;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,10 +59,20 @@ public abstract class InformationGatheringAgent implements Agent {
     protected abstract double getCost(RandomVariable var);
 
     protected double getVpi(RandomVariable var){
+        double vpi =0;
+        CategoricalDistribution distribution = inferenceMethod.ask((new RandomVariable[]{var}),
+                ((AssignmentProposition[])observedEvidence.toArray()),decisionNetwork.getNetwork());
         for (Object value :
                 ((FiniteDomain) var.getDomain()).getPossibleValues()) {
-            inferenceMethod.ask()
+            double posterierProb = distribution.getValue(value);
+            List<AssignmentProposition> modifiedEvidence = new ArrayList<>(observedEvidence);
+            modifiedEvidence.add(new AssignmentProposition(var,value));
+            double expectedUtilityForParticularValue = decisionNetwork.getExpectedUtility(var,
+                    modifiedEvidence);
+            vpi+= posterierProb*expectedUtilityForParticularValue;
         }
+        vpi-=decisionNetwork.getExpectedUtility(var,observedEvidence);
+        return vpi;
     }
 
     abstract List<AssignmentProposition> integratePercept(List<AssignmentProposition> observedEvidence, Percept percept);
