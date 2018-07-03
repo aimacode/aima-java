@@ -100,7 +100,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |15.6|580|Fixed-Lag-Smoothing|[FixedLagSmoothing](/aima-core/src/main/java/aima/core/probability/hmm/exact/FixedLagSmoothing.java)|
 |15|590|Dynamic Bayesian Network|[DynamicBayesianNetwork](/aima-core/src/main/java/aima/core/probability/bayes/DynamicBayesianNetwork.java)|
 |15.17|598|Particle-Filtering|[ParticleFiltering](/aima-core/src/main/java/aima/core/probability/bayes/approx/ParticleFiltering.java)|
-|16.9|632|Information-Gathering-Agent|---|
+|16.9|632|Information-Gathering-Agent|[InformationGatheringAgent](/aima-core/src/main/java/aima/core/probability/InformationGatheringAgent.java)|
 |17|647|Markov Decision Process|[MarkovDecisionProcess](/aima-core/src/main/java/aima/core/probability/mdp/MarkovDecisionProcess.java)|
 |17.4|653|Value-Iteration|[ValueIteration](/aima-core/src/main/java/aima/core/probability/mdp/search/ValueIteration.java)|
 |17.7|657|Policy-Iteration|[PolicyIteration](/aima-core/src/main/java/aima/core/probability/mdp/search/PolicyIteration.java)|
