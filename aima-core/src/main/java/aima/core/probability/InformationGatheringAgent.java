@@ -5,6 +5,7 @@ import aima.core.agent.Agent;
 import aima.core.agent.Percept;
 import aima.core.probability.bayes.BayesInference;
 import aima.core.probability.bayes.BayesianNetwork;
+import aima.core.probability.domain.FiniteDomain;
 import aima.core.probability.proposition.AssignmentProposition;
 
 import java.util.ArrayList;
@@ -13,20 +14,20 @@ import java.util.List;
 
 public abstract class InformationGatheringAgent implements Agent {
     private BayesInference inferenceMethod;
-    private BayesianNetwork decisionNetwork;
+    private DecisionNetwork decisionNetwork;
     private List<AssignmentProposition> observedEvidence;
     private List<RandomVariable> randomVars;
     
-    public InformationGatheringAgent(BayesianNetwork decisionNetwork,
+    public InformationGatheringAgent(DecisionNetwork decisionNetwork,
                                      BayesInference inferenceMethod,
                                      List<AssignmentProposition> initialEvidence){
         this.decisionNetwork = decisionNetwork;
         this.inferenceMethod = inferenceMethod;
         this.observedEvidence = initialEvidence;
-        this.randomVars = this.decisionNetwork.getVariablesInTopologicalOrder();
+        this.randomVars = this.decisionNetwork.getNetwork().getVariablesInTopologicalOrder();
     }
 
-    public InformationGatheringAgent(BayesianNetwork decisionNetwork,
+    public InformationGatheringAgent(DecisionNetwork decisionNetwork,
                                      BayesInference inferenceMethod){
         this(decisionNetwork,inferenceMethod,new ArrayList<>());
     }
@@ -40,8 +41,7 @@ public abstract class InformationGatheringAgent implements Agent {
         if (getVpi(randomVar)>getCost(randomVar)){
             return this.request(randomVar);
         }
-        // TODO :: Best action in network.
-        return null;
+        return ((Action) decisionNetwork.getBestAction());
     }
 
     protected abstract Action request(RandomVariable randomVar);
@@ -50,14 +50,19 @@ public abstract class InformationGatheringAgent implements Agent {
      List<Double> vpiPerUnitCost = new ArrayList<>();
         for (RandomVariable var :
                 variablesInTopologicalOrder) {
-            vpiPerUnitCost.add(((double) getVpi(var))/((double) getCost(var)));
+            vpiPerUnitCost.add(getVpi(var) / getCost(var));
         }
         return vpiPerUnitCost;
     }
 
     protected abstract double getCost(RandomVariable var);
 
-    protected abstract double getVpi(RandomVariable var);
+    protected double getVpi(RandomVariable var){
+        for (Object value :
+                ((FiniteDomain) var.getDomain()).getPossibleValues()) {
+            inferenceMethod.ask()
+        }
+    }
 
     abstract List<AssignmentProposition> integratePercept(List<AssignmentProposition> observedEvidence, Percept percept);
 
