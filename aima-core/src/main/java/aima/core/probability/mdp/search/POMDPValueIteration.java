@@ -10,10 +10,12 @@ import java.util.List;
 public class POMDPValueIteration<S,A extends Action,E> {
     public POMDP<S,A,E> pomdp;
     public double maxError;
+    public int depth;
 
-    public POMDPValueIteration(POMDP<S, A, E> pomdp, double maxError) {
+    public POMDPValueIteration(POMDP<S, A, E> pomdp, double maxError, int maxDepth) {
         this.pomdp = pomdp;
         this.maxError = maxError;
+        this.depth = maxDepth;
     }
 
     public HashMap<List<A>, List<Double>> pomdpValueIteration(POMDP pomdp, double maxError){
@@ -26,10 +28,12 @@ public class POMDPValueIteration<S,A extends Action,E> {
         }
         uDash = new HashMap<>();
         uDash.put(new ArrayList<>(),utilities);
-        while(maxDifference(u,uDash) < maxError*(1-pomdp.getDiscount())/pomdp.getDiscount()){
+        int i = 0;
+        while(maxDifference(u,uDash) < maxError*(1-pomdp.getDiscount())/pomdp.getDiscount() || (i<=this.depth)){
             u = new HashMap<>(uDash);
             uDash = increasePlanDepths(uDash);
             uDash = removeDominatedPlans(uDash);
+            i++;
         }
         return u;
     }
@@ -54,7 +58,7 @@ public class POMDPValueIteration<S,A extends Action,E> {
                              this.pomdp.states()) {
                             tempUtility+=this.pomdp.sensorModel(observation,
                                     actualState)*uDash.get(plan).
-                                    get(((ArrayList)this.pomdp.states()).indexOf(actualState));
+                                    get((new ArrayList<>(this.pomdp.states())).indexOf(actualState));
                         }
                         planUtility = tempUtility*this.pomdp.transitionProbability(actualState,
                                 currentState,action);
@@ -70,10 +74,10 @@ public class POMDPValueIteration<S,A extends Action,E> {
     }
 
     private HashMap<List<A>, List<Double>> removeDominatedPlans(HashMap<List<A>, List<Double>> uDash) {
-        return null;
+        return uDash;
     }
 
     private double maxDifference(HashMap<List<A>, List<Double>> u, HashMap<List<A>, List<Double>> uDash) {
-        return 0.0;
+        return 2;
     }
 }
