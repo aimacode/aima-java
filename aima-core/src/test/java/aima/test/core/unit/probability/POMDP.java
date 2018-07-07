@@ -3,6 +3,11 @@ package aima.test.core.unit.probability;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A concrete implementation of POMDP for testing purposes.
+ *
+ * @author samagra
+ */
 public class POMDP implements aima.core.probability.mdp.POMDP {
     double gamma = 1.0;
     State initialState = State.ZERO;

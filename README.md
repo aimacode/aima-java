@@ -104,7 +104,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |17|647|Markov Decision Process|[MarkovDecisionProcess](/aima-core/src/main/java/aima/core/probability/mdp/MarkovDecisionProcess.java)|
 |17.4|653|Value-Iteration|[ValueIteration](/aima-core/src/main/java/aima/core/probability/mdp/search/ValueIteration.java)|
 |17.7|657|Policy-Iteration|[PolicyIteration](/aima-core/src/main/java/aima/core/probability/mdp/search/PolicyIteration.java)|
-|17.9|663|POMDP-Value-Iteration|---|
+|17.9|663|POMDP-Value-Iteration|[POMDPValueIteration](/aima-core/src/main/java/aima/core/probability/mdp/search/POMDPValueIteration.java)|
 |18.5|702|Decision-Tree-Learning|[DecisionTreeLearner](/aima-core/src/main/java/aima/core/learning/learners/DecisionTreeLearner.java)|
 |18.8|710|Cross-Validation-Wrapper|[CrossValidation](/aima-core/src/main/java/aima/core/learning/inductive/CrossValidation.java)|
 |18.11|717|Decision-List-Learning|[DecisionListLearner](/aima-core/src/main/java/aima/core/learning/learners/DecisionListLearner.java)|
