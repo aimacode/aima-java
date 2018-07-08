@@ -43,7 +43,7 @@ import java.util.Queue;
  */
 
 public abstract class GenericSearch<A, S> {
-    protected NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
+    protected NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>(); // to generate new nodes.
     HashMap<S, Node<A, S>> reached = new HashMap<>();
 
     /**
@@ -56,32 +56,65 @@ public abstract class GenericSearch<A, S> {
     public Node<A, S> genericSearch(Problem<A, S> problem) {
         //  frontier ← a queue initially containing one path, for the problem's initial state
         Queue<Node<A, S>> frontier = newFrontier(problem.initialState());
+        // reached ← a table of {state: the best path that reached state}; initially empty
         reached.clear();
+        // solution ← failure
         Node<A, S> solution = null;
+        // while frontier is not empty and solution can possibly be improved do
         while (!frontier.isEmpty() && this.canImprove(reached, solution)) {
+            // parent ← some node that we choose to remove from frontier
             Node<A, S> parent = frontier.remove();
+            System.out.println("Parent ="+parent.toString());
+            // for child in successors(parent) do
             for (A action :
                     problem.actions(parent.state())) {
                 Node<A, S> child = nodeFactory.newChildNode(problem, parent, action);
+                // s ← child.state
                 S s = child.state();
+                // if s is not in reached or child is a cheaper path than reached[s] then
                 if (!reached.containsKey(s) || (child.pathCost() < reached.get(s).pathCost())) {
+                    // reached[s] ← child
                     reached.put(s, child);
+                    // add child to frontier
                     frontier = this.addToFrontier(child, frontier);
-                    if (problem.isGoalState(child.state()) && (child.pathCost() < solution.pathCost())) {
+                    // if child is a goal and is cheaper than solution then
+                    if (problem.isGoalState(child.state()) &&(solution==null || (child.pathCost() < solution.pathCost()))) {
+                        // solution = child
                         solution = child;
                     }
                 }
             }
         }
+        // return solution
         return solution;
     }
 
-    abstract Queue<Node<A, S>> addToFrontier(Node<A, S> child,
+    /**
+     * The strategy for adding nodes to the frontier
+     * @param child
+     * @param frontier
+     * @return
+     */
+    public abstract Queue<Node<A, S>> addToFrontier(Node<A, S> child,
                                              Queue<Node<A, S>> frontier);
 
-    abstract boolean canImprove(HashMap<S, Node<A, S>> reached,
-                                Node<A, S> solution);
+    /**
+     * the procedure for determining when it is no longer possible to improve on a solution.
+     * @param reached
+     * The reached states.
+     * @param solution
+     * The current solution.
+     * @return
+     *  A boolean stating if we can improve the solution.
+     */
+    public abstract boolean canImprove(HashMap<S, Node<A, S>> reached,
+                                       Node<A, S> solution);
 
+    /**
+     * This method initialises a new frontier.
+     * @param initialState
+     * @return
+     */
     public Queue<Node<A, S>> newFrontier(S initialState) {
         Queue<Node<A, S>> frontier = new LinkedList<>();
         frontier.add(nodeFactory.newRootNode(initialState));
