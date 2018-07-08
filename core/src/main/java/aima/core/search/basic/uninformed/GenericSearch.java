@@ -30,7 +30,7 @@ import java.util.Queue;
  *          solution = child
  *  return solution
  * </pre>
- *
+ * <p>
  * Figure ?? In the GENERIC-SEARCH algorithm, we keep track of the best
  * solution found so far, as well as a set of states that we have already
  * reached, and a frontier of paths from which we will choose the next path
@@ -38,20 +38,18 @@ import java.util.Queue;
  * for ordering the paths in the frontier, and (2) the procedure for
  * determining when it is no longer possible to improve on a solution.
  *
- *
  * @author samagra
  */
 
 public abstract class GenericSearch<A, S> {
-    protected NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>(); // to generate new nodes.
-    HashMap<S, Node<A, S>> reached = new HashMap<>();
+    public NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>(); // to generate new nodes.
+    public HashMap<S, Node<A, S>> reached = new HashMap<>();
 
     /**
      * function GENERIC-SEARCH(problem) returns a solution, or failure
-     * @param problem
-     *  The search problem.
-     * @return
-     *  The solution to the search problem.
+     *
+     * @param problem The search problem.
+     * @return The solution to the search problem.
      */
     public Node<A, S> genericSearch(Problem<A, S> problem) {
         //  frontier ← a queue initially containing one path, for the problem's initial state
@@ -64,7 +62,6 @@ public abstract class GenericSearch<A, S> {
         while (!frontier.isEmpty() && this.canImprove(reached, solution)) {
             // parent ← some node that we choose to remove from frontier
             Node<A, S> parent = frontier.remove();
-            System.out.println("Parent ="+parent.toString());
             // for child in successors(parent) do
             for (A action :
                     problem.actions(parent.state())) {
@@ -78,7 +75,7 @@ public abstract class GenericSearch<A, S> {
                     // add child to frontier
                     frontier = this.addToFrontier(child, frontier);
                     // if child is a goal and is cheaper than solution then
-                    if (problem.isGoalState(child.state()) &&(solution==null || (child.pathCost() < solution.pathCost()))) {
+                    if (problem.isGoalState(child.state()) && (solution == null || (child.pathCost() < solution.pathCost()))) {
                         // solution = child
                         solution = child;
                     }
@@ -91,27 +88,27 @@ public abstract class GenericSearch<A, S> {
 
     /**
      * The strategy for adding nodes to the frontier
+     *
      * @param child
      * @param frontier
      * @return
      */
     public abstract Queue<Node<A, S>> addToFrontier(Node<A, S> child,
-                                             Queue<Node<A, S>> frontier);
+                                                    Queue<Node<A, S>> frontier);
 
     /**
      * the procedure for determining when it is no longer possible to improve on a solution.
-     * @param reached
-     * The reached states.
-     * @param solution
-     * The current solution.
-     * @return
-     *  A boolean stating if we can improve the solution.
+     *
+     * @param reached  The reached states.
+     * @param solution The current solution.
+     * @return A boolean stating if we can improve the solution.
      */
     public abstract boolean canImprove(HashMap<S, Node<A, S>> reached,
                                        Node<A, S> solution);
 
     /**
      * This method initialises a new frontier.
+     *
      * @param initialState
      * @return
      */
