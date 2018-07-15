@@ -3,7 +3,7 @@ package aima.test.unit.search.uninformed;
 import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.support.ProblemFactory;
 import aima.core.search.api.Node;
-import aima.core.search.basic.uninformed.GenericSearch;
+import aima.core.search.basic.uninformedsearch.GenericSearch;
 import org.junit.Assert;
 import org.junit.Test;
 
