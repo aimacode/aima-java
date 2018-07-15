@@ -23,4 +23,14 @@ public class SearchUtils {
         }
         return nodes;
     }
+
+    public static int depth(Node node){
+        Node temp = node;
+        int count = 0;
+        while(temp!=null){
+            count ++;
+            temp = temp.parent();
+        }
+        return count;
+    }
 }
