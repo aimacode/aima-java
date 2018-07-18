@@ -3,11 +3,10 @@ package aima.core.search.basic.uninformedsearch;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
+import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.support.BasicNodeFactory;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
@@ -41,7 +40,7 @@ import java.util.Queue;
  * @author samagra
  */
 
-public abstract class GenericSearch<A, S> {
+public abstract class GenericSearch<A, S> implements SearchForActionsFunction<A,S> {
     public NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>(); // to generate new nodes.
     public HashMap<S, Node<A, S>> reached = new HashMap<>();
 
@@ -116,5 +115,18 @@ public abstract class GenericSearch<A, S> {
         Queue<Node<A, S>> frontier = new LinkedList<>();
         frontier.add(nodeFactory.newRootNode(initialState));
         return frontier;
+    }
+
+    @Override
+    public List<A> apply(Problem<A, S> problem) {
+        Node<A,S> solution = this.genericSearch(problem);
+        Node<A,S> parent = solution.parent();
+        List<A> actions = new ArrayList<>();
+        while(parent != null){
+            actions.add(parent.action());
+            parent = parent.parent();
+        }
+        Collections.reverse(actions);
+        return actions;
     }
 }

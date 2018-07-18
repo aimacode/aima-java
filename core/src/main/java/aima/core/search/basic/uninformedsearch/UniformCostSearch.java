@@ -3,12 +3,11 @@ package aima.core.search.basic.uninformedsearch;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
+import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.SearchUtils;
 import aima.core.search.basic.support.BasicNodeFactory;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * <pre>
@@ -37,7 +36,7 @@ import java.util.PriorityQueue;
  *
  * @author samagra
  */
-public class UniformCostSearch<A,S> implements GenericSearchInterface<A,S> {
+public class UniformCostSearch<A,S> implements GenericSearchInterface<A,S>, SearchForActionsFunction<A,S> {
 
     // frontier ← a priority queue ordered by pathCost, with a node for the initial state
     PriorityQueue<Node<A,S>> frontier = new PriorityQueue<>(new Comparator<Node<A, S>>() {
@@ -89,5 +88,18 @@ public class UniformCostSearch<A,S> implements GenericSearchInterface<A,S> {
         }
         // return solution
         return solution;
+    }
+
+    @Override
+    public List<A> apply(Problem<A, S> problem) {
+        Node<A,S> solution = this.search(problem);
+        Node<A,S> parent = solution.parent();
+        List<A> actions = new ArrayList<>();
+        while(parent != null){
+            actions.add(parent.action());
+            parent = parent.parent();
+        }
+        Collections.reverse(actions);
+        return actions;
     }
 }

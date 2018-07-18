@@ -3,12 +3,11 @@ package aima.core.search.basic.uninformedsearch;
 import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.Problem;
+import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.SearchUtils;
 import aima.core.search.basic.support.BasicNodeFactory;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * <pre>
@@ -37,7 +36,7 @@ import java.util.Queue;
  *
  * @author samagra
  */
-public class BreadthFirstSearch<A,S> implements GenericSearchInterface<A,S> {
+public class BreadthFirstSearch<A,S> implements GenericSearchInterface<A,S>, SearchForActionsFunction<A,S> {
     // Node factory is just a helper class to generate new nodes
     // It takes the problem and current state in order to generate new nodes
     NodeFactory<A,S> nodeFactory = new BasicNodeFactory();
@@ -84,5 +83,18 @@ public class BreadthFirstSearch<A,S> implements GenericSearchInterface<A,S> {
         }
         // return solution
         return solution;
+    }
+
+    @Override
+    public List<A> apply(Problem<A, S> problem) {
+        Node<A,S> solution = this.search(problem);
+        Node<A,S> parent = solution.parent();
+        List<A> actions = new ArrayList<>();
+        while(parent != null){
+            actions.add(parent.action());
+            parent = parent.parent();
+        }
+        Collections.reverse(actions);
+        return actions;
     }
 }
