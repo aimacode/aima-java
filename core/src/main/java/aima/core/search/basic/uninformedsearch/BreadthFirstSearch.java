@@ -10,31 +10,79 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * <pre>
+ *  function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
+ *  if problem's initial state is a goal then return empty path to initial state
+ *  frontier ← a FIFO queue initially containing one path, for the problem's initial state
+ *  reached ← a set of states; initially empty
+ *  solution ← failure
+ *  while frontier is not empty do
+ *    parent ← the first node in frontier
+ *    for child in successors(parent) do
+ *      s ← child.state
+ *      if s is a goal then
+ *        return child
+ *      if s is not in reached then
+ *        add s to reached
+ *        add child to the end of frontier
+ *  return solution
+ * </pre>
+ *
+ * Figure 3.9 Breadth-first search algorithm.
+ *
+ * @param <A> The generic object representing actions.
+ *
+ * @param <S> The generic object representing state.
+ *
+ * @author samagra
+ */
 public class BreadthFirstSearch<A,S> implements GenericSearchInterface<A,S> {
+    // Node factory is just a helper class to generate new nodes
+    // It takes the problem and current state in order to generate new nodes
     NodeFactory<A,S> nodeFactory = new BasicNodeFactory();
 
+    /**
+     * function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
+     * @param problem The search problem.
+     * @return The goal node if any else null.
+     */
     @Override
     public Node<A,S> search(Problem<A,S> problem) {
+        //  if problem's initial state is a goal then return empty path to initial state
         if (problem.isGoalState(problem.initialState())){
             return nodeFactory.newRootNode(problem.initialState());
         }
+        // frontier ← a FIFO queue initially containing one path, for the problem's initial state
         Queue<Node> frontier = new LinkedList<>();
         ((LinkedList<Node>) frontier).add(nodeFactory.newRootNode(problem.initialState()));
+        // reached ← a set of states; initially empty
         HashSet<S> reached = new HashSet<>();
+        // solution ← failure
         Node<A,S> solution = null;
+        // while frontier is not empty do
         while (!frontier.isEmpty()){
+            // parent ← the first node in frontier
             Node<A,S> parent = frontier.remove();
+            // for child in successors(parent) do
             for (Node<A,S> child: SearchUtils.successors(problem,parent)){
+                // s ← child.state
                 S s = child.state();
+                // if s is a goal then
                 if (problem.isGoalState(s)){
+                    // return child
                     return child;
                 }
+                // if s is not in reached then
                 if (!reached.contains(s)){
+                    // add s to reached
                     reached.add(s);
+                    // add child to the end of frontier
                     frontier.add(child);
                 }
             }
         }
+        // return solution
         return solution;
     }
 }
