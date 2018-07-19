@@ -1,4 +1,4 @@
-package aima.test.unit.search.uninformed;
+package aima.test.unit.search.uninformedsearch;
 
 import aima.core.environment.map2d.SimplifiedRoadMapOfPartOfRomania;
 import aima.core.environment.support.ProblemFactory;

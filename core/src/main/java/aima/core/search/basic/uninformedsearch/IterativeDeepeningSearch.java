@@ -3,6 +3,7 @@ package aima.core.search.basic.uninformedsearch;
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
+import aima.core.search.basic.SearchUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,13 +58,6 @@ public class IterativeDeepeningSearch<A,S> implements GenericSearchInterface<A,S
     @Override
     public List<A> apply(Problem<A, S> problem) {
         Node<A,S> solution = this.search(problem);
-        Node<A,S> parent = solution.parent();
-        List<A> actions = new ArrayList<>();
-        while(parent != null){
-            actions.add(parent.action());
-            parent = parent.parent();
-        }
-        Collections.reverse(actions);
-        return actions;
+        return SearchUtils.generateActions(solution);
     }
 }

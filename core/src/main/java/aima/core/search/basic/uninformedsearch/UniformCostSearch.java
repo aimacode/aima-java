@@ -93,13 +93,8 @@ public class UniformCostSearch<A,S> implements GenericSearchInterface<A,S>, Sear
     @Override
     public List<A> apply(Problem<A, S> problem) {
         Node<A,S> solution = this.search(problem);
-        Node<A,S> parent = solution.parent();
-        List<A> actions = new ArrayList<>();
-        while(parent != null){
-            actions.add(parent.action());
-            parent = parent.parent();
-        }
-        Collections.reverse(actions);
-        return actions;
+        if (solution == null)
+            return new ArrayList<>();
+        return SearchUtils.generateActions(solution);
     }
 }
