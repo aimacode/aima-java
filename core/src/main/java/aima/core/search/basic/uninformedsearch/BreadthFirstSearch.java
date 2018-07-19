@@ -41,6 +41,9 @@ public class BreadthFirstSearch<A,S> implements GenericSearchInterface<A,S>, Sea
     // It takes the problem and current state in order to generate new nodes
     NodeFactory<A,S> nodeFactory = new BasicNodeFactory();
 
+    public BreadthFirstSearch() {
+    }
+
     /**
      * function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
      * @param problem The search problem.
@@ -88,13 +91,6 @@ public class BreadthFirstSearch<A,S> implements GenericSearchInterface<A,S>, Sea
     @Override
     public List<A> apply(Problem<A, S> problem) {
         Node<A,S> solution = this.search(problem);
-        Node<A,S> parent = solution.parent();
-        List<A> actions = new ArrayList<>();
-        while(parent != null){
-            actions.add(parent.action());
-            parent = parent.parent();
-        }
-        Collections.reverse(actions);
-        return actions;
+        return SearchUtils.generateActions(solution);
     }
 }

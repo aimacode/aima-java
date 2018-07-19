@@ -6,6 +6,7 @@ import aima.core.search.api.Problem;
 import aima.core.search.basic.support.BasicNodeFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SearchUtils {
@@ -32,5 +33,16 @@ public class SearchUtils {
             temp = temp.parent();
         }
         return count;
+    }
+
+    public static <A,S> List<A> generateActions(Node<A,S> solution){
+        Node<A,S> parent = solution;
+        List<A> actions = new ArrayList<>();
+        while(parent.parent() != null){
+            actions.add(parent.action());
+            parent = parent.parent();
+        }
+        Collections.reverse(actions);
+        return actions;
     }
 }
