@@ -31,20 +31,22 @@ import aima.core.search.api.SearchForStateFunction;
  * @author Ravi Mohan
  * @author Paul Anton
  * @author Mike Stampone
+ * @author samagra
  */
-public class HillClimbingSearch<A, S> implements SearchForStateFunction<A, S> {
+public class HillClimbingSearch<A, S> implements  SearchForStateFunction<A, S> {
+
 	// function HILL-CLIMBING(problem) returns a state that is a local maximum
 	@Override
 	public S apply(Problem<A, S> problem) {
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
-		Node<S> current = makeNode(problem.initialState());
+		S current = problem.initialState();
 		// loop do
 		while (true) {
 			// neighbor <- a highest-valued successor of current
-			Node<S> neighbor = highestValuedSuccessor(current, problem);
+			S neighbor = highestValuedSuccessor(current, problem);
 			// if neighbor.VALUE <= current.VALUE then return current.STATE
-			if (neighbor.value <= current.value) {
-				return current.state;
+			if (stateValueFn.applyAsDouble(neighbor) <= stateValueFn.applyAsDouble(current)) {
+				return current;
 			}
 			// current <- neighbor
 			current = neighbor;
@@ -54,30 +56,6 @@ public class HillClimbingSearch<A, S> implements SearchForStateFunction<A, S> {
 	//
 	// Supporting Code
 
-	/**
-	 * The algorithm does not maintain a search tree, so the data structure for
-	 * the current node need only record the state and value of the
-	 * objective/cost function.
-	 * 
-	 * @author oreilly
-	 *
-	 * @param <S>
-	 *            the type of the state space
-	 */
-	public static class Node<S> {
-		S state;
-		double value;
-
-		Node(S state, double value) {
-			this.state = state;
-			this.value = value;
-		}
-
-		@Override
-		public String toString() {
-			return "N(" + state + ", " + value + ")";
-		}
-	}
 
 	/*
 	 * Represents an objective (higher better) or cost/heuristic (lower better)
@@ -99,15 +77,14 @@ public class HillClimbingSearch<A, S> implements SearchForStateFunction<A, S> {
 		}
 	}
 
-	public Node<S> makeNode(S state) {
-		return new Node<>(state, stateValueFn.applyAsDouble(state));
-	}
 
-	public Node<S> highestValuedSuccessor(Node<S> current, Problem<A, S> problem) {
-		Node<S> highestValueSuccessor = null;
-		for (A action : problem.actions(current.state)) {
-			Node<S> successor = makeNode(problem.result(current.state, action));
-			if (highestValueSuccessor == null || successor.value > highestValueSuccessor.value) {
+
+	public S highestValuedSuccessor(S current, Problem<A, S> problem) {
+		S highestValueSuccessor = null;
+		for (A action : problem.actions(current)) {
+			S successor = problem.result(current, action);
+			if (highestValueSuccessor == null || stateValueFn.applyAsDouble(successor)
+					> stateValueFn.applyAsDouble(highestValueSuccessor)) {
 				highestValueSuccessor = successor;
 			}
 		}

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.ToDoubleFunction;
 
+import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForStateFunction;
 import aima.core.search.basic.support.BasicSchedule;
@@ -44,19 +45,20 @@ public class SimulatedAnnealingSearch<A, S> implements SearchForStateFunction<A,
 	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
 	public S simulatedAnnealing(Problem<A, S> problem, ToDoubleFunction<Integer> schedule) {
 		// current <- MAKE-NODE(problem.INITIAL-STATE)
-		Node<S> current = makeNode(problem.initialState());
+		S current = problem.initialState();
 		// for t = 1 to INFINITY do
 		for (int t = 1; true; t++) {
 			// T <- schedule(t)
 			double T = schedule(t);
 			// if T = 0 then return current
 			if (T == 0) {
-				return current.state;
+				return current;
 			}
 			// next <- a randomly selected successor of current
-			Node<S> next = randomlySelectSuccessor(current, problem);
+			S next = randomlySelectSuccessor(current, problem);
 			// &Delta;E <- next.VALUE - current.VALUE
-			double DeltaE = next.value - current.value;
+			double DeltaE = stateValueFn.applyAsDouble(next) -
+					stateValueFn.applyAsDouble(current);
 			// if &Delta;E > 0 then current <- next
 			if (DeltaE > 0) {
 				current = next;
@@ -68,36 +70,9 @@ public class SimulatedAnnealingSearch<A, S> implements SearchForStateFunction<A,
 		}
 	}
 
-	//
-	// Supporting Code
 	@Override
 	public S apply(Problem<A, S> problem) {
 		return simulatedAnnealing(problem, schedule);
-	}
-
-	/**
-	 * The algorithm does not maintain a search tree, so the data structure for
-	 * the current node need only record the state and value of the
-	 * objective/cost function.
-	 * 
-	 * @author oreilly
-	 *
-	 * @param <S>
-	 *            the type of the state space
-	 */
-	public static class Node<S> {
-		S state;
-		double value;
-
-		Node(S state, double value) {
-			this.state = state;
-			this.value = value;
-		}
-
-		@Override
-		public String toString() {
-			return "N(" + state + ", " + value + ")";
-		}
 	}
 
 	/*
@@ -108,6 +83,7 @@ public class SimulatedAnnealingSearch<A, S> implements SearchForStateFunction<A,
 	 */
 	protected ToDoubleFunction<S> stateValueFn;
 	protected ToDoubleFunction<Integer> schedule;
+	// Pseudo-random number generator for handling probabilities
 	protected Random random = new Random();
 
 	public SimulatedAnnealingSearch(ToDoubleFunction<S> stateValueFn) {
@@ -128,9 +104,6 @@ public class SimulatedAnnealingSearch<A, S> implements SearchForStateFunction<A,
 		this.schedule = scheduler;
 	}
 
-	public Node<S> makeNode(S state) {
-		return new Node<>(state, stateValueFn.applyAsDouble(state));
-	}
 
 	public double schedule(int t) {
 		double T = schedule.applyAsDouble(t);
@@ -141,15 +114,15 @@ public class SimulatedAnnealingSearch<A, S> implements SearchForStateFunction<A,
 		return T;
 	}
 
-	public Node<S> randomlySelectSuccessor(Node<S> current, Problem<A, S> problem) {
+	public S randomlySelectSuccessor(S current, Problem<A, S> problem) {
 		// Default successor to current, so that in the case we reach a dead-end
 		// state i.e. one without reversible actions we will return something.
 		// This will not break the code above as the loop will exit when the
 		// temperature winds down to 0.
-		Node<S> successor = current;
-		List<A> actions = problem.actions(current.state);
+		S successor = current;
+		List<A> actions = problem.actions(current);
 		if (actions.size() > 0) {
-			successor = makeNode(problem.result(current.state, actions.get(random.nextInt(actions.size()))));
+			successor = problem.result(current, actions.get(random.nextInt(actions.size())));
 		}
 		return successor;
 	}
