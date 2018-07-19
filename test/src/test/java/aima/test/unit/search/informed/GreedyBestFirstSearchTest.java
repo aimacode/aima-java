@@ -13,6 +13,8 @@ import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
 import aima.core.search.api.SearchForActionsFunction;
 import aima.core.search.basic.informed.GreedyBestFirstSearch;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -44,7 +46,7 @@ public class GreedyBestFirstSearchTest {
     String finalLocation = initialLocation;
     Problem<GoAction, InState> problem = ProblemFactory
         .getSimplifiedRoadMapOfPartOfRomaniaProblem(initialLocation, finalLocation);
-    List<GoAction> goal = Arrays.asList((GoAction) null);
+    List<GoAction> goal = new ArrayList<>();
     assertEquals(goal, searchForActions(problem,
         new Map2DFunctionFactory.StraightLineDistanceHeuristic(map, finalLocation)));
 
