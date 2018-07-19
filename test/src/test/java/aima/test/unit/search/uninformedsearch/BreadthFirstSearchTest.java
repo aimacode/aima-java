@@ -23,19 +23,19 @@ public class BreadthFirstSearchTest {
     BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
 
     @Test
-    public void testSimplifiedRomania(){
+    public void testSimplifiedRomania() {
         Problem problem = ProblemFactory.getSimplifiedRoadMapOfPartOfRomaniaProblem(
                 SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
         Node result = breadthFirstSearch.search(problem);
-        Assert.assertEquals("In(Bucharest)",result.state().toString());
+        Assert.assertEquals("In(Bucharest)", result.state().toString());
         List actions = Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.SIBIU),
                 new GoAction(SimplifiedRoadMapOfPartOfRomania.FAGARAS),
                 new GoAction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST));
-        Assert.assertEquals(actions,breadthFirstSearch.apply(problem));
+        Assert.assertEquals(actions, breadthFirstSearch.apply(problem));
     }
 
     @Test
-    public void testVacuumEnvironment(){
+    public void testVacuumEnvironment() {
         Assert.assertEquals(new ArrayList(),
                 breadthFirstSearch.apply(ProblemFactory.getSimpleVacuumWorldProblem("A",
                         new VELocalState("A", VacuumEnvironment.Status.Clean),
@@ -113,7 +113,7 @@ public class BreadthFirstSearchTest {
     }
 
     @Test
-    public void simpleBinaryTreeTests(){
+    public void simpleBinaryTreeTests() {
         Assert.assertEquals(new ArrayList(),
                 breadthFirstSearch.apply(ProblemFactory.getSimpleBinaryTreeProblem("A", "A")));
 
@@ -129,7 +129,7 @@ public class BreadthFirstSearchTest {
     }
 
     @Test
-    public void unreachableStates(){
+    public void unreachableStates() {
         Assert.assertEquals(Collections.<String>emptyList(),
                 breadthFirstSearch.apply(ProblemFactory.getSimpleBinaryTreeProblem("B", "A")));
     }

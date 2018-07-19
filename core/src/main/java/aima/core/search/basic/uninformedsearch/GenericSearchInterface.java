@@ -5,7 +5,7 @@ import aima.core.search.api.Problem;
 
 /**
  * An interface that identifies a generic search algorithm.
- *
+ * <p>
  * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
  * <br>
  * <br>
@@ -36,6 +36,6 @@ import aima.core.search.api.Problem;
  *
  * @author samagra
  */
-public interface GenericSearchInterface<A,S> {
-    Node<A,S> search(Problem<A,S> problem);
+public interface GenericSearchInterface<A, S> {
+    Node<A, S> search(Problem<A, S> problem);
 }

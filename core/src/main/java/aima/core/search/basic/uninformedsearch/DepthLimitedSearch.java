@@ -24,7 +24,7 @@ import java.util.Stack;
  *          add child to frontier
  *  return solution
  * </pre>
- *
+ * <p>
  * Figure 3.14 An implementation of depth-limited tree search. The
  * algorithm has two different ways to signal failure to find a solution:
  * it returns failure when it has exhausted all paths and proved there is no
@@ -34,48 +34,38 @@ import java.util.Stack;
  *
  * @param <A> The generic object representing actions.
  * @param <S> The generic object representing state.
- *
  * @author samagra
  */
 public class DepthLimitedSearch<A, S> {
+
+    // A helper class to generate new nodes.
     NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
 
     /**
      * function DEPTH-LIMITED-SEARCH(problem, l) returns a solution, or failure, or cutoff
+     *
      * @param problem The search problem.
-     * @param l The cutoff limit.
+     * @param l       The cutoff limit.
      * @return The goal state if exists/found else null
      */
     public Node<A, S> search(Problem<A, S> problem, int l) {
-        //  frontier ← a LIFO queue initially containing one path, for the problem's initial state
         Stack<Node<A, S>> frontier = new Stack<>();
         frontier.push(nodeFactory.newRootNode(problem.initialState()));
-        //  solution ← failure
         Node<A, S> solution = null;
-        //  while frontier is not empty do
         while (!frontier.isEmpty()) {
-            // parent ← pop(frontier)
             Node<A, S> parent = frontier.pop();
-            // if depth(parent) > l then
             if (SearchUtils.depth(parent) > l) {
-                // solution ← cutoff
                 solution = null;
-                // else
             } else {
-                // for child in successors(parent) do
                 for (Node<A, S> child :
                         SearchUtils.successors(problem, parent)) {
-                    // if child is a goal then
                     if (problem.isGoalState(child.state())) {
-                        // return child
                         return child;
                     }
-                    // add child to frontier
                     frontier.push(child);
                 }
             }
         }
-        // return solution
         return solution;
     }
 }

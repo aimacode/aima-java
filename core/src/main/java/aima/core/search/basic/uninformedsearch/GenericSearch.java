@@ -40,7 +40,7 @@ import java.util.*;
  * @author samagra
  */
 
-public abstract class GenericSearch<A, S> implements SearchForActionsFunction<A,S> {
+public abstract class GenericSearch<A, S> implements SearchForActionsFunction<A, S> {
     public NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>(); // to generate new nodes.
     public HashMap<S, Node<A, S>> reached = new HashMap<>();
 
@@ -55,33 +55,26 @@ public abstract class GenericSearch<A, S> implements SearchForActionsFunction<A,
         Queue<Node<A, S>> frontier = newFrontier(problem.initialState());
         // reached ← a table of {state: the best path that reached state}; initially empty
         reached.clear();
-        // solution ← failure
         Node<A, S> solution = null;
         // while frontier is not empty and solution can possibly be improved do
         while (!frontier.isEmpty() && this.canImprove(reached, solution)) {
             // parent ← some node that we choose to remove from frontier
             Node<A, S> parent = frontier.remove();
-            // for child in successors(parent) do
             for (A action :
                     problem.actions(parent.state())) {
                 Node<A, S> child = nodeFactory.newChildNode(problem, parent, action);
-                // s ← child.state
                 S s = child.state();
                 // if s is not in reached or child is a cheaper path than reached[s] then
                 if (!reached.containsKey(s) || (child.pathCost() < reached.get(s).pathCost())) {
-                    // reached[s] ← child
                     reached.put(s, child);
-                    // add child to frontier
                     frontier = this.addToFrontier(child, frontier);
                     // if child is a goal and is cheaper than solution then
                     if (problem.isGoalState(child.state()) && (solution == null || (child.pathCost() < solution.pathCost()))) {
-                        // solution = child
                         solution = child;
                     }
                 }
             }
         }
-        // return solution
         return solution;
     }
 
@@ -119,10 +112,10 @@ public abstract class GenericSearch<A, S> implements SearchForActionsFunction<A,
 
     @Override
     public List<A> apply(Problem<A, S> problem) {
-        Node<A,S> solution = this.genericSearch(problem);
-        Node<A,S> parent = solution.parent();
+        Node<A, S> solution = this.genericSearch(problem);
+        Node<A, S> parent = solution.parent();
         List<A> actions = new ArrayList<>();
-        while(parent != null){
+        while (parent != null) {
             actions.add(parent.action());
             parent = parent.parent();
         }

@@ -14,21 +14,23 @@ import java.util.function.ToDoubleFunction;
 /**
  * <pre>
  * function GREEDY-BEST-FIRST-SEARCH(problem) returns a solution, or failure
- *   node &larr; a node with STATE = problem.INITIAL-STATE, PATH-COST=0
- *   frontier &larr; a priority queue ordered by h(NODE), with node as the only element
- *   explored &larr; an empty set
- *   loop do
- *      if EMPTY?(frontier) then return failure
- *      node &larr; POP(frontier) // chooses the lowest-cost node in frontier
- *      if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
- *      add node.STATE to explored
- *      for each action in problem.ACTIONS(node.STATE) do
- *         child &larr; CHILD-NODE(problem, node, action)
- *         if child.STATE is not in explored or frontier then
- *            frontier &larr; INSERT(child, frontier)
- *         else if child.STATE is in frontier with higher COST then
- *            replace that frontier node with child
+ *  if problem's initial state is a goal then return empty path to initial state
+ *  frontier ← a priority queue ordered by h(n), with a node for the initial state
+ *  reached ← a table of {state: the best path that reached state}; initially empty
+ *  solution ← failure
+ *  while frontier is not empty and top(frontier) is cheaper than solution do
+ *    parent ← pop(frontier)
+ *    for child in successors(parent) do
+ *      s ← child.state
+ *      if s is not in reached or child is a cheaper path than reached[s] then
+ *        reached[s] ← child
+ *        add child to the frontier
+ *        if child is a goal and is cheaper than solution then
+ *          solution = child
+ *  return solution
  * </pre>
+ *
+ * @author samagra
  */
 public class GreedyBestFirstSearch<A, S> implements GenericSearchInterface<A, S>, SearchForActionsFunction<A, S> {
 
@@ -59,40 +61,36 @@ public class GreedyBestFirstSearch<A, S> implements GenericSearchInterface<A, S>
         frontier.add(nodeFactory.newRootNode(problem.initialState()));
         // reached ← a table of {state: the best path that reached state}; initially empty
         HashMap<S, Node<A, S>> reached = new HashMap<>();
-        // solution ← failure
         Node<A, S> solution = null;
-        // while frontier is not empty and top(frontier) is cheaper than solution do
         while (!frontier.isEmpty() &&
-                (solution == null || h.applyAsDouble(frontier.peek()) < h.applyAsDouble(solution))) {
-            // parent ← pop(frontier)
+                (solution == null || h.applyAsDouble(frontier.peek())
+                        < h.applyAsDouble(solution))) {
             Node<A, S> parent = frontier.poll();
-            // for child in successors(parent) do
             for (Node<A, S> child :
                     SearchUtils.successors(problem, parent)) {
-                // s ← child.state
                 S s = child.state();
                 // if s is not in reached or child is a cheaper path than reached[s] then
                 if (!reached.containsKey(s) ||
                         h.applyAsDouble(child) < h.applyAsDouble(reached.get(s))) {
-                    // reached[s] ← child
                     reached.put(s, child);
-                    // add child to the frontier
                     frontier.add(child);
-                    // if child is a goal and is cheaper than solution then
                     if (problem.isGoalState(s) &&
                             (solution == null || h.applyAsDouble(child) < h.applyAsDouble(solution))) {
-                        // solution = child
                         solution = child;
                     }
                 }
             }
         }
-        // return solution
         return solution;
     }
 
 
-    // function GREEDY-BEST-FIRST-SEARCH(problem) returns a solution, or failure
+    /**
+     * Returns the list of actions that need to be taken in order to achieve the goal.
+     *
+     * @param problem The search problem.
+     * @return The list of actions.
+     */
     @Override
     public List<A> apply(Problem<A, S> problem) {
         Node<A, S> solution = this.search(problem);

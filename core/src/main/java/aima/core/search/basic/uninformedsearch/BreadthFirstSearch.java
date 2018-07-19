@@ -27,71 +27,64 @@ import java.util.*;
  *        add child to the end of frontier
  *  return solution
  * </pre>
- *
+ * <p>
  * Figure 3.9 Breadth-first search algorithm.
  *
  * @param <A> The generic object representing actions.
- *
  * @param <S> The generic object representing state.
- *
  * @author samagra
  */
-public class BreadthFirstSearch<A,S> implements GenericSearchInterface<A,S>, SearchForActionsFunction<A,S> {
+public class BreadthFirstSearch<A, S> implements GenericSearchInterface<A, S>, SearchForActionsFunction<A, S> {
     // Node factory is just a helper class to generate new nodes
     // It takes the problem and current state in order to generate new nodes
-    NodeFactory<A,S> nodeFactory = new BasicNodeFactory();
+    NodeFactory<A, S> nodeFactory = new BasicNodeFactory();
 
     public BreadthFirstSearch() {
     }
 
     /**
      * function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
+     *
      * @param problem The search problem.
      * @return The goal node if any else null.
      */
     @Override
-    public Node<A,S> search(Problem<A,S> problem) {
-        //  if problem's initial state is a goal then return empty path to initial state
-        if (problem.isGoalState(problem.initialState())){
+    public Node<A, S> search(Problem<A, S> problem) {
+        if (problem.isGoalState(problem.initialState())) {
             return nodeFactory.newRootNode(problem.initialState());
         }
         // frontier ← a FIFO queue initially containing one path, for the problem's initial state
         Queue<Node> frontier = new LinkedList<>();
         ((LinkedList<Node>) frontier).add(nodeFactory.newRootNode(problem.initialState()));
-        // reached ← a set of states; initially empty
         HashSet<S> reached = new HashSet<>();
-        // solution ← failure
-        Node<A,S> solution = null;
-        // while frontier is not empty do
-        while (!frontier.isEmpty()){
-            // parent ← the first node in frontier
-            Node<A,S> parent = frontier.remove();
-            // for child in successors(parent) do
-            for (Node<A,S> child: SearchUtils.successors(problem,parent)){
-                // s ← child.state
+        Node<A, S> solution = null;
+        while (!frontier.isEmpty()) {
+            Node<A, S> parent = frontier.remove();
+            for (Node<A, S> child : SearchUtils.successors(problem, parent)) {
                 S s = child.state();
-                // if s is a goal then
-                if (problem.isGoalState(s)){
-                    // return child
+                if (problem.isGoalState(s)) {
                     return child;
                 }
                 // if s is not in reached then
-                if (!reached.contains(s)){
-                    // add s to reached
+                if (!reached.contains(s)) {
                     reached.add(s);
-                    // add child to the end of frontier
                     frontier.add(child);
                 }
             }
         }
-        // return solution
         return solution;
     }
 
+    /**
+     * Extracts a list of actions from a solution state.
+     *
+     * @param problem
+     * @return
+     */
     @Override
     public List<A> apply(Problem<A, S> problem) {
-        Node<A,S> solution = this.search(problem);
-        if(solution == null)
+        Node<A, S> solution = this.search(problem);
+        if (solution == null)
             return new ArrayList<>();
         return SearchUtils.generateActions(solution);
     }

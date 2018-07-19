@@ -7,12 +7,10 @@ import aima.core.environment.vacuum.VELocalState;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.search.api.Node;
 import aima.core.search.api.Problem;
-import aima.core.search.basic.uninformedsearch.BreadthFirstSearch;
 import aima.core.search.basic.uninformedsearch.IterativeDeepeningSearch;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,11 +18,11 @@ public class IterativeDeepeningSearchTest {
     IterativeDeepeningSearch iterativeDeepeningSearch = new IterativeDeepeningSearch();
 
     @Test
-    public void testSimplifiedRomania(){
+    public void testSimplifiedRomania() {
         Problem problem = ProblemFactory.getSimplifiedRoadMapOfPartOfRomaniaProblem(
                 SimplifiedRoadMapOfPartOfRomania.ARAD, SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
         Node result = iterativeDeepeningSearch.search(problem);
-        Assert.assertEquals("In(Bucharest)",result.state().toString());
+        Assert.assertEquals("In(Bucharest)", result.state().toString());
         List actions = Arrays.asList(new GoAction(SimplifiedRoadMapOfPartOfRomania.SIBIU),
                 new GoAction(SimplifiedRoadMapOfPartOfRomania.FAGARAS),
                 new GoAction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST));
@@ -32,7 +30,7 @@ public class IterativeDeepeningSearchTest {
     }
 
     @Test
-    public void testVacuumEnvironment(){
+    public void testVacuumEnvironment() {
         Assert.assertEquals(Arrays.asList(VacuumEnvironment.ACTION_RIGHT, VacuumEnvironment.ACTION_SUCK),
                 iterativeDeepeningSearch.apply(ProblemFactory.getSimpleVacuumWorldProblem("A",
                         new VELocalState("A", VacuumEnvironment.Status.Clean),
@@ -100,7 +98,7 @@ public class IterativeDeepeningSearchTest {
     }
 
     @Test
-    public void simpleBinaryTreeTests(){
+    public void simpleBinaryTreeTests() {
         Assert.assertEquals(Arrays.asList("B"), iterativeDeepeningSearch.apply(ProblemFactory.getSimpleBinaryTreeProblem("A", "B")));
 
         Assert.assertEquals(Arrays.asList("C"), iterativeDeepeningSearch.apply(ProblemFactory.getSimpleBinaryTreeProblem("A", "C")));
