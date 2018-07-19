@@ -91,6 +91,8 @@ public class BreadthFirstSearch<A,S> implements GenericSearchInterface<A,S>, Sea
     @Override
     public List<A> apply(Problem<A, S> problem) {
         Node<A,S> solution = this.search(problem);
+        if(solution == null)
+            return new ArrayList<>();
         return SearchUtils.generateActions(solution);
     }
 }
