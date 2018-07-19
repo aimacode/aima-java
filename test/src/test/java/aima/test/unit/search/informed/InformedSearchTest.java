@@ -17,6 +17,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -59,7 +60,10 @@ public class InformedSearchTest {
 
 		Problem<GoAction, InState> problem = ProblemFactory.getSimplifiedRoadMapOfPartOfRomaniaProblem(initialLocation,
 				goal);
-		assertEquals(Arrays.asList((String) null), searchForActions(problem, new Map2DFunctionFactory.StraightLineDistanceHeuristic(map, goal)));
+		if(A_STAR.equals(searchFunctionName))
+			assertEquals(new ArrayList<>(), searchForActions(problem, new Map2DFunctionFactory.StraightLineDistanceHeuristic(map, goal)));
+		else
+			assertEquals(Arrays.asList((String) null), searchForActions(problem, new Map2DFunctionFactory.StraightLineDistanceHeuristic(map, goal)));
 
 		goal = SimplifiedRoadMapOfPartOfRomania.BUCHAREST;
 		problem = ProblemFactory.getSimplifiedRoadMapOfPartOfRomaniaProblem(initialLocation, goal);

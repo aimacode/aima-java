@@ -43,7 +43,7 @@ public class AStarSearch<A, S> implements GenericSearchInterface<A, S>, SearchFo
     PriorityQueue<Node<A, S>> frontier = new PriorityQueue<>(new Comparator<Node<A, S>>() {
         @Override
         public int compare(Node<A, S> o1, Node<A, S> o2) {
-            return (int) (h.applyAsDouble(o1) - h.applyAsDouble(o2));
+            return (int) (getCostValue(o1) - getCostValue(o2));
         }
     });
 
