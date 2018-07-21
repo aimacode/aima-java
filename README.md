@@ -84,7 +84,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |10.9|383|Graphplan|[GraphPlan](/aima-core/src/main/java/aima/core/logic/planning/GraphPlanAlgorithm.java)|
 |11.5|409|Hierarchical-Search|[HierarchicalSearchAlgorithm](/aima-core/src/main/java/aima/core/logic/planning/hierarchicalsearch/HierarchicalSearchAlgorithm.java)|
 |11.8|414|Angelic-Search|---|
-|13.1|484|DT-Agent|---|
+|13.1|484|DT-Agent|[DT-Agent](/aima-core/src/main/java/aima/core/agent/DTAgent.java)|
 |13|484|Probability-Model|[ProbabilityModel](/aima-core/src/main/java/aima/core/probability/ProbabilityModel.java)|
 |13|487|Probability-Distribution|[ProbabilityDistribution](/aima-core/src/main/java/aima/core/probability/ProbabilityDistribution.java)|
 |13|490|Full-Joint-Distribution|[FullJointDistributionModel](/aima-core/src/main/java/aima/core/probability/full/FullJointDistributionModel.java)|
