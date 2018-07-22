@@ -41,27 +41,56 @@ public class LearningDemo {
 
 		// Chapter 18
 		decisionTreeDemo();
-		decisionListDemo();
-		ensembleLearningDemo();
-		perceptronDemo();
-		backPropogationDemo();
-
-		// Chapter 21
-		passiveADPAgentDemo();
-		passiveTDAgentDemo();
-		qLearningAgentDemo();
+		decisionTreeMaxSizeDemo();
+//		decisionListDemo();
+//		ensembleLearningDemo();
+//		perceptronDemo();
+//		backPropogationDemo();
+//
+//		// Chapter 21
+//		passiveADPAgentDemo();
+//		passiveTDAgentDemo();
+//		qLearningAgentDemo();
 	}
 
 	public static void decisionTreeDemo() {
 		System.out.println(Util.ntimes("*", 100));
 		System.out
-				.println("\nDecisionTree Demo - Inducing a DecisionList from the Restaurant DataSet\n ");
+				.println("\nDecisionTree Demo - Inducing a DecisionTree from the Restaurant DataSet\n ");
 		System.out.println(Util.ntimes("*", 100));
 		try {
 			DataSet ds = DataSetFactory.getRestaurantDataSet();
 			DecisionTreeLearner learner = new DecisionTreeLearner();
 			learner.train(ds);
 			System.out.println("The Induced Decision Tree is ");
+			System.out.println(learner.getDecisionTree());
+			int[] result = learner.test(ds);
+
+			System.out
+					.println("\nThis Decision Tree classifies the data set with "
+							+ result[0]
+							+ " successes"
+							+ " and "
+							+ result[1]
+							+ " failures");
+			System.out.println("\n");
+		} catch (Exception e) {
+			System.out.println("Decision Tree Demo Failed  ");
+			e.printStackTrace();
+		}
+	}
+
+	public static void decisionTreeMaxSizeDemo() {
+		System.out.println(Util.ntimes("*", 100));
+		System.out
+				.println("\nDecisionTree Demo - Inducing a DecisionTree with a Max Size from the Restaurant DataSet\n ");
+		System.out.println(Util.ntimes("*", 100));
+		int maxSize = 8;
+		try {
+			DataSet ds = DataSetFactory.getRestaurantDataSet();
+			DecisionTreeLearner learner = new DecisionTreeLearner();
+			learner.train(maxSize, ds);
+			System.out.println("The Induced Decision Tree (sizeLimited:" + maxSize + ") is ");
 			System.out.println(learner.getDecisionTree());
 			int[] result = learner.test(ds);
 

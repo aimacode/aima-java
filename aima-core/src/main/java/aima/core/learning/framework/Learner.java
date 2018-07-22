@@ -1,5 +1,7 @@
 package aima.core.learning.framework;
 
+import java.util.ArrayList;
+
 /**
  * @author Ravi Mohan
  * 
@@ -26,4 +28,6 @@ public interface Learner {
 	 * @return the accuracy of the hypothesis on the specified set of examples
 	 */
 	int[] test(DataSet ds);
+
+
 }
