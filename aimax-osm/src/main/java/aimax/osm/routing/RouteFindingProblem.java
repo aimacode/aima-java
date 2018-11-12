@@ -50,14 +50,14 @@ public class RouteFindingProblem extends GeneralProblem<MapNode, OsmMoveAction>
 				OsmFunctions.createActionFunction
 						(filter, ignoreOneWays ? OneWayMode.IGNORE : OneWayMode.TRAVEL_FORWARD, to),
 				OsmFunctions::getResult,
-				GoalTest.isEqual(to),
+				GoalTest.forState(to),
 				costs);
 
 		reverseProblem = new GeneralProblem<>(to,
 				OsmFunctions.createActionFunction
 						(filter, ignoreOneWays ? OneWayMode.IGNORE : OneWayMode.TRAVEL_BACKWARDS, from),
 				OsmFunctions::getResult,
-				GoalTest.isEqual(from),
+				GoalTest.forState(from),
 				costs);
 	}
 

@@ -15,7 +15,7 @@ public class BidirectionalMapProblem extends GeneralProblem<String, MoveToAction
 	private Problem<String, MoveToAction> reverseProblem;
 
 	public BidirectionalMapProblem(Map map, String initialState, String goalState) {
-		this(map, initialState, goalState, GoalTest.isEqual(goalState));
+		this(map, initialState, goalState, GoalTest.forState(goalState));
 	}
 
 	public BidirectionalMapProblem(Map map, String initialState, String goalState, GoalTest<String> goalTest) {
@@ -23,7 +23,7 @@ public class BidirectionalMapProblem extends GeneralProblem<String, MoveToAction
 				goalTest, MapFunctions.createDistanceStepCostFunction(map));
 
 		reverseProblem = new GeneralProblem<>(goalState, MapFunctions.createReverseActionsFunction(map),
-				MapFunctions.createResultFunction(), GoalTest.isEqual(initialState),
+				MapFunctions.createResultFunction(), GoalTest.forState(initialState),
 				MapFunctions.createDistanceStepCostFunction(map));
 	}
 

@@ -62,7 +62,7 @@ public class UniformCostSearchTest {
 		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
 		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfPartOfRomania.SIBIU,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				GoalTest.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new UniformCostSearch<>();
@@ -87,7 +87,7 @@ public class UniformCostSearchTest {
 		map.addBidirectionalLink("d", "goal", 1.0);
 		map.addBidirectionalLink("e", "goal", 5.0);
 		Problem<String, MoveToAction> problem = new GeneralProblem<>("start", MapFunctions.createActionsFunction(map),
-				MapFunctions.createResultFunction(), GoalTest.isEqual("goal"),
+				MapFunctions.createResultFunction(), GoalTest.forState("goal"),
 				MapFunctions.createDistanceStepCostFunction(map));
 
 		SearchForActions<String, MoveToAction> search = new UniformCostSearch<>();

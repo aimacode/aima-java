@@ -37,7 +37,7 @@ public class LRTAStarAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.isEqual("A"),
+				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("A"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		LRTAStarAgent<String, MoveToAction> agent = new LRTAStarAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction(), h);
@@ -53,7 +53,7 @@ public class LRTAStarAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.isEqual("F"),
+				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("F"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		LRTAStarAgent<String, MoveToAction> agent = new LRTAStarAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction(), h);
@@ -71,7 +71,7 @@ public class LRTAStarAgentTest {
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.isEqual("G"),
+				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("G"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		LRTAStarAgent<String, MoveToAction> agent = new LRTAStarAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction(), h);

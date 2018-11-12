@@ -36,7 +36,7 @@ public class OnlineDFSAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.isEqual("A"),
+				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("A"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		OnlineDFSAgent<String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());
@@ -52,7 +52,7 @@ public class OnlineDFSAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.isEqual("G"),
+				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("G"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		OnlineDFSAgent<String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());
@@ -73,7 +73,7 @@ public class OnlineDFSAgentTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.isEqual("X"),
+				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("X"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		OnlineDFSAgent<String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());
@@ -102,7 +102,7 @@ public class OnlineDFSAgentTest {
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.isEqual("3,3"),
+				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("3,3"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		OnlineDFSAgent<String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());

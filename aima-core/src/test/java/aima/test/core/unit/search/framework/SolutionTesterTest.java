@@ -28,8 +28,8 @@ public class SolutionTesterTest {
 		Problem<String, MoveToAction> problem = new GeneralProblem<String, MoveToAction>
 				(SimplifiedRoadMapOfPartOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				GoalTest.<String>isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST).or
-						(GoalTest.isEqual(SimplifiedRoadMapOfPartOfRomania.HIRSOVA)),
+				GoalTest.<String>forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST).or
+						(GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.HIRSOVA)),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap)) {
 			@Override
 			public boolean testSolution(Node<String, MoveToAction> node) {

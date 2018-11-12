@@ -281,7 +281,7 @@ public class FolDemo {
 
 		String kbStr = kb.toString();
 
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("John"));
 		Predicate query = new Predicate("Evil", terms);
 

@@ -24,7 +24,7 @@ public interface GoalTest<S> extends Predicate<S> {
      * @return a predicate that tests if two arguments are equal according
      * to {@link Objects#equals(Object, Object)}
      */
-    static <T> GoalTest<T> isEqual(Object targetRef) {
+    static <T> GoalTest<T> forState(Object targetRef) {
         return (null == targetRef) ? Objects::isNull : targetRef::equals;
     }
 

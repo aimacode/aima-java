@@ -59,7 +59,7 @@ public class AStarSearchTest {
 				SimplifiedRoadMapOfPartOfRomania.SIBIU,
 				MapFunctions.createActionsFunction(romaniaMap),
 				MapFunctions.createResultFunction(),
-				GoalTest.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new GraphSearch<>(),
@@ -82,7 +82,7 @@ public class AStarSearchTest {
 						SimplifiedRoadMapOfPartOfRomania.ARAD,
 						MapFunctions.createActionsFunction(romaniaMap),
 						MapFunctions.createResultFunction(),
-						GoalTest.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+						GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
 						MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new TreeSearch<>(),
@@ -107,7 +107,7 @@ public class AStarSearchTest {
 				SimplifiedRoadMapOfPartOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap),
 				MapFunctions.createResultFunction(),
-				GoalTest.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new GraphSearch<>(),
@@ -137,7 +137,7 @@ public class AStarSearchTest {
 		map.addBidirectionalLink("e", "goal", 5.0);
 		Problem<String, MoveToAction> problem = new GeneralProblem<>("start",
 				MapFunctions.createActionsFunction(map),
-				MapFunctions.createResultFunction(), GoalTest.isEqual("goal"),
+				MapFunctions.createResultFunction(), GoalTest.forState("goal"),
 				MapFunctions.createDistanceStepCostFunction(map));
 
 		ToDoubleFunction<Node<String, MoveToAction>> h = node -> 0.0; // Don't have one for this test

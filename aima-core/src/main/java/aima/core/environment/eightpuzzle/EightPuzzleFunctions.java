@@ -5,6 +5,7 @@ import aima.core.search.framework.Node;
 import aima.core.util.datastructure.XYLocation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.ToDoubleFunction;
 
@@ -19,30 +20,27 @@ public class EightPuzzleFunctions {
 
 	public static List<Action> getActions(EightPuzzleBoard state) {
 		List<Action> actions = new ArrayList<>(4);
-
-		if (state.canMoveGap(EightPuzzleBoard.UP))
-			actions.add(EightPuzzleBoard.UP);
-		if (state.canMoveGap(EightPuzzleBoard.DOWN))
-			actions.add(EightPuzzleBoard.DOWN);
-		if (state.canMoveGap(EightPuzzleBoard.LEFT))
-			actions.add(EightPuzzleBoard.LEFT);
-		if (state.canMoveGap(EightPuzzleBoard.RIGHT))
-			actions.add(EightPuzzleBoard.RIGHT);
-
+        for (Action action : Arrays.asList(EightPuzzleBoard.UP, EightPuzzleBoard.DOWN,
+                EightPuzzleBoard.LEFT, EightPuzzleBoard.RIGHT)) {
+            if (state.canMoveGap(action))
+                actions.add(action);
+        }
 		return actions;
 	}
 
 	public static EightPuzzleBoard getResult(EightPuzzleBoard state, Action action) {
 		EightPuzzleBoard result = new EightPuzzleBoard(state);
 
-		if (EightPuzzleBoard.UP.equals(action) && state.canMoveGap(EightPuzzleBoard.UP))
-			result.moveGapUp();
-		else if (EightPuzzleBoard.DOWN.equals(action) && state.canMoveGap(EightPuzzleBoard.DOWN))
-			result.moveGapDown();
-		else if (EightPuzzleBoard.LEFT.equals(action) && state.canMoveGap(EightPuzzleBoard.LEFT))
-			result.moveGapLeft();
-		else if (EightPuzzleBoard.RIGHT.equals(action) && state.canMoveGap(EightPuzzleBoard.RIGHT))
-			result.moveGapRight();
+		if (state.canMoveGap(action)) {
+            if (EightPuzzleBoard.UP.equals(action))
+                result.moveGapUp();
+            else if (EightPuzzleBoard.DOWN.equals(action))
+                result.moveGapDown();
+            else if (EightPuzzleBoard.LEFT.equals(action))
+                result.moveGapLeft();
+            else if (EightPuzzleBoard.RIGHT.equals(action))
+                result.moveGapRight();
+        }
 		return result;
 	}
 

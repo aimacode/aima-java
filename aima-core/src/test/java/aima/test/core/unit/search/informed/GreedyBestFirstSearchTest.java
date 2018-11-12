@@ -80,7 +80,7 @@ public class GreedyBestFirstSearchTest {
 		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
 		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfPartOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				GoalTest.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new GreedyBestFirstSearch<>(new TreeSearch<>(),
@@ -100,7 +100,7 @@ public class GreedyBestFirstSearchTest {
 		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
 		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfPartOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				GoalTest.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new GreedyBestFirstSearch<>(new GraphSearch<>(),
