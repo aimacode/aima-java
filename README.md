@@ -21,8 +21,8 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 
 ### Index of Implemented Algorithms
 
-|Figure|Page|Name (in 3<sup>rd</sup> edition)|Code|Test|Notebook
-| -------- |:--------:| :-----| :----- |:----- |:----- |
+|Figure|Page|Name (in 3<sup>rd</sup> edition)|Code
+| -------- |:--------:| :-----| :----- |
 |2|34|Environment|[Environment](/aima-core/src/main/java/aima/core/agent/Environment.java)|
 |2.1|35|Agent|[Agent](/aima-core/src/main/java/aima/core/agent/Agent.java)|
 |2.3|36|Table-Driven-Vacuum-Agent|[TableDrivenVacuumAgent](/aima-core/src/main/java/aima/core/environment/vacuum/TableDrivenVacuumAgent.java)|
@@ -120,6 +120,22 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |22.1|871|HITS|[HITS](/aima-core/src/main/java/aima/core/nlp/ranking/HITS.java)|
 |23.5|894|CYK-Parse|[CYK](/aima-core/src/main/java/aima/core/nlp/parsing/CYK.java)|
 |25.9|982|Monte-Carlo-Localization|[MonteCarloLocalization](/aima-core/src/main/java/aima/core/robotics/MonteCarloLocalization.java)|
+
+### Index of implemented notebooks
+|Chapter No|Name |Status (in 3<sup>rd</sup> edition)|Status (in 4<sup>th</sup> edition)
+| -------- |:--------:| :-----| :----- |
+|3| [Solving Problems by Searching](https://github.com/aimacode/aima-java/blob/AIMA3e/notebooks/ClassicalSearch.ipynb)| In Progress| Not started|
+|6| [Constraint Satisfaction Problems](https://github.com/aimacode/aima-java/blob/AIMA3e/notebooks/ProbabilisticReasoning.ipynb) |In Progress|---|
+|12| [Knowledge Representation](https://github.com/aimacode/aima-java/blob/AIMA3e/notebooks/KnowledgeRepresentation.ipynb)|Done|---|
+|13| [Quantifying Uncertainty](https://github.com/aimacode/aima-java/blob/AIMA3e/notebooks/QuantifyingUncertainty.ipynb) |Done | --- |
+|14| [Probabilistic Reasoning](https://github.com/aimacode/aima-java/blob/AIMA3e/notebooks/ProbabilisticReasoning.ipynb)|In Progress| ---|
+
+
+Before starting to work on a new notebook:
+1. Open a new issue with the following heading: **Notebook: Chapter Name - Version **. Check that the issue is not assigned to anyone.
+2. Mention a topics list of what you will be implementing in the notebook for that particular chapter. You can iteratively refine the list once you start working.
+3. Start a discussion on what can go in that particular notebook.
+
 
 ###  "---" indicates algorithms yet to be implemented.
 
