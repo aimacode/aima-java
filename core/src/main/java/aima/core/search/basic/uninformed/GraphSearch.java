@@ -30,14 +30,13 @@ import java.util.*;
  */
 public class GraphSearch<A, S> implements SearchForActionsFunction<A, S> {
 	
-	//
-	// Supporting Code
 	protected NodeFactory<A, S> nodeFactory = new BasicNodeFactory<>();
 	protected SearchController<A, S> searchController = new BasicSearchController<A, S>();
 	
 	public GraphSearch() {
+		//empty constructor
 	}
-
+	
 	// function GRAPH-SEARCH(problem) returns a solution, or failure
 	@Override
 	public List<A> apply(Problem<A, S> problem) {
@@ -64,7 +63,7 @@ public class GraphSearch<A, S> implements SearchForActionsFunction<A, S> {
 					reached.put(child.state(), child);
 					frontier.add(child);
 					// if child is a goal and is cheaper than the best solution found so far then update the solution
-					if (isGoalState(child, problem)){
+					if (isGoalState(child, problem)) {
 						solution = getSolution(child);
 					}
 				}
@@ -95,7 +94,7 @@ public class GraphSearch<A, S> implements SearchForActionsFunction<A, S> {
 	public List<A> failure() {
 		return searchController.failure();
 	}
-
+	
 	public List<A> getSolution(Node<A, S> node) {
 		return searchController.solution(node);
 	}
