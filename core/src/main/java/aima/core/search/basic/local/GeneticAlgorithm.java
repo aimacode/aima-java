@@ -60,7 +60,7 @@ public class GeneticAlgorithm<A> {
 	 * 
 	 * @param population
 	 *            a set of individuals
-	 * @param fitnessFn
+	 * @param fitnessFN
 	 *            a function that measures the fitness of an individual
 	 * @return the best individual in the specified population, according to the
 	 *         specified FITNESS-FN.
@@ -73,18 +73,8 @@ public class GeneticAlgorithm<A> {
 			Set<Individual<A>> new_population = new HashSet<Individual<A>>(population.size());
 			// repeat
 			do {
-				// x <- RANDOM-SELECTION(population, FITNESS-FN)
-				Individual<A> x = randomSelection(population, fitnessFN);
-				// y <- RANDOM-SELECTION(population, FITNESS-FN)
-				Individual<A> y = randomSelection(population, fitnessFN);
-				// child <- REPRODUCE(x, y)
-				Individual<A> child = reproduce(x, y);
-				// if (small random probability) then child <- MUTATE(child)
-				if (isSmallRandomProbabilityOfMutation()) {
-					child = mutate(child);
-				}
-				// add child to new_population
-				new_population.add(child);
+				// population <- [MUTATE(RECOMBINE(SELECT(2, population, FITNESS-FN)))]
+				new_population.add(mutate(recombine(select(2, population, fitnessFN ))));
 			} // until SIZE(new_population) = SIZE(population)
 			while (new_population.size() != population.size());
 			population = new_population;
@@ -94,13 +84,36 @@ public class GeneticAlgorithm<A> {
 		return bestIndividual;
 	}
 
-	// function REPRODUCE(x, y) returns an individual
-	public Individual<A> reproduce(Individual<A> x, Individual<A> y) {
-		// n <- LENGTH(x);
+	
+	public Set<Individual<A>> select(int p, Set<Individual<A>> population, ToDoubleFunction<Individual<A>> fitnessFN){
+		Set<Individual<A>> selection = new HashSet<Individual<A>>(2*p);
+		// selection <- a uniform random sample of 2*p individuals from population
+		do{
+			selection.add(randomSelection(population,fitnessFN));
+		}
+		while (selection.size() != 2*p);
+		
+		// return the top p individuals in selection, ranked by FITNESS-FN
+		Set<Individual<A>> fittestIndividuals = new HashSet<Individual<A>>(p);
+		do{
+			Individual<A> best = selectBestIndividual(selection,fitnessFN);
+			fittestIndividuals.add(best);
+			selection.remove(best);
+		}
+		while(fittestIndividuals.size() != p);
+		
+		return fittestIndividuals;
+	}
+	
+	public Individual<A> recombine(Set<Individual<A>> parentIndividuals){
+		Iterator<Individual<A>> parentIt = parentIndividuals.iterator();
+		Individual<A> x = parentIt.next();
+		Individual<A> y = parentIt.next();
+		// n <- LENGTH(X)
 		int n = x.length();
-		// c <- random number from 1 to n
+		// c <- random number from 0 to n
 		int c = random.nextInt(n);
-		// return APPEND(SUBSTRING(x, 1, c), SUBSTRING(y, c+1, n))
+		// return APPEND(x[0:c], y[c:n])
 		return new Individual<A>(x.substring(0, c), y.substring(c, n));
 	}
 
@@ -154,34 +167,41 @@ public class GeneticAlgorithm<A> {
 	}
 
 	public Individual<A> mutate(Individual<A> child) {
-		// We will mutate the child in place.
-		child.getRepresentation().set(random.nextInt(child.length()), alphabet.get(random.nextInt(alphabet.size())));
+		// if (small random probability) then child <- MUTATE(child)
+		if(isSmallRandomProbabilityOfMutation()){
+			// We will mutate the child in place.
+			child.getRepresentation().set(random.nextInt(child.length()), alphabet.get(random.nextInt(alphabet.size())));
+		}
 		return child;
 	}
 
 	public Individual<A> selectBestIndividualIfReady(Set<Individual<A>> population,
 			ToDoubleFunction<Individual<A>> fitnessFN) {
-		Individual<A> best = null;
-
 		// until some individual is fit enough, or enough time has elapsed
 		if (!executionController.isExecuting() || population.stream().anyMatch(fitEnoughPredicate)) {
-			double bestValue = 0;
-			Iterator<Individual<A>> popIt = population.iterator();
-			while (popIt.hasNext()) {
-				Individual<A> current = popIt.next();
-				double currentValue = fitnessFN.applyAsDouble(current);
-				if (best == null || currentValue > bestValue) {
+			return selectBestIndividual(population,fitnessFN);
+		}
+		return null;
+	}
+	
+	public Individual<A> selectBestIndividual(Set<Individual<A>> population,
+		  	ToDoubleFunction<Individual<A>> fitnessFN) {
+		Individual<A> best = null;
+		double bestValue = 0;
+		Iterator<Individual<A>> popIt = population.iterator();
+		while (popIt.hasNext()) {
+			Individual<A> current = popIt.next();
+			double currentValue = fitnessFN.applyAsDouble(current);
+			if (best == null || currentValue > bestValue) {
+				best = current;
+				bestValue = currentValue;
+			} else if (currentValue == bestValue) {
+				// Randomly break ties
+				if (random.nextBoolean()) {
 					best = current;
-					bestValue = currentValue;
-				} else if (currentValue == bestValue) {
-					// Randomly break ties
-					if (random.nextBoolean()) {
-						best = current;
-					}
 				}
 			}
 		}
-
 		return best;
 	}
 }
