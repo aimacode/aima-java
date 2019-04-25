@@ -42,7 +42,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 */
 	private boolean isReverseActionTestEnabled = true;
 
-	// index 0: original problem, index 2: reverse problem
+	// index 0: original problem, index 1: reverse problem
 	private List<Map<S, ExtendedNode<S, A>>> explored;
 	private ExtendedNode<S, A> goalStateNode;
 

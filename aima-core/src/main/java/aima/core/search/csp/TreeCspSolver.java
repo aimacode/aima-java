@@ -72,8 +72,7 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
         }
 
         // Assign values to variables from top to bottom.
-        for (int i = 0; i < orderedVars.size(); i++) {
-            VAR var = orderedVars.get(i);
+        for (VAR var : orderedVars) {
             for (VAL value : csp.getDomain(var)) {
                 assignment.add(var, value);
                 if (assignment.isConsistent(csp.getConstraints(var))) {
