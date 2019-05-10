@@ -17,30 +17,30 @@ public class MapColoringCspDemo {
 		CSP<Variable, String> csp = new MapCSP();
 		CspListener.StepCounter<Variable, String> stepCounter = new CspListener.StepCounter<>();
 		CspSolver<Variable, String> solver;
-		Optional<Assignment<Variable, String>> result;
+		Optional<Assignment<Variable, String>> solution;
 		
 		solver = new MinConflictsSolver<>(1000);
 		solver.addCspListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Minimum Conflicts)");
-		result = solver.solve(csp);
-		result.ifPresent(System.out::println);
+		solution = solver.solve(csp);
+		solution.ifPresent(System.out::println);
 		System.out.println(stepCounter.getResults() + "\n");
 		
 		solver = new FlexibleBacktrackingSolver<Variable, String>().setAll();
 		solver.addCspListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Backtracking + MRV & DEG + LCV + AC3)");
-		result = solver.solve(csp);
-		result.ifPresent(System.out::println);
+		solution = solver.solve(csp);
+		solution.ifPresent(System.out::println);
 		System.out.println(stepCounter.getResults() + "\n");
 		
 		solver = new FlexibleBacktrackingSolver<>();
 		solver.addCspListener(stepCounter);
 		stepCounter.reset();
 		System.out.println("Map Coloring (Backtracking)");
-		result = solver.solve(csp);
-		result.ifPresent(System.out::println);
+		solution = solver.solve(csp);
+		solution.ifPresent(System.out::println);
 		System.out.println(stepCounter.getResults() + "\n");
 	}
 }
