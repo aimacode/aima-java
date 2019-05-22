@@ -21,7 +21,7 @@ import aima.core.agent.Action;
 public enum CellWorldAction implements Action {
 	Up, Down, Left, Right, None;
 
-	private static final Set<CellWorldAction> _actions = new LinkedHashSet<CellWorldAction>();
+	private static final Set<CellWorldAction> _actions = new LinkedHashSet<>();
 	static {
 		_actions.add(Up);
 		_actions.add(Down);
@@ -34,7 +34,7 @@ public enum CellWorldAction implements Action {
 	 * 
 	 * @return a set of the actual actions.
 	 */
-	public static final Set<CellWorldAction> actions() {
+	public static Set<CellWorldAction> actions() {
 		return _actions;
 	}
 	
@@ -42,10 +42,7 @@ public enum CellWorldAction implements Action {
 	// START-Action
 	@Override
 	public boolean isNoOp() {
-		if (None == this) {
-			return true;
-		}
-		return false;
+		return None == this;
 	}
 	// END-Action
 	//
