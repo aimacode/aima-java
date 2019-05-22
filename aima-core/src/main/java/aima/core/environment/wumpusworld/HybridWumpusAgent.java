@@ -281,8 +281,7 @@ public class HybridWumpusAgent extends AbstractAgent {
 			for (AgentPosition.Orientation orientation : AgentPosition.Orientation.values())
 				shootingPositions.remove(new AgentPosition(p.getX(), p.getY(), orientation));
 
-		List<WumpusAction> actions = new ArrayList<>();
-		actions.addAll(planRoute(shootingPositions, allowed));
+		List<WumpusAction> actions = new ArrayList<>(planRoute(shootingPositions, allowed));
 		actions.add(WumpusAction.SHOOT);
 		return actions;
 	}
