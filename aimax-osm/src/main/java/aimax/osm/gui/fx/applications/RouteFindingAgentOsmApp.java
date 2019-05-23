@@ -1,6 +1,7 @@
 package aimax.osm.gui.fx.applications;
 
 import aima.core.agent.*;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctions;
@@ -89,7 +90,7 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 	 * Factory method which creates a new agent based on the current parameter
 	 * settings.
 	 */
-	protected Agent createAgent(List<String> locations) {
+	protected Agent<DynamicPercept, MoveToAction> createAgent(List<String> locations) {
 		ToDoubleFunction<Node<String, MoveToAction>> heuristic;
 		if (taskPaneCtrl.getParamValueIndex(PARAM_HEURISTIC) == 0)
 			heuristic = node -> 0.0;
@@ -174,7 +175,7 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locations.add(map.getNearestLocation(pt));
 			}
-			Agent agent = createAgent(locations);
+			Agent<DynamicPercept, MoveToAction> agent = createAgent(locations);
 			env = createEnvironment();
 			env.addEnvironmentView(new TrackUpdater());
 			env.addAgent(agent, locations.get(0));
@@ -206,7 +207,7 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 
 	// helper classes...
 
-	private class TrackUpdater implements EnvironmentView {
+	private class TrackUpdater implements EnvironmentView<DynamicPercept, MoveToAction> {
 		int actionCounter = 0;
 
 		@Override
@@ -215,7 +216,7 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 		}
 
 		@Override
-		public void agentAdded(Agent agent, Environment source) {
+		public void agentAdded(Agent<?, ?> agent, Environment<?, ?> source) {
 			updateTrack(agent, new Metrics());
 		}
 
@@ -223,15 +224,14 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 		 * Reacts on environment changes and updates the tracks.
 		 */
 		@Override
-		public void agentActed(Agent agent, Percept percept, Action command, Environment source) {
-			if (command instanceof MoveToAction) {
-				Metrics metrics = new Metrics();
-				Double travelDistance = env.getAgentTravelDistance(env.getAgents().get(0));
-				if (travelDistance != null)
-					metrics.set("travelDistance[km]", travelDistance);
-				metrics.set("actions", ++actionCounter);
-				updateTrack(agent, metrics);
-			}
+		public void agentActed(Agent<?, ?> agent, DynamicPercept percept, MoveToAction command,
+							   Environment<?, ?> source) {
+			Metrics metrics = new Metrics();
+			Double travelDistance = env.getAgentTravelDistance(env.getAgents().get(0));
+			if (travelDistance != null)
+				metrics.set("travelDistance[km]", travelDistance);
+			metrics.set("actions", ++actionCounter);
+			updateTrack(agent, metrics);
 		}
 	}
 }

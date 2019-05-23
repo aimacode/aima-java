@@ -35,7 +35,7 @@ public class ModelBasedReflexVacuumAgentTest {
 
 		tve.stepUntilDone();
 
-		Assert.assertEquals("Action[name=Right], Action[name=NoOp]",
+		Assert.assertEquals("Action[name=Right]",
 				actionTracker.getActions());
 	}
 
@@ -51,7 +51,7 @@ public class ModelBasedReflexVacuumAgentTest {
 		tve.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=Right], Action[name=Suck], Action[name=NoOp]",
+				"Action[name=Right], Action[name=Suck]",
 				actionTracker.getActions());
 	}
 
@@ -67,7 +67,7 @@ public class ModelBasedReflexVacuumAgentTest {
 		tve.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=Suck], Action[name=Right], Action[name=NoOp]",
+				"Action[name=Suck], Action[name=Right]",
 				actionTracker.getActions());
 	}
 
@@ -83,7 +83,7 @@ public class ModelBasedReflexVacuumAgentTest {
 		tve.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=Suck], Action[name=Right], Action[name=Suck], Action[name=NoOp]",
+				"Action[name=Suck], Action[name=Right], Action[name=Suck]",
 				actionTracker.getActions());
 	}
 

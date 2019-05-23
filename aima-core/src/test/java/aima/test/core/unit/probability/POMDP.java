@@ -81,10 +81,5 @@ public class POMDP implements aima.core.probability.mdp.POMDP {
 
     public enum Action implements aima.core.agent.Action {
         GO, STAY;
-
-        @Override
-        public boolean isNoOp() {
-            return false;
-        }
     }
 }

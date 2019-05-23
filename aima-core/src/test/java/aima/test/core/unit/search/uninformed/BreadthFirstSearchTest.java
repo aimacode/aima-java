@@ -35,8 +35,8 @@ public class BreadthFirstSearchTest {
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(3),
 				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
 		SearchForActions<NQueensBoard, QueenAction> search = new BreadthFirstSearch<>(new TreeSearch<>());
-		SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
-		List<Action> actions = agent.getActions();
+		SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+		List<QueenAction> actions = agent.getActions();
 		Assert.assertEquals(0, actions.size());
 		Assert.assertEquals("6", agent.getInstrumentation().getProperty("nodesExpanded"));
 		Assert.assertEquals("0", agent.getInstrumentation().getProperty("pathCost"));

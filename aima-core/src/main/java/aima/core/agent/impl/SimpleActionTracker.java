@@ -1,6 +1,8 @@
 package aima.core.agent.impl;
 
-import aima.core.agent.*;
+import aima.core.agent.Agent;
+import aima.core.agent.Environment;
+import aima.core.agent.EnvironmentView;
 
 /**
  * Environment view implementation which logs performed action and
@@ -8,7 +10,7 @@ import aima.core.agent.*;
  *
  * @author Ruediger Lunde
  */
-public class SimpleActionTracker implements EnvironmentView {
+public class SimpleActionTracker implements EnvironmentView<Object, Object> {
 	protected final StringBuilder actions = new StringBuilder();
 
 	public String getActions() {
@@ -21,12 +23,12 @@ public class SimpleActionTracker implements EnvironmentView {
 	}
 
 	@Override
-	public void agentAdded(Agent agent, Environment source) {
+	public void agentAdded(Agent<?, ?> agent, Environment<?, ?> source) {
 		// Do nothing by default.
 	}
 
 	@Override
-	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+	public void agentActed(Agent<?, ?> agent, Object percept, Object action, Environment<?, ?> source) {
 		if (actions.length() > 0)
 			actions.append(", ");
 		actions.append(action);

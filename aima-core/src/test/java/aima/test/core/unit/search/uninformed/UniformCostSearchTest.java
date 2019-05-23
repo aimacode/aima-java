@@ -29,9 +29,9 @@ public class UniformCostSearchTest {
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(8),
 				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
 		SearchForActions<NQueensBoard, QueenAction> search = new UniformCostSearch<>();
-		SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 
-		List<Action> actions = agent.getActions();
+		List<QueenAction> actions = agent.getActions();
 
 		Assert.assertEquals(8, actions.size());
 
@@ -45,9 +45,9 @@ public class UniformCostSearchTest {
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(new NQueensBoard(3),
 				NQueensFunctions::getIFActions, NQueensFunctions::getResult, NQueensFunctions::testGoal);
 		SearchForActions<NQueensBoard, QueenAction> search = new UniformCostSearch<>();
-		SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 
-		List<Action> actions = agent.getActions();
+		List<QueenAction> actions = agent.getActions();
 
 		Assert.assertEquals(0, actions.size());
 
@@ -66,9 +66,9 @@ public class UniformCostSearchTest {
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new UniformCostSearch<>();
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 
-		List<Action> actions = agent.getActions();
+		List<MoveToAction> actions = agent.getActions();
 
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]",
@@ -91,9 +91,9 @@ public class UniformCostSearchTest {
 				MapFunctions.createDistanceStepCostFunction(map));
 
 		SearchForActions<String, MoveToAction> search = new UniformCostSearch<>();
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Action, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 
-		List<Action> actions = agent.getActions();
+		List<MoveToAction> actions = agent.getActions();
 
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=b], Action[name=moveTo, location=d], Action[name=moveTo, location=goal]]",

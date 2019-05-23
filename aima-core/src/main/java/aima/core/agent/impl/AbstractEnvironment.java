@@ -1,26 +1,18 @@
 package aima.core.agent.impl;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import aima.core.agent.Action;
-import aima.core.agent.Agent;
-import aima.core.agent.Environment;
-import aima.core.agent.EnvironmentObject;
-import aima.core.agent.EnvironmentView;
-import aima.core.agent.EnvironmentViewNotifier;
-import aima.core.agent.Percept;
+import aima.core.agent.*;
 import aima.core.util.Tasks;
 
+import java.util.*;
+
 /**
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
-public abstract class AbstractEnvironment implements Environment,
+public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 		EnvironmentViewNotifier {
 
 	// Note: Use LinkedHashSet's in order to ensure order is respected as
@@ -28,11 +20,11 @@ public abstract class AbstractEnvironment implements Environment,
 	// access to these elements via List interface.
 	protected Set<EnvironmentObject> envObjects = new LinkedHashSet<>();
 
-	protected Set<Agent> agents = new LinkedHashSet<>();
+	protected Set<Agent<? super P, ? extends A>> agents = new LinkedHashSet<>();
 
-	protected Set<EnvironmentView> views = new LinkedHashSet<>();
+	protected Set<EnvironmentView<? super P, ? super A>> views = new LinkedHashSet<>();
 
-	protected Map<Agent, Double> performanceMeasures = new LinkedHashMap<>();
+	protected Map<Agent<?, ?>, Double> performanceMeasures = new LinkedHashMap<>();
 
 	//
 	// PUBLIC METHODS
@@ -41,9 +33,9 @@ public abstract class AbstractEnvironment implements Environment,
 	//
 	// Methods to be implemented by subclasses.
 
-	public abstract void executeAction(Agent agent, Action action);
+	public abstract void executeAction(Agent<?, ?> agent, A action);
 
-	public abstract Percept getPerceptSeenBy(Agent anAgent);
+	public abstract P getPerceptSeenBy(Agent<?, ?> anAgent);
 
 	/**
 	 * Method for implementing dynamic environments in which not all changes are
@@ -53,55 +45,57 @@ public abstract class AbstractEnvironment implements Environment,
 	public void createExogenousChange() {
 	}
 
+	/** Is called when an agent doesn't select an action. Default implementation does nothing. */
+	protected void executeNoOp(Agent<? super P,? extends A> agent) {
+	}
+
 	//
 	// START-Environment
-	public List<Agent> getAgents() {
+	public List<Agent<? super P, ? extends A>> getAgents() {
 		// Return as a List but also ensures the caller cannot modify
-		return new ArrayList<Agent>(agents);
+		return new ArrayList<>(agents);
 	}
 
-	public void addAgent(Agent a) {
+	public void addAgent(Agent<? super P, ? extends A> a) {
+		agents.add(a);
 		addEnvironmentObject(a);
+		notifyEnvironmentViews(a);
 	}
 
-	public void removeAgent(Agent a) {
-		removeEnvironmentObject(a);
+	public void removeAgent(Agent<? super P, ? extends A> a) {
+		agents.remove(a);
 	}
 
 	public List<EnvironmentObject> getEnvironmentObjects() {
 		// Return as a List but also ensures the caller cannot modify
-		return new ArrayList<EnvironmentObject>(envObjects);
+		return new ArrayList<>(envObjects);
 	}
 
 	public void addEnvironmentObject(EnvironmentObject eo) {
 		envObjects.add(eo);
-		if (eo instanceof Agent) {
-			Agent a = (Agent) eo;
-			if (!agents.contains(a)) {
-				agents.add(a);
-				notifyEnvironmentViews(a);
-			}
-		}
 	}
 
 	public void removeEnvironmentObject(EnvironmentObject eo) {
 		envObjects.remove(eo);
-		agents.remove(eo);
 	}
 
 	/**
 	 * Central template method for controlling agent simulation. The concrete
 	 * behavior is determined by the primitive operations
-	 * {@link #getPerceptSeenBy(Agent)}, {@link #executeAction(Agent, Action)},
+	 * {@link #getPerceptSeenBy(Agent)}, {@link #executeAction(Agent agent, A action)},
 	 * and {@link #createExogenousChange()}.
 	 */
 	public void step() {
-		for (Agent agent : agents) {
+		for (Agent<? super P, ? extends A> agent : agents) {
 			if (agent.isAlive()) {
-				Percept percept = getPerceptSeenBy(agent);
-				Action anAction = agent.execute(percept);
-				executeAction(agent, anAction);
-				notifyEnvironmentViews(agent, percept, anAction);
+				P percept = getPerceptSeenBy(agent);
+				Optional<? extends A> anAction = agent.execute(percept);
+				if (anAction.isPresent()) {
+					executeAction(agent, anAction.get());
+					notifyEnvironmentViews(agent, percept, anAction.get());
+				} else {
+					executeNoOp(agent);
+				}
 			}
 		}
 		createExogenousChange();
@@ -122,24 +116,18 @@ public abstract class AbstractEnvironment implements Environment,
 		if (Tasks.currIsCancelled())
 			return true;
 
-		for (Agent agent : agents)
+		for (Agent<? super P, ? extends A> agent : agents)
 			if (agent.isAlive())
 				return false;
 
 		return true;
 	}
 
-	public double getPerformanceMeasure(Agent forAgent) {
-		Double pm = performanceMeasures.get(forAgent);
-		if (null == pm) {
-			pm = 0.0;
-			performanceMeasures.put(forAgent, pm);
-		}
-
-		return pm;
+	public double getPerformanceMeasure(Agent<?, ?> forAgent) {
+		return performanceMeasures.computeIfAbsent(forAgent, k -> 0.0);
 	}
 
-	public void addEnvironmentView(EnvironmentView ev) {
+	public void addEnvironmentView(EnvironmentView<? super P, ? super A> ev) {
 		views.add(ev);
 	}
 
@@ -160,19 +148,19 @@ public abstract class AbstractEnvironment implements Environment,
 	// PROTECTED METHODS
 	//
 
-	protected void updatePerformanceMeasure(Agent forAgent, double addTo) {
+	protected void updatePerformanceMeasure(Agent<?, ?> forAgent, double addTo) {
 		performanceMeasures.put(forAgent, getPerformanceMeasure(forAgent)
 				+ addTo);
 	}
 
-	protected void notifyEnvironmentViews(Agent agent) {
-		for (EnvironmentView view : views) {
+	protected void notifyEnvironmentViews(Agent<?, ?> agent) {
+		for (EnvironmentView<? super P, ? super A> view : views) {
 			view.agentAdded(agent, this);
 		}
 	}
 
-	protected void notifyEnvironmentViews(Agent agent, Percept percept, Action action) {
-		for (EnvironmentView view : views) {
+	protected void notifyEnvironmentViews(Agent<?, ?> agent, P percept, A action) {
+		for (EnvironmentView<? super P, ? super A> view : views) {
 			view.agentActed(agent, percept, action, this);
 		}
 	}

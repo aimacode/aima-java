@@ -12,6 +12,8 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.Percept;
+import aima.core.agent.impl.DynamicAction;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
 import aima.gui.swing.framework.AgentAppEnvironmentView;
@@ -35,12 +37,12 @@ import aimax.osm.gui.swing.viewer.MapViewPopup;
  * 
  * @author Ruediger Lunde
  */
-public class OsmAgentView extends AgentAppEnvironmentView {
+public class OsmAgentView extends AgentAppEnvironmentView<DynamicPercept, MoveToAction> {
 
 	private static final long serialVersionUID = 1L;
 	public static final String TRACK_NAME = "Track";
 
-	MapViewPane mapViewPane;
+	private MapViewPane mapViewPane;
 
 	/**
 	 * Creates an agent view which displays agent positions within a map using
@@ -86,14 +88,12 @@ public class OsmAgentView extends AgentAppEnvironmentView {
 	 * Reacts on environment changes and updates the tracks.
 	 */
 	@Override
-	public void agentActed(Agent agent, Percept percept, Action command, Environment source) {
+	public void agentActed(Agent<?, ?> agent, DynamicPercept percept, MoveToAction command, Environment<?, ?> source) {
 		String msg = "";
 		if (env.getAgents().size() > 1)
 			msg = "A" + env.getAgents().indexOf(agent) + ": ";
 		notify(msg + command.toString());
-		if (command instanceof MoveToAction) {
-			updateTrack(agent, getMapEnv().getAgentLocation(agent));
-		}
+		updateTrack(agent, getMapEnv().getAgentLocation(agent));
 	}
 
 	private void updateTrack(Agent agent, String location) {

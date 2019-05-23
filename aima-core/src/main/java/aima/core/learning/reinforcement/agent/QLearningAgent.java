@@ -2,6 +2,7 @@ package aima.core.learning.reinforcement.agent;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import aima.core.agent.Action;
 import aima.core.learning.reinforcement.PerceptStateReward;
@@ -62,16 +63,17 @@ import aima.core.util.datastructure.Pair;
  * 
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
 public class QLearningAgent<S, A extends Action> extends
 		ReinforcementAgent<S, A> {
 	// persistent: Q, a table of action values indexed by state and action,
 	// initially zero
-	Map<Pair<S, A>, Double> Q = new HashMap<Pair<S, A>, Double>();
+	private Map<Pair<S, A>, Double> Q = new HashMap<>();
 	// N<sub>sa</sub>, a table of frequencies for state-action pairs, initially
 	// zero
-	private FrequencyCounter<Pair<S, A>> Nsa = new FrequencyCounter<Pair<S, A>>();
+	private FrequencyCounter<Pair<S, A>> Nsa = new FrequencyCounter<>();
 	// s,a,r, the previous state, action, and reward, initially null
 	private S s = null;
 	private A a = null;
@@ -125,7 +127,7 @@ public class QLearningAgent<S, A extends Action> extends
 	 * @return an action
 	 */
 	@Override
-	public A execute(PerceptStateReward<S> percept) {
+	public Optional<A> execute(PerceptStateReward<S> percept) {
 
 		S sPrime = percept.state();
 		double rPrime = percept.reward();
@@ -162,7 +164,7 @@ public class QLearningAgent<S, A extends Action> extends
 		}
 
 		// return a
-		return a;
+		return Optional.ofNullable(a);
 	}
 
 	@Override
@@ -278,7 +280,7 @@ public class QLearningAgent<S, A extends Action> extends
 		A a = null;
 		double max = Double.NEGATIVE_INFINITY;
 		for (A aPrime : actionsFunction.actions(sPrime)) {
-			Pair<S, A> sPrimeAPrime = new Pair<S, A>(sPrime, aPrime);
+			Pair<S, A> sPrimeAPrime = new Pair<>(sPrime, aPrime);
 			double explorationValue = f(Q.get(sPrimeAPrime), Nsa
 					.getCount(sPrimeAPrime));
 			if (explorationValue > max) {

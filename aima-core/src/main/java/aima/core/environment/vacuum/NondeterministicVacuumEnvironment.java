@@ -11,6 +11,7 @@ import aima.core.agent.Agent;
  * dirt on the carpet.
  *
  * @author Andrew Brown
+ * @author Ruediger Lunde
  */
 public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
 
@@ -39,7 +40,7 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
      * Execute the agent action
      */
     @Override
-    public void executeAction(Agent a, Action action) {
+    public void executeAction(Agent<?, ?> a, Action action) {
         if (ACTION_MOVE_RIGHT == action) {
             envState.setAgentLocation(a, LOCATION_B);
             updatePerformanceMeasure(a, -1);
@@ -64,8 +65,6 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
                     envState.setLocationState(envState.getAgentLocation(a), VacuumEnvironment.LocationState.Dirty);
                 }
             }
-        } else if (action.isNoOp()) {
-            isDone = true;
         }
     }
 }

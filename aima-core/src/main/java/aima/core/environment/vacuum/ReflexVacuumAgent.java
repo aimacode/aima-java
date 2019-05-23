@@ -4,9 +4,9 @@ import aima.core.agent.Action;
 import aima.core.agent.AgentProgram;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.NoOpAction;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.8, page 48.<br>
@@ -25,34 +25,33 @@ import java.util.Objects;
  * Figure 2.3.
  * 
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  * 
  */
-public class ReflexVacuumAgent extends AbstractAgent {
+public class ReflexVacuumAgent extends AbstractAgent<Percept, Action> {
 
 	public ReflexVacuumAgent() {
-		super(new AgentProgram() {
+		super(new AgentProgram<Percept, Action>() {
 			// function REFLEX-VACUUM-AGENT([location, status]) returns an
 			// action
-			public Action execute(Percept percept) {
+			public Optional<Action> execute(Percept percept) {
 				LocalVacuumEnvironmentPercept vep = (LocalVacuumEnvironmentPercept) percept;
-
+				Action action = null;
 				// if status = Dirty then return Suck
 				if (VacuumEnvironment.LocationState.Dirty == vep
 						.getLocationState()) {
-					return VacuumEnvironment.ACTION_SUCK;
+					action = VacuumEnvironment.ACTION_SUCK;
 					// else if location = A then return Right
 				} else if (Objects.equals(VacuumEnvironment.LOCATION_A, vep
                         .getAgentLocation())) {
-					return VacuumEnvironment.ACTION_MOVE_RIGHT;
+					action = VacuumEnvironment.ACTION_MOVE_RIGHT;
 				} else if (Objects.equals(VacuumEnvironment.LOCATION_B, vep
 						.getAgentLocation())) {
 					// else if location = B then return Left
-					return VacuumEnvironment.ACTION_MOVE_LEFT;
+					action = VacuumEnvironment.ACTION_MOVE_LEFT;
 				}
-
-				// Note: This should not be returned if the
-				// environment is correct
-				return NoOpAction.NO_OP;
+				// Note: Empty should not be returned if the environment is correct
+				return Optional.ofNullable(action);
 			}
 		});
 	}

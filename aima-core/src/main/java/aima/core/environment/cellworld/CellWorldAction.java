@@ -37,15 +37,6 @@ public enum CellWorldAction implements Action {
 	public static Set<CellWorldAction> actions() {
 		return _actions;
 	}
-	
-	//
-	// START-Action
-	@Override
-	public boolean isNoOp() {
-		return None == this;
-	}
-	// END-Action
-	//
 
 	/**
 	 * 

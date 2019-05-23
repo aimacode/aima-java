@@ -1,6 +1,8 @@
 package aima.gui.demo.agent;
 
 import aima.core.agent.Action;
+import aima.core.agent.Percept;
+import aima.core.agent.impl.DynamicAction;
 import aima.core.agent.impl.SimpleActionTracker;
 import aima.core.environment.vacuum.*;
 import aima.core.search.agent.NondeterministicSearchAgent;
@@ -24,8 +26,8 @@ public class NondeterministicVacuumEnvironmentDemo {
 		System.out.println("AND-OR-GRAPH-SEARCH");
 
         // create agent and world
-        NondeterministicSearchAgent<VacuumEnvironmentState, Action> agent = new NondeterministicSearchAgent<>
-                (percept -> (VacuumEnvironmentState) percept); // percept == env state!
+        NondeterministicSearchAgent<Percept, VacuumEnvironmentState, Action> agent =
+                new NondeterministicSearchAgent<>(percept -> (VacuumEnvironmentState) percept); // percept == env state!
         NondeterministicVacuumEnvironment world = new NondeterministicVacuumEnvironment
                 (VacuumEnvironment.LocationState.Dirty, VacuumEnvironment.LocationState.Dirty);
         world.addAgent(agent, VacuumEnvironment.LOCATION_A);

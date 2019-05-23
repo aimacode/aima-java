@@ -1,15 +1,10 @@
 package aima.core.search.online;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 import aima.core.agent.Action;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.util.datastructure.Pair;
 import aima.core.util.datastructure.TwoKeyHashMap;
@@ -43,15 +38,18 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  * Figure 4.21 An online search agent that uses depth-first exploration. The
  * agent is applicable only in state spaces in which every action can be
  * "undone" by some other action.<br>
- * 
+ *
+ * @param <P> The type used to represent percepts
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate through the state space
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  * 
  */
-public class OnlineDFSAgent<S, A extends Action> extends AbstractAgent {
+public class OnlineDFSAgent<P, S, A extends Action> extends AbstractAgent<P, A> {
 
 	private OnlineSearchProblem<S, A> problem;
-	private Function<Percept, S> ptsFn;
+	private Function<P, S> ptsFn;
 	// persistent: result, a table, indexed by state and action, initially empty
 	private final TwoKeyHashMap<S, A, S> result = new TwoKeyHashMap<>();
 	// untried, a table that lists, for each state, the actions not yet tried
@@ -73,7 +71,7 @@ public class OnlineDFSAgent<S, A extends Action> extends AbstractAgent {
 	 *            a function which returns the problem state associated with a
 	 *            given Percept.
 	 */
-	public OnlineDFSAgent(OnlineSearchProblem<S, A> problem, Function<Percept, S> ptsFn) {
+	public OnlineDFSAgent(OnlineSearchProblem<S, A> problem, Function<P, S> ptsFn) {
 		setProblem(problem);
 		setPerceptToStateFunction(ptsFn);
 	}
@@ -103,7 +101,7 @@ public class OnlineDFSAgent<S, A extends Action> extends AbstractAgent {
 	 * 
 	 * @return the percept to state function of this agent.
 	 */
-	public Function<Percept, S> getPerceptToStateFunction() {
+	public Function<P, S> getPerceptToStateFunction() {
 		return ptsFn;
 	}
 
@@ -114,14 +112,14 @@ public class OnlineDFSAgent<S, A extends Action> extends AbstractAgent {
 	 *            a function which returns the problem state associated with a
 	 *            given Percept.
 	 */
-	public void setPerceptToStateFunction(Function<Percept, S> ptsFn) {
+	public void setPerceptToStateFunction(Function<P, S> ptsFn) {
 		this.ptsFn = ptsFn;
 	}
 
 	// function ONLINE-DFS-AGENT(s') returns an action
 	// inputs: s', a percept that identifies the current state
 	@Override
-	public Action execute(Percept psPrimed) {
+	public Optional<A> execute(P psPrimed) {
 		S sPrimed = ptsFn.apply(psPrimed);
 		// if GOAL-TEST(s') then return stop
 		if (problem.testGoal(sPrimed)) {
@@ -183,7 +181,7 @@ public class OnlineDFSAgent<S, A extends Action> extends AbstractAgent {
 		// s <- s'
 		s = sPrimed;
 		// return a
-		return a != null ? a : NoOpAction.NO_OP;
+		return Optional.ofNullable(a);
 	}
 
 	//

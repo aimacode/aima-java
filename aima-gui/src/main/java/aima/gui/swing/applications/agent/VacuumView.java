@@ -21,13 +21,13 @@ import aima.gui.swing.framework.EmptyEnvironmentView;
  * 
  * @author Ruediger Lunde
  */
-public class VacuumView extends EmptyEnvironmentView {
+public class VacuumView extends EmptyEnvironmentView<Percept, Action> {
 
 	private static final long serialVersionUID = 1L;
-	private Hashtable<Agent, Action> lastActions = new Hashtable<Agent, Action>();
+	private Hashtable<Agent, Action> lastActions = new Hashtable<>();
 
 	@Override
-	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+	public void agentActed(Agent<?, ?> agent, Percept percept, Action action, Environment<?, ?> source) {
 		lastActions.put(agent, action);
 		String prefix = "";
 		if (env.getAgents().size() > 1)

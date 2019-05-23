@@ -22,13 +22,13 @@ import java.util.Random;
  * actions in this version of the vacuum world: <em>Left</em>, <em>Right</em>,
  * and <em>Suck</em>. Assume for the moment, that sucking is 100% effective. The
  * goal is to clean up all the dirt.
- * 
+ *
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class VacuumEnvironment extends AbstractEnvironment {
+public class VacuumEnvironment extends AbstractEnvironment<Percept, Action> {
 	// Allowable Actions within the Vacuum Environment
 	public static final Action ACTION_MOVE_LEFT = new DynamicAction("Left");
 	public static final Action ACTION_MOVE_RIGHT = new DynamicAction("Right");
@@ -97,13 +97,13 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public void addAgent(Agent a) {
+	public void addAgent(Agent<? super Percept, ? extends Action> a) {
 		int idx = new Random().nextInt(locations.size());
 		envState.setAgentLocation(a, locations.get(idx));
 		super.addAgent(a);
 	}
 
-	public void addAgent(Agent a, String location) {
+	public void addAgent(Agent<? super Percept, ? extends Action> a, String location) {
 		// Ensure the agent state information is tracked before
 		// adding to super, as super will notify the registered
 		// EnvironmentViews that is was added.
@@ -112,7 +112,7 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public Percept getPerceptSeenBy(Agent anAgent) {
+	public Percept getPerceptSeenBy(Agent<?, ?> anAgent) {
 		if (anAgent instanceof NondeterministicSearchAgent) {
 			// This agent expects a fully observable environment. It gets a clone of the environment state.
 			return envState.clone();
@@ -123,7 +123,7 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public void executeAction(Agent a, Action action) {
+	public void executeAction(Agent<?, ?> a, Action action) {
 		String loc = getAgentLocation(a);
 		if (ACTION_MOVE_RIGHT == action) {
 			int x = getX(loc);
@@ -142,11 +142,14 @@ public class VacuumEnvironment extends AbstractEnvironment {
 						LocationState.Clean);
 				updatePerformanceMeasure(a, 10);
 			}
-		} else if (action.isNoOp()) {
-			// In the Vacuum Environment we consider things done if
-			// the agent generates a NoOp.
-			isDone = true;
 		}
+	}
+
+	@Override
+	protected void executeNoOp(Agent<? super Percept, ? extends Action> agent) {
+		// In the Vacuum Environment we consider things done if
+		// the agent's execute method returns no action.
+		isDone = true;
 	}
 
 	@Override

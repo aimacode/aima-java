@@ -1,18 +1,19 @@
 package aima.core.agent.impl.aprog.simplerule;
 
-import aima.core.agent.Action;
 import aima.core.agent.impl.ObjectWithDynamicAttributes;
 
 /**
  * A simple implementation of a "condition-action rule".
- * 
+ *
+ * @param <A> Type which is used to represent actions
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
-public class Rule {
+public class Rule<A> {
 	private Condition con;
 
-	private Action action;
+	private A action;
 
 	/**
 	 * Constructs a condition-action rule.
@@ -20,11 +21,10 @@ public class Rule {
 	 * @param con
 	 *            a condition
 	 * @param action
-	 *            an action
+	 *            an action, possibly null
 	 */
-	public Rule(Condition con, Action action) {
+	public Rule(Condition con, A action) {
 		assert (null != con);
-		assert (null != action);
 
 		this.con = con;
 		this.action = action;
@@ -39,15 +39,14 @@ public class Rule {
 	 * 
 	 * @return the action of this condition-action rule.
 	 */
-	public Action getAction() {
+	public A getAction() {
 		return action;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (o == null || !(o instanceof Rule)) {
+		if (o.getClass() != getClass())
 			return super.equals(o);
-		}
 		return (toString().equals(((Rule) o).toString()));
 	}
 
@@ -58,9 +57,6 @@ public class Rule {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		return sb.append("if ").append(con).append(" then ").append(action)
-				.append(".").toString();
+		return "if " + con + " then " + action + ".";
 	}
 }

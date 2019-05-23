@@ -3,9 +3,7 @@ package aima.core.learning.reinforcement.example;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.environment.cellworld.Cell;
 import aima.core.environment.cellworld.CellWorldAction;
@@ -19,11 +17,11 @@ import aima.core.util.Randomizer;
  * @author Ciaran O'Reilly
  * 
  */
-public class CellWorldEnvironment extends AbstractEnvironment {
+public class CellWorldEnvironment extends AbstractEnvironment<CellWorldPercept, CellWorldAction> {
 	private Cell<Double> startingCell = null;
-	private Set<Cell<Double>> allStates = new LinkedHashSet<Cell<Double>>();
+	private Set<Cell<Double>> allStates = new LinkedHashSet<>();
 	private TransitionProbabilityFunction<Cell<Double>, CellWorldAction> tpf;
-	private Randomizer r = null;
+	private Randomizer r;
 	private CellWorldEnvironmentState currentState = new CellWorldEnvironmentState();
 
 	/**
@@ -76,31 +74,35 @@ public class CellWorldEnvironment extends AbstractEnvironment {
 	}
 
 	@Override
-	public void executeAction(Agent agent, Action action) {
-		if (!action.isNoOp()) {
-			Cell<Double> s = currentState.getAgentLocation(agent);
-			double probabilityChoice = r.nextDouble();
-			double total = 0;
-			boolean set = false;
-			for (Cell<Double> sDelta : allStates) {
-				total += tpf.probability(sDelta, s, (CellWorldAction) action);
-				if (total > 1.0) {
-					throw new IllegalStateException("Bad probability calculation.");
-				}
-				if (total > probabilityChoice) {
-					currentState.setAgentLocation(agent, sDelta);
-					set = true;
-					break;
-				}
+	public void executeAction(Agent<?, ?> agent, CellWorldAction action) {
+		Cell<Double> s = currentState.getAgentLocation(agent);
+		double probabilityChoice = r.nextDouble();
+		double total = 0;
+		boolean set = false;
+		for (Cell<Double> sDelta : allStates) {
+			total += tpf.probability(sDelta, s, action);
+			if (total > 1.0) {
+				throw new IllegalStateException("Bad probability calculation.");
 			}
-			if (!set) {
-				throw new IllegalStateException("Failed to simulate the action="+action+" correctly from s="+s);
+			if (total > probabilityChoice) {
+				currentState.setAgentLocation(agent, sDelta);
+				set = true;
+				break;
 			}
+		}
+		if (!set) {
+			throw new IllegalStateException("Failed to simulate the action=" + action + " correctly from s=" + s);
 		}
 	}
 
+	/** Agents, which do nothing, die. */
 	@Override
-	public Percept getPerceptSeenBy(Agent anAgent) {
+	protected void executeNoOp(Agent<? super CellWorldPercept, ? extends CellWorldAction> agent) {
+		agent.setAlive(false);
+	}
+
+	@Override
+	public CellWorldPercept getPerceptSeenBy(Agent anAgent) {
 		return currentState.getPerceptFor(anAgent);
 	}
 }

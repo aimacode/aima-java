@@ -5,13 +5,14 @@ import aima.core.agent.impl.AbstractAgent;
 
 /**
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
-public class MockAgent extends AbstractAgent {
+public class MockAgent<P, A> extends AbstractAgent<P, A> {
 	public MockAgent() {
 	}
 
-	public MockAgent(AgentProgram agent) {
+	public MockAgent(AgentProgram<P, A> agent) {
 		super(agent);
 	}
 }

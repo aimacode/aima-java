@@ -4,6 +4,8 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.Percept;
+import aima.core.agent.impl.AbstractEnvironment;
+import aima.core.agent.impl.DynamicAction;
 import aima.core.environment.vacuum.VacuumEnvironment;
 import aima.core.environment.vacuum.VacuumEnvironment.LocationState;
 import aima.core.environment.vacuum.VacuumEnvironmentState;
@@ -26,7 +28,7 @@ import java.util.function.Function;
  *
  * @author Ruediger Lunde
  */
-public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
+public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl<Percept, Action> {
 
     private Set<Agent> agentsInSuckState = new HashSet<>();
     private Map<Agent, Double> agentOrientations = new HashMap<>();
@@ -54,7 +56,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
     }
 
     @Override
-    public void initialize(Environment env) {
+    public void initialize(AbstractEnvironment<? extends Percept, ? extends Action> env) {
         agentsInSuckState.clear();
         agentOrientations.clear();
         agentSymbols.clear();
@@ -67,7 +69,7 @@ public class VacuumEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
     }
 
     @Override
-    public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+    public void agentActed(Agent<?, ?> agent, Percept percept, Action action, Environment<?, ?> source) {
         if (action == VacuumEnvironment.ACTION_SUCK)
             agentsInSuckState.add(agent);
         else

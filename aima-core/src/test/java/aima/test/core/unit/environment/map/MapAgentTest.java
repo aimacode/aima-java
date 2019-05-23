@@ -43,7 +43,7 @@ public class MapAgentTest {
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(A):Action[name=NoOp]:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(A):METRIC[pathCost]=0.0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:",
 				envChanges.toString());
 	}
 
@@ -56,7 +56,7 @@ public class MapAgentTest {
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(D):Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(D):Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:",
 				envChanges.toString());
 	}
 
@@ -72,7 +72,7 @@ public class MapAgentTest {
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(D):Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(D):Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:",
 				envChanges.toString());
 	}
 
@@ -85,11 +85,11 @@ public class MapAgentTest {
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(E), Goal=In(A):Action[name=NoOp]:METRIC[pathCost]=0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=1:Action[name=NoOp]:",
+				"CurrentLocation=In(E), Goal=In(A):METRIC[pathCost]=0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=1:",
 				envChanges.toString());
 	}
 
-	private class TestEnvironmentView implements EnvironmentView {
+	private class TestEnvironmentView implements EnvironmentView<Object, Object> {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}
@@ -98,7 +98,7 @@ public class MapAgentTest {
 			// Nothing
 		}
 
-		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+		public void agentActed(Agent agent, Object percept, Object action, Environment source) {
 			envChanges.append(action).append(":");
 		}
 	}

@@ -4,7 +4,9 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.search.nondeterministic.ResultsFunction;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Contains useful functions for the vacuum cleaner world.

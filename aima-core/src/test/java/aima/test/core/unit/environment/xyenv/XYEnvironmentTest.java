@@ -27,6 +27,7 @@ public class XYEnvironmentTest {
 		env = new XYEnvironment(10, 12);
 		a = new MockAgent();
 		env.addObjectToLocation(a, new XYLocation(3, 4));
+		env.addAgent(a);
 	}
 
 	@Test
@@ -49,6 +50,7 @@ public class XYEnvironmentTest {
 		XYLocation loc = new XYLocation(5, 5);
 		AbstractAgent b = new MockAgent();
 		env.addObjectToLocation(b, loc);
+		env.addAgent(b);
 		Assert.assertEquals(2, env.getAgents().size());
 
 		Assert.assertEquals(loc, env.getCurrentLocationFor(b));

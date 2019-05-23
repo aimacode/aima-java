@@ -3,13 +3,15 @@ package aima.core.agent;
 /**
  * Allows external applications/logic to view the interaction of Agent(s) with
  * an Environment.
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public interface EnvironmentView {
+public interface EnvironmentView<P, A> {
 	/**
 	 * A simple notification message from an object in the Environment.
 	 * 
@@ -27,7 +29,7 @@ public interface EnvironmentView {
 	 * @param source
 	 *            the Environment to which the agent was added.
 	 */
-	void agentAdded(Agent agent, Environment source);
+	void agentAdded(Agent<?, ?> agent, Environment<?, ?> source);
 
 	/**
 	 * Indicates the Environment has changed as a result of an Agent's action.
@@ -41,5 +43,5 @@ public interface EnvironmentView {
 	 * @param source
 	 *            the Environment in which the agent has acted.
 	 */
-	void agentActed(Agent agent, Percept percept, Action action, Environment source);
+	void agentActed(Agent<?, ?> agent, P percept, A action, Environment<?, ?> source);
 }

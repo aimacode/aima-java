@@ -36,7 +36,7 @@ public class GreedyBestFirstSearchTest {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
 			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
 					(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 
 			Assert.assertEquals(49, agent.getActions().size()); // GraphSearchReducedFrontier: "49"
 			Assert.assertEquals("332", // GraphSearchReducedFrontier: "197"
@@ -64,7 +64,7 @@ public class GreedyBestFirstSearchTest {
 			QueueBasedSearch<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
 					(new GraphSearchReducedFrontier<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
 
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			Assert.assertEquals(49, agent.getActions().size());
 			Assert.assertEquals("197", agent.getInstrumentation().getProperty("nodesExpanded"));
 			Assert.assertEquals("140", agent.getInstrumentation().getProperty("queueSize"));
@@ -85,7 +85,7 @@ public class GreedyBestFirstSearchTest {
 
 		SearchForActions<String, MoveToAction> search = new GreedyBestFirstSearch<>(new TreeSearch<>(),
 				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=Fagaras], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());
@@ -105,7 +105,7 @@ public class GreedyBestFirstSearchTest {
 
 		SearchForActions<String, MoveToAction> search = new GreedyBestFirstSearch<>(new GraphSearch<>(),
 				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=Fagaras], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());

@@ -1,23 +1,24 @@
 package aima.core.environment.map;
 
-import java.util.HashMap;
-
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.util.datastructure.Pair;
+
+import java.util.HashMap;
 
 /**
  * @author Ciaran O'Reilly
  * 
  */
 public class MapEnvironmentState implements EnvironmentState {
-	private java.util.Map<Agent, Pair<String, Double>> agentLocationAndTravelDistance = new HashMap<>();
+	private java.util.Map<Agent<?, ?>, Pair<String, Double>>
+			agentLocationAndTravelDistance = new HashMap<>();
 
 	public MapEnvironmentState() {
 
 	}
 
-	public String getAgentLocation(Agent a) {
+	public String getAgentLocation(Agent<?, ?> a) {
 		Pair<String, Double> locAndTDistance = agentLocationAndTravelDistance
 				.get(a);
 		if (null == locAndTDistance) {
@@ -26,7 +27,7 @@ public class MapEnvironmentState implements EnvironmentState {
 		return locAndTDistance.getFirst();
 	}
 
-	public Double getAgentTravelDistance(Agent a) {
+	public Double getAgentTravelDistance(Agent<?, ?> a) {
 		Pair<String, Double> locAndTDistance = agentLocationAndTravelDistance
 				.get(a);
 		if (null == locAndTDistance) {
@@ -35,8 +36,8 @@ public class MapEnvironmentState implements EnvironmentState {
 		return locAndTDistance.getSecond();
 	}
 
-	public void setAgentLocationAndTravelDistance(Agent a, String location,
-			Double travelDistance) {
+	public void setAgentLocationAndTravelDistance(Agent<?, ?> a,
+												  String location, Double travelDistance) {
 		agentLocationAndTravelDistance.put(a, new Pair<String, Double>(
 				location, travelDistance));
 	}

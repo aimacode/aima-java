@@ -1,6 +1,7 @@
 package aima.test.core.unit.search.online;
 
 import aima.core.agent.*;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctions;
@@ -39,14 +40,14 @@ public class LRTAStarAgentTest {
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
 				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("A"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
-		LRTAStarAgent<String, MoveToAction> agent = new LRTAStarAgent<>
+		LRTAStarAgent<DynamicPercept, String, MoveToAction> agent = new LRTAStarAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction(), h);
 
 		me.addAgent(agent, "A");
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
-		Assert.assertEquals("Action[name=NoOp]->", envChanges.toString());
+		Assert.assertEquals("", envChanges.toString());
 	}
 
 	@Test
@@ -55,7 +56,7 @@ public class LRTAStarAgentTest {
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
 				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("F"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
-		LRTAStarAgent<String, MoveToAction> agent = new LRTAStarAgent<>
+		LRTAStarAgent<DynamicPercept, String, MoveToAction> agent = new LRTAStarAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction(), h);
 
 		me.addAgent(agent, "A");
@@ -63,7 +64,7 @@ public class LRTAStarAgentTest {
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=moveTo, location=B]->Action[name=moveTo, location=A]->Action[name=moveTo, location=B]->Action[name=moveTo, location=C]->Action[name=moveTo, location=B]->Action[name=moveTo, location=C]->Action[name=moveTo, location=D]->Action[name=moveTo, location=C]->Action[name=moveTo, location=D]->Action[name=moveTo, location=E]->Action[name=moveTo, location=D]->Action[name=moveTo, location=E]->Action[name=moveTo, location=F]->Action[name=NoOp]->",
+				"Action[name=moveTo, location=B]:Action[name=moveTo, location=A]:Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:Action[name=moveTo, location=E]:Action[name=moveTo, location=D]:Action[name=moveTo, location=E]:Action[name=moveTo, location=F]:",
 				envChanges.toString());
 	}
 
@@ -73,7 +74,7 @@ public class LRTAStarAgentTest {
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
 				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("G"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
-		LRTAStarAgent<String, MoveToAction> agent = new LRTAStarAgent<>
+		LRTAStarAgent<DynamicPercept, String, MoveToAction> agent = new LRTAStarAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction(), h);
 
 		me.addAgent(agent, "A");
@@ -84,21 +85,21 @@ public class LRTAStarAgentTest {
 		me.step(14);
 
 		Assert.assertEquals(
-				"Action[name=moveTo, location=B]->Action[name=moveTo, location=A]->Action[name=moveTo, location=B]->Action[name=moveTo, location=C]->Action[name=moveTo, location=B]->Action[name=moveTo, location=C]->Action[name=moveTo, location=D]->Action[name=moveTo, location=C]->Action[name=moveTo, location=D]->Action[name=moveTo, location=E]->Action[name=moveTo, location=D]->Action[name=moveTo, location=E]->Action[name=moveTo, location=F]->Action[name=moveTo, location=E]->",
+				"Action[name=moveTo, location=B]:Action[name=moveTo, location=A]:Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:Action[name=moveTo, location=E]:Action[name=moveTo, location=D]:Action[name=moveTo, location=E]:Action[name=moveTo, location=F]:Action[name=moveTo, location=E]:",
 				envChanges.toString());
 	}
 
-	private class TestEnvironmentView implements EnvironmentView {
+	private class TestEnvironmentView implements EnvironmentView<Object, Object> {
 		public void notify(String msg) {
-			envChanges.append(msg).append("->");
+			envChanges.append(msg).append(":");
 		}
 
 		public void agentAdded(Agent agent, Environment source) {
-			// Nothing.
+			// Nothing
 		}
 
-		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
-			envChanges.append(action).append("->");
+		public void agentActed(Agent agent, Object percept, Object action, Environment source) {
+			envChanges.append(action).append(":");
 		}
 	}
 }

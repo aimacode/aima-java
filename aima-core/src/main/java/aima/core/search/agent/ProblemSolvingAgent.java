@@ -1,9 +1,6 @@
 package aima.core.search.agent;
 
-import aima.core.agent.Action;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.LinkedList;
@@ -43,12 +40,13 @@ import java.util.Queue;
  * </code>
  * </pre>
  *
+ * @param <P> The type used to represent percepts
  * @param <S> The type used to represent states
  * @param <A> The type of the actions to be used to navigate through the state space
  *
  * @author Ruediger Lunde
  */
-public abstract class ProblemSolvingAgent<S, A extends Action> extends AbstractAgent {
+public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 
 	/** Plan, an action sequence, initially empty. */
 	protected Queue<A> plan = new LinkedList<>();
@@ -60,8 +58,8 @@ public abstract class ProblemSolvingAgent<S, A extends Action> extends AbstractA
 	 * 
 	 * @return an action
 	 */
-	public Action execute(Percept p) {
-		Action action = NoOpAction.NO_OP;
+	public Optional<A> execute(P p) {
+		A action = null;
 		// state <- UPDATE-STATE(state, percept)
 		updateState(p);
 		// if plan is empty then do
@@ -91,7 +89,7 @@ public abstract class ProblemSolvingAgent<S, A extends Action> extends AbstractA
 			// plan <- REST(plan)
 			action = plan.remove();
 		}
-		return action;
+		return Optional.ofNullable(action);
 	}
 
 	/**
@@ -117,7 +115,7 @@ public abstract class ProblemSolvingAgent<S, A extends Action> extends AbstractA
 	 * the model of the world proved to be wrong, implementations could update
 	 * the model and also clear the plan.
 	 */
-	protected abstract void updateState(Percept p);
+	protected abstract void updateState(P p);
 
 	/**
 	 * Primitive operation, responsible for goal generation. In this version,

@@ -1,8 +1,6 @@
 package aima.core.environment.map;
 
-import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.agent.impl.DynamicPercept;
 
@@ -12,7 +10,7 @@ import aima.core.agent.impl.DynamicPercept;
  * @author Ciaran O'Reilly
  * 
  */
-public class MapEnvironment extends AbstractEnvironment {
+public class MapEnvironment extends AbstractEnvironment<DynamicPercept, MoveToAction> {
 
 	private Map map = null;
 	private MapEnvironmentState state = new MapEnvironmentState();
@@ -21,7 +19,7 @@ public class MapEnvironment extends AbstractEnvironment {
 		this.map = map;
 	}
 
-	public void addAgent(Agent a, String startLocation) {
+	public void addAgent(Agent<? super DynamicPercept, ? extends MoveToAction> a, String startLocation) {
 		// Ensure the agent state information is tracked before
 		// adding to super, as super will notify the registered
 		// EnvironmentViews that is was added.
@@ -29,32 +27,27 @@ public class MapEnvironment extends AbstractEnvironment {
 		super.addAgent(a);
 	}
 
-	public String getAgentLocation(Agent a) {
+	public String getAgentLocation(Agent<?, ?> a) {
 		return state.getAgentLocation(a);
 	}
 
-	public Double getAgentTravelDistance(Agent a) {
+	public Double getAgentTravelDistance(Agent<?, ?> a) {
 		return state.getAgentTravelDistance(a);
 	}
 
 	@Override
-	public void executeAction(Agent agent, Action a) {
-
-		if (!a.isNoOp()) {
-			MoveToAction act = (MoveToAction) a;
-
-			String currLoc = getAgentLocation(agent);
-			Double distance = map.getDistance(currLoc, act.getToLocation());
-			if (distance != null) {
-				double currTD = getAgentTravelDistance(agent);
-				state.setAgentLocationAndTravelDistance(agent,
-						act.getToLocation(), currTD + distance);
-			}
+	public void executeAction(Agent<?, ?> agent, MoveToAction act) {
+		String currLoc = getAgentLocation(agent);
+		Double distance = map.getDistance(currLoc, act.getToLocation());
+		if (distance != null) {
+			double currTD = getAgentTravelDistance(agent);
+			state.setAgentLocationAndTravelDistance(agent,
+					act.getToLocation(), currTD + distance);
 		}
 	}
 
 	@Override
-	public Percept getPerceptSeenBy(Agent anAgent) {
+	public DynamicPercept getPerceptSeenBy(Agent<?, ?> anAgent) {
 		return new DynamicPercept(DynAttributeNames.PERCEPT_IN,
 				getAgentLocation(anAgent));
 	}

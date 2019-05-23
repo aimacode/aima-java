@@ -128,7 +128,7 @@ public class NQueensApp extends SimpleAgentApp {
 	 * Displays the informations provided by a <code>NQueensEnvironment</code>
 	 * on a panel.
 	 */
-	protected static class NQueensView extends AgentAppEnvironmentView implements ActionListener {
+	protected static class NQueensView extends AgentAppEnvironmentView<Percept, QueenAction> implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		protected JButton[] squareButtons;
 		protected int currSize = -1;
@@ -137,7 +137,7 @@ public class NQueensApp extends SimpleAgentApp {
 		}
 
 		@Override
-		public void setEnvironment(Environment env) {
+		public void setEnvironment(Environment<? extends Percept, ? extends QueenAction> env) {
 			super.setEnvironment(env);
 			showState();
 		}
@@ -149,7 +149,7 @@ public class NQueensApp extends SimpleAgentApp {
 
 		/** Agent value null indicates a user initiated action. */
 		@Override
-		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+		public void agentActed(Agent<?, ?> agent, Percept percept, QueenAction action, Environment<?, ?> source) {
 			showState();
 			notify((agent == null ? "User: " : "") + action.toString());
 		}
@@ -347,7 +347,7 @@ public class NQueensApp extends SimpleAgentApp {
 	}
 
 	/** Simple environment maintaining just the current board state. */
-	public static class NQueensEnvironment extends AbstractEnvironment {
+	public static class NQueensEnvironment extends AbstractEnvironment<Percept, QueenAction> {
 		NQueensBoard board;
 
 		public NQueensEnvironment(NQueensBoard board) {
@@ -362,22 +362,19 @@ public class NQueensApp extends SimpleAgentApp {
 		 * Executes the provided action and returns null.
 		 */
 		@Override
-		public void executeAction(Agent agent, Action action) {
-			if (action instanceof QueenAction) {
-				QueenAction act = (QueenAction) action;
-				XYLocation loc = new XYLocation(act.getX(), act.getY());
-				if (act.getName() == QueenAction.PLACE_QUEEN)
-					board.addQueenAt(loc);
-				else if (act.getName() == QueenAction.REMOVE_QUEEN)
-					board.removeQueenFrom(loc);
-				else if (act.getName() == QueenAction.MOVE_QUEEN)
-					board.moveQueenTo(loc);
-			}
+		public void executeAction(Agent<?, ?> agent, QueenAction action) {
+			XYLocation loc = new XYLocation(action.getX(), action.getY());
+			if (action.getName() == QueenAction.PLACE_QUEEN)
+				board.addQueenAt(loc);
+			else if (action.getName() == QueenAction.REMOVE_QUEEN)
+				board.removeQueenFrom(loc);
+			else if (action.getName() == QueenAction.MOVE_QUEEN)
+				board.moveQueenTo(loc);
 		}
 
 		/** Returns null. */
 		@Override
-		public Percept getPerceptSeenBy(Agent anAgent) {
+		public Percept getPerceptSeenBy(Agent<?, ?> anAgent) {
 			return null;
 		}
 	}

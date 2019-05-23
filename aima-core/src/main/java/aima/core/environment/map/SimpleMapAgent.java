@@ -1,11 +1,10 @@
 package aima.core.environment.map;
 
 import aima.core.agent.EnvironmentViewNotifier;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
-import aima.core.search.framework.SearchForActions;
 import aima.core.search.agent.SimpleProblemSolvingAgent;
+import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.Set;
  * @author Ruediger Lunde
  * 
  */
-public class SimpleMapAgent extends SimpleProblemSolvingAgent<String, MoveToAction> {
+public class SimpleMapAgent extends SimpleProblemSolvingAgent<DynamicPercept, String, MoveToAction> {
 
 	protected Map map = null;
 	protected DynamicState state = new DynamicState();
@@ -65,9 +64,8 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent<String, MoveToActi
 	// PROTECTED METHODS
 	//
 	@Override
-	protected void updateState(Percept p) {
-		DynamicPercept dp = (DynamicPercept) p;
-		state.setAttribute(DynAttributeNames.AGENT_LOCATION, dp.getAttribute(DynAttributeNames.PERCEPT_IN));
+	protected void updateState(DynamicPercept p) {
+		state.setAttribute(DynAttributeNames.AGENT_LOCATION, p.getAttribute(DynAttributeNames.PERCEPT_IN));
 	}
 
 	@Override

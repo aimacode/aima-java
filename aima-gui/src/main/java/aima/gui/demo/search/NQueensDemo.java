@@ -56,7 +56,7 @@ public class NQueensDemo {
 			Problem<NQueensBoard, QueenAction> problem =
 					NQueensFunctions.createIncrementalFormulationProblem(boardSize);
 			SearchForActions<NQueensBoard, QueenAction> search = new DepthLimitedSearch<>(boardSize);
-			SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class NQueensDemo {
 			Problem<NQueensBoard, QueenAction> problem =
 					NQueensFunctions.createIncrementalFormulationProblem(boardSize);
 			SearchForActions<NQueensBoard, QueenAction> search = new BreadthFirstSearch<>(new TreeSearch<>());
-			SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -85,7 +85,7 @@ public class NQueensDemo {
 			Problem<NQueensBoard, QueenAction> problem =
 					NQueensFunctions.createIncrementalFormulationProblem(boardSize);
 			SearchForActions<NQueensBoard, QueenAction> search = new DepthFirstSearch<>(new GraphSearch<>());
-			SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -99,7 +99,7 @@ public class NQueensDemo {
 			Problem<NQueensBoard, QueenAction> problem =
 					NQueensFunctions.createIncrementalFormulationProblem(boardSize);
 			SearchForActions<NQueensBoard, QueenAction> search = new IterativeDeepeningSearch<>();
-			SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 
 			System.out.println();
 			printActions(agent.getActions());
@@ -118,7 +118,7 @@ public class NQueensDemo {
 			SimulatedAnnealingSearch<NQueensBoard, QueenAction> search =
 					new SimulatedAnnealingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction(),
 					new Scheduler(20, 0.045, 100));
-			SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 
 			System.out.println();
 			printActions(agent.getActions());
@@ -137,7 +137,7 @@ public class NQueensDemo {
 					NQueensFunctions.createCompleteStateFormulationProblem(boardSize, Config.QUEENS_IN_FIRST_ROW);
 			HillClimbingSearch<NQueensBoard, QueenAction> search = new HillClimbingSearch<>
 					(NQueensFunctions.createAttackingPairsHeuristicFunction());
-			SearchAgent<NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 
 			System.out.println();
 			printActions(agent.getActions());
@@ -204,7 +204,7 @@ public class NQueensDemo {
 
 	}
 
-	private static void printActions(List<Action> actions) {
+	private static void printActions(List<QueenAction> actions) {
 		for (Action action : actions) {
 			System.out.println(action.toString());
 		}

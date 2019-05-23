@@ -8,10 +8,7 @@ import aima.core.environment.wumpusworld.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 
@@ -99,10 +96,10 @@ public class HybridWumpusAgentTest {
 		HybridWumpusAgent hwa =
 				new HybridWumpusAgent(2, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
 		// The gold is in the first square
-		Action a = hwa.execute(new WumpusPercept().setStench().setBreeze().setGlitter());
-		Assert.assertEquals(a, WumpusAction.GRAB);
+		Optional<WumpusAction> a = hwa.execute(new WumpusPercept().setStench().setBreeze().setGlitter());
+		Assert.assertEquals(WumpusAction.GRAB, a.orElse(null));
 		a = hwa.execute(new WumpusPercept().setStench().setBreeze().setGlitter());
-		Assert.assertEquals(a, WumpusAction.CLIMB);
+		Assert.assertEquals(WumpusAction.CLIMB, a.orElse(null));
 	}
 
 	@Test

@@ -1,7 +1,9 @@
 package aima.gui.swing.applications.agent;
 
 import aima.core.agent.Action;
+import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.DynamicAction;
 import aima.core.environment.vacuum.*;
 import aima.core.search.agent.NondeterministicSearchAgent;
 import aima.core.search.nondeterministic.NondeterministicProblem;
@@ -18,7 +20,7 @@ import aima.gui.swing.framework.SimulationThread;
 public class VacuumController extends AgentAppController {
 	
 	protected VacuumEnvironment env = null;
-	protected AbstractAgent agent = null;
+	protected AbstractAgent<Percept, Action> agent = null;
 	protected boolean isPrepared = false;
 	
 	/** Prepares next simulation if that makes sense. */
@@ -72,7 +74,7 @@ public class VacuumController extends AgentAppController {
 								VacuumWorldFunctions::getActions, VacuumWorldFunctions.createResultsFunction(agent),
 								VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
 				// Set the problem now for this kind of agent
-				((NondeterministicSearchAgent<VacuumEnvironmentState, Action>) agent).makePlan(problem);
+				((NondeterministicSearchAgent) agent).makePlan(problem);
 			}
 			isPrepared = true;
 		}

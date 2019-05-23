@@ -1,33 +1,28 @@
 package aima.core.environment.vacuum;
 
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
-
 import aima.core.agent.Action;
 import aima.core.agent.Model;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.DynamicState;
-import aima.core.agent.impl.NoOpAction;
 import aima.core.agent.impl.aprog.ModelBasedReflexAgentProgram;
 import aima.core.agent.impl.aprog.simplerule.ANDCondition;
 import aima.core.agent.impl.aprog.simplerule.EQUALCondition;
 import aima.core.agent.impl.aprog.simplerule.Rule;
 
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
+
 /**
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  * 
  */
-public class ModelBasedReflexVacuumAgent extends AbstractAgent {
-
-	private static final String ATTRIBUTE_CURRENT_LOCATION = "currentLocation";
-	private static final String ATTRIBUTE_CURRENT_STATE = "currentState";
-	private static final String ATTRIBUTE_STATE_LOCATION_A = "stateLocationA";
-	private static final String ATTRIBUTE_STATE_LOCATION_B = "stateLocationB";
+public class ModelBasedReflexVacuumAgent extends AbstractAgent<Percept, Action> {
 
 	public ModelBasedReflexVacuumAgent() {
-		super(new ModelBasedReflexAgentProgram() {
+		super(new ModelBasedReflexAgentProgram<Percept, Action>() {
 			@Override
 			protected void init() {
 				setState(new DynamicState());
@@ -39,16 +34,16 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent {
 
 				LocalVacuumEnvironmentPercept vep = (LocalVacuumEnvironmentPercept) percept;
 
-				state.setAttribute(ATTRIBUTE_CURRENT_LOCATION,
+				state.setAttribute(AttributeNames.CURRENT_LOCATION,
 						vep.getAgentLocation());
-				state.setAttribute(ATTRIBUTE_CURRENT_STATE,
+				state.setAttribute(AttributeNames.CURRENT_STATE,
 						vep.getLocationState());
 				// Keep track of the state of the different locations
 				if (Objects.equals(VacuumEnvironment.LOCATION_A, vep.getAgentLocation())) {
-					state.setAttribute(ATTRIBUTE_STATE_LOCATION_A,
+					state.setAttribute(AttributeNames.STATE_LOCATION_A,
 							vep.getLocationState());
 				} else {
-					state.setAttribute(ATTRIBUTE_STATE_LOCATION_B,
+					state.setAttribute(AttributeNames.STATE_LOCATION_B,
 							vep.getLocationState());
 				}
 				return state;
@@ -59,23 +54,23 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent {
 	//
 	// PRIVATE METHODS
 	//
-	private static Set<Rule> getRuleSet() {
+	private static Set<Rule<Action>> getRuleSet() {
 		// Note: Using a LinkedHashSet so that the iteration order (i.e. implied
 		// precedence) of rules can be guaranteed.
-		Set<Rule> rules = new LinkedHashSet<>();
+		Set<Rule<Action>> rules = new LinkedHashSet<>();
 
-		rules.add(new Rule(new ANDCondition(new EQUALCondition(
-				ATTRIBUTE_STATE_LOCATION_A,
+		rules.add(new Rule<>(new ANDCondition(new EQUALCondition(
+				AttributeNames.STATE_LOCATION_A,
 				VacuumEnvironment.LocationState.Clean), new EQUALCondition(
-				ATTRIBUTE_STATE_LOCATION_B,
-				VacuumEnvironment.LocationState.Clean)), NoOpAction.NO_OP));
-		rules.add(new Rule(new EQUALCondition(ATTRIBUTE_CURRENT_STATE,
+				AttributeNames.STATE_LOCATION_B,
+				VacuumEnvironment.LocationState.Clean)), null));
+		rules.add(new Rule<>(new EQUALCondition(AttributeNames.CURRENT_STATE,
 				VacuumEnvironment.LocationState.Dirty),
 				VacuumEnvironment.ACTION_SUCK));
-		rules.add(new Rule(new EQUALCondition(ATTRIBUTE_CURRENT_LOCATION,
+		rules.add(new Rule<>(new EQUALCondition(AttributeNames.CURRENT_LOCATION,
 				VacuumEnvironment.LOCATION_A),
 				VacuumEnvironment.ACTION_MOVE_RIGHT));
-		rules.add(new Rule(new EQUALCondition(ATTRIBUTE_CURRENT_LOCATION,
+		rules.add(new Rule<>(new EQUALCondition(AttributeNames.CURRENT_LOCATION,
 				VacuumEnvironment.LOCATION_B),
 				VacuumEnvironment.ACTION_MOVE_LEFT));
 

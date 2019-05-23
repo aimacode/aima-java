@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.ToDoubleFunction;
 
 import aima.core.agent.Agent;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.*;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
@@ -179,7 +180,7 @@ public class OsmAgentController extends AgentAppController {
 		} else {
 			StringBuilder statusMsg = new StringBuilder();
 			statusMsg.append("Task completed");
-			List<Agent> agents = env.getAgents();
+			List<Agent<? super DynamicPercept, ? extends MoveToAction>> agents = env.getAgents();
 			if (agents.size() == 1) {
 				Double travelDistance = env.getAgentTravelDistance(agents.get(0));
 				if (travelDistance != null) {

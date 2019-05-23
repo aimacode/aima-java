@@ -1,8 +1,6 @@
 package aima.core.environment.wumpusworld;
 
-import aima.core.agent.Action;
 import aima.core.agent.EnvironmentViewNotifier;
-import aima.core.agent.Percept;
 import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
 import aima.core.search.framework.SearchForActions;
@@ -102,10 +100,10 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
      * @return an action the agent should take.
      */
     @Override
-    public Action execute(Percept percept) {
+    public Optional<WumpusAction> execute(WumpusPercept percept) {
 
         // TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
-        getKB().makePerceptSentence((WumpusPercept) percept, t);
+        getKB().makePerceptSentence(percept, t);
         // TELL the KB the temporal "physics" sentences for time t
         // Optimization: The agent is aware of it's position - the KB can profit from that!
         getKB().tellTemporalPhysicsSentences(t, currentPosition);
@@ -179,7 +177,7 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
         updateAgentPosition(action);
         visitedRooms.add(currentPosition.getRoom());
         // return action
-        return action;
+        return Optional.of(action);
     }
 
     /**

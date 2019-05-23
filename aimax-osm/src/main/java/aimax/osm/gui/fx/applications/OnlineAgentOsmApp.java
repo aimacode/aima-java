@@ -190,7 +190,7 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 
 	// helper classes...
 
-	private class TrackUpdater implements EnvironmentView {
+	private class TrackUpdater implements EnvironmentView<Percept, Action> {
 		int actionCounter = 0;
 
 		@Override

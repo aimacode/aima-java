@@ -1,6 +1,5 @@
 package aima.core.environment.map;
 
-import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.problem.ActionsFunction;
@@ -8,7 +7,6 @@ import aima.core.search.framework.problem.ResultFunction;
 import aima.core.search.framework.problem.StepCostFunction;
 import aima.core.util.math.geom.shapes.Point2D;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
@@ -37,8 +35,8 @@ public class MapFunctions {
         return new DistanceStepCostFunction(map);
     }
 
-    public static Function<Percept, String> createPerceptToStateFunction() {
-        return  p -> (String) ((DynamicPercept) p).getAttribute(DynAttributeNames.PERCEPT_IN);
+    public static Function<DynamicPercept, String> createPerceptToStateFunction() {
+        return  p -> (String) p.getAttribute(DynAttributeNames.PERCEPT_IN);
     }
 
     /** Returns a heuristic function based on straight line distance computation. */
@@ -65,12 +63,9 @@ public class MapFunctions {
         }
 
         public List<MoveToAction> apply(String state) {
-            List<MoveToAction> actions = new ArrayList<>();
-
             List<String> linkedLocations = reverseMode ? map.getPossiblePrevLocations(state)
                     : map.getPossibleNextLocations(state);
-            actions.addAll(linkedLocations.stream().map(MoveToAction::new).collect(Collectors.toList()));
-            return actions;
+            return linkedLocations.stream().map(MoveToAction::new).collect(Collectors.toList());
         }
     }
 

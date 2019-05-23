@@ -1,19 +1,17 @@
 package aima.core.environment.map;
 
 import aima.core.agent.EnvironmentViewNotifier;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
+import aima.core.search.agent.ProblemSolvingAgent;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.agent.ProblemSolvingAgent;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.informed.Informed;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
@@ -26,7 +24,7 @@ import java.util.function.ToDoubleFunction;
  *
  * @author Ruediger Lunde
  */
-public class MapAgent extends ProblemSolvingAgent<String, MoveToAction> {
+public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveToAction> {
 
     protected final Map map;
     protected final DynamicState state = new DynamicState();
@@ -82,9 +80,8 @@ public class MapAgent extends ProblemSolvingAgent<String, MoveToAction> {
     // PROTECTED METHODS
     //
     @Override
-    protected void updateState(Percept p) {
-        DynamicPercept dp = (DynamicPercept) p;
-        state.setAttribute(DynAttributeNames.AGENT_LOCATION, dp.getAttribute(DynAttributeNames.PERCEPT_IN));
+    protected void updateState(DynamicPercept p) {
+        state.setAttribute(DynAttributeNames.AGENT_LOCATION, p.getAttribute(DynAttributeNames.PERCEPT_IN));
     }
 
     @SuppressWarnings("unchecked")

@@ -27,10 +27,12 @@ import javax.swing.JToolBar;
  * selectors. The frame is configurable at run-time, so subclassing will not
  * always be necessary.
  * </p>
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ruediger Lunde
  */
-public class AgentAppFrame extends JFrame {
+public class AgentAppFrame<P, A> extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	/** The controller, which executes the domain-level commands. */
@@ -56,7 +58,7 @@ public class AgentAppFrame extends JFrame {
 
 	protected JSplitPane centerPane;
 	private MessageLoggerPanel messageLogger;
-	private AgentAppEnvironmentView envView;
+	private AgentAppEnvironmentView<? extends P, ? extends A> envView;
 
 	/** Standard constructor. */
 	public AgentAppFrame() {
@@ -125,7 +127,7 @@ public class AgentAppFrame extends JFrame {
 	 * Returns the environment view which is currently used to display the
 	 * agents in their environment.
 	 */
-	public AgentAppEnvironmentView getEnvView() {
+	public AgentAppEnvironmentView<? extends P, ? extends A> getEnvView() {
 		return envView;
 	}
 
@@ -134,7 +136,7 @@ public class AgentAppFrame extends JFrame {
 	 * left of the splitbar. It typically implements a 2D-visualization of
 	 * agents in their environment.
 	 */
-	public void setEnvView(AgentAppEnvironmentView view) {
+	public void setEnvView(AgentAppEnvironmentView<? extends P, ? extends A> view) {
 		envView = view;
 		centerPane.add(JSplitPane.LEFT, envView);
 		envView.setController(controller);

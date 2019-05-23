@@ -46,7 +46,7 @@ public class EightPuzzleDemo {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(boardWithThreeMoveSolution);
 			SearchForActions<EightPuzzleBoard, Action> search = new DepthLimitedSearch<>(9);
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -60,7 +60,7 @@ public class EightPuzzleDemo {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SearchForActions<EightPuzzleBoard, Action> search = new IterativeDeepeningSearch<>();
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -75,7 +75,7 @@ public class EightPuzzleDemo {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(boardWithThreeMoveSolution);
 			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
 					(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction());
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -90,7 +90,7 @@ public class EightPuzzleDemo {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(boardWithThreeMoveSolution);
 			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
 					(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -105,7 +105,7 @@ public class EightPuzzleDemo {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
 					(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction());
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
@@ -120,7 +120,7 @@ public class EightPuzzleDemo {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SimulatedAnnealingSearch<EightPuzzleBoard, Action> search = new SimulatedAnnealingSearch<>
 					(EightPuzzleFunctions.createManhattanHeuristicFunction());
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			System.out.println("Search Outcome=" + search.getOutcome());
 			System.out.println("Final State=\n" + search.getLastSearchState());
@@ -136,7 +136,7 @@ public class EightPuzzleDemo {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
 					(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {

@@ -38,7 +38,7 @@ public class AStarSearchTest {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(),
 					EightPuzzleFunctions.createManhattanHeuristicFunction());
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			Assert.assertEquals(23, agent.getActions().size());
 			Assert.assertEquals("1133", // "926" GraphSearchReduced Frontier
 					agent.getInstrumentation().getProperty("nodesExpanded"));
@@ -64,9 +64,9 @@ public class AStarSearchTest {
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new GraphSearch<>(),
 				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 
-		List<Action> actions = agent.getActions();
+		List<MoveToAction> actions = agent.getActions();
 
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]",
@@ -87,7 +87,7 @@ public class AStarSearchTest {
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new TreeSearch<>(),
 				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());
@@ -112,7 +112,7 @@ public class AStarSearchTest {
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new GraphSearch<>(),
 				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());
@@ -143,9 +143,9 @@ public class AStarSearchTest {
 		ToDoubleFunction<Node<String, MoveToAction>> h = node -> 0.0; // Don't have one for this test
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new GraphSearch<>(), h);
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 
-		List<Action> actions = agent.getActions();
+		List<MoveToAction> actions = agent.getActions();
 
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=b], Action[name=moveTo, location=d], Action[name=moveTo, location=goal]]",

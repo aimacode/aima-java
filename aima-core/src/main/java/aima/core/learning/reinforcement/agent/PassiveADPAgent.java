@@ -1,10 +1,5 @@
 package aima.core.learning.reinforcement.agent;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import aima.core.agent.Action;
 import aima.core.learning.reinforcement.PerceptStateReward;
 import aima.core.probability.mdp.ActionsFunction;
@@ -14,6 +9,8 @@ import aima.core.probability.mdp.TransitionProbabilityFunction;
 import aima.core.probability.mdp.impl.MDP;
 import aima.core.util.FrequencyCounter;
 import aima.core.util.datastructure.Pair;
+
+import java.util.*;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 834.<br>
@@ -50,25 +47,26 @@ import aima.core.util.datastructure.Pair;
  *
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  *
  */
 public class PassiveADPAgent<S, A extends Action> extends
 		ReinforcementAgent<S, A> {
 	// persistent: &pi;, a fixed policy
-	private Map<S, A> pi = new HashMap<S, A>();
+	private Map<S, A> pi = new HashMap<>();
 	// mdp, an MDP with model P, rewards R, discount &gamma;
 	private MDP<S, A> mdp = null;
-	private Map<Pair<S, Pair<S, A>>, Double> P = new HashMap<Pair<S, Pair<S, A>>, Double>();
-	private Map<S, Double> R = new HashMap<S, Double>();
+	private Map<Pair<S, Pair<S, A>>, Double> P = new HashMap<>();
+	private Map<S, Double> R = new HashMap<>();
 	private PolicyEvaluation<S, A> policyEvaluation = null;
 	// U, a table of utilities, initially empty
-	private Map<S, Double> U = new HashMap<S, Double>();
+	private Map<S, Double> U = new HashMap<>();
 	// N<sub>sa</sub>, a table of frequencies for state-action pairs, initially
 	// zero
-	private FrequencyCounter<Pair<S, A>> Nsa = new FrequencyCounter<Pair<S, A>>();
+	private FrequencyCounter<Pair<S, A>> Nsa = new FrequencyCounter<>();
 	// N<sub>s'|sa</sub>, a table of outcome frequencies give state-action
 	// pairs, initially zero
-	private FrequencyCounter<Pair<S, Pair<S, A>>> NsDelta_sa = new FrequencyCounter<Pair<S, Pair<S, A>>>();
+	private FrequencyCounter<Pair<S, Pair<S, A>>> NsDelta_sa = new FrequencyCounter<>();
 	// s, a, the previous state and action, initially null
 	private S s = null;
 	private A a = null;
@@ -99,7 +97,7 @@ public class PassiveADPAgent<S, A extends Action> extends
 						Double p = P.get(new Pair<S, Pair<S, A>>(sDelta,
 								new Pair<S, A>(s, a)));
 
-						return null == p ? 0.0 : p.doubleValue();
+						return null == p ? 0.0 : p;
 					}
 				}, rewardfn);
 		this.policyEvaluation = policyEvaluation;
@@ -114,7 +112,7 @@ public class PassiveADPAgent<S, A extends Action> extends
 	 * @return an action
 	 */
 	@Override
-	public A execute(PerceptStateReward<S> percept) {
+	public Optional<A> execute(PerceptStateReward<S> percept) {
 		// if s' is new then U[s'] <- r'; R[s'] <- r'
 		S sDelta = percept.state();
 		double rDelta = percept.reward();
@@ -151,7 +149,7 @@ public class PassiveADPAgent<S, A extends Action> extends
 			a = pi.get(sDelta);
 		}
 		// return a
-		return a;
+		return Optional.ofNullable(a);
 	}
 
 	@Override

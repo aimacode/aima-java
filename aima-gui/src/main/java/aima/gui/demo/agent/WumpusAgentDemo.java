@@ -20,7 +20,7 @@ public class WumpusAgentDemo {
         // cave = create4x4Cave();
 
         WumpusEnvironment env = new WumpusEnvironment(cave);
-        EnvironmentView view = new SimpleEnvironmentView();
+        SimpleEnvironmentView view = new SimpleEnvironmentView();
         env.addEnvironmentView(view);
 
         HybridWumpusAgent a;

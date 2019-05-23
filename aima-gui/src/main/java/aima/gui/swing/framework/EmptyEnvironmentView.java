@@ -14,10 +14,12 @@ import aima.core.util.math.geom.shapes.Point2D;
  * translate 2D world coordinates into view coordinates. When creating
  * subclasses, it should normally be sufficient to override the method
  * {@link #paintComponent(java.awt.Graphics)}.
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ruediger Lunde
  */
-public class EmptyEnvironmentView extends AgentAppEnvironmentView {
+public class EmptyEnvironmentView<P, A> extends AgentAppEnvironmentView<P, A> {
 
 	private static final long serialVersionUID = 1L;
 	private int borderTop = 10;
@@ -86,18 +88,18 @@ public class EmptyEnvironmentView extends AgentAppEnvironmentView {
 
 	/** Stores the model and initiates painting. */
 	@Override
-	public void setEnvironment(Environment env) {
+	public void setEnvironment(Environment<? extends P, ? extends A> env) {
 		super.setEnvironment(env);
 		repaint();
 	}
 
 	@Override
-	public void agentAdded(Agent agent, Environment source) {
+	public void agentAdded(Agent<?, ?> agent, Environment<?, ?> source) {
 		repaint();
 	}
 
 	@Override
-	public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+	public void agentActed(Agent<?, ?> agent, P percept, A action, Environment<?, ?> source) {
 		repaint();
 	}
 

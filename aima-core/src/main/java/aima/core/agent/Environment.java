@@ -5,18 +5,21 @@ import java.util.List;
 /**
  * An abstract description of possible discrete Environments in which Agent(s)
  * can perceive and act.
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
-public interface Environment {
+public interface Environment<P, A> {
 	/**
 	 * Returns the Agents belonging to this Environment.
 	 * 
 	 * @return The Agents belonging to this Environment.
 	 */
-	List<Agent> getAgents();
+	List<Agent<? super P, ? extends A>> getAgents();
 
 	/**
 	 * Add an agent to the Environment.
@@ -24,7 +27,7 @@ public interface Environment {
 	 * @param agent
 	 *            the agent to be added.
 	 */
-	void addAgent(Agent agent);
+	void addAgent(Agent<? super P, ? extends A> agent);
 
 	/**
 	 * Remove an agent from the environment.
@@ -32,7 +35,7 @@ public interface Environment {
 	 * @param agent
 	 *            the agent to be removed.
 	 */
-	void removeAgent(Agent agent);
+	void removeAgent(Agent<? super P, ? extends A> agent);
 
 	/**
 	 * Returns the EnvironmentObjects that exist in this Environment.
@@ -91,7 +94,7 @@ public interface Environment {
 	 *            the Agent for which a performance measure is to be retrieved.
 	 * @return the performance measure associated with the Agent.
 	 */
-	double getPerformanceMeasure(Agent forAgent);
+	double getPerformanceMeasure(Agent<?, ?> forAgent);
 
 	/**
 	 * Add a view on the Environment.
@@ -99,7 +102,7 @@ public interface Environment {
 	 * @param ev
 	 *            the EnvironmentView to be added.
 	 */
-	void addEnvironmentView(EnvironmentView ev);
+	void addEnvironmentView(EnvironmentView<? super P, ? super A> ev);
 
 	/**
 	 * Remove a view on the Environment.
@@ -107,7 +110,7 @@ public interface Environment {
 	 * @param ev
 	 *            the EnvironmentView to be removed.
 	 */
-	void removeEnvironmentView(EnvironmentView ev);
+	void removeEnvironmentView(EnvironmentView<? super P, ? super A> ev);
 
 	/**
 	 * Notify all registered EnvironmentViews of a message.

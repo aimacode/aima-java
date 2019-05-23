@@ -40,7 +40,7 @@ public class SolutionTesterTest {
 
 		SearchForActions<String, MoveToAction> search = new UniformCostSearch<>(new GraphSearch<>());
 
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest], Action[name=moveTo, location=Urziceni], Action[name=moveTo, location=Hirsova]]",
 				agent.getActions().toString());

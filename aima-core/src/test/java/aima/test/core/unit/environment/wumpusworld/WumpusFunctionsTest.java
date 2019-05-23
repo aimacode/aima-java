@@ -53,10 +53,10 @@ public class WumpusFunctionsTest {
 		//If you are in front of a wall forward action is not possible
 		AgentPosition pos31s = new AgentPosition(3, 1, AgentPosition.Orientation.FACING_SOUTH);
 		AgentPosition pos41e = new AgentPosition(4, 1, AgentPosition.Orientation.FACING_EAST);
-		for (Action a : actionsFn.apply(pos31s))
+		for (WumpusAction a : actionsFn.apply(pos31s))
 			Assert.assertNotEquals(a, WumpusAction.FORWARD);
 		
-		for (Action a : actionsFn.apply(pos41e))
+		for (WumpusAction a : actionsFn.apply(pos41e))
 			Assert.assertNotEquals(a, WumpusAction.FORWARD);
 	}
 }

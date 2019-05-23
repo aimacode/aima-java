@@ -40,11 +40,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "A" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(A):Action[name=NoOp]:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=0:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(A):METRIC[pathCost]=0.0:METRIC[maxQueueSize]=0:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:",
 				envChanges.toString());
 	}
 
@@ -59,11 +59,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "A" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(A):Action[name=NoOp]:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=0:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(A):METRIC[pathCost]=0.0:METRIC[maxQueueSize]=0:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:",
 				envChanges.toString());
 	}
 
@@ -77,11 +77,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "B" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(B):Action[name=moveTo, location=B]:METRIC[pathCost]=5.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=1:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(B):Action[name=moveTo, location=B]:METRIC[pathCost]=5.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=1:",
 				envChanges.toString());
 	}
 
@@ -96,11 +96,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "C" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(C):Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(C):Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:",
 				envChanges.toString());
 	}
 
@@ -116,11 +116,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "D" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(D):Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=4:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(D):Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=4:",
 				envChanges.toString());
 	}
 
@@ -134,11 +134,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "B" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(B):Action[name=moveTo, location=B]:METRIC[pathCost]=5.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=1:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(B):Action[name=moveTo, location=B]:METRIC[pathCost]=5.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=1:",
 				envChanges.toString());
 	}
 
@@ -153,11 +153,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "C" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(C):Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=3:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(C):Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=3:",
 				envChanges.toString());
 
 	}
@@ -175,11 +175,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "E" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(E):Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:Action[name=moveTo, location=E]:METRIC[pathCost]=20.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=5:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(E):Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:Action[name=moveTo, location=E]:METRIC[pathCost]=20.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=5:",
 				envChanges.toString());
 	}
 
@@ -193,11 +193,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "B" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(B):Action[name=NoOp]:METRIC[pathCost]=0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=2:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(B):METRIC[pathCost]=0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=2:",
 				envChanges.toString());
 	}
 
@@ -212,11 +212,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "C" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(C):Action[name=NoOp]:METRIC[pathCost]=0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=2:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(C):METRIC[pathCost]=0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=2:",
 				envChanges.toString());
 	}
 
@@ -232,11 +232,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "E" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(E):Action[name=NoOp]:METRIC[pathCost]=0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=4:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(E):METRIC[pathCost]=0:METRIC[maxQueueSize]=2:METRIC[queueSize]=0:METRIC[nodesExpanded]=4:",
 				envChanges.toString());
 	}
 
@@ -262,11 +262,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "H" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(H):Action[name=moveTo, location=B]:Action[name=moveTo, location=H]:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=2:METRIC[nodesExpanded]=3:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(H):Action[name=moveTo, location=B]:Action[name=moveTo, location=H]:METRIC[pathCost]=10.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=2:METRIC[nodesExpanded]=3:",
 				envChanges.toString());
 	}
 
@@ -290,11 +290,11 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "F" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(F):Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:Action[name=moveTo, location=E]:Action[name=moveTo, location=F]:METRIC[pathCost]=25.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=6:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(F):Action[name=moveTo, location=B]:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:Action[name=moveTo, location=E]:Action[name=moveTo, location=F]:METRIC[pathCost]=25.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=6:",
 				envChanges.toString());
 	}
 
@@ -321,24 +321,24 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, search, new String[] { "F" });
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new BDSEnvironmentView());
+		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(F):Action[name=moveTo, location=E]:Action[name=moveTo, location=D]:Action[name=moveTo, location=F]:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=3:METRIC[nodesExpanded]=5:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(F):Action[name=moveTo, location=E]:Action[name=moveTo, location=D]:Action[name=moveTo, location=F]:METRIC[pathCost]=15.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=3:METRIC[nodesExpanded]=5:",
 				envChanges.toString());
 	}
 
-	private class BDSEnvironmentView implements EnvironmentView {
+	private class TestEnvironmentView implements EnvironmentView<Object, Object> {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}
 
 		public void agentAdded(Agent agent, Environment source) {
-			// Nothing.
+			// Nothing
 		}
 
-		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+		public void agentActed(Agent agent, Object percept, Object action, Environment source) {
 			envChanges.append(action).append(":");
 		}
 	}

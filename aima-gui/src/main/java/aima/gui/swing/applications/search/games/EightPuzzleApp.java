@@ -17,6 +17,8 @@ import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
+import aima.core.agent.impl.DynamicAction;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.eightpuzzle.*;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
@@ -44,7 +46,7 @@ import aima.gui.swing.framework.SimulationThread;
  * 
  * @author Ruediger Lunde
  */
-public class EightPuzzleApp extends SimpleAgentApp {
+public class EightPuzzleApp extends SimpleAgentApp<Percept, Action> {
 
 	/** List of supported search algorithm names. */
 	protected static List<String> SEARCH_NAMES = new ArrayList<>();
@@ -133,7 +135,8 @@ public class EightPuzzleApp extends SimpleAgentApp {
 	 * By pressing a button, the user can move the corresponding tile to the
 	 * adjacent gap.
 	 */
-	protected static class EightPuzzleView extends AgentAppEnvironmentView implements ActionListener {
+	protected static class EightPuzzleView extends AgentAppEnvironmentView<Percept, Action>
+			implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		protected JButton[] squareButtons;
 
@@ -151,19 +154,19 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		}
 
 		@Override
-		public void setEnvironment(Environment env) {
+		public void setEnvironment(Environment<? extends Percept, ? extends Action> env) {
 			super.setEnvironment(env);
 			showState();
 		}
 
 		@Override
-		public void agentAdded(Agent agent, Environment source) {
+		public void agentAdded(Agent<?, ?> agent, Environment<?, ?> source) {
 			showState();
 		}
 
 		/** Agent value null indicates a user initiated action. */
 		@Override
-		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+		public void agentActed(Agent<?, ?> agent, Percept percept, Action action, Environment<?, ?> source) {
 			showState();
 			notify((agent == null ? "User: " : "") + action.toString());
 		}
@@ -346,7 +349,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 	}
 
 	/** Simple environment maintaining just the current board state. */
-	protected static class EightPuzzleEnvironment extends AbstractEnvironment {
+	protected static class EightPuzzleEnvironment extends AbstractEnvironment<Percept, Action> {
 		EightPuzzleBoard board;
 
 		protected EightPuzzleEnvironment(EightPuzzleBoard board) {
@@ -359,7 +362,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		/** Executes the provided action and returns null. */
 		@Override
-		public void executeAction(Agent agent, Action action) {
+		public void executeAction(Agent<?, ?> agent, Action action) {
 			if (action == EightPuzzleBoard.UP)
 				board.moveGapUp();
 			else if (action == EightPuzzleBoard.DOWN)
@@ -372,7 +375,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		/** Returns null. */
 		@Override
-		public Percept getPerceptSeenBy(Agent anAgent) {
+		public Percept getPerceptSeenBy(Agent<?, ?> anAgent) {
 			return null;
 		}
 	}

@@ -1,13 +1,11 @@
 package aima.core.search.online;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
-import aima.core.agent.Action;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
@@ -45,15 +43,18 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  * <b>Note:</b> This algorithm fails to exit if the goal does not exist (e.g.
  * A<->B Goal=X), this could be an issue with the implementation. Comments
  * welcome.
- * 
+ *
+ * @param <P> The type used to represent percepts
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate through the state space
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class LRTAStarAgent<S, A extends Action> extends AbstractAgent {
+public class LRTAStarAgent<P, S, A> extends AbstractAgent<P, A> {
 
 	private OnlineSearchProblem<S, A> problem;
-	private Function<Percept, S> ptsFn;
+	private Function<P, S> ptsFn;
 	private ToDoubleFunction<S> h;
 	// persistent: result, a table, indexed by state and action, initially empty
 	private final TwoKeyHashMap<S, A, S> result = new TwoKeyHashMap<>();
@@ -77,7 +78,7 @@ public class LRTAStarAgent<S, A extends Action> extends AbstractAgent {
 	 *            the cheapest path from the state at node <em>n</em> to a goal
 	 *            state.
 	 */
-	public LRTAStarAgent(OnlineSearchProblem<S, A> problem, Function<Percept, S> ptsFn, ToDoubleFunction<S> h) {
+	public LRTAStarAgent(OnlineSearchProblem<S, A> problem, Function<P, S> ptsFn, ToDoubleFunction<S> h) {
 		setProblem(problem);
 		setPerceptToStateFunction(ptsFn);
 		setHeuristicFunction(h);
@@ -108,7 +109,7 @@ public class LRTAStarAgent<S, A extends Action> extends AbstractAgent {
 	 * 
 	 * @return the percept to state function of this agent.
 	 */
-	public Function<Percept, S> getPerceptToStateFunction() {
+	public Function<P, S> getPerceptToStateFunction() {
 		return ptsFn;
 	}
 
@@ -119,7 +120,7 @@ public class LRTAStarAgent<S, A extends Action> extends AbstractAgent {
 	 *            a function which returns the problem state associated with a
 	 *            given Percept.
 	 */
-	public void setPerceptToStateFunction(Function<Percept, S> ptsFn) {
+	public void setPerceptToStateFunction(Function<P, S> ptsFn) {
 		this.ptsFn = ptsFn;
 	}
 
@@ -145,7 +146,7 @@ public class LRTAStarAgent<S, A extends Action> extends AbstractAgent {
 	// function LRTA*-AGENT(s') returns an action
 	// inputs: s', a percept that identifies the current state
 	@Override
-	public Action execute(Percept psPrimed) {
+	public Optional<A> execute(P psPrimed) {
 		S sPrimed = ptsFn.apply(psPrimed);
 		// if GOAL-TEST(s') then return stop
 		if (problem.testGoal(sPrimed)) {
@@ -194,7 +195,7 @@ public class LRTAStarAgent<S, A extends Action> extends AbstractAgent {
 			setAlive(false);
 		}
 		// return a
-		return a != null ? a : NoOpAction.NO_OP;
+		return Optional.ofNullable(a);
 	}
 
 	//

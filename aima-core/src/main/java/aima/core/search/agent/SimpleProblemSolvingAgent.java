@@ -1,9 +1,6 @@
 package aima.core.search.agent;
 
-import aima.core.agent.Action;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.NoOpAction;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.LinkedList;
@@ -38,6 +35,7 @@ import java.util.Queue;
  * then executes the actions one at a time. When this is complete, it formulates
  * another goal and starts over.<br>
  *
+ * @param <P> The type used to represent percepts
  * @param <S> The type used to represent states
  * @param <A> The type of the actions to be used to navigate through the state space
  *
@@ -45,7 +43,7 @@ import java.util.Queue;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends AbstractAgent {
+public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 
 	// seq, an action sequence, initially empty
 	private Queue<A> seq = new LinkedList<>();
@@ -78,9 +76,14 @@ public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends Abs
 	}
 
 	// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
+	/**
+	 * Decides which action to perform next taking into account the current percept.
+	 * @param p The current percept
+	 * @return An action or empty if at goal or goal not found
+	 */
 	@Override
-	public Action execute(Percept p) {
-		Action action = NoOpAction.NO_OP; // return value if at goal or goal not found
+	public Optional<A> execute(P p) {
+		A action = null; // return value if at goal or goal not found
 
 		// state <- UPDATE-STATE(state, percept)
 		updateState(p);
@@ -97,8 +100,7 @@ public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends Abs
 				Problem<S, A> problem = formulateProblem(goal);
 				// seq <- SEARCH(problem)
 				Optional<List<A>> actions = search(problem);
-				if (actions.isPresent())
-					seq.addAll(actions.get());
+				actions.ifPresent(as -> seq.addAll(as));
 			} else {
 				// Agent no longer wishes to
 				// achieve any more goals
@@ -113,13 +115,13 @@ public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends Abs
 			action = seq.remove();
 		}
 
-		return action;
+		return Optional.ofNullable(action);
 	}
 
 	//
 	// PROTECTED METHODS
 	//
-	protected abstract void updateState(Percept p);
+	protected abstract void updateState(P p);
 
 	protected abstract Object formulateGoal();
 
