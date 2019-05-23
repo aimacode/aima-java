@@ -5,7 +5,7 @@ package aima.core.environment.vacuum;
  *
  * @author Ruediger Lunde
  */
-public class AttributeNames {
+public class AttNames {
 
     public static final String CURRENT_LOCATION = "currentLocation";
     public static final String CURRENT_STATE = "currentState";

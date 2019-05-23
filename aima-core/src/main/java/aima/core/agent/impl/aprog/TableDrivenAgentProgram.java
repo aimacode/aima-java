@@ -34,7 +34,7 @@ import java.util.Optional;
  * @author Ruediger Lunde
  * 
  */
-public class TableDrivenAgentProgram<P extends ObjectWithDynamicAttributes, A> implements AgentProgram<P, A> {
+public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
 	private List<P> percepts = new ArrayList<>();
 
 	private Table<List<P>, String, A> table;

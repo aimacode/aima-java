@@ -4,6 +4,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Model;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
 import aima.core.agent.impl.aprog.ModelBasedReflexAgentProgram;
 import aima.core.agent.impl.aprog.simplerule.ANDCondition;
@@ -32,20 +33,16 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent<Percept, Action> 
 			protected DynamicState updateState(DynamicState state,
 					Action anAction, Percept percept, Model model) {
 
-				LocalVacuumEnvironmentPercept vep = (LocalVacuumEnvironmentPercept) percept;
-
-				state.setAttribute(AttributeNames.CURRENT_LOCATION,
-						vep.getAgentLocation());
-				state.setAttribute(AttributeNames.CURRENT_STATE,
-						vep.getLocationState());
+				DynamicPercept dp = (DynamicPercept) percept;
+				Object loc = dp.getAttribute(AttNames.CURRENT_LOCATION);
+				Object locState = dp.getAttribute(AttNames.CURRENT_STATE);
+				state.setAttribute(AttNames.CURRENT_LOCATION, loc);
+				state.setAttribute(AttNames.CURRENT_STATE, locState);
 				// Keep track of the state of the different locations
-				if (Objects.equals(VacuumEnvironment.LOCATION_A, vep.getAgentLocation())) {
-					state.setAttribute(AttributeNames.STATE_LOCATION_A,
-							vep.getLocationState());
-				} else {
-					state.setAttribute(AttributeNames.STATE_LOCATION_B,
-							vep.getLocationState());
-				}
+				if (Objects.equals(VacuumEnvironment.LOCATION_A, loc))
+					state.setAttribute(AttNames.STATE_LOCATION_A, locState);
+				else
+					state.setAttribute(AttNames.STATE_LOCATION_B, locState);
 				return state;
 			}
 		});
@@ -59,19 +56,15 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent<Percept, Action> 
 		// precedence) of rules can be guaranteed.
 		Set<Rule<Action>> rules = new LinkedHashSet<>();
 
-		rules.add(new Rule<>(new ANDCondition(new EQUALCondition(
-				AttributeNames.STATE_LOCATION_A,
-				VacuumEnvironment.LocationState.Clean), new EQUALCondition(
-				AttributeNames.STATE_LOCATION_B,
-				VacuumEnvironment.LocationState.Clean)), null));
-		rules.add(new Rule<>(new EQUALCondition(AttributeNames.CURRENT_STATE,
-				VacuumEnvironment.LocationState.Dirty),
+		rules.add(new Rule<>(new ANDCondition
+				(new EQUALCondition(AttNames.STATE_LOCATION_A, VacuumEnvironment.LocationState.Clean),
+				new EQUALCondition(AttNames.STATE_LOCATION_B, VacuumEnvironment.LocationState.Clean)),
+				null));
+		rules.add(new Rule<>(new EQUALCondition(AttNames.CURRENT_STATE, VacuumEnvironment.LocationState.Dirty),
 				VacuumEnvironment.ACTION_SUCK));
-		rules.add(new Rule<>(new EQUALCondition(AttributeNames.CURRENT_LOCATION,
-				VacuumEnvironment.LOCATION_A),
+		rules.add(new Rule<>(new EQUALCondition(AttNames.CURRENT_LOCATION, VacuumEnvironment.LOCATION_A),
 				VacuumEnvironment.ACTION_MOVE_RIGHT));
-		rules.add(new Rule<>(new EQUALCondition(AttributeNames.CURRENT_LOCATION,
-				VacuumEnvironment.LOCATION_B),
+		rules.add(new Rule<>(new EQUALCondition(AttNames.CURRENT_LOCATION, VacuumEnvironment.LOCATION_B),
 				VacuumEnvironment.ACTION_MOVE_LEFT));
 
 		return rules;

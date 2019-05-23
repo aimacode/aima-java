@@ -6,6 +6,7 @@ import aima.core.agent.EnvironmentState;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.agent.impl.DynamicAction;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.search.agent.NondeterministicSearchAgent;
 import aima.core.util.Util;
 
@@ -118,8 +119,11 @@ public class VacuumEnvironment extends AbstractEnvironment<Percept, Action> {
 			return envState.clone();
 		}
 		// Other agents get a local percept.
+		DynamicPercept percept = new DynamicPercept();
 		String loc = envState.getAgentLocation(anAgent);
-		return new LocalVacuumEnvironmentPercept(loc, envState.getLocationState(loc));
+		percept.setAttribute(AttNames.CURRENT_LOCATION, loc);
+		percept.setAttribute(AttNames.CURRENT_STATE, envState.getLocationState(loc));
+		return percept;
 	}
 
 	@Override

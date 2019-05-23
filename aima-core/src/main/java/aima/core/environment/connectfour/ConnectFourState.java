@@ -209,10 +209,10 @@ public class ConnectFourState implements Cloneable {
 		ConnectFourState result = null;
 		try {
 			result = (ConnectFourState) super.clone();
+			result.board = board.clone();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-		result.board = board.clone();
 		return result;
 	}
 

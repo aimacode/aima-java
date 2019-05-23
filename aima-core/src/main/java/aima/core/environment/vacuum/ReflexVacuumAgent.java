@@ -4,6 +4,7 @@ import aima.core.agent.Action;
 import aima.core.agent.AgentProgram;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.DynamicPercept;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -35,18 +36,15 @@ public class ReflexVacuumAgent extends AbstractAgent<Percept, Action> {
 			// function REFLEX-VACUUM-AGENT([location, status]) returns an
 			// action
 			public Optional<Action> execute(Percept percept) {
-				LocalVacuumEnvironmentPercept vep = (LocalVacuumEnvironmentPercept) percept;
+				DynamicPercept dp = (DynamicPercept) percept;
 				Action action = null;
 				// if status = Dirty then return Suck
-				if (VacuumEnvironment.LocationState.Dirty == vep
-						.getLocationState()) {
+				if (VacuumEnvironment.LocationState.Dirty == dp.getAttribute(AttNames.CURRENT_STATE)) {
 					action = VacuumEnvironment.ACTION_SUCK;
 					// else if location = A then return Right
-				} else if (Objects.equals(VacuumEnvironment.LOCATION_A, vep
-                        .getAgentLocation())) {
+				} else if (Objects.equals(VacuumEnvironment.LOCATION_A, dp.getAttribute(AttNames.CURRENT_LOCATION))) {
 					action = VacuumEnvironment.ACTION_MOVE_RIGHT;
-				} else if (Objects.equals(VacuumEnvironment.LOCATION_B, vep
-						.getAgentLocation())) {
+				} else if (Objects.equals(VacuumEnvironment.LOCATION_B, dp.getAttribute(AttNames.CURRENT_LOCATION))) {
 					// else if location = B then return Left
 					action = VacuumEnvironment.ACTION_MOVE_LEFT;
 				}

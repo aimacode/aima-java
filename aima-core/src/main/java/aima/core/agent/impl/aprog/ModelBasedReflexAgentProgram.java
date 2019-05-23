@@ -123,9 +123,8 @@ public abstract class ModelBasedReflexAgentProgram<P extends Percept, A>
 
 	protected Rule<A> ruleMatch(DynamicState state, Set<Rule<A>> rules) {
 		for (Rule<A> r : rules) {
-			if (r.evaluate(state)) {
+			if (r.evaluate(state))
 				return r;
-			}
 		}
 		return null;
 	}

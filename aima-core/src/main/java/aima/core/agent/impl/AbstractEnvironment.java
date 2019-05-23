@@ -56,14 +56,15 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 		return new ArrayList<>(agents);
 	}
 
-	public void addAgent(Agent<? super P, ? extends A> a) {
-		agents.add(a);
-		addEnvironmentObject(a);
-		notifyEnvironmentViews(a);
+	public void addAgent(Agent<? super P, ? extends A> agent) {
+		agents.add(agent);
+		addEnvironmentObject(agent);
+		notifyEnvironmentViews(agent);
 	}
 
-	public void removeAgent(Agent<? super P, ? extends A> a) {
-		agents.remove(a);
+	public void removeAgent(Agent<? super P, ? extends A> agent) {
+		agents.remove(agent);
+		removeEnvironmentObject(agent);
 	}
 
 	public List<EnvironmentObject> getEnvironmentObjects() {

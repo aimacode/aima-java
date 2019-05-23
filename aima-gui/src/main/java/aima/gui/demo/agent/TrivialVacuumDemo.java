@@ -2,9 +2,14 @@ package aima.gui.demo.agent;
 
 import aima.core.agent.*;
 import aima.core.agent.impl.DynamicAction;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.SimpleEnvironmentView;
+import aima.core.environment.map.MapAgent;
 import aima.core.environment.vacuum.ModelBasedReflexVacuumAgent;
 import aima.core.environment.vacuum.VacuumEnvironment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Demonstrates, how to set up a simple environment, place an agent in it,
@@ -24,7 +29,7 @@ public class TrivialVacuumDemo {
 		// a = new ReflexVacuumAgent();
 		// a = new SimpleReflexVacuumAgent();
 		// a = new TableDrivenVacuumAgent();
-		
+
 		env.addAgent(a);
 		env.step(16);
 		env.notifyViews("Performance=" + env.getPerformanceMeasure(a));
