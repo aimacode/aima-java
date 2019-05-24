@@ -29,7 +29,7 @@ import java.util.Random;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class VacuumEnvironment extends AbstractEnvironment<Percept, Action> {
+public class VacuumEnvironment extends AbstractEnvironment<DynamicPercept, Action> {
 	// Allowable Actions within the Vacuum Environment
 	public static final Action ACTION_MOVE_LEFT = new DynamicAction("Left");
 	public static final Action ACTION_MOVE_RIGHT = new DynamicAction("Right");
@@ -98,13 +98,13 @@ public class VacuumEnvironment extends AbstractEnvironment<Percept, Action> {
 	}
 
 	@Override
-	public void addAgent(Agent<? super Percept, ? extends Action> a) {
+	public void addAgent(Agent<? super DynamicPercept, ? extends Action> a) {
 		int idx = new Random().nextInt(locations.size());
 		envState.setAgentLocation(a, locations.get(idx));
 		super.addAgent(a);
 	}
 
-	public void addAgent(Agent<? super Percept, ? extends Action> a, String location) {
+	public void addAgent(Agent<? super DynamicPercept, ? extends Action> a, String location) {
 		// Ensure the agent state information is tracked before
 		// adding to super, as super will notify the registered
 		// EnvironmentViews that is was added.
@@ -113,16 +113,17 @@ public class VacuumEnvironment extends AbstractEnvironment<Percept, Action> {
 	}
 
 	@Override
-	public Percept getPerceptSeenBy(Agent<?, ?> anAgent) {
-		if (anAgent instanceof NondeterministicSearchAgent) {
-			// This agent expects a fully observable environment. It gets a clone of the environment state.
-			return envState.clone();
-		}
+	public DynamicPercept getPerceptSeenBy(Agent<?, ?> anAgent) {
 		// Other agents get a local percept.
 		DynamicPercept percept = new DynamicPercept();
 		String loc = envState.getAgentLocation(anAgent);
 		percept.setAttribute(AttNames.CURRENT_LOCATION, loc);
 		percept.setAttribute(AttNames.CURRENT_STATE, envState.getLocationState(loc));
+		if (anAgent instanceof NondeterministicSearchAgent) {
+			// This agent expects a fully observable environment.
+			percept.setAttribute(AttNames.STATE_LOCATION_A, envState.getLocationState(VacuumEnvironment.LOCATION_A));
+			percept.setAttribute(AttNames.STATE_LOCATION_B, envState.getLocationState(VacuumEnvironment.LOCATION_B));
+		}
 		return percept;
 	}
 

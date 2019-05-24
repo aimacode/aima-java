@@ -1,12 +1,11 @@
 package aima.core.environment.vacuum;
 
-import java.util.*;
-
 import aima.core.agent.Action;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.aprog.TableDrivenAgentProgram;
+
+import java.util.*;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.3, page 36.<br>
@@ -18,7 +17,7 @@ import aima.core.agent.impl.aprog.TableDrivenAgentProgram;
  * @author Ruediger Lunde
  * 
  */
-public class TableDrivenVacuumAgent extends AbstractAgent<Percept, Action> {
+public class TableDrivenVacuumAgent extends AbstractAgent<DynamicPercept, Action> {
 
 	public TableDrivenVacuumAgent() {
 		super(new TableDrivenAgentProgram<>(getPerceptSequenceActions()));
@@ -27,13 +26,13 @@ public class TableDrivenVacuumAgent extends AbstractAgent<Percept, Action> {
 	//
 	// PRIVATE METHODS
 	//
-	private static Map<List<Percept>, Action> getPerceptSequenceActions() {
-		Map<List<Percept>, Action> perceptSequenceActions = new HashMap<>();
+	private static Map<List<DynamicPercept>, Action> getPerceptSequenceActions() {
+		Map<List<DynamicPercept>, Action> perceptSequenceActions = new HashMap<>();
 
 		// NOTE: While this particular table could be setup simply
 		// using a few loops, the intent is to show how quickly a table
 		// based approach grows and becomes unusable.
-		List<Percept> ps;
+		List<DynamicPercept> ps;
 		//
 		// Level 1: 4 states
 		ps = createPerceptSequence(createPercept(VacuumEnvironment.LOCATION_A, VacuumEnvironment.LocationState.Clean));
@@ -678,7 +677,7 @@ public class TableDrivenVacuumAgent extends AbstractAgent<Percept, Action> {
 		return perceptSequenceActions;
 	}
 
-	private static List<Percept> createPerceptSequence(Percept... percepts) {
+	private static List<DynamicPercept> createPerceptSequence(DynamicPercept... percepts) {
 		return new ArrayList<>(Arrays.asList(percepts));
 	}
 	

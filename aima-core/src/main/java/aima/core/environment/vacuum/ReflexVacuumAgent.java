@@ -29,22 +29,21 @@ import java.util.Optional;
  * @author Ruediger Lunde
  * 
  */
-public class ReflexVacuumAgent extends AbstractAgent<Percept, Action> {
+public class ReflexVacuumAgent extends AbstractAgent<DynamicPercept, Action> {
 
 	public ReflexVacuumAgent() {
-		super(new AgentProgram<Percept, Action>() {
+		super(new AgentProgram<DynamicPercept, Action>() {
 			// function REFLEX-VACUUM-AGENT([location, status]) returns an
 			// action
-			public Optional<Action> execute(Percept percept) {
-				DynamicPercept dp = (DynamicPercept) percept;
+			public Optional<Action> execute(DynamicPercept percept) {
 				Action action = null;
 				// if status = Dirty then return Suck
-				if (VacuumEnvironment.LocationState.Dirty == dp.getAttribute(AttNames.CURRENT_STATE)) {
+				if (VacuumEnvironment.LocationState.Dirty == percept.getAttribute(AttNames.CURRENT_STATE)) {
 					action = VacuumEnvironment.ACTION_SUCK;
 					// else if location = A then return Right
-				} else if (Objects.equals(VacuumEnvironment.LOCATION_A, dp.getAttribute(AttNames.CURRENT_LOCATION))) {
+				} else if (Objects.equals(VacuumEnvironment.LOCATION_A, percept.getAttribute(AttNames.CURRENT_LOCATION))) {
 					action = VacuumEnvironment.ACTION_MOVE_RIGHT;
-				} else if (Objects.equals(VacuumEnvironment.LOCATION_B, dp.getAttribute(AttNames.CURRENT_LOCATION))) {
+				} else if (Objects.equals(VacuumEnvironment.LOCATION_B, percept.getAttribute(AttNames.CURRENT_LOCATION))) {
 					// else if location = B then return Left
 					action = VacuumEnvironment.ACTION_MOVE_LEFT;
 				}

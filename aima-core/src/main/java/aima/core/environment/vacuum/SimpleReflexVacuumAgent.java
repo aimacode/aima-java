@@ -17,16 +17,15 @@ import java.util.Set;
  * @auhtor Ruediger Lunde
  * 
  */
-public class SimpleReflexVacuumAgent extends AbstractAgent<Percept, Action> {
+public class SimpleReflexVacuumAgent extends AbstractAgent<DynamicPercept, Action> {
 
 	public SimpleReflexVacuumAgent() {
-		super(new SimpleReflexAgentProgram<Percept, Action>(getRuleSet()){
+		super(new SimpleReflexAgentProgram<DynamicPercept, Action>(getRuleSet()){
 			@Override
-			protected DynamicState interpretInput(Percept percept) {
+			protected DynamicState interpretInput(DynamicPercept percept) {
 				DynamicState state = new DynamicState();
-				DynamicPercept dp = (DynamicPercept) percept;
-				state.setAttribute(AttNames.CURRENT_LOCATION, dp.getAttribute(AttNames.CURRENT_LOCATION));
-				state.setAttribute(AttNames.CURRENT_STATE, dp.getAttribute(AttNames.CURRENT_STATE));
+				state.setAttribute(AttNames.CURRENT_LOCATION, percept.getAttribute(AttNames.CURRENT_LOCATION));
+				state.setAttribute(AttNames.CURRENT_STATE, percept.getAttribute(AttNames.CURRENT_STATE));
 				return state;
 			}
 		});

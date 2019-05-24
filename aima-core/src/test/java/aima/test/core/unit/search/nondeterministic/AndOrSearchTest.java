@@ -1,16 +1,16 @@
 package aima.test.core.unit.search.nondeterministic;
 
 import aima.core.agent.Action;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.DynamicAction;
-import aima.core.environment.vacuum.*;
+import aima.core.agent.impl.DynamicPercept;
+import aima.core.environment.vacuum.NondeterministicVacuumEnvironment;
+import aima.core.environment.vacuum.VacuumEnvironmentState;
+import aima.core.environment.vacuum.VacuumWorldFunctions;
 import aima.core.search.agent.NondeterministicSearchAgent;
+import aima.core.search.nondeterministic.NondeterministicProblem;
+import aima.core.search.nondeterministic.Path;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import aima.core.search.nondeterministic.NondeterministicProblem;
-import aima.core.search.nondeterministic.Path;
 
 import java.util.Arrays;
 
@@ -28,7 +28,7 @@ import static aima.core.environment.vacuum.VacuumEnvironment.*;
 public class AndOrSearchTest {
 
     /** State is used as percept! */
-    private NondeterministicSearchAgent<Percept, VacuumEnvironmentState, Action> agent;
+    private NondeterministicSearchAgent<DynamicPercept, VacuumEnvironmentState, Action> agent;
     private NondeterministicVacuumEnvironment world;
 
     /**
@@ -37,16 +37,16 @@ public class AndOrSearchTest {
     @Before
     public void setUp() {
         // create agent and world (init state: both rooms are dirty and the vacuum is in room A)
-        agent = new NondeterministicSearchAgent<>(percept -> (VacuumEnvironmentState) percept); // percept == env state!
+        agent = new NondeterministicSearchAgent<>(VacuumWorldFunctions::ptsFunction);
         world = new NondeterministicVacuumEnvironment(LocationState.Dirty, LocationState.Dirty);
         world.addAgent(agent, LOCATION_A);
 
         // create problem
         NondeterministicProblem<VacuumEnvironmentState, Action> problem =
-                new NondeterministicProblem<VacuumEnvironmentState, Action>(
+                new NondeterministicProblem<>(
                 (VacuumEnvironmentState) world.getCurrentState(),
                 VacuumWorldFunctions::getActions,
-                VacuumWorldFunctions.createResultsFunction(agent),
+                VacuumWorldFunctions.getResultsFunctionFor(agent),
                 VacuumWorldFunctions::testGoal,
                 (s, a, sPrimed) -> 1.0);
         // set the problem and agent

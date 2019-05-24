@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Andrew Brown
  * @author Ruediger Lunde
  */
-public class VacuumEnvironmentState implements EnvironmentState, Percept, Cloneable {
+public class VacuumEnvironmentState implements EnvironmentState, Cloneable {
 
 	private Map<String, VacuumEnvironment.LocationState> state;
 	private Map<Agent, String> agentLocations;

@@ -20,11 +20,11 @@ import java.util.List;
 public class TrivialVacuumDemo {
 	public static void main(String[] args) {
 		// create environment with random state of cleaning.
-		Environment<Percept, Action> env = new VacuumEnvironment();
+		Environment<DynamicPercept, Action> env = new VacuumEnvironment();
 		EnvironmentView<Object, Object> view = new SimpleEnvironmentView();
 		env.addEnvironmentView(view);
 		
-		Agent<Percept, Action> a = null;
+		Agent<DynamicPercept, Action> a = null;
 		a = new ModelBasedReflexVacuumAgent();
 		// a = new ReflexVacuumAgent();
 		// a = new SimpleReflexVacuumAgent();

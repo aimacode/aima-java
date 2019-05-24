@@ -2,7 +2,6 @@ package aima.gui.demo.agent;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
-import aima.core.agent.impl.DynamicAction;
 import aima.core.agent.impl.SimpleActionTracker;
 import aima.core.environment.vacuum.*;
 import aima.core.search.agent.NondeterministicSearchAgent;
@@ -36,7 +35,7 @@ public class NondeterministicVacuumEnvironmentDemo {
         NondeterministicProblem<VacuumEnvironmentState, Action> problem = new NondeterministicProblem<>(
                 (VacuumEnvironmentState) world.getCurrentState(),
                 VacuumWorldFunctions::getActions,
-                VacuumWorldFunctions.createResultsFunction(agent),
+                VacuumWorldFunctions.getResultsFunctionFor(agent),
                 VacuumWorldFunctions::testGoal,
                 (s, a, sPrimed) -> 1.0);
         agent.makePlan(problem);

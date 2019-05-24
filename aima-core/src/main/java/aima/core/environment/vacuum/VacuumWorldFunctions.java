@@ -2,14 +2,16 @@ package aima.core.environment.vacuum;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.search.nondeterministic.ResultsFunction;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 /**
- * Contains useful functions for the vacuum cleaner world.
+ * Contains useful functions for the vacuum cleaner world with two locations.
  *
  * @author Ruediger Lunde
  * @author Andrew Brown
@@ -33,25 +35,12 @@ public class VacuumWorldFunctions {
                 && state.getLocationState(VacuumEnvironment.LOCATION_B) == VacuumEnvironment.LocationState.Clean;
     }
 
-    public static ResultsFunction<VacuumEnvironmentState, Action> createResultsFunction(Agent agent) {
-        return new VacuumWorldResults(agent);
-    }
-
     /**
-     * Returns possible results.
+     * Returns a function which maps possible state-action-pairs to a lists of possible successor states
+     * for the non-deterministic vacuum world.
      */
-    private static class VacuumWorldResults implements ResultsFunction<VacuumEnvironmentState, Action> {
-        private Agent agent;
-
-        VacuumWorldResults(Agent agent) {
-            this.agent = agent;
-        }
-
-        /**
-         * Returns a list of possible results for a given state and action.
-         */
-        @Override
-        public List<VacuumEnvironmentState> results(VacuumEnvironmentState state, Action action) {
+    public static ResultsFunction<VacuumEnvironmentState, Action> getResultsFunctionFor(final Agent agent) {
+        return (VacuumEnvironmentState state, Action action) -> {
             List<VacuumEnvironmentState> results = new ArrayList<>();
             // add clone of state to results, modify later...
             VacuumEnvironmentState s = state.clone();
@@ -86,6 +75,20 @@ public class VacuumWorldFunctions {
                 }
             }
             return results;
-        }
+        };
+    }
+
+    /**
+     * Maps a vacuum world percept of an agent to the corresponding vacuum environment state.
+     * @param agent The perceiving agent.
+     */
+    public static VacuumEnvironmentState ptsFunction(DynamicPercept percept, Agent<?, ?> agent) {
+        VacuumEnvironmentState state = new VacuumEnvironmentState();
+        state.setAgentLocation(agent, (String) percept.getAttribute(AttNames.CURRENT_LOCATION));
+        state.setLocationState(VacuumEnvironment.LOCATION_A,
+                (VacuumEnvironment.LocationState) percept.getAttribute(AttNames.STATE_LOCATION_A));
+        state.setLocationState(VacuumEnvironment.LOCATION_B,
+                (VacuumEnvironment.LocationState) percept.getAttribute(AttNames.STATE_LOCATION_B));
+        return state;
     }
 }

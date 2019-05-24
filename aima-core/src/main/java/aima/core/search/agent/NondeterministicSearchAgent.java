@@ -1,5 +1,6 @@
 package aima.core.search.agent;
 
+import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentViewNotifier;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.search.nondeterministic.AndOrSearch;
@@ -7,6 +8,7 @@ import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.core.search.nondeterministic.Plan;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -20,6 +22,9 @@ import java.util.function.Function;
  * @author Andrew Brown
  */
 public class NondeterministicSearchAgent<P, S, A> extends AbstractAgent<P, A> {
+	/**
+	 * Maps percepts to states.
+	 */
 	private Function<P, S> ptsFunction;
 	private EnvironmentViewNotifier notifier;
 
@@ -33,6 +38,15 @@ public class NondeterministicSearchAgent<P, S, A> extends AbstractAgent<P, A> {
 
 	public NondeterministicSearchAgent(Function<P, S> ptsFn, EnvironmentViewNotifier notifier) {
 		this.ptsFunction = ptsFn;
+		this.notifier = notifier;
+	}
+
+	public NondeterministicSearchAgent(BiFunction<P, Agent, S> ptsFn) {
+		this.ptsFunction = (percept) -> ptsFn.apply(percept, this);
+	}
+
+	public NondeterministicSearchAgent(BiFunction<P, Agent, S> ptsFn, EnvironmentViewNotifier notifier) {
+		this.ptsFunction = (percept) -> ptsFn.apply(percept, this);
 		this.notifier = notifier;
 	}
 

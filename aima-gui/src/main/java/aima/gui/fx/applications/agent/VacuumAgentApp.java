@@ -1,9 +1,8 @@
 package aima.gui.fx.applications.agent;
 
 import aima.core.agent.Action;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.DynamicAction;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.vacuum.*;
 import aima.core.search.agent.NondeterministicSearchAgent;
 import aima.core.search.nondeterministic.NondeterministicProblem;
@@ -39,7 +38,7 @@ public class VacuumAgentApp extends IntegrableApplication {
     private TaskExecutionPaneCtrl taskPaneCtrl;
     private SimpleEnvironmentViewCtrl envViewCtrl;
     protected VacuumEnvironment env = null;
-    protected AbstractAgent<Percept, Action> agent = null;
+    protected AbstractAgent<DynamicPercept, Action> agent = null;
 
     @Override
     public String getTitle() {
@@ -105,7 +104,7 @@ public class VacuumAgentApp extends IntegrableApplication {
                 agent = new ModelBasedReflexVacuumAgent();
                 break;
             case 4:
-                agent = new NondeterministicSearchAgent<>(percept -> (VacuumEnvironmentState) percept, env);
+                agent = new NondeterministicSearchAgent<>(VacuumWorldFunctions::ptsFunction, env);
                 break;
         }
         if (env != null && agent != null) {
@@ -123,10 +122,10 @@ public class VacuumAgentApp extends IntegrableApplication {
         if (agent instanceof NondeterministicSearchAgent) {
             NondeterministicProblem<VacuumEnvironmentState, Action> problem =
                     new NondeterministicProblem<>((VacuumEnvironmentState) env.getCurrentState(),
-                            VacuumWorldFunctions::getActions, VacuumWorldFunctions.createResultsFunction(agent),
+                            VacuumWorldFunctions::getActions, VacuumWorldFunctions.getResultsFunctionFor(agent),
                             VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
             // Set the problem now for this kind of agent
-            ((NondeterministicSearchAgent<Percept, VacuumEnvironmentState, Action>) agent).makePlan(problem);
+            ((NondeterministicSearchAgent<DynamicPercept, VacuumEnvironmentState, Action>) agent).makePlan(problem);
         }
         while (!env.isDone() && !Tasks.currIsCancelled()) {
             env.step();

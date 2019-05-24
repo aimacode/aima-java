@@ -20,10 +20,10 @@ import java.util.Set;
  * @author Ruediger Lunde
  * 
  */
-public class ModelBasedReflexVacuumAgent extends AbstractAgent<Percept, Action> {
+public class ModelBasedReflexVacuumAgent extends AbstractAgent<DynamicPercept, Action> {
 
 	public ModelBasedReflexVacuumAgent() {
-		super(new ModelBasedReflexAgentProgram<Percept, Action>() {
+		super(new ModelBasedReflexAgentProgram<DynamicPercept, Action>() {
 			@Override
 			protected void init() {
 				setState(new DynamicState());
@@ -31,11 +31,10 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent<Percept, Action> 
 			}
 
 			protected DynamicState updateState(DynamicState state,
-					Action anAction, Percept percept, Model model) {
+					Action anAction, DynamicPercept percept, Model model) {
 
-				DynamicPercept dp = (DynamicPercept) percept;
-				Object loc = dp.getAttribute(AttNames.CURRENT_LOCATION);
-				Object locState = dp.getAttribute(AttNames.CURRENT_STATE);
+				Object loc = percept.getAttribute(AttNames.CURRENT_LOCATION);
+				Object locState = percept.getAttribute(AttNames.CURRENT_STATE);
 				state.setAttribute(AttNames.CURRENT_LOCATION, loc);
 				state.setAttribute(AttNames.CURRENT_STATE, locState);
 				// Keep track of the state of the different locations
