@@ -28,7 +28,7 @@ import aima.core.agent.Action;
  * @author Ravi Mohan
  * 
  */
-public interface MarkovDecisionProcess<S, A extends Action> {
+public interface MarkovDecisionProcess<S, A> {
 
 	/**
 	 * Get the set of states associated with the Markov decision process.

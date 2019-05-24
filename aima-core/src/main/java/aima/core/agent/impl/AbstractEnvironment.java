@@ -45,8 +45,9 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	public void createExogenousChange() {
 	}
 
-	/** Is called when an agent doesn't select an action. Default implementation does nothing. */
-	protected void executeNoOp(Agent<? super P,? extends A> agent) {
+	/** Method is called when an agent doesn't select an action when asked. Default implementation does nothing.
+	 * Subclasses can for example modify the isDone status.*/
+	protected void executeNoOp(Agent<?,?> agent) {
 	}
 
 	//
@@ -113,6 +114,10 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 			step();
 	}
 
+	/**
+	 * Returns true if the current task was cancelled or no agent is alive anmore.
+	 * @return
+	 */
 	public boolean isDone() {
 		if (Tasks.currIsCancelled())
 			return true;

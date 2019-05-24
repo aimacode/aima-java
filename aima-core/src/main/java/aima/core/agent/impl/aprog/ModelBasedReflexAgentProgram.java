@@ -38,7 +38,7 @@ import java.util.Set;
  * @author Ruediger Lunde
  * 
  */
-public abstract class ModelBasedReflexAgentProgram<P extends Percept, A>
+public abstract class ModelBasedReflexAgentProgram<P, A>
 		implements AgentProgram<P, A> {
 	//
 	// persistent: state, the agent's current conception of the world state

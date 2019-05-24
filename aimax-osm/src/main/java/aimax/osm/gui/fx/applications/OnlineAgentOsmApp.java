@@ -1,6 +1,7 @@
 package aimax.osm.gui.fx.applications;
 
 import aima.core.agent.*;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctions;
@@ -83,7 +84,7 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 	 * Factory method which creates a new agent based on the current parameter
 	 * settings.
 	 */
-	protected Agent createAgent(List<String> locations) {
+	protected Agent<DynamicPercept, MoveToAction> createAgent(List<String> locations) {
 		Problem<String, MoveToAction> p = new BidirectionalMapProblem(map, null, locations.get(1));
 		OnlineSearchProblem<String, MoveToAction> osp = new GeneralProblem<>
 				(null, p::getActions, null, p::testGoal, p::getStepCosts);
@@ -94,7 +95,7 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 		else
 			heuristic = state -> MapFunctions.getSLD(state, locations.get(1), map);
 
-		Agent agent;
+		Agent<DynamicPercept, MoveToAction> agent;
 		if (simPaneCtrl.getParamValueIndex(PARAM_STRATEGY) == 0)
 			agent = new OnlineDFSAgent<>(osp, MapFunctions.createPerceptToStateFunction());
 		else
@@ -162,7 +163,7 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 				Point2D pt = new Point2D(node.getLon(), node.getLat());
 				locations.add(map.getNearestLocation(pt));
 			}
-			Agent agent = createAgent(locations);
+			Agent<DynamicPercept, MoveToAction> agent = createAgent(locations);
 			env = new MapEnvironment(map);
 			env.addEnvironmentView(new TrackUpdater());
 			env.addAgent(agent, locations.get(0));

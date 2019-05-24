@@ -17,7 +17,7 @@ import java.util.Set;
  * @param <A> the action type.
  * @author samagra
  */
-public interface POMDP<S, A extends Action> extends MarkovDecisionProcess<S, A> {
+public interface POMDP<S, A> extends MarkovDecisionProcess<S, A> {
 
     /**
      * @return The discount on future rewards i.e gamma.

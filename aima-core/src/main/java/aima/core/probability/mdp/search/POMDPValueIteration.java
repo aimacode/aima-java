@@ -38,7 +38,7 @@ import java.util.List;
  * @author samagra
  */
 
-public class POMDPValueIteration<S, A extends Action> {
+public class POMDPValueIteration<S, A> {
     public POMDP<S, A> pomdp;
     public double maxError;
     public int depth;

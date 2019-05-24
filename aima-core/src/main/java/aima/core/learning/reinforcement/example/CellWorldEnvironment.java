@@ -97,7 +97,7 @@ public class CellWorldEnvironment extends AbstractEnvironment<CellWorldPercept, 
 
 	/** Agents, which do nothing, die. */
 	@Override
-	protected void executeNoOp(Agent<? super CellWorldPercept, ? extends CellWorldAction> agent) {
+	protected void executeNoOp(Agent<?, ?> agent) {
 		agent.setAlive(false);
 	}
 

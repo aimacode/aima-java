@@ -1,7 +1,6 @@
 package aima.core.agent.impl.aprog;
 
 import aima.core.agent.AgentProgram;
-import aima.core.agent.impl.ObjectWithDynamicAttributes;
 import aima.core.util.datastructure.Table;
 
 import java.util.ArrayList;

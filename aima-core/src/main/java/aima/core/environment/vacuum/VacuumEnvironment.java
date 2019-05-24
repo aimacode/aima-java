@@ -150,7 +150,7 @@ public class VacuumEnvironment extends AbstractEnvironment<Percept, Action> {
 	}
 
 	@Override
-	protected void executeNoOp(Agent<? super Percept, ? extends Action> agent) {
+	protected void executeNoOp(Agent<?, ?> agent) {
 		// In the Vacuum Environment we consider things done if
 		// the agent's execute method returns no action.
 		isDone = true;
