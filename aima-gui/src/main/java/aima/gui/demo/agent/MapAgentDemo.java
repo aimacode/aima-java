@@ -13,7 +13,7 @@ import aima.core.search.uninformed.DepthFirstSearch;
 import aima.core.search.uninformed.UniformCostSearch;
 
 /**
- * Demonstrates how different kinds of search algorithms perform an a route finding scenario.
+ * Demonstrates how different kinds of search algorithms perform in a route finding scenario.
  * @author Ruediger Lunde
  */
 public class MapAgentDemo {

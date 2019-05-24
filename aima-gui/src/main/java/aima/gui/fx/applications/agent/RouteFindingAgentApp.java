@@ -23,7 +23,7 @@ import java.util.function.ToDoubleFunction;
 
 /**
  * Integrable application which demonstrates how different kinds of search
- * algorithms perform an a route finding scenario.
+ * algorithms perform in a route finding scenario.
  *
  * @author Ruediger Lunde
  *
