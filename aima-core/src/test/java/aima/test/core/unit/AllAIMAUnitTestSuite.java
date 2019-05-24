@@ -15,7 +15,7 @@ import aima.test.core.unit.util.math.geom.GeometryTestSuite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ AgentTestSuite.class, EnvironmentTestSuite.class, SearchTestSuite.class,
-		LearningTestSuite.class, LogicTestSuite.class, NLPTestSuite.class,
-		ProbabilityTestSuite.class, UtilTestSuite.class, GeometryTestSuite.class })
+		LearningTestSuite.class, NLPTestSuite.class,
+		ProbabilityTestSuite.class, UtilTestSuite.class, GeometryTestSuite.class, LogicTestSuite.class })
 public class AllAIMAUnitTestSuite {
 }

@@ -42,7 +42,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	 * directly caused by agent action execution. The default implementation
 	 * does nothing.
 	 */
-	public void createExogenousChange() {
+	protected void createExogenousChange() {
 	}
 
 	/** Method is called when an agent doesn't select an action when asked. Default implementation does nothing.
@@ -116,7 +116,6 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 
 	/**
 	 * Returns true if the current task was cancelled or no agent is alive anmore.
-	 * @return
 	 */
 	public boolean isDone() {
 		if (Tasks.currIsCancelled())

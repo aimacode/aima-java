@@ -38,8 +38,7 @@ import java.util.Set;
  * @author Ruediger Lunde
  * 
  */
-public abstract class ModelBasedReflexAgentProgram<P, A>
-		implements AgentProgram<P, A> {
+public abstract class ModelBasedReflexAgentProgram<P, A> implements AgentProgram<P, A> {
 	//
 	// persistent: state, the agent's current conception of the world state
 	private DynamicState state = null;
@@ -54,7 +53,7 @@ public abstract class ModelBasedReflexAgentProgram<P, A>
 	// action, the most recent action, initially none
 	private A action = null;
 
-	public ModelBasedReflexAgentProgram() {
+	protected ModelBasedReflexAgentProgram() {
 		init();
 	}
 

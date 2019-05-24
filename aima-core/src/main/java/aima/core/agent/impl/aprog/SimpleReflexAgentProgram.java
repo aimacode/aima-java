@@ -45,7 +45,7 @@ public abstract class SimpleReflexAgentProgram<P, A> implements AgentProgram<P, 
 	 * @param ruleSet
 	 *            a set of condition-action rules
 	 */
-	public SimpleReflexAgentProgram(Set<Rule<A>> ruleSet) {
+	protected SimpleReflexAgentProgram(Set<Rule<A>> ruleSet) {
 		rules = ruleSet;
 	}
 
