@@ -17,7 +17,7 @@ import aima.gui.swing.framework.SimulationThread;
  * 
  * @author Ruediger Lunde
  */
-public class VacuumController extends AgentAppController {
+public class VacuumController extends AgentAppController<Percept, Action> {
 	
 	protected VacuumEnvironment env = null;
 	protected AbstractAgent<Percept, Action> agent = null;

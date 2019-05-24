@@ -1,9 +1,6 @@
 package aima.test.core.unit.environment.wumpusworld;
 
-import aima.core.agent.Action;
-import aima.core.agent.EnvironmentView;
 import aima.core.agent.impl.SimpleActionTracker;
-import aima.core.agent.impl.SimpleEnvironmentView;
 import aima.core.environment.wumpusworld.*;
 import org.junit.Assert;
 import org.junit.Test;

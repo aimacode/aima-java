@@ -58,7 +58,7 @@ public class AgentAppFrame<P, A> extends JFrame {
 
 	protected JSplitPane centerPane;
 	private MessageLoggerPanel messageLogger;
-	private AgentAppEnvironmentView<? extends P, ? extends A> envView;
+	private AgentAppEnvironmentView<? super P, ? super A> envView;
 
 	/** Standard constructor. */
 	public AgentAppFrame() {
@@ -127,7 +127,7 @@ public class AgentAppFrame<P, A> extends JFrame {
 	 * Returns the environment view which is currently used to display the
 	 * agents in their environment.
 	 */
-	public AgentAppEnvironmentView<? extends P, ? extends A> getEnvView() {
+	public AgentAppEnvironmentView<? super P, ? super A> getEnvView() {
 		return envView;
 	}
 
@@ -136,7 +136,7 @@ public class AgentAppFrame<P, A> extends JFrame {
 	 * left of the splitbar. It typically implements a 2D-visualization of
 	 * agents in their environment.
 	 */
-	public void setEnvView(AgentAppEnvironmentView<? extends P, ? extends A> view) {
+	public void setEnvView(AgentAppEnvironmentView<? super P, ? super A> view) {
 		envView = view;
 		centerPane.add(JSplitPane.LEFT, envView);
 		envView.setController(controller);
@@ -312,8 +312,7 @@ public class AgentAppFrame<P, A> extends JFrame {
 						}
 					} else if (selectors.combos.contains(source)) {
 						err = "when preparing the agent ";
-						selectionChanged(selectors
-								.getName((JComboBox<Object>) source));
+						selectionChanged(selectors.getName((JComboBox<Object>) source));
 					}
 				}
 			} catch (Exception e) {
@@ -330,7 +329,7 @@ public class AgentAppFrame<P, A> extends JFrame {
 		String[] selectorNames = new String[] {};
 		int[] selectorDefaults = new int[] {};
 		// JPanel selectorPanel = new JPanel();
-		List<JComboBox<Object>> combos = new ArrayList<JComboBox<Object>>();
+		List<JComboBox<Object>> combos = new ArrayList<>();
 
 		public void setSelectors(String[] selectorNames, String[] tooltips) {
 			this.selectorNames = selectorNames;
@@ -444,9 +443,9 @@ public class AgentAppFrame<P, A> extends JFrame {
 		/** Returns a readable representation of the selection state. */
 		@Override
 		public String toString() {
-			StringBuffer result = new StringBuffer("State[ ");
+			StringBuilder result = new StringBuilder("State[ ");
 			for (int i = 0; i < size(); i++)
-				result.append(selectors.get(i) + "=" + selIndices.get(i) + " ");
+				result.append(selectors.get(i)).append("=").append(selIndices.get(i)).append(" ");
 			result.append("]");
 			return result.toString();
 		}

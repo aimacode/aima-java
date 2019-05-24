@@ -19,7 +19,7 @@ public interface Environment<P, A> {
 	 * 
 	 * @return The Agents belonging to this Environment.
 	 */
-	List<Agent<? super P, ? extends A>> getAgents();
+	List<Agent<?, ?>> getAgents();
 
 	/**
 	 * Add an agent to the Environment.

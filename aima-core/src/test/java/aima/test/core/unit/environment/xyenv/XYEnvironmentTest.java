@@ -2,6 +2,8 @@ package aima.test.core.unit.environment.xyenv;
 
 import java.util.Set;
 
+import aima.core.agent.Action;
+import aima.core.agent.impl.DynamicPercept;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,12 +22,12 @@ import aima.test.core.unit.agent.impl.MockAgent;
 public class XYEnvironmentTest {
 	XYEnvironment env;
 
-	AbstractAgent a;
+	AbstractAgent<DynamicPercept, Action> a;
 
 	@Before
 	public void setUp() {
 		env = new XYEnvironment(10, 12);
-		a = new MockAgent();
+		a = new MockAgent<>();
 		env.addObjectToLocation(a, new XYLocation(3, 4));
 		env.addAgent(a);
 	}
@@ -48,7 +50,7 @@ public class XYEnvironmentTest {
 	public void testAddObjectTwice() {
 		Assert.assertEquals(1, env.getAgents().size());
 		XYLocation loc = new XYLocation(5, 5);
-		AbstractAgent b = new MockAgent();
+		AbstractAgent<DynamicPercept, Action> b = new MockAgent<>();
 		env.addObjectToLocation(b, loc);
 		env.addAgent(b);
 		Assert.assertEquals(2, env.getAgents().size());
@@ -82,10 +84,10 @@ public class XYEnvironmentTest {
 	public void testIsBlocked() {
 		XYLocation loc = new XYLocation(5, 5);
 		Assert.assertEquals(0, env.getObjectsAt(loc).size());
-		Assert.assertEquals(false, env.isBlocked(loc));
+		Assert.assertFalse(env.isBlocked(loc));
 		env.addObjectToLocation(new Wall(), loc);
 		Assert.assertEquals(1, env.getObjectsAt(loc).size());
-		Assert.assertEquals(true, env.isBlocked(loc));
+		Assert.assertTrue(env.isBlocked(loc));
 	}
 
 	@Test

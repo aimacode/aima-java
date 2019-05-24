@@ -26,10 +26,10 @@ import aimax.osm.routing.MapAdapter;
 
 /**
  * Controller for graphical OSM map agent applications.
- * 
+ *
  * @author Ruediger Lunde
  */
-public class OsmAgentController extends AgentAppController {
+public class OsmAgentController extends AgentAppController<DynamicPercept, MoveToAction> {
 
 	protected MapAdapter map;
 	protected MapEnvironment env;
@@ -153,7 +153,7 @@ public class OsmAgentController extends AgentAppController {
 		search = SearchFactory.getInstance().createSearch(state.getIndex(MapAgentFrame.SEARCH_SEL),
 				state.getIndex(MapAgentFrame.Q_SEARCH_IMPL_SEL), heuristic);
 		
-		Agent agent = null;
+		Agent<DynamicPercept, MoveToAction> agent = null;
 		switch (state.getIndex(MapAgentFrame.AGENT_SEL)) {
 		case 0:
 			agent = new SimpleMapAgent(map, env, search, new String[] { locs[1] });
@@ -180,7 +180,7 @@ public class OsmAgentController extends AgentAppController {
 		} else {
 			StringBuilder statusMsg = new StringBuilder();
 			statusMsg.append("Task completed");
-			List<Agent<? super DynamicPercept, ? extends MoveToAction>> agents = env.getAgents();
+			List<Agent<?, ?>> agents = env.getAgents();
 			if (agents.size() == 1) {
 				Double travelDistance = env.getAgentTravelDistance(agents.get(0));
 				if (travelDistance != null) {

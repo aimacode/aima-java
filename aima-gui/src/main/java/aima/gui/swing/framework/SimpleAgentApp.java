@@ -33,10 +33,10 @@ public class SimpleAgentApp<P, A> {
 	 * Creates all parts of an agent application and makes the parts know each
 	 * other. Part construction is delegated to factory methods.
 	 */
-	public AgentAppFrame constructApplicationFrame() {
-		AgentAppEnvironmentView<? extends P, ? extends A> envView = createEnvironmentView();
+	public AgentAppFrame<P, A> constructApplicationFrame() {
+		AgentAppEnvironmentView<? super P, ? super A> envView = createEnvironmentView();
 		AgentAppFrame<P, A> frame = createFrame();
-		AgentAppController controller = createController();
+		AgentAppController<P, A> controller = createController();
 		frame.setEnvView(envView);
 		envView.setMessageLogger(frame.getMessageLogger());
 		frame.setController(controller);
@@ -46,7 +46,7 @@ public class SimpleAgentApp<P, A> {
 	}
 
 	/** Factory method, responsible for creating the environment view. */
-	public AgentAppEnvironmentView<? extends P, ? extends A> createEnvironmentView() {
+	public AgentAppEnvironmentView<? super P, ? super A> createEnvironmentView() {
 		return new EmptyEnvironmentView<>();
 	}
 
@@ -70,8 +70,8 @@ public class SimpleAgentApp<P, A> {
 	}
 
 	/** Factory method, responsible for creating the controller. */
-	public AgentAppController createController() {
-		return new DemoController();
+	public AgentAppController<P, A> createController() {
+		return new DemoController<>();
 	}
 
 	// ///////////////////////////////////////////////////////////////

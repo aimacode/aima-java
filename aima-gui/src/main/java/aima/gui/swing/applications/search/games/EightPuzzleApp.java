@@ -1,25 +1,13 @@
 package aima.gui.swing.applications.search.games;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
-
-import javax.swing.JButton;
-
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
-import aima.core.agent.impl.DynamicAction;
-import aima.core.agent.impl.DynamicPercept;
-import aima.core.environment.eightpuzzle.*;
+import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
+import aima.core.environment.eightpuzzle.EightPuzzleBoard;
+import aima.core.environment.eightpuzzle.EightPuzzleFunctions;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
@@ -32,12 +20,16 @@ import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.util.datastructure.XYLocation;
-import aima.gui.swing.framework.AgentAppController;
-import aima.gui.swing.framework.AgentAppEnvironmentView;
-import aima.gui.swing.framework.AgentAppFrame;
-import aima.gui.swing.framework.MessageLogger;
-import aima.gui.swing.framework.SimpleAgentApp;
-import aima.gui.swing.framework.SimulationThread;
+import aima.gui.swing.framework.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 
 /**
  * Graphical 8-puzzle game application. It demonstrates the performance of
@@ -81,19 +73,19 @@ public class EightPuzzleApp extends SimpleAgentApp<Percept, Action> {
 	}
 
 	/** Returns an <code>EightPuzzleView</code> instance. */
-	public AgentAppEnvironmentView createEnvironmentView() {
+	public AgentAppEnvironmentView<Percept, Action> createEnvironmentView() {
 		return new EightPuzzleView();
 	}
 
 	/** Returns a <code>EightPuzzleFrame</code> instance. */
 	@Override
-	public AgentAppFrame createFrame() {
+	public AgentAppFrame<Percept, Action> createFrame() {
 		return new EightPuzzleFrame();
 	}
 
 	/** Returns a <code>EightPuzzleController</code> instance. */
 	@Override
-	public AgentAppController createController() {
+	public AgentAppController<Percept, Action> createController() {
 		return new EightPuzzleController();
 	}
 
@@ -113,7 +105,7 @@ public class EightPuzzleApp extends SimpleAgentApp<Percept, Action> {
 	/**
 	 * Adds some selectors to the base class and adjusts its size.
 	 */
-	protected static class EightPuzzleFrame extends AgentAppFrame {
+	protected static class EightPuzzleFrame extends AgentAppFrame<Percept, Action> {
 		private static final long serialVersionUID = 1L;
 		public static String ENV_SEL = "EnvSelection";
 		public static String SEARCH_SEL = "SearchSelection";
@@ -211,10 +203,10 @@ public class EightPuzzleApp extends SimpleAgentApp<Percept, Action> {
 	/**
 	 * Defines how to react on standard simulation button events.
 	 */
-	protected static class EightPuzzleController extends AgentAppController {
+	protected static class EightPuzzleController extends AgentAppController<Percept, Action> {
 
 		protected EightPuzzleEnvironment env = null;
-		protected SearchAgent agent = null;
+		protected SearchAgent<Percept, EightPuzzleBoard, Action> agent = null;
 		protected boolean dirty;
 
 		/** Prepares next simulation. */

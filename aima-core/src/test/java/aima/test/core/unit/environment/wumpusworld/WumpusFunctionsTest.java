@@ -1,6 +1,5 @@
 package aima.test.core.unit.environment.wumpusworld;
 
-import aima.core.agent.Action;
 import aima.core.environment.wumpusworld.AgentPosition;
 import aima.core.environment.wumpusworld.WumpusAction;
 import aima.core.environment.wumpusworld.WumpusCave;

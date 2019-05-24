@@ -1,12 +1,11 @@
 package aima.test.core.unit.environment.vacuum;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import aima.core.agent.impl.SimpleActionTracker;
 import aima.core.environment.vacuum.ModelBasedReflexVacuumAgent;
 import aima.core.environment.vacuum.VacuumEnvironment;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Ravi Mohan

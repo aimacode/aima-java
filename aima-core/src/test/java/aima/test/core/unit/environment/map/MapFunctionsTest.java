@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.agent.Action;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.problem.ActionsFunction;
@@ -79,7 +78,7 @@ public class MapFunctionsTest {
 		}
 		// E
 		locations.clear();
-		Assert.assertTrue(0 == actionsFn.apply("E").size());
+		Assert.assertEquals(0, actionsFn.apply("E").size());
 	}
 
 	@Test

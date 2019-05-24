@@ -6,6 +6,8 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import aima.core.agent.impl.DynamicPercept;
+import aima.core.environment.map.MoveToAction;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppFrame;
 import aima.gui.swing.framework.SimpleAgentApp;
@@ -24,7 +26,7 @@ import aimax.osm.routing.MapAdapter;
  * agent application.
  * @author Ruediger Lunde
  */
-public class OsmAgentApp extends SimpleAgentApp {
+public class OsmAgentApp extends SimpleAgentApp<DynamicPercept, MoveToAction> {
 
 	protected static Logger LOG = Logger.getLogger("aimax.osm");
 	
@@ -60,7 +62,7 @@ public class OsmAgentApp extends SimpleAgentApp {
 	 * has been loaded yet and calls the super class implementation.
 	 */
 	@Override
-	public AgentAppFrame constructApplicationFrame() {
+	public AgentAppFrame<DynamicPercept, MoveToAction> constructApplicationFrame() {
 		if (map == null)
 			readMap(DataResource.getUlmFileResource());
 		return super.constructApplicationFrame();
@@ -74,13 +76,13 @@ public class OsmAgentApp extends SimpleAgentApp {
 
 	/** Factory method, which creates an <code>OsmAgentFrame</code>. */
 	@Override
-	public AgentAppFrame createFrame() {
+	public AgentAppFrame<DynamicPercept, MoveToAction> createFrame() {
 		return new OsmAgentFrame();
 	}
 
 	/** Factory method, which creates an <code>OsmAgentController</code>. */
 	@Override
-	public AgentAppController createController() {
+	public AgentAppController<DynamicPercept, MoveToAction> createController() {
 		return new OsmAgentController(map);
 	}
 

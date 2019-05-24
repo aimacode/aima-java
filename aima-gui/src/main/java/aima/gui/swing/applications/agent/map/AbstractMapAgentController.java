@@ -122,7 +122,7 @@ public abstract class AbstractMapAgentController extends AgentAppController {
 		} else {
 			StringBuilder statusMsg = new StringBuilder();
 			statusMsg.append("Task completed");
-			List<Agent<? super DynamicPercept, ? extends MoveToAction>> agents = scenario.getEnv().getAgents();
+			List<Agent<?, ?>> agents = scenario.getEnv().getAgents();
 			if (agents.size() == 1) {
 				Double travelDistance = scenario.getEnv().getAgentTravelDistance(
 						agents.get(0));

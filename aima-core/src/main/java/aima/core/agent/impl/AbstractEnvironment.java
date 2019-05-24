@@ -51,7 +51,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 
 	//
 	// START-Environment
-	public List<Agent<? super P, ? extends A>> getAgents() {
+	public List<Agent<?, ?>> getAgents() {
 		// Return as a List but also ensures the caller cannot modify
 		return new ArrayList<>(agents);
 	}
@@ -117,7 +117,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 		if (Tasks.currIsCancelled())
 			return true;
 
-		for (Agent<? super P, ? extends A> agent : agents)
+		for (Agent<?, ?> agent : agents)
 			if (agent.isAlive())
 				return false;
 

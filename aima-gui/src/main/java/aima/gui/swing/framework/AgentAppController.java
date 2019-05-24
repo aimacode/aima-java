@@ -2,17 +2,19 @@ package aima.gui.swing.framework;
 
 /**
  * Provides the base class for all controller implementations.
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ruediger Lunde
  */
-public abstract class AgentAppController {
-	protected AgentAppFrame frame;
+public abstract class AgentAppController<P, A> {
+	protected AgentAppFrame<P, A> frame;
 
 	/**
 	 * Gives the controller access to the frame. This is useful to display
 	 * status information.
 	 */
-	public void setFrame(AgentAppFrame frame) {
+	public void setFrame(AgentAppFrame<P, A> frame) {
 		this.frame = frame;
 	}
 

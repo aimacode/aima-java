@@ -1,6 +1,5 @@
 package aima.gui.swing.applications.search.games;
 
-import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.Percept;
@@ -42,7 +41,7 @@ import java.util.Properties;
  * 
  * @author Ruediger Lunde
  */
-public class NQueensApp extends SimpleAgentApp {
+public class NQueensApp extends SimpleAgentApp<Percept, QueenAction> {
 
 	/** List of supported search algorithm names. */
 	protected static List<String> SEARCH_NAMES = new ArrayList<>();
@@ -74,19 +73,19 @@ public class NQueensApp extends SimpleAgentApp {
 	}
 
 	/** Returns a <code>NQueensView</code> instance. */
-	public AgentAppEnvironmentView createEnvironmentView() {
+	public AgentAppEnvironmentView<Percept, QueenAction> createEnvironmentView() {
 		return new NQueensView();
 	}
 
 	/** Returns a <code>NQueensFrame</code> instance. */
 	@Override
-	public AgentAppFrame createFrame() {
+	public AgentAppFrame<Percept, QueenAction> createFrame() {
 		return new NQueensFrame();
 	}
 
 	/** Returns a <code>NQueensController</code> instance. */
 	@Override
-	public AgentAppController createController() {
+	public AgentAppController<Percept, QueenAction> createController() {
 		return new NQueensController();
 	}
 
@@ -106,7 +105,7 @@ public class NQueensApp extends SimpleAgentApp {
 	/**
 	 * Adds some selectors to the base class and adjusts its size.
 	 */
-	protected static class NQueensFrame extends AgentAppFrame {
+	protected static class NQueensFrame extends AgentAppFrame<Percept, QueenAction> {
 		private static final long serialVersionUID = 1L;
 		public static String ENV_SEL = "EnvSelection";
 		public static String PROBLEM_SEL = "ProblemSelection";
@@ -205,10 +204,10 @@ public class NQueensApp extends SimpleAgentApp {
 	/**
 	 * Defines how to react on standard simulation button events.
 	 */
-	protected static class NQueensController extends AgentAppController {
+	protected static class NQueensController extends AgentAppController<Percept, QueenAction> {
 
 		protected NQueensEnvironment env = null;
-		protected SearchAgent agent = null;
+		protected SearchAgent<Percept, NQueensBoard, QueenAction> agent = null;
 		protected boolean boardDirty;
 
 		/** Prepares next simulation. */

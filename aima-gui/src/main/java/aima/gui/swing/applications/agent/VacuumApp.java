@@ -1,5 +1,7 @@
 package aima.gui.swing.applications.agent;
 
+import aima.core.agent.Action;
+import aima.core.agent.Percept;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppEnvironmentView;
 import aima.gui.swing.framework.AgentAppFrame;
@@ -11,23 +13,23 @@ import aima.gui.swing.framework.SimpleAgentApp;
  * 
  * @author Ruediger Lunde
  */
-public class VacuumApp extends SimpleAgentApp {
+public class VacuumApp extends SimpleAgentApp<Percept, Action> {
 
 	/** Returns a <code>VacuumView</code> instance. */
 	@Override
-	public AgentAppEnvironmentView createEnvironmentView() {
+	public AgentAppEnvironmentView<Percept, Action> createEnvironmentView() {
 		return new VacuumView();
 	}
 	
 	/** Returns a <code>VacuumFrame</code> instance. */
 	@Override
-	public AgentAppFrame createFrame() {
+	public AgentAppFrame<Percept, Action> createFrame() {
 		return new VacuumFrame();
 	}
 
 	/** Returns a <code>VacuumController</code> instance. */
 	@Override
-	public AgentAppController createController() {
+	public AgentAppController<Percept, Action> createController() {
 		return new VacuumController();
 	}
 

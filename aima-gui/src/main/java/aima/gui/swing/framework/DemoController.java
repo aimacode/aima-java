@@ -3,10 +3,12 @@ package aima.gui.swing.framework;
 /**
  * Simple controller implementation which shows the relationship between buttons
  * and selector activations and controller method calls.
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ruediger Lunde
  */
-public class DemoController extends AgentAppController {
+public class DemoController<P, A> extends AgentAppController<P, A> {
 	/** The controller decides when simulation can be started. */
 	private boolean isPrepared = false;
 

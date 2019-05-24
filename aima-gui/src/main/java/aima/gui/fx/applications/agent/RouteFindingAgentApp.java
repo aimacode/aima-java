@@ -1,6 +1,7 @@
 package aima.gui.fx.applications.agent;
 
 import aima.core.agent.Agent;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.*;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
@@ -43,7 +44,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	private TaskExecutionPaneCtrl taskPaneCtrl;
 	private MapEnvironmentViewCtrl envViewCtrl;
 	protected MapEnvironment env = null;
-	protected Agent agent = null;
+	protected Agent<DynamicPercept, MoveToAction> agent = null;
 
 	/** A scenario. */
 	protected Scenario scenario;
