@@ -30,7 +30,7 @@ toggle between StepMode and VeryFast).
 Depends on the aima-core project. 
 
 ### Current Release
-#### 1.1.1-JavaFX GUIs Added : 18 Dec 2016
+#### 1.1.1-JavaFX GUIs Added : 18 Dec 2016 (outdated)
  * Fixed Jar to launch JavaFX Integrated App by default.
   
 ### Running the GUIs and Command Line Demos
