@@ -22,17 +22,17 @@ public class WumpusAgentDemo {
         SimpleEnvironmentView view = new SimpleEnvironmentView();
         env.addEnvironmentView(view);
 
-        HybridWumpusAgent a;
-        a = new HybridWumpusAgent
+        HybridWumpusAgent agent;
+        agent = new HybridWumpusAgent
         // a = new EfficientHybridWumpusAgent
                 (cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart(),
                 new DPLLSatisfiable(), env);
 
         env.notifyViews("The cave:\n" + cave.toString());
-        env.addAgent(a);
+        env.addAgent(agent);
         env.stepUntilDone();
-        env.notifyViews("Metrics: " + a.getMetrics());
-        env.notifyViews("KB:\n" + a.getKB());
+        env.notifyViews("Metrics: " + agent.getMetrics());
+        env.notifyViews("KB:\n" + agent.getKB());
     }
 
     private static WumpusCave create2x2Cave() {

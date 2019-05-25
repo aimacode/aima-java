@@ -22,14 +22,14 @@ public class TrivialVacuumDemo {
 		EnvironmentView<Object, Object> view = new SimpleEnvironmentView();
 		env.addEnvironmentView(view);
 		
-		Agent<DynamicPercept, Action> a = null;
-		a = new ModelBasedReflexVacuumAgent();
-		// a = new ReflexVacuumAgent();
-		// a = new SimpleReflexVacuumAgent();
-		// a = new TableDrivenVacuumAgent();
+		Agent<DynamicPercept, Action> agent;
+		agent = new ModelBasedReflexVacuumAgent();
+		// agent = new ReflexVacuumAgent();
+		// agent = new SimpleReflexVacuumAgent();
+		// agent = new TableDrivenVacuumAgent();
 
-		env.addAgent(a);
+		env.addAgent(agent);
 		env.step(16);
-		env.notifyViews("Performance=" + env.getPerformanceMeasure(a));
+		env.notifyViews("Performance=" + env.getPerformanceMeasure(agent));
 	}
 }

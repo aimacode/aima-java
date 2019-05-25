@@ -1,6 +1,7 @@
 package aima.gui.demo.agent;
 
 import aima.core.agent.Action;
+import aima.core.agent.EnvironmentView;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.SimpleActionTracker;
 import aima.core.environment.vacuum.NondeterministicVacuumEnvironment;
@@ -27,12 +28,14 @@ public class NondeterministicVacuumEnvironmentDemo {
 	private static void startAndOrSearch() {
 		System.out.println("AND-OR-GRAPH-SEARCH");
 
-        // create agent and world
+        // create agent, environment, and environment view
         NondeterministicSearchAgent<DynamicPercept, VacuumEnvironmentState, Action> agent =
                 new NondeterministicSearchAgent<>(VacuumWorldFunctions::ptsFunction);
-        NondeterministicVacuumEnvironment world = new NondeterministicVacuumEnvironment
+        VacuumEnvironment world = new NondeterministicVacuumEnvironment
                 (VacuumEnvironment.LocationState.Dirty, VacuumEnvironment.LocationState.Dirty);
         world.addAgent(agent, VacuumEnvironment.LOCATION_A);
+        SimpleActionTracker actionTracker = new SimpleActionTracker();
+        world.addEnvironmentView(actionTracker);
 
         // provide the agent with a problem formulation so that a contingency plan can be computed.
         NondeterministicProblem<VacuumEnvironmentState, Action> problem = new NondeterministicProblem<>(
@@ -42,8 +45,6 @@ public class NondeterministicVacuumEnvironmentDemo {
                 VacuumWorldFunctions::testGoal,
                 (s, a, sPrimed) -> 1.0);
         agent.makePlan(problem);
-        SimpleActionTracker actionTracker = new SimpleActionTracker();
-        world.addEnvironmentView(actionTracker);
 
         // show and execute the plan
         System.out.println("Initial Plan: " + agent.getPlan());
