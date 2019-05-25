@@ -17,8 +17,8 @@ import java.util.function.ToDoubleFunction;
 
 /**
  * Variant of {@link aima.core.environment.map.SimpleMapAgent} which works
- * correctly also for A* and other best-first search implementations. It can be
- * extended also for scenarios, in which the agent faces unforeseen events. When
+ * correctly for A* and other best-first search implementations. It can be
+ * extended for scenarios, in which the agent faces unforeseen events. When
  * using informed search and more then one goal, make sure, that a heuristic
  * function factory is provided!
  *
