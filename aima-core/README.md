@@ -91,7 +91,7 @@ private static void nQueensWithBreadthFirstSearch() {
     }
 }
 ```
-For further information about code design, see the [Wiki2](https://github.com/aimacode/aima-java/wiki/AIMA3e-Search-Framework).
+For further information about code design, see [Wiki2](https://github.com/aimacode/aima-java/wiki/AIMA3e-Search-Framework).
 
 ### Logic Notes
 To use First Order Logic, first you need to create an instance of `aima.core.logic.fol.domain.FOLDomain`
