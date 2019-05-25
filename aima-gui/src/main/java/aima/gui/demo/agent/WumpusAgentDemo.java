@@ -1,6 +1,5 @@
 package aima.gui.demo.agent;
 
-import aima.core.agent.EnvironmentView;
 import aima.core.agent.impl.SimpleEnvironmentView;
 import aima.core.environment.wumpusworld.HybridWumpusAgent;
 import aima.core.environment.wumpusworld.WumpusCave;

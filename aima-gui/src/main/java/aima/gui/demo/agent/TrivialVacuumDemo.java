@@ -1,15 +1,13 @@
 package aima.gui.demo.agent;
 
-import aima.core.agent.*;
-import aima.core.agent.impl.DynamicAction;
+import aima.core.agent.Action;
+import aima.core.agent.Agent;
+import aima.core.agent.Environment;
+import aima.core.agent.EnvironmentView;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.SimpleEnvironmentView;
-import aima.core.environment.map.MapAgent;
 import aima.core.environment.vacuum.ModelBasedReflexVacuumAgent;
 import aima.core.environment.vacuum.VacuumEnvironment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Demonstrates, how to set up a simple environment, place an agent in it,
