@@ -3,7 +3,7 @@
 ### Requirements
 JDK 1.8 - is the baseline JDK against which this project is developed.
 
-### Current Release: 3.0.0-Search-Improvements
+### Current Release: 3.0.0-Search-Improvements (outdated)
 #### 3.0.0-Search-Improvements : Dec 18 2016
 * Releasing as a full version number, corresponding to 3rd edition of book 
   (i.e. all 3rd edition releases will start with 3.x.x going forward).
@@ -31,8 +31,10 @@ Included in the aima-core directory are .classpath and .project files for the [E
 
 ## Using the Code
 
-For examples of how to use the various algorithms and supporting classes, look at the test cases in the parallel directory structure under src/test.
+For examples of how to use the various algorithms and supporting classes, look at the test cases in the parallel directory structure under src/test or in the demo package of the aima-gui sub-project. General comments on architecture and design can be found [here](https://github.com/aimacode/aima-java/wiki/AIMA3e-Architecture-and-Design).
 
+### Notes on the Agent Framework
+For comments on the design of the agent framework see [Wiki1](https://github.com/aimacode/aima-java/wiki/AIMA3e-Agent-Framework).
 
 ### Notes on Search
 
@@ -89,8 +91,7 @@ private static void nQueensWithBreadthFirstSearch() {
     }
 }
 ```
-
-For further information about code design, see the [Wiki](https://github.com/aimacode/aima-java/wiki).
+For further information about code design, see the [Wiki2](https://github.com/aimacode/aima-java/wiki/AIMA3e-Search-Framework).
 
 ### Logic Notes
 To use First Order Logic, first you need to create an instance of `aima.core.logic.fol.domain.FOLDomain`
