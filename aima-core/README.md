@@ -31,10 +31,10 @@ Included in the aima-core directory are .classpath and .project files for the [E
 
 ## Using the Code
 
-For examples of how to use the various algorithms and supporting classes, look at the test cases in the parallel directory structure under src/test or in the demo package of the aima-gui sub-project. General comments on architecture and design can be found [here](https://github.com/aimacode/aima-java/wiki/AIMA3e-Architecture-and-Design).
+For examples of how to use the various algorithms and supporting classes, look at the test cases in the parallel directory structure under src/test or in the demo package of the aima-gui sub-project. General comments on architecture and design can be found in [Wiki0](https://github.com/aimacode/aima-java/wiki/AIMA3e-Architecture-and-Design).
 
 ### Notes on the Agent Framework
-For comments on the design of the agent framework see [Wiki1](https://github.com/aimacode/aima-java/wiki/AIMA3e-Agent-Framework).
+For comments on the design of the agent framework, see [Wiki1](https://github.com/aimacode/aima-java/wiki/AIMA3e-Agent-Framework).
 
 ### Notes on Search
 
