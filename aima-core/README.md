@@ -78,17 +78,17 @@ To actually search you need to:
 A good example (from the NQueens Demo) is:
 ```java
 private static void nQueensWithBreadthFirstSearch() {
-	try {
-		System.out.println("\nNQueensDemo BFS -->");
-		Problem<NQueensBoard, QueenAction> problem =
-				NQueensFunctions.createIncrementalFormulationProblem(boardSize);
-		SearchForActions<NQueensBoard, QueenAction> search = new BreadthFirstSearch<>(new TreeSearch<>());
-		SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
-		printActions(agent.getActions());
-		printInstrumentation(agent.getInstrumentation());
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
+    try {
+	System.out.println("\nNQueensDemo BFS -->");
+ 	Problem<NQueensBoard, QueenAction> problem =
+		NQueensFunctions.createIncrementalFormulationProblem(boardSize);
+	SearchForActions<NQueensBoard, QueenAction> search = new BreadthFirstSearch<>(new TreeSearch<>());
+	SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
+	printActions(agent.getActions());
+	printInstrumentation(agent.getInstrumentation());
+    } catch (Exception e) {
+	e.printStackTrace();
+    }
 }
 ```
 For further information about code design, see [Wiki2](https://github.com/aimacode/aima-java/wiki/AIMA3e-Search-Framework).
