@@ -72,7 +72,7 @@ markers must be set.
 
 
 ### Current Release
-#### 2.1.1-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016
+#### 2.1.1-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016 (outdated)
   * Fixed Jar to launch JavaFX Integrated App by default.
 
 ### Keywords
