@@ -38,7 +38,7 @@ For comments on the design of the agent framework, see [Wiki1](https://github.co
 
 ### Notes on Search
 
-To define a problem for (non CSP) search you can follow this steps:
+To define a problem for search you can follow this steps:
 * Choose or implement a class to represent states and another to represent
   actions for navigation through the state space. Often, `String`/ `Integer`
   and `DynamicAction` will do. For the N-Queens-Problem,
@@ -92,6 +92,7 @@ private static void nQueensWithBreadthFirstSearch() {
 }
 ```
 For further information about code design, see [Wiki2](https://github.com/aimacode/aima-java/wiki/AIMA3e-Search-Framework).
+An overview of the CSP package is given in [Wiki3](https://github.com/aimacode/aima-java/wiki/AIMA3e-CSP-Package).
 
 ### Logic Notes
 To use First Order Logic, first you need to create an instance of `aima.core.logic.fol.domain.FOLDomain`
