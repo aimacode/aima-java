@@ -8,7 +8,6 @@ import aima.core.search.nondeterministic.ResultsFunction;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Contains useful functions for the vacuum cleaner world with two locations.
