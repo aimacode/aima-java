@@ -21,8 +21,8 @@ projects. Typical programming challenges include:
 * Develop an agent which plans the Saturday morning shopping tour for you. Try to
   create an optimal tour (the typical greedy TSP implementation is not that challenging...).
 
-Two GUIs are provided: One is based on JavaFX (package `aimax.osm.gui.fx`) and the other based on
-Swing (package `aimax.osm.gui.swing`). The FX GUI ist newer, more elegant, and
+Two GUIs are provided: One is based on JavaFX (package [aimax.osm.gui.fx](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/fx)) and the other based on
+Swing (package [aimax.osm.gui.swing](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/swing)). The FX GUI ist newer, more elegant, and
 more focused on AIMA concepts evaluation. The Swing GUI provides more functionality including
 a toolbox for building small navigation systems.
 
@@ -60,7 +60,8 @@ cities like Berlin can be loaded and displayed without any problem if enough
 heap space is provided (VM argument `-Xmx500M`).
 
 Getting started: Run one of the applications in the
-`aimax.osm.gui.fx.applications` or `aimax.osm.gui.swing.applications` package,
+[aimax.osm.gui.fx.applications](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/fx/applications)
+or [aimax.osm.gui.swing.applications](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/swing/applications) package,
 or use the corresponding integrated applications one package level up. If no map is
 displayed by default, make sure that the `main/resource` folder is included
 in the build path of your project, recompile and start again.
