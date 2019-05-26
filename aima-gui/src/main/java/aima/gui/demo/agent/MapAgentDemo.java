@@ -31,7 +31,9 @@ public class MapAgentDemo {
         //search = new UniformCostSearch<>(new TreeSearch<>());
         //search = new UniformCostSearch<>(new GraphSearch<>());
         search = new AStarSearch<>(new GraphSearch<>(), MapFunctions.createSLDHeuristicFunction(destination, map));
-        Agent<DynamicPercept, MoveToAction> agent = new SimpleMapAgent(map, search, new String[]{destination});
+        Agent<DynamicPercept, MoveToAction> agent;
+        //agent = new SimpleMapAgent(map, search, new String[]{destination});
+        agent = new MapAgent(map, search, destination);
 
         env.addAgent(agent, agentLoc);
         env.stepUntilDone();
