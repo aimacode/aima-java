@@ -12,8 +12,8 @@ scenarios, different algorithms can be tested and compared with various paramete
  
 Application class names end with "App" and command line demo class names end with "Demo".
 Simple demo command line applications can be found in package [aima.gui.demo](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/demo).
-Graphical demo applications are available based on JavaFX (package [aima.gui.fx.applications`](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/fx)) and
-Swing (package [aima.gui.swing.applications](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/swing)). Each platform-specific root package contains an
+Graphical demo applications are available based on JavaFX (package [aima.gui.fx.applications](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/fx/applications)) and
+Swing (package [aima.gui.swing.applications](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/swing/applications)). Each platform-specific root package contains an
 integrated application providing access to all integrable applications. The individual applications are placed
 in sub-packages.
 
