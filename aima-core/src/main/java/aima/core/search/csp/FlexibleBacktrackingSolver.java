@@ -19,7 +19,7 @@ import aima.core.search.csp.inference.*;
 public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends AbstractBacktrackingSolver<VAR, VAL> {
 
     private CspHeuristics.VariableSelectionStrategy<VAR, VAL> varSelectionStrategy;
-    private CspHeuristics.ValueSortingStrategy<VAR, VAL> valSelectionStrategy;
+    private CspHeuristics.ValueOrderingStrategy<VAR, VAL> valOrderingStrategy;
     private InferenceStrategy<VAR, VAL> inferenceStrategy;
 
 
@@ -34,8 +34,8 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
     /**
      * Selects the algorithm for ORDER-DOMAIN-VALUES. Uses the fluent interface design pattern.
      */
-    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.ValueSortingStrategy<VAR, VAL> valStrategy) {
-        valSelectionStrategy = valStrategy;
+    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.ValueOrderingStrategy<VAR, VAL> valStrategy) {
+        valOrderingStrategy = valStrategy;
         return this;
     }
 
@@ -89,8 +89,8 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      */
     @Override
     protected Iterable<VAL> orderDomainValues(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
-        if (valSelectionStrategy != null)
-            return valSelectionStrategy.apply(csp, assignment, var);
+        if (valOrderingStrategy != null)
+            return valOrderingStrategy.apply(csp, assignment, var);
         else
             return csp.getDomain(var);
     }

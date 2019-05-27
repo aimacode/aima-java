@@ -18,7 +18,7 @@ public class CspHeuristics {
         List<VAR> apply(CSP<VAR, VAL> csp, List<VAR> vars);
     }
 
-    public interface ValueSortingStrategy<VAR extends Variable, VAL> {
+    public interface ValueOrderingStrategy<VAR extends Variable, VAL> {
         List<VAL> apply(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var);
     }
 
@@ -28,7 +28,7 @@ public class CspHeuristics {
         return (csp, vars) -> new DegHeuristic<VAR, VAL>().apply(csp, new MrvHeuristic<VAR, VAL>().apply(csp, vars));
     }
 
-    public static <VAR extends Variable, VAL> ValueSortingStrategy<VAR, VAL> lcv() { return new LcvHeuristic<>();}
+    public static <VAR extends Variable, VAL> ValueOrderingStrategy<VAR, VAL> lcv() { return new LcvHeuristic<>();}
 
     /**
      * Implements the minimum-remaining-values heuristic.
@@ -79,7 +79,7 @@ public class CspHeuristics {
     /**
      * Implements the least constraining value heuristic.
      */
-    public static class LcvHeuristic<VAR extends Variable, VAL> implements ValueSortingStrategy<VAR, VAL> {
+    public static class LcvHeuristic<VAR extends Variable, VAL> implements ValueOrderingStrategy<VAR, VAL> {
 
         /** Returns the values of Dom(var) in a special order. The least constraining value comes first. */
         public List<VAL> apply(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
