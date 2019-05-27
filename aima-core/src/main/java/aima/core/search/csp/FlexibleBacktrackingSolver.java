@@ -18,15 +18,15 @@ import aima.core.search.csp.inference.*;
  */
 public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends AbstractBacktrackingSolver<VAR, VAL> {
 
-    private CspHeuristics.VariableSelection<VAR, VAL> varSelectionStrategy;
-    private CspHeuristics.ValueSelection<VAR, VAL> valSelectionStrategy;
+    private CspHeuristics.VariableSelectionStrategy<VAR, VAL> varSelectionStrategy;
+    private CspHeuristics.ValueSortingStrategy<VAR, VAL> valSelectionStrategy;
     private InferenceStrategy<VAR, VAL> inferenceStrategy;
 
 
     /**
      * Selects the algorithm for SELECT-UNASSIGNED-VARIABLE. Uses the fluent interface design pattern.
      */
-    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.VariableSelection<VAR, VAL> varStrategy) {
+    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.VariableSelectionStrategy<VAR, VAL> varStrategy) {
         varSelectionStrategy = varStrategy;
         return this;
     }
@@ -34,7 +34,7 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
     /**
      * Selects the algorithm for ORDER-DOMAIN-VALUES. Uses the fluent interface design pattern.
      */
-    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.ValueSelection<VAR, VAL> valStrategy) {
+    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.ValueSortingStrategy<VAR, VAL> valStrategy) {
         valSelectionStrategy = valStrategy;
         return this;
     }

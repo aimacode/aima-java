@@ -14,25 +14,26 @@ import java.util.stream.Collectors;
 public class CspHeuristics {
 
 
-    public interface VariableSelection<VAR extends Variable, VAL> {
+    public interface VariableSelectionStrategy<VAR extends Variable, VAL> {
         List<VAR> apply(CSP<VAR, VAL> csp, List<VAR> vars);
     }
 
-    public interface ValueSelection<VAR extends Variable, VAL> {
+    public interface ValueSortingStrategy<VAR extends Variable, VAL> {
         List<VAL> apply(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var);
     }
 
-    public static <VAR extends Variable, VAL> VariableSelection<VAR, VAL> mrv() { return new MrvHeuristic<>(); }
-    public static <VAR extends Variable, VAL> VariableSelection<VAR, VAL> deg() { return new DegHeuristic<>(); }
-    public static <VAR extends Variable, VAL> VariableSelection<VAR, VAL> mrvDeg() {
+    public static <VAR extends Variable, VAL> VariableSelectionStrategy<VAR, VAL> mrv() { return new MrvHeuristic<>(); }
+    public static <VAR extends Variable, VAL> VariableSelectionStrategy<VAR, VAL> deg() { return new DegHeuristic<>(); }
+    public static <VAR extends Variable, VAL> VariableSelectionStrategy<VAR, VAL> mrvDeg() {
         return (csp, vars) -> new DegHeuristic<VAR, VAL>().apply(csp, new MrvHeuristic<VAR, VAL>().apply(csp, vars));
     }
-    public static <VAR extends Variable, VAL> ValueSelection<VAR, VAL> lcv() { return new LcvHeuristic<>();}
+
+    public static <VAR extends Variable, VAL> ValueSortingStrategy<VAR, VAL> lcv() { return new LcvHeuristic<>();}
 
     /**
      * Implements the minimum-remaining-values heuristic.
      */
-    public static class MrvHeuristic<VAR extends Variable, VAL> implements VariableSelection<VAR, VAL> {
+    public static class MrvHeuristic<VAR extends Variable, VAL> implements VariableSelectionStrategy<VAR, VAL> {
 
         /** Returns variables from <code>vars</code> which are the best with respect to MRV. */
         public List<VAR> apply(CSP<VAR, VAL> csp, List<VAR> vars) {
@@ -55,7 +56,7 @@ public class CspHeuristics {
     /**
      * Implements the degree heuristic. Constraints with arbitrary scope size are supported.
      */
-    public static class DegHeuristic<VAR extends Variable, VAL> implements VariableSelection<VAR, VAL> {
+    public static class DegHeuristic<VAR extends Variable, VAL> implements VariableSelectionStrategy<VAR, VAL> {
 
         /** Returns variables from <code>vars</code> which are the best with respect to DEG. */
         public List<VAR> apply(CSP<VAR, VAL> csp, List<VAR> vars) {
@@ -78,7 +79,7 @@ public class CspHeuristics {
     /**
      * Implements the least constraining value heuristic.
      */
-    public static class LcvHeuristic<VAR extends Variable, VAL> implements ValueSelection<VAR, VAL> {
+    public static class LcvHeuristic<VAR extends Variable, VAL> implements ValueSortingStrategy<VAR, VAL> {
 
         /** Returns the values of Dom(var) in a special order. The least constraining value comes first. */
         public List<VAL> apply(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
