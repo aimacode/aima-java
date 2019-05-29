@@ -26,17 +26,17 @@ import java.util.Queue;
  *   state <- UPDATE-STATE(state, percept)
  *   while (state.plan is empty && agent is alive) do
  *     goal <- FORMULATE-GOAL(state)
- *     if (goal != null) then
+ *     if (goal exists) then
  *       problem <- FORMULATE-PROBLEM(state, goal)
  *       actions <- SEARCH(problem)
- *       if (actions != null) then
+ *       if (actions != failure) then
  *         state.plan = actions
  *       else
  *         handleGoalUnreachable(goal)
  *     else
  *       die
  *   if (state.plan is empty)
- *      action = null;
+ *      action = do nothing
  *   else
  *      action <- FIRST(state.plan)
  *      state.plan <- REST(state.plan)
@@ -97,9 +97,9 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	protected abstract void updateState(P p);
 
 	/**
-	 * Primitive operation, responsible for goal generation. In this version,
-	 * implementations are allowed to return empty to indicate that the agent has
-	 * finished the job an should die.
+	 * Primitive operation, responsible for goal generation. Implementations are
+	 * allowed to return empty to indicate that the agent has finished the job an
+	 * should die.
 	 */
 	protected abstract Optional<Object> formulateGoal();
 

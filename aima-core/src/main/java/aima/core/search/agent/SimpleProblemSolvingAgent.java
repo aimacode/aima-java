@@ -50,8 +50,8 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P
 
 	// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
 	/**
-	 * Decides which action to perform next taking into account the current percept. Here, the agent
-	 * dies if no further goals can be found.
+	 * Template method which decides about the action to perform next taking into account the current percept.
+	 * Here, the agent dies if no further goals exist.
 	 * @param p The current percept
 	 * @return An action or empty if at the goal, current goal unreachable, or no further goal found
 	 */
@@ -78,21 +78,20 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P
 				setAlive(false);
 			}
 		}
-
-		if (!seq.isEmpty()) {
-			// action <- FIRST(seq)
-			// seq <- REST(seq)
-			action = seq.remove();
-		}
-
-		return Optional.ofNullable(action);
+		// action <- FIRST(seq)
+		// seq <- REST(seq)
+		return Optional.ofNullable(!seq.isEmpty() ? seq.remove() : null);
 	}
 
-	//
-	// PROTECTED METHODS
-	//
+	// primitive operations
+
 	protected abstract void updateState(P p);
 
+	/**
+	 * Primitive operation, responsible for goal generation. Implementations are
+	 * allowed to return empty to indicate that the agent has finished the job an
+	 * should die.
+	 */
 	protected abstract Optional<Object> formulateGoal();
 
 	protected abstract Problem<S, A> formulateProblem(Object goal);
