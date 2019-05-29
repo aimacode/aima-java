@@ -27,7 +27,7 @@ import java.util.Queue;
  *   while (state.plan is empty && agent is alive) do
  *     goal <- FORMULATE-GOAL(state)
  *     if (goal != null) then
- *       problem    <- FORMULATE-PROBLEM(state, goal)
+ *       problem <- FORMULATE-PROBLEM(state, goal)
  *       actions <- SEARCH(problem)
  *       if (actions != null) then
  *         state.plan = actions
@@ -35,8 +35,11 @@ import java.util.Queue;
  *         handleGoalUnreachable(goal)
  *     else
  *       die
- *   action <- FIRST(state.plan)
- *   plan <- REST(state.plan)
+ *   if (state.plan is empty)
+ *      action = null;
+ *   else
+ *      action <- FIRST(state.plan)
+ *      state.plan <- REST(state.plan)
  *   return action
  * </code>
  * </pre>
@@ -63,7 +66,6 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	 * @return an action or empty if at a new goal or no further goal left.
 	 */
 	public Optional<A> execute(P p) {
-		A action = null;
 		updateState(p);
 		// never give up
 		while (plan.isEmpty() && isAlive()) {
@@ -81,9 +83,7 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 				setAlive(false);
 			}
 		}
-		if (!plan.isEmpty())
-			action = plan.remove();
-		return Optional.ofNullable(action);
+		return Optional.ofNullable(!plan.isEmpty() ? plan.remove() : null);
 	}
 
 	/**
@@ -99,9 +99,7 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	/**
 	 * Primitive operation, responsible for goal generation. In this version,
 	 * implementations are allowed to return empty to indicate that the agent has
-	 * finished the job an should die. Implementations can access the current
-	 * goal (which is a possibly modified version of the last formulated goal).
-	 * This might be useful in situations in which plan execution has failed.
+	 * finished the job an should die.
 	 */
 	protected abstract Optional<Object> formulateGoal();
 
@@ -111,7 +109,7 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	protected abstract Problem<S, A> formulateProblem(Object goal);
 
 	/**
-	 * Primitive operation, responsible for the generation of an action list
+	 * Primitive operation, responsible for the generation of a list of actions
 	 * (plan) for the given search problem.
 	 */
 	protected abstract Optional<List<A>> search(Problem<S, A> problem);
