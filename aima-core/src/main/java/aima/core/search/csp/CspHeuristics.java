@@ -38,16 +38,15 @@ public class CspHeuristics {
         /** Returns variables from <code>vars</code> which are the best with respect to MRV. */
         public List<VAR> apply(CSP<VAR, VAL> csp, List<VAR> vars) {
             List<VAR> result = new ArrayList<>();
-            int mrv = Integer.MAX_VALUE;
+            int minValues = Integer.MAX_VALUE;
             for (VAR var : vars) {
-                int rv = csp.getDomain(var).size();
-                if (rv <= mrv) {
-                    if (rv < mrv) {
-                        result.clear();
-                        mrv = rv;
-                    }
-                    result.add(var);
+                int values = csp.getDomain(var).size();
+                if (values < minValues) {
+                    result.clear();
+                    minValues = values;
                 }
+                if (values == minValues)
+                    result.add(var);
             }
             return result;
         }
@@ -64,13 +63,12 @@ public class CspHeuristics {
             int maxDegree = -1;
             for (VAR var : vars) {
                 int degree = csp.getConstraints(var).size();
-                if (degree >= maxDegree) {
-                    if (degree > maxDegree) {
-                        result.clear();
-                        maxDegree = degree;
-                    }
-                    result.add(var);
+                if (degree > maxDegree) {
+                    result.clear();
+                    maxDegree = degree;
                 }
+                if (degree == maxDegree)
+                    result.add(var);
             }
             return result;
         }
@@ -105,9 +103,8 @@ public class CspHeuristics {
                     if (!assignment.contains(neighbor))
                         for (VAL nValue : csp.getDomain(neighbor)) {
                             assign.add(neighbor, nValue);
-                            if (!constraint.isSatisfiedWith(assign)) {
+                            if (!constraint.isSatisfiedWith(assign))
                                 ++result;
-                            }
                         }
                 }
             }

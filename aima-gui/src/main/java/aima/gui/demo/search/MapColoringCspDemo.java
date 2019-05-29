@@ -34,6 +34,14 @@ public class MapColoringCspDemo {
 		solution = solver.solve(csp);
 		solution.ifPresent(System.out::println);
 		System.out.println(stepCounter.getResults() + "\n");
+
+		solver = new FlexibleBacktrackingSolver<Variable, String>().set(CspHeuristics.mrvDeg());
+		solver.addCspListener(stepCounter);
+		stepCounter.reset();
+		System.out.println("Map Coloring (Backtracking + MRV & DEG)");
+		solution = solver.solve(csp);
+		solution.ifPresent(System.out::println);
+		System.out.println(stepCounter.getResults() + "\n");
 		
 		solver = new FlexibleBacktrackingSolver<>();
 		solver.addCspListener(stepCounter);

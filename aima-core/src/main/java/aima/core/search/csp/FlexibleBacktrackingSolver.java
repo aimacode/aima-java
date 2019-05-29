@@ -51,8 +51,7 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      * Selects MRV&DEG for variable selection, LCV for domain ordering and AC3 as inference method.
      */
     public FlexibleBacktrackingSolver<VAR, VAL> setAll() {
-        set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv()).set(new AC3Strategy<>());
-        return this;
+        return set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv()).set(new AC3Strategy<>());
     }
 
     /**
@@ -77,8 +76,8 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      */
     @Override
     protected VAR selectUnassignedVariable(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
-        List<VAR> vars = csp.getVariables().stream().
-                filter((v) -> !assignment.contains(v)).collect(Collectors.toList());
+        List<VAR> vars = csp.getVariables().stream().filter(v -> !assignment.contains(v)).
+                collect(Collectors.toList());
         if (varSelectionStrategy != null)
             vars = varSelectionStrategy.apply(csp, vars);
         return vars.get(0);
@@ -89,10 +88,7 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      */
     @Override
     protected Iterable<VAL> orderDomainValues(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
-        if (valOrderingStrategy != null)
-            return valOrderingStrategy.apply(csp, assignment, var);
-        else
-            return csp.getDomain(var);
+        return (valOrderingStrategy != null) ? valOrderingStrategy.apply(csp, assignment, var) : csp.getDomain(var);
     }
 
     /**
@@ -106,9 +102,6 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      */
     @Override
     protected InferenceLog<VAR, VAL> inference(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
-        if (inferenceStrategy != null)
-            return inferenceStrategy.apply(csp, assignment, var);
-        else
-            return InferenceLog.emptyLog();
+        return (inferenceStrategy != null) ? inferenceStrategy.apply(csp, assignment, var) : InferenceLog.emptyLog();
     }
 }
