@@ -33,7 +33,7 @@ public class NotEqualConstraint<VAR extends Variable, VAL> implements Constraint
 
 	@Override
 	public boolean isSatisfiedWith(Assignment<VAR, VAL> assignment) {
-		Object value1 = assignment.getValue(var1);
+		VAL value1 = assignment.getValue(var1);
 		return value1 == null || !value1.equals(assignment.getValue(var2));
 	}
 }

@@ -154,8 +154,7 @@ public class CSP<VAR extends Variable, VAL> implements Cloneable {
         CSP<VAR, VAL> result;
         try {
             result = (CSP<VAR, VAL>) clone();
-            result.domains = new ArrayList<>(domains.size());
-            result.domains.addAll(domains);
+            result.domains = new ArrayList<>(domains);
         } catch (CloneNotSupportedException e) {
             throw new UnsupportedOperationException("Could not copy domains.");
         }

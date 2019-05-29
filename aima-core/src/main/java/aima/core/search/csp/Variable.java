@@ -23,7 +23,7 @@ public class Variable {
     /** Variables with equal names are equal. */
     @Override
     public final boolean equals(Object obj) {
-        return obj instanceof Variable && this.name.equals(((Variable) obj).name);
+        return (obj != null && obj.getClass() == getClass()) && name.equals(((Variable) obj).name);
     }
 
     @Override

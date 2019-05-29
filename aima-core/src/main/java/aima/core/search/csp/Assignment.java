@@ -1,7 +1,6 @@
 package aima.core.search.csp;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * An assignment assigns values to some or all variables of a CSP.
@@ -15,7 +14,7 @@ public class Assignment<VAR extends Variable, VAL> implements Cloneable {
     private LinkedHashMap<VAR, VAL> variableToValueMap = new LinkedHashMap<>();
 
     public List<VAR> getVariables() {
-        return variableToValueMap.keySet().stream().collect(Collectors.toList());
+        return new ArrayList<>(variableToValueMap.keySet());
     }
 
     public VAL getValue(VAR var) {
@@ -40,10 +39,7 @@ public class Assignment<VAR extends Variable, VAL> implements Cloneable {
      * <code>constraints</code>.
      */
     public boolean isConsistent(List<Constraint<VAR, VAL>> constraints) {
-        for (Constraint<VAR, VAL> cons : constraints)
-            if (!cons.isSatisfiedWith(this))
-                return false;
-        return true;
+        return constraints.stream().allMatch(cons -> cons.isSatisfiedWith(this));
     }
 
     /**
@@ -51,10 +47,7 @@ public class Assignment<VAR extends Variable, VAL> implements Cloneable {
      * <code>vars</code>.
      */
     public boolean isComplete(List<VAR> vars) {
-        for (VAR var : vars)
-            if (!contains(var))
-                return false;
-        return true;
+        return vars.stream().allMatch(this::contains);
     }
 
     /**
