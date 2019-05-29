@@ -156,7 +156,7 @@ public class OsmAgentController extends AgentAppController<DynamicPercept, MoveT
 		Agent<DynamicPercept, MoveToAction> agent = null;
 		switch (state.getIndex(MapAgentFrame.AGENT_SEL)) {
 		case 0:
-			agent = new SimpleMapAgent(map, env, search, new String[] { locs[1] });
+			agent = new SimpleMapAgent(map, search, locs[1]).setNotifier(env);
 			break;
 		case 1:
 			Problem<String, MoveToAction> p = new BidirectionalMapProblem(map, null, locs[1]);

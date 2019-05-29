@@ -9,14 +9,13 @@ import java.util.Optional;
 import java.util.Queue;
 
 /**
- * Modified copy of class
- * {@link SimpleProblemSolvingAgent} which can be used for
+ * Modified copy of class {@link SimpleProblemSolvingAgent} which can be used for
  * online search, too. Here, attribute {@link #plan} (original:
  * <code>seq</code>) is protected. Static pseudo code variable state is used in
  * a more general sense including world state as well as agent state aspects.
- * This allows the agent to change the plan, if unexpected percepts are
- * observed. In the concrete java code, state corresponds with the agent
- * instance itself (this).
+ * This allows the agent to remove the current plan and mark the current goal
+ * as not yet reached if unexpected percepts are observed in
+ * {@link #updateState(Object)}.
  * 
  * <pre>
  * <code>
@@ -25,15 +24,17 @@ import java.util.Queue;
  *   static: state, some description of current agent and world state
  *           
  *   state <- UPDATE-STATE(state, percept)
- *   while (state.plan is empty) do
+ *   while (state.plan is empty && agent is alive) do
  *     goal <- FORMULATE-GOAL(state)
  *     if (goal != null) then
  *       problem    <- FORMULATE-PROBLEM(state, goal)
- *       state.plan <- SEARCH(problem)
- *       if (state.plan is empty and !tryWithAnotherGoal()) then
- *         add NO_OP to plan         // failure
+ *       actions <- SEARCH(problem)
+ *       if (actions != null) then
+ *         state.plan = actions
+ *       else
+ *         handleGoalUnreachable(goal)
  *     else
- *       add NO_OP to plan           // success
+ *       die
  *   action <- FIRST(state.plan)
  *   plan <- REST(state.plan)
  *   return action
@@ -55,58 +56,36 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	/**
 	 * Template method, which corresponds to pseudo code function
 	 * <code>PROBLEM-SOLVING-AGENT(percept)</code>.
+	 *
+	 * In this implementation, the agent does not necessarily give up, if search fails for one goal as
+	 * long as there are other goals. But the agent dies if no further goal is left.
 	 * 
-	 * @return an action
+	 * @return an action or empty if at a new goal or no further goal left.
 	 */
 	public Optional<A> execute(P p) {
 		A action = null;
-		// state <- UPDATE-STATE(state, percept)
 		updateState(p);
-		// if plan is empty then do
-		while (plan.isEmpty()) {
-			// state.goal <- FORMULATE-GOAL(state)
+		// never give up
+		while (plan.isEmpty() && isAlive()) {
 			Optional<Object> goal = formulateGoal();
 			if (goal.isPresent()) {
-				// problem <- FORMULATE-PROBLEM(state, goal)
 				Problem<S, A> problem = formulateProblem(goal.get());
-				// state.plan <- SEARCH(problem)
 				Optional<List<A>> actions = search(problem);
 				if (actions.isPresent())
+					// list is empty if agent is at the goal
 					plan.addAll(actions.get());
-				else if (!tryWithAnotherGoal()) {
-					// unable to identify a path
-					setAlive(false);
-					break;
-				}
+				else
+					handleGoalUnreachable(goal.get());
 			} else {
-				// no further goal to achieve
+				// no further goal
 				setAlive(false);
-				break;
 			}
 		}
-		if (!plan.isEmpty()) {
-			// action <- FIRST(plan)
-			// plan <- REST(plan)
+		if (!plan.isEmpty())
 			action = plan.remove();
-		}
 		return Optional.ofNullable(action);
 	}
 
-	/**
-	 * Primitive operation, which decides after a search for a plan failed,
-	 * whether to stop the whole task with a failure, or to go on with
-	 * formulating another goal. This implementation always returns false. If
-	 * the agent defines local goals to reach an externally specified global
-	 * goal, it might be interesting, not to stop when the first local goal
-	 * turns out to be unreachable.
-	 */
-	protected boolean tryWithAnotherGoal() {
-		return false;
-	}
-
-	//
-	// ABSTRACT METHODS
-	//
 	/**
 	 * Primitive operation, responsible for updating the state of the agent with
 	 * respect to latest feedback from the world. In this version,
@@ -136,4 +115,12 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	 * (plan) for the given search problem.
 	 */
 	protected abstract Optional<List<A>> search(Problem<S, A> problem);
+
+	/**
+	 * Primitive operation, which decides what to do after the search for a plan failed.
+	 * Implementations can influence next goal or problem formulation.
+	 * This implementation does nothing.
+	 * @param goal The goal which has turned out to be unreachable.
+	 */
+	protected void handleGoalUnreachable(Object goal) { }
 }

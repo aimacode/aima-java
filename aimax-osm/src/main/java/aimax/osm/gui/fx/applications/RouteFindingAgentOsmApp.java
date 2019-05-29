@@ -101,7 +101,7 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 				(taskPaneCtrl.getParamValueIndex(PARAM_SEARCH),
 				taskPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
 
-		return new MapAgent(map, search, locations.get(1), envViewCtrl::notify);
+		return new MapAgent(map, search, locations.get(1)).setNotifier(envViewCtrl::notify);
 	}
 
 	/**

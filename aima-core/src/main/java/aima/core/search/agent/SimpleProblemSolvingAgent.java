@@ -48,68 +48,38 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P
 	// seq, an action sequence, initially empty
 	private Queue<A> seq = new LinkedList<>();
 
-	//
-	private boolean formulateGoalsIndefinitely = true;
-
-	private int maxGoalsToFormulate = 1;
-
-	private int goalsFormulated = 0;
-
-	/**
-	 * Constructs a simple problem solving agent which will formulate goals
-	 * indefinitely.
-	 */
-	public SimpleProblemSolvingAgent() {
-		formulateGoalsIndefinitely = true;
-	}
-
-	/**
-	 * Constructs a simple problem solving agent which will formulate, at
-	 * maximum, the specified number of goals.
-	 * 
-	 * @param maxGoalsToFormulate
-	 *            the maximum number of goals this agent is to formulate.
-	 */
-	public SimpleProblemSolvingAgent(int maxGoalsToFormulate) {
-		formulateGoalsIndefinitely = false;
-		this.maxGoalsToFormulate = maxGoalsToFormulate;
-	}
-
 	// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
 	/**
-	 * Decides which action to perform next taking into account the current percept.
+	 * Decides which action to perform next taking into account the current percept. Here, the agent
+	 * dies if no further goals can be found.
 	 * @param p The current percept
-	 * @return An action or empty if at goal or goal not found
+	 * @return An action or empty if at the goal, current goal unreachable, or no further goal found
 	 */
 	@Override
 	public Optional<A> execute(P p) {
-		A action = null; // return value if at goal or goal not found
+		A action = null;
 
 		// state <- UPDATE-STATE(state, percept)
 		updateState(p);
 		// if seq is empty then do
 		if (seq.isEmpty()) {
-			if (formulateGoalsIndefinitely || goalsFormulated < maxGoalsToFormulate) {
-				if (goalsFormulated > 0) {
-					notifyViewOfMetrics();
-				}
-				// goal <- FORMULATE-GOAL(state)
-				Object goal = formulateGoal();
-				goalsFormulated++;
+			// goal <- FORMULATE-GOAL(state)
+			Optional<Object> goal = formulateGoal();
+			if (goal.isPresent()) {
 				// problem <- FORMULATE-PROBLEM(state, goal)
-				Problem<S, A> problem = formulateProblem(goal);
+				Problem<S, A> problem = formulateProblem(goal.get());
 				// seq <- SEARCH(problem)
 				Optional<List<A>> actions = search(problem);
+				// actions is empty if goal is unreachable
+				// actions contains empty list of actions if agent is at the goal
 				actions.ifPresent(as -> seq.addAll(as));
 			} else {
-				// Agent no longer wishes to
-				// achieve any more goals
+				// agent no longer wishes to achieve any more goals
 				setAlive(false);
-				notifyViewOfMetrics();
 			}
 		}
 
-		if (seq.size() > 0) {
+		if (!seq.isEmpty()) {
 			// action <- FIRST(seq)
 			// seq <- REST(seq)
 			action = seq.remove();
@@ -123,11 +93,9 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P
 	//
 	protected abstract void updateState(P p);
 
-	protected abstract Object formulateGoal();
+	protected abstract Optional<Object> formulateGoal();
 
 	protected abstract Problem<S, A> formulateProblem(Object goal);
 
 	protected abstract Optional<List<A>> search(Problem<S, A> problem);
-
-	protected abstract void notifyViewOfMetrics();
 }

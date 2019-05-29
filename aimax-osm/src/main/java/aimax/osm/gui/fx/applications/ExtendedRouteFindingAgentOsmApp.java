@@ -93,7 +93,8 @@ public class ExtendedRouteFindingAgentOsmApp extends RouteFindingAgentOsmApp {
 			hFnFactory = goal -> (node -> 0.0);
 		else
 			hFnFactory = goal -> MapFunctions.createSLDHeuristicFunction(goal, map);
-		return new MapAgent(map, search, locations.subList(1, locations.size()), envViewCtrl::notify, hFnFactory);
+		return new MapAgent(map, search, locations.subList(1, locations.size()), hFnFactory).
+				setNotifier(envViewCtrl::notify);
 	}
 
 	// helper classes...

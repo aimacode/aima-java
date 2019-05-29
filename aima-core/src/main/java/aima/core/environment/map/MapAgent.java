@@ -29,22 +29,16 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
     protected final Map map;
     protected final DynamicState state = new DynamicState();
     protected final List<String> goals = new ArrayList<>();
-    protected int currGoalIdx = -1;
+    protected int nextGoalPos = 0;
 
-    // possibly null...
-    protected EnvironmentViewNotifier notifier = null;
-    private SearchForActions<String, MoveToAction> search = null;
+    private SearchForActions<String, MoveToAction> search;
     private Function<String, ToDoubleFunction<Node<String, MoveToAction>>> hFnFactory;
+    protected EnvironmentViewNotifier notifier;
 
     public MapAgent(Map map, SearchForActions<String, MoveToAction> search, String goal) {
         this.map = map;
         this.search = search;
         goals.add(goal);
-    }
-
-    public MapAgent(Map map, SearchForActions<String, MoveToAction> search, String goal, EnvironmentViewNotifier notifier) {
-        this(map, search, goal);
-        this.notifier = notifier;
     }
 
     public MapAgent(Map map, SearchForActions<String, MoveToAction> search, List<String> goals) {
@@ -53,27 +47,25 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
         this.goals.addAll(goals);
     }
 
-    public MapAgent(Map map, SearchForActions<String, MoveToAction> search, List<String> goals,
-                    EnvironmentViewNotifier notifier) {
-        this(map, search, goals);
-        this.notifier = notifier;
-    }
-
     /**
      * Constructor.
      * @param map Information about the environment
      * @param search Search strategy to be used
      * @param goals List of locations to be visited
-     * @param notifier Gets informed about decisions of the agent
      * @param hFnFactory Factory, mapping goals to heuristic functions. When using
      *                   informed search, the agent must be able to estimate remaining costs for
      *                   the goals he has selected.
      */
     public MapAgent(Map map, SearchForActions<String, MoveToAction> search, List<String> goals,
-                    EnvironmentViewNotifier notifier,
                     Function<String, ToDoubleFunction<Node<String, MoveToAction>>> hFnFactory) {
-        this(map, search, goals, notifier);
+        this(map, search, goals);
         this.hFnFactory = hFnFactory;
+    }
+
+    /**  Sets a notifier which gets informed about decisions of the agent */
+    public MapAgent setNotifier(EnvironmentViewNotifier notifier) {
+        this.notifier = notifier;
+        return this;
     }
 
     //
@@ -88,16 +80,16 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
     @Override
     protected Optional<Object> formulateGoal() {
         String goal = null;
-        if (currGoalIdx < goals.size() - 1) {
-            goal = goals.get(++currGoalIdx);
+        if (nextGoalPos < goals.size())
+            goal = goals.get(nextGoalPos++);
+        if (goal != null) {
             if (hFnFactory != null && search instanceof Informed)
                 ((Informed<String, MoveToAction>) search).setHeuristicFunction(hFnFactory.apply(goal));
-
             if (notifier != null)
                 notifier.notifyViews("Current location: In(" + state.getAttribute(DynAttributeNames.AGENT_LOCATION)
                         + "), Goal: In(" + goal + ")");
         }
-        return goal != null ? Optional.of(goal) : Optional.empty();
+        return Optional.ofNullable(goal);
     }
 
     @Override
@@ -109,12 +101,8 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
     @Override
     protected Optional<List<MoveToAction>> search(Problem<String, MoveToAction> problem) {
         Optional<List<MoveToAction>> result = search.findActions(problem);
-        notifyViewOfMetrics();
-        return result;
-    }
-
-    protected void notifyViewOfMetrics() {
         if (notifier != null)
-            notifier.notifyViews("Search metrics: " + search.getMetrics());
+            notifier.notifyViews("Search" + search.getMetrics());
+        return result;
     }
 }

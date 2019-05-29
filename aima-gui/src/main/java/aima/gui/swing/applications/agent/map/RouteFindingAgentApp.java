@@ -212,7 +212,7 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 			}
 			MapEnvironment env = scenario.getEnv();
 			String goal = destinations.get(0);
-			SimpleMapAgent agent = new SimpleMapAgent(env.getMap(), env, search, new String[] { goal });
+			SimpleMapAgent agent = new SimpleMapAgent(env.getMap(), search, goal).setNotifier(env);
 			env.addAgent(agent, scenario.getInitAgentLocation());
 		}
 	}

@@ -17,9 +17,9 @@ import aima.core.search.uninformed.UniformCostSearch;
  * 
  */
 public class MapEnvironmentTest {
-	MapEnvironment me;
+	private MapEnvironment me;
 
-	SimpleMapAgent ma;
+	private SimpleMapAgent ma;
 
 	@Before
 	public void setUp() {
@@ -31,8 +31,7 @@ public class MapEnvironmentTest {
 		aMap.addUnidirectionalLink("B", "E", 14.0);
 
 		me = new MapEnvironment(aMap);
-		ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(),
-				new String[] { "A" });
+		ma = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(),"A").setNotifier(me);
 	}
 
 	@Test
@@ -57,10 +56,8 @@ public class MapEnvironmentTest {
 
 	@Test
 	public void testTwoAgentsSupported() {
-		SimpleMapAgent ma1 = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(),
-				new String[] { "A" });
-		SimpleMapAgent ma2 = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(),
-				new String[] { "A" });
+		SimpleMapAgent ma1 = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(), "A").setNotifier(me);
+		SimpleMapAgent ma2 = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(), "A").setNotifier(me);
 
 		me.addAgent(ma1, "A");
 		me.addAgent(ma2, "A");

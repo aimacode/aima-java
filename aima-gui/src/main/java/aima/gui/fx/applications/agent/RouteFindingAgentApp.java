@@ -186,7 +186,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 				taskPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
 
 		String goal = destinations.get(0);
-		agent = new SimpleMapAgent(env.getMap(), search, new String[] { goal });
+		agent = new SimpleMapAgent(env.getMap(), search, goal);
 		env.addAgent(agent, scenario.getInitAgentLocation());
 		env.addEnvironmentView(envViewCtrl);
 		envViewCtrl.setGoal(goal);

@@ -47,53 +47,53 @@ public class RecursiveBestFirstSearchTest {
 	@Test
 	public void testStartingAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, recursiveBestFirstSearch,
-				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), recursiveBestFirstSearch,
+				SimplifiedRoadMapOfPartOfRomania.BUCHAREST).setNotifier(me);
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(Bucharest), Goal=In(Bucharest):METRIC[pathCost]=0.0:METRIC[maxRecursiveDepth]=0:METRIC[nodesExpanded]=0:",
+				"CurrentLocation=In(Bucharest), Goal=In(Bucharest):Search{maxRecursiveDepth=0, nodesExpanded=0, pathCost=0.0}:",
 				envChanges.toString());
 	}
 
 	@Test
 	public void testAIMA3eFigure3_27() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, recursiveBestFirstSearch,
-				new String[] { SimplifiedRoadMapOfPartOfRomania.BUCHAREST });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), recursiveBestFirstSearch,
+				SimplifiedRoadMapOfPartOfRomania.BUCHAREST).setNotifier(me);
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(Arad), Goal=In(Bucharest):Action[name=moveTo, location=Sibiu]:Action[name=moveTo, location=RimnicuVilcea]:Action[name=moveTo, location=Pitesti]:Action[name=moveTo, location=Bucharest]:METRIC[pathCost]=418.0:METRIC[maxRecursiveDepth]=4:METRIC[nodesExpanded]=6:",
+				"CurrentLocation=In(Arad), Goal=In(Bucharest):Search{maxRecursiveDepth=4, nodesExpanded=6, pathCost=418.0}:Action[name=moveTo, location=Sibiu]:Action[name=moveTo, location=RimnicuVilcea]:Action[name=moveTo, location=Pitesti]:Action[name=moveTo, location=Bucharest]:",
 				envChanges.toString());
 	}
 
 	@Test
 	public void testAIMA3eAradNeamtA() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, recursiveBestFirstSearch,
-				new String[] { SimplifiedRoadMapOfPartOfRomania.NEAMT });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), recursiveBestFirstSearch,
+				SimplifiedRoadMapOfPartOfRomania.NEAMT).setNotifier(me);
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.addEnvironmentView(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(Arad), Goal=In(Neamt):Action[name=moveTo, location=Sibiu]:Action[name=moveTo, location=RimnicuVilcea]:Action[name=moveTo, location=Pitesti]:Action[name=moveTo, location=Bucharest]:Action[name=moveTo, location=Urziceni]:Action[name=moveTo, location=Vaslui]:Action[name=moveTo, location=Iasi]:Action[name=moveTo, location=Neamt]:METRIC[pathCost]=824.0:METRIC[maxRecursiveDepth]=12:METRIC[nodesExpanded]=340208:",
+				"CurrentLocation=In(Arad), Goal=In(Neamt):Search{maxRecursiveDepth=12, nodesExpanded=340208, pathCost=824.0}:Action[name=moveTo, location=Sibiu]:Action[name=moveTo, location=RimnicuVilcea]:Action[name=moveTo, location=Pitesti]:Action[name=moveTo, location=Bucharest]:Action[name=moveTo, location=Urziceni]:Action[name=moveTo, location=Vaslui]:Action[name=moveTo, location=Iasi]:Action[name=moveTo, location=Neamt]:",
 				envChanges.toString());
 	}
 
 	@Test
 	public void testAIMA3eAradNeamtB() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, recursiveBestFirstSearchAvoidingLoops,
-				new String[] { SimplifiedRoadMapOfPartOfRomania.NEAMT });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), recursiveBestFirstSearchAvoidingLoops,
+				SimplifiedRoadMapOfPartOfRomania.NEAMT).setNotifier(me);
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
 		me.addEnvironmentView(new TestEnvironmentView());
@@ -101,7 +101,7 @@ public class RecursiveBestFirstSearchTest {
 
 		// loops avoided, now much less number of expanded nodes ...
 		Assert.assertEquals(
-				"CurrentLocation=In(Arad), Goal=In(Neamt):Action[name=moveTo, location=Sibiu]:Action[name=moveTo, location=RimnicuVilcea]:Action[name=moveTo, location=Pitesti]:Action[name=moveTo, location=Bucharest]:Action[name=moveTo, location=Urziceni]:Action[name=moveTo, location=Vaslui]:Action[name=moveTo, location=Iasi]:Action[name=moveTo, location=Neamt]:METRIC[pathCost]=824.0:METRIC[maxRecursiveDepth]=9:METRIC[nodesExpanded]=1367:",
+				"CurrentLocation=In(Arad), Goal=In(Neamt):Search{maxRecursiveDepth=9, nodesExpanded=1367, pathCost=824.0}:Action[name=moveTo, location=Sibiu]:Action[name=moveTo, location=RimnicuVilcea]:Action[name=moveTo, location=Pitesti]:Action[name=moveTo, location=Bucharest]:Action[name=moveTo, location=Urziceni]:Action[name=moveTo, location=Vaslui]:Action[name=moveTo, location=Iasi]:Action[name=moveTo, location=Neamt]:",
 				envChanges.toString());
 	}
 
