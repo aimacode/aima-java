@@ -57,8 +57,6 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P
 	 */
 	@Override
 	public Optional<A> execute(P p) {
-		A action = null;
-
 		// state <- UPDATE-STATE(state, percept)
 		updateState(p);
 		// if seq is empty then do
@@ -70,21 +68,21 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P
 				Problem<S, A> problem = formulateProblem(goal.get());
 				// seq <- SEARCH(problem)
 				Optional<List<A>> actions = search(problem);
-				// actions is empty if goal is unreachable
-				// actions contains empty list of actions if agent is at the goal
+				/// actions is empty if goal is unreachable
+				/// actions contains empty list of actions if agent is at the goal
 				actions.ifPresent(as -> seq.addAll(as));
 			} else {
-				// agent no longer wishes to achieve any more goals
+				/// agent no longer wishes to achieve any more goals
 				setAlive(false);
 			}
 		}
+		// if seq = failure then return a null action
 		// action <- FIRST(seq)
 		// seq <- REST(seq)
 		return Optional.ofNullable(!seq.isEmpty() ? seq.remove() : null);
 	}
 
-	// primitive operations
-
+	
 	protected abstract void updateState(P p);
 
 	/**

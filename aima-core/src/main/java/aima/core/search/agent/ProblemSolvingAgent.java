@@ -55,7 +55,6 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	/** Plan, an action sequence, initially empty. */
 	protected Queue<A> plan = new LinkedList<>();
 
-
 	/**
 	 * Template method, which corresponds to pseudo code function
 	 * <code>PROBLEM-SOLVING-AGENT(percept)</code>.
@@ -116,8 +115,8 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 
 	/**
 	 * Primitive operation, which decides what to do after the search for a plan failed.
-	 * Implementations can influence next goal or problem formulation.
-	 * This implementation does nothing.
+	 * Implementations can influence next goal or problem formulation. This implementation
+	 * does nothing.
 	 * @param goal The goal which has turned out to be unreachable.
 	 */
 	protected void handleGoalUnreachable(Object goal) { }
