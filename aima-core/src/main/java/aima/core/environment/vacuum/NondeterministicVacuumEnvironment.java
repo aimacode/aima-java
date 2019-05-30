@@ -40,17 +40,17 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
      * Execute the agent action
      */
     @Override
-    public void executeAction(Agent<?, ?> a, Action action) {
+    public void executeAction(Agent<?, ?> agent, Action action) {
         if (ACTION_MOVE_RIGHT == action) {
-            envState.setAgentLocation(a, LOCATION_B);
-            updatePerformanceMeasure(a, -1);
+            envState.setAgentLocation(agent, LOCATION_B);
+            updatePerformanceMeasure(agent, -1);
         } else if (ACTION_MOVE_LEFT == action) {
-            envState.setAgentLocation(a, LOCATION_A);
-            updatePerformanceMeasure(a, -1);
+            envState.setAgentLocation(agent, LOCATION_A);
+            updatePerformanceMeasure(agent, -1);
         } else if (ACTION_SUCK == action) {
             // case: square is dirty
-            if (VacuumEnvironment.LocationState.Dirty == envState.getLocationState(envState.getAgentLocation(a))) {
-                String currentLocation = envState.getAgentLocation(a);
+            if (VacuumEnvironment.LocationState.Dirty == envState.getLocationState(envState.getAgentLocation(agent))) {
+                String currentLocation = envState.getAgentLocation(agent);
                 String adjacentLocation = (currentLocation.equals("A")) ? "B" : "A";
                 // always clean current square
                 envState.setLocationState(currentLocation, VacuumEnvironment.LocationState.Clean);
@@ -59,10 +59,10 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
                     envState.setLocationState(adjacentLocation, VacuumEnvironment.LocationState.Clean);
                 }
             } // case: square is clean
-            else if (VacuumEnvironment.LocationState.Clean == envState.getLocationState(envState.getAgentLocation(a))) {
+            else if (VacuumEnvironment.LocationState.Clean == envState.getLocationState(envState.getAgentLocation(agent))) {
                 // possibly dirty current square
                 if (Math.random() > 0.5) {
-                    envState.setLocationState(envState.getAgentLocation(a), VacuumEnvironment.LocationState.Dirty);
+                    envState.setLocationState(envState.getAgentLocation(agent), VacuumEnvironment.LocationState.Dirty);
                 }
             }
         }

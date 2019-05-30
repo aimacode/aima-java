@@ -99,9 +99,9 @@ public class WumpusEnvironment extends AbstractEnvironment<WumpusPercept, Wumpus
     }
 
     @Override
-    public WumpusPercept getPerceptSeenBy(Agent<?, ?> anAgent) {
+    public WumpusPercept getPerceptSeenBy(Agent<?, ?> agent) {
         WumpusPercept result = new WumpusPercept();
-        AgentPosition pos = agentPositions.get(anAgent);
+        AgentPosition pos = agentPositions.get(agent);
         List<Room> adjacentRooms = Arrays.asList(
                 new Room(pos.getX()-1, pos.getY()), new Room(pos.getX()+1, pos.getY()),
                 new Room(pos.getX(), pos.getY()-1), new Room(pos.getX(), pos.getY()+1)
@@ -114,7 +114,7 @@ public class WumpusEnvironment extends AbstractEnvironment<WumpusPercept, Wumpus
         }
         if (pos.getRoom().equals(cave.getGold()))
             result.setGlitter();
-        if (bumpedAgents.contains(anAgent))
+        if (bumpedAgents.contains(agent))
             result.setBump();
         if (agentJustKillingWumpus != null)
             result.setScream();

@@ -18,28 +18,21 @@ public abstract class AbstractAgent<P, A> implements Agent<P, A> {
 	protected AgentProgram<P, A> program;
 	private boolean alive = true;
 
-	public AbstractAgent() {
-
-	}
+	public AbstractAgent() { }
 
 	/**
 	 * Constructs an Agent with the specified AgentProgram.
 	 * 
-	 * @param aProgram
+	 * @param program
 	 *            the Agent's program, which maps any given percept sequences to
 	 *            an action.
 	 */
-	public AbstractAgent(AgentProgram<P, A> aProgram) {
-		program = aProgram;
+	public AbstractAgent(AgentProgram<P, A> program) {
+		this.program = program;
 	}
 
-	//
-	// START-Agent
-	public Optional<A> execute(P p) {
-		if (null != program) {
-			return program.execute(p);
-		}
-		return Optional.empty();
+	public Optional<A> execute(P percept) {
+		return (null != program) ? program.execute(percept) : Optional.empty();
 	}
 
 	public boolean isAlive() {
@@ -49,7 +42,4 @@ public abstract class AbstractAgent<P, A> implements Agent<P, A> {
 	public void setAlive(boolean alive) {
 		this.alive = alive;
 	}
-
-	// END-Agent
-	//
 }

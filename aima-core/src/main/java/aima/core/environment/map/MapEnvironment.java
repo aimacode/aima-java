@@ -19,37 +19,37 @@ public class MapEnvironment extends AbstractEnvironment<DynamicPercept, MoveToAc
 		this.map = map;
 	}
 
-	public void addAgent(Agent<? super DynamicPercept, ? extends MoveToAction> a, String startLocation) {
+	public void addAgent(Agent<? super DynamicPercept, ? extends MoveToAction> agent, String startLocation) {
 		// Ensure the agent state information is tracked before
 		// adding to super, as super will notify the registered
 		// EnvironmentViews that is was added.
-		state.setAgentLocationAndTravelDistance(a, startLocation, 0.0);
-		super.addAgent(a);
+		state.setAgentLocationAndTravelDistance(agent, startLocation, 0.0);
+		super.addAgent(agent);
 	}
 
-	public String getAgentLocation(Agent<?, ?> a) {
-		return state.getAgentLocation(a);
+	public String getAgentLocation(Agent<?, ?> agent) {
+		return state.getAgentLocation(agent);
 	}
 
-	public Double getAgentTravelDistance(Agent<?, ?> a) {
-		return state.getAgentTravelDistance(a);
+	public Double getAgentTravelDistance(Agent<?, ?> agent) {
+		return state.getAgentTravelDistance(agent);
 	}
 
 	@Override
-	public void executeAction(Agent<?, ?> agent, MoveToAction act) {
+	public void executeAction(Agent<?, ?> agent, MoveToAction action) {
 		String currLoc = getAgentLocation(agent);
-		Double distance = map.getDistance(currLoc, act.getToLocation());
+		Double distance = map.getDistance(currLoc, action.getToLocation());
 		if (distance != null) {
 			double currTD = getAgentTravelDistance(agent);
 			state.setAgentLocationAndTravelDistance(agent,
-					act.getToLocation(), currTD + distance);
+					action.getToLocation(), currTD + distance);
 		}
 	}
 
 	@Override
-	public DynamicPercept getPerceptSeenBy(Agent<?, ?> anAgent) {
+	public DynamicPercept getPerceptSeenBy(Agent<?, ?> agent) {
 		return new DynamicPercept(AttNames.PERCEPT_IN,
-				getAgentLocation(anAgent));
+				getAgentLocation(agent));
 	}
 
 	public Map getMap() {
