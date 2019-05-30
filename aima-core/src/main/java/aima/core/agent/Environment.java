@@ -71,12 +71,19 @@ public interface Environment<P, A> {
 	 * @param n
 	 *            the number of time steps to move the Environment forward.
 	 */
-	void step(int n);
+	default void step(int n) {
+		for (int i = 0; i < n; i++) {
+			step();
+		}
+	}
 
 	/**
 	 * Step through time steps until the Environment has no more tasks.
 	 */
-	void stepUntilDone();
+	default void stepUntilDone() {
+		while (!isDone())
+			step();
+	}
 
 	/**
 	 * Returns <code>true</code> if the Environment is finished with its current
@@ -90,27 +97,27 @@ public interface Environment<P, A> {
 	/**
 	 * Retrieve the performance measure associated with an Agent.
 	 * 
-	 * @param forAgent
+	 * @param agent
 	 *            the Agent for which a performance measure is to be retrieved.
 	 * @return the performance measure associated with the Agent.
 	 */
-	double getPerformanceMeasure(Agent<?, ?> forAgent);
+	double getPerformanceMeasure(Agent<?, ?> agent);
 
 	/**
 	 * Add a view on the Environment.
 	 * 
-	 * @param ev
+	 * @param view
 	 *            the EnvironmentView to be added.
 	 */
-	void addEnvironmentView(EnvironmentView<? super P, ? super A> ev);
+	void addEnvironmentView(EnvironmentView<? super P, ? super A> view);
 
 	/**
 	 * Remove a view on the Environment.
 	 * 
-	 * @param ev
+	 * @param view
 	 *            the EnvironmentView to be removed.
 	 */
-	void removeEnvironmentView(EnvironmentView<? super P, ? super A> ev);
+	void removeEnvironmentView(EnvironmentView<? super P, ? super A> view);
 
 	/**
 	 * Notify all registered EnvironmentViews of a message.

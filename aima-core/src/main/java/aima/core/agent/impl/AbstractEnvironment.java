@@ -15,23 +15,83 @@ import java.util.*;
 public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 		EnvironmentViewNotifier {
 
-	// Note: Use LinkedHashSet's in order to ensure order is respected as
-	// provide
-	// access to these elements via List interface.
+	// Note: Use LinkedHashSet's in order to ensure order is respected.
+	// get methods provide access to these elements via a List interface.
+	protected Set<Agent<? super P, ? extends A>> agents = new LinkedHashSet<>();
 	protected Set<EnvironmentObject> envObjects = new LinkedHashSet<>();
 
-	protected Set<Agent<? super P, ? extends A>> agents = new LinkedHashSet<>();
-
 	protected Set<EnvironmentView<? super P, ? super A>> views = new LinkedHashSet<>();
-
 	protected Map<Agent<?, ?>, Double> performanceMeasures = new LinkedHashMap<>();
 
-	//
-	// PUBLIC METHODS
-	//
+
+	@Override
+	public List<Agent<?, ?>> getAgents() {
+		// Return as a List but also ensure the caller cannot modify
+		return new ArrayList<>(agents);
+	}
+
+	@Override
+	public void addAgent(Agent<? super P, ? extends A> agent) {
+		agents.add(agent);
+		addEnvironmentObject(agent);
+		notifyEnvironmentViews(agent);
+	}
+
+	@Override
+	public void removeAgent(Agent<? super P, ? extends A> agent) {
+		agents.remove(agent);
+		removeEnvironmentObject(agent);
+	}
+
+	@Override
+	public List<EnvironmentObject> getEnvironmentObjects() {
+		// Return as a List but also ensure the caller cannot modify
+		return new ArrayList<>(envObjects);
+	}
+
+	@Override
+	public void addEnvironmentObject(EnvironmentObject eo) {
+		envObjects.add(eo);
+	}
+
+	@Override
+	public void removeEnvironmentObject(EnvironmentObject eo) {
+		envObjects.remove(eo);
+	}
+
+	/**
+	 * Central template method for controlling agent simulation. The concrete
+	 * behavior is determined by the primitive operations
+	 * {@link #getPerceptSeenBy(Agent)}, {@link #executeAction(Agent, Object)},
+	 * and {@link #createExogenousChange()}.
+	 */
+	@Override
+	public void step() {
+		for (Agent<? super P, ? extends A> agent : agents) {
+			if (agent.isAlive()) {
+				P percept = getPerceptSeenBy(agent);
+				Optional<? extends A> anAction = agent.execute(percept);
+				if (anAction.isPresent()) {
+					executeAction(agent, anAction.get());
+					notifyEnvironmentViews(agent, percept, anAction.get());
+				} else {
+					executeNoOp(agent);
+				}
+			}
+		}
+		createExogenousChange();
+	}
+
+	/**
+	 * Returns true if the current task was cancelled or no agent is alive anymore.
+	 */
+	@Override
+	public boolean isDone() {
+		return Tasks.currIsCancelled() || agents.stream().noneMatch(Agent::isAlive);
+	}
 
 	//
-	// Methods to be implemented by subclasses.
+	// Primitive operations to be implemented by subclasses:
 
 	public abstract void executeAction(Agent<?, ?> agent, A action);
 
@@ -52,99 +112,32 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	protected void executeNoOp(Agent<?,?> agent) {
 	}
 
+
 	//
-	// START-Environment
-	public List<Agent<?, ?>> getAgents() {
-		// Return as a List but also ensures the caller cannot modify
-		return new ArrayList<>(agents);
+	// Other methods of environment interface:
+
+	@Override
+	public double getPerformanceMeasure(Agent<?, ?> agent) {
+		return performanceMeasures.computeIfAbsent(agent, k -> 0.0);
 	}
 
-	public void addAgent(Agent<? super P, ? extends A> agent) {
-		agents.add(agent);
-		addEnvironmentObject(agent);
-		notifyEnvironmentViews(agent);
-	}
-
-	public void removeAgent(Agent<? super P, ? extends A> agent) {
-		agents.remove(agent);
-		removeEnvironmentObject(agent);
-	}
-
-	public List<EnvironmentObject> getEnvironmentObjects() {
-		// Return as a List but also ensures the caller cannot modify
-		return new ArrayList<>(envObjects);
-	}
-
-	public void addEnvironmentObject(EnvironmentObject eo) {
-		envObjects.add(eo);
-	}
-
-	public void removeEnvironmentObject(EnvironmentObject eo) {
-		envObjects.remove(eo);
-	}
-
-	/**
-	 * Central template method for controlling agent simulation. The concrete
-	 * behavior is determined by the primitive operations
-	 * {@link #getPerceptSeenBy(Agent)}, {@link #executeAction(Agent, Object)},
-	 * and {@link #createExogenousChange()}.
-	 */
-	public void step() {
-		for (Agent<? super P, ? extends A> agent : agents) {
-			if (agent.isAlive()) {
-				P percept = getPerceptSeenBy(agent);
-				Optional<? extends A> anAction = agent.execute(percept);
-				if (anAction.isPresent()) {
-					executeAction(agent, anAction.get());
-					notifyEnvironmentViews(agent, percept, anAction.get());
-				} else {
-					executeNoOp(agent);
-				}
-			}
-		}
-		createExogenousChange();
-	}
-
-	public void step(int n) {
-		for (int i = 0; i < n; i++) {
-			step();
-		}
-	}
-
-	public void stepUntilDone() {
-		while (!isDone())
-			step();
-	}
-
-	/**
-	 * Returns true if the current task was cancelled or no agent is alive anymore.
-	 */
-	public boolean isDone() {
-		return Tasks.currIsCancelled() || agents.stream().noneMatch(Agent::isAlive);
-	}
-
-	public double getPerformanceMeasure(Agent<?, ?> forAgent) {
-		return performanceMeasures.computeIfAbsent(forAgent, k -> 0.0);
-	}
-
+	@Override
 	public void addEnvironmentView(EnvironmentView<? super P, ? super A> ev) {
 		views.add(ev);
 	}
 
+	@Override
 	public void removeEnvironmentView(EnvironmentView ev) {
 		views.remove(ev);
 	}
 
+	@Override
 	public void notifyViews(String msg) {
 		views.forEach(ev -> ev.notify(msg));
 	}
 
-	// END-Environment
 	//
-
-	//
-	// PROTECTED METHODS
-	//
+	// Helper methods:
 
 	protected void updatePerformanceMeasure(Agent<?, ?> forAgent, double addTo) {
 		performanceMeasures.put(forAgent, getPerformanceMeasure(forAgent) + addTo);
