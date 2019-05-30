@@ -44,7 +44,7 @@ import java.util.Queue;
  */
 public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 
-	// seq, an action sequence, initially empty
+	/// seq, an action sequence, initially empty
 	private Queue<A> seq = new LinkedList<>();
 
 	/// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action

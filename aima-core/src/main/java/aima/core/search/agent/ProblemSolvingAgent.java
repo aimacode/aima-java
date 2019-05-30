@@ -59,7 +59,7 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	 * <code>PROBLEM-SOLVING-AGENT(percept)</code>.
 	 *
 	 * In this implementation, the agent does not necessarily give up, if search fails for one goal as
-	 * long as there are other goals. But the agent dies if no further goal exists.
+	 * long as there are other goals.
 	 * 
 	 * @return an action or empty if no further goal exists.
 	 */
