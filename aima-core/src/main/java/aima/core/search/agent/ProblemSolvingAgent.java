@@ -14,8 +14,7 @@ import java.util.Queue;
  * <code>seq</code>) is protected. Static pseudo code variable state is used in
  * a more general sense including world state as well as agent state aspects.
  * This allows the agent to remove the current plan and mark the current goal
- * as not yet reached if unexpected percepts are observed in
- * {@link #updateState(Object)}.
+ * as not yet reached if unexpected percepts are observed in {@link #updateState(Object)}.
  * 
  * <pre>
  * <code>
@@ -32,7 +31,7 @@ import java.util.Queue;
  *       if (actions != failure) then
  *         state.plan = actions
  *       else
- *         handleGoalUnreachable(goal)
+ *         handleGoalUnreachable(state, goal)
  *     else
  *       die
  *   if (state.plan is empty)
@@ -60,12 +59,12 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	 * <code>PROBLEM-SOLVING-AGENT(percept)</code>.
 	 *
 	 * In this implementation, the agent does not necessarily give up, if search fails for one goal as
-	 * long as there are other goals. But the agent dies if no further goal is left.
+	 * long as there are other goals. But the agent dies if no further goal exists.
 	 * 
-	 * @return an action or empty if at a new goal or no further goal left.
+	 * @return an action or empty if started at the goal or no further goal exists.
 	 */
-	public Optional<A> execute(P p) {
-		updateState(p);
+	public Optional<A> execute(P percept) {
+		updateState(percept);
 		// never give up
 		while (plan.isEmpty() && isAlive()) {
 			Optional<Object> goal = formulateGoal();
@@ -88,12 +87,12 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	/**
 	 * Primitive operation, responsible for updating the state of the agent with
 	 * respect to latest feedback from the world. In this version,
-	 * implementations have access to the agent's current goal and plan, so they
-	 * can modify them if needed. For example, if the plan didn't work because
+	 * implementations have access to the agent's internal state. So they
+	 * can modify the plan if needed. For example, if the plan didn't work because
 	 * the model of the world proved to be wrong, implementations could update
 	 * the model and also clear the plan.
 	 */
-	protected abstract void updateState(P p);
+	protected abstract void updateState(P percept);
 
 	/**
 	 * Primitive operation, responsible for goal generation. Implementations are
@@ -110,6 +109,8 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	/**
 	 * Primitive operation, responsible for the generation of a list of actions
 	 * (plan) for the given search problem.
+	 * @return a possibly empty list of actions (if started at the goal) or empty
+	 *         if goal is unreachable.
 	 */
 	protected abstract Optional<List<A>> search(Problem<S, A> problem);
 

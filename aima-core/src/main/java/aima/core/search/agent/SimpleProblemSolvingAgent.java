@@ -48,42 +48,42 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P
 	// seq, an action sequence, initially empty
 	private Queue<A> seq = new LinkedList<>();
 
-	// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
+	/// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
 	/**
 	 * Template method which decides about the action to perform next taking into account the current percept.
-	 * Here, the agent dies if no further goals exist.
-	 * @param p The current percept
-	 * @return An action or empty if at the goal, current goal unreachable, or no further goal found
+	 * Here, the agent dies if no further goal exists.
+	 * @param percept The current percept
+	 * @return An action or empty if started at the goal, current goal unreachable, or no further goal exists
 	 */
 	@Override
-	public Optional<A> execute(P p) {
-		// state <- UPDATE-STATE(state, percept)
-		updateState(p);
-		// if seq is empty then do
+	public Optional<A> execute(P percept) {
+		/// state <- UPDATE-STATE(state, percept)
+		updateState(percept);
+		/// if seq is empty then do
 		if (seq.isEmpty()) {
-			// goal <- FORMULATE-GOAL(state)
+			/// goal <- FORMULATE-GOAL(state)
 			Optional<Object> goal = formulateGoal();
 			if (goal.isPresent()) {
-				// problem <- FORMULATE-PROBLEM(state, goal)
+				/// problem <- FORMULATE-PROBLEM(state, goal)
 				Problem<S, A> problem = formulateProblem(goal.get());
-				// seq <- SEARCH(problem)
+				/// seq <- SEARCH(problem)
 				Optional<List<A>> actions = search(problem);
-				/// actions is empty if goal is unreachable
-				/// actions contains empty list of actions if agent is at the goal
+				// actions is empty if goal is unreachable
+				// actions contains empty list of actions if agent is at the goal
 				actions.ifPresent(as -> seq.addAll(as));
 			} else {
-				/// agent no longer wishes to achieve any more goals
+				// agent no longer wishes to achieve any more goals
 				setAlive(false);
 			}
 		}
-		// if seq = failure then return a null action
-		// action <- FIRST(seq)
-		// seq <- REST(seq)
+		/// if seq = failure then return a null action
+		/// action <- FIRST(seq)
+		/// seq <- REST(seq)
 		return Optional.ofNullable(!seq.isEmpty() ? seq.remove() : null);
 	}
 
-	
-	protected abstract void updateState(P p);
+
+	protected abstract void updateState(P percept);
 
 	/**
 	 * Primitive operation, responsible for goal generation. Implementations are
