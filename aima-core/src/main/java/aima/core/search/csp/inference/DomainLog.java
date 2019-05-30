@@ -67,8 +67,7 @@ public class DomainLog<VAR extends Variable, VAL> implements InferenceLog<VAR, V
 
 	@Override
 	public void undo(CSP<VAR, VAL> csp) {
-		for (Pair<VAR, Domain<VAL>> pair : getSavedDomains())
-			csp.setDomain(pair.getFirst(), pair.getSecond());
+		getSavedDomains().forEach(pair -> csp.setDomain(pair.getFirst(), pair.getSecond()));
 	}
 
 	@Override

@@ -44,6 +44,7 @@ public class CSP<VAR extends Variable, VAL> implements Cloneable {
         variables = new ArrayList<>();
         domains = new ArrayList<>();
         constraints = new ArrayList<>();
+
         varIndexHash = new Hashtable<>();
         cnet = new Hashtable<>();
     }
@@ -106,16 +107,15 @@ public class CSP<VAR extends Variable, VAL> implements Cloneable {
 
     public void addConstraint(Constraint<VAR, VAL> constraint) {
         constraints.add(constraint);
-        for (VAR var : constraint.getScope())
-            cnet.get(var).add(constraint);
+        constraint.getScope().forEach(var -> cnet.get(var).add(constraint));
     }
 
     public boolean removeConstraint(Constraint<VAR, VAL> constraint) {
-        boolean result = constraints.remove(constraint);
-        if (result)
-            for (VAR var : constraint.getScope())
-                cnet.get(var).remove(constraint);
-        return result;
+        if (constraints.remove(constraint)) {
+            constraint.getScope().forEach(var -> cnet.get(var).remove(constraint));
+            return true;
+        }
+        return false;
     }
 
     public List<Constraint<VAR, VAL>> getConstraints() {
