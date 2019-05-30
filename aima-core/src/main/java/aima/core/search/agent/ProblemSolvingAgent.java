@@ -96,8 +96,7 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 
 	/**
 	 * Primitive operation, responsible for goal generation. Implementations are
-	 * allowed to return empty to indicate that the agent has finished the job an
-	 * should die.
+	 * allowed to return empty to indicate that the agent has finished the job.
 	 */
 	protected abstract Optional<Object> formulateGoal();
 
