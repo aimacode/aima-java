@@ -29,13 +29,13 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	//
 	// PUBLIC METHODS
 	//
-	
+
 	//
 	// Methods to be implemented by subclasses.
 
 	public abstract void executeAction(Agent<?, ?> agent, A action);
 
-	public abstract P getPerceptSeenBy(Agent<?, ?> anAgent);
+	public abstract P getPerceptSeenBy(Agent<?, ?> agent);
 
 	/**
 	 * Method for implementing dynamic environments in which not all changes are
@@ -45,8 +45,10 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	protected void createExogenousChange() {
 	}
 
-	/** Method is called when an agent doesn't select an action when asked. Default implementation does nothing.
-	 * Subclasses can for example modify the isDone status.*/
+	/**
+	 * Method is called when an agent doesn't select an action when asked. Default implementation does nothing.
+	 * Subclasses can for example modify the isDone status.
+	 */
 	protected void executeNoOp(Agent<?,?> agent) {
 	}
 
@@ -84,7 +86,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	/**
 	 * Central template method for controlling agent simulation. The concrete
 	 * behavior is determined by the primitive operations
-	 * {@link #getPerceptSeenBy(Agent)}, {@link #executeAction(Agent agent, A action)},
+	 * {@link #getPerceptSeenBy(Agent)}, {@link #executeAction(Agent, Object)},
 	 * and {@link #createExogenousChange()}.
 	 */
 	public void step() {
@@ -115,17 +117,10 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	}
 
 	/**
-	 * Returns true if the current task was cancelled or no agent is alive anmore.
+	 * Returns true if the current task was cancelled or no agent is alive anymore.
 	 */
 	public boolean isDone() {
-		if (Tasks.currIsCancelled())
-			return true;
-
-		for (Agent<?, ?> agent : agents)
-			if (agent.isAlive())
-				return false;
-
-		return true;
+		return Tasks.currIsCancelled() || agents.stream().noneMatch(Agent::isAlive);
 	}
 
 	public double getPerformanceMeasure(Agent<?, ?> forAgent) {
@@ -141,9 +136,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	}
 
 	public void notifyViews(String msg) {
-		for (EnvironmentView ev : views) {
-			ev.notify(msg);
-		}
+		views.forEach(ev -> ev.notify(msg));
 	}
 
 	// END-Environment
@@ -154,19 +147,14 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	//
 
 	protected void updatePerformanceMeasure(Agent<?, ?> forAgent, double addTo) {
-		performanceMeasures.put(forAgent, getPerformanceMeasure(forAgent)
-				+ addTo);
+		performanceMeasures.put(forAgent, getPerformanceMeasure(forAgent) + addTo);
 	}
 
 	protected void notifyEnvironmentViews(Agent<?, ?> agent) {
-		for (EnvironmentView<? super P, ? super A> view : views) {
-			view.agentAdded(agent, this);
-		}
+		views.forEach(view -> view.agentAdded(agent, this));
 	}
 
 	protected void notifyEnvironmentViews(Agent<?, ?> agent, P percept, A action) {
-		for (EnvironmentView<? super P, ? super A> view : views) {
-			view.agentActed(agent, percept, action, this);
-		}
+		views.forEach(view -> view.agentActed(agent, percept, action, this));
 	}
 }
