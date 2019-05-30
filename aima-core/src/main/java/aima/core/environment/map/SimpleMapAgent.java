@@ -60,8 +60,8 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent<DynamicPercept, St
 	// PROTECTED METHODS
 	//
 	@Override
-	protected void updateState(DynamicPercept p) {
-		state.setAttribute(DynAttributeNames.AGENT_LOCATION, p.getAttribute(DynAttributeNames.PERCEPT_IN));
+	protected void updateState(DynamicPercept percept) {
+		state.setAttribute(AttNames.AGENT_LOCATION, percept.getAttribute(AttNames.PERCEPT_IN));
 	}
 
 	@Override
@@ -72,15 +72,14 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent<DynamicPercept, St
 		else if (nextGoalPos < goals.size())
 			goal = goals.get(nextGoalPos++);
 		if (goal != null && notifier != null)
-			notifier.notifyViews("CurrentLocation=In(" + state.getAttribute(DynAttributeNames.AGENT_LOCATION)
+			notifier.notifyViews("CurrentLocation=In(" + state.getAttribute(AttNames.AGENT_LOCATION)
 					+ "), Goal=In(" + goal + ")");
 		return Optional.ofNullable(goal);
 	}
 
 	@Override
 	protected Problem<String, MoveToAction> formulateProblem(Object goal) {
-		return new BidirectionalMapProblem(map, (String) state.getAttribute(DynAttributeNames.AGENT_LOCATION),
-				(String) goal);
+		return new BidirectionalMapProblem(map, (String) state.getAttribute(AttNames.AGENT_LOCATION), (String) goal);
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public class MapEnvironment extends AbstractEnvironment<DynamicPercept, MoveToAc
 
 	@Override
 	public DynamicPercept getPerceptSeenBy(Agent<?, ?> anAgent) {
-		return new DynamicPercept(DynAttributeNames.PERCEPT_IN,
+		return new DynamicPercept(AttNames.PERCEPT_IN,
 				getAgentLocation(anAgent));
 	}
 

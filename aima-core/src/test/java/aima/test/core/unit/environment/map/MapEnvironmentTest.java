@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.agent.impl.DynamicPercept;
-import aima.core.environment.map.DynAttributeNames;
+import aima.core.environment.map.AttNames;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
@@ -51,7 +51,7 @@ public class MapEnvironmentTest {
 	public void testPerceptSeenBy() {
 		me.addAgent(ma, "D");
 		DynamicPercept p = (DynamicPercept) me.getPerceptSeenBy(ma);
-		Assert.assertEquals(p.getAttribute(DynAttributeNames.PERCEPT_IN), "D");
+		Assert.assertEquals(p.getAttribute(AttNames.PERCEPT_IN), "D");
 	}
 
 	@Test

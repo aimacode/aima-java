@@ -72,21 +72,20 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
     // PROTECTED METHODS
     //
     @Override
-    protected void updateState(DynamicPercept p) {
-        state.setAttribute(DynAttributeNames.AGENT_LOCATION, p.getAttribute(DynAttributeNames.PERCEPT_IN));
+    protected void updateState(DynamicPercept percept) {
+        state.setAttribute(AttNames.AGENT_LOCATION, percept.getAttribute(AttNames.PERCEPT_IN));
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected Optional<Object> formulateGoal() {
         String goal = null;
-        if (nextGoalPos < goals.size())
+        if (nextGoalPos < goals.size()) {
             goal = goals.get(nextGoalPos++);
-        if (goal != null) {
             if (hFnFactory != null && search instanceof Informed)
                 ((Informed<String, MoveToAction>) search).setHeuristicFunction(hFnFactory.apply(goal));
             if (notifier != null)
-                notifier.notifyViews("Current location: In(" + state.getAttribute(DynAttributeNames.AGENT_LOCATION)
+                notifier.notifyViews("Current location: In(" + state.getAttribute(AttNames.AGENT_LOCATION)
                         + "), Goal: In(" + goal + ")");
         }
         return Optional.ofNullable(goal);
@@ -94,7 +93,7 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
 
     @Override
     protected Problem<String, MoveToAction> formulateProblem(Object goal) {
-        return new BidirectionalMapProblem(map, (String) state.getAttribute(DynAttributeNames.AGENT_LOCATION),
+        return new BidirectionalMapProblem(map, (String) state.getAttribute(AttNames.AGENT_LOCATION),
                 (String) goal);
     }
 

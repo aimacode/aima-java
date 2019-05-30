@@ -36,7 +36,7 @@ public class MapFunctions {
     }
 
     public static Function<DynamicPercept, String> createPerceptToStateFunction() {
-        return  p -> (String) p.getAttribute(DynAttributeNames.PERCEPT_IN);
+        return  p -> (String) p.getAttribute(AttNames.PERCEPT_IN);
     }
 
     /** Returns a heuristic function based on straight line distance computation. */
