@@ -15,7 +15,6 @@ import java.util.Queue;
  * a more general sense including world state as well as agent state aspects.
  * This allows the agent to remove the current plan and mark the current goal
  * as not yet reached if unexpected percepts are observed in {@link #updateState(Object)}.
- * 
  * <pre>
  * <code>
  * function PROBLEM-SOLVING-AGENT(percept) returns an action
@@ -23,7 +22,7 @@ import java.util.Queue;
  *   static: state, some description of current agent and world state
  *           
  *   state <- UPDATE-STATE(state, percept)
- *   while (state.plan is empty && agent is alive) do
+ *   while (state.plan is empty) do
  *     goal <- FORMULATE-GOAL(state)
  *     if (goal exists) then
  *       problem <- FORMULATE-PROBLEM(state, goal)
@@ -33,7 +32,8 @@ import java.util.Queue;
  *       else
  *         handleGoalUnreachable(state, goal)
  *     else
- *       die
+ *       handleNoGoal(state)
+ *       break
  *   if (state.plan is empty)
  *      action = do nothing
  *   else
@@ -61,12 +61,12 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	 * In this implementation, the agent does not necessarily give up, if search fails for one goal as
 	 * long as there are other goals. But the agent dies if no further goal exists.
 	 * 
-	 * @return an action or empty if started at the goal or no further goal exists.
+	 * @return an action or empty if no further goal exists.
 	 */
 	public Optional<A> execute(P percept) {
 		updateState(percept);
 		// never give up
-		while (plan.isEmpty() && isAlive()) {
+		while (plan.isEmpty()) {
 			Optional<Object> goal = formulateGoal();
 			if (goal.isPresent()) {
 				Problem<S, A> problem = formulateProblem(goal.get());
@@ -77,8 +77,8 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 				else
 					handleGoalUnreachable(goal.get());
 			} else {
-				// no further goal
-				setAlive(false);
+				handleNoGoal();
+				break;
 			}
 		}
 		return Optional.ofNullable(!plan.isEmpty() ? plan.remove() : null);
@@ -121,4 +121,12 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	 * @param goal The goal which has turned out to be unreachable.
 	 */
 	protected void handleGoalUnreachable(Object goal) { }
+
+	/**
+	 * Primitive operation, which decides what to do if goal formulation failed.
+	 * In this default implementation the agent dies.
+	 */
+	protected void handleNoGoal() {
+		setAlive(false);
+	}
 }

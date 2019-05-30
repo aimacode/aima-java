@@ -11,7 +11,6 @@ import java.util.Queue;
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.1, page 67.<br>
  * <br>
- * 
  * <pre>
  * function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
  *   persistent: seq, an action sequence, initially empty
@@ -51,7 +50,6 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P
 	/// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
 	/**
 	 * Template method which decides about the action to perform next taking into account the current percept.
-	 * Here, the agent dies if no further goal exists.
 	 * @param percept The current percept
 	 * @return An action or empty if started at the goal, current goal unreachable, or no further goal exists
 	 */
@@ -72,8 +70,7 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P
 				// actions contains empty list of actions if agent is at the goal
 				actions.ifPresent(as -> seq.addAll(as));
 			} else {
-				// agent no longer wishes to achieve any more goals
-				setAlive(false);
+				handleNoGoal();
 			}
 		}
 		/// if seq = failure then return a null action
@@ -87,12 +84,19 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends AbstractAgent<P
 
 	/**
 	 * Primitive operation, responsible for goal generation. Implementations are
-	 * allowed to return empty to indicate that the agent has finished the job an
-	 * should die.
+	 * allowed to return empty to indicate that the agent has finished the job.
 	 */
 	protected abstract Optional<Object> formulateGoal();
 
 	protected abstract Problem<S, A> formulateProblem(Object goal);
 
 	protected abstract Optional<List<A>> search(Problem<S, A> problem);
+
+	/**
+	 * Primitive operation, which decides what to do if goal formulation failed.
+	 * In this default implementation the agent dies.
+	 */
+	protected void handleNoGoal() {
+		setAlive(false);
+	}
 }
