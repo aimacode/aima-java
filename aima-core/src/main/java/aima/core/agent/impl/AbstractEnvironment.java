@@ -34,7 +34,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	public void addAgent(Agent<? super P, ? extends A> agent) {
 		agents.add(agent);
 		addEnvironmentObject(agent);
-		notifyEnvironmentViews(agent);
+		notifyViews(agent);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 				Optional<? extends A> anAction = agent.execute(percept);
 				if (anAction.isPresent()) {
 					executeAction(agent, anAction.get());
-					notifyEnvironmentViews(agent, percept, anAction.get());
+					notifyViews(agent, percept, anAction.get());
 				} else {
 					executeNoOp(agent);
 				}
@@ -133,7 +133,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 
 	@Override
 	public void notifyViews(String msg) {
-		views.forEach(ev -> ev.notify(msg));
+		views.forEach(view -> view.notify(msg));
 	}
 
 	//
@@ -143,11 +143,11 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 		performanceMeasures.put(forAgent, getPerformanceMeasure(forAgent) + addTo);
 	}
 
-	protected void notifyEnvironmentViews(Agent<?, ?> agent) {
+	protected void notifyViews(Agent<?, ?> agent) {
 		views.forEach(view -> view.agentAdded(agent, this));
 	}
 
-	protected void notifyEnvironmentViews(Agent<?, ?> agent, P percept, A action) {
+	protected void notifyViews(Agent<?, ?> agent, P percept, A action) {
 		views.forEach(view -> view.agentActed(agent, percept, action, this));
 	}
 }
