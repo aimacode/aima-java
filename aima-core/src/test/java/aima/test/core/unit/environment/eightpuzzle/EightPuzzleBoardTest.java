@@ -12,6 +12,7 @@ import aima.core.util.datastructure.XYLocation;
 
 /**
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
 public class EightPuzzleBoardTest {
@@ -39,50 +40,40 @@ public class EightPuzzleBoardTest {
 
 	@Test
 	public void testGetLocation() {
-		Assert.assertEquals(new XYLocation(0, 2), board.getLocationOf(0));
+		Assert.assertEquals(new XYLocation(2, 0), board.getLocationOf(0));
 		Assert.assertEquals(new XYLocation(1, 1), board.getLocationOf(1));
 		Assert.assertEquals(new XYLocation(2, 2), board.getLocationOf(2));
-		Assert.assertEquals(new XYLocation(2, 1), board.getLocationOf(3));
-		Assert.assertEquals(new XYLocation(0, 1), board.getLocationOf(4));
+		Assert.assertEquals(new XYLocation(1, 2), board.getLocationOf(3));
+		Assert.assertEquals(new XYLocation(1, 0), board.getLocationOf(4));
 		Assert.assertEquals(new XYLocation(0, 0), board.getLocationOf(5));
-		Assert.assertEquals(new XYLocation(1, 0), board.getLocationOf(6));
-		Assert.assertEquals(new XYLocation(2, 0), board.getLocationOf(7));
-		Assert.assertEquals(new XYLocation(1, 2), board.getLocationOf(8));
+		Assert.assertEquals(new XYLocation(0, 1), board.getLocationOf(6));
+		Assert.assertEquals(new XYLocation(0, 2), board.getLocationOf(7));
+		Assert.assertEquals(new XYLocation(2, 1), board.getLocationOf(8));
 	}
 
 	@Test
 	public void testGetValueAt() {
 		Assert.assertEquals(5, board.getValueAt(new XYLocation(0, 0)));
-		Assert.assertEquals(4, board.getValueAt(new XYLocation(0, 1)));
-		Assert.assertEquals(0, board.getValueAt(new XYLocation(0, 2)));
-		Assert.assertEquals(6, board.getValueAt(new XYLocation(1, 0)));
+		Assert.assertEquals(4, board.getValueAt(new XYLocation(1, 0)));
+		Assert.assertEquals(0, board.getValueAt(new XYLocation(2, 0)));
+		Assert.assertEquals(6, board.getValueAt(new XYLocation(0, 1)));
 		Assert.assertEquals(1, board.getValueAt(new XYLocation(1, 1)));
-		Assert.assertEquals(8, board.getValueAt(new XYLocation(1, 2)));
-		Assert.assertEquals(7, board.getValueAt(new XYLocation(2, 0)));
-		Assert.assertEquals(3, board.getValueAt(new XYLocation(2, 1)));
+		Assert.assertEquals(8, board.getValueAt(new XYLocation(2, 1)));
+		Assert.assertEquals(7, board.getValueAt(new XYLocation(0, 2)));
+		Assert.assertEquals(3, board.getValueAt(new XYLocation(1, 2)));
 		Assert.assertEquals(2, board.getValueAt(new XYLocation(2, 2)));
 	}
 
 	@Test
 	public void testGetPositions() {
-		List<XYLocation> expected = new ArrayList<XYLocation>();
-		expected.add(new XYLocation(0, 2));
-		expected.add(new XYLocation(1, 1));
-		expected.add(new XYLocation(2, 2));
-		expected.add(new XYLocation(2, 1));
-		expected.add(new XYLocation(0, 1));
-		expected.add(new XYLocation(0, 0));
-		expected.add(new XYLocation(1, 0));
-		expected.add(new XYLocation(2, 0));
-		expected.add(new XYLocation(1, 2));
-
 		List<XYLocation> actual = board.getPositions();
-		Assert.assertEquals(expected, actual);
+		Assert.assertEquals("[(2, 0), (1, 1), (2, 2), (1, 2), (1, 0), (0, 0), (0, 1), (0, 2), (2, 1)]",
+				actual.toString());
 	}
 
 	@Test
 	public void testSetBoard() {
-		List<XYLocation> passedIn = new ArrayList<XYLocation>();
+		List<XYLocation> passedIn = new ArrayList<>();
 		passedIn.add(new XYLocation(1, 1));
 		passedIn.add(new XYLocation(0, 2));
 		passedIn.add(new XYLocation(2, 2));

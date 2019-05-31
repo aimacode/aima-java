@@ -184,19 +184,20 @@ public class EightPuzzleApp extends SimpleAgentApp<Percept, Action> {
 				if (ae.getSource() == squareButtons[i]) {
 					EightPuzzleController contr = (EightPuzzleController) getController();
 					XYLocation locGap = ((EightPuzzleEnvironment) env).getBoard().getLocationOf(0);
-					if (locGap.getX() == i / 3) {
-						if (locGap.getY() == i % 3 - 1)
-							contr.executeUserAction(EightPuzzleBoard.RIGHT);
-						else if (locGap.getY() == i % 3 + 1)
-							contr.executeUserAction(EightPuzzleBoard.LEFT);
-					} else if (locGap.getY() == i % 3) {
-						if (locGap.getX() == i / 3 - 1)
+					if (locGap.getX() == i % 3) {
+						if (locGap.getY() == i / 3 - 1)
 							contr.executeUserAction(EightPuzzleBoard.DOWN);
-						else if (locGap.getX() == i / 3 + 1)
+						else if (locGap.getY() == i / 3 + 1)
 							contr.executeUserAction(EightPuzzleBoard.UP);
+					} else if (locGap.getY() == i / 3) {
+						if (locGap.getX() == i % 3 - 1)
+							contr.executeUserAction(EightPuzzleBoard.RIGHT);
+						else if (locGap.getX() == i % 3 + 1)
+							contr.executeUserAction(EightPuzzleBoard.LEFT);
 					}
 				}
 			}
+			showState();
 		}
 	}
 

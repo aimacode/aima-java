@@ -52,22 +52,20 @@ public class EightPuzzleBoard {
 	public void moveGapRight() {
 		int gapPos = getGapPosition();
 		int x = getXCoord(gapPos);
-		int ypos = getYCoord(gapPos);
-		if (!(ypos == 2)) {
-			int valueOnRight = getValueAt(x, ypos + 1);
-			setValue(x, ypos, valueOnRight);
-			setValue(x, ypos + 1, 0);
+		int y = getYCoord(gapPos);
+		if (x != 2) {
+			setValue(x, y, getValueAt(x + 1, y));
+			setValue(x + 1, y, 0);
 		}
 	}
 
 	public void moveGapLeft() {
 		int gapPos = getGapPosition();
 		int x = getXCoord(gapPos);
-		int ypos = getYCoord(gapPos);
-		if (!(ypos == 0)) {
-			int valueOnLeft = getValueAt(x, ypos - 1);
-			setValue(x, ypos, valueOnLeft);
-			setValue(x, ypos - 1, 0);
+		int y = getYCoord(gapPos);
+		if (x != 0) {
+			setValue(x, y, getValueAt(x - 1, y));
+			setValue(x - 1, y, 0);
 		}
 	}
 
@@ -75,10 +73,9 @@ public class EightPuzzleBoard {
 		int gapPos = getGapPosition();
 		int x = getXCoord(gapPos);
 		int y = getYCoord(gapPos);
-		if (!(x == 2)) {
-			int valueOnBottom = getValueAt(x + 1, y);
-			setValue(x, y, valueOnBottom);
-			setValue(x + 1, y, 0);
+		if (y != 2) {
+			setValue(x, y, getValueAt(x, y + 1));
+			setValue(x, y + 1, 0);
 		}
 
 	}
@@ -87,55 +84,47 @@ public class EightPuzzleBoard {
 		int gapPos = getGapPosition();
 		int x = getXCoord(gapPos);
 		int y = getYCoord(gapPos);
-		if (!(x == 0)) {
-			int valueOnTop = getValueAt(x - 1, y);
-			setValue(x, y, valueOnTop);
-			setValue(x - 1, y, 0);
+		if (y != 0) {
+			setValue(x, y, getValueAt(x, y - 1));
+			setValue(x, y - 1, 0);
 		}
 	}
 
 	public List<XYLocation> getPositions() {
-		ArrayList<XYLocation> retVal = new ArrayList<>();
+		ArrayList<XYLocation> result = new ArrayList<>(9);
 		for (int i = 0; i < 9; i++) {
 			int absPos = getPositionOf(i);
-			XYLocation loc = new XYLocation(getXCoord(absPos),
-					getYCoord(absPos));
-			retVal.add(loc);
-
+			result.add(new XYLocation(getXCoord(absPos), getYCoord(absPos)));
 		}
-		return retVal;
+		return result;
 	}
 
 	public void setBoard(List<XYLocation> locs) {
 		int count = 0;
-		for (XYLocation loc : locs) {
-			this.setValue(loc.getX(), loc.getY(), count);
-			count = count + 1;
-		}
+		for (XYLocation loc : locs)
+			setValue(loc.getX(), loc.getY(), count++);
 	}
 
-	public boolean canMoveGap(Action where) {
+	public boolean canMoveGap(Action action) {
 		boolean result = true;
 		int absPos = getPositionOf(0);
-		if (where.equals(LEFT))
-			result = (getYCoord(absPos) != 0);
-		else if (where.equals(RIGHT))
-			result = (getYCoord(absPos) != 2);
-		else if (where.equals(UP))
+		if (action.equals(LEFT))
 			result = (getXCoord(absPos) != 0);
-		else if (where.equals(DOWN))
+		else if (action.equals(RIGHT))
 			result = (getXCoord(absPos) != 2);
+		else if (action.equals(UP))
+			result = (getYCoord(absPos) != 0);
+		else if (action.equals(DOWN))
+			result = (getYCoord(absPos) != 2);
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o != null && getClass() == o.getClass()) {
 			EightPuzzleBoard aBoard = (EightPuzzleBoard) o;
-			for (int i = 0; i < 8; i++) {
-				if (this.getPositionOf(i) != aBoard.getPositionOf(i))
+			for (int i = 0; i < 9; i++) {
+				if (state[i] != aBoard.state[i])
 					return false;
 			}
 			return true;
@@ -169,7 +158,7 @@ public class EightPuzzleBoard {
 	 * vertical direction).
 	 */
 	private int getXCoord(int absPos) {
-		return absPos / 3;
+		return absPos % 3;
 	}
 
 	/**
@@ -177,11 +166,11 @@ public class EightPuzzleBoard {
 	 * in horizontal direction).
 	 */
 	private int getYCoord(int absPos) {
-		return absPos % 3;
+		return absPos / 3;
 	}
 
 	private int getAbsPosition(int x, int y) {
-		return x * 3 + y;
+		return x + 3 * y;
 	}
 
 	private int getValueAt(int x, int y) {
