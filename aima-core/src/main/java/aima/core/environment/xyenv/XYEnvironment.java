@@ -170,8 +170,8 @@ public class XYEnvironment extends AbstractEnvironment<DynamicPercept, Action> {
 		// PRIVATE METHODS
 		//
 		private boolean withinRadius(int radius, XYLocation agentLocation, XYLocation objectLocation) {
-			int xdifference = agentLocation.getXCoOrdinate() - objectLocation.getXCoOrdinate();
-			int ydifference = agentLocation.getYCoOrdinate() - objectLocation.getYCoOrdinate();
+			int xdifference = agentLocation.getX() - objectLocation.getX();
+			int ydifference = agentLocation.getY() - objectLocation.getY();
 			return Math.sqrt((xdifference * xdifference) + (ydifference * ydifference)) <= radius;
 		}
 	}

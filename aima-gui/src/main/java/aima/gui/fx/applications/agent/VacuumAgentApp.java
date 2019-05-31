@@ -104,7 +104,7 @@ public class VacuumAgentApp extends IntegrableApplication {
                 agent = new ModelBasedReflexVacuumAgent();
                 break;
             case 4:
-                agent = new NondeterministicSearchAgent<>(VacuumWorldFunctions::ptsFunction, env);
+                agent = new NondeterministicSearchAgent<>(VacuumWorldFunctions::getState, env);
                 break;
         }
         if (env != null && agent != null) {
@@ -122,7 +122,7 @@ public class VacuumAgentApp extends IntegrableApplication {
         if (agent instanceof NondeterministicSearchAgent) {
             NondeterministicProblem<VacuumEnvironmentState, Action> problem =
                     new NondeterministicProblem<>((VacuumEnvironmentState) env.getCurrentState(),
-                            VacuumWorldFunctions::getActions, VacuumWorldFunctions.getResultsFunctionFor(agent),
+                            VacuumWorldFunctions::getActions, VacuumWorldFunctions.createResultsFunctionFor(agent),
                             VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
             // Set the problem now for this kind of agent
             ((NondeterministicSearchAgent<DynamicPercept, VacuumEnvironmentState, Action>) agent).makePlan(problem);

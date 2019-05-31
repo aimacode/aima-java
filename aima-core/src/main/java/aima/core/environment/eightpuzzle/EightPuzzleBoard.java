@@ -14,13 +14,9 @@ import aima.core.util.datastructure.XYLocation;
 public class EightPuzzleBoard {
 
 	public static Action LEFT = new DynamicAction("Left");
-
 	public static Action RIGHT = new DynamicAction("Right");
-
 	public static Action UP = new DynamicAction("Up");
-
 	public static Action DOWN = new DynamicAction("Down");
-
 	private int[] state;
 
 	//
@@ -45,7 +41,7 @@ public class EightPuzzleBoard {
 	}
 
 	public int getValueAt(XYLocation loc) {
-		return getValueAt(loc.getXCoOrdinate(), loc.getYCoOrdinate());
+		return getValueAt(loc.getX(), loc.getY());
 	}
 
 	public XYLocation getLocationOf(int val) {
@@ -113,23 +109,23 @@ public class EightPuzzleBoard {
 	public void setBoard(List<XYLocation> locs) {
 		int count = 0;
 		for (XYLocation loc : locs) {
-			this.setValue(loc.getXCoOrdinate(), loc.getYCoOrdinate(), count);
+			this.setValue(loc.getX(), loc.getY(), count);
 			count = count + 1;
 		}
 	}
 
 	public boolean canMoveGap(Action where) {
-		boolean retVal = true;
+		boolean result = true;
 		int absPos = getPositionOf(0);
 		if (where.equals(LEFT))
-			retVal = (getYCoord(absPos) != 0);
+			result = (getYCoord(absPos) != 0);
 		else if (where.equals(RIGHT))
-			retVal = (getYCoord(absPos) != 2);
+			result = (getYCoord(absPos) != 2);
 		else if (where.equals(UP))
-			retVal = (getXCoord(absPos) != 0);
+			result = (getXCoord(absPos) != 0);
 		else if (where.equals(DOWN))
-			retVal = (getXCoord(absPos) != 2);
-		return retVal;
+			result = (getXCoord(absPos) != 2);
+		return result;
 	}
 
 	@Override

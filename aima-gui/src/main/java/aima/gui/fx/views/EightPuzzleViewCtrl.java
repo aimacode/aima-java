@@ -72,15 +72,15 @@ public class EightPuzzleViewCtrl {
         for (int i = 0; i < 9; i++) {
             if (ae.getSource() == tileBtns[i]) {
                 XYLocation locGap = board.getLocationOf(0);
-                if (locGap.getXCoOrdinate() == i / 3) {
-                    if (locGap.getYCoOrdinate() == i % 3 - 1)
+                if (locGap.getX() == i / 3) {
+                    if (locGap.getY() == i % 3 - 1)
                         board.moveGapRight();
-                    else if (locGap.getYCoOrdinate() == i % 3 + 1)
+                    else if (locGap.getY() == i % 3 + 1)
                         board.moveGapLeft();
-                } else if (locGap.getYCoOrdinate() == i % 3) {
-                    if (locGap.getXCoOrdinate() == i / 3 - 1)
+                } else if (locGap.getY() == i % 3) {
+                    if (locGap.getX() == i / 3 - 1)
                         board.moveGapDown();
-                    else if (locGap.getXCoOrdinate() == i / 3 + 1)
+                    else if (locGap.getX() == i / 3 + 1)
                         board.moveGapUp();
                 }
             }

@@ -79,12 +79,12 @@ public class NQueensBoard {
 	/** Column and row indices start with 0! */
 	public void addQueenAt(XYLocation l) {
 		if (!(queenExistsAt(l)))
-			squares[l.getXCoOrdinate()][l.getYCoOrdinate()] = 1;
+			squares[l.getX()][l.getY()] = 1;
 	}
 
 	public void removeQueenFrom(XYLocation l) {
-		if (squares[l.getXCoOrdinate()][l.getYCoOrdinate()] == 1) {
-			squares[l.getXCoOrdinate()][l.getYCoOrdinate()] = 0;
+		if (squares[l.getX()][l.getY()] == 1) {
+			squares[l.getX()][l.getY()] = 0;
 		}
 	}
 
@@ -95,8 +95,8 @@ public class NQueensBoard {
 	 */
 	public void moveQueenTo(XYLocation l) {
 		for (int i = 0; i < getSize(); i++)
-			squares[l.getXCoOrdinate()][i] = 0;
-		squares[l.getXCoOrdinate()][l.getYCoOrdinate()] = 1;
+			squares[l.getX()][i] = 0;
+		squares[l.getX()][l.getY()] = 1;
 	}
 
 	public void moveQueen(XYLocation from, XYLocation to) {
@@ -107,7 +107,7 @@ public class NQueensBoard {
 	}
 
 	public boolean queenExistsAt(XYLocation l) {
-		return (queenExistsAt(l.getXCoOrdinate(), l.getYCoOrdinate()));
+		return (queenExistsAt(l.getX(), l.getY()));
 	}
 
 	private boolean queenExistsAt(int x, int y) {
@@ -146,14 +146,14 @@ public class NQueensBoard {
 	}
 
 	public int getNumberOfAttacksOn(XYLocation l) {
-		int x = l.getXCoOrdinate();
-		int y = l.getYCoOrdinate();
+		int x = l.getX();
+		int y = l.getY();
 		return numberOfHorizontalAttacksOn(x, y) + numberOfVerticalAttacksOn(x, y) + numberOfDiagonalAttacksOn(x, y);
 	}
 
 	public boolean isSquareUnderAttack(XYLocation l) {
-		int x = l.getXCoOrdinate();
-		int y = l.getYCoOrdinate();
+		int x = l.getX();
+		int y = l.getY();
 		return (isSquareHorizontallyAttacked(x, y) || isSquareVerticallyAttacked(x, y)
 				|| isSquareDiagonallyAttacked(x, y));
 	}

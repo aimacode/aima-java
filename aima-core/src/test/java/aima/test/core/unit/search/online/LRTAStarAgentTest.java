@@ -7,13 +7,13 @@ import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.problem.GeneralProblem;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.search.online.LRTAStarAgent;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 
 public class LRTAStarAgentTest {
@@ -38,7 +38,7 @@ public class LRTAStarAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("A"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("A"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		LRTAStarAgent<DynamicPercept, String, MoveToAction> agent = new LRTAStarAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction(), h);
@@ -54,7 +54,7 @@ public class LRTAStarAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("F"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("F"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		LRTAStarAgent<DynamicPercept, String, MoveToAction> agent = new LRTAStarAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction(), h);
@@ -72,7 +72,7 @@ public class LRTAStarAgentTest {
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("G"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("G"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		LRTAStarAgent<DynamicPercept, String, MoveToAction> agent = new LRTAStarAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction(), h);

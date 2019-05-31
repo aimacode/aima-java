@@ -74,7 +74,7 @@ public class EightPuzzleDemo {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(boardWithThreeMoveSolution);
 			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
-					(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction());
+					(new GraphSearch<>(), EightPuzzleFunctions::getNumberOfMisplacedTiles);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -89,7 +89,7 @@ public class EightPuzzleDemo {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(boardWithThreeMoveSolution);
 			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
-					(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
+					(new GraphSearch<>(), EightPuzzleFunctions::getManhattanDistance);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -104,7 +104,7 @@ public class EightPuzzleDemo {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
-					(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction());
+					(new GraphSearch<>(), EightPuzzleFunctions::getNumberOfMisplacedTiles);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -119,7 +119,7 @@ public class EightPuzzleDemo {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SimulatedAnnealingSearch<EightPuzzleBoard, Action> search = new SimulatedAnnealingSearch<>
-					(EightPuzzleFunctions.createManhattanHeuristicFunction());
+					(EightPuzzleFunctions::getManhattanDistance);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			System.out.println("Search Outcome=" + search.getOutcome());
@@ -135,7 +135,7 @@ public class EightPuzzleDemo {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
-					(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
+					(new GraphSearch<>(), EightPuzzleFunctions::getManhattanDistance);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());

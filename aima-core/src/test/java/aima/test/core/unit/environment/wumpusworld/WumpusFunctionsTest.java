@@ -4,13 +4,13 @@ import aima.core.environment.wumpusworld.AgentPosition;
 import aima.core.environment.wumpusworld.WumpusAction;
 import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusFunctions;
-import aima.core.search.framework.problem.ActionsFunction;
-import aima.core.search.framework.problem.ResultFunction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * 
@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class WumpusFunctionsTest {
 	
-	private ActionsFunction<AgentPosition, WumpusAction> actionsFn;
-	private ResultFunction<AgentPosition, WumpusAction> resultFn;
+	private Function<AgentPosition, List<WumpusAction>> actionsFn;
+	private BiFunction<AgentPosition, WumpusAction, AgentPosition> resultFn;
 
 	@Before
 	public void setUp() {

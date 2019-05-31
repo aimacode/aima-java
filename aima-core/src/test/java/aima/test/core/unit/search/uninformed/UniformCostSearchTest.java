@@ -8,7 +8,6 @@ import aima.core.environment.nqueens.QueenAction;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.QueueSearch;
 import aima.core.search.uninformed.UniformCostSearch;
@@ -16,6 +15,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * @author Ciaran O'Reilly
@@ -62,7 +62,7 @@ public class UniformCostSearchTest {
 		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
 		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfPartOfRomania.SIBIU,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				Predicate.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new UniformCostSearch<>();
@@ -87,7 +87,7 @@ public class UniformCostSearchTest {
 		map.addBidirectionalLink("d", "goal", 1.0);
 		map.addBidirectionalLink("e", "goal", 5.0);
 		Problem<String, MoveToAction> problem = new GeneralProblem<>("start", MapFunctions.createActionsFunction(map),
-				MapFunctions.createResultFunction(), GoalTest.forState("goal"),
+				MapFunctions.createResultFunction(), Predicate.isEqual("goal"),
 				MapFunctions.createDistanceStepCostFunction(map));
 
 		SearchForActions<String, MoveToAction> search = new UniformCostSearch<>();

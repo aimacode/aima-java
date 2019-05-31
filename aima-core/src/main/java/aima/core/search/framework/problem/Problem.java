@@ -42,7 +42,8 @@ public interface Problem<S, A> extends OnlineSearchProblem<S, A> {
     S getInitialState();
 
     /**
-     * Returns the description of the possible actions available to the agent.
+     * Returns the set of actions that can be executed in the given state.
+     * We say that each of these actions is <b>applicable</b> in the state.
      */
     List<A> getActions(S state);
 

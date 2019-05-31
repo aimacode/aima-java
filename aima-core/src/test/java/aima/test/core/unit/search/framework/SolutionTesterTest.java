@@ -8,12 +8,13 @@ import aima.core.search.framework.Node;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.uninformed.UniformCostSearch;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.function.Predicate;
 
 
 /**
@@ -28,8 +29,8 @@ public class SolutionTesterTest {
 		Problem<String, MoveToAction> problem = new GeneralProblem<String, MoveToAction>
 				(SimplifiedRoadMapOfPartOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				GoalTest.<String>forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST).or
-						(GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.HIRSOVA)),
+				Predicate.<String>isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST).or
+						(Predicate.isEqual(SimplifiedRoadMapOfPartOfRomania.HIRSOVA)),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap)) {
 			@Override
 			public boolean testSolution(Node<String, MoveToAction> node) {

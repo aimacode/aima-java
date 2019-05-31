@@ -9,7 +9,6 @@ import aima.core.environment.nqueens.NQueensFunctions;
 import aima.core.environment.nqueens.QueenAction;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.problem.ActionsFunction;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
@@ -32,6 +31,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.function.Function;
 
 /**
  * Graphical n-queens game application. It demonstrates the performance of
@@ -64,11 +64,11 @@ public class NQueensApp extends SimpleAgentApp<Percept, QueenAction> {
 		addSearchAlgorithm("Depth Limited Search (8)", new DepthLimitedSearch<>(8));
 		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch<>());
 		addSearchAlgorithm("A* search (attacking pair heuristic)",
-				new AStarSearch<>(new GraphSearch<>(), NQueensFunctions.createAttackingPairsHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), NQueensFunctions::getNumberOfAttackingPairs));
 		addSearchAlgorithm("Hill Climbing Search", new HillClimbingSearch<>
-				(NQueensFunctions.createAttackingPairsHeuristicFunction()));
+				(NQueensFunctions::getNumberOfAttackingPairs));
 		addSearchAlgorithm("Simulated Annealing Search",
-				new SimulatedAnnealingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction(),
+				new SimulatedAnnealingSearch<>(NQueensFunctions::getNumberOfAttackingPairs,
 						new Scheduler(20, 0.045, 1000)));
 	}
 
@@ -177,7 +177,7 @@ public class NQueensApp extends SimpleAgentApp<Percept, QueenAction> {
 			Font f = new java.awt.Font(Font.SANS_SERIF, Font.PLAIN,
 					Math.min(getWidth(), getHeight()) * 3 / 4 / currSize);
 			for (XYLocation loc : board.getQueenPositions()) {
-				JButton square = squareButtons[loc.getXCoOrdinate() + loc.getYCoOrdinate() * currSize];
+				JButton square = squareButtons[loc.getX() + loc.getY() * currSize];
 				square.setForeground(board.isSquareUnderAttack(loc) ? Color.RED : Color.BLACK);
 				square.setFont(f);
 				square.setText("Q");
@@ -258,7 +258,7 @@ public class NQueensApp extends SimpleAgentApp<Percept, QueenAction> {
 			if (agent == null) {
 				int pSel = frame.getSelection().getIndex(NQueensFrame.PROBLEM_SEL);
 				int sSel = frame.getSelection().getIndex(NQueensFrame.SEARCH_SEL);
-				ActionsFunction<NQueensBoard, QueenAction> actionsFn;
+				Function<NQueensBoard, List<QueenAction>> actionsFn;
 				if (pSel == 0)
 					actionsFn = NQueensFunctions::getIFActions;
 				else

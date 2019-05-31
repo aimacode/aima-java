@@ -101,7 +101,7 @@ public class NQueensSearchDemo {
 		// board = new NQueensBoard(boardSize, Config.QUEEN_IN_EVERY_COL);
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(board, NQueensFunctions::getCSFActions,
 				NQueensFunctions::getResult, NQueensFunctions::testGoal);
-		search = new HillClimbingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction());
+		search = new HillClimbingSearch<>(NQueensFunctions::getNumberOfAttackingPairs);
 		search.addNodeListener(n -> notifyProgressTrackers(n.getState(), search.getMetrics()));
 		search.findActions(problem);
 
@@ -113,7 +113,7 @@ public class NQueensSearchDemo {
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(board, NQueensFunctions::getCSFActions,
 				NQueensFunctions::getResult, NQueensFunctions::testGoal);
 		Scheduler scheduler = new Scheduler(k, lambda, maxIterations);
-		search = new SimulatedAnnealingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction(), scheduler);
+		search = new SimulatedAnnealingSearch<>(NQueensFunctions::getNumberOfAttackingPairs, scheduler);
 		search.addNodeListener(n -> notifyProgressTrackers(n.getState(), search.getMetrics()));
 		search.findActions(problem);
 

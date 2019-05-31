@@ -9,7 +9,6 @@ import aima.core.search.framework.Node;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.QueueSearch;
@@ -19,6 +18,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 
 public class AStarSearchTest {
@@ -37,7 +37,7 @@ public class AStarSearchTest {
 
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(),
-					EightPuzzleFunctions.createManhattanHeuristicFunction());
+					EightPuzzleFunctions::getManhattanDistance);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			Assert.assertEquals(23, agent.getActions().size());
 			Assert.assertEquals("1133", // "926" GraphSearchReduced Frontier
@@ -59,7 +59,7 @@ public class AStarSearchTest {
 				SimplifiedRoadMapOfPartOfRomania.SIBIU,
 				MapFunctions.createActionsFunction(romaniaMap),
 				MapFunctions.createResultFunction(),
-				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				Predicate.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new GraphSearch<>(),
@@ -82,7 +82,7 @@ public class AStarSearchTest {
 						SimplifiedRoadMapOfPartOfRomania.ARAD,
 						MapFunctions.createActionsFunction(romaniaMap),
 						MapFunctions.createResultFunction(),
-						GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+						Predicate.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
 						MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new TreeSearch<>(),
@@ -107,7 +107,7 @@ public class AStarSearchTest {
 				SimplifiedRoadMapOfPartOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap),
 				MapFunctions.createResultFunction(),
-				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				Predicate.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new GraphSearch<>(),
@@ -137,7 +137,7 @@ public class AStarSearchTest {
 		map.addBidirectionalLink("e", "goal", 5.0);
 		Problem<String, MoveToAction> problem = new GeneralProblem<>("start",
 				MapFunctions.createActionsFunction(map),
-				MapFunctions.createResultFunction(), GoalTest.forState("goal"),
+				MapFunctions.createResultFunction(), Predicate.isEqual("goal"),
 				MapFunctions.createDistanceStepCostFunction(map));
 
 		ToDoubleFunction<Node<String, MoveToAction>> h = node -> 0.0; // Don't have one for this test

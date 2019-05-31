@@ -2,37 +2,41 @@ package aima.core.environment.map;
 
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.problem.ActionsFunction;
-import aima.core.search.framework.problem.ResultFunction;
 import aima.core.search.framework.problem.StepCostFunction;
 import aima.core.util.math.geom.shapes.Point2D;
 
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
 /**
  * @author Ruediger Lunde
- * @author Ciaran O'Reilly
  */
 public class MapFunctions {
 
-    public static ActionsFunction<String, MoveToAction> createActionsFunction(Map map) {
-        return new MapActionsFunction(map, false);
+    public static Function<String, List<MoveToAction>> createActionsFunction(Map map) {
+        return (state) -> map.getPossibleNextLocations(state).stream().
+                map(MoveToAction::new).collect(Collectors.toList());
     }
 
-    public static ActionsFunction<String, MoveToAction> createReverseActionsFunction(Map map) {
-        return new MapActionsFunction(map, true);
+    public static Function<String, List<MoveToAction>> createReverseActionsFunction(Map map) {
+        return (state) -> map.getPossiblePrevLocations(state).stream().
+                map(MoveToAction::new).collect(Collectors.toList());
     }
 
-    public static ResultFunction<String, MoveToAction> createResultFunction() {
-        return new MapResultFunction();
+    public static BiFunction<String, MoveToAction, String> createResultFunction() {
+        return (state, action) -> action.getToLocation();
     }
-
 
     public static StepCostFunction<String, MoveToAction> createDistanceStepCostFunction(Map map) {
-        return new DistanceStepCostFunction(map);
+        return (state, action, statePrimed) -> {
+            Double distance = map.getDistance(state, statePrimed);
+            // Used by Uniform-cost search to ensure every step is greater than or equal
+            // to some small positive constant
+            return (distance != null && distance > 0) ? distance : 0.1;
+        };
     }
 
     public static Function<DynamicPercept, String> createPerceptToStateFunction() {
@@ -51,56 +55,5 @@ public class MapFunctions {
         if (pt1 != null && pt2 != null)
             result = pt1.distance(pt2);
         return result;
-    }
-
-    private static class MapActionsFunction implements ActionsFunction<String, MoveToAction> {
-        private Map map = null;
-        private boolean reverseMode;
-
-        private MapActionsFunction(Map map, boolean reverseMode) {
-            this.map = map;
-            this.reverseMode = reverseMode;
-        }
-
-        public List<MoveToAction> apply(String state) {
-            List<String> linkedLocations = reverseMode ? map.getPossiblePrevLocations(state)
-                    : map.getPossibleNextLocations(state);
-            return linkedLocations.stream().map(MoveToAction::new).collect(Collectors.toList());
-        }
-    }
-
-    private static class MapResultFunction implements ResultFunction<String, MoveToAction> {
-
-        public String apply(String s, MoveToAction a) {
-            if (a != null)
-                return a.getToLocation();
-            // If the action is NoOp the result will be the current state.
-            return s;
-        }
-    }
-
-    /**
-     * Implementation of StepCostFunction interface that uses the distance between
-     * locations to calculate the cost in addition to a constant cost, so that it
-     * may be used in conjunction with a Uniform-cost search.
-     */
-    private static class DistanceStepCostFunction implements StepCostFunction<String, MoveToAction> {
-        private Map map = null;
-
-        // Used by Uniform-cost search to ensure every step is greater than or equal
-        // to some small positive constant
-        private static double constantCost = 1.0;
-
-        private DistanceStepCostFunction(Map map) {
-            this.map = map;
-        }
-
-        @Override
-        public double applyAsDouble(String state, MoveToAction action, String statePrimed) {
-            Double distance = map.getDistance(state, statePrimed);
-            if (distance == null || distance <= 0)
-                return constantCost;
-            return distance;
-        }
     }
 }

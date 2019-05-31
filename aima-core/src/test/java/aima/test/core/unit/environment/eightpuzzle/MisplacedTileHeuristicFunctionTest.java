@@ -18,8 +18,7 @@ public class MisplacedTileHeuristicFunctionTest {
 
 	@Test
 	public void testHeuristicCalculation() {
-		ToDoubleFunction<Node<EightPuzzleBoard, Action>> h =
-				EightPuzzleFunctions.createMisplacedTileHeuristicFunction();
+		ToDoubleFunction<Node<EightPuzzleBoard, Action>> h = EightPuzzleFunctions::getNumberOfMisplacedTiles;
 		EightPuzzleBoard board = new EightPuzzleBoard(new int[] { 2, 0, 5, 6,
 				4, 8, 3, 7, 1 });
 		Assert.assertEquals(6.0, h.applyAsDouble(new Node<>(board)), 0.001);

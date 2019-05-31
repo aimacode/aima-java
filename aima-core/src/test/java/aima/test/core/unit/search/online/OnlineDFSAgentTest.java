@@ -7,12 +7,13 @@ import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.problem.GeneralProblem;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.search.online.OnlineDFSAgent;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.function.Predicate;
 
 public class OnlineDFSAgentTest {
 
@@ -37,7 +38,7 @@ public class OnlineDFSAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("A"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("A"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		OnlineDFSAgent<DynamicPercept, String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());
@@ -53,7 +54,7 @@ public class OnlineDFSAgentTest {
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("G"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("G"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		OnlineDFSAgent<DynamicPercept, String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());
@@ -74,7 +75,7 @@ public class OnlineDFSAgentTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("X"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("X"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		OnlineDFSAgent<DynamicPercept, String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());
@@ -103,7 +104,7 @@ public class OnlineDFSAgentTest {
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("3,3"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("3,3"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
 		OnlineDFSAgent<DynamicPercept, String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());

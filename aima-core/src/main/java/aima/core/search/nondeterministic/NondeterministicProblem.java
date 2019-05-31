@@ -1,10 +1,10 @@
 package aima.core.search.nondeterministic;
 
-import aima.core.search.framework.problem.ActionsFunction;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.StepCostFunction;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Non-deterministic problems may have multiple results for a given state and
@@ -17,26 +17,24 @@ import java.util.List;
 public class NondeterministicProblem<S, A> {
 
 	protected S initialState;
-	protected ActionsFunction<S, A> actionsFn;
-	protected GoalTest<S> goalTest;
+	protected Function<S, List<A>> actionsFn;
+	protected Predicate<S> goalTest;
 	protected StepCostFunction<S, A> stepCostFn;
 	protected ResultsFunction<S, A> resultsFn;
 
 	/**
 	 * Constructor
 	 */
-	public NondeterministicProblem(S initialState,
-			ActionsFunction<S, A> actionsFn, ResultsFunction<S, A> resultsFn,
-			GoalTest<S> goalTest) {
+	public NondeterministicProblem(S initialState, Function<S, List<A>> actionsFn, ResultsFunction<S, A> resultsFn,
+								   Predicate<S> goalTest) {
 		this(initialState, actionsFn, resultsFn, goalTest, (s, a, sPrimed) -> 1.0);
 	}
 
 	/**
 	 * Constructor
 	 */
-	public NondeterministicProblem(S initialState,
-			ActionsFunction<S, A> actionsFn, ResultsFunction<S, A> resultsFn,
-			GoalTest<S> goalTest, StepCostFunction<S, A> stepCostFn) {
+	public NondeterministicProblem(S initialState, Function<S, List<A>> actionsFn, ResultsFunction<S, A> resultsFn,
+								   Predicate<S> goalTest, StepCostFunction<S, A> stepCostFn) {
 		this.initialState = initialState;
 		this.actionsFn = actionsFn;
 		this.resultsFn = resultsFn;

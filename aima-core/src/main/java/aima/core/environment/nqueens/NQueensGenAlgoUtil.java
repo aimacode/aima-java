@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.local.FitnessFunction;
 import aima.core.search.local.Individual;
 import aima.core.util.datastructure.XYLocation;
@@ -27,7 +27,7 @@ public class NQueensGenAlgoUtil {
 		return new NQueensFitnessFunction();
 	}
 	
-	public static GoalTest<Individual<Integer>> getGoalTest() {
+	public static Predicate<Individual<Integer>> getGoalTest() {
 		return new NQueensGenAlgoGoalTest();
 	}
 	
@@ -64,7 +64,7 @@ public class NQueensGenAlgoUtil {
 			List<XYLocation> qPositions = board.getQueenPositions();
 			for (int fromX = 0; fromX < (boardSize - 1); fromX++) {
 				for (int toX = fromX + 1; toX < boardSize; toX++) {
-					int fromY = qPositions.get(fromX).getYCoOrdinate();
+					int fromY = qPositions.get(fromX).getY();
 					boolean nonAttackingPair = true;
 					// Check right beside
 					int toY = fromY;
@@ -96,8 +96,8 @@ public class NQueensGenAlgoUtil {
 		}
 	}
 
-	public static class NQueensGenAlgoGoalTest implements GoalTest<Individual<Integer>> {
-		private final GoalTest<NQueensBoard> goalTest = NQueensFunctions::testGoal;
+	public static class NQueensGenAlgoGoalTest implements Predicate<Individual<Integer>> {
+		private final Predicate<NQueensBoard> goalTest = NQueensFunctions::testGoal;
 
 		@Override
 		public boolean test(Individual<Integer> state) {

@@ -8,7 +8,6 @@ import aima.core.environment.nqueens.NQueensGenAlgoUtil;
 import aima.core.environment.nqueens.QueenAction;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.TreeSearch;
@@ -23,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * @author Ravi Mohan
@@ -116,7 +116,7 @@ public class NQueensDemo {
 					NQueensFunctions.createCompleteStateFormulationProblem(boardSize, Config.QUEENS_IN_FIRST_ROW);
 
 			SimulatedAnnealingSearch<NQueensBoard, QueenAction> search =
-					new SimulatedAnnealingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction(),
+					new SimulatedAnnealingSearch<>(NQueensFunctions::getNumberOfAttackingPairs,
 					new Scheduler(20, 0.045, 100));
 			SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 
@@ -136,7 +136,7 @@ public class NQueensDemo {
 			Problem<NQueensBoard, QueenAction> problem =
 					NQueensFunctions.createCompleteStateFormulationProblem(boardSize, Config.QUEENS_IN_FIRST_ROW);
 			HillClimbingSearch<NQueensBoard, QueenAction> search = new HillClimbingSearch<>
-					(NQueensFunctions.createAttackingPairsHeuristicFunction());
+					(NQueensFunctions::getNumberOfAttackingPairs);
 			SearchAgent<Object, NQueensBoard, QueenAction> agent = new SearchAgent<>(problem, search);
 
 			System.out.println();
@@ -153,7 +153,7 @@ public class NQueensDemo {
 		System.out.println("\nNQueensDemo GeneticAlgorithm  -->");
 		try {
 			FitnessFunction<Integer> fitnessFunction = NQueensGenAlgoUtil.getFitnessFunction();
-			GoalTest<Individual<Integer>> goalTest = NQueensGenAlgoUtil.getGoalTest();
+			Predicate<Individual<Integer>> goalTest = NQueensGenAlgoUtil.getGoalTest();
 			// Generate an initial population
 			Set<Individual<Integer>> population = new HashSet<>();
 			for (int i = 0; i < 50; i++) {

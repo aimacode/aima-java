@@ -14,8 +14,8 @@ public class XYLocationTest {
 	@Test
 	public void testXYLocationAtributeSettingOnConstruction() {
 		XYLocation loc = new XYLocation(3, 4);
-		Assert.assertEquals(3, loc.getXCoOrdinate());
-		Assert.assertEquals(4, loc.getYCoOrdinate());
+		Assert.assertEquals(3, loc.getX());
+		Assert.assertEquals(4, loc.getY());
 	}
 
 	@Test

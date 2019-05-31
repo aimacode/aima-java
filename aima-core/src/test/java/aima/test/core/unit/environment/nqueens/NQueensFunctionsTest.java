@@ -2,18 +2,18 @@ package aima.test.core.unit.environment.nqueens;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import aima.core.environment.nqueens.NQueensFunctions;
 import aima.core.environment.nqueens.QueenAction;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.util.datastructure.XYLocation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.environment.nqueens.NQueensBoard;
-import aima.core.search.framework.problem.ActionsFunction;
-import aima.core.search.framework.problem.ResultFunction;
 
 /**
  * @author Ravi Mohan
@@ -21,9 +21,9 @@ import aima.core.search.framework.problem.ResultFunction;
  * @author Ruediger Lunde
  */
 public class NQueensFunctionsTest {
-	private ActionsFunction<NQueensBoard, QueenAction> actionsFn;
-	private ResultFunction<NQueensBoard, QueenAction> resultFn;
-	private GoalTest<NQueensBoard> goalTest;
+	private Function<NQueensBoard, List<QueenAction>> actionsFn;
+	private BiFunction<NQueensBoard, QueenAction, NQueensBoard> resultFn;
+	private Predicate<NQueensBoard> goalTest;
 
 	private NQueensBoard oneBoard;
 	private NQueensBoard eightBoard;

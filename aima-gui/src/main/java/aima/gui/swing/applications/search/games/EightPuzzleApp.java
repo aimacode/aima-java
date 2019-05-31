@@ -60,16 +60,16 @@ public class EightPuzzleApp extends SimpleAgentApp<Percept, Action> {
 		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch<>());
 		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeursitic)",
 				new GreedyBestFirstSearch<>(new GraphSearch<>(),
-						EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
+						EightPuzzleFunctions::getNumberOfMisplacedTiles));
 		addSearchAlgorithm("Greedy Best First Search (ManhattanHeursitic)",
 				new GreedyBestFirstSearch<>(new GraphSearch<>(),
-						EightPuzzleFunctions.createManhattanHeuristicFunction()));
+						EightPuzzleFunctions::getManhattanDistance));
 		addSearchAlgorithm("AStar Search (MisplacedTileHeursitic)",
-				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getNumberOfMisplacedTiles));
 		addSearchAlgorithm("AStar Search (ManhattanHeursitic)",
-				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getManhattanDistance));
 		addSearchAlgorithm("Simulated Annealing Search",
-				new SimulatedAnnealingSearch<>(EightPuzzleFunctions.createManhattanHeuristicFunction()));
+				new SimulatedAnnealingSearch<>(EightPuzzleFunctions::getManhattanDistance));
 	}
 
 	/** Returns an <code>EightPuzzleView</code> instance. */
@@ -184,15 +184,15 @@ public class EightPuzzleApp extends SimpleAgentApp<Percept, Action> {
 				if (ae.getSource() == squareButtons[i]) {
 					EightPuzzleController contr = (EightPuzzleController) getController();
 					XYLocation locGap = ((EightPuzzleEnvironment) env).getBoard().getLocationOf(0);
-					if (locGap.getXCoOrdinate() == i / 3) {
-						if (locGap.getYCoOrdinate() == i % 3 - 1)
+					if (locGap.getX() == i / 3) {
+						if (locGap.getY() == i % 3 - 1)
 							contr.executeUserAction(EightPuzzleBoard.RIGHT);
-						else if (locGap.getYCoOrdinate() == i % 3 + 1)
+						else if (locGap.getY() == i % 3 + 1)
 							contr.executeUserAction(EightPuzzleBoard.LEFT);
-					} else if (locGap.getYCoOrdinate() == i % 3) {
-						if (locGap.getXCoOrdinate() == i / 3 - 1)
+					} else if (locGap.getY() == i % 3) {
+						if (locGap.getX() == i / 3 - 1)
 							contr.executeUserAction(EightPuzzleBoard.DOWN);
-						else if (locGap.getXCoOrdinate() == i / 3 + 1)
+						else if (locGap.getX() == i / 3 + 1)
 							contr.executeUserAction(EightPuzzleBoard.UP);
 					}
 				}
