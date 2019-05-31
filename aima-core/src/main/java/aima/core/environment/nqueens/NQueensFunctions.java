@@ -44,10 +44,8 @@ public class NQueensFunctions {
         int boardSize = state.getSize();
         for (int i = 0; i < boardSize; i++) {
             XYLocation newLocation = new XYLocation(numQueens, i);
-            if (!(state.isSquareUnderAttack(newLocation))) {
-                actions.add(new QueenAction(QueenAction.PLACE_QUEEN,
-                        newLocation));
-            }
+            if (!(state.isSquareUnderAttack(newLocation)))
+                actions.add(new QueenAction(QueenAction.PLACE_QUEEN, newLocation));
         }
         return actions;
     }

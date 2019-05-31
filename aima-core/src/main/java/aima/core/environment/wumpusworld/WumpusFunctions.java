@@ -1,9 +1,13 @@
 package aima.core.environment.wumpusworld;
 
+import aima.core.search.framework.Node;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Factory class for constructing functions for use in the Wumpus World environment.
@@ -39,6 +43,16 @@ public class WumpusFunctions {
 					break;
 			}
 			return result;
+		};
+	}
+
+	public static ToDoubleFunction<Node<AgentPosition, WumpusAction>> createManhattanDistanceFunction
+			(Set<AgentPosition> goals) {
+		return node -> {
+			AgentPosition curr = node.getState();
+			return goals.stream().
+					mapToInt(goal -> Math.abs(goal.getX() - curr.getX()) + Math.abs(goal.getY() - curr.getY())).min().
+					orElse(Integer.MAX_VALUE);
 		};
 	}
 }

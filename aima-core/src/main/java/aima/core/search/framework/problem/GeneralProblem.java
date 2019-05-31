@@ -15,14 +15,11 @@ import java.util.function.Predicate;
  * @author Ruediger Lunde
  */
 public class GeneralProblem<S, A> implements Problem<S, A> {
+
     private S initialState;
-
     private Function<S, List<A>> actionsFn;
-
     private BiFunction<S, A, S> resultFn;
-
     private Predicate<S> goalTest;
-
     private StepCostFunction<S, A> stepCostFn;
 
     /**

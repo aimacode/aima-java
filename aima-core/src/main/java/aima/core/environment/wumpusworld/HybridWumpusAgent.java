@@ -235,7 +235,7 @@ public class HybridWumpusAgent extends AbstractAgent<WumpusPercept, WumpusAction
 				WumpusFunctions.createActionsFunction(cave),
 				WumpusFunctions.createResultFunction(cave), goals::contains);
 		SearchForActions<AgentPosition, WumpusAction> search =
-				new AStarSearch<>(new GraphSearch<>(), new ManhattanHeuristicFunction(goals));
+				new AStarSearch<>(new GraphSearch<>(), WumpusFunctions.createManhattanDistanceFunction(goals));
 		Optional<List<WumpusAction>> actions = search.findActions(problem);
 
 		return actions.orElse(Collections.emptyList());
