@@ -40,7 +40,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "A").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -59,7 +59,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "A").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -77,7 +77,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "B").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -96,7 +96,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "C").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -116,7 +116,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "D").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -134,7 +134,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "B").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -153,7 +153,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "C").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -175,7 +175,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "E").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -193,7 +193,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "B").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -212,7 +212,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "C").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -232,7 +232,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "E").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -262,7 +262,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "H").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -290,7 +290,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "F").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -321,7 +321,7 @@ public class BidirectionalSearchTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), search, "F").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -329,7 +329,7 @@ public class BidirectionalSearchTest {
 				envChanges.toString());
 	}
 
-	private class TestEnvironmentView implements EnvironmentView<Object, Object> {
+	private class TestEnvironmentView implements EnvironmentListener<Object, Object> {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}

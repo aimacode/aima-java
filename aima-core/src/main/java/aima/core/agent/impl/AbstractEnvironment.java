@@ -13,14 +13,14 @@ import java.util.*;
  * @author Ruediger Lunde
  */
 public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
-		EnvironmentViewNotifier {
+		Notifier {
 
 	// Note: Use LinkedHashSet's in order to ensure order is respected.
 	// get methods provide access to these elements via a List interface.
 	protected Set<Agent<? super P, ? extends A>> agents = new LinkedHashSet<>();
 	protected Set<EnvironmentObject> envObjects = new LinkedHashSet<>();
 
-	protected Set<EnvironmentView<? super P, ? super A>> views = new LinkedHashSet<>();
+	protected Set<EnvironmentListener<? super P, ? super A>> listeners = new LinkedHashSet<>();
 	protected Map<Agent<?, ?>, Double> performanceMeasures = new LinkedHashMap<>();
 
 
@@ -34,7 +34,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	public void addAgent(Agent<? super P, ? extends A> agent) {
 		agents.add(agent);
 		addEnvironmentObject(agent);
-		notifyViews(agent);
+		notify(agent);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 				Optional<? extends A> anAction = agent.execute(percept);
 				if (anAction.isPresent()) {
 					executeAction(agent, anAction.get());
-					notifyViews(agent, percept, anAction.get());
+					notify(agent, percept, anAction.get());
 				} else {
 					executeNoOp(agent);
 				}
@@ -122,18 +122,18 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	}
 
 	@Override
-	public void addEnvironmentView(EnvironmentView<? super P, ? super A> ev) {
-		views.add(ev);
+	public void addEnvironmentListener(EnvironmentListener<? super P, ? super A> listener) {
+		listeners.add(listener);
 	}
 
 	@Override
-	public void removeEnvironmentView(EnvironmentView ev) {
-		views.remove(ev);
+	public void removeEnvironmentListener(EnvironmentListener listener) {
+		listeners.remove(listener);
 	}
 
 	@Override
-	public void notifyViews(String msg) {
-		views.forEach(view -> view.notify(msg));
+	public void notify(String msg) {
+		listeners.forEach(listener -> listener.notify(msg));
 	}
 
 	//
@@ -143,11 +143,11 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 		performanceMeasures.put(forAgent, getPerformanceMeasure(forAgent) + addTo);
 	}
 
-	protected void notifyViews(Agent<?, ?> agent) {
-		views.forEach(view -> view.agentAdded(agent, this));
+	protected void notify(Agent<?, ?> agent) {
+		listeners.forEach(listener -> listener.agentAdded(agent, this));
 	}
 
-	protected void notifyViews(Agent<?, ?> agent, P percept, A action) {
-		views.forEach(view -> view.agentActed(agent, percept, action, this));
+	protected void notify(Agent<?, ?> agent, P percept, A action) {
+		listeners.forEach(listener -> listener.agentActed(agent, percept, action, this));
 	}
 }

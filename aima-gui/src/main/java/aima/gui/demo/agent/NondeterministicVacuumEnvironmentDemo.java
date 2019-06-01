@@ -34,7 +34,7 @@ public class NondeterministicVacuumEnvironmentDemo {
                 (VacuumEnvironment.LocationState.Dirty, VacuumEnvironment.LocationState.Dirty);
         world.addAgent(agent, VacuumEnvironment.LOCATION_A);
         SimpleActionTracker actionTracker = new SimpleActionTracker();
-        world.addEnvironmentView(actionTracker);
+        world.addEnvironmentListener(actionTracker);
 
         // provide the agent with a problem formulation so that a contingency plan can be computed.
         NondeterministicProblem<VacuumEnvironmentState, Action> problem = new NondeterministicProblem<>(

@@ -1,7 +1,6 @@
 package aima.test.core.unit.search.informed;
 
 import aima.core.agent.*;
-import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.*;
 import aima.core.search.framework.Node;
 import aima.core.search.informed.AStarSearch;
@@ -51,7 +50,7 @@ public class RecursiveBestFirstSearchTest {
 				SimplifiedRoadMapOfPartOfRomania.BUCHAREST).setNotifier(me);
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -66,7 +65,7 @@ public class RecursiveBestFirstSearchTest {
 				SimplifiedRoadMapOfPartOfRomania.BUCHAREST).setNotifier(me);
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -81,7 +80,7 @@ public class RecursiveBestFirstSearchTest {
 				SimplifiedRoadMapOfPartOfRomania.NEAMT).setNotifier(me);
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -96,7 +95,7 @@ public class RecursiveBestFirstSearchTest {
 				SimplifiedRoadMapOfPartOfRomania.NEAMT).setNotifier(me);
 
 		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		// loops avoided, now much less number of expanded nodes ...
@@ -105,7 +104,7 @@ public class RecursiveBestFirstSearchTest {
 				envChanges.toString());
 	}
 
-	private class TestEnvironmentView implements EnvironmentView<Object, Object> {
+	private class TestEnvironmentView implements EnvironmentListener<Object, Object> {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}

@@ -44,7 +44,7 @@ public class LRTAStarAgentTest {
 				(problem, MapFunctions.createPerceptToStateFunction(), h);
 
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals("", envChanges.toString());
@@ -60,7 +60,7 @@ public class LRTAStarAgentTest {
 				(problem, MapFunctions.createPerceptToStateFunction(), h);
 
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -78,7 +78,7 @@ public class LRTAStarAgentTest {
 				(problem, MapFunctions.createPerceptToStateFunction(), h);
 
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		// Note: Will search forever if no path is possible,
 		// Therefore restrict the number of steps to something
 		// reasonablbe, against which to test.
@@ -89,7 +89,7 @@ public class LRTAStarAgentTest {
 				envChanges.toString());
 	}
 
-	private class TestEnvironmentView implements EnvironmentView<Object, Object> {
+	private class TestEnvironmentView implements EnvironmentListener<Object, Object> {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}

@@ -3,7 +3,7 @@ package aima.gui.demo.agent;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
-import aima.core.agent.EnvironmentView;
+import aima.core.agent.EnvironmentListener;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.SimpleEnvironmentView;
 import aima.core.environment.vacuum.ModelBasedReflexVacuumAgent;
@@ -19,8 +19,8 @@ public class TrivialVacuumDemo {
 	public static void main(String[] args) {
 		// create environment with random state of cleaning.
 		Environment<DynamicPercept, Action> env = new VacuumEnvironment();
-		EnvironmentView<Object, Object> view = new SimpleEnvironmentView();
-		env.addEnvironmentView(view);
+		EnvironmentListener<Object, Object> view = new SimpleEnvironmentView();
+		env.addEnvironmentListener(view);
 		
 		Agent<DynamicPercept, Action> agent;
 		agent = new ModelBasedReflexVacuumAgent();
@@ -30,6 +30,6 @@ public class TrivialVacuumDemo {
 
 		env.addAgent(agent);
 		env.step(16);
-		env.notifyViews("Performance=" + env.getPerformanceMeasure(agent));
+		env.notify("Performance=" + env.getPerformanceMeasure(agent));
 	}
 }

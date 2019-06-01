@@ -109,7 +109,7 @@ public class VacuumAgentApp extends IntegrableApplication {
         }
         if (env != null && agent != null) {
             envViewCtrl.initialize(env);
-            env.addEnvironmentView(envViewCtrl);
+            env.addEnvironmentListener(envViewCtrl);
             env.addAgent(agent);
         }
     }

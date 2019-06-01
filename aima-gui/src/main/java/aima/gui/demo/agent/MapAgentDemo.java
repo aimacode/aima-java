@@ -1,16 +1,13 @@
 package aima.gui.demo.agent;
 
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentView;
+import aima.core.agent.EnvironmentListener;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.SimpleEnvironmentView;
 import aima.core.environment.map.*;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.qsearch.GraphSearch;
-import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.informed.AStarSearch;
-import aima.core.search.uninformed.DepthFirstSearch;
-import aima.core.search.uninformed.UniformCostSearch;
 
 /**
  * Demonstrates how different kinds of search algorithms perform in a route finding scenario.
@@ -21,8 +18,8 @@ public class MapAgentDemo {
         ExtendableMap map = new ExtendableMap();
         SimplifiedRoadMapOfPartOfRomania.initMap(map);
         MapEnvironment env = new MapEnvironment(map);
-        EnvironmentView<Object, Object> envView = new SimpleEnvironmentView();
-        env.addEnvironmentView(envView);
+        EnvironmentListener<Object, Object> envView = new SimpleEnvironmentView();
+        env.addEnvironmentListener(envView);
 
         String agentLoc = SimplifiedRoadMapOfPartOfRomania.ARAD;
         String destination = SimplifiedRoadMapOfPartOfRomania.BUCHAREST;

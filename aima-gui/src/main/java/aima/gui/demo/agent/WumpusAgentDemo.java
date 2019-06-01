@@ -20,7 +20,7 @@ public class WumpusAgentDemo {
 
         WumpusEnvironment env = new WumpusEnvironment(cave);
         SimpleEnvironmentView view = new SimpleEnvironmentView();
-        env.addEnvironmentView(view);
+        env.addEnvironmentListener(view);
 
         HybridWumpusAgent agent;
         agent = new HybridWumpusAgent
@@ -28,11 +28,11 @@ public class WumpusAgentDemo {
                 (cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart(),
                 new DPLLSatisfiable(), env);
 
-        env.notifyViews("The cave:\n" + cave.toString());
+        env.notify("The cave:\n" + cave.toString());
         env.addAgent(agent);
         env.stepUntilDone();
-        env.notifyViews("Metrics: " + agent.getMetrics());
-        env.notifyViews("KB:\n" + agent.getKB());
+        env.notify("Metrics: " + agent.getMetrics());
+        env.notify("KB:\n" + agent.getKB());
     }
 
     private static WumpusCave create2x2Cave() {

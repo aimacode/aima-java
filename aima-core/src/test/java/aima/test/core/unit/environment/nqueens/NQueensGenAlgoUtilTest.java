@@ -59,12 +59,6 @@ public class NQueensGenAlgoUtilTest {
 		NQueensBoard board = NQueensGenAlgoUtil
 				.getBoardForIndividual(new Individual<>(Arrays
 						.asList(5, 6, 1, 3, 6, 4, 7, 7)));
-		Assert.assertEquals(" -  -  -  -  -  -  -  - \n"
-				+ " -  -  Q  -  -  -  -  - \n" + " -  -  -  -  -  -  -  - \n"
-				+ " -  -  -  Q  -  -  -  - \n" + " -  -  -  -  -  Q  -  - \n"
-				+ " Q  -  -  -  -  -  -  - \n" + " -  Q  -  -  Q  -  -  - \n"
-				+ " -  -  -  -  -  -  Q  Q \n", board.getBoardPic());
-
 		Assert.assertEquals("--------\n" + "--Q-----\n" + "--------\n"
 				+ "---Q----\n" + "-----Q--\n" + "Q-------\n" + "-Q--Q---\n"
 				+ "------QQ\n", board.toString());

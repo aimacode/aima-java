@@ -39,7 +39,7 @@ public class MapAgentTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(), "A").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -52,7 +52,7 @@ public class MapAgentTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(),"D").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -68,7 +68,7 @@ public class MapAgentTest {
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), ucSearch, "D").setNotifier(me);
 
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -81,7 +81,7 @@ public class MapAgentTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(), "A").setNotifier(me);
 		me.addAgent(ma, "E");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -89,7 +89,7 @@ public class MapAgentTest {
 				envChanges.toString());
 	}
 
-	private class TestEnvironmentView implements EnvironmentView<Object, Object> {
+	private class TestEnvironmentView implements EnvironmentListener<Object, Object> {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}

@@ -1,6 +1,6 @@
 package aima.core.environment.map;
 
-import aima.core.agent.EnvironmentViewNotifier;
+import aima.core.agent.Notifier;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
 import aima.core.search.agent.SimpleProblemSolvingAgent;
@@ -29,7 +29,7 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent<DynamicPercept, St
 	private SearchForActions<String, MoveToAction> search;
 	private List<String> goals;
 	private int nextGoalPos = 0;
-	private EnvironmentViewNotifier notifier;
+	private Notifier notifier;
 
 	/** Randomly generates goals forever. */
 	public SimpleMapAgent(Map map, SearchForActions<String, MoveToAction> search) {
@@ -51,7 +51,7 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent<DynamicPercept, St
 	}
 
 	/**  Sets a notifier which gets informed about decisions of the agent */
-	public SimpleMapAgent setNotifier(EnvironmentViewNotifier notifier) {
+	public SimpleMapAgent setNotifier(Notifier notifier) {
 		this.notifier = notifier;
 		return this;
 	}
@@ -72,7 +72,7 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent<DynamicPercept, St
 		else if (nextGoalPos < goals.size())
 			goal = goals.get(nextGoalPos++);
 		if (goal != null && notifier != null)
-			notifier.notifyViews("CurrentLocation=In(" + state.getAttribute(AttNames.AGENT_LOCATION)
+			notifier.notify("CurrentLocation=In(" + state.getAttribute(AttNames.AGENT_LOCATION)
 					+ "), Goal=In(" + goal + ")");
 		return Optional.ofNullable(goal);
 	}
@@ -86,7 +86,7 @@ public class SimpleMapAgent extends SimpleProblemSolvingAgent<DynamicPercept, St
 	protected Optional<List<MoveToAction>> search(Problem<String, MoveToAction> problem) {
 		Optional<List<MoveToAction>> result = search.findActions(problem);
 		if (notifier != null)
-			notifier.notifyViews("Search" + search.getMetrics());
+			notifier.notify("Search" + search.getMetrics());
 		return result;
 	}
 }

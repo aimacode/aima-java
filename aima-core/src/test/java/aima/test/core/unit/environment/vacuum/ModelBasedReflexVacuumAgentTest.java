@@ -30,7 +30,7 @@ public class ModelBasedReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.stepUntilDone();
 
@@ -45,7 +45,7 @@ public class ModelBasedReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.stepUntilDone();
 
@@ -61,7 +61,7 @@ public class ModelBasedReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.stepUntilDone();
 
@@ -77,7 +77,7 @@ public class ModelBasedReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.stepUntilDone();
 

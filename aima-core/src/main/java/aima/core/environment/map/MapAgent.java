@@ -1,6 +1,6 @@
 package aima.core.environment.map;
 
-import aima.core.agent.EnvironmentViewNotifier;
+import aima.core.agent.Notifier;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
 import aima.core.search.agent.ProblemSolvingAgent;
@@ -33,7 +33,7 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
 
     private SearchForActions<String, MoveToAction> search;
     private Function<String, ToDoubleFunction<Node<String, MoveToAction>>> hFnFactory;
-    protected EnvironmentViewNotifier notifier;
+    protected Notifier notifier;
 
     public MapAgent(Map map, SearchForActions<String, MoveToAction> search, String goal) {
         this.map = map;
@@ -63,7 +63,7 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
     }
 
     /**  Sets a notifier which gets informed about decisions of the agent */
-    public MapAgent setNotifier(EnvironmentViewNotifier notifier) {
+    public MapAgent setNotifier(Notifier notifier) {
         this.notifier = notifier;
         return this;
     }
@@ -85,7 +85,7 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
             if (hFnFactory != null && search instanceof Informed)
                 ((Informed<String, MoveToAction>) search).setHeuristicFunction(hFnFactory.apply(goal));
             if (notifier != null)
-                notifier.notifyViews("Current location: In(" + state.getAttribute(AttNames.AGENT_LOCATION)
+                notifier.notify("Current location: In(" + state.getAttribute(AttNames.AGENT_LOCATION)
                         + "), Goal: In(" + goal + ")");
         }
         return Optional.ofNullable(goal);
@@ -101,7 +101,7 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
     protected Optional<List<MoveToAction>> search(Problem<String, MoveToAction> problem) {
         Optional<List<MoveToAction>> result = search.findActions(problem);
         if (notifier != null)
-            notifier.notifyViews("Search" + search.getMetrics());
+            notifier.notify("Search" + search.getMetrics());
         return result;
     }
 }

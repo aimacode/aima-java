@@ -44,7 +44,7 @@ public class OnlineDFSAgentTest {
 				(problem, MapFunctions.createPerceptToStateFunction());
 
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals("", envChanges.toString());
@@ -60,7 +60,7 @@ public class OnlineDFSAgentTest {
 				(problem, MapFunctions.createPerceptToStateFunction());
 
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -81,7 +81,7 @@ public class OnlineDFSAgentTest {
 				(problem, MapFunctions.createPerceptToStateFunction());
 
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 
 		me.stepUntilDone();
 
@@ -110,7 +110,7 @@ public class OnlineDFSAgentTest {
 				(problem, MapFunctions.createPerceptToStateFunction());
 
 		me.addAgent(agent, "1,1");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
@@ -118,7 +118,7 @@ public class OnlineDFSAgentTest {
 				envChanges.toString());
 	}
 
-	private class TestEnvironmentView implements EnvironmentView<Object, Object> {
+	private class TestEnvironmentView implements EnvironmentListener<Object, Object> {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}

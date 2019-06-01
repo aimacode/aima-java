@@ -1,7 +1,7 @@
 package aima.core.search.agent;
 
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentViewNotifier;
+import aima.core.agent.Notifier;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.search.nondeterministic.AndOrSearch;
 import aima.core.search.nondeterministic.NondeterministicProblem;
@@ -26,7 +26,7 @@ public class NondeterministicSearchAgent<P, S, A> extends AbstractAgent<P, A> {
 	 * Maps percepts to states.
 	 */
 	private Function<P, S> ptsFunction;
-	private EnvironmentViewNotifier notifier;
+	private Notifier notifier;
 
 	private NondeterministicProblem<S, A> problem;
 	private Plan<S, A> contingencyPlan;
@@ -36,7 +36,7 @@ public class NondeterministicSearchAgent<P, S, A> extends AbstractAgent<P, A> {
 		this.ptsFunction = ptsFn;
 	}
 
-	public NondeterministicSearchAgent(Function<P, S> ptsFn, EnvironmentViewNotifier notifier) {
+	public NondeterministicSearchAgent(Function<P, S> ptsFn, Notifier notifier) {
 		this.ptsFunction = ptsFn;
 		this.notifier = notifier;
 	}
@@ -45,7 +45,7 @@ public class NondeterministicSearchAgent<P, S, A> extends AbstractAgent<P, A> {
 		this.ptsFunction = (percept) -> ptsFn.apply(percept, this);
 	}
 
-	public NondeterministicSearchAgent(BiFunction<P, Agent, S> ptsFn, EnvironmentViewNotifier notifier) {
+	public NondeterministicSearchAgent(BiFunction<P, Agent, S> ptsFn, Notifier notifier) {
 		this.ptsFunction = (percept) -> ptsFn.apply(percept, this);
 		this.notifier = notifier;
 	}
@@ -64,7 +64,7 @@ public class NondeterministicSearchAgent<P, S, A> extends AbstractAgent<P, A> {
 		contingencyPlan = plan.orElse(null);
 		currStep = -1;
 		if (notifier != null)
-			notifier.notifyViews("Contingency plan: " + contingencyPlan);
+			notifier.notify("Contingency plan: " + contingencyPlan);
 	}
 
 	/**

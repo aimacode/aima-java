@@ -2,15 +2,15 @@ package aima.core.agent.impl;
 
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
-import aima.core.agent.EnvironmentView;
+import aima.core.agent.EnvironmentListener;
 
 /**
- * Environment view implementation which logs performed action and
+ * Environment listener implementation which logs performed action and
  * provides a comma-separated String with all actions performed so far.
  *
  * @author Ruediger Lunde
  */
-public class SimpleActionTracker implements EnvironmentView<Object, Object> {
+public class SimpleActionTracker implements EnvironmentListener<Object, Object> {
 	protected final StringBuilder actions = new StringBuilder();
 
 	public String getActions() {

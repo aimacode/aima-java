@@ -165,7 +165,7 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 			}
 			Agent<DynamicPercept, MoveToAction> agent = createAgent(locations);
 			env = new MapEnvironment(map);
-			env.addEnvironmentView(new TrackUpdater());
+			env.addEnvironmentListener(new TrackUpdater());
 			env.addAgent(agent, locations.get(0));
 			while (!env.isDone() && !Tasks.currIsCancelled()) {
 				env.step();
@@ -191,7 +191,7 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 
 	// helper classes...
 
-	private class TrackUpdater implements EnvironmentView<Percept, Action> {
+	private class TrackUpdater implements EnvironmentListener<Percept, Action> {
 		int actionCounter = 0;
 
 		@Override

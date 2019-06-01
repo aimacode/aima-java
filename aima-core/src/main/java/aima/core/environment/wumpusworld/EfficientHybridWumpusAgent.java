@@ -1,6 +1,6 @@
 package aima.core.environment.wumpusworld;
 
-import aima.core.agent.EnvironmentViewNotifier;
+import aima.core.agent.Notifier;
 import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
 import aima.core.search.framework.SearchForActions;
@@ -79,12 +79,12 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
     }
 
     public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, DPLL satSolver,
-                                      EnvironmentViewNotifier notifier) {
+                                      Notifier notifier) {
         this(caveXDim, caveYDim, start, new WumpusKnowledgeBase(caveXDim, caveYDim, start, satSolver), notifier);
     }
 
     public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, WumpusKnowledgeBase kb,
-                                      EnvironmentViewNotifier notifier) {
+                                      Notifier notifier) {
         super(caveXDim, caveYDim, start, kb, notifier);
         getKB().disableNavSentences(); // Optimization: Verbosity of produced sentences is reduced.
         modelCave = new WumpusCave(caveXDim, caveYDim);

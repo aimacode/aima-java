@@ -106,7 +106,7 @@ public class HybridWumpusAgentTest {
 				+ "S G ");
 		WumpusEnvironment env = new WumpusEnvironment(cave);
 		SimpleActionTracker view = new SimpleActionTracker();
-		env.addEnvironmentView(view);
+		env.addEnvironmentListener(view);
 		HybridWumpusAgent a = new HybridWumpusAgent
 				(cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart());
 		env.addAgent(a);

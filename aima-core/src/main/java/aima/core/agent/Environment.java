@@ -104,26 +104,26 @@ public interface Environment<P, A> {
 	double getPerformanceMeasure(Agent<?, ?> agent);
 
 	/**
-	 * Add a view on the Environment.
+	 * Add a listener which is notified about environment changes.
 	 * 
-	 * @param view
-	 *            the EnvironmentView to be added.
+	 * @param listener
+	 *            the listener to be added.
 	 */
-	void addEnvironmentView(EnvironmentView<? super P, ? super A> view);
+	void addEnvironmentListener(EnvironmentListener<? super P, ? super A> listener);
 
 	/**
-	 * Remove a view on the Environment.
+	 * Remove a listener.
 	 * 
-	 * @param view
-	 *            the EnvironmentView to be removed.
+	 * @param listener
+	 *            the listener to be removed.
 	 */
-	void removeEnvironmentView(EnvironmentView<? super P, ? super A> view);
+	void removeEnvironmentListener(EnvironmentListener<? super P, ? super A> listener);
 
 	/**
-	 * Notify all registered EnvironmentViews of a message.
+	 * Notify all environment listeners of a message.
 	 * 
 	 * @param msg
-	 *            the message to notify the registered EnvironmentViews with.
+	 *            the message to notify the registered listeners with.
 	 */
-	void notifyViews(String msg);
+	void notify(String msg);
 }

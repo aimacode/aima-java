@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.function.ToIntFunction;
 
 /**
- * Provides base functionality for implementing views for environments which are based on a grid world.
+ * Provides base functionality for implementing listeners for environments which are based on a grid world.
  * Square (1, 1) is bottom left. Environments are expected to be derived from {@link AbstractEnvironment}.
  *
  * @param <P> Typ used for percepts

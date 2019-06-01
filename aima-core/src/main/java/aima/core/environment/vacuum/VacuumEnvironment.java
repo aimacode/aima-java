@@ -162,7 +162,7 @@ public class VacuumEnvironment extends AbstractEnvironment<DynamicPercept, Actio
 	}
 
 
-	// Information for grid views...
+	// Information for grid listeners...
 
 	public int getXDimension() {
 		return locations.size();

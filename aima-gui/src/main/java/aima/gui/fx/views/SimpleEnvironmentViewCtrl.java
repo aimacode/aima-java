@@ -13,7 +13,7 @@ import java.util.Observable;
 /**
  * Controller class for a simple environment view. It logs informations about
  * environment changes on a text area and can be used for any kind of
- * environment. More specific environment views can be created on this base by
+ * environment. More specific environment listeners can be created on this base by
  * adding state visualization to the split pane of this implementation.
  *
  * @param <P> Typ used for percepts
@@ -21,7 +21,7 @@ import java.util.Observable;
  * @author Ruediger Lunde
  *
  */
-public class SimpleEnvironmentViewCtrl<P, A> extends Observable implements EnvironmentView<P, A> {
+public class SimpleEnvironmentViewCtrl<P, A> extends Observable implements EnvironmentListener<P, A> {
 
 	protected SplitPane splitPane;
 	protected TextArea textArea;

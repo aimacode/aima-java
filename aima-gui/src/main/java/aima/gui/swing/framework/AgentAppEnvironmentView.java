@@ -3,7 +3,7 @@ package aima.gui.swing.framework;
 import javax.swing.JComponent;
 
 import aima.core.agent.Environment;
-import aima.core.agent.EnvironmentView;
+import aima.core.agent.EnvironmentListener;
 
 /**
  * Base class for all graphical environment view implementations.
@@ -15,7 +15,7 @@ import aima.core.agent.EnvironmentView;
  * @param <A> Type which is used to represent actions
  * @author Ruediger Lunde
  */
-public abstract class AgentAppEnvironmentView<P, A> extends JComponent implements EnvironmentView<P, A> {
+public abstract class AgentAppEnvironmentView<P, A> extends JComponent implements EnvironmentListener<P, A> {
 	
 	private static final long serialVersionUID = 1L;
 	/** The environment providing the data to be visualized. */
@@ -31,9 +31,9 @@ public abstract class AgentAppEnvironmentView<P, A> extends JComponent implement
 	/** Sets the data source for the viewer. */
 	public void setEnvironment(Environment<? extends P, ? extends A> env) {
 		if (this.env != null)
-			this.env.removeEnvironmentView(this);
+			this.env.removeEnvironmentListener(this);
 		this.env = env;
-		env.addEnvironmentView(this);
+		env.addEnvironmentListener(this);
 		repaint();
 	}
 	

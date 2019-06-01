@@ -177,10 +177,10 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 			}
 			Agent<DynamicPercept, MoveToAction> agent = createAgent(locations);
 			env = createEnvironment();
-			env.addEnvironmentView(new TrackUpdater());
+			env.addEnvironmentListener(new TrackUpdater());
 			env.addAgent(agent, locations.get(0));
 			if (taskPaneCtrl.getParam(PARAM_SEARCH) != null)
-				env.notifyViews("Using " + taskPaneCtrl.getParamValue(PARAM_SEARCH));
+				env.notify("Using " + taskPaneCtrl.getParamValue(PARAM_SEARCH));
 			while (!env.isDone() && !Tasks.currIsCancelled()) {
 				env.step();
 				taskPaneCtrl.waitAfterStep();
@@ -207,7 +207,7 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 
 	// helper classes...
 
-	private class TrackUpdater implements EnvironmentView<DynamicPercept, MoveToAction> {
+	private class TrackUpdater implements EnvironmentListener<DynamicPercept, MoveToAction> {
 		int actionCounter = 0;
 
 		@Override

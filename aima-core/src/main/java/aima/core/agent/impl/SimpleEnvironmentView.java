@@ -2,15 +2,15 @@ package aima.core.agent.impl;
 
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
-import aima.core.agent.EnvironmentView;
+import aima.core.agent.EnvironmentListener;
 
 /**
- * Simple environment view which uses the standard output stream to inform about
+ * Simple environment listener which uses the standard output stream to inform about
  * relevant events.
  * 
  * @author Ruediger Lunde
  */
-public class SimpleEnvironmentView implements EnvironmentView<Object, Object> {
+public class SimpleEnvironmentView implements EnvironmentListener<Object, Object> {
 	@Override
 	public void notify(String msg) {
 		System.out.println("Message: " + msg);

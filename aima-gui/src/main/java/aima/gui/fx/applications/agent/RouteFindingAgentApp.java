@@ -188,7 +188,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		String goal = destinations.get(0);
 		agent = new SimpleMapAgent(env.getMap(), search, goal);
 		env.addAgent(agent, scenario.getInitAgentLocation());
-		env.addEnvironmentView(envViewCtrl);
+		env.addEnvironmentListener(envViewCtrl);
 		envViewCtrl.setGoal(goal);
 		envViewCtrl.initialize(env);
 	}

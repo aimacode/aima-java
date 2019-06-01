@@ -189,15 +189,6 @@ public class NQueensBoardTest {
 	}
 
 	@Test
-	public void testPrint() {
-
-		NQueensBoard board2 = new NQueensBoard(2);
-		board2.addQueenAt(new XYLocation(0, 0));
-		String expected = " Q  - \n -  - \n";
-		Assert.assertEquals(expected, board2.getBoardPic());
-	}
-
-	@Test
 	public void testDontPlaceTwoQueensOnOneSquare() {
 
 		board.addQueenAt(new XYLocation(0, 0));
@@ -265,12 +256,6 @@ public class NQueensBoardTest {
 		board.addQueenAt(new XYLocation(5, 4));
 		board.addQueenAt(new XYLocation(6, 7));
 		board.addQueenAt(new XYLocation(7, 7));
-		Assert.assertEquals(" -  -  -  -  -  -  -  - \n"
-				+ " -  -  Q  -  -  -  -  - \n" + " -  -  -  -  -  -  -  - \n"
-				+ " -  -  -  Q  -  -  -  - \n" + " -  -  -  -  -  Q  -  - \n"
-				+ " Q  -  -  -  -  -  -  - \n" + " -  Q  -  -  Q  -  -  - \n"
-				+ " -  -  -  -  -  -  Q  Q \n", board.getBoardPic());
-
 		Assert.assertEquals("--------\n" + "--Q-----\n" + "--------\n"
 				+ "---Q----\n" + "-----Q--\n" + "Q-------\n" + "-Q--Q---\n"
 				+ "------QQ\n", board.toString());

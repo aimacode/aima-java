@@ -1,6 +1,6 @@
 package aima.core.environment.wumpusworld;
 
-import aima.core.agent.EnvironmentViewNotifier;
+import aima.core.agent.Notifier;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
@@ -81,7 +81,7 @@ public class HybridWumpusAgent extends AbstractAgent<WumpusPercept, WumpusAction
 	protected int t = 0;
 	// plan, an action sequence, initially empty
 	protected Queue<WumpusAction> plan = new LinkedList<>(); // FIFOQueue
-	private EnvironmentViewNotifier notifier;
+	private Notifier notifier;
 
 	public HybridWumpusAgent() {
 		// i.e. default is a 4x4 world as depicted in figure 7.2
@@ -93,12 +93,12 @@ public class HybridWumpusAgent extends AbstractAgent<WumpusPercept, WumpusAction
 	}
 
 	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, DPLL satSolver,
-							 EnvironmentViewNotifier notifier) {
+							 Notifier notifier) {
 		this(caveXDim, caveYDim, start, new WumpusKnowledgeBase(caveXDim, caveYDim, start, satSolver), notifier);
 	}
 
 	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, WumpusKnowledgeBase kb,
-							 EnvironmentViewNotifier notifier) {
+							 Notifier notifier) {
 		this.kb = kb;
 		this.start = start;
 		this.currentPosition = start;
@@ -290,6 +290,6 @@ public class HybridWumpusAgent extends AbstractAgent<WumpusPercept, WumpusAction
 
 	protected void notifyViews(String msg) {
 		if (notifier != null)
-			notifier.notifyViews(msg);
+			notifier.notify(msg);
 	}
 }

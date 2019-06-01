@@ -278,7 +278,7 @@ public class AgentAppFrame<P, A> extends JFrame {
 					Object source = evt.getSource();
 					if (source == clearButton) {
 						// additionally clear the text area
-						err = "when clearing the views ";
+						err = "when clearing the listeners ";
 						messageLogger.clear();
 						statusLabel.setText("");
 						controller.clear();
