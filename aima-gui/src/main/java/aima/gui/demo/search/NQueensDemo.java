@@ -30,10 +30,10 @@ public class NQueensDemo {
 	private static final int boardSize = 8;
 
 	public static void main(String[] args) {
-		newNQueensDemo();
+		startNQueensDemo();
 	}
 
-	private static void newNQueensDemo() {
+	private static void startNQueensDemo() {
 		solveNQueensWithDepthFirstSearch();
 		solveNQueensWithBreadthFirstSearch();
 		solveNQueensWithRecursiveDLS();
