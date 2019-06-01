@@ -2,7 +2,7 @@ package aimax.osm.viewer;
 
 
 /**
- * Allows map listeners to inform interested listeners about user interactions such
+ * Allows map views to inform interested listeners about user interactions such
  * as zooming or marker placement.
  * 
  * @author Ruediger Lunde
