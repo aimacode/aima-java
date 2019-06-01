@@ -167,7 +167,7 @@ public class NQueensDemo {
 		long startTime = System.currentTimeMillis();
 		do {
 			i++;
-			board = new NQueensBoard(8, Config.QUEEN_IN_EVERY_COL);
+			board = new NQueensBoard(boardSize, Config.QUEEN_IN_EVERY_COL);
 		} while (board.getNumberOfAttackingPairs() > 0);
 		long stopTime = System.currentTimeMillis();
 		System.out.println("Solution found after generating " + i + " random configurations ("
