@@ -12,7 +12,7 @@ import aima.core.environment.vacuum.VacuumEnvironment;
 /**
  * Demonstrates, how to set up a simple environment, place an agent in it,
  * and run it. The vacuum world is used as a simple example.
- * 
+ *
  * @author Ruediger Lunde
  */
 public class TrivialVacuumDemo {
@@ -21,7 +21,7 @@ public class TrivialVacuumDemo {
 		Environment<DynamicPercept, Action> env = new VacuumEnvironment();
 		EnvironmentListener<Object, Object> view = new SimpleEnvironmentView();
 		env.addEnvironmentListener(view);
-		
+
 		Agent<DynamicPercept, Action> agent;
 		agent = new ModelBasedReflexVacuumAgent();
 		// agent = new ReflexVacuumAgent();
