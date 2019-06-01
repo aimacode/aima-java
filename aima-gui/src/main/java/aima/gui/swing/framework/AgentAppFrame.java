@@ -278,7 +278,7 @@ public class AgentAppFrame<P, A> extends JFrame {
 					Object source = evt.getSource();
 					if (source == clearButton) {
 						// additionally clear the text area
-						err = "when clearing the listeners ";
+						err = "when clearing the views ";
 						messageLogger.clear();
 						statusLabel.setText("");
 						controller.clear();
@@ -400,9 +400,9 @@ public class AgentAppFrame<P, A> extends JFrame {
 	 * frame and the controller.
 	 */
 	public static class SelectionState {
-		private final List<String> selectors = new ArrayList<String>();
-		private final List<Integer> selIndices = new ArrayList<Integer>();
-		private final List<Object> selItems = new ArrayList<Object>();
+		private final List<String> selectors = new ArrayList<>();
+		private final List<Integer> selIndices = new ArrayList<>();
+		private final List<Object> selItems = new ArrayList<>();
 
 		protected SelectionState(String[] selectors) {
 			for (String sel : selectors) {
