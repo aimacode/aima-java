@@ -114,7 +114,7 @@ public class SimulatedAnnealingMaximumFinderApp extends IntegrableApplication {
 		search = new SimulatedAnnealingSearch<>(n -> 1 - func.apply(n.getState()), scheduler);
 		search.addNodeListener(n -> updateStateView(n.getState()));
 		search.findActions(problem);
-		updateStateView(search.getLastSearchState());
+		updateStateView(search.getLastState());
 	}
 
 	/** Creates a random initial state for the maximum search problem. */

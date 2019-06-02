@@ -119,8 +119,7 @@ public class EightPuzzleDemo {
 					(EightPuzzleFunctions::getManhattanDistance);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
-			System.out.println("Search Outcome=" + search.getOutcome());
-			System.out.println("Final State:\n" + search.getLastSearchState());
+			System.out.println("Final State:\n" + search.getLastState());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
 			e.printStackTrace();

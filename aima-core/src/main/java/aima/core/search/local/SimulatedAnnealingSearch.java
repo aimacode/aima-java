@@ -7,7 +7,6 @@ import aima.core.util.Util;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.ToDoubleFunction;
 
@@ -41,10 +40,6 @@ import java.util.function.ToDoubleFunction;
  */
 public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A> {
 
-	public enum SearchOutcome {
-		FAILURE, SOLUTION_FOUND
-	}
-
     public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_TEMPERATURE = "temp";
 	public static final String METRIC_NODE_VALUE = "nodeValue";
@@ -52,8 +47,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	private final ToDoubleFunction<Node<S, A>> h;
 	private final Scheduler scheduler;
 	private final NodeExpander<S, A> nodeExpander;
-	
-	private SearchOutcome outcome = SearchOutcome.FAILURE;
+
 	private S lastState;
 	private Metrics metrics = new Metrics();
 
@@ -100,69 +94,49 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 		return SearchUtils.toState(findNode(p));
 	}
 
-	// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
+	/**
+	 * Returns a node corresponding to a goal state or empty. Method {@link #getLastState()}
+	 * provides the last explored state if result is empty.
+	 */
+	/// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
 	public Optional<Node<S, A>> findNode(Problem<S, A> p) {
 		clearMetrics();
-		outcome = SearchOutcome.FAILURE;
-		lastState = null;
-		// current <- MAKE-NODE(problem.INITIAL-STATE)
+		/// current <- MAKE-NODE(problem.INITIAL-STATE)
 		Node<S, A> current = nodeExpander.createRootNode(p.getInitialState());
-		// for t = 1 to INFINITY do
+		/// for t = 1 to INFINITY do
 		int timeStep = 0;
 		while (!Tasks.currIsCancelled()) {
-			// temperature <- schedule(t)
+			/// temperature <- schedule(t)
 			double temperature = scheduler.getTemp(timeStep);
 			timeStep++;
 			lastState = current.getState();
-			// if temperature = 0 then return current
+			/// if temperature = 0 then return current
 			if (temperature == 0.0) {
-				if (p.testSolution(current))
-					outcome = SearchOutcome.SOLUTION_FOUND;
-				return Optional.of(current);
+				lastState = current.getState();
+				return Optional.ofNullable(p.testSolution(current) ? current : null);
 			}
 
 			updateMetrics(temperature, getValue(current));
 			List<Node<S, A>> children = nodeExpander.expand(current, p);
 			if (children.size() > 0) {
-				// next <- a randomly selected successor of current
+				/// next <- a randomly selected successor of current
 				Node<S, A> next = Util.selectRandomlyFromList(children);
-				// /\E <- next.VALUE - current.value
+				/// /\E <- next.VALUE - current.value
 				double deltaE = getValue(next) - getValue(current);
-
-				if (shouldAccept(temperature, deltaE)) {
+				/// if /\E &gt; 0 then current &lt;- next
+				/// else current &lt;- next only with probability e&circ;(/\E/T)
+				if (deltaE > 0.0 || Math.random() <= Math.exp(deltaE / temperature))
 					current = next;
-				}
 			}
 		}
+		lastState = current.getState();
 		return Optional.empty();
 	}
 
 	/**
-	 * Returns <em>e</em><sup>&delta<em>E / T</em></sup>
-	 * 
-	 * @param temperature
-	 *            <em>T</em>, a "temperature" controlling the probability of
-	 *            downward steps
-	 * @param deltaE
-	 *            VALUE[<em>next</em>] - VALUE[<em>current</em>]
-	 * @return <em>e</em><sup>&delta<em>E / T</em></sup>
+	 * Returns the last explored state.
 	 */
-	public double probabilityOfAcceptance(double temperature, double deltaE) {
-		return Math.exp(deltaE / temperature);
-	}
-
-	public SearchOutcome getOutcome() {
-		return outcome;
-	}
-
-	/**
-	 * Returns the last state from which the simulated annealing search found a
-	 * solution state.
-	 * 
-	 * @return the last state from which the simulated annealing search found a
-	 *         solution state.
-	 */
-	public Object getLastSearchState() {
+	public Object getLastState() {
 		return lastState;
 	}
 	
@@ -201,13 +175,6 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	//
 	// PRIVATE METHODS
 	//
-
-	// if /\E > 0 then current <- next
-	// else current <- next only with probability e^(/\E/T)
-	private boolean shouldAccept(double temperature, double deltaE) {
-		return (deltaE > 0.0)
-				|| (Math.random() <= probabilityOfAcceptance(temperature, deltaE));
-	}
 
 	private double getValue(Node<S, A> n) {
 		// assumption greater heuristic value =>

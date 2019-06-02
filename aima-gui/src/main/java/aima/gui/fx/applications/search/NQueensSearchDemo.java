@@ -105,7 +105,7 @@ public class NQueensSearchDemo {
 		search.addNodeListener(n -> notifyProgressTrackers(n.getState(), search.getMetrics()));
 		search.findActions(problem);
 
-		board = (NQueensBoard) ((HillClimbingSearch) search).getLastSearchState();
+		board = (NQueensBoard) ((HillClimbingSearch) search).getLastState();
 		notifyProgressTrackers(board, search.getMetrics());
 	}
 
@@ -117,7 +117,7 @@ public class NQueensSearchDemo {
 		search.addNodeListener(n -> notifyProgressTrackers(n.getState(), search.getMetrics()));
 		search.findActions(problem);
 
-		board = (NQueensBoard) ((SimulatedAnnealingSearch) search).getLastSearchState();
+		board = (NQueensBoard) ((SimulatedAnnealingSearch) search).getLastState();
 		notifyProgressTrackers(board, search.getMetrics());
 	}
 

@@ -101,8 +101,7 @@ public class NQueensDemo {
 
 		actions.ifPresent(qActions -> qActions.forEach(System.out::println));
 		System.out.println(search.getMetrics());
-		System.out.println("Search Outcome=" + search.getOutcome());
-		System.out.println("Final State:\n" + search.getLastSearchState());
+		System.out.println("Final State:\n" + search.getLastState());
 	}
 
 	private static void solveNQueensWithHillClimbingSearch() {
@@ -116,8 +115,7 @@ public class NQueensDemo {
 
 		actions.ifPresent(qActions -> qActions.forEach(System.out::println));
 		System.out.println(search.getMetrics());
-		System.out.println("Search Outcome=" + search.getOutcome());
-		System.out.println("Final State:\n" + search.getLastSearchState());
+		System.out.println("Final State:\n" + search.getLastState());
 	}
 
 	private static void solveNQueensWithGeneticAlgorithmSearch() {

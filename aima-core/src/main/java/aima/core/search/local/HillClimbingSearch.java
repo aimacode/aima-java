@@ -37,16 +37,11 @@ import java.util.function.ToDoubleFunction;
  */
 public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A>, Informed<S, A> {
 
-    public enum SearchOutcome {
-        FAILURE, SOLUTION_FOUND
-    }
-
     public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
     public static final String METRIC_NODE_VALUE = "nodeValue";
 
     private ToDoubleFunction<Node<S, A>> h = null;
     private final NodeExpander<S, A> nodeExpander;
-    private SearchOutcome outcome = SearchOutcome.FAILURE;
     private S lastState = null;
     private Metrics metrics = new Metrics();
 
@@ -83,58 +78,41 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
     }
 
     /**
-     * Returns a node corresponding to a local maximum or empty if the search was
-     * cancelled by the user.
+     * Returns a node corresponding to a goal state or empty. Method {@link #getLastState()}
+     * provides the local maximum if result is empty.
      *
      * @param p the search problem
      * @return a node or empty
      */
-    // function HILL-CLIMBING(problem) returns a state that is a local maximum
+    /// function HILL-CLIMBING(problem) returns a state that is a local maximum
     public Optional<Node<S, A>> findNode(Problem<S, A> p) {
         clearMetrics();
-        outcome = SearchOutcome.FAILURE;
-        // current <- MAKE-NODE(problem.INITIAL-STATE)
+        /// current <- MAKE-NODE(problem.INITIAL-STATE)
         Node<S, A> current = nodeExpander.createRootNode(p.getInitialState());
         Node<S, A> neighbor;
-        // loop do
+        /// loop do
         while (!Tasks.currIsCancelled()) {
-            lastState = current.getState();
             metrics.set(METRIC_NODE_VALUE, getValue(current));
             List<Node<S, A>> children = nodeExpander.expand(current, p);
-            // neighbor <- a highest-valued successor of current
+            /// neighbor <- a highest-valued successor of current
             neighbor = getHighestValuedNodeFrom(children);
 
-            // if neighbor.VALUE <= current.VALUE then return current.STATE
+            /// if neighbor.VALUE <= current.VALUE then return current.STATE
             if (neighbor == null || getValue(neighbor) <= getValue(current)) {
-                if (p.testSolution(current))
-                    outcome = SearchOutcome.SOLUTION_FOUND;
-                return Optional.of(current);
+                lastState = current.getState();
+                return Optional.ofNullable(p.testSolution(current) ? current : null);
             }
-            // current <- neighbor
+            /// current <- neighbor
             current = neighbor;
         }
+        lastState = current.getState();
         return Optional.empty();
     }
 
     /**
-     * Returns SOLUTION_FOUND if the local maximum is a goal state, or FAILURE
-     * if the local maximum is not a goal state.
-     *
-     * @return SOLUTION_FOUND if the local maximum is a goal state, or FAILURE
-     * if the local maximum is not a goal state.
+     * Returns the last explored state which is at least a local maximum if search was not cancelled by the user.
      */
-    public SearchOutcome getOutcome() {
-        return outcome;
-    }
-
-    /**
-     * Returns the last state from which the hill climbing search found the
-     * local maximum.
-     *
-     * @return the last state from which the hill climbing search found the
-     * local maximum.
-     */
-    public S getLastSearchState() {
+    public S getLastState() {
         return lastState;
     }
 
