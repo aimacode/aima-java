@@ -54,7 +54,7 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
 
     private static final Double INFINITY = Double.MAX_VALUE;
 
-    private final ToDoubleFunction<Node<S, A>> evalFn;
+    private final EvaluationFunction<S, A> evalFn;
     private boolean avoidLoops;
     private final NodeExpander<S, A> nodeExpander;
 
@@ -62,18 +62,18 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
     private Set<S> explored = new HashSet<>();
     private Metrics metrics;
 
-    public RecursiveBestFirstSearch(ToDoubleFunction<Node<S, A>> evalFn) {
+    public RecursiveBestFirstSearch(EvaluationFunction<S, A> evalFn) {
         this(evalFn, false);
     }
 
     /**
      * Constructor which allows to enable the loop avoidance strategy.
      */
-    public RecursiveBestFirstSearch(ToDoubleFunction<Node<S, A>> evalFn, boolean avoidLoops) {
+    public RecursiveBestFirstSearch(EvaluationFunction<S, A> evalFn, boolean avoidLoops) {
         this(evalFn, avoidLoops, new NodeExpander<>());
     }
 
-    public RecursiveBestFirstSearch(ToDoubleFunction<Node<S, A>> evalFn, boolean avoidLoops,
+    public RecursiveBestFirstSearch(EvaluationFunction<S, A> evalFn, boolean avoidLoops,
                                     NodeExpander<S, A> nodeExpander) {
         this.evalFn = evalFn;
         this.avoidLoops = avoidLoops;
@@ -83,12 +83,11 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
     }
 
     /**
-     * Modifies the evaluation function if it is a {@link HeuristicEvaluationFunction}.
+     * Modifies the evaluation function.
      */
     @Override
     public void setHeuristicFunction(ToDoubleFunction<Node<S, A>> h) {
-        if (evalFn instanceof HeuristicEvaluationFunction)
-            ((HeuristicEvaluationFunction<S, A>) evalFn).setHeuristicFunction(h);
+        evalFn.setHeuristicFunction(h);
     }
 
     // function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or

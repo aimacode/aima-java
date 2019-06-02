@@ -3,7 +3,6 @@ package aima.core.search.informed;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.qsearch.QueueSearch;
 
-import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
 /**
@@ -32,25 +31,16 @@ public class GreedyBestFirstSearch<S, A> extends BestFirstSearch<S, A> {
 	 *            state.
 	 */
 	public GreedyBestFirstSearch(QueueSearch<S, A> impl, ToDoubleFunction<Node<S, A>> h) {
-		super(impl, new EvalFunction<>(h));
+		super(impl, createEvalFn(h));
 	}
 
-
-	public static class EvalFunction<S, A> extends HeuristicEvaluationFunction<S, A> {
-		public EvalFunction(ToDoubleFunction<Node<S, A>> h) {
-			this.h = h;
-		}
-
-		/**
-		 * Returns the heuristic cost <em>h(n)</em> to get from the specified node to the goal.
-		 *
-		 * @param n a node
-		 * @return h(n)
-		 */
-		@Override
-		public double applyAsDouble(Node<S, A> n) {
-			// f(n) = h(n)
-			return h.applyAsDouble(n);
-		}
+	// f(n) = h(n)
+	public static <S, A> EvaluationFunction<S, A> createEvalFn(ToDoubleFunction<Node<S, A>> h) {
+		return new EvaluationFunction<S, A>(h) {
+			@Override
+			public double applyAsDouble(Node<S, A> node) {
+				return this.h.applyAsDouble(node);
+			}
+		};
 	}
 }

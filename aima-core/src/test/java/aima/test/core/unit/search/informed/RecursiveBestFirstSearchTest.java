@@ -38,9 +38,10 @@ public class RecursiveBestFirstSearchTest {
 				return pt1.distance(pt2);
 		};
 
-		recursiveBestFirstSearch = new RecursiveBestFirstSearch<>(new AStarSearch.EvalFunction<>(heuristicFunction));
-		recursiveBestFirstSearchAvoidingLoops = new RecursiveBestFirstSearch<>(
-				new AStarSearch.EvalFunction<>(heuristicFunction), true);
+		recursiveBestFirstSearch = new RecursiveBestFirstSearch<>
+				(AStarSearch.createEvalFn(heuristicFunction));
+		recursiveBestFirstSearchAvoidingLoops = new RecursiveBestFirstSearch<>
+				(AStarSearch.createEvalFn(heuristicFunction), true);
 	}
 
 	@Test
