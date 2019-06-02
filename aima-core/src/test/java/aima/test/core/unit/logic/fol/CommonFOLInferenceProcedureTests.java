@@ -172,7 +172,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 		Assert.assertFalse(answer.isPossiblyFalse());
 		Assert.assertTrue(answer.isTrue());
 		Assert.assertFalse(answer.isUnknownDueToTimeout());
-		// DB can expand infinitely so is only partial.
+		// DB can getSuccessors infinitely so is only partial.
 		Assert.assertTrue(answer.isPartialResultDueToTimeout());
 		Assert.assertEquals(4, answer.getProofs().size());
 		Assert.assertEquals(1, answer.getProofs().get(0).getAnswerBindings()

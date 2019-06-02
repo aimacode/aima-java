@@ -46,7 +46,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	
 	private final ToDoubleFunction<Node<S, A>> h;
 	private final Scheduler scheduler;
-	private final NodeExpander<S, A> nodeExpander;
+	private final NodeFactory<S, A> nodeFactory;
 
 	private S lastState;
 	private Metrics metrics = new Metrics();
@@ -72,25 +72,25 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	 *            a mapping from time to "temperature"
 	 */
 	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> h, Scheduler scheduler) {
-		this(h, scheduler, new NodeExpander<>());
+		this(h, scheduler, new NodeFactory<>());
 	}
 	
-	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> h, Scheduler scheduler, NodeExpander<S, A> nodeExpander) {
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> h, Scheduler scheduler, NodeFactory<S, A> nodeFactory) {
 		this.h = h;
 		this.scheduler = scheduler;
-		this.nodeExpander = nodeExpander;
-		nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
+		this.nodeFactory = nodeFactory;
+		nodeFactory.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
 	}
 	
 	@Override
 	public Optional<List<A>> findActions(Problem<S, A> p) {
-		nodeExpander.useParentLinks(true);
+		nodeFactory.useParentLinks(true);
 		return SearchUtils.toActions(findNode(p));
 	}
 	
 	@Override
 	public Optional<S> findState(Problem<S, A> p) {
-		nodeExpander.useParentLinks(false);
+		nodeFactory.useParentLinks(false);
 		return SearchUtils.toState(findNode(p));
 	}
 
@@ -102,7 +102,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	public Optional<Node<S, A>> findNode(Problem<S, A> p) {
 		clearMetrics();
 		/// current <- MAKE-NODE(problem.INITIAL-STATE)
-		Node<S, A> current = nodeExpander.createRootNode(p.getInitialState());
+		Node<S, A> current = nodeFactory.createNode(p.getInitialState());
 		/// for t = 1 to INFINITY do
 		int timeStep = 0;
 		while (!Tasks.currIsCancelled()) {
@@ -117,7 +117,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 			}
 
 			updateMetrics(temperature, getValue(current));
-			List<Node<S, A>> children = nodeExpander.expand(current, p);
+			List<Node<S, A>> children = nodeFactory.getSuccessors(current, p);
 			if (children.size() > 0) {
 				/// next <- a randomly selected successor of current
 				Node<S, A> next = Util.selectRandomlyFromList(children);
@@ -164,12 +164,12 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 
 	@Override
 	public void addNodeListener(Consumer<Node<S, A>> listener)  {
-		nodeExpander.addNodeListener(listener);
+		nodeFactory.addNodeListener(listener);
 	}
 
 	@Override
 	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
-		return nodeExpander.removeNodeListener(listener);
+		return nodeFactory.removeNodeListener(listener);
 	}
 	
 	//

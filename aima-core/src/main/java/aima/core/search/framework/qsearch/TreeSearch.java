@@ -3,7 +3,7 @@ package aima.core.search.framework.qsearch;
 import java.util.Queue;
 
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.NodeFactory;
 import aima.core.search.framework.problem.Problem;
 
 /**
@@ -36,11 +36,11 @@ import aima.core.search.framework.problem.Problem;
 public class TreeSearch<S, A> extends QueueSearch<S, A> {
 
 	public TreeSearch() {
-		this(new NodeExpander<>());
+		this(new NodeFactory<>());
 	}
 
-	public TreeSearch(NodeExpander<S, A> nodeExpander) {
-		super(nodeExpander);
+	public TreeSearch(NodeFactory<S, A> nodeFactory) {
+		super(nodeFactory);
 	}
 	
 	/**

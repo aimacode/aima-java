@@ -30,7 +30,7 @@
  * 
  * <br>
  * Here, all search strategies explore the search space by expanding nodes. A
- * central {@link aima.core.search.framework.NodeExpander} class is used for
+ * central {@link aima.core.search.framework.NodeFactory} class is used for
  * this purpose. The default implementation should work for most purposes, but
  * it is possible to equip search algorithms with specialized versions (e.g.
  * which modify path cost computation - extra costs for move direction changes).

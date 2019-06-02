@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.Set;
 
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.NodeFactory;
 import aima.core.search.framework.problem.Problem;
 
 /**
@@ -47,11 +47,11 @@ public class GraphSearchBFS<S, A> extends QueueSearch<S, A> {
 	private Set<S> frontierStates = new HashSet<>();
 
 	public GraphSearchBFS() {
-		this(new NodeExpander<>());
+		this(new NodeFactory<>());
 	}
 
-	public GraphSearchBFS(NodeExpander<S, A> nodeExpander) {
-		super(nodeExpander);
+	public GraphSearchBFS(NodeFactory<S, A> nodeFactory) {
+		super(nodeFactory);
 	}
 	
 	
@@ -61,7 +61,7 @@ public class GraphSearchBFS<S, A> extends QueueSearch<S, A> {
 	 */
 	@Override
 	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
-		// Initialize the explored set to be empty
+		// initialize the explored set to be empty
 		explored.clear();
 		frontierStates.clear();
 		return super.findNode(problem, frontier);

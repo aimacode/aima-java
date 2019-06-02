@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Instances of this class are responsible for node creation and expansion. They
+ * Instances of this class are responsible for node creation and successor generation. They
  * compute path costs, support progress tracking, and count the number of
- * {@link #expand(Node, Problem)} calls.
+ * {@link #getSuccessors(Node, Problem)} calls.
  *
  * @param <S> The type used to represent states
  * @param <A> The type of the actions to be used to navigate through the state space
  *
  * @author Ruediger Lunde
  */
-public class NodeExpander<S, A> {
+public class NodeFactory<S, A> {
 
 	protected boolean useParentLinks = true;
 
@@ -25,7 +25,7 @@ public class NodeExpander<S, A> {
 	 * using local search to search for states, parent links are not needed and
 	 * lead to unnecessary memory consumption.
 	 */
-	public NodeExpander useParentLinks(boolean s) {
+	public NodeFactory useParentLinks(boolean s) {
 		useParentLinks = s;
 		return this;
 	}
@@ -34,16 +34,17 @@ public class NodeExpander<S, A> {
 	// expanding nodes
 
 	/**
-	 * Factory method, which creates a root node for the specified state.
+	 * Factory method, which creates a node for the specified state.
 	 */
-	public Node<S, A> createRootNode(S state) {
+	public Node<S, A> createNode(S state) {
 		return new Node<>(state);
 	}
 
 	/**
-	 * Computes the path cost for getting from the root node state via the
-	 * parent node state to the specified state, creates a new node for the
-	 * specified state, adds it as child of the provided parent (if
+	 * Factory method, which computes the path cost for getting from
+	 * the initial state via the parent node state to the specified
+	 * state, creates a new node for the specified state,
+	 * adds it as child of the provided parent (if
 	 * {@link #useParentLinks} is true), and returns it.
 	 */
 	public Node<S, A> createNode(S state, Node<S, A> parent, A action, double stepCost) {
@@ -56,14 +57,14 @@ public class NodeExpander<S, A> {
 	 * specified problem.
 	 * 
 	 * @param node
-	 *            the node to expand
+	 *            the node to getSuccessors
 	 * @param problem
 	 *            the problem the specified node is within.
 	 * 
 	 * @return the children obtained from expanding the specified node in the
 	 *         specified problem.
 	 */
-	public List<Node<S, A>> expand(Node<S, A> node, Problem<S, A> problem) {
+	public List<Node<S, A>> getSuccessors(Node<S, A> node, Problem<S, A> problem) {
 		List<Node<S, A>> successors = new ArrayList<>();
 
 		for (A action : problem.getActions(node.getState())) {
@@ -72,7 +73,7 @@ public class NodeExpander<S, A> {
 			double stepCost = problem.getStepCosts(node.getState(), action, successorState);
 			successors.add(createNode(successorState, node, action, stepCost));
 		}
-		notifyNodeListeners(node);
+		notifyListeners(node);
 		return successors;
 	}
 
@@ -83,25 +84,24 @@ public class NodeExpander<S, A> {
 	 * All node listeners added to this list get informed whenever a node is
 	 * expanded.
 	 */
-	private List<Consumer<Node<S, A>>> nodeListeners = new ArrayList<>();
+	private List<Consumer<Node<S, A>>> listeners = new ArrayList<>();
 
 	/**
 	 * Adds a listener to the list of node listeners. It is informed whenever a
 	 * node is expanded during search.
 	 */
 	public void addNodeListener(Consumer<Node<S, A>> listener) {
-		nodeListeners.add(listener);
+		listeners.add(listener);
 	}
 
 	/**
 	 * Removes a listener from the list of node listeners.
 	 */
 	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
-		return nodeListeners.remove(listener);
+		return listeners.remove(listener);
 	}
 
-	protected void notifyNodeListeners(Node<S, A> node) {
-		for (Consumer<Node<S, A>> listener : nodeListeners)
-			listener.accept(node);
+	protected void notifyListeners(Node<S, A> node) {
+		listeners.forEach(listener -> listener.accept(node));
 	}
 }

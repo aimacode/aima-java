@@ -41,7 +41,7 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
     public static final String METRIC_NODE_VALUE = "nodeValue";
 
     private ToDoubleFunction<Node<S, A>> h = null;
-    private final NodeExpander<S, A> nodeExpander;
+    private final NodeFactory<S, A> nodeFactory;
     private S lastState = null;
     private Metrics metrics = new Metrics();
 
@@ -51,13 +51,13 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
      * @param h a heuristic function
      */
     public HillClimbingSearch(ToDoubleFunction<Node<S, A>> h) {
-        this(h, new NodeExpander<>());
+        this(h, new NodeFactory<>());
     }
 
-    public HillClimbingSearch(ToDoubleFunction<Node<S, A>> h, NodeExpander<S, A> nodeExpander) {
+    public HillClimbingSearch(ToDoubleFunction<Node<S, A>> h, NodeFactory<S, A> nodeFactory) {
         this.h = h;
-        this.nodeExpander = nodeExpander;
-        nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
+        this.nodeFactory = nodeFactory;
+        nodeFactory.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
     }
 
     @Override
@@ -67,13 +67,13 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
 
     @Override
     public Optional<List<A>> findActions(Problem<S, A> p) {
-        nodeExpander.useParentLinks(true);
+        nodeFactory.useParentLinks(true);
         return SearchUtils.toActions(findNode(p));
     }
 
     @Override
     public Optional<S> findState(Problem<S, A> p) {
-        nodeExpander.useParentLinks(false);
+        nodeFactory.useParentLinks(false);
         return SearchUtils.toState(findNode(p));
     }
 
@@ -88,12 +88,12 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
     public Optional<Node<S, A>> findNode(Problem<S, A> p) {
         clearMetrics();
         /// current <- MAKE-NODE(problem.INITIAL-STATE)
-        Node<S, A> current = nodeExpander.createRootNode(p.getInitialState());
+        Node<S, A> current = nodeFactory.createNode(p.getInitialState());
         Node<S, A> neighbor;
         /// loop do
         while (!Tasks.currIsCancelled()) {
             metrics.set(METRIC_NODE_VALUE, getValue(current));
-            List<Node<S, A>> children = nodeExpander.expand(current, p);
+            List<Node<S, A>> children = nodeFactory.getSuccessors(current, p);
             /// neighbor <- a highest-valued successor of current
             neighbor = getHighestValuedNodeFrom(children);
 
@@ -133,12 +133,12 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
 
     @Override
     public void addNodeListener(Consumer<Node<S, A>> listener) {
-        nodeExpander.addNodeListener(listener);
+        nodeFactory.addNodeListener(listener);
     }
 
     @Override
     public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
-        return nodeExpander.removeNodeListener(listener);
+        return nodeFactory.removeNodeListener(listener);
     }
 
     //

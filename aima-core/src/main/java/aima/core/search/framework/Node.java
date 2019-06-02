@@ -1,8 +1,5 @@
 package aima.core.search.framework;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.10, page
  * 79.<br>
@@ -34,27 +31,26 @@ import java.util.List;
 public class Node<S, A> {
 
 	// n.STATE: the state in the state space to which the node corresponds;
-	private S state;
+	private final S state;
 
 	// n.PARENT: the node in the search tree that generated this node;
-	private Node<S, A> parent;
+	private final Node<S, A> parent;
 
 	// n.ACTION: the action that was applied to the parent to generate the node;
-	private A action;
+	private final A action;
 
 	// n.PATH-COST: the cost, traditionally denoted by g(n), of the path from
 	// the initial state to the node, as indicated by the parent pointers.
-	private double pathCost;
+	private final double pathCost;
 
 	/**
-	 * Constructs a node with the specified state.
+	 * Constructs a root node for the specified state.
 	 * 
 	 * @param state
 	 *            the state in the state space to which the node corresponds.
 	 */
 	public Node(S state) {
-		this.state = state;
-		pathCost = 0.0;
+		this(state, null, null, 0.0);
 	}
 
 	/**
@@ -74,7 +70,7 @@ public class Node<S, A> {
 	 *            the the specified action.
 	 */
 	public Node(S state, Node<S, A> parent, A action, double pathCost) {
-		this(state);
+		this.state = state;
 		this.parent = parent;
 		this.action = action;
 		this.pathCost = pathCost;

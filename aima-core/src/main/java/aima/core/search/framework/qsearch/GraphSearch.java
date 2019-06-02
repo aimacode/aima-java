@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.Set;
 
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.NodeFactory;
 import aima.core.search.framework.problem.Problem;
 
 /**
@@ -48,11 +48,11 @@ public class GraphSearch<S, A> extends QueueSearch<S, A> {
 	private Set<S> explored = new HashSet<>();
 
 	public GraphSearch() {
-		this(new NodeExpander<>());
+		this(new NodeFactory<>());
 	}
 
-	public GraphSearch(NodeExpander<S, A> nodeExpander) {
-		super(nodeExpander);
+	public GraphSearch(NodeFactory<S, A> nodeFactory) {
+		super(nodeFactory);
 	}
 
 	/**
@@ -88,8 +88,7 @@ public class GraphSearch<S, A> extends QueueSearch<S, A> {
 	 */
 	@Override
 	protected Node<S, A> removeFromFrontier() {
-		cleanUpFrontier(); // not really necessary because isFrontierEmpty
-							// should be called before...
+		cleanUpFrontier(); // not really necessary because isFrontierEmpty should be called before...
 		Node<S, A> result = frontier.remove();
 		explored.add(result.getState());
 		updateMetrics(frontier.size());

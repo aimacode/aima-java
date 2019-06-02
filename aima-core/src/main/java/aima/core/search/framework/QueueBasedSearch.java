@@ -31,7 +31,7 @@ public abstract class QueueBasedSearch<S, A> implements SearchForActions<S, A>, 
 
 	@Override
 	public Optional<List<A>> findActions(Problem<S, A> p) {
-		impl.getNodeExpander().useParentLinks(true);
+		impl.getNodeFactory().useParentLinks(true);
 		frontier.clear();
 		Optional<Node<S, A>> node = impl.findNode(p, frontier);
 		return SearchUtils.toActions(node);
@@ -39,7 +39,7 @@ public abstract class QueueBasedSearch<S, A> implements SearchForActions<S, A>, 
 
 	@Override
 	public Optional<S> findState(Problem<S, A> p) {
-		impl.getNodeExpander().useParentLinks(false);
+		impl.getNodeFactory().useParentLinks(false);
 		frontier.clear();
 		Optional<Node<S, A>> node = impl.findNode(p, frontier);
 		return SearchUtils.toState(node);
@@ -52,11 +52,11 @@ public abstract class QueueBasedSearch<S, A> implements SearchForActions<S, A>, 
 
 	@Override
 	public void addNodeListener(Consumer<Node<S, A>> listener)  {
-		impl.getNodeExpander().addNodeListener(listener);
+		impl.getNodeFactory().addNodeListener(listener);
 	}
 
 	@Override
 	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
-		return impl.getNodeExpander().removeNodeListener(listener);
+		return impl.getNodeFactory().removeNodeListener(listener);
 	}
 }

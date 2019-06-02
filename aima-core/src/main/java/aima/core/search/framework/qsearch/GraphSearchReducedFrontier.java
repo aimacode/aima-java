@@ -3,7 +3,7 @@ package aima.core.search.framework.qsearch;
 import java.util.*;
 
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.NodeFactory;
 import aima.core.search.framework.problem.Problem;
 
 /**
@@ -50,11 +50,11 @@ public class GraphSearchReducedFrontier<S, A> extends QueueSearch<S, A> {
 	private Comparator<? super Node<S, A>> nodeComparator = null;
 
 	public GraphSearchReducedFrontier() {
-		this(new NodeExpander<>());
+		this(new NodeFactory<>());
 	}
 
-	public GraphSearchReducedFrontier(NodeExpander<S, A> nodeExpander) {
-		super(nodeExpander);
+	public GraphSearchReducedFrontier(NodeFactory<S, A> nodeFactory) {
+		super(nodeFactory);
 	}
 
 	/**

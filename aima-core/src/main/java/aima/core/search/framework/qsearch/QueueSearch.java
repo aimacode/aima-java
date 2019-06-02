@@ -2,7 +2,7 @@ package aima.core.search.framework.qsearch;
 
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.NodeFactory;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.Tasks;
 
@@ -32,15 +32,15 @@ public abstract class QueueSearch<S, A> {
 	public static final String METRIC_MAX_QUEUE_SIZE = "maxQueueSize";
 	public static final String METRIC_PATH_COST = "pathCost";
 
-	final protected NodeExpander<S, A> nodeExpander;
+	final protected NodeFactory<S, A> nodeFactory;
 	protected Queue<Node<S, A>> frontier;
 	protected boolean earlyGoalTest = false;
 	protected Metrics metrics = new Metrics();
 
 	/** Stores the provided node expander and adds a node listener to it. */
-	protected QueueSearch(NodeExpander<S, A> nodeExpander) {
-		this.nodeExpander = nodeExpander;
-		nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
+	protected QueueSearch(NodeFactory<S, A> nodeFactory) {
+		this.nodeFactory = nodeFactory;
+		nodeFactory.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
 	}
 
 	/**
@@ -50,36 +50,32 @@ public abstract class QueueSearch<S, A> {
 	 * implementations. It can be customized by overriding some primitive
 	 * operations, especially {@link #addToFrontier(Node)},
 	 * {@link #removeFromFrontier()}, and {@link #isFrontierEmpty()}.
-	 * 
+	 *
 	 * @param problem
 	 *            the search problem
 	 * @param frontier
 	 *            the data structure for nodes that are waiting to be expanded
-	 * 
+	 *
 	 * @return a node referencing a goal state, if the goal was found, otherwise empty;
 	 */
 	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		this.frontier = frontier;
 		clearMetrics();
 		// initialize the frontier using the initial state of the problem
-		Node<S, A> root = nodeExpander.createRootNode(problem.getInitialState());
+		Node<S, A> root = nodeFactory.createNode(problem.getInitialState());
 		addToFrontier(root);
 		if (earlyGoalTest && problem.testSolution(root))
 			return getSolution(root);
 
 		while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
 			// choose a leaf node and remove it from the frontier
-			Node<S, A> nodeToExpand = removeFromFrontier();
-			// only need to check the nodeToExpand if have not already
-			// checked before adding to the frontier
-			if (!earlyGoalTest && problem.testSolution(nodeToExpand))
-				// if the node contains a goal state then return the
-				// corresponding solution
-				return getSolution(nodeToExpand);
+			Node<S, A> node = removeFromFrontier();
+			// if the node contains a goal state then return the corresponding solution
+			if (!earlyGoalTest && problem.testSolution(node))
+				return getSolution(node);
 
-			// expand the chosen node, adding the resulting nodes to the
-			// frontier
-			for (Node<S, A> successor : nodeExpander.expand(nodeToExpand, problem)) {
+			// expand the chosen node and add the successor nodes to the frontier
+			for (Node<S, A> successor : nodeFactory.getSuccessors(node, problem)) {
 				addToFrontier(successor);
 				if (earlyGoalTest && problem.testSolution(successor))
 					return getSolution(successor);
@@ -95,9 +91,8 @@ public abstract class QueueSearch<S, A> {
 	protected abstract void addToFrontier(Node<S, A> node);
 
 	/**
-	 * Primitive operation which removes and returns the node at the head of the
-	 * frontier.
-	 * 
+	 * Primitive operation which removes and returns the node at the head of the frontier.
+	 *
 	 * @return the node at the head of the frontier.
 	 */
 	protected abstract Node<S, A> removeFromFrontier();
@@ -109,15 +104,14 @@ public abstract class QueueSearch<S, A> {
 	protected abstract boolean isFrontierEmpty();
 
 	/**
-	 * Enables optimization for FIFO queue based search, especially breadth
-	 * first search.
+	 * Enables optimization for FIFO queue based search, especially breadth first search.
 	 */
 	public void setEarlyGoalTest(boolean b) {
 		earlyGoalTest = b;
 	}
 
-	public NodeExpander<S, A> getNodeExpander() {
-		return nodeExpander;
+	public NodeFactory<S, A> getNodeFactory() {
+		return nodeFactory;
 	}
 
 	/**
