@@ -136,7 +136,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	/**
 	 * Returns the last explored state.
 	 */
-	public Object getLastState() {
+	public S getLastState() {
 		return lastState;
 	}
 	
