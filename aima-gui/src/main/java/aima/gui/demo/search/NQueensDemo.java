@@ -47,8 +47,7 @@ public class NQueensDemo {
 	private static void solveNQueensWithDepthFirstSearch() {
 		System.out.println("\n--- NQueensDemo DFS ---");
 
-		Problem<NQueensBoard, QueenAction> problem =
-				NQueensFunctions.createIncrementalFormulationProblem(boardSize);
+		Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createIncrementalFormulationProblem(boardSize);
 		SearchForActions<NQueensBoard, QueenAction> search = new DepthFirstSearch<>(new GraphSearch<>());
 		Optional<List<QueenAction>> actions = search.findActions(problem);
 
