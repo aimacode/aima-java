@@ -40,7 +40,7 @@
  * Nodes do not necessary increase space complexity as long as parent links can
  * be switched off. However, by switching on parent links, those algorithms can
  * be turned into search for actions algorithms. Additionally, the common node
- * expander interface unifies progress tracing for all search algorithms (just
+ * factory class unifies progress tracking for all search algorithms (just
  * add a node listener to get notifications about expanded nodes).
  * 
  * @author Ruediger Lunde
