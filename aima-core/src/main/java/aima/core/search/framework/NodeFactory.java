@@ -53,11 +53,10 @@ public class NodeFactory<S, A> {
 	}
 
 	/**
-	 * Returns the children obtained from expanding the specified node in the
-	 * specified problem.
+	 * Returns the children obtained from expanding the specified node in the specified problem.
 	 * 
 	 * @param node
-	 *            the node to getSuccessors
+	 *            the node to expand
 	 * @param problem
 	 *            the problem the specified node is within.
 	 * 

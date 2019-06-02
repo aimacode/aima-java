@@ -32,7 +32,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 			InferenceProcedure infp) {
 		FOLKnowledgeBase kkb = FOLKnowledgeBaseFactory
 				.createKingsKnowledgeBase(infp);
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Criminal", terms);
 		InferenceResult answer = kkb.ask(query);
@@ -47,7 +47,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 			InferenceProcedure infp) {
 		FOLKnowledgeBase kkb = FOLKnowledgeBaseFactory
 				.createKingsKnowledgeBase(infp);
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("Richard"));
 		Predicate query = new Predicate("Evil", terms);
 		InferenceResult answer = kkb.ask(query);
@@ -62,7 +62,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 			InferenceProcedure infp) {
 		FOLKnowledgeBase kkb = FOLKnowledgeBaseFactory
 				.createKingsKnowledgeBase(infp);
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("John"));
 		Predicate query = new Predicate("Evil", terms);
 		InferenceResult answer = kkb.ask(query);
@@ -81,7 +81,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 			InferenceProcedure infp) {
 		FOLKnowledgeBase kkb = FOLKnowledgeBaseFactory
 				.createKingsKnowledgeBase(infp);
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Evil", terms);
 		InferenceResult answer = kkb.ask(query);
@@ -102,7 +102,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 			InferenceProcedure infp) {
 		FOLKnowledgeBase kkb = FOLKnowledgeBaseFactory
 				.createKingsKnowledgeBase(infp);
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("King", terms);
 		InferenceResult answer = kkb.ask(query);
@@ -140,7 +140,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 			InferenceProcedure infp) {
 		FOLKnowledgeBase wkb = FOLKnowledgeBaseFactory
 				.createWeaponsKnowledgeBase(infp);
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Criminal", terms);
 
@@ -162,7 +162,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 			InferenceProcedure infp) {
 		FOLKnowledgeBase rotkb = FOLKnowledgeBaseFactory
 				.createRingOfThievesKnowledgeBase(infp);
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Variable("x"));
 		Predicate query = new Predicate("Skis", terms);
 
@@ -172,7 +172,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 		Assert.assertFalse(answer.isPossiblyFalse());
 		Assert.assertTrue(answer.isTrue());
 		Assert.assertFalse(answer.isUnknownDueToTimeout());
-		// DB can getSuccessors infinitely so is only partial.
+		// DB can expand infinitely so is only partial.
 		Assert.assertTrue(answer.isPartialResultDueToTimeout());
 		Assert.assertEquals(4, answer.getProofs().size());
 		Assert.assertEquals(1, answer.getProofs().get(0).getAnswerBindings()
@@ -184,7 +184,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 		Assert.assertEquals(1, answer.getProofs().get(3).getAnswerBindings()
 				.size());
 
-		List<Constant> expected = new ArrayList<Constant>();
+		List<Constant> expected = new ArrayList<>();
 		expected.add(new Constant("Nancy"));
 		expected.add(new Constant("Red"));
 		expected.add(new Constant("Bert"));
@@ -199,7 +199,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 			InferenceProcedure infp, boolean expectedToTimeOut) {
 		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
 				.createLovesAnimalKnowledgeBase(infp);
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("Curiosity"));
 		terms.add(new Constant("Tuna"));
 		Predicate query = new Predicate("Kills", terms);
@@ -227,7 +227,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 			InferenceProcedure infp, boolean expectedToTimeOut) {
 		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
 				.createLovesAnimalKnowledgeBase(infp);
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("Jack"));
 		terms.add(new Constant("Tuna"));
 		NotSentence query = new NotSentence(new Predicate("Kills", terms));
@@ -256,7 +256,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 			InferenceProcedure infp, boolean expectedToTimeOut) {
 		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
 				.createLovesAnimalKnowledgeBase(infp);
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("Jack"));
 		terms.add(new Constant("Tuna"));
 		Predicate query = new Predicate("Kills", terms);
@@ -304,7 +304,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
 				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, true);
 
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("A"));
 		Function fa = new Function("F", terms);
 		terms = new ArrayList<Term>();
@@ -329,7 +329,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
 				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, true);
 
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("D"));
 		Predicate query = new Predicate("P", terms);
 
@@ -413,7 +413,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
 				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, false);
 
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("A"));
 		Function fa = new Function("F", terms);
 		terms = new ArrayList<Term>();
@@ -446,7 +446,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
 				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, false);
 
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("D"));
 		Predicate query = new Predicate("P", terms);
 
@@ -475,7 +475,7 @@ public abstract class CommonFOLInferenceProcedureTests {
 		FOLKnowledgeBase akb = FOLKnowledgeBaseFactory
 				.createABCDEqualityAndSubstitutionKnowledgeBase(infp, false);
 
-		List<Term> terms = new ArrayList<Term>();
+		List<Term> terms = new ArrayList<>();
 		terms.add(new Constant("A"));
 		Function fa = new Function("F", terms);
 		terms = new ArrayList<Term>();
