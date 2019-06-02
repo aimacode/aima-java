@@ -21,7 +21,7 @@ public class NodeFactory<S, A> {
 	protected boolean useParentLinks = true;
 
 	/**
-	 * Modifies {@link #useParentLinks} and returns this node expander. When
+	 * Modifies {@link #useParentLinks} and returns this node factory. When
 	 * using local search to search for states, parent links are not needed and
 	 * lead to unnecessary memory consumption.
 	 */
