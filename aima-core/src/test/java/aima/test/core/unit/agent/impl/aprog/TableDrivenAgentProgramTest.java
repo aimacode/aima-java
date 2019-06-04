@@ -1,7 +1,7 @@
 package aima.test.core.unit.agent.impl.aprog;
 
 import aima.core.agent.Action;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.agent.impl.DynamicAction;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.aprog.TableDrivenAgentProgram;
@@ -23,7 +23,7 @@ public class TableDrivenAgentProgramTest {
 	private static final Action ACTION_2 = new DynamicAction("action2");
 	private static final Action ACTION_3 = new DynamicAction("action3");
 
-	private AbstractAgent<DynamicPercept, Action> agent;
+	private SimpleAgent<DynamicPercept, Action> agent;
 
 	@Before
 	public void setUp() {
@@ -45,19 +45,19 @@ public class TableDrivenAgentProgramTest {
 	@Test
 	public void testExistingSequences() {
 		Assert.assertEquals(Optional.of(ACTION_1),
-				agent.execute(new DynamicPercept("key1", "value1")));
+				agent.act(new DynamicPercept("key1", "value1")));
 		Assert.assertEquals(Optional.of(ACTION_2),
-				agent.execute(new DynamicPercept("key1", "value2")));
+				agent.act(new DynamicPercept("key1", "value2")));
 		Assert.assertEquals(Optional.of(ACTION_3),
-				agent.execute(new DynamicPercept("key1", "value3")));
+				agent.act(new DynamicPercept("key1", "value3")));
 	}
 
 	@Test
 	public void testNonExistingSequence() {
 		Assert.assertEquals(Optional.of(ACTION_1),
-				agent.execute(new DynamicPercept("key1", "value1")));
+				agent.act(new DynamicPercept("key1", "value1")));
 		Assert.assertEquals(Optional.empty(),
-				agent.execute(new DynamicPercept("key1", "value3")));
+				agent.act(new DynamicPercept("key1", "value3")));
 	}
 
 	private static List<DynamicPercept> createPerceptSequence(DynamicPercept... percepts) {

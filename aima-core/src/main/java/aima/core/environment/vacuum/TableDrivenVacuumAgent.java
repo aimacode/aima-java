@@ -1,7 +1,7 @@
 package aima.core.environment.vacuum;
 
 import aima.core.agent.Action;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.aprog.TableDrivenAgentProgram;
 
@@ -17,7 +17,7 @@ import java.util.*;
  * @author Ruediger Lunde
  * 
  */
-public class TableDrivenVacuumAgent extends AbstractAgent<DynamicPercept, Action> {
+public class TableDrivenVacuumAgent extends SimpleAgent<DynamicPercept, Action> {
 
 	public TableDrivenVacuumAgent() {
 		super(new TableDrivenAgentProgram<>(getPerceptSequenceActions()));

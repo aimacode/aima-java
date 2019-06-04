@@ -2,7 +2,7 @@ package aima.core.search.agent;
 
 import aima.core.agent.Agent;
 import aima.core.agent.Notifier;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.search.nondeterministic.AndOrSearch;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.core.search.nondeterministic.Plan;
@@ -21,7 +21,7 @@ import java.util.function.Function;
  * @author Ruediger Lunde
  * @author Andrew Brown
  */
-public class NondeterministicSearchAgent<P, S, A> extends AbstractAgent<P, A> {
+public class NondeterministicSearchAgent<P, S, A> extends SimpleAgent<P, A> {
 	/**
 	 * Maps percepts to states.
 	 */
@@ -36,18 +36,13 @@ public class NondeterministicSearchAgent<P, S, A> extends AbstractAgent<P, A> {
 		this.ptsFunction = ptsFn;
 	}
 
-	public NondeterministicSearchAgent(Function<P, S> ptsFn, Notifier notifier) {
-		this.ptsFunction = ptsFn;
-		this.notifier = notifier;
-	}
-
-	public NondeterministicSearchAgent(BiFunction<P, Agent, S> ptsFn) {
+	public NondeterministicSearchAgent(BiFunction<P, Agent<P, A>, S> ptsFn) {
 		this.ptsFunction = (percept) -> ptsFn.apply(percept, this);
 	}
 
-	public NondeterministicSearchAgent(BiFunction<P, Agent, S> ptsFn, Notifier notifier) {
-		this.ptsFunction = (percept) -> ptsFn.apply(percept, this);
+	public NondeterministicSearchAgent<P, S, A> setNotifier(Notifier notifier) {
 		this.notifier = notifier;
+		return this;
 	}
 
 	/**
@@ -86,13 +81,13 @@ public class NondeterministicSearchAgent<P, S, A> extends AbstractAgent<P, A> {
 	}
 
 	/**
-	 * Execute an action from the contingency plan.
+	 * Selects next action from the contingency plan.
 	 * 
 	 * @param percept A percept.
 	 * @return An action from the contingency plan.
 	 */
 	@Override
-	public Optional<A> execute(P percept) {
+	public Optional<A> act(P percept) {
 		S state = (S) ptsFunction.apply(percept);
 		// at goal or no plan?
 		if (problem.testGoal(state) || contingencyPlan == null)
@@ -109,9 +104,9 @@ public class NondeterministicSearchAgent<P, S, A> extends AbstractAgent<P, A> {
 		if (contingencyPlan.isActionStep(currStep))
 			return Optional.of(contingencyPlan.getAction(currStep));
 
-		// determine next sub-plan and execute it!
+		// determine next sub-plan and act it!
 		contingencyPlan = contingencyPlan.getPlan(currStep, state);
 		currStep = -1;
-		return execute(percept);
+		return act(percept);
 	}
 }

@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.Function;
 
 import aima.core.agent.Action;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.util.datastructure.Pair;
 import aima.core.util.datastructure.TwoKeyHashMap;
@@ -46,7 +46,7 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  * @author Ruediger Lunde
  * 
  */
-public class OnlineDFSAgent<P, S, A extends Action> extends AbstractAgent<P, A> {
+public class OnlineDFSAgent<P, S, A extends Action> extends SimpleAgent<P, A> {
 
 	private OnlineSearchProblem<S, A> problem;
 	private Function<P, S> ptsFn;
@@ -119,7 +119,7 @@ public class OnlineDFSAgent<P, S, A extends Action> extends AbstractAgent<P, A> 
 	// function ONLINE-DFS-AGENT(s') returns an action
 	// inputs: s', a percept that identifies the current state
 	@Override
-	public Optional<A> execute(P psPrimed) {
+	public Optional<A> act(P psPrimed) {
 		S sPrimed = ptsFn.apply(psPrimed);
 		// if GOAL-TEST(s') then return stop
 		if (problem.testGoal(sPrimed)) {

@@ -334,7 +334,7 @@ public class EightPuzzleApp extends SimpleAgentApp<Percept, Action> {
 		}
 
 		public void executeUserAction(Action action) {
-			env.executeAction(null, action);
+			env.execute(null, action);
 			agent = null;
 			dirty = true;
 			frame.updateEnabledState();
@@ -355,7 +355,7 @@ public class EightPuzzleApp extends SimpleAgentApp<Percept, Action> {
 
 		/** Executes the provided action and returns null. */
 		@Override
-		public void executeAction(Agent<?, ?> agent, Action action) {
+		public void execute(Agent<?, ?> agent, Action action) {
 			if (action == EightPuzzleBoard.UP)
 				board.moveGapUp();
 			else if (action == EightPuzzleBoard.DOWN)

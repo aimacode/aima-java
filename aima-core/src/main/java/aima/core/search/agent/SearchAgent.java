@@ -2,7 +2,7 @@ package aima.core.search.agent;
 
 import java.util.*;
 
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
@@ -16,7 +16,7 @@ import aima.core.search.framework.problem.Problem;
  * @author Ravi Mohan
  * @author Ruediger Lunde
  */
-public class SearchAgent<P, S, A> extends AbstractAgent<P, A> {
+public class SearchAgent<P, S, A> extends SimpleAgent<P, A> {
 	private List<A> actionList;
 
 	private Iterator<A> actionIterator;
@@ -33,7 +33,7 @@ public class SearchAgent<P, S, A> extends AbstractAgent<P, A> {
 	}
 
 	@Override
-	public Optional<A> execute(P p) {
+	public Optional<A> act(P p) {
 		if (actionIterator.hasNext())
 			return Optional.of(actionIterator.next());
 		return Optional.empty(); // no success or at goal

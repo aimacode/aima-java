@@ -22,5 +22,5 @@ public interface AgentProgram<P, A> {
 	 * @return the Action to be taken in response to the currently perceived
 	 *         percept. No action replaces NoOp in earlier implementations.
 	 */
-	Optional<A> execute(P percept);
+	Optional<A> apply(P percept);
 }

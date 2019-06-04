@@ -34,7 +34,7 @@ public class XYEnvironment extends AbstractEnvironment<DynamicPercept, Action> {
 	 * Does nothing (don't ask me why...).
 	 */
 	@Override
-	public void executeAction(Agent a, Action action) {
+	public void execute(Agent a, Action action) {
 	}
 
 	@Override

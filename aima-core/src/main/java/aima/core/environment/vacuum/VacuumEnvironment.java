@@ -127,7 +127,7 @@ public class VacuumEnvironment extends AbstractEnvironment<DynamicPercept, Actio
 	}
 
 	@Override
-	public void executeAction(Agent<?, ?> agent, Action action) {
+	public void execute(Agent<?, ?> agent, Action action) {
 		String loc = getAgentLocation(agent);
 		if (ACTION_MOVE_RIGHT == action) {
 			int x = getX(loc);
@@ -152,7 +152,7 @@ public class VacuumEnvironment extends AbstractEnvironment<DynamicPercept, Actio
 	@Override
 	protected void executeNoOp(Agent<?, ?> agent) {
 		// In the Vacuum Environment we consider things done if
-		// the agent's execute method returns no action.
+		// the agent's act method returns no action.
 		isDone = true;
 	}
 

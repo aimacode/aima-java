@@ -127,7 +127,7 @@ public class QLearningAgent<S, A extends Action> extends
 	 * @return an action
 	 */
 	@Override
-	public Optional<A> execute(PerceptStateReward<S> percept) {
+	public Optional<A> act(PerceptStateReward<S> percept) {
 
 		S sPrime = percept.state();
 		double rPrime = percept.reward();

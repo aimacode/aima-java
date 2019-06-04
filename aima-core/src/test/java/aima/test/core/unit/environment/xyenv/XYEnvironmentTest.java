@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.agent.EnvironmentObject;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.environment.xyenv.Wall;
 import aima.core.environment.xyenv.XYEnvironment;
 import aima.core.util.datastructure.XYLocation;
@@ -22,7 +22,7 @@ import aima.test.core.unit.agent.impl.MockAgent;
 public class XYEnvironmentTest {
 	XYEnvironment env;
 
-	AbstractAgent<DynamicPercept, Action> a;
+	SimpleAgent<DynamicPercept, Action> a;
 
 	@Before
 	public void setUp() {
@@ -50,7 +50,7 @@ public class XYEnvironmentTest {
 	public void testAddObjectTwice() {
 		Assert.assertEquals(1, env.getAgents().size());
 		XYLocation loc = new XYLocation(5, 5);
-		AbstractAgent<DynamicPercept, Action> b = new MockAgent<>();
+		SimpleAgent<DynamicPercept, Action> b = new MockAgent<>();
 		env.addObjectToLocation(b, loc);
 		env.addAgent(b);
 		Assert.assertEquals(2, env.getAgents().size());
@@ -119,7 +119,7 @@ public class XYEnvironmentTest {
 		XYLocation loc = new XYLocation(5, 7);
 		env.moveObjectToAbsoluteLocation(a, loc);
 		Assert.assertEquals(1, env.getObjectsAt(loc).size());
-		AbstractAgent b = new MockAgent();
+		SimpleAgent b = new MockAgent();
 		env.addObjectToLocation(b, loc);
 		Assert.assertEquals(2, env.getObjectsAt(loc).size());
 	}
@@ -128,8 +128,8 @@ public class XYEnvironmentTest {
 	public void testGetObjectsNear() {
 		XYLocation loc = new XYLocation(5, 5);
 		env.moveObjectToAbsoluteLocation(a, loc);
-		AbstractAgent b = new MockAgent();
-		AbstractAgent c = new MockAgent();
+		SimpleAgent b = new MockAgent();
+		SimpleAgent c = new MockAgent();
 		Wall w1 = new Wall();
 
 		env.addObjectToLocation(b, new XYLocation(7, 4));

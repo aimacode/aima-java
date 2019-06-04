@@ -1,9 +1,7 @@
 package aima.core.agent;
 
 
-import aima.core.agent.Action;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.probability.BeliefState;
 import aima.core.util.datastructure.Pair;
 
@@ -32,7 +30,7 @@ import java.util.List;
  *  @author Ritwik Sharma
  *  @author samagra
  */
-public abstract class DTAgent extends AbstractAgent {
+public abstract class DTAgent extends SimpleAgent {
 	/**
 	 * @param belief_state
 	 *            	      probabilistic beliefs about the current state of the world.

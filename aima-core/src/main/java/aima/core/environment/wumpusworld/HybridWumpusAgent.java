@@ -1,7 +1,7 @@
 package aima.core.environment.wumpusworld;
 
 import aima.core.agent.Notifier;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
 import aima.core.search.framework.Metrics;
@@ -69,7 +69,7 @@ import java.util.*;
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
-public class HybridWumpusAgent extends AbstractAgent<WumpusPercept, WumpusAction> {
+public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> {
 
 	// persistent: KB, a knowledge base, initially the atemporal
 	// "wumpus physics"
@@ -118,7 +118,7 @@ public class HybridWumpusAgent extends AbstractAgent<WumpusPercept, WumpusAction
 	 * @return an action the agent should take.
 	 */
 	@Override
-	public Optional<WumpusAction> execute(WumpusPercept percept) {
+	public Optional<WumpusAction> act(WumpusPercept percept) {
 
 		// TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
 		kb.makePerceptSentence(percept, t);

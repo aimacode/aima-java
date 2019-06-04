@@ -53,7 +53,7 @@ public class CellWorldEnvironment extends AbstractEnvironment<CellWorldPercept, 
 	 * Execute N trials.
 	 * 
 	 * @param n
-	 *            the number of trials to execute.
+	 *            the number of trials to act.
 	 */
 	public void executeTrials(int n) {
 		for (int i = 0; i < n; i++) {
@@ -74,7 +74,7 @@ public class CellWorldEnvironment extends AbstractEnvironment<CellWorldPercept, 
 	}
 
 	@Override
-	public void executeAction(Agent<?, ?> agent, CellWorldAction action) {
+	public void execute(Agent<?, ?> agent, CellWorldAction action) {
 		Cell<Double> s = currentState.getAgentLocation(agent);
 		double probabilityChoice = r.nextDouble();
 		double total = 0;

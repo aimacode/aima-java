@@ -43,7 +43,7 @@ public class MapEnvironmentTest {
 	@Test
 	public void testExecuteAction() {
 		me.addAgent(ma, "D");
-		me.executeAction(ma, new MoveToAction("C"));
+		me.execute(ma, new MoveToAction("C"));
 		Assert.assertEquals(me.getAgentLocation(ma), "C");
 	}
 
@@ -61,8 +61,8 @@ public class MapEnvironmentTest {
 
 		me.addAgent(ma1, "A");
 		me.addAgent(ma2, "A");
-		me.executeAction(ma1, new MoveToAction("B"));
-		me.executeAction(ma2, new MoveToAction("C"));
+		me.execute(ma1, new MoveToAction("B"));
+		me.execute(ma2, new MoveToAction("C"));
 
 		Assert.assertEquals(me.getAgentLocation(ma1), "B");
 		Assert.assertEquals(me.getAgentLocation(ma2), "C");

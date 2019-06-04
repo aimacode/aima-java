@@ -3,7 +3,7 @@ package aima.core.learning.reinforcement.agent;
 import java.util.Map;
 import java.util.Optional;
 
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.learning.reinforcement.PerceptStateReward;
 
 /**
@@ -18,7 +18,7 @@ import aima.core.learning.reinforcement.PerceptStateReward;
  * @author Ravi Mohan
  */
 public abstract class ReinforcementAgent<S, A> extends
-		AbstractAgent<PerceptStateReward<S>, A> {
+		SimpleAgent<PerceptStateReward<S>, A> {
 
 	/**
 	 * Default Constructor.
@@ -33,7 +33,7 @@ public abstract class ReinforcementAgent<S, A> extends
 	 *            a percept indicating the current state s' and reward signal r'
 	 * @return the action to take.
 	 */
-	public abstract Optional<A> execute(PerceptStateReward<S> percept);
+	public abstract Optional<A> act(PerceptStateReward<S> percept);
 	
 	/**
 	 * Get a vector of the currently calculated utilities for states of type S

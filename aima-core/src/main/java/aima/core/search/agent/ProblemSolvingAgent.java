@@ -1,6 +1,6 @@
 package aima.core.search.agent;
 
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.LinkedList;
@@ -49,7 +49,7 @@ import java.util.Queue;
  *
  * @author Ruediger Lunde
  */
-public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
+public abstract class ProblemSolvingAgent<P, S, A> extends SimpleAgent<P, A> {
 
 	/** Plan, an action sequence, initially empty. */
 	protected Queue<A> plan = new LinkedList<>();
@@ -63,7 +63,7 @@ public abstract class ProblemSolvingAgent<P, S, A> extends AbstractAgent<P, A> {
 	 * 
 	 * @return an action or empty if no further goal exists.
 	 */
-	public Optional<A> execute(P percept) {
+	public Optional<A> act(P percept) {
 		updateState(percept);
 		// never give up
 		while (plan.isEmpty()) {

@@ -62,7 +62,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	/**
 	 * Central template method for controlling agent simulation. The concrete
 	 * behavior is determined by the primitive operations
-	 * {@link #getPerceptSeenBy(Agent)}, {@link #executeAction(Agent, Object)},
+	 * {@link #getPerceptSeenBy(Agent)}, {@link #execute(Agent, Object)},
 	 * and {@link #createExogenousChange()}.
 	 */
 	@Override
@@ -70,9 +70,9 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 		for (Agent<? super P, ? extends A> agent : agents) {
 			if (agent.isAlive()) {
 				P percept = getPerceptSeenBy(agent);
-				Optional<? extends A> anAction = agent.execute(percept);
+				Optional<? extends A> anAction = agent.act(percept);
 				if (anAction.isPresent()) {
-					executeAction(agent, anAction.get());
+					execute(agent, anAction.get());
 					notify(agent, percept, anAction.get());
 				} else {
 					executeNoOp(agent);
@@ -93,7 +93,7 @@ public abstract class AbstractEnvironment<P, A> implements Environment<P, A>,
 	//
 	// Primitive operations to be implemented by subclasses:
 
-	public abstract void executeAction(Agent<?, ?> agent, A action);
+	public abstract void execute(Agent<?, ?> agent, A action);
 
 	public abstract P getPerceptSeenBy(Agent<?, ?> agent);
 

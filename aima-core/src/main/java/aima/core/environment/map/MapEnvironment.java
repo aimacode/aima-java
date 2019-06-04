@@ -8,11 +8,12 @@ import aima.core.agent.impl.DynamicPercept;
  * Represents the environment a SimpleMapAgent can navigate.
  * 
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  * 
  */
 public class MapEnvironment extends AbstractEnvironment<DynamicPercept, MoveToAction> {
 
-	private Map map = null;
+	private Map map;
 	private MapEnvironmentState state = new MapEnvironmentState();
 
 	public MapEnvironment(Map map) {
@@ -36,7 +37,7 @@ public class MapEnvironment extends AbstractEnvironment<DynamicPercept, MoveToAc
 	}
 
 	@Override
-	public void executeAction(Agent<?, ?> agent, MoveToAction action) {
+	public void execute(Agent<?, ?> agent, MoveToAction action) {
 		String currLoc = getAgentLocation(agent);
 		Double distance = map.getDistance(currLoc, action.getToLocation());
 		if (distance != null) {

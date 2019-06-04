@@ -112,7 +112,7 @@ public class PassiveADPAgent<S, A extends Action> extends
 	 * @return an action
 	 */
 	@Override
-	public Optional<A> execute(PerceptStateReward<S> percept) {
+	public Optional<A> act(PerceptStateReward<S> percept) {
 		// if s' is new then U[s'] <- r'; R[s'] <- r'
 		S sDelta = percept.state();
 		double rDelta = percept.reward();

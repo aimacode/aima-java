@@ -23,7 +23,7 @@ public interface Agent<P, A> extends EnvironmentObject {
 	 * @return the Action to be taken in response to the currently perceived
 	 *         percept. No action replaces NoOp in earlier implementations.
 	 */
-	Optional<A> execute(P percept);
+	Optional<A> act(P percept);
 
 	/**
 	 * Life-cycle indicator as to the liveness of an Agent.

@@ -2,8 +2,7 @@ package aima.core.environment.vacuum;
 
 import aima.core.agent.Action;
 import aima.core.agent.Model;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
 import aima.core.agent.impl.aprog.ModelBasedReflexAgentProgram;
@@ -20,7 +19,7 @@ import java.util.Set;
  * @author Ruediger Lunde
  * 
  */
-public class ModelBasedReflexVacuumAgent extends AbstractAgent<DynamicPercept, Action> {
+public class ModelBasedReflexVacuumAgent extends SimpleAgent<DynamicPercept, Action> {
 
 	public ModelBasedReflexVacuumAgent() {
 		super(new ModelBasedReflexAgentProgram<DynamicPercept, Action>() {
@@ -30,6 +29,7 @@ public class ModelBasedReflexVacuumAgent extends AbstractAgent<DynamicPercept, A
 				setRules(getRuleSet());
 			}
 
+			@Override
 			protected DynamicState updateState(DynamicState state,
 					Action anAction, DynamicPercept percept, Model model) {
 

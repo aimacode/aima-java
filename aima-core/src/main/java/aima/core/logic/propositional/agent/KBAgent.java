@@ -2,7 +2,7 @@ package aima.core.logic.propositional.agent;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 
@@ -32,7 +32,7 @@ import java.util.Optional;
  * 
  * @author Ciaran O'Reilly
  */
-public abstract class KBAgent extends AbstractAgent<Percept, Action> {
+public abstract class KBAgent extends SimpleAgent<Percept, Action> {
 	// persistent: KB, a knowledge base
 	protected KnowledgeBase kb;
 	// t, a counter, initially 0, indicating time
@@ -44,7 +44,7 @@ public abstract class KBAgent extends AbstractAgent<Percept, Action> {
 
 	// function KB-AGENT(percept) returns an action
 	@Override
-	public Optional<Action> execute(Percept percept) {
+	public Optional<Action> act(Percept percept) {
 		// TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
 		kb.tell(makePerceptSentence(percept, t));
 		// action &lt;- ASK(KB, MAKE-ACTION-QUERY(t))

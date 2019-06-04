@@ -93,7 +93,7 @@ public abstract class ModelBasedReflexAgentProgram<P, A> implements AgentProgram
 	// START-AgentProgram
 
 	// function MODEL-BASED-REFLEX-AGENT(percept) returns an action
-	public Optional<A> execute(P percept) {
+	public Optional<A> apply(P percept) {
 		// state <- UPDATE-STATE(state, action, percept, model)
 		state = updateState(state, action, percept, model);
 		// rule <- RULE-MATCH(state, rules)

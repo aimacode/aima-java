@@ -1,7 +1,7 @@
 package aima.gui.swing.applications.agent;
 
 import aima.core.agent.Action;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.vacuum.*;
 import aima.core.search.agent.NondeterministicSearchAgent;
@@ -19,7 +19,7 @@ import aima.gui.swing.framework.SimulationThread;
 public class VacuumController extends AgentAppController<DynamicPercept, Action> {
 	
 	protected VacuumEnvironment env = null;
-	protected AbstractAgent<DynamicPercept, Action> agent = null;
+	protected SimpleAgent<DynamicPercept, Action> agent = null;
 	protected boolean isPrepared = false;
 	
 	/** Prepares next simulation if that makes sense. */
@@ -61,7 +61,8 @@ public class VacuumController extends AgentAppController<DynamicPercept, Action>
 			agent = new ModelBasedReflexVacuumAgent();
 			break;
 		case 4:
-			agent = new NondeterministicSearchAgent<>(VacuumWorldFunctions::getState, env);
+			agent = new NondeterministicSearchAgent<DynamicPercept, VacuumEnvironmentState, Action>
+					(VacuumWorldFunctions::getState).setNotifier(env);
 			break;
 		}
 		if (env != null && agent != null) {

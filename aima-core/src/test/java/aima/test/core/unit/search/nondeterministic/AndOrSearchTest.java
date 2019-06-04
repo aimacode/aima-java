@@ -118,12 +118,12 @@ public class AndOrSearchTest {
     }
 
     /**
-     * Use AND-OR search to create a contingency plan; execute the plan and
+     * Use AND-OR search to create a contingency plan; act the plan and
      * verify that it successfully cleans the NondeterministicVacuumWorld.
      */
     @Test
     public void testSearchExecutesSuccessfully() {
-        // execute plan
+        // act plan
         world.stepUntilDone();
         // test
         VacuumEnvironmentState endState = (VacuumEnvironmentState) world.getCurrentState();

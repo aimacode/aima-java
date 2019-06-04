@@ -1,8 +1,7 @@
 package aima.core.environment.vacuum;
 
 import aima.core.agent.Action;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
 import aima.core.agent.impl.aprog.SimpleReflexAgentProgram;
@@ -17,7 +16,7 @@ import java.util.Set;
  * @auhtor Ruediger Lunde
  * 
  */
-public class SimpleReflexVacuumAgent extends AbstractAgent<DynamicPercept, Action> {
+public class SimpleReflexVacuumAgent extends SimpleAgent<DynamicPercept, Action> {
 
 	public SimpleReflexVacuumAgent() {
 		super(new SimpleReflexAgentProgram<DynamicPercept, Action>(getRuleSet()){

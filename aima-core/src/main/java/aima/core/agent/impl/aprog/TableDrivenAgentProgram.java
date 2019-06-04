@@ -68,7 +68,7 @@ public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
 	// START-AgentProgram
 
 	// function TABLE-DRIVEN-AGENT(percept) returns an action
-	public Optional<A> execute(P percept) {
+	public Optional<A> apply(P percept) {
 		// append percept to end of percepts
 		percepts.add(percept);
 

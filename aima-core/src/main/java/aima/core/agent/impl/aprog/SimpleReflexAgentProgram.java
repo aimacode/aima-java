@@ -54,7 +54,7 @@ public abstract class SimpleReflexAgentProgram<P, A> implements AgentProgram<P, 
 
 	// function SIMPLE-RELEX-AGENT(percept) returns an action
 	@Override
-	public Optional<A> execute(P percept) {
+	public Optional<A> apply(P percept) {
 
 		// state <- INTERPRET-INPUT(percept);
 		DynamicState state = interpretInput(percept);

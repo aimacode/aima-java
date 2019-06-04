@@ -100,7 +100,7 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
      * @return an action the agent should take.
      */
     @Override
-    public Optional<WumpusAction> execute(WumpusPercept percept) {
+    public Optional<WumpusAction> act(WumpusPercept percept) {
 
         // TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
         getKB().makePerceptSentence(percept, t);

@@ -40,7 +40,7 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
      * Execute the agent action
      */
     @Override
-    public void executeAction(Agent<?, ?> agent, Action action) {
+    public void execute(Agent<?, ?> agent, Action action) {
         if (ACTION_MOVE_RIGHT == action) {
             envState.setAgentLocation(agent, LOCATION_B);
             updatePerformanceMeasure(agent, -1);

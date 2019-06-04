@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.util.datastructure.TwoKeyHashMap;
 
@@ -51,7 +51,7 @@ import aima.core.util.datastructure.TwoKeyHashMap;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class LRTAStarAgent<P, S, A> extends AbstractAgent<P, A> {
+public class LRTAStarAgent<P, S, A> extends SimpleAgent<P, A> {
 
 	private OnlineSearchProblem<S, A> problem;
 	private Function<P, S> ptsFn;
@@ -146,7 +146,7 @@ public class LRTAStarAgent<P, S, A> extends AbstractAgent<P, A> {
 	// function LRTA*-AGENT(s') returns an action
 	// inputs: s', a percept that identifies the current state
 	@Override
-	public Optional<A> execute(P psPrimed) {
+	public Optional<A> act(P psPrimed) {
 		S sPrimed = ptsFn.apply(psPrimed);
 		// if GOAL-TEST(s') then return stop
 		if (problem.testGoal(sPrimed)) {

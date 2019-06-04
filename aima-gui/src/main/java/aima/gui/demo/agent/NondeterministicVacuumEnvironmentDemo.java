@@ -45,7 +45,7 @@ public class NondeterministicVacuumEnvironmentDemo {
 				(s, a, sPrimed) -> 1.0);
 		agent.makePlan(problem);
 
-		// show and execute the plan
+		// show and act the plan
 		System.out.println("Initial Plan: " + agent.getPlan());
 		world.stepUntilDone();
 		System.out.println("Actions Taken: " + actionTracker.getActions());

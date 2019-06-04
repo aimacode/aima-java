@@ -2,8 +2,7 @@ package aima.core.environment.vacuum;
 
 import aima.core.agent.Action;
 import aima.core.agent.AgentProgram;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.agent.impl.DynamicPercept;
 
 import java.util.Objects;
@@ -29,13 +28,13 @@ import java.util.Optional;
  * @author Ruediger Lunde
  * 
  */
-public class ReflexVacuumAgent extends AbstractAgent<DynamicPercept, Action> {
+public class ReflexVacuumAgent extends SimpleAgent<DynamicPercept, Action> {
 
 	public ReflexVacuumAgent() {
 		super(new AgentProgram<DynamicPercept, Action>() {
-			// function REFLEX-VACUUM-AGENT([location, status]) returns an
-			// action
-			public Optional<Action> execute(DynamicPercept percept) {
+			// function REFLEX-VACUUM-AGENT([location, status]) returns an action
+			@Override
+			public Optional<Action> apply(DynamicPercept percept) {
 				Action action = null;
 				// if status = Dirty then return Suck
 				if (VacuumEnvironment.LocationState.Dirty == percept.getAttribute(AttNames.CURRENT_STATE)) {

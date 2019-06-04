@@ -93,9 +93,9 @@ public class HybridWumpusAgentTest {
 		HybridWumpusAgent hwa =
 				new HybridWumpusAgent(2, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
 		// The gold is in the first square
-		Optional<WumpusAction> a = hwa.execute(new WumpusPercept().setStench().setBreeze().setGlitter());
+		Optional<WumpusAction> a = hwa.act(new WumpusPercept().setStench().setBreeze().setGlitter());
 		Assert.assertEquals(WumpusAction.GRAB, a.orElse(null));
-		a = hwa.execute(new WumpusPercept().setStench().setBreeze().setGlitter());
+		a = hwa.act(new WumpusPercept().setStench().setBreeze().setGlitter());
 		Assert.assertEquals(WumpusAction.CLIMB, a.orElse(null));
 	}
 

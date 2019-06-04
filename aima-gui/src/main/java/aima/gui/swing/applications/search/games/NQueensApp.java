@@ -339,7 +339,7 @@ public class NQueensApp extends SimpleAgentApp<Percept, QueenAction> {
 				atype = QueenAction.REMOVE_QUEEN;
 			else
 				atype = QueenAction.PLACE_QUEEN;
-			env.executeAction(null, new QueenAction(atype, loc));
+			env.execute(null, new QueenAction(atype, loc));
 			agent = null;
 			frame.updateEnabledState();
 		}
@@ -361,7 +361,7 @@ public class NQueensApp extends SimpleAgentApp<Percept, QueenAction> {
 		 * Executes the provided action and returns null.
 		 */
 		@Override
-		public void executeAction(Agent<?, ?> agent, QueenAction action) {
+		public void execute(Agent<?, ?> agent, QueenAction action) {
 			XYLocation loc = new XYLocation(action.getX(), action.getY());
 			if (action.getName() == QueenAction.PLACE_QUEEN)
 				board.addQueenAt(loc);

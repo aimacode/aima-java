@@ -82,7 +82,7 @@ public class PassiveTDAgent<S, A> extends ReinforcementAgent<S, A> {
 	 * @return an action
 	 */
 	@Override
-	public Optional<A> execute(PerceptStateReward<S> percept) {
+	public Optional<A> act(PerceptStateReward<S> percept) {
 		// if s' is new then U[s'] <- r'
 		S sDelta = percept.state();
 		double rDelta = percept.reward();

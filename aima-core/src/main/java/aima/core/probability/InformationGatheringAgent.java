@@ -75,7 +75,7 @@ public abstract class InformationGatheringAgent implements Agent<Percept, Action
      * @return action to be executed by the agent
      */
     @Override
-    public Optional<Action> execute(Percept percept) {
+    public Optional<Action> act(Percept percept) {
         // integrate percept into D
         observedEvidence = integratePercept(observedEvidence, percept);
 

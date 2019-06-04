@@ -47,7 +47,7 @@ public class WumpusEnvironment extends AbstractEnvironment<WumpusPercept, Wumpus
     }
 
     @Override
-    public void executeAction(Agent<?, ?> agent, WumpusAction action) {
+    public void execute(Agent<?, ?> agent, WumpusAction action) {
         bumpedAgents.remove(agent);
         if (agent == agentJustKillingWumpus)
             agentJustKillingWumpus = null;
