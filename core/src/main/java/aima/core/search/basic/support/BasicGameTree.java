@@ -17,7 +17,7 @@ import java.util.Random;
  * @author Suyash Jain
  */
 
-public class GameTree<A, S>{
+public class BasicGameTree<A, S>{
 	
 	HashMap<Node<A, S>, List<Node<A, S>>> gameTree;
 	HashMap<S, Double> Wi, Ni;
@@ -25,7 +25,7 @@ public class GameTree<A, S>{
 	Node<A, S> root;
 	
 	
-	public GameTree() {
+	public BasicGameTree() {
 		this.gameTree = new HashMap<>();
 		this.nodeFactory = new BasicNodeFactory<>();
 		Wi = new HashMap<>();
@@ -92,6 +92,23 @@ public class GameTree<A, S>{
 				best_children = new ArrayList<>();
 				best_children.add(child);
 			} else if (uct == max_uct) {
+				best_children.add(child);
+			}
+		}
+		Random rand = new Random();
+		return best_children.get(rand.nextInt(best_children.size()));
+	}
+	
+	public Node<A, S> getChildWithMaxPlayouts(Node<A, S> node){
+		List<Node<A, S>> best_children = new ArrayList<>();
+		double max_playouts = Double.NEGATIVE_INFINITY;
+		for (Node<A, S> child : successors(node)) {
+			double playouts = (Ni.get(child.state()));
+			if (playouts > max_playouts) {
+				max_playouts = playouts;
+				best_children = new ArrayList<>();
+				best_children.add(child);
+			} else if (playouts == max_playouts) {
 				best_children.add(child);
 			}
 		}

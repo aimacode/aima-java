@@ -5,7 +5,7 @@ import aima.core.search.api.Node;
 import aima.core.search.api.NodeFactory;
 import aima.core.search.api.SearchForAdversarialActionFunction;
 import aima.core.search.basic.support.BasicNodeFactory;
-import aima.core.search.basic.support.GameTree;
+import aima.core.search.basic.support.BasicGameTree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +43,14 @@ import java.util.Random;
  */
 
 public class MonteCarloTreeSearch<S, A, P> implements SearchForAdversarialActionFunction<S, A> {
+	protected int iterations = 0;
 	protected Game<S, A, P> game;
-	protected GameTree<A, S> tree;
+	protected BasicGameTree<A, S> tree;
 	
-	public MonteCarloTreeSearch(Game<S, A, P> game) {
+	public MonteCarloTreeSearch(Game<S, A, P> game, int iterations) {
 		this.game = game;
-		tree = new GameTree();
+		this.iterations = iterations;
+		tree = new BasicGameTree();
 	}
 	
 	// function MONTE-CARLO-TREE-SEARCH(state) returns an action
@@ -57,7 +59,7 @@ public class MonteCarloTreeSearch<S, A, P> implements SearchForAdversarialAction
 		// tree <-- NODE(state)
 		tree.addRoot(state);
 		// while TIME-REMAINING() do
-		while () {
+		while (iterations != 0) {
 			// leaf <-- SELECT(tree)
 			Node<A, S> leaf = select(tree);
 			// child <-- EXPAND(leaf)
@@ -67,12 +69,14 @@ public class MonteCarloTreeSearch<S, A, P> implements SearchForAdversarialAction
 			boolean result = simulate(child);
 			// BACKPROPAGATE(result, child)
 			backpropagate(result, child);
+			// repeat the four steps for set number of iterations
+			--iterations;
 		}
 		// return the move in ACTIONS(state) whose node has highest number of playouts
 		return bestAction(tree.getRoot());
 	}
 	
-	private Node<A, S> select(GameTree gameTree) {
+	private Node<A, S> select(BasicGameTree gameTree) {
 		Node node = gameTree.getRoot();
 		while (isNodeFullyExpanded(node)) {
 			node = gameTree.getChildWithMaxUCT(node);
@@ -106,7 +110,7 @@ public class MonteCarloTreeSearch<S, A, P> implements SearchForAdversarialAction
 	}
 	
 	private A bestAction(Node<A, S> root) {
-		Node<A, S> bestChild = tree.getChildWithMaxUCT(root);
+		Node<A, S> bestChild = tree.getChildWithMaxPlayouts(root);
 		for (A a : game.actions(root.state())) {
 			S result = game.result(root.state(), a);
 			if (result == bestChild.state()) return a;
