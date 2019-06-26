@@ -30,9 +30,6 @@ public class SimpleReflexVacuumAgent extends SimpleAgent<DynamicPercept, Action>
 		});
 	}
 
-	//
-	// PRIVATE METHODS
-	//
 	private static Set<Rule<Action>> getRuleSet() {
 		// Note: Using a LinkedHashSet so that the iteration order (i.e. implied
 		// precedence) of rules can be guaranteed.

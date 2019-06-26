@@ -40,9 +40,9 @@ public class ReflexVacuumAgent extends SimpleAgent<DynamicPercept, Action> {
 				if (VacuumEnvironment.LocationState.Dirty == percept.getAttribute(AttNames.CURRENT_STATE)) {
 					action = VacuumEnvironment.ACTION_SUCK;
 					// else if location = A then return Right
-				} else if (Objects.equals(VacuumEnvironment.LOCATION_A, percept.getAttribute(AttNames.CURRENT_LOCATION))) {
+				} else if (VacuumEnvironment.LOCATION_A.equals(percept.getAttribute(AttNames.CURRENT_LOCATION))) {
 					action = VacuumEnvironment.ACTION_MOVE_RIGHT;
-				} else if (Objects.equals(VacuumEnvironment.LOCATION_B, percept.getAttribute(AttNames.CURRENT_LOCATION))) {
+				} else if (VacuumEnvironment.LOCATION_B.equals(percept.getAttribute(AttNames.CURRENT_LOCATION))) {
 					// else if location = B then return Left
 					action = VacuumEnvironment.ACTION_MOVE_LEFT;
 				}

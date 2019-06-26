@@ -72,9 +72,8 @@ public interface Environment<P, A> {
 	 *            the number of time steps to move the Environment forward.
 	 */
 	default void step(int n) {
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++)
 			step();
-		}
 	}
 
 	/**
