@@ -11,11 +11,8 @@ import java.util.Queue;
 /**
  * Base class for queue-based search implementations, especially for
  * {@link TreeSearch}, {@link GraphSearch}, and {@link BidirectionalSearch}. It
- * provides an abstract method for controlling search execution and defines
- * primitive methods encapsulating frontier access. Tree search implementations
- * will implement frontier access straight-forward. Graph search implementations
- * will add node filtering mechanisms to avoid that nodes of already explored
- * states are selected for expansion.
+ * defines an abstract method for controlling search execution and provides some
+ * infrastructure for performance analysis and node creation.
  *
  * @param <S> The type used to represent states
  * @param <A> The type of the actions to be used to navigate through the state space
