@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.Queue;
 
 /**
- * Base class for queue-based search implementations, especially for
+ * Base class for queue-based search implementations, especially for 
  * {@link TreeSearch}, {@link GraphSearch}, and {@link BidirectionalSearch}. It
  * defines an abstract method for controlling search execution and provides some
  * infrastructure for performance analysis and node creation.
