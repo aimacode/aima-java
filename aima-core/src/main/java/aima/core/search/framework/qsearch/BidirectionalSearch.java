@@ -31,6 +31,7 @@ import java.util.*;
  */
 public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 
+	private Queue<Node<S, A>> frontier;
 	private final static int ORG_P_IDX = 0;
 	private final static int REV_P_IDX = 1;
 
@@ -140,7 +141,6 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 * Inserts the node at the tail of the frontier if the corresponding state
 	 * is not yet explored.
 	 */
-	@Override
 	protected void addToFrontier(Node<S, A> node) {
 		if (!isExplored(node)) {
 			frontier.add(node);
@@ -155,7 +155,6 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 * 
 	 * @return A node of a not yet explored state.
 	 */
-	@Override
 	protected Node<S, A> removeFromFrontier() {
 		cleanUpFrontier(); // not really necessary because isFrontierEmpty
 							// should be called before...
@@ -170,7 +169,6 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 * Pops nodes of already explored states from the head of the frontier and
 	 * checks whether there are still some nodes left.
 	 */
-	@Override
 	protected boolean isFrontierEmpty() {
 		cleanUpFrontier();
 		updateMetrics(frontier.size());

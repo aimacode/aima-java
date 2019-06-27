@@ -43,12 +43,14 @@ public class SearchFactory {
 	public final static int TREE_SEARCH = 0;
 	/** Queue search implementation: graph search. */
 	public final static int GRAPH_SEARCH = 1;
+	/** Queue search implementation: graph search 4e. */
+	public final static int GRAPH_SEARCH4e = 2;
 	/** Queue search implementation: graph search with reduced frontier. */
-	public final static int GRAPH_SEARCH_RED_FRONTIER = 2;
+	public final static int GRAPH_SEARCH_RED_FRONTIER = 3;
 	/** Queue search implementation: graph search for breadth first search. */
-	public final static int GRAPH_SEARCH_BFS = 3;
+	public final static int GRAPH_SEARCH_BFS = 4;
 	/** Queue search implementation: bidirectional search. */
-	public final static int BIDIRECTIONAL_SEARCH = 4;
+	public final static int BIDIRECTIONAL_SEARCH = 5;
 
 	/** Contains the only existing instance. */
 	private static SearchFactory instance;
@@ -80,7 +82,7 @@ public class SearchFactory {
 	 * {@link #createSearch(int, int, ToDoubleFunction)}.
 	 */
 	public String[] getQSearchImplNames() {
-		return new String[] { "Tree Search", "Graph Search", "Graph Search red Fr.",
+		return new String[] { "Tree Search", "Graph Search", "Graph Search 4e", "Graph Search red Fr.",
 				"Graph Search BFS", "Bidirectional Search" };
 	}
 
@@ -97,49 +99,52 @@ public class SearchFactory {
 		QueueSearch<S, A> qs = null;
 		SearchForActions<S, A> result = null;
 		switch (qSearchImpl) {
-		case TREE_SEARCH:
-			qs = new TreeSearch<>();
-			break;
-		case GRAPH_SEARCH:
-			qs = new GraphSearch<>();
-			break;
-		case GRAPH_SEARCH_RED_FRONTIER:
-			qs = new GraphSearchReducedFrontier<>();
-			break;
-		case GRAPH_SEARCH_BFS:
-			qs = new GraphSearchBFS<>();
-			break;
-		case BIDIRECTIONAL_SEARCH:
-			qs = new BidirectionalSearch<>();
+			case TREE_SEARCH:
+				qs = new TreeSearch<>();
+				break;
+			case GRAPH_SEARCH:
+				qs = new GraphSearch<>();
+				break;
+			case GRAPH_SEARCH4e:
+				qs = new GraphSearch4e<>();
+				break;
+			case GRAPH_SEARCH_RED_FRONTIER:
+				qs = new GraphSearchReducedFrontier<>();
+				break;
+			case GRAPH_SEARCH_BFS:
+				qs = new GraphSearchBFS<>();
+				break;
+			case BIDIRECTIONAL_SEARCH:
+				qs = new BidirectionalSearch<>();
 		}
 		switch (strategy) {
-		case DF_SEARCH:
-			result = new DepthFirstSearch<>(qs);
-			break;
-		case BF_SEARCH:
-			result = new BreadthFirstSearch<>(qs);
-			break;
-		case ID_SEARCH:
-			result = new IterativeDeepeningSearch<>();
-			break;
-		case UC_SEARCH:
-			result = new UniformCostSearch<>(qs);
-			break;
-		case GBF_SEARCH:
-			result = new GreedyBestFirstSearch<>(qs, h);
-			break;
-		case ASTAR_SEARCH:
-			result = new AStarSearch<>(qs, h);
-			break;
-		case RBF_SEARCH:
-			result = new RecursiveBestFirstSearch<>(AStarSearch.createEvalFn(h));
-			break;
-		case RBF_AL_SEARCH:
-			result = new RecursiveBestFirstSearch<>(AStarSearch.createEvalFn(h), true);
-			break;
-		case HILL_SEARCH:
-			result = new HillClimbingSearch<>(h);
-			break;
+			case DF_SEARCH:
+				result = new DepthFirstSearch<>(qs);
+				break;
+			case BF_SEARCH:
+				result = new BreadthFirstSearch<>(qs);
+				break;
+			case ID_SEARCH:
+				result = new IterativeDeepeningSearch<>();
+				break;
+			case UC_SEARCH:
+				result = new UniformCostSearch<>(qs);
+				break;
+			case GBF_SEARCH:
+				result = new GreedyBestFirstSearch<>(qs, h);
+				break;
+			case ASTAR_SEARCH:
+				result = new AStarSearch<>(qs, h);
+				break;
+			case RBF_SEARCH:
+				result = new RecursiveBestFirstSearch<>(AStarSearch.createEvalFn(h));
+				break;
+			case RBF_AL_SEARCH:
+				result = new RecursiveBestFirstSearch<>(AStarSearch.createEvalFn(h), true);
+				break;
+			case HILL_SEARCH:
+				result = new HillClimbingSearch<>(h);
+				break;
 		}
 		return result;
 	}

@@ -27,7 +27,7 @@ import aima.core.search.framework.problem.Problem;
  * 
  * <br>
  * This implementation is based on the template method
- * {@link #findNode(Problem, Queue)} of the superclass and provides
+ * {@link TreeSearch#findNode(Problem, Queue)} of the superclass and provides
  * implementations for the needed primitive operations. It implements a special
  * version of graph search which keeps the frontier short by focusing on the
  * best node for each state only. It should only be used in combination with
@@ -43,7 +43,7 @@ import aima.core.search.framework.problem.Problem;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public class GraphSearchReducedFrontier<S, A> extends QueueSearch<S, A> {
+public class GraphSearchReducedFrontier<S, A> extends TreeSearch<S, A> {
 
 	private Set<S> explored = new HashSet<>();
 	private Map<S, Node<S, A>> frontierNodeLookup = new HashMap<>();
