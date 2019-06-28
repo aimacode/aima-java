@@ -35,7 +35,7 @@ import java.util.function.ToDoubleFunction;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A>, Informed<S, A> {
+public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A> {
 
     public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
     public static final String METRIC_NODE_VALUE = "nodeValue";
@@ -54,17 +54,12 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
         this(evalFn, new NodeFactory<>());
     }
 
-    public HillClimbingSearch(ToDoubleFunction<Node<S, A>> h, NodeFactory<S, A> nodeFactory) {
-        this.evalFn = h;
+    public HillClimbingSearch(ToDoubleFunction<Node<S, A>> evalFn, NodeFactory<S, A> nodeFactory) {
+        this.evalFn = evalFn;
         this.nodeFactory = nodeFactory;
         nodeFactory.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
     }
-
-    @Override
-    public void setHeuristicFunction(ToDoubleFunction<Node<S, A>> h) {
-        this.evalFn = h;
-    }
-
+    
     @Override
     public Optional<List<A>> findActions(Problem<S, A> p) {
         nodeFactory.useParentLinks(true);
