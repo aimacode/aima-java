@@ -139,7 +139,7 @@ public class NQueensDemo {
 		Problem<NQueensBoard, QueenAction> problem =
 				NQueensFunctions.createCompleteStateFormulationProblem(boardSize, Config.QUEENS_IN_FIRST_ROW);
 		HillClimbingSearch<NQueensBoard, QueenAction> search = new HillClimbingSearch<>
-				(NQueensFunctions::getNumberOfAttackingPairs);
+				(n -> -NQueensFunctions.getNumberOfAttackingPairs(n));
 		Optional<List<QueenAction>> actions = search.findActions(problem);
 
 		actions.ifPresent(qActions -> qActions.forEach(System.out::println));

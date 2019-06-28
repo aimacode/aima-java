@@ -143,7 +143,7 @@ public class SearchFactory {
 				result = new RecursiveBestFirstSearch<>(AStarSearch.createEvalFn(h), true);
 				break;
 			case HILL_SEARCH:
-				result = new HillClimbingSearch<>(h);
+				result = new HillClimbingSearch<>(n -> -h.applyAsDouble(n));
 				break;
 		}
 		return result;

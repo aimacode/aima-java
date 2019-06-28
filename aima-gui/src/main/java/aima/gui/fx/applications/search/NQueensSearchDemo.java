@@ -101,7 +101,7 @@ public class NQueensSearchDemo {
 		// board = new NQueensBoard(boardSize, Config.QUEEN_IN_EVERY_COL);
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(board, NQueensFunctions::getCSFActions,
 				NQueensFunctions::getResult, NQueensFunctions::testGoal);
-		search = new HillClimbingSearch<>(NQueensFunctions::getNumberOfAttackingPairs);
+		search = new HillClimbingSearch<>(n -> -NQueensFunctions.getNumberOfAttackingPairs(n));
 		search.addNodeListener(n -> notifyProgressTrackers(n.getState(), search.getMetrics()));
 		search.findActions(problem);
 

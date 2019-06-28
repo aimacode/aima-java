@@ -66,7 +66,7 @@ public class NQueensApp extends SimpleAgentApp<Percept, QueenAction> {
 		addSearchAlgorithm("A* search (attacking pair heuristic)",
 				new AStarSearch<>(new GraphSearch<>(), NQueensFunctions::getNumberOfAttackingPairs));
 		addSearchAlgorithm("Hill Climbing Search", new HillClimbingSearch<>
-				(NQueensFunctions::getNumberOfAttackingPairs));
+				(n -> -NQueensFunctions.getNumberOfAttackingPairs(n)));
 		addSearchAlgorithm("Simulated Annealing Search",
 				new SimulatedAnnealingSearch<>(NQueensFunctions::getNumberOfAttackingPairs,
 						new Scheduler(20, 0.045, 1000)));

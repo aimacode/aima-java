@@ -44,7 +44,7 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	public static final String METRIC_TEMPERATURE = "temp";
 	public static final String METRIC_NODE_VALUE = "nodeValue";
 	
-	private final ToDoubleFunction<Node<S, A>> h;
+	private final ToDoubleFunction<Node<S, A>> energyFn;
 	private final Scheduler scheduler;
 	private final NodeFactory<S, A> nodeFactory;
 
@@ -52,31 +52,31 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	private Metrics metrics = new Metrics();
 
 	/**
-	 * Constructs a simulated annealing search from the specified heuristic
+	 * Constructs a simulated annealing search for the specified energy
 	 * function and a default scheduler.
 	 * 
-	 * @param h
-	 *            a heuristic function
+	 * @param energyFn
+	 *            a function mapping nodes to the energy of their state (the lower the better).
 	 */
-	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> h) {
-		this(h, new Scheduler());
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> energyFn) {
+		this(energyFn, new Scheduler());
 	}
 
 	/**
-	 * Constructs a simulated annealing search from the specified heuristic
+	 * Constructs a simulated annealing search for the specified energy
 	 * function and scheduler.
-	 * 
-	 * @param h
-	 *            a heuristic function
+	 *
+	 * @param energyFn
+	 *            a function mapping nodes to the energy of their state (the lower the better).
 	 * @param scheduler
 	 *            a mapping from time to "temperature"
 	 */
-	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> h, Scheduler scheduler) {
-		this(h, scheduler, new NodeFactory<>());
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> energyFn, Scheduler scheduler) {
+		this(energyFn, scheduler, new NodeFactory<>());
 	}
 	
-	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> h, Scheduler scheduler, NodeFactory<S, A> nodeFactory) {
-		this.h = h;
+	public SimulatedAnnealingSearch(ToDoubleFunction<Node<S, A>> energyFn, Scheduler scheduler, NodeFactory<S, A> nodeFactory) {
+		this.energyFn = energyFn;
 		this.scheduler = scheduler;
 		this.nodeFactory = nodeFactory;
 		nodeFactory.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
@@ -96,7 +96,10 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 
 	/**
 	 * Returns a node corresponding to a goal state or empty. Method {@link #getLastState()}
-	 * provides the last explored state if result is empty.
+	 * provides the last explored state if result is empty. Note that in this version, a minimum
+	 * is searched (two advantages: 1) The physical idea behind the algorithm becomes more visible.
+	 * 2) Heuristic functions can directly be used as energy functions, no need to change the sign
+	 * of the value).
 	 */
 	/// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
 	public Optional<Node<S, A>> findNode(Problem<S, A> p) {
@@ -116,21 +119,25 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 				return Optional.ofNullable(p.testSolution(current) ? current : null);
 			}
 
-			updateMetrics(temperature, getValue(current));
+			updateMetrics(temperature, getEnergy(current));
 			List<Node<S, A>> children = nodeFactory.getSuccessors(current, p);
 			if (children.size() > 0) {
 				/// next <- a randomly selected successor of current
 				Node<S, A> next = Util.selectRandomlyFromList(children);
-				/// /\E <- next.VALUE - current.value
-				double deltaE = getValue(next) - getValue(current);
-				/// if /\E &gt; 0 then current &lt;- next
-				/// else current &lt;- next only with probability e&circ;(/\E/T)
-				if (deltaE > 0.0 || Math.random() <= Math.exp(deltaE / temperature))
+				/// dE <- next.VALUE - current.value
+				double deltaE = getEnergy(next) - getEnergy(current);
+				// if dE < 0 then current &lt;- next
+				// else current <- next only with probability e&circ;(-dE/T)
+				if (deltaE < 0.0 || Math.random() <= Math.exp(-deltaE / temperature))
 					current = next;
 			}
 		}
 		lastState = current.getState();
 		return Optional.empty();
+	}
+
+	private double getEnergy(Node<S, A> n) {
+		return energyFn.applyAsDouble(n);
 	}
 
 	/**
@@ -170,16 +177,5 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	@Override
 	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
 		return nodeFactory.removeNodeListener(listener);
-	}
-	
-	//
-	// PRIVATE METHODS
-	//
-
-	private double getValue(Node<S, A> n) {
-		// assumption greater heuristic value =>
-		// HIGHER on hill; 0 == goal state;
-		// SA deals with gradient DESCENT
-		return -1 * h.applyAsDouble(n);
 	}
 }
