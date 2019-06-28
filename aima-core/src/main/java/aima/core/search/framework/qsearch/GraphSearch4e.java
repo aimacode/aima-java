@@ -110,25 +110,25 @@ public class GraphSearch4e<S, A> extends QueueSearch<S, A> {
 	}
 
 	/**
-	 * Primitive operation which inserts the node at the tail of the frontier.
+	 * Inserts the node at the tail of the frontier.
 	 */
-	protected void addToFrontier(Node<S, A> node) {
+	private void addToFrontier(Node<S, A> node) {
 		frontier.add(node);
 		updateMetrics(frontier.size());
 	}
 
 	/**
-	 * Primitive operation which removes and returns the node at the head of the frontier.
+	 * Removes and returns the node at the head of the frontier.
 	 *
 	 * @return the node at the head of the frontier.
 	 */
-	protected Node<S, A> removeFromFrontier() {
+	private Node<S, A> removeFromFrontier() {
 		Node<S, A> result = frontier.remove();
 		updateMetrics(frontier.size());
 		return result;
 	}
 
-	public boolean isCheaper(Node<S, A> node1, Node<S, A> node2) {
+	private boolean isCheaper(Node<S, A> node1, Node<S, A> node2) {
 		return node2 == null || nodeComparator != null && nodeComparator.compare(node1, node2) < 0;
 	}
 }
