@@ -34,7 +34,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |3.1|67|Simple-Problem-Solving-Agent|[SimpleProblemSolvingAgent](/aima-core/src/main/java/aima/core/search/agent/SimpleProblemSolvingAgent.java)|
 |3.2|68|Romania|[SimplifiedRoadMapOfPartOfRomania](/aima-core/src/main/java/aima/core/environment/map/SimplifiedRoadMapOfPartOfRomania.java)|
 |3.7|77|Tree-Search|[TreeSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/TreeSearch.java)|
-|3.7|77|Graph-Search|[GraphSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/GraphSearch.java)|
+|3.7|77|Graph-Search|[GraphSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/GraphSearch4e.java)|
 |3.10|79|Node|[Node](/aima-core/src/main/java/aima/core/search/framework/Node.java)|
 |3.11|82|Breadth-First-Search|[BreadthFirstSearch](/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java)|
 |3.14|84|Uniform-Cost-Search|[UniformCostSearch](/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java)|
