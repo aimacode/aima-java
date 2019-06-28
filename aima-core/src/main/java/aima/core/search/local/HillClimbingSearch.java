@@ -59,7 +59,7 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
         this.nodeFactory = nodeFactory;
         nodeFactory.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
     }
-    
+
     @Override
     public Optional<List<A>> findActions(Problem<S, A> p) {
         nodeFactory.useParentLinks(true);

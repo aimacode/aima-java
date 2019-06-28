@@ -97,8 +97,8 @@ public class SimulatedAnnealingSearch<S, A> implements SearchForActions<S, A>, S
 	/**
 	 * Returns a node corresponding to a goal state or empty. Method {@link #getLastState()}
 	 * provides the last explored state if result is empty. Note that in this version, a minimum
-	 * is searched (two advantages: 1) The physical idea behind the algorithm becomes more visible.
-	 * 2) Heuristic functions can directly be used as energy functions, no need to change the sign
+	 * is searched (two advantages: 1. The physical idea behind the algorithm becomes more visible.
+	 * 2. Heuristic functions can directly be used as energy functions, no need to change the sign
 	 * of the value).
 	 */
 	/// function SIMULATED-ANNEALING(problem, schedule) returns a solution state
