@@ -83,7 +83,7 @@ public class GraphSearch4e<S, A> extends QueueSearch<S, A> {
 		if (problem.testSolution(root))
 			return asOptional(root);
 
-		// while frontier is not empty and solution can possibly be improved do
+		/// while frontier is not empty and solution can possibly be improved do
 		while (!frontier.isEmpty() && !Tasks.currIsCancelled() && isCheaper(frontier.element(), solution)) {
 			/// parent <- some node that we choose to remove from frontier
 			Node<S, A> parent = removeFromFrontier();

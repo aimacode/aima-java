@@ -18,12 +18,10 @@ import aima.core.search.framework.problem.Problem;
  */
 public class SearchAgent<P, S, A> extends SimpleAgent<P, A> {
 	private List<A> actionList;
-
 	private Iterator<A> actionIterator;
-
 	private Metrics searchMetrics;
 
-	public SearchAgent(Problem<S, A> p, SearchForActions<S, A> search) throws Exception {
+	public SearchAgent(Problem<S, A> p, SearchForActions<S, A> search) {
 		Optional<List<A>> actions = search.findActions(p);
 		actionList = new ArrayList<>();
 		actions.ifPresent(as -> actionList.addAll(as));
@@ -49,10 +47,7 @@ public class SearchAgent<P, S, A> extends SimpleAgent<P, A> {
 
 	public Properties getInstrumentation() {
 		Properties result = new Properties();
-		for (String key : searchMetrics.keySet()) {
-			String value = searchMetrics.get(key);
-			result.setProperty(key, value);
-		}
+		searchMetrics.keySet().forEach(key -> result.setProperty(key, searchMetrics.get(key)));
 		return result;
 	}
 }
