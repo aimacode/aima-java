@@ -89,27 +89,17 @@ public abstract class ModelBasedReflexAgentProgram<P, A> implements AgentProgram
 		rules = ruleSet;
 	}
 
-	//
-	// START-AgentProgram
-
 	// function MODEL-BASED-REFLEX-AGENT(percept) returns an action
-	public Optional<A> apply(P percept) {
+	public final Optional<A> apply(P percept) {
 		// state <- UPDATE-STATE(state, action, percept, model)
 		state = updateState(state, action, percept, model);
 		// rule <- RULE-MATCH(state, rules)
 		Rule<A> rule = ruleMatch(state, rules);
 		// action <- rule.ACTION
-		action = ruleAction(rule);
+		action = (rule != null) ? rule.getAction() : null;
 		// return action
 		return Optional.ofNullable(action);
 	}
-
-	// END-AgentProgram
-	//
-
-	//
-	// PROTECTED METHODS
-	//
 
 	/**
 	 * Realizations of this class should implement the init() method so that it
@@ -120,15 +110,7 @@ public abstract class ModelBasedReflexAgentProgram<P, A> implements AgentProgram
 	protected abstract DynamicState updateState(DynamicState state,
 			A action, P percept, Model model);
 
-	protected Rule<A> ruleMatch(DynamicState state, Set<Rule<A>> rules) {
-		for (Rule<A> r : rules) {
-			if (r.evaluate(state))
-				return r;
-		}
-		return null;
-	}
-
-	protected A ruleAction(Rule<A> r) {
-		return r != null ? r.getAction() : null;
+	private Rule<A> ruleMatch(DynamicState state, Set<Rule<A>> rules) {
+		return rules.stream().filter(r -> r.evaluate(state)).findFirst().orElse(null);
 	}
 }

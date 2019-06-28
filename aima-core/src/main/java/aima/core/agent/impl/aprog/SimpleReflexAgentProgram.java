@@ -49,39 +49,21 @@ public abstract class SimpleReflexAgentProgram<P, A> implements AgentProgram<P, 
 		rules = ruleSet;
 	}
 
-	//
-	// START-AgentProgram
-
 	// function SIMPLE-RELEX-AGENT(percept) returns an action
 	@Override
-	public Optional<A> apply(P percept) {
-
+	public final Optional<A> apply(P percept) {
 		// state <- INTERPRET-INPUT(percept);
 		DynamicState state = interpretInput(percept);
 		// rule <- RULE-MATCH(state, rules);
 		Rule<A> rule = ruleMatch(state, rules);
 		// action <- rule.ACTION;
 		// return action
-		return Optional.ofNullable(ruleAction(rule));
+		return (rule != null) ? Optional.of(rule.getAction()) : Optional.empty();
 	}
 
-	// END-AgentProgram
-	//
-
-	//
-	// PROTECTED METHODS
-	//
 	protected abstract DynamicState interpretInput(P p);
 
-	protected Rule<A> ruleMatch(ObjectWithDynamicAttributes state, Set<Rule<A>> rulesSet) {
-		for (Rule<A> r : rulesSet) {
-			if (r.evaluate(state))
-				return r;
-		}
-		return null;
-	}
-
-	protected A ruleAction(Rule<A> r) {
-		return r != null ? r.getAction() : null;
+	private Rule<A> ruleMatch(ObjectWithDynamicAttributes state, Set<Rule<A>> rulesSet) {
+		return rulesSet.stream().filter(r -> r.evaluate(state)).findFirst().orElse(null);
 	}
 }

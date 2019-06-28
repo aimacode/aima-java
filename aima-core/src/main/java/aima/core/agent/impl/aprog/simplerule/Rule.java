@@ -45,9 +45,7 @@ public class Rule<A> {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o.getClass() != getClass())
-			return super.equals(o);
-		return (toString().equals(((Rule) o).toString()));
+		return o != null && o.getClass() == getClass() && toString().equals(((Rule) o).toString());
 	}
 
 	@Override

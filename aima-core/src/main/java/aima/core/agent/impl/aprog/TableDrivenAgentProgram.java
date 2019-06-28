@@ -53,19 +53,14 @@ public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
 	public TableDrivenAgentProgram(Map<List<P>, A> perceptSequenceActions) {
 
 		List<List<P>> rowHeaders = new ArrayList<>(perceptSequenceActions.keySet());
-
 		List<String> colHeaders = new ArrayList<>();
 		colHeaders.add(ACTION);
 
 		table = new Table<>(rowHeaders, colHeaders);
 
-		for (List<P> row : rowHeaders) {
+		for (List<P> row : rowHeaders)
 			table.set(row, ACTION, perceptSequenceActions.get(row));
-		}
 	}
-
-	//
-	// START-AgentProgram
 
 	// function TABLE-DRIVEN-AGENT(percept) returns an action
 	public Optional<A> apply(P percept) {
@@ -77,12 +72,6 @@ public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
 		return Optional.ofNullable(lookupCurrentAction());
 	}
 
-	// END-AgentProgram
-	//
-
-	//
-	// PRIVATE METHODS
-	//
 	private A lookupCurrentAction() {
 		return table.get(percepts, ACTION);
 	}
