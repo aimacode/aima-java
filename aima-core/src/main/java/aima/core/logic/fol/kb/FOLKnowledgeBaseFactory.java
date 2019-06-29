@@ -248,8 +248,8 @@ public class FOLKnowledgeBaseFactory {
 		kb.tell("Father(Philip,Anne)");
 		kb.tell("Father(Philip,Andrew)");
 		kb.tell("Father(Philip,Edward)");
-		kb.tell("Father(William,Charles)");
-		kb.tell("Father(William,Harry)");
+		kb.tell("Father(Charles,William)");
+		kb.tell("Father(Charles,Harry)");
 		kb.tell("Father(Mark,Peter)");
 		kb.tell("Father(Mark,Zara)");
 		kb.tell("Father(Andrew,Beatrice)");

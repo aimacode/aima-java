@@ -30,14 +30,15 @@ public class FOILTest {
         testing.put(x,new Constant("Mum"));
         testing.put(y,new Constant("Spencer"));
         System.out.println(kb.ask(kb.subst(testing,l).toString()).isTrue());
+        
+		
 
         FOIL algo = new FOIL();
         Literal lit = new Literal(new Predicate("Grandfather",Arrays.asList(x,y)));
         List<HashMap<Variable,Constant>> positiveExamples = new ArrayList<>();
         List<HashMap<Variable,Constant>> negativeExamples = new ArrayList<>();
         System.out.println(algo.kb.domain.getConstants().toString());
-        for (List<String> list :
-                PermutationGenerator.product(new ArrayList<>(algo.kb.domain.getConstants()),new ArrayList<>(algo.kb.domain.getConstants()))) {
+        for (List<String> list : PermutationGenerator.product(new ArrayList<>(algo.kb.domain.getConstants()),new ArrayList<>(algo.kb.domain.getConstants()))) {
             HashMap<Variable,Constant> temp = new HashMap<>();
             temp.put(x,new Constant(list.get(0)));
             temp.put(y,new Constant(list.get(1)));
@@ -47,11 +48,6 @@ public class FOILTest {
         HashMap<Variable,Constant> temp = new HashMap<>();
         temp.put(x,new Constant("George"));
         temp.put(y,new Constant("Charles"));
-        negativeExamples.remove(new HashMap<>(temp));
-        positiveExamples.add(new HashMap<>(temp));
-        temp.clear();
-        temp.put(x,new Constant("George"));
-        temp.put(y,new Constant("Anne"));
         negativeExamples.remove(new HashMap<>(temp));
         positiveExamples.add(new HashMap<>(temp));
         temp.clear();
