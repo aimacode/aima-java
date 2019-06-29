@@ -19,19 +19,10 @@ public class FOIL {
 	
 	public FOLKnowledgeBase kb = FOLKnowledgeBaseFactory.familyKnowledgeBase();
 	
-	
 	public HashSet<Clause> foil(List<List<HashMap<Variable, Constant>>> examples, Literal target) {
 		HashSet<Clause> clauses = new HashSet<>();
-		int i = 0;
 		while (!examples.get(0).isEmpty()) {
-			//
-			System.out.println("Positive Examples iteration i == " + (i++));
-			assert (i < 50);
-			System.out.println(examples.get(0).toString());
-			System.out.println(examples.get(0).size());
-			//
 			Clause clause = newClause(examples, target);
-			System.out.println(clause.toString());
 			// remove positive examples covered by clause from examples
 			for (HashMap<Variable, Constant> example : new ArrayList<>(examples.get(0))) {
 				boolean covered = true;
@@ -71,9 +62,14 @@ public class FOIL {
 			l = chooseLiteral(newLiterals(clause), extendedExamples);
 			System.out.println("CHOSEN LITERAL **** = " + l.toString());
 			clause.addLiteral(l);
-			List<HashMap<Variable, Constant>> allExamples = new ArrayList<>(extendedExamples.get(1));
+			List<HashMap<Variable, Constant>> allPosExamples = new ArrayList<>(extendedExamples.get(0));
+			extendedExamples.get(0).clear();
+			for (HashMap<Variable, Constant> example : allPosExamples) {
+				extendedExamples.get(0).addAll(extendExample(example, l));
+			}
+			List<HashMap<Variable, Constant>> allNegExamples = new ArrayList<>(extendedExamples.get(1));
 			extendedExamples.get(1).clear();
-			for (HashMap<Variable, Constant> example : allExamples) {
+			for (HashMap<Variable, Constant> example : allNegExamples) {
 				extendedExamples.get(1).addAll(extendExample(example, l));
 			}
 			System.out.println("Reduced size ==" + extendedExamples.get(1).size());
@@ -98,15 +94,56 @@ public class FOIL {
 		return extended_examples;
 	}
 	
-	private Literal chooseLiteral(List<Literal> literals, List<List<HashMap<Variable, Constant>>> extendedExamples) {
-		Variable x = new Variable("x");
-		Variable y = new Variable("y");
-		Variable z = new Variable("z");
-		List<Literal> l = new ArrayList<>();
-		l.add(new Literal(new Predicate("Father", Arrays.asList(x, z))));
-		l.add(new Literal(new Predicate("Father", Arrays.asList(z, y))));
-		return l.get((int) (l.size() * Math.random()));
-//		return literals.get((int) (literals.size() * Math.random()));
+	private Literal chooseLiteral(List<Literal> literals, List<List<HashMap<Variable, Constant>>> examples) {
+		Literal literal = null;
+		double gain = Double.MIN_VALUE;
+		
+		for(Literal l : literals){
+			
+			List<List<HashMap<Variable, Constant>>> allExamples = new ArrayList<>();
+			allExamples.add(0, new ArrayList<>());
+			allExamples.add(1, new ArrayList<>());
+			for (HashMap<Variable, Constant> h : examples.get(0)) {
+				HashMap<Variable, Constant> hashMap = new HashMap<>(h);
+				allExamples.get(0).add(hashMap);
+			}
+			for (HashMap<Variable, Constant> h : examples.get(1)) {
+				HashMap<Variable, Constant> hashMap = new HashMap<>(h);
+				allExamples.get(1).add(hashMap);
+			}
+			
+			double t = allExamples.get(0).size() + allExamples.get(1).size();
+			double tplus = allExamples.get(0).size();
+			
+			double  icurr = -((Math.log(tplus/t))/(Math.log(2)));
+			
+			List<List<HashMap<Variable, Constant>>> extendedExamples = new ArrayList<>();
+			extendedExamples.add(0, new ArrayList<>());
+			extendedExamples.add(1, new ArrayList<>());
+			int d = 0;
+			
+			for (HashMap<Variable, Constant> example : allExamples.get(0)) {
+				Map<Variable, Term> tempEg = new HashMap<>(example);
+				InferenceResult result = kb.ask(kb.subst(tempEg, l).toString());
+				if(result.isTrue()) d++;
+				extendedExamples.get(0).addAll(extendExample(example, l));
+			}
+			for (HashMap<Variable, Constant> example : allExamples.get(1)) {
+				extendedExamples.get(1).addAll(extendExample(example, l));
+			}
+			
+			double tdash = extendedExamples.get(0).size() + extendedExamples.get(1).size();
+			double tdashplus = extendedExamples.get(0).size();
+			
+			double inow = -((Math.log(tdashplus/tdash))/(Math.log(2)));
+			
+			double g = d * (icurr - inow);
+			if (g >= gain) {
+				gain = g;
+				literal = l;
+			}
+		}
+		return literal;
 	}
 	
 	private List<Literal> newLiterals(Clause clause) {
