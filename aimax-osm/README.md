@@ -34,13 +34,10 @@ version of the map representation.
 
 Central part of the project is an OSM viewer implementation. It is designed
 as an efficient general purpose viewer which is highly configurable and extendable.
-It consists of a platform-indepented base implementation and specializations for
-JavaFX and Swing. To add map functionality to a pane (map visualization and event
-handling for pan, zoom etc.) in JavaFX, the following lines are sufficient:
-`
-  StackPane mapPane = new StackPane();
-  mapPaneCtrl = new MapPaneCtrl(mapPane);
-  mapPaneCtrl.loadMap(DataResource.getUlmFileResource());`
+It consists of a platform-indepented [UnifiedMapDrawer](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/viewer/UnifiedMapDrawer.java) implementation which is equiped with platform-specific image builders, e.g. an [FXImageBuilder](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/gui/fx/viewer/FXImageBuilder.java). To add map functionality to a pane (map visualization and event handling for pan, zoom etc.) in JavaFX, the following commands are sufficient:
+`StackPane mapPane = new StackPane();
+ mapPaneCtrl = new MapPaneCtrl(mapPane);
+ mapPaneCtrl.loadMap(DataResource.getUlmFileResource());`
 
 The internal [DefaultMap](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/data/impl/DefaultMap.java) representation is chosen as close as possible to the
 original OSM XML file format. A [KDTree](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/data/impl/KDTree.java) is used to improve rendering efficiency.
