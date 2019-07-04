@@ -29,12 +29,12 @@ a toolbox for building small navigation systems.
 The framework provides interfaces for central parts of a map visualization system and
 additionally example implementations. Fundamental data structures
 for nodes, ways, and the map itself can be replaced (see package [aimax.osm.data](https://github.com/aimacode/aima-java/tree/AIMA3e/aimax-osm/src/main/java/aimax/osm/data)). The framework supports experiments
-with different implementations to optimize routing and also to integrate a database
+with different implementations for routing and also to integrate a database
 version of the map representation.
 
 Central part of the project is an OSM viewer implementation. It is designed
 as an efficient general purpose viewer which is highly configurable and extendable.
-It consists of a platform-indepented [UnifiedMapDrawer](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/viewer/UnifiedMapDrawer.java) implementation which is equiped with platform-specific image builders, e.g. an [FXImageBuilder](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/gui/fx/viewer/FXImageBuilder.java). To add map functionality to a pane (map visualization and event handling for pan, zoom etc.) in JavaFX, the following commands are sufficient:
+It consists of a platform-indepented [UnifiedMapDrawer](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/viewer/UnifiedMapDrawer.java) implementation which is equipped with a platform-specific image builder, e.g. an [FXImageBuilder](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/gui/fx/viewer/FXImageBuilder.java). To add map functionality to a pane (map visualization and event handling for pan, zoom etc.) in JavaFX, the following commands are sufficient:
 `StackPane mapPane = new StackPane();
  mapPaneCtrl = new MapPaneCtrl(mapPane);
  mapPaneCtrl.loadMap(DataResource.getUlmFileResource());`
