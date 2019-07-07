@@ -14,7 +14,7 @@ import aima.core.util.Tasks;
  * <pre>
  * function GRAPH-SEARCH(problem) returns a solution, or failure
  *  frontier &lt;- a queue initially containing one path, for the problem's initial state
- *  reached &lt;- a table of {state: node}; initially empty
+ *  reached &lt;- a table of {state: node}; initially empty (RLu: ??)
  *  solution &lt;- failure
  *  while frontier is not empty and solution can possibly be improved do
  *    parent &lt;- some node that we choose to remove from frontier
@@ -71,29 +71,35 @@ public class GraphSearch4e<S, A> extends QueueSearch<S, A> {
 		this.frontier = frontier;
 		nodeComparator = (frontier instanceof PriorityQueue<?>) ?
 				((PriorityQueue<Node<S, A>>) frontier).comparator() : null;
+		Node<S, A> root = nodeFactory.createNode(problem.getInitialState());
 
 		/// frontier <- a queue initially containing one path, for the problem's initial state
 		/// reached <- a table of {state: node}; initially empty
 		/// solution <- failure
+		addToFrontier(root);
 		Hashtable<S, Node<S, A>> reached = new Hashtable<>();
 		Node<S, A> solution = null;
-		Node<S, A> root = nodeFactory.createNode(problem.getInitialState());
-		addToFrontier(root);
-		// missing in pseudocode but necessary if the initial state is a goal state.
-		if (problem.testSolution(root))
+
+		// missing in pseudocode...
+		reached.put(root.getState(), root); // initial state has been reached!
+		if (problem.testSolution(root)) // initial state can be a goal state
 			return asOptional(root);
 
 		/// while frontier is not empty and solution can possibly be improved do
-		while (!frontier.isEmpty() && !Tasks.currIsCancelled() && isCheaper(frontier.element(), solution)) {
+		while (!frontier.isEmpty() && isCheaper(frontier.element(), solution) && !Tasks.currIsCancelled()) {
 			/// parent <- some node that we choose to remove from frontier
 			Node<S, A> parent = removeFromFrontier();
+			
+			// missing in pseudocode (a better path might have been found for the state)
+			if (reached.get(parent.getState()) != parent)
+				continue;
+
 			/// for child in EXPAND(parent) do
 			for (Node<S, A> child : nodeFactory.getSuccessors(parent, problem)) {
 				/// s <- child.state
 				S s = child.getState();
 				/// if s is not in reached or child is a cheaper path than reached[s] then
-				Node<S, A> reachedNode = reached.get(s);
-				if (reachedNode == null || isCheaper(child, reachedNode)) {
+				if (isCheaper(child, reached.get(s))) {
 					/// reached[s] <- child
 					reached.put(s, child);
 					/// add child to frontier
@@ -128,6 +134,12 @@ public class GraphSearch4e<S, A> extends QueueSearch<S, A> {
 		return result;
 	}
 
+	/**
+	 * Compares <code>node1</code> and <code>node2</code> with the comparator used in the frontier
+	 * if possible. If no comparator is given or <code>node2</code> is null, value true is returned.
+	 * @param node1 A node.
+	 * @param node2 A node, possibly null.
+	 */
 	private boolean isCheaper(Node<S, A> node1, Node<S, A> node2) {
 		return node2 == null || nodeComparator != null && nodeComparator.compare(node1, node2) < 0;
 	}
