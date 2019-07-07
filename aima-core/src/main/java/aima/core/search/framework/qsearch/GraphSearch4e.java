@@ -55,8 +55,8 @@ public class GraphSearch4e<S, A> extends QueueSearch<S, A> {
 	}
 
 	/**
-	 * Receives a problem and a queue implementing the search strategy and
-	 * computes a node referencing a goal state, if such a state was found.
+	 * Template method which receives a problem and a queue implementing the search strategy
+	 * and computes a node referencing a goal state, if such a state was found.
 	 *
 	 * @param problem
 	 *            the search problem
@@ -86,10 +86,10 @@ public class GraphSearch4e<S, A> extends QueueSearch<S, A> {
 			return asOptional(root);
 
 		/// while frontier is not empty and solution can possibly be improved do
-		while (!frontier.isEmpty() && isCheaper(frontier.element(), solution) && !Tasks.currIsCancelled()) {
+		while (!frontier.isEmpty() && canPossiblyBeImproved(solution) && !Tasks.currIsCancelled()) {
 			/// parent <- some node that we choose to remove from frontier
 			Node<S, A> parent = removeFromFrontier();
-			
+
 			// missing in pseudocode (a better path might have been found for the state)
 			if (reached.get(parent.getState()) != parent)
 				continue;
@@ -135,12 +135,22 @@ public class GraphSearch4e<S, A> extends QueueSearch<S, A> {
 	}
 
 	/**
-	 * Compares <code>node1</code> and <code>node2</code> with the comparator used in the frontier
+	 * Primitive operation which tests whether it makes sense to continue search for better solutions.
+	 * This implementation tests whether the first element of the frontier is cheaper than the
+	 * solution. This is sufficient for priority queues which evaluate nodes in a non-decreasing way
+	 * on all paths. It is assumed that the frontier contains at least one node.
+	 */
+	protected boolean canPossiblyBeImproved(Node<S, A> solution) {
+		return isCheaper(frontier.element(), solution);
+	}
+
+	/**
+	 * Primitive operation which compares <code>node1</code> and <code>node2</code> with the comparator used in the frontier
 	 * if possible. If no comparator is given or <code>node2</code> is null, value true is returned.
 	 * @param node1 A node.
 	 * @param node2 A node, possibly null.
 	 */
-	private boolean isCheaper(Node<S, A> node1, Node<S, A> node2) {
+	protected boolean isCheaper(Node<S, A> node1, Node<S, A> node2) {
 		return node2 == null || nodeComparator != null && nodeComparator.compare(node1, node2) < 0;
 	}
 }
