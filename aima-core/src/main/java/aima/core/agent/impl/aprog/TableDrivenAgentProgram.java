@@ -57,9 +57,7 @@ public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
 		colHeaders.add(ACTION);
 
 		table = new Table<>(rowHeaders, colHeaders);
-
-		for (List<P> row : rowHeaders)
-			table.set(row, ACTION, perceptsToActionMap.get(row));
+		rowHeaders.forEach(row -> table.set(row, ACTION, perceptsToActionMap.get(row)));
 	}
 
 	// function TABLE-DRIVEN-AGENT(percept) returns an action
