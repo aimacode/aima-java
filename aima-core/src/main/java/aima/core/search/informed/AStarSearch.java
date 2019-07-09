@@ -24,7 +24,7 @@ import java.util.function.ToDoubleFunction;
 public class AStarSearch<S, A> extends BestFirstSearch<S, A> {
 
     /**
-     * Constructs an A* search from a specified search space exploration
+     * Constructs an A* search from a specified search execution
      * strategy and a heuristic function.
      *
      * @param impl a search space exploration strategy (e.g. TreeSearch, GraphSearch).

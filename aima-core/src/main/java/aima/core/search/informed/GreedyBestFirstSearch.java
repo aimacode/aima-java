@@ -19,8 +19,8 @@ import java.util.function.ToDoubleFunction;
 public class GreedyBestFirstSearch<S, A> extends BestFirstSearch<S, A> {
 
 	/**
-	 * Constructs a greedy best-first search from a specified search space
-	 * exploration strategy and a heuristic function.
+	 * Constructs a greedy best-first search from a specified search execution strategy
+	 * and a heuristic function.
 	 * 
 	 * @param impl
 	 *            a search space exploration strategy (e.g. TreeSearch,

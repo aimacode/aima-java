@@ -3,7 +3,7 @@
  * interface for them, which is implicitly defined by abstract class
  * {@link aima.core.search.framework.qsearch.QueueSearch}. Given a problem and a
  * queue data structure of nodes (which is defined by some search strategy),
- * the implementations control search space exploration and return a
+ * the implementations control search execution and return a
  * node corresponding to a goal state if such was found.
  * 
  * @author Ruediger Lunde

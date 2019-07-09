@@ -31,8 +31,7 @@ import aima.core.search.framework.problem.Problem;
  * This implementation is based on the template method
  * {@link TreeSearch#findNode(Problem, Queue)} of the superclass and
  * provides implementations for the needed primitive operations. It is the most
- * efficient variant of graph search for breadth first in search applied
- * to bidirectional problems. But don't expect
+ * efficient variant of graph search for breadth first. But don't expect
  * shortest paths in combination with priority queue frontiers.
  *
  * @param <S> The type used to represent states

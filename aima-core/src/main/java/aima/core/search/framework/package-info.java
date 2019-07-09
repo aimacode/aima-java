@@ -24,9 +24,9 @@
  * search strategies) are provided as specializations of
  * {@link aima.core.search.framework.QueueBasedSearch}. They delegate the work of
  * controlling the actual search to some
- * {@link aima.core.search.framework.qsearch.QueueSearch} implementation. The
- * most important concrete implementations are TreeSearch, GraphSearch, and
- * BidirectionalSearch.
+ * {@link aima.core.search.framework.qsearch.QueueSearch} implementation (called
+ * search execution strategies). The most important concrete implementations are
+ * TreeSearch, GraphSearch4e, and BidirectionalSearch.
  * 
  * <br>
  * Here, all search strategies explore the search space by expanding nodes. A
