@@ -158,7 +158,7 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 	}
 
 
-	// Information for grid listeners...
+	// Information for grid views...
 
 	public int getXDimension() {
 		return locations.size();
