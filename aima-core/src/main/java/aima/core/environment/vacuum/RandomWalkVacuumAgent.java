@@ -56,20 +56,18 @@ public class RandomWalkVacuumAgent extends SimpleAgent<VacuumPercept, Action> {
                 default:
                     result = lastMoveAction;
             }
-            lastMoveAction = result;
 
             for (int i = 0; i < 2 ; i++) {
-                if (result == ACTION_MOVE_UP && "False".equals(percept.getAttribute("canMoveUp")))
-                    result = ACTION_MOVE_LEFT;
-                else if (result == ACTION_MOVE_LEFT && "False".equals(percept.getAttribute("canMoveLeft")))
-                    result = bound != 2 ? ACTION_MOVE_DOWN : ACTION_MOVE_UP;
-                else if (result == ACTION_MOVE_DOWN && "False".equals(percept.getAttribute("canMoveDown")))
-                    result = ACTION_MOVE_RIGHT;
-                else if (result == ACTION_MOVE_RIGHT && "False".equals(percept.getAttribute("canMoveRight")))
-                    result = ACTION_MOVE_UP;
-                else
-                    i = 2;
-            }
+				if (result == ACTION_MOVE_UP && "False".equals(percept.getAttribute("canMoveUp")))
+					result = ACTION_MOVE_LEFT;
+				if (result == ACTION_MOVE_LEFT && "False".equals(percept.getAttribute("canMoveLeft")))
+					result = bound != 2 ? ACTION_MOVE_DOWN : ACTION_MOVE_UP;
+				if (result == ACTION_MOVE_DOWN && "False".equals(percept.getAttribute("canMoveDown")))
+					result = ACTION_MOVE_RIGHT;
+				if (result == ACTION_MOVE_RIGHT && "False".equals(percept.getAttribute("canMoveRight")))
+					result = ACTION_MOVE_UP;
+			}
+			lastMoveAction = result;
         }
         return Optional.of(result);
     }
