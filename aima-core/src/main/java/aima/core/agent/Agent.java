@@ -19,16 +19,16 @@ public interface Agent<P, A> extends EnvironmentObject {
 	 * action.
 	 * 
 	 * @param percept
-	 *            The current percept of a sequence perceived by the Agent.
-	 * @return the Action to be taken in response to the currently perceived
-	 *         percept. No action replaces NoOp in earlier implementations.
+	 *      	The current percept of a sequence perceived by the Agent.
+	 * @return 	The Action to be taken in response to the currently perceived
+	 *         	percept. Empty replaces NoOp in earlier implementations.
 	 */
 	Optional<A> act(P percept);
 
 	/**
 	 * Life-cycle indicator as to the liveness of an Agent.
 	 * 
-	 * @return true if the Agent is to be considered alive, false otherwise.
+	 * @return 	Value true if the Agent is to be considered alive, false otherwise.
 	 */
 	boolean isAlive();
 
@@ -36,8 +36,8 @@ public interface Agent<P, A> extends EnvironmentObject {
 	 * Set the current liveness of the Agent.
 	 * 
 	 * @param alive
-	 *            set to true if the Agent is to be considered alive, false
-	 *            otherwise.
+	 *        	Set to true if the Agent is to be considered alive, false
+	 *       	otherwise.
 	 */
 	void setAlive(boolean alive);
 }
