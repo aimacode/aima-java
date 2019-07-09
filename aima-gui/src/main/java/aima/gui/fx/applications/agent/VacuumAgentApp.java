@@ -53,7 +53,13 @@ public class VacuumAgentApp extends IntegrableApplication {
         BorderPane root = new BorderPane();
 
         StackPane envView = new StackPane();
-        envViewCtrl = new VacuumEnvironmentViewCtrl(envView);
+		envViewCtrl = new VacuumEnvironmentViewCtrl(envView, action -> {
+			if (action == VacuumEnvironment.ACTION_MOVE_LEFT) return 270.0;
+			else if (action == VacuumEnvironment.ACTION_MOVE_RIGHT) return 90.0;
+			else if (action == MazeVacuumEnvironment.ACTION_MOVE_UP) return 0.0;
+			else if (action == MazeVacuumEnvironment.ACTION_MOVE_DOWN) return 180.0;
+			else return null;
+		});
 
         List<Parameter> params = createParameters();
 

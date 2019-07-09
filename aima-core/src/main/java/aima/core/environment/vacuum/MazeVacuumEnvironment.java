@@ -13,6 +13,8 @@ import java.util.*;
  * Percepts tell about possible movements, the current square state, and whether still
  * some dirt exists.
  *
+ * This environment can be used as a base for vacuum agent design competitions.
+ *
  * @author Ruediger Lunde
  */
 public class MazeVacuumEnvironment extends VacuumEnvironment {
