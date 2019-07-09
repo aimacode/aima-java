@@ -5,7 +5,6 @@ import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.agent.impl.DynamicAction;
-import aima.core.agent.impl.DynamicPercept;
 import aima.core.search.agent.NondeterministicSearchAgent;
 import aima.core.util.Util;
 
@@ -28,7 +27,7 @@ import java.util.Random;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class VacuumEnvironment extends AbstractEnvironment<DynamicPercept, Action> {
+public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action> {
 	// Allowable Actions within the Vacuum Environment
 	public static final Action ACTION_MOVE_LEFT = new DynamicAction("Left");
 	public static final Action ACTION_MOVE_RIGHT = new DynamicAction("Right");
@@ -97,13 +96,13 @@ public class VacuumEnvironment extends AbstractEnvironment<DynamicPercept, Actio
 	}
 
 	@Override
-	public void addAgent(Agent<? super DynamicPercept, ? extends Action> agent) {
+	public void addAgent(Agent<? super VacuumPercept, ? extends Action> agent) {
 		int idx = new Random().nextInt(locations.size());
 		envState.setAgentLocation(agent, locations.get(idx));
 		super.addAgent(agent);
 	}
 
-	public void addAgent(Agent<? super DynamicPercept, ? extends Action> agent, String location) {
+	public void addAgent(Agent<? super VacuumPercept, ? extends Action> agent, String location) {
 		// Ensure the agent state information is tracked before
 		// adding to super, as super will notify the registered
 		// EnvironmentViews that is was added.
@@ -112,16 +111,15 @@ public class VacuumEnvironment extends AbstractEnvironment<DynamicPercept, Actio
 	}
 
 	@Override
-	public DynamicPercept getPerceptSeenBy(Agent<?, ?> agent) {
-		// Other agents get a local percept.
-		DynamicPercept percept = new DynamicPercept();
+	public VacuumPercept getPerceptSeenBy(Agent<?, ?> agent) {
 		String loc = envState.getAgentLocation(agent);
-		percept.setAttribute(AttNames.CURRENT_LOCATION, loc);
-		percept.setAttribute(AttNames.CURRENT_STATE, envState.getLocationState(loc));
+		VacuumPercept percept = new VacuumPercept(loc, envState.getLocationState(loc));
 		if (agent instanceof NondeterministicSearchAgent) {
 			// This agent expects a fully observable environment.
-			percept.setAttribute(AttNames.STATE_LOCATION_A, envState.getLocationState(VacuumEnvironment.LOCATION_A));
-			percept.setAttribute(AttNames.STATE_LOCATION_B, envState.getLocationState(VacuumEnvironment.LOCATION_B));
+			percept.setAttribute(VacuumEnvironment.LOCATION_A,
+					envState.getLocationState(VacuumEnvironment.LOCATION_A));
+			percept.setAttribute(VacuumEnvironment.LOCATION_B,
+					envState.getLocationState(VacuumEnvironment.LOCATION_B));
 		}
 		return percept;
 	}
@@ -129,21 +127,19 @@ public class VacuumEnvironment extends AbstractEnvironment<DynamicPercept, Actio
 	@Override
 	public void execute(Agent<?, ?> agent, Action action) {
 		String loc = getAgentLocation(agent);
-		if (ACTION_MOVE_RIGHT == action) {
+		if (action == ACTION_MOVE_RIGHT) {
 			int x = getX(loc);
 			if (x < getXDimension())
 				envState.setAgentLocation(agent, getLocation(x + 1, getY(loc)));
 			updatePerformanceMeasure(agent, -1);
-		} else if (ACTION_MOVE_LEFT == action) {
+		} else if (action == ACTION_MOVE_LEFT) {
 			int x = getX(loc);
 			if (x > 1)
 				envState.setAgentLocation(agent, getLocation(x - 1, getY(loc)));
 			updatePerformanceMeasure(agent, -1);
-		} else if (ACTION_SUCK == action) {
-			if (LocationState.Dirty == envState.getLocationState(envState
-					.getAgentLocation(agent))) {
-				envState.setLocationState(envState.getAgentLocation(agent),
-						LocationState.Clean);
+		} else if (action == ACTION_SUCK) {
+			if (LocationState.Dirty == envState.getLocationState(envState.getAgentLocation(agent))) {
+				envState.setLocationState(envState.getAgentLocation(agent), LocationState.Clean);
 				updatePerformanceMeasure(agent, 10);
 			}
 		}

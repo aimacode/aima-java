@@ -2,7 +2,6 @@ package aima.core.environment.vacuum;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.impl.DynamicPercept;
 import aima.core.search.nondeterministic.ResultsFunction;
 
 import java.util.ArrayList;
@@ -80,13 +79,13 @@ public class VacuumWorldFunctions {
      * Maps a vacuum world percept of an agent to the corresponding vacuum environment state.
      * @param agent The perceiving agent.
      */
-    public static VacuumEnvironmentState getState(DynamicPercept percept, Agent<?, ?> agent) {
+    public static VacuumEnvironmentState getState(VacuumPercept percept, Agent<?, ?> agent) {
         VacuumEnvironmentState state = new VacuumEnvironmentState();
-        state.setAgentLocation(agent, (String) percept.getAttribute(AttNames.CURRENT_LOCATION));
+        state.setAgentLocation(agent, percept.getCurrLocation());
         state.setLocationState(VacuumEnvironment.LOCATION_A,
-                (VacuumEnvironment.LocationState) percept.getAttribute(AttNames.STATE_LOCATION_A));
+                (VacuumEnvironment.LocationState) percept.getAttribute(VacuumEnvironment.LOCATION_A));
         state.setLocationState(VacuumEnvironment.LOCATION_B,
-                (VacuumEnvironment.LocationState) percept.getAttribute(AttNames.STATE_LOCATION_B));
+                (VacuumEnvironment.LocationState) percept.getAttribute(VacuumEnvironment.LOCATION_B));
         return state;
     }
 }

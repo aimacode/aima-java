@@ -40,9 +40,10 @@ public class NondeterministicSearchAgent<P, S, A> extends SimpleAgent<P, A> {
 		this.ptsFunction = (percept) -> ptsFn.apply(percept, this);
 	}
 
-	public NondeterministicSearchAgent<P, S, A> setNotifier(Notifier notifier) {
+
+	public NondeterministicSearchAgent(BiFunction<P, Agent<P, A>, S> ptsFn, Notifier notifier) {
+		this(ptsFn);
 		this.notifier = notifier;
-		return this;
 	}
 
 	/**

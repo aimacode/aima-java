@@ -3,9 +3,8 @@ package aima.core.environment.vacuum;
 import aima.core.agent.Action;
 import aima.core.agent.AgentProgram;
 import aima.core.agent.impl.SimpleAgent;
-import aima.core.agent.impl.DynamicPercept;
+import aima.core.environment.vacuum.VacuumEnvironment.LocationState;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -28,21 +27,21 @@ import java.util.Optional;
  * @author Ruediger Lunde
  * 
  */
-public class ReflexVacuumAgent extends SimpleAgent<DynamicPercept, Action> {
+public class ReflexVacuumAgent extends SimpleAgent<VacuumPercept, Action> {
 
 	public ReflexVacuumAgent() {
-		super(new AgentProgram<DynamicPercept, Action>() {
+		super(new AgentProgram<VacuumPercept, Action>() {
 			// function REFLEX-VACUUM-AGENT([location, status]) returns an action
 			@Override
-			public Optional<Action> apply(DynamicPercept percept) {
+			public Optional<Action> apply(VacuumPercept percept) {
 				Action action = null;
 				// if status = Dirty then return Suck
-				if (VacuumEnvironment.LocationState.Dirty == percept.getAttribute(AttNames.CURRENT_STATE)) {
+				if (LocationState.Dirty == percept.getCurrState()) {
 					action = VacuumEnvironment.ACTION_SUCK;
 					// else if location = A then return Right
-				} else if (VacuumEnvironment.LOCATION_A.equals(percept.getAttribute(AttNames.CURRENT_LOCATION))) {
+				} else if (VacuumEnvironment.LOCATION_A.equals(percept.getCurrLocation())) {
 					action = VacuumEnvironment.ACTION_MOVE_RIGHT;
-				} else if (VacuumEnvironment.LOCATION_B.equals(percept.getAttribute(AttNames.CURRENT_LOCATION))) {
+				} else if (VacuumEnvironment.LOCATION_B.equals(percept.getCurrLocation())) {
 					// else if location = B then return Left
 					action = VacuumEnvironment.ACTION_MOVE_LEFT;
 				}

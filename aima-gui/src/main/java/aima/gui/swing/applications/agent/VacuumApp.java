@@ -1,7 +1,7 @@
 package aima.gui.swing.applications.agent;
 
 import aima.core.agent.Action;
-import aima.core.agent.impl.DynamicPercept;
+import aima.core.environment.vacuum.VacuumPercept;
 import aima.gui.swing.framework.AgentAppController;
 import aima.gui.swing.framework.AgentAppEnvironmentView;
 import aima.gui.swing.framework.AgentAppFrame;
@@ -13,23 +13,23 @@ import aima.gui.swing.framework.SimpleAgentApp;
  * 
  * @author Ruediger Lunde
  */
-public class VacuumApp extends SimpleAgentApp<DynamicPercept, Action> {
+public class VacuumApp extends SimpleAgentApp<VacuumPercept, Action> {
 
 	/** Returns a <code>VacuumView</code> instance. */
 	@Override
-	public AgentAppEnvironmentView<DynamicPercept, Action> createEnvironmentView() {
+	public AgentAppEnvironmentView<VacuumPercept, Action> createEnvironmentView() {
 		return new VacuumView();
 	}
 	
 	/** Returns a <code>VacuumFrame</code> instance. */
 	@Override
-	public AgentAppFrame<DynamicPercept, Action> createFrame() {
+	public AgentAppFrame<VacuumPercept, Action> createFrame() {
 		return new VacuumFrame();
 	}
 
 	/** Returns a <code>VacuumController</code> instance. */
 	@Override
-	public AgentAppController<DynamicPercept, Action> createController() {
+	public AgentAppController<VacuumPercept, Action> createController() {
 		return new VacuumController();
 	}
 

@@ -4,6 +4,7 @@ import aima.core.agent.Action;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.vacuum.NondeterministicVacuumEnvironment;
 import aima.core.environment.vacuum.VacuumEnvironmentState;
+import aima.core.environment.vacuum.VacuumPercept;
 import aima.core.environment.vacuum.VacuumWorldFunctions;
 import aima.core.search.agent.NondeterministicSearchAgent;
 import aima.core.search.nondeterministic.NondeterministicProblem;
@@ -28,7 +29,7 @@ import static aima.core.environment.vacuum.VacuumEnvironment.*;
 public class AndOrSearchTest {
 
     /** State is used as percept! */
-    private NondeterministicSearchAgent<DynamicPercept, VacuumEnvironmentState, Action> agent;
+    private NondeterministicSearchAgent<VacuumPercept, VacuumEnvironmentState, Action> agent;
     private NondeterministicVacuumEnvironment world;
 
     /**

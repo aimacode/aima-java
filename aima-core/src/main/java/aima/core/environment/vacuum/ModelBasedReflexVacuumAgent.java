@@ -3,7 +3,6 @@ package aima.core.environment.vacuum;
 import aima.core.agent.Action;
 import aima.core.agent.Model;
 import aima.core.agent.impl.SimpleAgent;
-import aima.core.agent.impl.DynamicPercept;
 import aima.core.agent.impl.DynamicState;
 import aima.core.agent.impl.aprog.ModelBasedReflexAgentProgram;
 import aima.core.agent.impl.aprog.simplerule.ANDCondition;
@@ -19,10 +18,15 @@ import java.util.Set;
  * @author Ruediger Lunde
  * 
  */
-public class ModelBasedReflexVacuumAgent extends SimpleAgent<DynamicPercept, Action> {
+public class ModelBasedReflexVacuumAgent extends SimpleAgent<VacuumPercept, Action> {
 
+	private static final String CURRENT_LOCATION = "currentLocation";
+	private static final String CURRENT_STATE = "currentState";
+	private static final String STATE_LOCATION_A = "stateLocationA";
+	private static final String STATE_LOCATION_B = "stateLocationB";
+	
 	public ModelBasedReflexVacuumAgent() {
-		super(new ModelBasedReflexAgentProgram<DynamicPercept, Action>() {
+		super(new ModelBasedReflexAgentProgram<VacuumPercept, Action>() {
 			@Override
 			protected void init() {
 				setState(new DynamicState());
@@ -31,17 +35,17 @@ public class ModelBasedReflexVacuumAgent extends SimpleAgent<DynamicPercept, Act
 
 			@Override
 			protected DynamicState updateState(DynamicState state,
-					Action anAction, DynamicPercept percept, Model model) {
+					Action anAction, VacuumPercept percept, Model model) {
 
-				Object loc = percept.getAttribute(AttNames.CURRENT_LOCATION);
-				Object locState = percept.getAttribute(AttNames.CURRENT_STATE);
-				state.setAttribute(AttNames.CURRENT_LOCATION, loc);
-				state.setAttribute(AttNames.CURRENT_STATE, locState);
+				Object loc = percept.getCurrLocation();
+				Object locState = percept.getCurrState();
+				state.setAttribute(CURRENT_LOCATION, loc);
+				state.setAttribute(CURRENT_STATE, locState);
 				// Keep track of the state of the different locations
 				if (Objects.equals(VacuumEnvironment.LOCATION_A, loc))
-					state.setAttribute(AttNames.STATE_LOCATION_A, locState);
+					state.setAttribute(STATE_LOCATION_A, locState);
 				else
-					state.setAttribute(AttNames.STATE_LOCATION_B, locState);
+					state.setAttribute(STATE_LOCATION_B, locState);
 				return state;
 			}
 		});
@@ -56,14 +60,14 @@ public class ModelBasedReflexVacuumAgent extends SimpleAgent<DynamicPercept, Act
 		Set<Rule<Action>> rules = new LinkedHashSet<>();
 
 		rules.add(new Rule<>(new ANDCondition
-				(new EQUALCondition(AttNames.STATE_LOCATION_A, VacuumEnvironment.LocationState.Clean),
-				new EQUALCondition(AttNames.STATE_LOCATION_B, VacuumEnvironment.LocationState.Clean)),
+				(new EQUALCondition(STATE_LOCATION_A, VacuumEnvironment.LocationState.Clean),
+				new EQUALCondition(STATE_LOCATION_B, VacuumEnvironment.LocationState.Clean)),
 				null));
-		rules.add(new Rule<>(new EQUALCondition(AttNames.CURRENT_STATE, VacuumEnvironment.LocationState.Dirty),
+		rules.add(new Rule<>(new EQUALCondition(CURRENT_STATE, VacuumEnvironment.LocationState.Dirty),
 				VacuumEnvironment.ACTION_SUCK));
-		rules.add(new Rule<>(new EQUALCondition(AttNames.CURRENT_LOCATION, VacuumEnvironment.LOCATION_A),
+		rules.add(new Rule<>(new EQUALCondition(CURRENT_LOCATION, VacuumEnvironment.LOCATION_A),
 				VacuumEnvironment.ACTION_MOVE_RIGHT));
-		rules.add(new Rule<>(new EQUALCondition(AttNames.CURRENT_LOCATION, VacuumEnvironment.LOCATION_B),
+		rules.add(new Rule<>(new EQUALCondition(CURRENT_LOCATION, VacuumEnvironment.LOCATION_B),
 				VacuumEnvironment.ACTION_MOVE_LEFT));
 
 		return rules;

@@ -4,8 +4,8 @@ import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.impl.DynamicAction;
-import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.vacuum.VacuumEnvironment;
+import aima.core.environment.vacuum.VacuumPercept;
 import aima.gui.swing.framework.EmptyEnvironmentView;
 
 import java.awt.*;
@@ -19,13 +19,13 @@ import java.util.List;
  * 
  * @author Ruediger Lunde
  */
-public class VacuumView extends EmptyEnvironmentView<DynamicPercept, Action> {
+public class VacuumView extends EmptyEnvironmentView<VacuumPercept, Action> {
 
 	private static final long serialVersionUID = 1L;
 	private Hashtable<Agent, Action> lastActions = new Hashtable<>();
 
 	@Override
-	public void agentActed(Agent<?, ?> agent, DynamicPercept percept, Action action, Environment<?, ?> source) {
+	public void agentActed(Agent<?, ?> agent, VacuumPercept percept, Action action, Environment<?, ?> source) {
 		lastActions.put(agent, action);
 		String prefix = "";
 		if (env.getAgents().size() > 1)
