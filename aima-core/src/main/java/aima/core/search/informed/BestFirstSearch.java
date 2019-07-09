@@ -27,13 +27,13 @@ public class BestFirstSearch<S, A> extends QueueBasedSearch<S, A> implements Inf
 	private final EvaluationFunction<S, A> evalFn;
 	
 	/**
-	 * Constructs a best first search from a specified search problem and
+	 * Constructs a best first search from a specified search execution strategy and an
 	 * evaluation function.
 	 * 
 	 * @param impl
-	 *            a search space exploration strategy.
+	 *            A search execution strategy.
 	 * @param evalFn
-	 *            an evaluation function, which returns a number purporting to
+	 *            An evaluation function, which returns a number purporting to
 	 *            describe the desirability (or lack thereof) of expanding a
 	 *            node.
 	 */

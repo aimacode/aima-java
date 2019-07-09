@@ -53,7 +53,7 @@ public class UniformCostSearch<S, A> extends QueueBasedSearch<S, A> {
 
 	/**
 	 * Combines UniformCostSearch queue definition with the specified
-	 * search space exploration strategy.
+	 * search execution strategy.
 	 */
 	public UniformCostSearch(QueueSearch<S, A> impl) {
 		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(Node::getPathCost)));

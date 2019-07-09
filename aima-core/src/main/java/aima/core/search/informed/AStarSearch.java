@@ -27,9 +27,9 @@ public class AStarSearch<S, A> extends BestFirstSearch<S, A> {
      * Constructs an A* search from a specified search execution
      * strategy and a heuristic function.
      *
-     * @param impl a search space exploration strategy (e.g. TreeSearch, GraphSearch).
-     * @param h   a heuristic function <em>h(n)</em>, which estimates the cost
-     *             of the cheapest path from the state at node <em>n</em> to a
+     * @param impl A search execution strategy (e.g. TreeSearch, GraphSearch).
+     * @param h    A heuristic function <em>h(n)</em>, which estimates the cost
+     *             of the cheapest path from the state of node <em>n</em> to a
      *             goal state.
      */
     public AStarSearch(QueueSearch<S, A> impl, ToDoubleFunction<Node<S, A>> h) {

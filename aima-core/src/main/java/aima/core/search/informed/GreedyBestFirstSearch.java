@@ -23,10 +23,9 @@ public class GreedyBestFirstSearch<S, A> extends BestFirstSearch<S, A> {
 	 * and a heuristic function.
 	 * 
 	 * @param impl
-	 *            a search space exploration strategy (e.g. TreeSearch,
-	 *            GraphSearch).
+	 *            A search execution strategy (e.g. TreeSearch, GraphSearch).
 	 * @param h
-	 *            a heuristic function <em>h(n)</em>, which estimates the
+	 *            A heuristic function <em>h(n)</em>, which estimates the
 	 *            cheapest path from the state at node <em>n</em> to a goal
 	 *            state.
 	 */
