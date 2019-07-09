@@ -47,19 +47,19 @@ public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
 	 * Constructs a TableDrivenAgentProgram with a table of actions, indexed by
 	 * percept sequences.
 	 * 
-	 * @param perceptSequenceActions
+	 * @param perceptsToActionMap
 	 *            a table of actions, indexed by percept sequences
 	 */
-	public TableDrivenAgentProgram(Map<List<P>, A> perceptSequenceActions) {
+	public TableDrivenAgentProgram(Map<List<P>, A> perceptsToActionMap) {
 
-		List<List<P>> rowHeaders = new ArrayList<>(perceptSequenceActions.keySet());
+		List<List<P>> rowHeaders = new ArrayList<>(perceptsToActionMap.keySet());
 		List<String> colHeaders = new ArrayList<>();
 		colHeaders.add(ACTION);
 
 		table = new Table<>(rowHeaders, colHeaders);
 
 		for (List<P> row : rowHeaders)
-			table.set(row, ACTION, perceptSequenceActions.get(row));
+			table.set(row, ACTION, perceptsToActionMap.get(row));
 	}
 
 	// function TABLE-DRIVEN-AGENT(percept) returns an action
