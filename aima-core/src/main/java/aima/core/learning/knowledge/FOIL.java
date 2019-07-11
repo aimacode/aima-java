@@ -61,23 +61,15 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 public class FOIL {
+	private FOLKnowledgeBase kb;
 	
-	public FOLKnowledgeBase kb = FOLKnowledgeBaseFactory.familyKnowledgeBase();
-	
-	public HashSet<Clause> foil(List<List<HashMap<Variable, Constant>>> examples, Literal target) {
+	private HashSet<Clause> foil(List<List<HashMap<Variable, Constant>>> examples, Literal target) {
 		HashSet<Clause> clauses = new HashSet<>();
 		while (!examples.get(0).isEmpty()) {
 			Clause clause = newClause(examples, target);
 			// remove positive examples covered by clause from examples
 			for (HashMap<Variable, Constant> example : new ArrayList<>(examples.get(0))) {
-				boolean covered = true;
-				for (Literal l : clause.getLiterals()) {
-					Map<Variable, Term> tempExample = new HashMap<>(example);
-					if ((!l.getAtomicSentence().getSymbolicName().equals(target.getAtomicSentence().getSymbolicName())) && !kb.ask(kb.subst(tempExample, l).toString()).isTrue()) {
-						covered = false;
-						break;
-					}
-				}
+				boolean covered = check(clause, example, target);
 				if (covered) {
 					examples.get(0).remove(example);
 				}
@@ -104,7 +96,6 @@ public class FOIL {
 		}
 		while (!extendedExamples.get(1).isEmpty()) {
 			l = chooseLiteral(newLiterals(clause), extendedExamples);
-			System.out.println("CHOSEN LITERAL **** = " + l.toString());
 			clause.addLiteral(l);
 			List<HashMap<Variable, Constant>> allPosExamples = new ArrayList<>(extendedExamples.get(0));
 			extendedExamples.get(0).clear();
@@ -116,7 +107,6 @@ public class FOIL {
 			for (HashMap<Variable, Constant> example : allNegExamples) {
 				extendedExamples.get(1).addAll(extendExample(example, l));
 			}
-			System.out.println("Reduced size ==" + extendedExamples.get(1).size());
 		}
 		return clause;
 	}
@@ -243,8 +233,44 @@ public class FOIL {
 				setOfLiterals.add(toAdd);
 			}
 		}
-		System.out.println("New Literals: " + setOfLiterals.toString());
 		return new ArrayList<>(setOfLiterals);
 	}
 	
+	private boolean check(Clause c, HashMap<Variable, Constant> testing, Literal target) {
+		List<HashMap<Variable, Constant>> extended_examples = new ArrayList<>();
+		extended_examples.add(testing);
+		for (Literal l : c.getLiterals()) {
+			if (l.getAtomicSentence().getSymbolicName().equals(target.getAtomicSentence().getSymbolicName())) continue;
+			List<HashMap<Variable, Constant>> extended_examples_temp = new ArrayList<>();
+			for (HashMap<Variable, Constant> map : extended_examples) {
+				Map<Variable, Term> tempEg = new HashMap<>(map);
+				InferenceResult result = kb.ask(kb.subst(tempEg, l).toString());
+				if (result.isTrue()) {
+					for (Proof proof : result.getProofs()) {
+						Map<Variable, Term> tempCondition = proof.getAnswerBindings();
+						HashMap<Variable, Constant> h = new HashMap<>(map);
+						for (Variable v : tempCondition.keySet()) {
+							h.put(v, new Constant(tempCondition.get(v).toString()));
+						}
+						extended_examples_temp.add(h);
+					}
+				}
+			}
+			extended_examples.clear();
+			extended_examples.addAll(extended_examples_temp);
+		}
+		return extended_examples.size() > 0;
+	}
+	
+	public HashSet<Clause> apply(List<List<HashMap<Variable, Constant>>> examples, Literal target){
+		return foil(examples, target);
+	}
+	
+	public FOLKnowledgeBase getKnowledgeBase(){
+		return kb;
+	}
+	
+	public FOIL(FOLKnowledgeBase kb) {
+		this.kb = kb;
+	}
 }
