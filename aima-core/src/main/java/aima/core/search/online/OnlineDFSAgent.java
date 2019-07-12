@@ -50,14 +50,13 @@ public class OnlineDFSAgent<P, S, A extends Action> extends SimpleAgent<P, A> {
 
 	private OnlineSearchProblem<S, A> problem;
 	private Function<P, S> ptsFn;
-	// persistent: result, a table, indexed by state and action, initially empty
+	/// persistent: result, a table, indexed by state and action, initially empty
 	private final TwoKeyHashMap<S, A, S> result = new TwoKeyHashMap<>();
-	// untried, a table that lists, for each state, the actions not yet tried
+	/// untried, a table that lists, for each state, the actions not yet tried
 	private final Map<S, List<A>> untried = new HashMap<>();
-	// unbacktracked, a table that lists,
-	// for each state, the backtracks not yet tried
+	/// unbacktracked, a table that lists, for each state, the backtracks not yet tried
 	private final Map<S, List<S>> unbacktracked = new HashMap<>();
-	// s, a, the previous state and action, initially null
+	/// s, a, the previous state and action, initially null
 	private S s = null;
 	private A a = null;
 
@@ -76,6 +75,70 @@ public class OnlineDFSAgent<P, S, A extends Action> extends SimpleAgent<P, A> {
 		setPerceptToStateFunction(ptsFn);
 	}
 
+
+	/// function ONLINE-DFS-AGENT(s') returns an action
+	/// inputs: s', a percept that identifies the current state
+	@Override
+	public Optional<A> act(P psPrimed) {
+		S sPrimed = ptsFn.apply(psPrimed);
+		/// if GOAL-TEST(s') then return stop
+		if (problem.testGoal(sPrimed)) {
+			a = null;
+		} else {
+			/// if s' is a new state (not in untried) then untried[s'] <- ACTIONS(s')
+			if (!untried.containsKey(sPrimed))
+				untried.put(sPrimed, problem.getActions(sPrimed));
+
+			/// if s is not null then do
+			if (s != null) {
+				// Note: If I've already seen the result of this
+				// [s, a] then don't put it back on the unbacktracked
+				// list otherwise you can keep oscillating
+				// between the same states endlessly.
+				if (!(sPrimed.equals(result.get(s, a)))) {
+					/// result[s, a] <- s'
+					result.put(s, a, sPrimed);
+
+					// Ensure the unbacktracked always has a list for s'
+					if (!unbacktracked.containsKey(sPrimed))
+						unbacktracked.put(sPrimed, new ArrayList<>());
+
+					/// add s to the front of the unbacktracked[s']
+					unbacktracked.get(sPrimed).add(0, s);
+				}
+			}
+			/// if untried[s'] is empty then
+			if (untried.get(sPrimed).isEmpty()) {
+				/// if unbacktracked[s'] is empty then return stop
+				if (unbacktracked.get(sPrimed).isEmpty()) {
+					a = null;
+				} else {
+					/// else a <- an action b such that result[s', b] = POP(unbacktracked[s'])
+					S popped = unbacktracked.get(sPrimed).remove(0);
+					for (Pair<S, A> sa : result.keySet()) {
+						if (sa.getFirst().equals(sPrimed) && result.get(sa).equals(popped)) {
+							a = sa.getSecond();
+							break;
+						}
+					}
+				}
+			} else {
+				/// else a <- POP(untried[s'])
+				a = untried.get(sPrimed).remove(0);
+			}
+		}
+
+		if (a == null)
+			// I'm either at the Goal or can't get to it, which in either case I'm finished so just die.
+			setAlive(false);
+
+		/// s <- s'
+		s = sPrimed;
+		/// return a
+		return Optional.ofNullable(a);
+	}
+
+
 	/**
 	 * Returns the search problem for this agent.
 	 * 
@@ -93,7 +156,13 @@ public class OnlineDFSAgent<P, S, A extends Action> extends SimpleAgent<P, A> {
 	 */
 	public void setProblem(OnlineSearchProblem<S, A> problem) {
 		this.problem = problem;
-		init();
+
+		result.clear();
+		untried.clear();
+		unbacktracked.clear();
+		s = null;
+		a = null;
+		setAlive(true);
 	}
 
 	/**
@@ -106,7 +175,7 @@ public class OnlineDFSAgent<P, S, A extends Action> extends SimpleAgent<P, A> {
 	}
 
 	/**
-	 * Sets the percept to state functino of this agent.
+	 * Sets the percept to state functinon of this agent.
 	 * 
 	 * @param ptsFn
 	 *            a function which returns the problem state associated with a
@@ -114,86 +183,5 @@ public class OnlineDFSAgent<P, S, A extends Action> extends SimpleAgent<P, A> {
 	 */
 	public void setPerceptToStateFunction(Function<P, S> ptsFn) {
 		this.ptsFn = ptsFn;
-	}
-
-	// function ONLINE-DFS-AGENT(s') returns an action
-	// inputs: s', a percept that identifies the current state
-	@Override
-	public Optional<A> act(P psPrimed) {
-		S sPrimed = ptsFn.apply(psPrimed);
-		// if GOAL-TEST(s') then return stop
-		if (problem.testGoal(sPrimed)) {
-			a = null;
-		} else {
-			// if s' is a new state (not in untried) then untried[s'] <-
-			// ACTIONS(s')
-			if (!untried.containsKey(sPrimed)) {
-				untried.put(sPrimed, problem.getActions(sPrimed));
-			}
-
-			// if s is not null then do
-			if (null != s) {
-				// Note: If I've already seen the result of this
-				// [s, a] then don't put it back on the unbacktracked
-				// list otherwise you can keep oscillating
-				// between the same states endlessly.
-				if (!(sPrimed.equals(result.get(s, a)))) {
-					// result[s, a] <- s'
-					result.put(s, a, sPrimed);
-
-					// Ensure the unbacktracked always has a list for s'
-					if (!unbacktracked.containsKey(sPrimed)) {
-						unbacktracked.put(sPrimed, new ArrayList<>());
-					}
-
-					// add s to the front of the unbacktracked[s']
-					unbacktracked.get(sPrimed).add(0, s);
-				}
-			}
-			// if untried[s'] is empty then
-			if (untried.get(sPrimed).isEmpty()) {
-				// if unbacktracked[s'] is empty then return stop
-				if (unbacktracked.get(sPrimed).isEmpty()) {
-					a = null;
-				} else {
-					// else a <- an action b such that result[s', b] =
-					// POP(unbacktracked[s'])
-					S popped = unbacktracked.get(sPrimed).remove(0);
-					for (Pair<S, A> sa : result.keySet()) {
-						if (sa.getFirst().equals(sPrimed) && result.get(sa).equals(popped)) {
-							a = sa.getSecond();
-							break;
-						}
-					}
-				}
-			} else {
-				// else a <- POP(untried[s'])
-				a = untried.get(sPrimed).remove(0);
-			}
-		}
-
-		if (a == null) {
-			// I'm either at the Goal or can't get to it,
-			// which in either case I'm finished so just die.
-			setAlive(false);
-		}
-
-		// s <- s'
-		s = sPrimed;
-		// return a
-		return Optional.ofNullable(a);
-	}
-
-	//
-	// PRIVATE METHODS
-	//
-
-	private void init() {
-		setAlive(true);
-		result.clear();
-		untried.clear();
-		unbacktracked.clear();
-		s = null;
-		a = null;
 	}
 }
