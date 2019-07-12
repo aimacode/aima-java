@@ -74,9 +74,8 @@ public class LRTAStarAgent<P, S, A> extends SimpleAgent<P, A> {
 	 *            a function which returns the problem state associated with a
 	 *            given Percept.
 	 * @param h
-	 *            heuristic function <em>h(n)</em>, which estimates the cost of
-	 *            the cheapest path from the state at node <em>n</em> to a goal
-	 *            state.
+	 *            heuristic function <em>h(s)</em>, which estimates the cost of
+	 *            the cheapest path from the state <em>s</em> to a goal state.
 	 */
 	public LRTAStarAgent(OnlineSearchProblem<S, A> problem, Function<P, S> ptsFn, ToDoubleFunction<S> h) {
 		setProblem(problem);
@@ -135,9 +134,8 @@ public class LRTAStarAgent<P, S, A> extends SimpleAgent<P, A> {
 	 * Sets the heuristic function of this agent.
 	 * 
 	 * @param h
-	 *            heuristic function <em>h(n)</em>, which estimates the cost of
-	 *            the cheapest path from the state at node <em>n</em> to a goal
-	 *            state.
+	 *            heuristic function <em>h(s)</em>, which estimates the cost of
+	 *            the cheapest path from the state <em>s</em> to a goal state.
 	 */
 	public void setHeuristicFunction(ToDoubleFunction<S> h) {
 		this.h = h;
