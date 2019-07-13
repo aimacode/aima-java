@@ -71,15 +71,14 @@ import java.util.*;
  */
 public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> {
 
-	// persistent: KB, a knowledge base, initially the atemporal
-	// "wumpus physics"
+	/// persistent: KB, a knowledge base, initially the atemporal "wumpus physics"
 	private WumpusKnowledgeBase kb = null;
 	protected AgentPosition start;
 	/** The agent's current position. */
 	protected AgentPosition currentPosition;
-	// t, a counter, initially 0, indicating time
+	/// t, a counter, initially 0, indicating time
 	protected int t = 0;
-	// plan, an action sequence, initially empty
+	/// plan, an action sequence, initially empty
 	protected Queue<WumpusAction> plan = new LinkedList<>(); // FIFOQueue
 	private Notifier notifier;
 
@@ -120,9 +119,9 @@ public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> 
 	@Override
 	public Optional<WumpusAction> act(WumpusPercept percept) {
 
-		// TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
+		/// TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
 		kb.makePerceptSentence(percept, t);
-		// TELL the KB the temporal "physics" sentences for time t
+		/// TELL the KB the temporal "physics" sentences for time t
 		kb.tellTemporalPhysicsSentences(t);
 
 		Set<Room> safe = null;
@@ -133,14 +132,14 @@ public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> 
 			notifyViews("Reasoning (t=" + t + ", Percept=" + percept + ") ...");
 			currentPosition = kb.askCurrentPosition(t);
 			notifyViews("Ask position -> " + currentPosition);
-			// safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
+			/// safe <- {[x, y] : ASK(KB, OK<sup>t</sup><sub>x,y</sub>) = true}
 			safe = kb.askSafeRooms(t);
 			notifyViews("Ask safe -> " + safe);
 		}
 
-		// if ASK(KB, Glitter<sup>t</sup>) = true then (can only be true when plan is empty!)
+		/// if ASK(KB, Glitter<sup>t</sup>) = true then (can only be true when plan is empty!)
 		if (plan.isEmpty() && kb.askGlitter(t)) {
-			// plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
+			/// plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
 			Set<Room> goals = new LinkedHashSet<>();
 			goals.add(start.getRoom());
 			plan.add(WumpusAction.GRAB);
@@ -148,50 +147,50 @@ public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> 
 			plan.add(WumpusAction.CLIMB);
 		}
 
-		// if plan is empty then
+		/// if plan is empty then
 		if (plan.isEmpty()) {
-			// unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
+			/// unvisited <- {[x, y] : ASK(KB, L<sup>t'</sup><sub>x,y</sub>) = false for all t' &le; t}
 			unvisited = kb.askUnvisitedRooms(t);
 			notifyViews("Ask unvisited -> " + unvisited);
-			// plan <- PLAN-ROUTE(current, unvisited &cap; safe, safe)
+			/// plan <- PLAN-ROUTE(current, unvisited &cap; safe, safe)
 			plan.addAll(planRouteToRooms(SetOps.intersection(unvisited, safe), safe));
 		}
 
-		// if plan is empty and ASK(KB, HaveArrow<sup>t</sup>) = true then
+		/// if plan is empty and ASK(KB, HaveArrow<sup>t</sup>) = true then
 		if (plan.isEmpty() && kb.askHaveArrow(t)) {
-			// possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
+			/// possible_wumpus <- {[x, y] : ASK(KB, ~W<sub>x,y</sub>) = false}
 			Set<Room> possibleWumpus = kb.askPossibleWumpusRooms(t);
 			notifyViews("Ask possible Wumpus positions -> " + possibleWumpus);
-			// plan <- PLAN-SHOT(current, possible_wumpus, safe)
+			/// plan <- PLAN-SHOT(current, possible_wumpus, safe)
 			plan.addAll(planShot(possibleWumpus, safe));
 		}
 
-		// if plan is empty then //no choice but to take a risk
+		/// if plan is empty then (no choice but to take a risk)
 		if (plan.isEmpty()) {
-			// not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
+			/// not_unsafe <- {[x, y] : ASK(KB, ~OK<sup>t</sup><sub>x,y</sub>) = false}
 			Set<Room> notUnsafe = kb.askNotUnsafeRooms(t);
 			notifyViews("Ask not unsafe -> " + notUnsafe);
-			// plan <- PLAN-ROUTE(current, unvisited &cap; not_unsafe, safe)
+			/// plan <- PLAN-ROUTE(current, unvisited &cap; not_unsafe, safe)
 			// Correction: Last argument must be not_unsafe!
 			plan.addAll(planRouteToRooms(unvisited, notUnsafe));
 		}
 
-		// if plan is empty then
+		/// if plan is empty then
 		if (plan.isEmpty()) {
 			notifyViews("Going home.");
-			// plan PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
+			/// plan PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
 			Set<Room> goal = new LinkedHashSet<>();
 			goal.add(start.getRoom());
 			plan.addAll(planRouteToRooms(goal, safe));
 			plan.add(WumpusAction.CLIMB);
 		}
-		// action <- POP(plan)
+		/// action <- POP(plan)
 		WumpusAction action = plan.remove();
-		// TELL(KB, MAKE-ACTION-SENTENCE(action, t))
+		/// TELL(KB, MAKE-ACTION-SENTENCE(action, t))
 		kb.makeActionSentence(action, t);
-		// t <- t+1
+		/// t <- t+1
 		t = t + 1;
-		// return action
+		/// return action
 		return Optional.of(action);
 	}
 
@@ -255,9 +254,9 @@ public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> 
 
 		Set<AgentPosition> shootingPositions = new LinkedHashSet<>();
 
-		for (Room p : possibleWumpus) {
-			int x = p.getX();
-			int y = p.getY();
+		for (Room room : possibleWumpus) {
+			int x = room.getX();
+			int y = room.getY();
 
 			for (int i = 1; i <= kb.getCaveXDimension(); i++) {
 				if (i < x)
@@ -273,11 +272,10 @@ public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> 
 			}
 		}
 
-		// Can't have a shooting position from any of the rooms the wumpus could
-		// reside
-		for (Room p : possibleWumpus)
+		// Can't have a shooting position from any of the rooms the wumpus could reside
+		for (Room room : possibleWumpus)
 			for (AgentPosition.Orientation orientation : AgentPosition.Orientation.values())
-				shootingPositions.remove(new AgentPosition(p.getX(), p.getY(), orientation));
+				shootingPositions.remove(new AgentPosition(room.getX(), room.getY(), orientation));
 
 		List<WumpusAction> actions = new ArrayList<>(planRoute(shootingPositions, allowed));
 		actions.add(WumpusAction.SHOOT);

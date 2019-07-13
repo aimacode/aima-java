@@ -25,6 +25,14 @@ public class TicTacToeTest {
 	public void setUp() {
 		game = new TicTacToeGame();
 		state = game.getInitialState();
+		// for debugging
+//		state.mark(0, 0); // x
+//		state.mark(1, 0); // o
+//		state.mark(2, 0); // x
+//
+//		state.mark(0, 1); // o
+//		state.mark(2, 1); // x
+//		state.mark(1, 1); // o
 	}
 
 	@Test

@@ -57,44 +57,51 @@ public class MinimaxSearch<S, A, P> implements AdversarialSearch<S, A> {
         this.game = game;
     }
 
-    @Override
-    public A makeDecision(S state) {
-        metrics = new Metrics();
-        A result = null;
-        double resultValue = Double.NEGATIVE_INFINITY;
-        P player = game.getPlayer(state);
-        for (A action : game.getActions(state)) {
-            double value = minValue(game.getResult(state, action), player);
-            if (value > resultValue) {
-                result = action;
-                resultValue = value;
-            }
-        }
-        return result;
-    }
 
-    public double maxValue(S state, P player) { // returns an utility
-        // value
+	@Override
+	public A makeDecision(S state) {
+		metrics = new Metrics();
+		A result = null;
+		double resultValue = Double.NEGATIVE_INFINITY;
+		P player = game.getPlayer(state);
+		for (A action : game.getActions(state)) {
+			double value = minValue(game.getResult(state, action), player);
+			if (value > resultValue) {
+				result = action;
+				resultValue = value;
+			}
+		}
+		return result;
+	}
+
+//	  Note: This version looks cleaner but expands almost twice as much nodes (Comparator...)
+//    @Override
+//    public A makeDecision(S state) {
+//        metrics = new Metrics();
+//        P player = game.getPlayer(state);
+//        return game.getActions(state).stream()
+//                .max(Comparator.comparing(action -> minValue(game.getResult(state, action), player)))
+//                .orElse(null);
+//    }
+
+
+	public double maxValue(S state, P player) { // returns an utility value
+		metrics.incrementInt(METRICS_NODES_EXPANDED);
+		if (game.isTerminal(state))
+			return game.getUtility(state, player);
+		return game.getActions(state).stream()
+				.mapToDouble(action -> minValue(game.getResult(state, action), player))
+				.max().orElse(Double.NEGATIVE_INFINITY);
+	}
+
+
+    public double minValue(S state, P player) { // returns an utility value
         metrics.incrementInt(METRICS_NODES_EXPANDED);
         if (game.isTerminal(state))
             return game.getUtility(state, player);
-        double value = Double.NEGATIVE_INFINITY;
-        for (A action : game.getActions(state))
-            value = Math.max(value,
-                    minValue(game.getResult(state, action), player));
-        return value;
-    }
-
-    public double minValue(S state, P player) { // returns an utility
-        // value
-        metrics.incrementInt(METRICS_NODES_EXPANDED);
-        if (game.isTerminal(state))
-            return game.getUtility(state, player);
-        double value = Double.POSITIVE_INFINITY;
-        for (A action : game.getActions(state))
-            value = Math.min(value,
-                    maxValue(game.getResult(state, action), player));
-        return value;
+        return game.getActions(state).stream()
+                .mapToDouble(action -> maxValue(game.getResult(state, action), player))
+                .min().orElse(Double.POSITIVE_INFINITY);
     }
 
     @Override
