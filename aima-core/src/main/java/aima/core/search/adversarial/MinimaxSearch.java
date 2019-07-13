@@ -41,23 +41,22 @@ import aima.core.search.framework.Metrics;
  */
 public class MinimaxSearch<S, A, P> implements AdversarialSearch<S, A> {
 
-    public final static String METRICS_NODES_EXPANDED = "nodesExpanded";
+	public final static String METRICS_NODES_EXPANDED = "nodesExpanded";
 
-    private Game<S, A, P> game;
-    private Metrics metrics = new Metrics();
+	private Game<S, A, P> game;
+	private Metrics metrics = new Metrics();
 
-    /**
-     * Creates a new search object for a given game.
-     */
-    public static <S, A, P> MinimaxSearch<S, A, P> createFor(Game<S, A, P> game) {
-        return new MinimaxSearch<>(game);
-    }
+	/**
+	 * Creates a new search object for a given game.
+	 */
+	public static <S, A, P> MinimaxSearch<S, A, P> createFor(Game<S, A, P> game) {
+		return new MinimaxSearch<>(game);
+	}
 
-    public MinimaxSearch(Game<S, A, P> game) {
-        this.game = game;
-    }
-
-
+	public MinimaxSearch(Game<S, A, P> game) {
+		this.game = game;
+	}
+	
 	@Override
 	public A makeDecision(S state) {
 		metrics = new Metrics();
@@ -84,7 +83,6 @@ public class MinimaxSearch<S, A, P> implements AdversarialSearch<S, A> {
 //                .orElse(null);
 //    }
 
-
 	public double maxValue(S state, P player) { // returns an utility value
 		metrics.incrementInt(METRICS_NODES_EXPANDED);
 		if (game.isTerminal(state))
@@ -95,17 +93,17 @@ public class MinimaxSearch<S, A, P> implements AdversarialSearch<S, A> {
 	}
 
 
-    public double minValue(S state, P player) { // returns an utility value
-        metrics.incrementInt(METRICS_NODES_EXPANDED);
-        if (game.isTerminal(state))
-            return game.getUtility(state, player);
-        return game.getActions(state).stream()
-                .mapToDouble(action -> maxValue(game.getResult(state, action), player))
-                .min().orElse(Double.POSITIVE_INFINITY);
-    }
+	public double minValue(S state, P player) { // returns an utility value
+		metrics.incrementInt(METRICS_NODES_EXPANDED);
+		if (game.isTerminal(state))
+			return game.getUtility(state, player);
+		return game.getActions(state).stream()
+				.mapToDouble(action -> maxValue(game.getResult(state, action), player))
+				.min().orElse(Double.POSITIVE_INFINITY);
+	}
 
-    @Override
-    public Metrics getMetrics() {
-        return metrics;
-    }
+	@Override
+	public Metrics getMetrics() {
+		return metrics;
+	}
 }
