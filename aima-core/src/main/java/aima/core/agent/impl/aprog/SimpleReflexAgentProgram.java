@@ -9,10 +9,8 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.10, page
- * 49.<br>
- * <br>
- * 
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.10, page 49.
+ * <br><br>
  * <pre>
  * function SIMPLE-RELEX-AGENT(percept) returns an action
  *   persistent: rules, a set of condition-action rules
@@ -31,33 +29,25 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  * @author Ruediger Lunde
- * 
  */
 public abstract class SimpleReflexAgentProgram<P, A> implements AgentProgram<P, A> {
-	//
 	// persistent: rules, a set of condition-action rules
 	private Set<Rule<A>> rules;
 
 	/**
-	 * Constructs a SimpleReflexAgentProgram with a set of condition-action
-	 * rules.
-	 * 
-	 * @param ruleSet
+	 * Constructs a SimpleReflexAgentProgram with a set of condition-action rules.
+	 * @param rules
 	 *            a set of condition-action rules
 	 */
-	protected SimpleReflexAgentProgram(Set<Rule<A>> ruleSet) {
-		rules = ruleSet;
+	protected SimpleReflexAgentProgram(Set<Rule<A>> rules) {
+		this.rules = rules;
 	}
 
 	// function SIMPLE-RELEX-AGENT(percept) returns an action
 	@Override
 	public final Optional<A> apply(P percept) {
-		// state <- INTERPRET-INPUT(percept);
 		DynamicState state = interpretInput(percept);
-		// rule <- RULE-MATCH(state, rules);
 		Rule<A> rule = ruleMatch(state, rules);
-		// action <- rule.ACTION;
-		// return action
 		return (rule != null) ? Optional.of(rule.getAction()) : Optional.empty();
 	}
 

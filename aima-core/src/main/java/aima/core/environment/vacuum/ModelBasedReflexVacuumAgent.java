@@ -30,6 +30,7 @@ public class ModelBasedReflexVacuumAgent extends SimpleAgent<VacuumPercept, Acti
 			protected void init() {
 				setState(new DynamicState());
 				setRules(getRuleSet());
+				// the model attribute is not used here!
 			}
 
 			@Override
@@ -50,8 +51,7 @@ public class ModelBasedReflexVacuumAgent extends SimpleAgent<VacuumPercept, Acti
 	}
 
 	private static Set<Rule<Action>> getRuleSet() {
-		// Note: Using a LinkedHashSet so that the iteration order (i.e. implied
-		// precedence) of rules can be guaranteed.
+		// Note: LinkedHashSet preserves iteration order (i.e. implied precedence).
 		Set<Rule<Action>> rules = new LinkedHashSet<>();
 
 		rules.add(new Rule<>(new ANDCondition(

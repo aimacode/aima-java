@@ -1,7 +1,6 @@
 package aima.core.agent.impl.aprog;
 
 import aima.core.agent.AgentProgram;
-import aima.core.util.datastructure.Table;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.7, page 47.<br>
- * <br>
- * 
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.7, page 47.
+ * <br><br>
  * <pre>
  * function TABLE-DRIVEN-AGENT(percept) returns an action
  *   persistent: percepts, a sequence, initially empty
@@ -33,32 +31,21 @@ import java.util.Optional;
  * @author Ruediger Lunde
  */
 public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
-	// persistent: percepts, a sequence, initially empty
 	private List<P> percepts = new ArrayList<>();
-	// table, a table of actions, indexed by percept sequences, initially fully specified
-	private Table<List<P>, String, A> table;
-	private static final String ACTION_COL = "Action";
+	private Map<List<P>, A> table;
 
 	/**
 	 * Constructs a TableDrivenAgentProgram with a table of actions, indexed by percept sequences.
-	 * 
 	 * @param perceptsToActionMap
 	 *            a table of actions, indexed by percept sequences
 	 */
 	public TableDrivenAgentProgram(Map<List<P>, A> perceptsToActionMap) {
-		List<List<P>> rowHeaders = new ArrayList<>(perceptsToActionMap.keySet());
-		List<String> colHeaders = new ArrayList<>();
-		colHeaders.add(ACTION_COL);
-		table = new Table<>(rowHeaders, colHeaders);
-		rowHeaders.forEach(row -> table.set(row, ACTION_COL, perceptsToActionMap.get(row)));
+		table = perceptsToActionMap;
 	}
 
-	// function TABLE-DRIVEN-AGENT(percept) returns an action
+	/// function TABLE-DRIVEN-AGENT(percept) returns an action
 	public Optional<A> apply(P percept) {
-		// append percept to end of percepts
 		percepts.add(percept);
-		// action <- LOOKUP(percepts, table)
-		// return action
-		return Optional.ofNullable(table.get(percepts, ACTION_COL));
+		return Optional.ofNullable(table.get(percepts));
 	}
 }

@@ -12,12 +12,10 @@ import aima.core.agent.impl.ObjectWithDynamicAttributes;
  */
 public class Rule<A> {
 	private Condition con;
-
 	private A action;
 
 	/**
 	 * Constructs a condition-action rule.
-	 * 
 	 * @param con
 	 *            a condition
 	 * @param action

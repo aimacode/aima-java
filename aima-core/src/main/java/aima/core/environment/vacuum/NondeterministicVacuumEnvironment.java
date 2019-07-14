@@ -16,17 +16,12 @@ import aima.core.agent.Agent;
 public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
 
     /**
-     * Construct a vacuum environment with two locations, in which dirt is
-     * placed at random.
+     * Construct a vacuum environment with two locations, in which dirt is placed at random.
      */
-    public NondeterministicVacuumEnvironment() {
-        super();
-    }
+    public NondeterministicVacuumEnvironment() { }
 
     /**
-     * Construct a vacuum environment with two locations, in which dirt is
-     * placed as specified.
-     *
+     * Construct a vacuum environment with two locations, in which dirt is placed as specified.
      * @param locAState the initial state of location A, which is either
      * <em>Clean</em> or <em>Dirty</em>.
      * @param locBState the initial state of location B, which is either
@@ -41,29 +36,26 @@ public class NondeterministicVacuumEnvironment extends VacuumEnvironment {
      */
     @Override
     public void execute(Agent<?, ?> agent, Action action) {
-        if (ACTION_MOVE_RIGHT == action) {
+        if (action == ACTION_MOVE_RIGHT) {
             envState.setAgentLocation(agent, LOCATION_B);
             updatePerformanceMeasure(agent, -1);
-        } else if (ACTION_MOVE_LEFT == action) {
+        } else if (action == ACTION_MOVE_LEFT) {
             envState.setAgentLocation(agent, LOCATION_A);
             updatePerformanceMeasure(agent, -1);
-        } else if (ACTION_SUCK == action) {
+        } else if (action == ACTION_SUCK) {
+            String currLocation = envState.getAgentLocation(agent);
             // case: square is dirty
-            if (VacuumEnvironment.LocationState.Dirty == envState.getLocationState(envState.getAgentLocation(agent))) {
-                String currentLocation = envState.getAgentLocation(agent);
-                String adjacentLocation = (currentLocation.equals("A")) ? "B" : "A";
+            if (envState.getLocationState(currLocation) == LocationState.Dirty) {
                 // always clean current square
-                envState.setLocationState(currentLocation, VacuumEnvironment.LocationState.Clean);
+                envState.setLocationState(currLocation, LocationState.Clean);
                 // possibly clean adjacent square
-                if (Math.random() > 0.5) {
-                    envState.setLocationState(adjacentLocation, VacuumEnvironment.LocationState.Clean);
-                }
+                if (Math.random() > 0.5)
+                    envState.setLocationState(currLocation.equals("A") ? "B" : "A", LocationState.Clean);
             } // case: square is clean
-            else if (VacuumEnvironment.LocationState.Clean == envState.getLocationState(envState.getAgentLocation(agent))) {
+            else if (envState.getLocationState(currLocation) == LocationState.Clean) {
                 // possibly dirty current square
-                if (Math.random() > 0.5) {
-                    envState.setLocationState(envState.getAgentLocation(agent), VacuumEnvironment.LocationState.Dirty);
-                }
+                if (Math.random() > 0.5)
+                    envState.setLocationState(currLocation, LocationState.Dirty);
             }
         }
     }

@@ -35,13 +35,13 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 	public static final String LOCATION_A = "A";
 	public static final String LOCATION_B = "B";
 
-	public enum LocationState {
-		Clean, Dirty
-	}
-
     private final List<String> locations;
 	protected VacuumEnvironmentState envState = null;
 	protected boolean isDone = false;
+
+	public enum LocationState {
+		Clean, Dirty
+	}
 
 	/**
 	 * Constructs a vacuum environment with two locations A and B, in which dirt is
@@ -78,22 +78,6 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 			envState.setLocationState(locations.get(i), locStates[i]);
 	}
 
-	public List<String> getLocations() {
-		return locations;
-	}
-
-	public EnvironmentState getCurrentState() {
-		return envState;
-	}
-
-	public LocationState getLocationState(String location) {
-		return envState.getLocationState(location);
-	}
-
-	public String getAgentLocation(Agent agent) {
-		return envState.getAgentLocation(agent);
-	}
-
 	@Override
 	public void addAgent(Agent<? super VacuumPercept, ? extends Action> agent) {
 		int idx = new Random().nextInt(locations.size());
@@ -102,9 +86,6 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 	}
 
 	public void addAgent(Agent<? super VacuumPercept, ? extends Action> agent, String location) {
-		// Ensure the agent state information is tracked before
-		// adding to super, as super will notify the registered
-		// EnvironmentViews that is was added.
 		envState.setAgentLocation(agent, location);
 		super.addAgent(agent);
 	}
@@ -115,10 +96,8 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 		VacuumPercept percept = new VacuumPercept(loc, envState.getLocationState(loc));
 		if (agent instanceof NondeterministicSearchAgent) {
 			// This agent expects a fully observable environment.
-			percept.setAttribute(VacuumEnvironment.LOCATION_A,
-					envState.getLocationState(VacuumEnvironment.LOCATION_A));
-			percept.setAttribute(VacuumEnvironment.LOCATION_B,
-					envState.getLocationState(VacuumEnvironment.LOCATION_B));
+			percept.setAttribute(LOCATION_A, envState.getLocationState(LOCATION_A));
+			percept.setAttribute(LOCATION_B, envState.getLocationState(LOCATION_B));
 		}
 		return percept;
 	}
@@ -137,8 +116,8 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 				envState.setAgentLocation(agent, getLocation(x - 1, getY(loc)));
 			updatePerformanceMeasure(agent, -1);
 		} else if (action == ACTION_SUCK) {
-			if (envState.getLocationState(envState.getAgentLocation(agent)) == LocationState.Dirty) {
-				envState.setLocationState(envState.getAgentLocation(agent), LocationState.Clean);
+			if (envState.getLocationState(loc) == LocationState.Dirty) {
+				envState.setLocationState(loc, LocationState.Clean);
 				updatePerformanceMeasure(agent, 10);
 			}
 		}
@@ -153,6 +132,22 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 	@Override
 	public boolean isDone() {
 		return super.isDone() || isDone;
+	}
+
+	public List<String> getLocations() {
+		return locations;
+	}
+
+	public EnvironmentState getCurrentState() {
+		return envState;
+	}
+
+	public LocationState getLocationState(String location) {
+		return envState.getLocationState(location);
+	}
+
+	public String getAgentLocation(Agent agent) {
+		return envState.getAgentLocation(agent);
 	}
 
 	//

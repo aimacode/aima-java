@@ -2,7 +2,6 @@ package aima.core.agent.impl.aprog;
 
 import aima.core.agent.AgentProgram;
 import aima.core.agent.Model;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicState;
 import aima.core.agent.impl.aprog.simplerule.Rule;
 
@@ -39,22 +38,37 @@ import java.util.Set;
  * 
  */
 public abstract class ModelBasedReflexAgentProgram<P, A> implements AgentProgram<P, A> {
-	//
-	// persistent: state, the agent's current conception of the world state
+	/// persistent: state, the agent's current conception of the world state
 	private DynamicState state = null;
-
-	// model, a description of how the next state depends on current state and
-	// action
+	/// model, a description of how the next state depends on current state and action
 	private Model model = null;
-
-	// rules, a set of condition-action rules
+	/// rules, a set of condition-action rules
 	private Set<Rule<A>> rules = null;
-
-	// action, the most recent action, initially none
+	/// action, the most recent action, initially none
 	private A action = null;
 
 	protected ModelBasedReflexAgentProgram() {
 		init();
+	}
+
+	/// function MODEL-BASED-REFLEX-AGENT(percept) returns an action
+	public final Optional<A> apply(P percept) {
+		state = updateState(state, action, percept, model);
+		Rule<A> rule = ruleMatch(state, rules);
+		action = (rule != null) ? rule.getAction() : null;
+		return Optional.ofNullable(action);
+	}
+
+	/**
+	 * Realizations of this class should implement the init() method so that it
+	 * calls the setState(), setModel(), and setRules() method.
+	 */
+	protected abstract void init();
+
+	protected abstract DynamicState updateState(DynamicState state, A action, P percept, Model model);
+
+	private Rule<A> ruleMatch(DynamicState state, Set<Rule<A>> rules) {
+		return rules.stream().filter(r -> r.evaluate(state)).findFirst().orElse(null);
 	}
 
 	/**
@@ -82,35 +96,10 @@ public abstract class ModelBasedReflexAgentProgram<P, A> implements AgentProgram
 	/**
 	 * Set the program's condition-action rules
 	 * 
-	 * @param ruleSet
+	 * @param rules
 	 *            a set of condition-action rules
 	 */
-	public void setRules(Set<Rule<A>> ruleSet) {
-		rules = ruleSet;
-	}
-
-	// function MODEL-BASED-REFLEX-AGENT(percept) returns an action
-	public final Optional<A> apply(P percept) {
-		// state <- UPDATE-STATE(state, action, percept, model)
-		state = updateState(state, action, percept, model);
-		// rule <- RULE-MATCH(state, rules)
-		Rule<A> rule = ruleMatch(state, rules);
-		// action <- rule.ACTION
-		action = (rule != null) ? rule.getAction() : null;
-		// return action
-		return Optional.ofNullable(action);
-	}
-
-	/**
-	 * Realizations of this class should implement the init() method so that it
-	 * calls the setState(), setModel(), and setRules() method.
-	 */
-	protected abstract void init();
-
-	protected abstract DynamicState updateState(DynamicState state,
-			A action, P percept, Model model);
-
-	private Rule<A> ruleMatch(DynamicState state, Set<Rule<A>> rules) {
-		return rules.stream().filter(r -> r.evaluate(state)).findFirst().orElse(null);
+	public void setRules(Set<Rule<A>> rules) {
+		this.rules = rules;
 	}
 }
