@@ -6,6 +6,14 @@ import java.util.Objects;
 
 import aima.core.environment.vacuum.VacuumEnvironment.LocationState;
 
+/**
+ * Represents a percept in the Vacuum World. It provides information about the
+ * current location name and state. To support experiments with nondeterministic
+ * environments or environments with more than two locations, additionally, an
+ * optional set of (key, value) pairs is maintained.
+ *
+ * @author Ruediger Lunde
+ */
 public class VacuumPercept {
 	private String currLocation;
 	private LocationState currState;
@@ -47,6 +55,7 @@ public class VacuumPercept {
 
 	//
 	// needed for TableDrivenVacuumAgent:
+
 	@Override
 	public int hashCode() {
 		return 7 * currLocation.hashCode() + 13 * currState.hashCode() + 17 * dynAttributes.hashCode();
