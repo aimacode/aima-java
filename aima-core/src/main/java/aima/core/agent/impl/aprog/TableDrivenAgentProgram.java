@@ -31,7 +31,6 @@ import java.util.Optional;
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  * @author Ruediger Lunde
- * 
  */
 public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
 	// persistent: percepts, a sequence, initially empty
@@ -41,14 +40,12 @@ public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
 	private static final String ACTION_COL = "Action";
 
 	/**
-	 * Constructs a TableDrivenAgentProgram with a table of actions, indexed by
-	 * percept sequences.
+	 * Constructs a TableDrivenAgentProgram with a table of actions, indexed by percept sequences.
 	 * 
 	 * @param perceptsToActionMap
 	 *            a table of actions, indexed by percept sequences
 	 */
 	public TableDrivenAgentProgram(Map<List<P>, A> perceptsToActionMap) {
-
 		List<List<P>> rowHeaders = new ArrayList<>(perceptsToActionMap.keySet());
 		List<String> colHeaders = new ArrayList<>();
 		colHeaders.add(ACTION_COL);
@@ -62,10 +59,6 @@ public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
 		percepts.add(percept);
 		// action <- LOOKUP(percepts, table)
 		// return action
-		return Optional.ofNullable(lookupCurrentAction());
-	}
-
-	private A lookupCurrentAction() {
-		return table.get(percepts, ACTION_COL);
+		return Optional.ofNullable(table.get(percepts, ACTION_COL));
 	}
 }
