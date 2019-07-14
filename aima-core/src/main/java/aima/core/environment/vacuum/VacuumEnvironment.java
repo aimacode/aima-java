@@ -53,8 +53,7 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 	}
 
 	/**
-	 * Constructs a vacuum environment with two locations A and B, in which dirt is
-	 * placed as specified.
+	 * Constructs a vacuum environment with two locations A and B, in which dirt is placed as specified.
 	 * 
 	 * @param locAState
 	 *            the initial state of location A, which is either
@@ -138,7 +137,7 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 				envState.setAgentLocation(agent, getLocation(x - 1, getY(loc)));
 			updatePerformanceMeasure(agent, -1);
 		} else if (action == ACTION_SUCK) {
-			if (LocationState.Dirty == envState.getLocationState(envState.getAgentLocation(agent))) {
+			if (envState.getLocationState(envState.getAgentLocation(agent)) == LocationState.Dirty) {
 				envState.setLocationState(envState.getAgentLocation(agent), LocationState.Clean);
 				updatePerformanceMeasure(agent, 10);
 			}
@@ -147,8 +146,7 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 
 	@Override
 	protected void executeNoOp(Agent<?, ?> agent) {
-		// In the Vacuum Environment we consider things done if
-		// the agent's act method returns no action.
+		// In the Vacuum Environment we consider things done if the agent's act method returns no action.
 		isDone = true;
 	}
 
@@ -157,7 +155,7 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 		return super.isDone() || isDone;
 	}
 
-
+	//
 	// Information for grid views...
 
 	public int getXDimension() {

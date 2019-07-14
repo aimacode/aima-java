@@ -20,43 +20,43 @@ public class RandomWalkVacuumAgent extends SimpleAgent<VacuumPercept, Action> {
 
     @Override
     public Optional<Action> act(VacuumPercept percept) {
-        Action result;
+        Action action;
         if (percept.getCurrState() == LocationState.Dirty) {
-            result = ACTION_SUCK;
+            action = ACTION_SUCK;
         } else {
         	// prefer last direction
             switch (Util.randomInt((lastMoveAction != null) ? 6 : 4)) {
                 case 0:
-                    result = ACTION_MOVE_UP;
+                    action = ACTION_MOVE_UP;
                     break;
                 case 1:
-                    result = ACTION_MOVE_LEFT;
+                    action = ACTION_MOVE_LEFT;
                     break;
                 case 2:
-                    result = ACTION_MOVE_DOWN;
+                    action = ACTION_MOVE_DOWN;
                     break;
                 case 3:
-                    result = ACTION_MOVE_RIGHT;
+                    action = ACTION_MOVE_RIGHT;
                     break;
                 default:
-                    result = lastMoveAction;
+                    action = lastMoveAction;
             }
 
             // avoid obstacles
             for (int i = 0; i < 2 ; i++) {
-				if (result == ACTION_MOVE_UP && "False".equals(percept.getAttribute(CAN_MOVE_UP)))
-					result = ACTION_MOVE_LEFT;
-				if (result == ACTION_MOVE_LEFT && "False".equals(percept.getAttribute(CAN_MOVE_LEFT)))
-					result = ACTION_MOVE_DOWN;
-				if (result == ACTION_MOVE_DOWN && "False".equals(percept.getAttribute(CAN_MOVE_DOWN)))
-					result = ACTION_MOVE_RIGHT;
-				if (result == ACTION_MOVE_RIGHT && "False".equals(percept.getAttribute(CAN_MOVE_RIGHT)))
-					result = ACTION_MOVE_UP;
+				if (action == ACTION_MOVE_UP && "False".equals(percept.getAttribute(ATT_CAN_MOVE_UP)))
+					action = ACTION_MOVE_LEFT;
+				if (action == ACTION_MOVE_LEFT && "False".equals(percept.getAttribute(ATT_CAN_MOVE_LEFT)))
+					action = ACTION_MOVE_DOWN;
+				if (action == ACTION_MOVE_DOWN && "False".equals(percept.getAttribute(ATT_CAN_MOVE_DOWN)))
+					action = ACTION_MOVE_RIGHT;
+				if (action == ACTION_MOVE_RIGHT && "False".equals(percept.getAttribute(ATT_CAN_MOVE_RIGHT)))
+					action = ACTION_MOVE_UP;
 				else
 					break;
 			}
-			lastMoveAction = result;
+			lastMoveAction = action;
         }
-        return Optional.of(result);
+        return Optional.of(action);
     }
 }

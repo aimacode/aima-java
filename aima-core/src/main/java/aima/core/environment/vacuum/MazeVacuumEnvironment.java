@@ -20,10 +20,10 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 
 	public static final DynamicAction ACTION_MOVE_UP = new DynamicAction("Up");
 	public static final DynamicAction ACTION_MOVE_DOWN = new DynamicAction("Down");
-	public static final String CAN_MOVE_LEFT = "canMoveLeft";
-	public static final String CAN_MOVE_RIGHT = "canMoveRight";
-	public static final String CAN_MOVE_DOWN = "canMoveDown";
-	public static final String CAN_MOVE_UP = "canMoveUp";
+	public static final String ATT_CAN_MOVE_LEFT = "canMoveLeft";
+	public static final String ATT_CAN_MOVE_RIGHT = "canMoveRight";
+	public static final String ATT_CAN_MOVE_DOWN = "canMoveDown";
+	public static final String ATT_CAN_MOVE_UP = "canMoveUp";
 
 	private final int xDimension;
 	private final int yDimension;
@@ -41,10 +41,9 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 	// Obstacles are marked by with locationState==null
 	public MazeVacuumEnvironment(int xDim, int yDim, double obstacleProbability) {
 		this(xDim, yDim);
-		for (String loc : getLocations()) {
+		for (String loc : getLocations())
 			if (Util.randomInt(100) < obstacleProbability * 100)
 				envState.setLocationState(loc,null);
-		}
 	}
 
 	public void setObstacle(String location, boolean state) {
@@ -69,10 +68,10 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 	public VacuumPercept getPerceptSeenBy(Agent agent) {
 		VacuumPercept result = super.getPerceptSeenBy(agent);
 		String loc = getAgentLocation(agent);
-		result.setAttribute(CAN_MOVE_LEFT, canMoveLeft(loc) ? "True" : "False");
-		result.setAttribute(CAN_MOVE_RIGHT, canMoveRight(loc) ? "True" : "False");
-		result.setAttribute(CAN_MOVE_DOWN, canMoveDown(loc) ? "True" : "False");
-		result.setAttribute(CAN_MOVE_UP, canMoveUp(loc) ? "True" : "False");
+		result.setAttribute(ATT_CAN_MOVE_LEFT, canMoveLeft(loc) ? "True" : "False");
+		result.setAttribute(ATT_CAN_MOVE_RIGHT, canMoveRight(loc) ? "True" : "False");
+		result.setAttribute(ATT_CAN_MOVE_DOWN, canMoveDown(loc) ? "True" : "False");
+		result.setAttribute(ATT_CAN_MOVE_UP, canMoveUp(loc) ? "True" : "False");
 		return result;
 	}
 
@@ -99,8 +98,7 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 			if (LocationState.Dirty == envState.getLocationState(envState.getAgentLocation(agent))) {
 				envState.setLocationState(envState.getAgentLocation(agent), LocationState.Clean);
 				updatePerformanceMeasure(agent, 10);
-			} else
-				updatePerformanceMeasure(agent, -1);
+			}
 		}
 	}
 
