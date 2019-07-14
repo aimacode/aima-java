@@ -25,9 +25,7 @@ public class IterativeDeepeningAlphaBetaSearch<S, A, P> implements AdversarialSe
     protected double utilMax;
     protected double utilMin;
     protected int currDepthLimit;
-    private boolean heuristicEvaluationUsed; // indicates that non-terminal
-    // nodes
-    // have been evaluated.
+    private boolean heuristicEvaluationUsed; // indicates that non-terminal nodes have been evaluated.
     private Timer timer;
     private boolean logEnabled;
 

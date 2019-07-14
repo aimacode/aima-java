@@ -10,8 +10,7 @@ import java.util.*;
 /**
  * A checkerboard-like world with squares to be cleaned. Movements in all 4 directions
  * are possible if not at the border and the next square does not contain obstructions.
- * Percepts tell about possible movements, the current square state, and whether still
- * some dirt exists.
+ * Percepts tell about possible movements and the current square state.
  *
  * This environment can be used as a base for vacuum agent design competitions.
  *
@@ -21,6 +20,10 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 
 	public static final DynamicAction ACTION_MOVE_UP = new DynamicAction("Up");
 	public static final DynamicAction ACTION_MOVE_DOWN = new DynamicAction("Down");
+	public static final String CAN_MOVE_LEFT = "canMoveLeft";
+	public static final String CAN_MOVE_RIGHT = "canMoveRight";
+	public static final String CAN_MOVE_DOWN = "canMoveDown";
+	public static final String CAN_MOVE_UP = "canMoveUp";
 
 	private final int xDimension;
 	private final int yDimension;
@@ -66,11 +69,10 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 	public VacuumPercept getPerceptSeenBy(Agent agent) {
 		VacuumPercept result = super.getPerceptSeenBy(agent);
 		String loc = getAgentLocation(agent);
-		result.setAttribute("canMoveLeft", canMoveLeft(loc) ? "True" : "False");
-		result.setAttribute("canMoveRight", canMoveRight(loc) ? "True" : "False");
-		result.setAttribute("canMoveDown", canMoveDown(loc) ? "True" : "False");
-		result.setAttribute("canMoveUp", canMoveUp(loc) ? "True" : "False");
-		result.setAttribute("isAllClean", isAllClean() ? "True" : "False");
+		result.setAttribute(CAN_MOVE_LEFT, canMoveLeft(loc) ? "True" : "False");
+		result.setAttribute(CAN_MOVE_RIGHT, canMoveRight(loc) ? "True" : "False");
+		result.setAttribute(CAN_MOVE_DOWN, canMoveDown(loc) ? "True" : "False");
+		result.setAttribute(CAN_MOVE_UP, canMoveUp(loc) ? "True" : "False");
 		return result;
 	}
 

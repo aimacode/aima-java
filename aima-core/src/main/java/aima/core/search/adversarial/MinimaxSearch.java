@@ -91,7 +91,7 @@ public class MinimaxSearch<S, A, P> implements AdversarialSearch<S, A> {
 				.mapToDouble(action -> minValue(game.getResult(state, action), player))
 				.max().orElse(Double.NEGATIVE_INFINITY);
 	}
-	
+
 	public double minValue(S state, P player) { // returns an utility value
 		metrics.incrementInt(METRICS_NODES_EXPANDED);
 		if (game.isTerminal(state))
