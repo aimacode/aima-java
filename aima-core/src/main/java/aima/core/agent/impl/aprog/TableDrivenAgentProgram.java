@@ -34,15 +34,12 @@ import java.util.Optional;
  * 
  */
 public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
-	private List<P> percepts = new ArrayList<>();
-
-	private Table<List<P>, String, A> table;
-
-	private static final String ACTION = "action";
-
 	// persistent: percepts, a sequence, initially empty
-	// table, a table of actions, indexed by percept sequences, initially fully
-	// specified
+	private List<P> percepts = new ArrayList<>();
+	// table, a table of actions, indexed by percept sequences, initially fully specified
+	private Table<List<P>, String, A> table;
+	private static final String ACTION_COL = "Action";
+
 	/**
 	 * Constructs a TableDrivenAgentProgram with a table of actions, indexed by
 	 * percept sequences.
@@ -54,23 +51,21 @@ public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
 
 		List<List<P>> rowHeaders = new ArrayList<>(perceptsToActionMap.keySet());
 		List<String> colHeaders = new ArrayList<>();
-		colHeaders.add(ACTION);
-
+		colHeaders.add(ACTION_COL);
 		table = new Table<>(rowHeaders, colHeaders);
-		rowHeaders.forEach(row -> table.set(row, ACTION, perceptsToActionMap.get(row)));
+		rowHeaders.forEach(row -> table.set(row, ACTION_COL, perceptsToActionMap.get(row)));
 	}
 
 	// function TABLE-DRIVEN-AGENT(percept) returns an action
 	public Optional<A> apply(P percept) {
 		// append percept to end of percepts
 		percepts.add(percept);
-
 		// action <- LOOKUP(percepts, table)
 		// return action
 		return Optional.ofNullable(lookupCurrentAction());
 	}
 
 	private A lookupCurrentAction() {
-		return table.get(percepts, ACTION);
+		return table.get(percepts, ACTION_COL);
 	}
 }
