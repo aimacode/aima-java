@@ -138,7 +138,7 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 		return locations;
 	}
 
-	public EnvironmentState getCurrentState() {
+	public VacuumEnvironmentState getCurrentState() {
 		return envState;
 	}
 
