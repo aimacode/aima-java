@@ -79,7 +79,6 @@ public abstract class SimpleProblemSolvingAgent<P, S, A> extends SimpleAgent<P, 
 		return Optional.ofNullable(!seq.isEmpty() ? seq.remove() : null);
 	}
 
-
 	protected abstract void updateState(P percept);
 
 	/**
