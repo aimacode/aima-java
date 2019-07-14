@@ -59,10 +59,10 @@ public class UniformCostSearchTest {
 
 	@Test
 	public void testAIMA3eFigure3_15() throws Exception {
-		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
-		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfPartOfRomania.SIBIU,
+		Map romaniaMap = new SimplifiedRoadMapOfRomania();
+		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfRomania.SIBIU,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				Predicate.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				Predicate.isEqual(SimplifiedRoadMapOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new UniformCostSearch<>();

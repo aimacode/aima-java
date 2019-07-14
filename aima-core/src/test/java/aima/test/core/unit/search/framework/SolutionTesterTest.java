@@ -3,7 +3,7 @@ package aima.test.core.unit.search.framework;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
-import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.environment.map.SimplifiedRoadMapOfRomania;
 import aima.core.search.framework.Node;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
@@ -24,13 +24,13 @@ public class SolutionTesterTest {
 
 	@Test
 	public void testMultiGoalProblem() throws Exception {
-		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
+		Map romaniaMap = new SimplifiedRoadMapOfRomania();
 
 		Problem<String, MoveToAction> problem = new GeneralProblem<String, MoveToAction>
-				(SimplifiedRoadMapOfPartOfRomania.ARAD,
+				(SimplifiedRoadMapOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				Predicate.<String>isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST).or
-						(Predicate.isEqual(SimplifiedRoadMapOfPartOfRomania.HIRSOVA)),
+				Predicate.<String>isEqual(SimplifiedRoadMapOfRomania.BUCHAREST).or
+						(Predicate.isEqual(SimplifiedRoadMapOfRomania.HIRSOVA)),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap)) {
 			@Override
 			public boolean testSolution(Node<String, MoveToAction> node) {

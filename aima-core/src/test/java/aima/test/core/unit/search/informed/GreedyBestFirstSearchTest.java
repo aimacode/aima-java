@@ -11,7 +11,7 @@ import org.junit.Test;
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.EightPuzzleFunctions;
 import aima.core.environment.map.Map;
-import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.environment.map.SimplifiedRoadMapOfRomania;
 import aima.core.search.framework.QueueBasedSearch;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
@@ -78,14 +78,14 @@ public class GreedyBestFirstSearchTest {
 
 	@Test
 	public void testAIMA3eFigure3_23() throws Exception {
-		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
-		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfPartOfRomania.ARAD,
+		Map romaniaMap = new SimplifiedRoadMapOfRomania();
+		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				Predicate.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				Predicate.isEqual(SimplifiedRoadMapOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new GreedyBestFirstSearch<>(new TreeSearch<>(),
-				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
+				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=Fagaras], Action[name=moveTo, location=Bucharest]]",
@@ -98,14 +98,14 @@ public class GreedyBestFirstSearchTest {
 
 	@Test
 	public void testAIMA3eFigure3_23_using_GraphSearch() throws Exception {
-		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
-		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfPartOfRomania.ARAD,
+		Map romaniaMap = new SimplifiedRoadMapOfRomania();
+		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				Predicate.isEqual(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				Predicate.isEqual(SimplifiedRoadMapOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new GreedyBestFirstSearch<>(new GraphSearch<>(),
-				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
+				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfRomania.BUCHAREST, romaniaMap));
 		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=Fagaras], Action[name=moveTo, location=Bucharest]]",

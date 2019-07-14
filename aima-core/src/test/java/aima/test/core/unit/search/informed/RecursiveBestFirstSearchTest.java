@@ -30,11 +30,11 @@ public class RecursiveBestFirstSearchTest {
 	@Before
 	public void setUp() {
 		envChanges = new StringBuffer();
-		aMap = new SimplifiedRoadMapOfPartOfRomania();
+		aMap = new SimplifiedRoadMapOfRomania();
 
 		ToDoubleFunction<Node<String, MoveToAction>> heuristicFunction = (node) -> {
 				Point2D pt1 = aMap.getPosition((String) node.getState());
-				Point2D pt2 = aMap.getPosition(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+				Point2D pt2 = aMap.getPosition(SimplifiedRoadMapOfRomania.BUCHAREST);
 				return pt1.distance(pt2);
 		};
 
@@ -48,9 +48,9 @@ public class RecursiveBestFirstSearchTest {
 	public void testStartingAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), recursiveBestFirstSearch,
-				SimplifiedRoadMapOfPartOfRomania.BUCHAREST).setNotifier(me);
+				SimplifiedRoadMapOfRomania.BUCHAREST).setNotifier(me);
 
-		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+		me.addAgent(ma, SimplifiedRoadMapOfRomania.BUCHAREST);
 		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
@@ -63,9 +63,9 @@ public class RecursiveBestFirstSearchTest {
 	public void testAIMA3eFigure3_27() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), recursiveBestFirstSearch,
-				SimplifiedRoadMapOfPartOfRomania.BUCHAREST).setNotifier(me);
+				SimplifiedRoadMapOfRomania.BUCHAREST).setNotifier(me);
 
-		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
+		me.addAgent(ma, SimplifiedRoadMapOfRomania.ARAD);
 		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
@@ -78,9 +78,9 @@ public class RecursiveBestFirstSearchTest {
 	public void testAIMA3eAradNeamtA() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), recursiveBestFirstSearch,
-				SimplifiedRoadMapOfPartOfRomania.NEAMT).setNotifier(me);
+				SimplifiedRoadMapOfRomania.NEAMT).setNotifier(me);
 
-		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
+		me.addAgent(ma, SimplifiedRoadMapOfRomania.ARAD);
 		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
@@ -93,9 +93,9 @@ public class RecursiveBestFirstSearchTest {
 	public void testAIMA3eAradNeamtB() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), recursiveBestFirstSearchAvoidingLoops,
-				SimplifiedRoadMapOfPartOfRomania.NEAMT).setNotifier(me);
+				SimplifiedRoadMapOfRomania.NEAMT).setNotifier(me);
 
-		me.addAgent(ma, SimplifiedRoadMapOfPartOfRomania.ARAD);
+		me.addAgent(ma, SimplifiedRoadMapOfRomania.ARAD);
 		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 

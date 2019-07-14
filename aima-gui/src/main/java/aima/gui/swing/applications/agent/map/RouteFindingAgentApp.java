@@ -115,16 +115,16 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 			String agentLoc = null;
 			switch (scenarioIdx) {
 			case 0:
-				SimplifiedRoadMapOfPartOfRomania.initMap(map);
-				agentLoc = SimplifiedRoadMapOfPartOfRomania.ARAD;
+				SimplifiedRoadMapOfRomania.initMap(map);
+				agentLoc = SimplifiedRoadMapOfRomania.ARAD;
 				break;
 			case 1:
-				SimplifiedRoadMapOfPartOfRomania.initMap(map);
-				agentLoc = SimplifiedRoadMapOfPartOfRomania.LUGOJ;
+				SimplifiedRoadMapOfRomania.initMap(map);
+				agentLoc = SimplifiedRoadMapOfRomania.LUGOJ;
 				break;
 			case 2:
-				SimplifiedRoadMapOfPartOfRomania.initMap(map);
-				agentLoc = SimplifiedRoadMapOfPartOfRomania.FAGARAS;
+				SimplifiedRoadMapOfRomania.initMap(map);
+				agentLoc = SimplifiedRoadMapOfRomania.FAGARAS;
 				break;
 			case 3:
 				SimplifiedRoadMapOfAustralia.initMap(map);
@@ -142,13 +142,13 @@ public class RouteFindingAgentApp extends SimpleAgentApp {
 				switch (destIdx) {
 				case 0:
 					destinations
-							.add(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+							.add(SimplifiedRoadMapOfRomania.BUCHAREST);
 					break;
 				case 1:
-					destinations.add(SimplifiedRoadMapOfPartOfRomania.EFORIE);
+					destinations.add(SimplifiedRoadMapOfRomania.EFORIE);
 					break;
 				case 2:
-					destinations.add(SimplifiedRoadMapOfPartOfRomania.NEAMT);
+					destinations.add(SimplifiedRoadMapOfRomania.NEAMT);
 					break;
 				case 3:
 					destinations.add(map.randomlyGenerateDestination());
