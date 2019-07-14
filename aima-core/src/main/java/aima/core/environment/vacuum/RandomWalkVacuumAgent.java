@@ -25,8 +25,7 @@ public class RandomWalkVacuumAgent extends SimpleAgent<VacuumPercept, Action> {
             result = ACTION_SUCK;
         } else {
         	// prefer last direction
-            int bound = (lastMoveAction != null) ? 6 : 4;
-            switch (Util.randomInt(bound)) {
+            switch (Util.randomInt((lastMoveAction != null) ? 6 : 4)) {
                 case 0:
                     result = ACTION_MOVE_UP;
                     break;
@@ -53,6 +52,8 @@ public class RandomWalkVacuumAgent extends SimpleAgent<VacuumPercept, Action> {
 					result = ACTION_MOVE_RIGHT;
 				if (result == ACTION_MOVE_RIGHT && "False".equals(percept.getAttribute(CAN_MOVE_RIGHT)))
 					result = ACTION_MOVE_UP;
+				else
+					break;
 			}
 			lastMoveAction = result;
         }

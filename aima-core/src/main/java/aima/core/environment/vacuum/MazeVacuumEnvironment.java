@@ -87,11 +87,11 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 			if (canMoveLeft(loc))
 				envState.setAgentLocation(agent, getLocation(getX(loc) - 1, getY(loc)));
 			updatePerformanceMeasure(agent, -1);
-		} else if (ACTION_MOVE_UP == action) {
+		} else if (action == ACTION_MOVE_UP) {
 			if (canMoveUp(loc))
 				envState.setAgentLocation(agent, getLocation(getX(loc), getY(loc) + 1));
 			updatePerformanceMeasure(agent, -1);
-		} else if (ACTION_MOVE_DOWN == action) {
+		} else if (action == ACTION_MOVE_DOWN) {
 			if (canMoveDown(loc))
 				envState.setAgentLocation(agent, getLocation(getX(loc), getY(loc) - 1));
 			updatePerformanceMeasure(agent, -1);
@@ -126,13 +126,6 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 		int x = getX(loc);
 		int y = getY(loc);
 		return y < getYDimension() && !containsObstacle(getLocation(x, y + 1));
-	}
-
-	private boolean isAllClean() {
-		for (String loc : getLocations())
-			if (getLocationState(loc) == LocationState.Dirty)
-				return false;
-		return true;
 	}
 
 	private static List<String> createLocations(int size) {
