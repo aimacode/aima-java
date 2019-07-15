@@ -45,11 +45,11 @@ public class VacuumPercept {
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
-		result.append("[ currLocation=").append(getCurrLocation()).append(" currState=").append(getCurrState());
+		result.append("[currLocation=").append(getCurrLocation()).append(", currState=").append(getCurrState());
 		if (!dynAttributes.isEmpty())
 			for (Map.Entry<String, Object> e : dynAttributes.entrySet())
-				result.append(" ").append(e.getKey()).append("=").append(e.getValue());
-		result.append(" ]");
+				result.append(", ").append(e.getKey()).append("=").append(e.getValue());
+		result.append("]");
 		return result.toString();
 	}
 
