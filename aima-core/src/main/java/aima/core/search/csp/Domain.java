@@ -62,36 +62,21 @@ public class Domain<VAL> implements Iterable<VAL> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj != null && getClass() == obj.getClass()) {
-			Domain d = (Domain) obj;
-			if (d.values.length != values.length)
-				return false;
-			for (int i = 0; i < values.length; i++)
-				if (!values[i].equals(d.values[i]))
-					return false;
-			return true;
-		}
-		return false;
+		return obj != null && getClass() == obj.getClass() && Arrays.equals(values, ((Domain) obj).values);
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = 9; // arbitrary seed value
-		int multiplier = 13; // arbitrary multiplier value
-		for (Object value : values)
-			hash = hash * multiplier + value.hashCode();
-		return hash;
+		return Arrays.hashCode(values);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder("{");
-		boolean comma = false;
 		for (Object value : values) {
-			if (comma)
+			if (result.length() > 1)
 				result.append(", ");
-			result.append(value.toString());
-			comma = true;
+			result.append(value);
 		}
 		result.append("}");
 		return result.toString();

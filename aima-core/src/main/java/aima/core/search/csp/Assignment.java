@@ -73,13 +73,11 @@ public class Assignment<VAR extends Variable, VAL> implements Cloneable {
 
     @Override
     public String toString() {
-        boolean comma = false;
         StringBuilder result = new StringBuilder("{");
         for (Map.Entry<VAR, VAL> entry : variableToValueMap.entrySet()) {
-            if (comma)
+            if (result.length() > 1)
                 result.append(", ");
             result.append(entry.getKey()).append("=").append(entry.getValue());
-            comma = true;
         }
         result.append("}");
         return result.toString();
