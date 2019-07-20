@@ -53,7 +53,7 @@ public abstract class SimpleReflexAgentProgram<P, A> implements AgentProgram<P, 
 
 	protected abstract DynamicState interpretInput(P p);
 
-	private Rule<A> ruleMatch(ObjectWithDynamicAttributes state, Set<Rule<A>> rulesSet) {
-		return rulesSet.stream().filter(r -> r.evaluate(state)).findFirst().orElse(null);
+	private Rule<A> ruleMatch(ObjectWithDynamicAttributes state, Set<Rule<A>> rules) {
+		return rules.stream().filter(r -> r.evaluate(state)).findFirst().orElse(null);
 	}
 }
