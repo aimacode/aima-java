@@ -48,7 +48,7 @@ public abstract class SimpleReflexAgentProgram<P, A> implements AgentProgram<P, 
 	public final Optional<A> apply(P percept) {
 		DynamicState state = interpretInput(percept);
 		Rule<A> rule = ruleMatch(state, rules);
-		return (rule != null) ? Optional.of(rule.getAction()) : Optional.empty();
+		return Optional.ofNullable(rule != null ? rule.getAction() : null);
 	}
 
 	protected abstract DynamicState interpretInput(P p);
