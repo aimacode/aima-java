@@ -22,9 +22,9 @@ public class EightPuzzleFunctions {
 	}
 
 	public static EightPuzzleBoard getResult(EightPuzzleBoard state, Action action) {
-		EightPuzzleBoard result = new EightPuzzleBoard(state);
+		EightPuzzleBoard result = state.clone();
 
-		if (state.canMoveGap(action)) {
+		if (result.canMoveGap(action)) {
 			if (action == EightPuzzleBoard.UP)
 				result.moveGapUp();
 			else if (action == EightPuzzleBoard.DOWN)
