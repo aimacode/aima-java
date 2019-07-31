@@ -25,6 +25,14 @@ public class TicTacToeTest {
 	public void setUp() {
 		game = new TicTacToeGame();
 		state = game.getInitialState();
+		// for debugging
+//		state.mark(0, 0); // x
+//		state.mark(1, 0); // o
+//		state.mark(2, 0); // x
+//
+//		state.mark(0, 1); // o
+//		state.mark(2, 1); // x
+//		state.mark(1, 1); // o
 	}
 
 	@Test
@@ -53,15 +61,15 @@ public class TicTacToeTest {
 		Assert.assertEquals(TicTacToeState.EMPTY, state.getValue(0, 2));
 		Assert.assertEquals(TicTacToeState.EMPTY, state.getValue(2, 0));
 		Assert.assertEquals(TicTacToeState.EMPTY, state.getValue(2, 2));
-		Assert.assertEquals(true, state.isEmpty(0, 0));
-		Assert.assertEquals(true, state.isEmpty(2, 2));
+		Assert.assertTrue(state.isEmpty(0, 0));
+		Assert.assertTrue(state.isEmpty(2, 2));
 	}
 
 	@Test
 	public void testMakingOneMoveChangesState() {
 		state = game.getResult(state, new XYLocation(0, 0));
 		Assert.assertEquals(TicTacToeState.X, state.getValue(0, 0));
-		Assert.assertEquals(false, state.isEmpty(0, 0));
+		Assert.assertFalse(state.isEmpty(0, 0));
 		Assert.assertEquals(8, game.getActions(state).size());
 		Assert.assertEquals(TicTacToeState.O, game.getPlayer(state));
 	}
@@ -71,8 +79,8 @@ public class TicTacToeTest {
 		state = game.getResult(state, new XYLocation(0, 0));
 		state = game.getResult(state, new XYLocation(0, 1));
 		Assert.assertEquals(TicTacToeState.O, state.getValue(0, 1));
-		Assert.assertEquals(false, state.isEmpty(0, 1));
-		Assert.assertEquals(true, state.isEmpty(1, 0));
+		Assert.assertFalse(state.isEmpty(0, 1));
+		Assert.assertTrue(state.isEmpty(1, 0));
 		Assert.assertEquals(7, game.getActions(state).size());
 		Assert.assertEquals(TicTacToeState.X, game.getPlayer(state));
 	}
@@ -83,9 +91,9 @@ public class TicTacToeTest {
 		state.mark(1, 0);
 		state.mark(0, 1);
 		state.mark(1, 1);
-		Assert.assertEquals(false, state.lineThroughBoard());
+		Assert.assertFalse(state.lineThroughBoard());
 		state.mark(new XYLocation(0, 2));
-		Assert.assertEquals(true, state.lineThroughBoard());
+		Assert.assertTrue(state.lineThroughBoard());
 	}
 
 	@Test
@@ -94,9 +102,9 @@ public class TicTacToeTest {
 		state.mark(0, 1);
 		state.mark(1, 0);
 		state.mark(1, 1);
-		Assert.assertEquals(false, state.lineThroughBoard());
+		Assert.assertFalse(state.lineThroughBoard());
 		state.mark(2, 0);
-		Assert.assertEquals(true, state.lineThroughBoard());
+		Assert.assertTrue(state.lineThroughBoard());
 	}
 
 	@Test
@@ -105,9 +113,9 @@ public class TicTacToeTest {
 		state.mark(0, 1);
 		state.mark(1, 1);
 		state.mark(0, 2);
-		Assert.assertEquals(false, state.lineThroughBoard());
+		Assert.assertFalse(state.lineThroughBoard());
 		state.mark(2, 2);
-		Assert.assertEquals(true, state.lineThroughBoard());
+		Assert.assertTrue(state.lineThroughBoard());
 	}
 
 	@Test

@@ -1,6 +1,5 @@
 package aimax.osm.routing;
 
-import aima.core.search.framework.problem.ActionsFunction;
 import aimax.osm.data.MapWayFilter;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
@@ -8,6 +7,7 @@ import aimax.osm.data.entities.WayRef;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Contains useful functions for OSM routing problems.
@@ -18,8 +18,7 @@ public class OsmFunctions {
 
     public enum OneWayMode {IGNORE, TRAVEL_FORWARD, TRAVEL_BACKWARDS}
 
-
-    public static ActionsFunction<MapNode, OsmMoveAction> createActionFunction
+    public static Function<MapNode, List<OsmMoveAction>> createActionFunction
             (MapWayFilter filter, OneWayMode oneWayMode, MapNode goal) {
         return new OsmActionsFunction(filter, oneWayMode, goal);
     }
@@ -38,7 +37,7 @@ public class OsmFunctions {
      * specified, all generated actions lead to road crossings, road ends, or the
      * specified goal. Otherwise, they lead to directly linked neighbor nodes.
      */
-    public static class OsmActionsFunction implements ActionsFunction<MapNode, OsmMoveAction> {
+    public static class OsmActionsFunction implements Function<MapNode, List<OsmMoveAction>> {
 
         protected MapWayFilter filter;
         private OneWayMode oneWayMode;
@@ -57,8 +56,7 @@ public class OsmFunctions {
         @Override
         public List<OsmMoveAction> apply(MapNode state) {
             List<OsmMoveAction> result = new ArrayList<>();
-            MapNode from = (MapNode) state;
-            for (WayRef wref : from.getWayRefs()) {
+            for (WayRef wref : state.getWayRefs()) {
                 if (filter == null || filter.isAccepted(wref.getWay())) {
                     MapWay way = wref.getWay();
                     int nodeIdx = wref.getNodeIdx();

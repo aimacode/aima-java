@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.agent.impl.DynamicPercept;
-import aima.core.environment.map.DynAttributeNames;
+import aima.core.environment.map.AttNames;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.MapEnvironment;
@@ -17,9 +17,9 @@ import aima.core.search.uninformed.UniformCostSearch;
  * 
  */
 public class MapEnvironmentTest {
-	MapEnvironment me;
+	private MapEnvironment me;
 
-	SimpleMapAgent ma;
+	private SimpleMapAgent ma;
 
 	@Before
 	public void setUp() {
@@ -31,8 +31,7 @@ public class MapEnvironmentTest {
 		aMap.addUnidirectionalLink("B", "E", 14.0);
 
 		me = new MapEnvironment(aMap);
-		ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(),
-				new String[] { "A" });
+		ma = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(),"A").setNotifier(me);
 	}
 
 	@Test
@@ -44,7 +43,7 @@ public class MapEnvironmentTest {
 	@Test
 	public void testExecuteAction() {
 		me.addAgent(ma, "D");
-		me.executeAction(ma, new MoveToAction("C"));
+		me.execute(ma, new MoveToAction("C"));
 		Assert.assertEquals(me.getAgentLocation(ma), "C");
 	}
 
@@ -52,20 +51,18 @@ public class MapEnvironmentTest {
 	public void testPerceptSeenBy() {
 		me.addAgent(ma, "D");
 		DynamicPercept p = (DynamicPercept) me.getPerceptSeenBy(ma);
-		Assert.assertEquals(p.getAttribute(DynAttributeNames.PERCEPT_IN), "D");
+		Assert.assertEquals(p.getAttribute(AttNames.PERCEPT_IN), "D");
 	}
 
 	@Test
 	public void testTwoAgentsSupported() {
-		SimpleMapAgent ma1 = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(),
-				new String[] { "A" });
-		SimpleMapAgent ma2 = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(),
-				new String[] { "A" });
+		SimpleMapAgent ma1 = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(), "A").setNotifier(me);
+		SimpleMapAgent ma2 = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(), "A").setNotifier(me);
 
 		me.addAgent(ma1, "A");
 		me.addAgent(ma2, "A");
-		me.executeAction(ma1, new MoveToAction("B"));
-		me.executeAction(ma2, new MoveToAction("C"));
+		me.execute(ma1, new MoveToAction("B"));
+		me.execute(ma2, new MoveToAction("C"));
 
 		Assert.assertEquals(me.getAgentLocation(ma1), "B");
 		Assert.assertEquals(me.getAgentLocation(ma2), "C");

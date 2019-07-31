@@ -1,7 +1,7 @@
 package aima.gui.fx.applications.agent;
 
 import aima.core.agent.Action;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.environment.vacuum.*;
 import aima.core.search.agent.NondeterministicSearchAgent;
 import aima.core.search.nondeterministic.NondeterministicProblem;
@@ -37,7 +37,7 @@ public class VacuumAgentApp extends IntegrableApplication {
     private TaskExecutionPaneCtrl taskPaneCtrl;
     private SimpleEnvironmentViewCtrl envViewCtrl;
     protected VacuumEnvironment env = null;
-    protected AbstractAgent agent = null;
+    protected SimpleAgent<VacuumPercept, Action> agent = null;
 
     @Override
     public String getTitle() {
@@ -53,7 +53,13 @@ public class VacuumAgentApp extends IntegrableApplication {
         BorderPane root = new BorderPane();
 
         StackPane envView = new StackPane();
-        envViewCtrl = new VacuumEnvironmentViewCtrl(envView);
+		envViewCtrl = new VacuumEnvironmentViewCtrl(envView, action -> {
+			if (action == VacuumEnvironment.ACTION_MOVE_LEFT) return 270.0;
+			else if (action == VacuumEnvironment.ACTION_MOVE_RIGHT) return 90.0;
+			else if (action == MazeVacuumEnvironment.ACTION_MOVE_UP) return 0.0;
+			else if (action == MazeVacuumEnvironment.ACTION_MOVE_DOWN) return 180.0;
+			else return null;
+		});
 
         List<Parameter> params = createParameters();
 
@@ -68,9 +74,11 @@ public class VacuumAgentApp extends IntegrableApplication {
     }
 
     protected List<Parameter> createParameters() {
-        Parameter p1 = new Parameter(PARAM_ENV, "A/B Deterministic Environment", "A/B Non-Deterministic Environment");
+        Parameter p1 = new Parameter(PARAM_ENV, "A/B Deterministic Environment",
+                "A/B Non-Deterministic Environment", "Maze Environment");
         Parameter p2 = new Parameter(PARAM_AGENT, "TableDrivenVacuumAgent", "ReflexVacuumAgent",
-                "SimpleReflexVacuumAgent", "ModelBasedReflexVacuumAgent", "NondeterministicVacuumAgent");
+                "SimpleReflexVacuumAgent", "ModelBasedReflexVacuumAgent", "NondeterministicVacuumAgent",
+                "RandomWalkVacuumAgent");
         return Arrays.asList(p1, p2);
     }
 
@@ -86,6 +94,9 @@ public class VacuumAgentApp extends IntegrableApplication {
                 break;
             case 1:
                 env = new NondeterministicVacuumEnvironment();
+                break;
+            case 2:
+                env = new MazeVacuumEnvironment(5, 5, 0.2);
                 break;
         }
         agent = null;
@@ -103,12 +114,15 @@ public class VacuumAgentApp extends IntegrableApplication {
                 agent = new ModelBasedReflexVacuumAgent();
                 break;
             case 4:
-                agent = new NondeterministicSearchAgent<>(percept -> (VacuumEnvironmentState) percept, env);
+                agent = new NondeterministicSearchAgent<>(VacuumWorldFunctions::getState, env);
+                break;
+            case 5:
+                agent = new RandomWalkVacuumAgent();
                 break;
         }
         if (env != null && agent != null) {
             envViewCtrl.initialize(env);
-            env.addEnvironmentView(envViewCtrl);
+            env.addEnvironmentListener(envViewCtrl);
             env.addAgent(agent);
         }
     }
@@ -118,13 +132,13 @@ public class VacuumAgentApp extends IntegrableApplication {
      */
     @SuppressWarnings("unchecked")
     public void startExperiment() {
-        if (agent instanceof NondeterministicSearchAgent<?, ?>) {
+        if (agent instanceof NondeterministicSearchAgent) {
             NondeterministicProblem<VacuumEnvironmentState, Action> problem =
                     new NondeterministicProblem<>((VacuumEnvironmentState) env.getCurrentState(),
-                            VacuumWorldFunctions::getActions, VacuumWorldFunctions.createResultsFunction(agent),
+                            VacuumWorldFunctions::getActions, VacuumWorldFunctions.createResultsFunctionFor(agent),
                             VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
             // Set the problem now for this kind of agent
-            ((NondeterministicSearchAgent<VacuumEnvironmentState, Action>) agent).makePlan(problem);
+            ((NondeterministicSearchAgent<VacuumPercept, VacuumEnvironmentState, Action>) agent).makePlan(problem);
         }
         while (!env.isDone() && !Tasks.currIsCancelled()) {
             env.step();

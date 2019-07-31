@@ -101,11 +101,11 @@ public class NQueensSearchDemo {
 		// board = new NQueensBoard(boardSize, Config.QUEEN_IN_EVERY_COL);
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(board, NQueensFunctions::getCSFActions,
 				NQueensFunctions::getResult, NQueensFunctions::testGoal);
-		search = new HillClimbingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction());
+		search = new HillClimbingSearch<>(n -> -NQueensFunctions.getNumberOfAttackingPairs(n));
 		search.addNodeListener(n -> notifyProgressTrackers(n.getState(), search.getMetrics()));
 		search.findActions(problem);
 
-		board = (NQueensBoard) ((HillClimbingSearch) search).getLastSearchState();
+		board = (NQueensBoard) ((HillClimbingSearch) search).getLastState();
 		notifyProgressTrackers(board, search.getMetrics());
 	}
 
@@ -113,11 +113,11 @@ public class NQueensSearchDemo {
 		Problem<NQueensBoard, QueenAction> problem = new GeneralProblem<>(board, NQueensFunctions::getCSFActions,
 				NQueensFunctions::getResult, NQueensFunctions::testGoal);
 		Scheduler scheduler = new Scheduler(k, lambda, maxIterations);
-		search = new SimulatedAnnealingSearch<>(NQueensFunctions.createAttackingPairsHeuristicFunction(), scheduler);
+		search = new SimulatedAnnealingSearch<>(NQueensFunctions::getNumberOfAttackingPairs, scheduler);
 		search.addNodeListener(n -> notifyProgressTrackers(n.getState(), search.getMetrics()));
 		search.findActions(problem);
 
-		board = (NQueensBoard) ((SimulatedAnnealingSearch) search).getLastSearchState();
+		board = (NQueensBoard) ((SimulatedAnnealingSearch) search).getLastState();
 		notifyProgressTrackers(board, search.getMetrics());
 	}
 

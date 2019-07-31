@@ -1,24 +1,23 @@
 package aima.core.environment.xyenv;
 
+import aima.core.agent.Action;
+import aima.core.agent.Agent;
+import aima.core.agent.EnvironmentObject;
+import aima.core.agent.EnvironmentState;
+import aima.core.agent.impl.AbstractEnvironment;
+import aima.core.agent.impl.DynamicPercept;
+import aima.core.util.datastructure.XYLocation;
+
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import aima.core.agent.Action;
-import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentObject;
-import aima.core.agent.EnvironmentState;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.AbstractEnvironment;
-import aima.core.agent.impl.DynamicPercept;
-import aima.core.util.datastructure.XYLocation;
-
 /**
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public class XYEnvironment extends AbstractEnvironment {
+public class XYEnvironment extends AbstractEnvironment<DynamicPercept, Action> {
 	private XYEnvironmentState envState = null;
 
 	//
@@ -31,13 +30,15 @@ public class XYEnvironment extends AbstractEnvironment {
 		envState = new XYEnvironmentState(width, height);
 	}
 
-	/** Does nothing (don't ask me why...). */
+	/**
+	 * Does nothing (don't ask me why...).
+	 */
 	@Override
-	public void executeAction(Agent a, Action action) {
+	public void execute(Agent a, Action action) {
 	}
 
 	@Override
-	public Percept getPerceptSeenBy(Agent anAgent) {
+	public DynamicPercept getPerceptSeenBy(Agent anAgent) {
 		return new DynamicPercept();
 	}
 
@@ -100,81 +101,78 @@ public class XYEnvironment extends AbstractEnvironment {
 			envState.moveObjectToAbsoluteLocation(new Wall(), loc2);
 		}
 	}
-}
 
-class XYEnvironmentState implements EnvironmentState {
-	int width;
-	int height;
 
-	private Map<XYLocation, Set<EnvironmentObject>> objsAtLocation = new LinkedHashMap<XYLocation, Set<EnvironmentObject>>();
 
-	public XYEnvironmentState(int width, int height) {
-		this.width = width;
-		this.height = height;
-		for (int h = 1; h <= height; h++) {
-			for (int w = 1; w <= width; w++) {
-				objsAtLocation.put(new XYLocation(h, w), new LinkedHashSet<EnvironmentObject>());
+	private static class XYEnvironmentState implements EnvironmentState {
+		int width;
+		int height;
+
+		private Map<XYLocation, Set<EnvironmentObject>> objsAtLocation = new LinkedHashMap<XYLocation, Set<EnvironmentObject>>();
+
+		public XYEnvironmentState(int width, int height) {
+			this.width = width;
+			this.height = height;
+			for (int h = 1; h <= height; h++) {
+				for (int w = 1; w <= width; w++) {
+					objsAtLocation.put(new XYLocation(h, w), new LinkedHashSet<EnvironmentObject>());
+				}
 			}
 		}
-	}
 
-	public void moveObjectToAbsoluteLocation(EnvironmentObject eo, XYLocation loc) {
-		// Ensure is not already at another location
-		for (Set<EnvironmentObject> eos : objsAtLocation.values()) {
-			if (eos.remove(eo)) {
-				break; // Should only every be at 1 location
+		public void moveObjectToAbsoluteLocation(EnvironmentObject eo, XYLocation loc) {
+			// Ensure is not already at another location
+			for (Set<EnvironmentObject> eos : objsAtLocation.values()) {
+				if (eos.remove(eo)) {
+					break; // Should only every be at 1 location
+				}
 			}
+			// Add it to the location specified
+			getObjectsAt(loc).add(eo);
 		}
-		// Add it to the location specified
-		getObjectsAt(loc).add(eo);
-	}
 
-	public Set<EnvironmentObject> getObjectsAt(XYLocation loc) {
-		Set<EnvironmentObject> objectsAt = objsAtLocation.get(loc);
-		if (null == objectsAt) {
+		public Set<EnvironmentObject> getObjectsAt(XYLocation loc) {
 			// Always ensure an empty Set is returned
-			objectsAt = new LinkedHashSet<EnvironmentObject>();
-			objsAtLocation.put(loc, objectsAt);
+			return objsAtLocation.computeIfAbsent(loc, k -> new LinkedHashSet<>());
 		}
-		return objectsAt;
-	}
 
-	public XYLocation getCurrentLocationFor(EnvironmentObject eo) {
-		for (XYLocation loc : objsAtLocation.keySet()) {
-			if (objsAtLocation.get(loc).contains(eo)) {
-				return loc;
+		public XYLocation getCurrentLocationFor(EnvironmentObject eo) {
+			for (XYLocation loc : objsAtLocation.keySet()) {
+				if (objsAtLocation.get(loc).contains(eo)) {
+					return loc;
+				}
 			}
+			return null;
 		}
-		return null;
-	}
 
-	public Set<EnvironmentObject> getObjectsNear(Agent agent, int radius) {
-		Set<EnvironmentObject> objsNear = new LinkedHashSet<>();
+		public Set<EnvironmentObject> getObjectsNear(Agent agent, int radius) {
+			Set<EnvironmentObject> objsNear = new LinkedHashSet<>();
 
-		XYLocation agentLocation = getCurrentLocationFor(agent);
-		for (XYLocation loc : objsAtLocation.keySet()) {
-			if (withinRadius(radius, agentLocation, loc)) {
-				objsNear.addAll(objsAtLocation.get(loc));
+			XYLocation agentLocation = getCurrentLocationFor(agent);
+			for (XYLocation loc : objsAtLocation.keySet()) {
+				if (withinRadius(radius, agentLocation, loc)) {
+					objsNear.addAll(objsAtLocation.get(loc));
+				}
 			}
+			// Ensure the 'agent' is not included in the Set of
+			// objects near
+			objsNear.remove(agent);
+
+			return objsNear;
 		}
-		// Ensure the 'agent' is not included in the Set of
-		// objects near
-		objsNear.remove(agent);
 
-		return objsNear;
-	}
+		@Override
+		public String toString() {
+			return "XYEnvironmentState:" + objsAtLocation.toString();
+		}
 
-	@Override
-	public String toString() {
-		return "XYEnvironmentState:" + objsAtLocation.toString();
-	}
-
-	//
-	// PRIVATE METHODS
-	//
-	private boolean withinRadius(int radius, XYLocation agentLocation, XYLocation objectLocation) {
-		int xdifference = agentLocation.getXCoOrdinate() - objectLocation.getXCoOrdinate();
-		int ydifference = agentLocation.getYCoOrdinate() - objectLocation.getYCoOrdinate();
-		return Math.sqrt((xdifference * xdifference) + (ydifference * ydifference)) <= radius;
+		//
+		// PRIVATE METHODS
+		//
+		private boolean withinRadius(int radius, XYLocation agentLocation, XYLocation objectLocation) {
+			int xdifference = agentLocation.getX() - objectLocation.getX();
+			int ydifference = agentLocation.getY() - objectLocation.getY();
+			return Math.sqrt((xdifference * xdifference) + (ydifference * ydifference)) <= radius;
+		}
 	}
 }

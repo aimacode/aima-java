@@ -1,19 +1,15 @@
 package aima.core.agent.impl.aprog;
 
+import aima.core.agent.AgentProgram;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import aima.core.agent.Action;
-import aima.core.agent.AgentProgram;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.NoOpAction;
-import aima.core.util.datastructure.Table;
+import java.util.Optional;
 
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.7, page 47.<br>
- * <br>
- * 
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.7, page 47.
+ * <br><br>
  * <pre>
  * function TABLE-DRIVEN-AGENT(percept) returns an action
  *   persistent: percepts, a sequence, initially empty
@@ -27,71 +23,29 @@ import aima.core.util.datastructure.Table;
  * Figure 2.7 The TABLE-DRIVEN-AGENT program is invoked for each new percept and
  * returns an action each time. It retains the complete percept sequence in
  * memory.
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ciaran O'Reilly
  * @author Mike Stampone
- * 
+ * @author Ruediger Lunde
  */
-public class TableDrivenAgentProgram implements AgentProgram {
-	private List<Percept> percepts = new ArrayList<Percept>();
+public class TableDrivenAgentProgram<P, A> implements AgentProgram<P, A> {
+	private List<P> percepts = new ArrayList<>();
+	private Map<List<P>, A> table;
 
-	private Table<List<Percept>, String, Action> table;
-
-	private static final String ACTION = "action";
-
-	// persistent: percepts, a sequence, initially empty
-	// table, a table of actions, indexed by percept sequences, initially fully
-	// specified
 	/**
-	 * Constructs a TableDrivenAgentProgram with a table of actions, indexed by
-	 * percept sequences.
-	 * 
-	 * @param perceptSequenceActions
+	 * Constructs a TableDrivenAgentProgram with a table of actions, indexed by percept sequences.
+	 * @param perceptsToActionMap
 	 *            a table of actions, indexed by percept sequences
 	 */
-	public TableDrivenAgentProgram(
-			Map<List<Percept>, Action> perceptSequenceActions) {
-
-		List<List<Percept>> rowHeaders = new ArrayList<List<Percept>>(
-				perceptSequenceActions.keySet());
-
-		List<String> colHeaders = new ArrayList<String>();
-		colHeaders.add(ACTION);
-
-		table = new Table<List<Percept>, String, Action>(rowHeaders, colHeaders);
-
-		for (List<Percept> row : rowHeaders) {
-			table.set(row, ACTION, perceptSequenceActions.get(row));
-		}
+	public TableDrivenAgentProgram(Map<List<P>, A> perceptsToActionMap) {
+		table = perceptsToActionMap;
 	}
 
-	//
-	// START-AgentProgram
-
-	// function TABLE-DRIVEN-AGENT(percept) returns an action
-	public Action execute(Percept percept) {
-		// append percept to end of percepts
+	/// function TABLE-DRIVEN-AGENT(percept) returns an action
+	public Optional<A> apply(P percept) {
 		percepts.add(percept);
-
-		// action <- LOOKUP(percepts, table)
-		// return action
-		return lookupCurrentAction();
-	}
-
-	// END-AgentProgram
-	//
-
-	//
-	// PRIVATE METHODS
-	//
-	private Action lookupCurrentAction() {
-		Action action = null;
-
-		action = table.get(percepts, ACTION);
-		if (null == action) {
-			action = NoOpAction.NO_OP;
-		}
-
-		return action;
+		return Optional.ofNullable(table.get(percepts));
 	}
 }

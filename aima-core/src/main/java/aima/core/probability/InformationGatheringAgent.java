@@ -10,6 +10,7 @@ import aima.core.probability.proposition.AssignmentProposition;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 16.9, page 632.<br>
@@ -34,7 +35,7 @@ import java.util.List;
  *
  * @author samagra
  */
-public abstract class InformationGatheringAgent implements Agent {
+public abstract class InformationGatheringAgent implements Agent<Percept, Action> {
 
     // To carry out conditional probability calculations
     private BayesInference inferenceMethod;
@@ -74,7 +75,7 @@ public abstract class InformationGatheringAgent implements Agent {
      * @return action to be executed by the agent
      */
     @Override
-    public Action execute(Percept percept) {
+    public Optional<Action> act(Percept percept) {
         // integrate percept into D
         observedEvidence = integratePercept(observedEvidence, percept);
 
@@ -86,10 +87,10 @@ public abstract class InformationGatheringAgent implements Agent {
         // if VPI(Ej) > Cost(Ej)
         if (getVpi(randomVar) > getCost(randomVar)) {
             // return REQUEST(Ej)
-            return this.request(randomVar);
+            return Optional.ofNullable(request(randomVar));
         }
         // else return the best action from D
-        return ((Action) decisionNetwork.getBestAction());
+        return Optional.ofNullable((Action) decisionNetwork.getBestAction());
     }
 
     /**

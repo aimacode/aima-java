@@ -54,41 +54,40 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
 
     private static final Double INFINITY = Double.MAX_VALUE;
 
-    private final ToDoubleFunction<Node<S, A>> evalFn;
+    private final EvaluationFunction<S, A> evalFn;
     private boolean avoidLoops;
-    private final NodeExpander<S, A> nodeExpander;
+    private final NodeFactory<S, A> nodeFactory;
 
     // stores the states on the current path if avoidLoops is true.
     private Set<S> explored = new HashSet<>();
     private Metrics metrics;
 
-    public RecursiveBestFirstSearch(ToDoubleFunction<Node<S, A>> evalFn) {
+    public RecursiveBestFirstSearch(EvaluationFunction<S, A> evalFn) {
         this(evalFn, false);
     }
 
     /**
      * Constructor which allows to enable the loop avoidance strategy.
      */
-    public RecursiveBestFirstSearch(ToDoubleFunction<Node<S, A>> evalFn, boolean avoidLoops) {
-        this(evalFn, avoidLoops, new NodeExpander<>());
+    public RecursiveBestFirstSearch(EvaluationFunction<S, A> evalFn, boolean avoidLoops) {
+        this(evalFn, avoidLoops, new NodeFactory<>());
     }
 
-    public RecursiveBestFirstSearch(ToDoubleFunction<Node<S, A>> evalFn, boolean avoidLoops,
-                                    NodeExpander<S, A> nodeExpander) {
+    public RecursiveBestFirstSearch(EvaluationFunction<S, A> evalFn, boolean avoidLoops,
+                                    NodeFactory<S, A> nodeFactory) {
         this.evalFn = evalFn;
         this.avoidLoops = avoidLoops;
-        this.nodeExpander = nodeExpander;
-        nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
+        this.nodeFactory = nodeFactory;
+        nodeFactory.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
         metrics = new Metrics();
     }
 
     /**
-     * Modifies the evaluation function if it is a {@link HeuristicEvaluationFunction}.
+     * Modifies the evaluation function.
      */
     @Override
     public void setHeuristicFunction(ToDoubleFunction<Node<S, A>> h) {
-        if (evalFn instanceof HeuristicEvaluationFunction)
-            ((HeuristicEvaluationFunction<S, A>) evalFn).setHeuristicFunction(h);
+        evalFn.setHeuristicFunction(h);
     }
 
     // function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or
@@ -99,7 +98,7 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
         clearMetrics();
 
         // RBFS(problem, MAKE-NODE(INITIAL-STATE[problem]), infinity)
-        Node<S, A> n = nodeExpander.createRootNode(p.getInitialState());
+        Node<S, A> n = nodeFactory.createNode(p.getInitialState());
         SearchResult<S, A> sr = rbfs(p, n, evalFn.applyAsDouble(n), INFINITY, 0);
         if (sr.hasSolution()) {
             Node<S, A> s = sr.getSolutionNode();
@@ -128,12 +127,12 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
 
     @Override
     public void addNodeListener(Consumer<Node<S, A>> listener) {
-        nodeExpander.addNodeListener(listener);
+        nodeFactory.addNodeListener(listener);
     }
 
     @Override
     public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
-        return nodeExpander.removeNodeListener(listener);
+        return nodeFactory.removeNodeListener(listener);
     }
 
     //
@@ -220,7 +219,7 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
     }
 
     private List<Node<S, A>> expandNode(Node<S, A> node, Problem<S, A> problem) {
-        List<Node<S, A>> result = nodeExpander.expand(node, problem);
+        List<Node<S, A>> result = nodeFactory.getSuccessors(node, problem);
         if (avoidLoops) {
             explored.add(node.getState());
             result = result.stream().filter(n -> !explored.contains(n.getState())).collect(Collectors.toList());

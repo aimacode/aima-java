@@ -1,17 +1,16 @@
 package aima.test.core.unit.environment.wumpusworld;
 
-import aima.core.agent.Action;
 import aima.core.environment.wumpusworld.AgentPosition;
 import aima.core.environment.wumpusworld.WumpusAction;
 import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusFunctions;
-import aima.core.search.framework.problem.ActionsFunction;
-import aima.core.search.framework.problem.ResultFunction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * 
@@ -22,8 +21,8 @@ import java.util.List;
  */
 public class WumpusFunctionsTest {
 	
-	private ActionsFunction<AgentPosition, WumpusAction> actionsFn;
-	private ResultFunction<AgentPosition, WumpusAction> resultFn;
+	private Function<AgentPosition, List<WumpusAction>> actionsFn;
+	private BiFunction<AgentPosition, WumpusAction, AgentPosition> resultFn;
 
 	@Before
 	public void setUp() {
@@ -53,10 +52,10 @@ public class WumpusFunctionsTest {
 		//If you are in front of a wall forward action is not possible
 		AgentPosition pos31s = new AgentPosition(3, 1, AgentPosition.Orientation.FACING_SOUTH);
 		AgentPosition pos41e = new AgentPosition(4, 1, AgentPosition.Orientation.FACING_EAST);
-		for (Action a : actionsFn.apply(pos31s))
+		for (WumpusAction a : actionsFn.apply(pos31s))
 			Assert.assertNotEquals(a, WumpusAction.FORWARD);
 		
-		for (Action a : actionsFn.apply(pos41e))
+		for (WumpusAction a : actionsFn.apply(pos41e))
 			Assert.assertNotEquals(a, WumpusAction.FORWARD);
 	}
 }

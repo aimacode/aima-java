@@ -6,8 +6,11 @@ import java.util.Objects;
 
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
+import aima.core.agent.impl.AbstractEnvironment;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.Map;
 import aima.core.environment.map.MapEnvironment;
+import aima.core.environment.map.MoveToAction;
 import aima.core.util.math.geom.shapes.Point2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -25,7 +28,7 @@ import javafx.scene.text.Text;
  * 
  * @author Ruediger Lunde
  */
-public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
+public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl<DynamicPercept, MoveToAction> {
 
 	protected Pane envStateView;
 	protected MapEnvironment env;
@@ -49,7 +52,7 @@ public class MapEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
 	}
 
 	@Override
-	public void initialize(Environment env) {
+	public void initialize(AbstractEnvironment<? extends DynamicPercept, ? extends MoveToAction> env) {
 		if (env instanceof MapEnvironment)
 			this.env = (MapEnvironment) env;
 		track.clear();

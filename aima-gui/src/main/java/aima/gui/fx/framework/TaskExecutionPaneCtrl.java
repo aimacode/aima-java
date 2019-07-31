@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Controller class for task execution panes. It is responsible for maintaining the
  * current parameter settings, the task execution state, the current execution
- * thread, and for handling events (parameter change events and execute button events).
+ * thread, and for handling events (parameter change events and act button events).
  * If not otherwise stated, methods must be called from the FX Application Thread.
  * 
  * @author Ruediger Lunde
@@ -56,7 +56,7 @@ public class TaskExecutionPaneCtrl {
 			if (!combo.getId().equals(PARAM_EXEC_SPEED))
 				combo.getSelectionModel().selectedItemProperty().addListener(listener);
 		executeBtn.setOnAction(ev -> onExecuteButtonAction());
-		// mouse-left on execute button toggles execution speed between StepMode and VeryFast
+		// mouse-left on act button toggles execution speed between StepMode and VeryFast
 		executeBtn.setOnMouseClicked(ev -> {
 			if (ev.getButton() == MouseButton.SECONDARY) {
 				if (getParamAsInt(PARAM_EXEC_SPEED) == Integer.MAX_VALUE)

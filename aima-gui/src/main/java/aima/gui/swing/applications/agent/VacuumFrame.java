@@ -1,5 +1,7 @@
 package aima.gui.swing.applications.agent;
 
+import aima.core.agent.Action;
+import aima.core.environment.vacuum.VacuumPercept;
 import aima.gui.swing.framework.AgentAppFrame;
 
 /**
@@ -7,7 +9,7 @@ import aima.gui.swing.framework.AgentAppFrame;
  * 
  * @author Ruediger Lunde
  */
-public class VacuumFrame extends AgentAppFrame {
+public class VacuumFrame extends AgentAppFrame<VacuumPercept, Action> {
 	private static final long serialVersionUID = 1L;
 	public static String ENV_SEL = "EnvSelection";
 	public static String AGENT_SEL = "AgentSelection";

@@ -1,5 +1,7 @@
 package aima.gui.swing.applications.agent.map;
 
+import aima.core.agent.impl.DynamicPercept;
+import aima.core.environment.map.MoveToAction;
 import aima.gui.swing.framework.AgentAppFrame;
 import aima.gui.util.SearchFactory;
 
@@ -13,7 +15,7 @@ import aima.gui.util.SearchFactory;
  * 
  * @author Ruediger Lunde
  */
-public class MapAgentFrame extends AgentAppFrame {
+public class MapAgentFrame extends AgentAppFrame<DynamicPercept, MoveToAction> {
 	
 	private static final long serialVersionUID = 1L;
 	public static String SCENARIO_SEL = "ScenarioSelection";

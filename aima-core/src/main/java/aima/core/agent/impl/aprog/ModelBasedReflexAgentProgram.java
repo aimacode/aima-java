@@ -1,14 +1,12 @@
 package aima.core.agent.impl.aprog;
 
-import java.util.Set;
-
-import aima.core.agent.Action;
 import aima.core.agent.AgentProgram;
 import aima.core.agent.Model;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.DynamicState;
-import aima.core.agent.impl.NoOpAction;
 import aima.core.agent.impl.aprog.simplerule.Rule;
+
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.12, page
@@ -31,28 +29,46 @@ import aima.core.agent.impl.aprog.simplerule.Rule;
  * Figure 2.12 A model-based reflex agent. It keeps track of the current state
  * of the world using an internal model. It then chooses an action in the same
  * way as the reflex agent.
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  * 
  */
-public abstract class ModelBasedReflexAgentProgram implements AgentProgram {
-	//
-	// persistent: state, the agent's current conception of the world state
+public abstract class ModelBasedReflexAgentProgram<P, A> implements AgentProgram<P, A> {
+	/// persistent: state, the agent's current conception of the world state
 	private DynamicState state = null;
-
-	// model, a description of how the next state depends on current state and
-	// action
+	/// model, a description of how the next state depends on current state and action
 	private Model model = null;
+	/// rules, a set of condition-action rules
+	private Set<Rule<A>> rules = null;
+	/// action, the most recent action, initially none
+	private A action = null;
 
-	// rules, a set of condition-action rules
-	private Set<Rule> rules = null;
-
-	// action, the most recent action, initially none
-	private Action action = null;
-
-	public ModelBasedReflexAgentProgram() {
+	protected ModelBasedReflexAgentProgram() {
 		init();
+	}
+
+	/// function MODEL-BASED-REFLEX-AGENT(percept) returns an action
+	public final Optional<A> apply(P percept) {
+		state = updateState(state, action, percept, model);
+		Rule<A> rule = ruleMatch(state, rules);
+		action = (rule != null) ? rule.getAction() : null;
+		return Optional.ofNullable(action);
+	}
+
+	/**
+	 * Realizations of this class should implement the init() method so that it
+	 * calls the setState(), setModel(), and setRules() method.
+	 */
+	protected abstract void init();
+
+	protected abstract DynamicState updateState(DynamicState state, A action, P percept, Model model);
+
+	private Rule<A> ruleMatch(DynamicState state, Set<Rule<A>> rules) {
+		return rules.stream().filter(r -> r.evaluate(state)).findFirst().orElse(null);
 	}
 
 	/**
@@ -80,54 +96,10 @@ public abstract class ModelBasedReflexAgentProgram implements AgentProgram {
 	/**
 	 * Set the program's condition-action rules
 	 * 
-	 * @param ruleSet
+	 * @param rules
 	 *            a set of condition-action rules
 	 */
-	public void setRules(Set<Rule> ruleSet) {
-		rules = ruleSet;
-	}
-
-	//
-	// START-AgentProgram
-
-	// function MODEL-BASED-REFLEX-AGENT(percept) returns an action
-	public Action execute(Percept percept) {
-		// state <- UPDATE-STATE(state, action, percept, model)
-		state = updateState(state, action, percept, model);
-		// rule <- RULE-MATCH(state, rules)
-		Rule rule = ruleMatch(state, rules);
-		// action <- rule.ACTION
-		action = ruleAction(rule);
-		// return action
-		return action;
-	}
-
-	// END-AgentProgram
-	//
-
-	//
-	// PROTECTED METHODS
-	//
-
-	/**
-	 * Realizations of this class should implement the init() method so that it
-	 * calls the setState(), setModel(), and setRules() method.
-	 */
-	protected abstract void init();
-
-	protected abstract DynamicState updateState(DynamicState state,
-			Action action, Percept percept, Model model);
-
-	protected Rule ruleMatch(DynamicState state, Set<Rule> rules) {
-		for (Rule r : rules) {
-			if (r.evaluate(state)) {
-				return r;
-			}
-		}
-		return null;
-	}
-
-	protected Action ruleAction(Rule r) {
-		return null == r ? NoOpAction.NO_OP : r.getAction();
+	public void setRules(Set<Rule<A>> rules) {
+		this.rules = rules;
 	}
 }

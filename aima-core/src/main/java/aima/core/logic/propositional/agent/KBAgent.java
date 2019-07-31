@@ -2,9 +2,11 @@ package aima.core.logic.propositional.agent;
 
 import aima.core.agent.Action;
 import aima.core.agent.Percept;
-import aima.core.agent.impl.AbstractAgent;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.parsing.ast.Sentence;
+
+import java.util.Optional;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 7.1, page
@@ -30,30 +32,30 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * 
  * @author Ciaran O'Reilly
  */
-public abstract class KBAgent extends AbstractAgent {
+public abstract class KBAgent extends SimpleAgent<Percept, Action> {
 	// persistent: KB, a knowledge base
-	protected KnowledgeBase KB;
+	protected KnowledgeBase kb;
 	// t, a counter, initially 0, indicating time
 	private int t = 0;
 
-	public KBAgent(KnowledgeBase KB) {
-		this.KB = KB;
+	public KBAgent(KnowledgeBase kb) {
+		this.kb = kb;
 	}
 
 	// function KB-AGENT(percept) returns an action
 	@Override
-	public Action execute(Percept percept) {
+	public Optional<Action> act(Percept percept) {
 		// TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
-		KB.tell(makePerceptSentence(percept, t));
+		kb.tell(makePerceptSentence(percept, t));
 		// action &lt;- ASK(KB, MAKE-ACTION-QUERY(t))
-		Action action = ask(KB, makeActionQuery(t));
+		Action action = ask(kb, makeActionQuery(t));
 		
 		// TELL(KB, MAKE-ACTION-SENTENCE(action, t))
-		KB.tell(makeActionSentence(action, t));
+		kb.tell(makeActionSentence(action, t));
 		// t &lt;- t + 1
 		t = t + 1;
 		// return action
-		return action;
+		return Optional.ofNullable(action);
 	}
 
 	/**
@@ -98,12 +100,12 @@ public abstract class KBAgent extends AbstractAgent {
 	 * a sentence) determined by the KB into an allowed 'Action' object from the current
 	 * environment in which the KB-AGENT resides.
 	 * 
-	 * @param KB
+	 * @param kb
 	 *        the KB to ask.
 	 * @param actionQuery
 	 *        an action query.
 	 * @return the Action to be performed in response to the given query.
 	 */
 	// ASK(KB, MAKE-ACTION-QUERY(t))
-	public abstract Action ask(KnowledgeBase KB, Sentence actionQuery);
+	public abstract Action ask(KnowledgeBase kb, Sentence actionQuery);
 }

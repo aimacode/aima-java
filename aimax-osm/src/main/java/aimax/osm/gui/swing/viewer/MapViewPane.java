@@ -371,8 +371,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 * and data changes.
 	 */
 	public void fireMapViewEvent(MapViewEvent e) {
-		for (MapViewEventListener listener : eventListeners)
-			listener.eventHappened(e);
+		eventListeners.forEach(listener -> listener.eventHappened(e));
 	}
 
 	/**

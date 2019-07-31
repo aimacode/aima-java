@@ -11,18 +11,17 @@ some of the core algorithms, especially from the search and logic area. Based on
 scenarios, different algorithms can be tested and compared with various parameter settings.
  
 Application class names end with "App" and command line demo class names end with "Demo".
-Simple demo command line applications can be found in package `aima.gui.demo`.
-Graphical demo applications are available based on JavaFX (package `aima.gui.fx.applications`) and
-Swing (package `aima.gui.swing.applications`). Each platform-specific root package contains an
+Simple demo command line applications can be found in package [aima.gui.demo](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/demo).
+Graphical demo applications are available based on JavaFX (package [aima.gui.fx.applications](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/fx/applications)) and
+Swing (package [aima.gui.swing.applications](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/swing/applications)). Each platform-specific root package contains an
 integrated application providing access to all integrable applications. The individual applications are placed
 in sub-packages.
 
 Note that JavaFX and Swing applications are structured quite differently.
 They use different frameworks (sub-package framework) and also differ in function. The JavaFX framework
-is the newer of the two. It uses newer technology, its code design is more elegant
-(see the [Wiki](https://github.com/aimacode/aima-java/wiki)), and already now more applications are available.
+is the newer of the two. It uses newer technology, its code design is more elegant, and already now more applications are available.
 Experiment execution can be controlled with just one button (try Mouse-Right on the rightmost button to
-toggle between StepMode and VeryFast).
+toggle between StepMode and VeryFast). For more information about the design see the [Wiki](https://github.com/aimacode/aima-java/wiki/AIMA3e-GUI-FX-Framework).
 
 ![NQueensCspApp Demo Application](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-gui/src/main/uml/NQueensCspApp.png)
 
@@ -30,7 +29,7 @@ toggle between StepMode and VeryFast).
 Depends on the aima-core project. 
 
 ### Current Release
-#### 1.1.1-JavaFX GUIs Added : 18 Dec 2016
+#### 1.1.1-JavaFX GUIs Added : 18 Dec 2016 (outdated)
  * Fixed Jar to launch JavaFX Integrated App by default.
   
 ### Running the GUIs and Command Line Demos

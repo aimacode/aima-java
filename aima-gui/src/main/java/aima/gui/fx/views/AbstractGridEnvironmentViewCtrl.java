@@ -23,9 +23,11 @@ import java.util.function.ToIntFunction;
  * Provides base functionality for implementing views for environments which are based on a grid world.
  * Square (1, 1) is bottom left. Environments are expected to be derived from {@link AbstractEnvironment}.
  *
+ * @param <P> Typ used for percepts
+ * @param <A> Typ used for actions
  * @author Ruediger Lunde
  */
-public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentViewCtrl {
+public abstract class AbstractGridEnvironmentViewCtrl<P, A> extends SimpleEnvironmentViewCtrl<P, A> {
 
     protected Label perceptLabel = new Label();
     protected double fontSizeFactor = 0.3;
@@ -34,7 +36,7 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
     protected IntegerProperty yDimension = new SimpleIntegerProperty(-1);
     protected IntegerProperty squareSize = new SimpleIntegerProperty();
 
-    protected Environment env;
+    protected AbstractEnvironment<? extends P, ? extends A> env;
     private ToIntFunction<Environment> xDimFn;
     private ToIntFunction<Environment> yDimFn;
     private GridPane gridPane = new GridPane();
@@ -72,10 +74,8 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
     }
 
     @Override
-    public void initialize(Environment env) {
+    public void initialize(AbstractEnvironment<? extends P, ? extends A> env) {
         this.env = env;
-        if (!(env instanceof AbstractEnvironment))
-            throw new IllegalStateException("This view expects environments to be derived from AbstractEnvironment.");
         updateDimensions();
         super.initialize(env);
         isEditingEnabled = true;
@@ -130,14 +130,14 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
      * Can be called from every thread.
      */
     @Override
-    public void agentAdded(Agent agent, Environment source) {
+    public void agentAdded(Agent<?, ?> agent, Environment<?, ?> source) {
         super.agentAdded(agent, source);
         updatePerceptLabel(agent);
     }
 
     /** Can be called from every thread. */
     @Override
-    public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+    public void agentActed(Agent<?, ?> agent, P percept, A action, Environment<?, ?> source) {
         super.agentActed(agent, percept, action, source);
         isEditingEnabled = false; // never change the environment when the agent has started his job.
         updatePerceptLabel(agent);
@@ -145,7 +145,7 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
 
     /** Updates the view. */
     @Override
-    protected final void updateEnvStateView(Environment env) {
+    protected final void updateEnvStateView(Environment<?, ?> env) {
         if (this.env != env)
             throw new IllegalStateException("Environment can only be changed during initialization.");
         updatePerceptLabel(null);
@@ -153,12 +153,12 @@ public abstract class AbstractGridEnvironmentViewCtrl extends SimpleEnvironmentV
     }
 
     /** Updates the percept label with the current percept of the agent. Can be called from every thread. */
-    private void updatePerceptLabel(Agent agent) {
+    private void updatePerceptLabel(Agent<?, ?> agent) {
         String agentInfo = null;
-        Percept percept = null;
+        P percept = null;
         if (agent != null) {
             agentInfo = env.getAgents().size() > 1 ? " (A" + (env.getAgents().indexOf(agent) + 1) + ")" : "";
-            percept = ((AbstractEnvironment) env).getPerceptSeenBy(agent);
+            percept = env.getPerceptSeenBy(agent);
         }
         String txt = (agent != null) ? "Percept" + agentInfo + ": " + percept : "";
         if (Platform.isFxApplicationThread())

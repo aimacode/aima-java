@@ -1,8 +1,6 @@
 package aima.core.environment.wumpusworld;
 
-import aima.core.agent.Action;
-import aima.core.agent.EnvironmentViewNotifier;
-import aima.core.agent.Percept;
+import aima.core.agent.Notifier;
 import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
 import aima.core.search.framework.SearchForActions;
@@ -81,12 +79,12 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
     }
 
     public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, DPLL satSolver,
-                                      EnvironmentViewNotifier notifier) {
+                                      Notifier notifier) {
         this(caveXDim, caveYDim, start, new WumpusKnowledgeBase(caveXDim, caveYDim, start, satSolver), notifier);
     }
 
     public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, WumpusKnowledgeBase kb,
-                                      EnvironmentViewNotifier notifier) {
+                                      Notifier notifier) {
         super(caveXDim, caveYDim, start, kb, notifier);
         getKB().disableNavSentences(); // Optimization: Verbosity of produced sentences is reduced.
         modelCave = new WumpusCave(caveXDim, caveYDim);
@@ -102,10 +100,10 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
      * @return an action the agent should take.
      */
     @Override
-    public Action execute(Percept percept) {
+    public Optional<WumpusAction> act(WumpusPercept percept) {
 
         // TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
-        getKB().makePerceptSentence((WumpusPercept) percept, t);
+        getKB().makePerceptSentence(percept, t);
         // TELL the KB the temporal "physics" sentences for time t
         // Optimization: The agent is aware of it's position - the KB can profit from that!
         getKB().tellTemporalPhysicsSentences(t, currentPosition);
@@ -179,7 +177,7 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
         updateAgentPosition(action);
         visitedRooms.add(currentPosition.getRoom());
         // return action
-        return action;
+        return Optional.of(action);
     }
 
     /**
@@ -199,7 +197,7 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
                 WumpusFunctions.createActionsFunction(modelCave),
                 WumpusFunctions.createResultFunction(modelCave), goals::contains);
         SearchForActions<AgentPosition, WumpusAction> search =
-                new AStarSearch<>(new GraphSearch<>(), new ManhattanHeuristicFunction(goals));
+                new AStarSearch<>(new GraphSearch<>(), WumpusFunctions.createManhattanDistanceFunction(goals));
         Optional<List<WumpusAction>> actions = search.findActions(problem);
 
         return actions.orElse(Collections.emptyList());

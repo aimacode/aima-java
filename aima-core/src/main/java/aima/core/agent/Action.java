@@ -2,18 +2,10 @@ package aima.core.agent;
 
 /**
  * Describes an Action that can or has been taken by an Agent via one of its
- * Actuators.
+ * Actuators. Serves as marker interface but the framework does not require to use it.
  * 
  * @author Ciaran O'Reilly
+ * @author Ruediger Lunde
  */
 public interface Action {
-
-	/**
-	 * Indicates whether or not this Action is a 'No Operation'.<br>
-	 * Note: AIMA3e - NoOp, or no operation, is the name of an assembly language
-	 * instruction that does nothing.
-	 * 
-	 * @return true if this is a NoOp Action.
-	 */
-	boolean isNoOp();
 }

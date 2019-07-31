@@ -6,9 +6,7 @@ import aima.core.agent.State;
  * @author Ciaran O'Reilly
  */
 public class DynamicState extends ObjectWithDynamicAttributes implements State {
-	public DynamicState() {
-
-	}
+	public DynamicState() { }
 
 	@Override
 	public String describeType() {

@@ -1,23 +1,13 @@
 package aima.gui.swing.applications.search.games;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
-
-import javax.swing.JButton;
-
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
-import aima.core.environment.eightpuzzle.*;
+import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
+import aima.core.environment.eightpuzzle.EightPuzzleBoard;
+import aima.core.environment.eightpuzzle.EightPuzzleFunctions;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
@@ -30,12 +20,16 @@ import aima.core.search.uninformed.BreadthFirstSearch;
 import aima.core.search.uninformed.DepthLimitedSearch;
 import aima.core.search.uninformed.IterativeDeepeningSearch;
 import aima.core.util.datastructure.XYLocation;
-import aima.gui.swing.framework.AgentAppController;
-import aima.gui.swing.framework.AgentAppEnvironmentView;
-import aima.gui.swing.framework.AgentAppFrame;
-import aima.gui.swing.framework.MessageLogger;
-import aima.gui.swing.framework.SimpleAgentApp;
-import aima.gui.swing.framework.SimulationThread;
+import aima.gui.swing.framework.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 
 /**
  * Graphical 8-puzzle game application. It demonstrates the performance of
@@ -44,7 +38,7 @@ import aima.gui.swing.framework.SimulationThread;
  * 
  * @author Ruediger Lunde
  */
-public class EightPuzzleApp extends SimpleAgentApp {
+public class EightPuzzleApp extends SimpleAgentApp<Percept, Action> {
 
 	/** List of supported search algorithm names. */
 	protected static List<String> SEARCH_NAMES = new ArrayList<>();
@@ -66,32 +60,32 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch<>());
 		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeursitic)",
 				new GreedyBestFirstSearch<>(new GraphSearch<>(),
-						EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
+						EightPuzzleFunctions::getNumberOfMisplacedTiles));
 		addSearchAlgorithm("Greedy Best First Search (ManhattanHeursitic)",
 				new GreedyBestFirstSearch<>(new GraphSearch<>(),
-						EightPuzzleFunctions.createManhattanHeuristicFunction()));
+						EightPuzzleFunctions::getManhattanDistance));
 		addSearchAlgorithm("AStar Search (MisplacedTileHeursitic)",
-				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getNumberOfMisplacedTiles));
 		addSearchAlgorithm("AStar Search (ManhattanHeursitic)",
-				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getManhattanDistance));
 		addSearchAlgorithm("Simulated Annealing Search",
-				new SimulatedAnnealingSearch<>(EightPuzzleFunctions.createManhattanHeuristicFunction()));
+				new SimulatedAnnealingSearch<>(EightPuzzleFunctions::getManhattanDistance));
 	}
 
 	/** Returns an <code>EightPuzzleView</code> instance. */
-	public AgentAppEnvironmentView createEnvironmentView() {
+	public AgentAppEnvironmentView<Percept, Action> createEnvironmentView() {
 		return new EightPuzzleView();
 	}
 
 	/** Returns a <code>EightPuzzleFrame</code> instance. */
 	@Override
-	public AgentAppFrame createFrame() {
+	public AgentAppFrame<Percept, Action> createFrame() {
 		return new EightPuzzleFrame();
 	}
 
 	/** Returns a <code>EightPuzzleController</code> instance. */
 	@Override
-	public AgentAppController createController() {
+	public AgentAppController<Percept, Action> createController() {
 		return new EightPuzzleController();
 	}
 
@@ -111,7 +105,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 	/**
 	 * Adds some selectors to the base class and adjusts its size.
 	 */
-	protected static class EightPuzzleFrame extends AgentAppFrame {
+	protected static class EightPuzzleFrame extends AgentAppFrame<Percept, Action> {
 		private static final long serialVersionUID = 1L;
 		public static String ENV_SEL = "EnvSelection";
 		public static String SEARCH_SEL = "SearchSelection";
@@ -133,7 +127,8 @@ public class EightPuzzleApp extends SimpleAgentApp {
 	 * By pressing a button, the user can move the corresponding tile to the
 	 * adjacent gap.
 	 */
-	protected static class EightPuzzleView extends AgentAppEnvironmentView implements ActionListener {
+	protected static class EightPuzzleView extends AgentAppEnvironmentView<Percept, Action>
+			implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		protected JButton[] squareButtons;
 
@@ -151,19 +146,19 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		}
 
 		@Override
-		public void setEnvironment(Environment env) {
+		public void setEnvironment(Environment<? extends Percept, ? extends Action> env) {
 			super.setEnvironment(env);
 			showState();
 		}
 
 		@Override
-		public void agentAdded(Agent agent, Environment source) {
+		public void agentAdded(Agent<?, ?> agent, Environment<?, ?> source) {
 			showState();
 		}
 
 		/** Agent value null indicates a user initiated action. */
 		@Override
-		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+		public void agentActed(Agent<?, ?> agent, Percept percept, Action action, Environment<?, ?> source) {
 			showState();
 			notify((agent == null ? "User: " : "") + action.toString());
 		}
@@ -189,29 +184,30 @@ public class EightPuzzleApp extends SimpleAgentApp {
 				if (ae.getSource() == squareButtons[i]) {
 					EightPuzzleController contr = (EightPuzzleController) getController();
 					XYLocation locGap = ((EightPuzzleEnvironment) env).getBoard().getLocationOf(0);
-					if (locGap.getXCoOrdinate() == i / 3) {
-						if (locGap.getYCoOrdinate() == i % 3 - 1)
-							contr.executeUserAction(EightPuzzleBoard.RIGHT);
-						else if (locGap.getYCoOrdinate() == i % 3 + 1)
-							contr.executeUserAction(EightPuzzleBoard.LEFT);
-					} else if (locGap.getYCoOrdinate() == i % 3) {
-						if (locGap.getXCoOrdinate() == i / 3 - 1)
+					if (locGap.getX() == i % 3) {
+						if (locGap.getY() == i / 3 - 1)
 							contr.executeUserAction(EightPuzzleBoard.DOWN);
-						else if (locGap.getXCoOrdinate() == i / 3 + 1)
+						else if (locGap.getY() == i / 3 + 1)
 							contr.executeUserAction(EightPuzzleBoard.UP);
+					} else if (locGap.getY() == i / 3) {
+						if (locGap.getX() == i % 3 - 1)
+							contr.executeUserAction(EightPuzzleBoard.RIGHT);
+						else if (locGap.getX() == i % 3 + 1)
+							contr.executeUserAction(EightPuzzleBoard.LEFT);
 					}
 				}
 			}
+			showState();
 		}
 	}
 
 	/**
 	 * Defines how to react on standard simulation button events.
 	 */
-	protected static class EightPuzzleController extends AgentAppController {
+	protected static class EightPuzzleController extends AgentAppController<Percept, Action> {
 
 		protected EightPuzzleEnvironment env = null;
-		protected SearchAgent agent = null;
+		protected SearchAgent<Percept, EightPuzzleBoard, Action> agent = null;
 		protected boolean dirty;
 
 		/** Prepares next simulation. */
@@ -338,7 +334,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 		}
 
 		public void executeUserAction(Action action) {
-			env.executeAction(null, action);
+			env.execute(null, action);
 			agent = null;
 			dirty = true;
 			frame.updateEnabledState();
@@ -346,7 +342,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 	}
 
 	/** Simple environment maintaining just the current board state. */
-	protected static class EightPuzzleEnvironment extends AbstractEnvironment {
+	protected static class EightPuzzleEnvironment extends AbstractEnvironment<Percept, Action> {
 		EightPuzzleBoard board;
 
 		protected EightPuzzleEnvironment(EightPuzzleBoard board) {
@@ -359,7 +355,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		/** Executes the provided action and returns null. */
 		@Override
-		public void executeAction(Agent agent, Action action) {
+		public void execute(Agent<?, ?> agent, Action action) {
 			if (action == EightPuzzleBoard.UP)
 				board.moveGapUp();
 			else if (action == EightPuzzleBoard.DOWN)
@@ -372,7 +368,7 @@ public class EightPuzzleApp extends SimpleAgentApp {
 
 		/** Returns null. */
 		@Override
-		public Percept getPerceptSeenBy(Agent anAgent) {
+		public Percept getPerceptSeenBy(Agent<?, ?> anAgent) {
 			return null;
 		}
 	}

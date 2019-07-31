@@ -5,14 +5,13 @@ import aima.core.environment.eightpuzzle.BidirectionalEightPuzzleProblem;
 import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.problem.GeneralProblem;
-import aima.core.search.framework.problem.GoalTest;
 import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.environment.eightpuzzle.EightPuzzleBoard;
 import aima.core.environment.eightpuzzle.EightPuzzleFunctions;
 import aima.core.environment.map.Map;
-import aima.core.environment.map.SimplifiedRoadMapOfPartOfRomania;
+import aima.core.environment.map.SimplifiedRoadMapOfRomania;
 import aima.core.search.framework.QueueBasedSearch;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
@@ -21,6 +20,8 @@ import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.GraphSearchReducedFrontier;
 import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.informed.GreedyBestFirstSearch;
+
+import java.util.function.Predicate;
 
 public class GreedyBestFirstSearchTest {
 
@@ -35,8 +36,8 @@ public class GreedyBestFirstSearchTest {
 
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
 			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
-					(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+					(new GraphSearch<>(), EightPuzzleFunctions::getManhattanDistance);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 
 			Assert.assertEquals(49, agent.getActions().size()); // GraphSearchReducedFrontier: "49"
 			Assert.assertEquals("332", // GraphSearchReducedFrontier: "197"
@@ -62,9 +63,9 @@ public class GreedyBestFirstSearchTest {
 
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
 			QueueBasedSearch<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
-					(new GraphSearchReducedFrontier<>(), EightPuzzleFunctions.createManhattanHeuristicFunction());
+					(new GraphSearchReducedFrontier<>(), EightPuzzleFunctions::getManhattanDistance);
 
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			Assert.assertEquals(49, agent.getActions().size());
 			Assert.assertEquals("197", agent.getInstrumentation().getProperty("nodesExpanded"));
 			Assert.assertEquals("140", agent.getInstrumentation().getProperty("queueSize"));
@@ -77,15 +78,15 @@ public class GreedyBestFirstSearchTest {
 
 	@Test
 	public void testAIMA3eFigure3_23() throws Exception {
-		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
-		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfPartOfRomania.ARAD,
+		Map romaniaMap = new SimplifiedRoadMapOfRomania();
+		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				Predicate.isEqual(SimplifiedRoadMapOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new GreedyBestFirstSearch<>(new TreeSearch<>(),
-				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfRomania.BUCHAREST, romaniaMap));
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=Fagaras], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());
@@ -97,15 +98,15 @@ public class GreedyBestFirstSearchTest {
 
 	@Test
 	public void testAIMA3eFigure3_23_using_GraphSearch() throws Exception {
-		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
-		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfPartOfRomania.ARAD,
+		Map romaniaMap = new SimplifiedRoadMapOfRomania();
+		Problem<String, MoveToAction> problem = new GeneralProblem<>(SimplifiedRoadMapOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap), MapFunctions.createResultFunction(),
-				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				Predicate.isEqual(SimplifiedRoadMapOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new GreedyBestFirstSearch<>(new GraphSearch<>(),
-				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfRomania.BUCHAREST, romaniaMap));
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=Fagaras], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());

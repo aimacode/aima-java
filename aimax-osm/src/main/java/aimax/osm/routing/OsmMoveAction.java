@@ -59,11 +59,7 @@ public class OsmMoveAction implements Action {
 		}
 		return result;
 	}
-	
-	@Override
-	public boolean isNoOp() {
-		return false;
-	}
+
 	public String toString() {
 		return "OsmMove[to=" + getTo().getId() + "]";
 	}

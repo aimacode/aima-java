@@ -1,11 +1,11 @@
 package aima.core.learning.reinforcement.agent;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import aima.core.agent.Action;
 import aima.core.learning.reinforcement.PerceptStateReward;
 import aima.core.util.FrequencyCounter;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 837.<br>
@@ -38,14 +38,14 @@ import aima.core.util.FrequencyCounter;
  * 
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
+ * @author Ruediger Lunde
  * 
  */
-public class PassiveTDAgent<S, A extends Action> extends
-		ReinforcementAgent<S, A> {
+public class PassiveTDAgent<S, A> extends ReinforcementAgent<S, A> {
 	// persistent: &pi;, a fixed policy
-	private Map<S, A> pi = new HashMap<S, A>();
+	private Map<S, A> pi = new HashMap<>();
 	// U, a table of utilities, initially empty
-	private Map<S, Double> U = new HashMap<S, Double>();
+	private Map<S, Double> U = new HashMap<>();
 	// N<sub>s</sub>, a table of frequencies for states, initially zero
 	private FrequencyCounter<S> Ns = new FrequencyCounter<S>();
 	// s,a,r, the previous state, action, and reward, initially null
@@ -82,7 +82,7 @@ public class PassiveTDAgent<S, A extends Action> extends
 	 * @return an action
 	 */
 	@Override
-	public A execute(PerceptStateReward<S> percept) {
+	public Optional<A> act(PerceptStateReward<S> percept) {
 		// if s' is new then U[s'] <- r'
 		S sDelta = percept.state();
 		double rDelta = percept.reward();
@@ -109,7 +109,7 @@ public class PassiveTDAgent<S, A extends Action> extends
 		}
 
 		// return a
-		return a;
+		return Optional.ofNullable(a);
 	}
 
 	@Override
@@ -154,8 +154,8 @@ public class PassiveTDAgent<S, A extends Action> extends
 	//
 	private boolean isTerminal(S s) {
 		boolean terminal = false;
-		Action a = pi.get(s);
-		if (null == a || a.isNoOp()) {
+		A a = pi.get(s);
+		if (null == a) {
 			// No actions possible in state is considered terminal.
 			terminal = true;
 		}

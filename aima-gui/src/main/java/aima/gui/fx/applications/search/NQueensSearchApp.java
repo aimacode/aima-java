@@ -129,10 +129,10 @@ public class NQueensSearchApp extends IntegrableApplication {
 			experiment.startExperiment(new IterativeDeepeningSearch<>());
 		else if (strategy.equals("Greedy Best-First Search (attacking pair heuristic)"))
 			experiment.startExperiment(new GreedyBestFirstSearch<>(new GraphSearch<>(),
-					NQueensFunctions.createAttackingPairsHeuristicFunction()));
+					NQueensFunctions::getNumberOfAttackingPairs));
         else if (strategy.equals("A* search (attacking pair heuristic)"))
             experiment.startExperiment(new AStarSearch<>(new GraphSearch<>(),
-					NQueensFunctions.createAttackingPairsHeuristicFunction()));
+					NQueensFunctions::getNumberOfAttackingPairs));
 		else if (strategy.equals("Hill Climbing"))
 			experiment.startHillClimbingExperiment();
 		else if (strategy.equals("Simulated Annealing"))

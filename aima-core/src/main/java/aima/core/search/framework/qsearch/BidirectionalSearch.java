@@ -1,7 +1,7 @@
 package aima.core.search.framework.qsearch;
 
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.NodeFactory;
 import aima.core.search.framework.problem.BidirectionalProblem;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.Tasks;
@@ -31,6 +31,7 @@ import java.util.*;
  */
 public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 
+	private Queue<Node<S, A>> frontier;
 	private final static int ORG_P_IDX = 0;
 	private final static int REV_P_IDX = 1;
 
@@ -42,16 +43,16 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 */
 	private boolean isReverseActionTestEnabled = true;
 
-	// index 0: original problem, index 2: reverse problem
+	// index 0: original problem, index 1: reverse problem
 	private List<Map<S, ExtendedNode<S, A>>> explored;
 	private ExtendedNode<S, A> goalStateNode;
 
 	public BidirectionalSearch() {
-		this(new NodeExpander<>());
+		this(new NodeFactory<>());
 	}
 
-	public BidirectionalSearch(NodeExpander<S, A> nodeExpander) {
-		super(nodeExpander);
+	public BidirectionalSearch(NodeFactory<S, A> nodeFactory) {
+		super(nodeFactory);
 		explored = new ArrayList<>(2);
 		explored.add(new HashMap<>());
 		explored.add(new HashMap<>());
@@ -81,7 +82,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		assert (problem instanceof BidirectionalProblem);
 
-		nodeExpander.useParentLinks(true); // bidirectional search needs parents!
+		nodeFactory.useParentLinks(true); // bidirectional search needs parents!
 		this.frontier = frontier;
 		clearMetrics();
 		explored.get(ORG_P_IDX).clear();
@@ -90,8 +91,8 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 		Problem<S, A> orgP = ((BidirectionalProblem<S, A>) problem).getOriginalProblem();
 		Problem<S, A> revP = ((BidirectionalProblem<S, A>) problem).getReverseProblem();
 		ExtendedNode<S, A> initStateNode;
-		initStateNode = new ExtendedNode<>(nodeExpander.createRootNode(orgP.getInitialState()), ORG_P_IDX);
-		goalStateNode = new ExtendedNode<>(nodeExpander.createRootNode(revP.getInitialState()), REV_P_IDX);
+		initStateNode = new ExtendedNode<>(nodeFactory.createNode(orgP.getInitialState()), ORG_P_IDX);
+		goalStateNode = new ExtendedNode<>(nodeFactory.createNode(revP.getInitialState()), REV_P_IDX);
 
 		if (orgP.getInitialState().equals(revP.getInitialState()))
 			return getSolution(orgP, initStateNode, goalStateNode);
@@ -102,19 +103,17 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 
 		while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
 			// choose a leaf node and remove it from the frontier
-			ExtendedNode<S, A> nodeToExpand = (ExtendedNode) removeFromFrontier();
+			ExtendedNode<S, A> node = (ExtendedNode) removeFromFrontier();
 			ExtendedNode<S, A> nodeFromOtherProblem;
 
-			// if the node contains a goal state then return the
-			// corresponding solution
-			if (!earlyGoalTest && (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(nodeToExpand)) != null)
-				return getSolution(orgP, nodeToExpand, nodeFromOtherProblem);
+			// if the node contains a goal state then return the corresponding solution
+			if (!earlyGoalTest && (nodeFromOtherProblem = getCorrespondingNodeFromOtherProblem(node)) != null)
+				return getSolution(orgP, node, nodeFromOtherProblem);
 
-			// expand the chosen node, adding the resulting nodes to the
-			// frontier
-			for (Node<S, A> s : nodeExpander.expand(nodeToExpand, problem)) {
-				ExtendedNode<S, A> successor = new ExtendedNode<>(s, nodeToExpand.getProblemIndex());
-				if (!isReverseActionTestEnabled || nodeToExpand.getProblemIndex() == ORG_P_IDX
+			// expand the chosen node and add successor nodes to the frontier
+			for (Node<S, A> s : nodeFactory.getSuccessors(node, problem)) {
+				ExtendedNode<S, A> successor = new ExtendedNode<>(s, node.getProblemIndex());
+				if (!isReverseActionTestEnabled || node.getProblemIndex() == ORG_P_IDX
 						|| getReverseAction(orgP, successor) != null) {
 
 					if (earlyGoalTest
@@ -142,7 +141,6 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 * Inserts the node at the tail of the frontier if the corresponding state
 	 * is not yet explored.
 	 */
-	@Override
 	protected void addToFrontier(Node<S, A> node) {
 		if (!isExplored(node)) {
 			frontier.add(node);
@@ -157,7 +155,6 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 * 
 	 * @return A node of a not yet explored state.
 	 */
-	@Override
 	protected Node<S, A> removeFromFrontier() {
 		cleanUpFrontier(); // not really necessary because isFrontierEmpty
 							// should be called before...
@@ -172,7 +169,6 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 * Pops nodes of already explored states from the head of the frontier and
 	 * checks whether there are still some nodes left.
 	 */
-	@Override
 	protected boolean isFrontierEmpty() {
 		cleanUpFrontier();
 		updateMetrics(frontier.size());
@@ -207,7 +203,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 			if (action != null) {
 				S nextState = revNode.getParent().getState();
 				double stepCosts = orgP.getStepCosts(revNode.getState(), action, nextState);
-				orgNode = nodeExpander.createNode(nextState, orgNode, action, stepCosts);
+				orgNode = nodeFactory.createNode(nextState, orgNode, action, stepCosts);
 				revNode = revNode.getParent();
 			} else {
 				return Optional.empty();

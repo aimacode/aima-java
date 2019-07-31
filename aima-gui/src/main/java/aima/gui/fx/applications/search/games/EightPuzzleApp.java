@@ -64,17 +64,16 @@ public class EightPuzzleApp extends IntegrableApplication {
 		addSearchAlgorithm("Depth Limited Search (9)", new DepthLimitedSearch<>(9));
 		addSearchAlgorithm("Iterative Deepening Search", new IterativeDeepeningSearch<>());
 		addSearchAlgorithm("Greedy Best First Search (MisplacedTileHeuristic)",
-				new GreedyBestFirstSearch<>(new GraphSearch<>(),
-						EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
+				new GreedyBestFirstSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getNumberOfMisplacedTiles));
 		addSearchAlgorithm("Greedy Best First Search (ManhattanHeuristic)",
 				new GreedyBestFirstSearch<>(new GraphSearch<>(),
-						EightPuzzleFunctions.createManhattanHeuristicFunction()));
+						EightPuzzleFunctions::getManhattanDistance));
 		addSearchAlgorithm("AStar Search (MisplacedTileHeuristic)",
-				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions.createMisplacedTileHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getNumberOfMisplacedTiles));
 		addSearchAlgorithm("AStar Search (ManhattanHeuristic)",
-				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions.createManhattanHeuristicFunction()));
+				new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getManhattanDistance));
 		addSearchAlgorithm("Simulated Annealing Search (ManhattanHeuristic)",
-				new SimulatedAnnealingSearch<>(EightPuzzleFunctions.createManhattanHeuristicFunction(),
+				new SimulatedAnnealingSearch<>(EightPuzzleFunctions::getManhattanDistance,
 						new Scheduler(20, 0.05, 200)));
 	}
 
@@ -182,8 +181,8 @@ public class EightPuzzleApp extends IntegrableApplication {
 				else if (action == EightPuzzleBoard.RIGHT)
 					board.moveGapRight();
 				Metrics m = new Metrics();
-				m.set("manhattanHeuristic", EightPuzzleFunctions.createManhattanHeuristicFunction().applyAsDouble
-						(new Node<>(board)));
+				m.set("misplacedTileHeuristic", EightPuzzleFunctions.getNumberOfMisplacedTiles(new Node<>(board)));
+				m.set("manhattanHeuristic", EightPuzzleFunctions.getManhattanDistance(new Node<>(board)));
 				updateStateView(m);
 				if (Tasks.currIsCancelled())
 					break;

@@ -3,10 +3,9 @@ package aima.gui.fx.views;
 
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
-import aima.core.environment.wumpusworld.AgentPosition;
-import aima.core.environment.wumpusworld.Room;
-import aima.core.environment.wumpusworld.WumpusCave;
-import aima.core.environment.wumpusworld.WumpusEnvironment;
+import aima.core.agent.impl.AbstractEnvironment;
+import aima.core.environment.wumpusworld.*;
+import aima.gui.fx.applications.agent.WumpusAgentApp;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -25,7 +24,7 @@ import java.util.Map;
  *
  * @author Ruediger Lunde
  */
-public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
+public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl<WumpusPercept, WumpusAction> {
 
     private Map<Agent, Shape> agentSymbols = new HashMap<>();
     private boolean showRoomContent = true;
@@ -50,7 +49,7 @@ public class WumpusEnvironmentViewCtrl extends AbstractGridEnvironmentViewCtrl {
     }
 
     @Override
-    public void initialize(Environment env) {
+    public void initialize(AbstractEnvironment<? extends WumpusPercept, ? extends WumpusAction> env) {
         agentSymbols.clear();
         super.initialize(env);
     }

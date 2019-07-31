@@ -24,13 +24,13 @@
  * search strategies) are provided as specializations of
  * {@link aima.core.search.framework.QueueBasedSearch}. They delegate the work of
  * controlling the actual search to some
- * {@link aima.core.search.framework.qsearch.QueueSearch} implementation. The
- * most important concrete implementations are TreeSearch, GraphSearch, and
- * BidirectionalSearch.
+ * {@link aima.core.search.framework.qsearch.QueueSearch} implementation (called
+ * search execution strategies). The most important concrete implementations are
+ * TreeSearch, GraphSearch4e, and BidirectionalSearch.
  * 
  * <br>
  * Here, all search strategies explore the search space by expanding nodes. A
- * central {@link aima.core.search.framework.NodeExpander} class is used for
+ * central {@link aima.core.search.framework.NodeFactory} class is used for
  * this purpose. The default implementation should work for most purposes, but
  * it is possible to equip search algorithms with specialized versions (e.g.
  * which modify path cost computation - extra costs for move direction changes).
@@ -40,7 +40,7 @@
  * Nodes do not necessary increase space complexity as long as parent links can
  * be switched off. However, by switching on parent links, those algorithms can
  * be turned into search for actions algorithms. Additionally, the common node
- * expander interface unifies progress tracing for all search algorithms (just
+ * factory class unifies progress tracking for all search algorithms (just
  * add a node listener to get notifications about expanded nodes).
  * 
  * @author Ruediger Lunde

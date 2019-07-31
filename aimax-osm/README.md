@@ -11,46 +11,48 @@ This project provides a framework for building intelligent Open Street Map
 and search concepts from the AIMA library in a non-trivial
 application area and provide an interesting coding environment for student
 projects. Typical programming challenges include:
-* Extend the `RoutePlannerOsmApp` and provide additional options, e.g. to optimize
+* Extend the [RoutePlannerOsmApp](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/gui/fx/applications/RoutePlannerOsmApp.java) and provide additional options, e.g. to optimize
   time for a driver, to optimize fun for a cyclist, ...
-* Extend the `OnlineAgentOsmApp` and add variants of the original LRTAStar-based
+* Extend the [OnlineAgentOsmApp](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/gui/fx/applications/OnlineAgentOsmApp.java) and add variants of the original [LRTAStar](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/search/online/LRTAStarAgent.java)-based
   agent which try to perform better than the original in this special environment, e.g.
   by increasing greediness.
-* Extend the `RouteFindingAgentOsmApp` and add a new agent which is able to react on unforeseen
+* Extend the [RouteFindingAgentOsmApp](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/gui/fx/applications/RouteFindingAgentOsmApp.java) and add a new agent which is able to react on unforeseen
   events, e.g. on a road blocking defined by additional markers.
 * Develop an agent which plans the Saturday morning shopping tour for you. Try to
   create an optimal tour (the typical greedy TSP implementation is not that challenging...).
 
-Two GUIs are provided: One is based on JavaFX (package `aimax.osm.gui.fx`) and the other based on
-Swing (package `aimax.osm.gui.swing`). The FX GUI ist newer, more elegant, and
+Two GUIs are provided: One is based on JavaFX (package [aimax.osm.gui.fx](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/fx)) and the other based on
+Swing (package [aimax.osm.gui.swing](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/swing)). The FX GUI ist newer, more elegant, and
 more focused on AIMA concepts evaluation. The Swing GUI provides more functionality including
 a toolbox for building small navigation systems.
 
 The framework provides interfaces for central parts of a map visualization system and
 additionally example implementations. Fundamental data structures
-for nodes, ways, and the map itself can be replaced. The framework supports experiments
-with different implementations to optimize routing and also to integrate a database
-version of the map representation. The application `aimax.osm.gui.swing.applications.MiniNaviApp`
-demonstrates how to plug the components together and provides means to integrate and test
-own versions of the needed components.
+for nodes, ways, and the map itself can be replaced (see package [aimax.osm.data](https://github.com/aimacode/aima-java/tree/AIMA3e/aimax-osm/src/main/java/aimax/osm/data)). The framework supports experiments
+with different implementations for routing and also to integrate a database
+version of the map representation.
 
 Central part of the project is an OSM viewer implementation. It is designed
 as an efficient general purpose viewer which is highly configurable and extendable.
+It consists of a platform-indepented [UnifiedMapDrawer](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/viewer/UnifiedMapDrawer.java) implementation which is equipped with a platform-specific image builder, e.g. an [FXImageBuilder](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/gui/fx/viewer/FXImageBuilder.java). To add map functionality to a pane (map visualization and event handling for pan, zoom etc.) in JavaFX, the following commands are sufficient:
+`StackPane mapPane = new StackPane();
+ mapPaneCtrl = new MapPaneCtrl(mapPane);
+ mapPaneCtrl.loadMap(DataResource.getUlmFileResource());`
 
-The internal default map representation is chosen as close as possible to the
-original OSM XML file format. A kd-tree is used to improve rendering efficiency.
+The internal [DefaultMap](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/data/impl/DefaultMap.java) representation is chosen as close as possible to the
+original OSM XML file format. A [KDTree](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/data/impl/KDTree.java) is used to improve rendering efficiency.
 Classification and abstraction of map entities as well as their
 visual appearance within the drawn map are controlled by declarative
 rendering rules. They can be replaced or configured at runtime.
 New personal map styles can be created quite easily. See classes
-`aimax.osm.viewer.MapStyleFactory` and
-`aimax.osm.gui.swing.applications.OsmViewerPlusApp` for ideas how that
+[aimax.osm.viewer.MapStyleFactory](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/viewer/MapStyleFactory.java) and
+[aimax.osm.gui.swing.applications.OsmViewerPlusApp](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/gui/swing/applications/OsmViewerPlusApp.java) for ideas how that
 can be achieved.
 
 Routing functionality is based on the AIMA-CORE library.
-All dependencies from the AIMA libraries are encapsulated in the routing
-sub-package (search algorithms) and the gui sub-package (JavaFX/Swing-based frameworks).
-So all other packages can also be used as stand-alone library for building general OSM
+All dependencies from the AIMA libraries are encapsulated in the [aimax.osm.routing](https://github.com/aimacode/aima-java/tree/AIMA3e/aimax-osm/src/main/java/aimax/osm/routing)
+package (search algorithms) and the [aimax.osm.gui](https://github.com/aimacode/aima-java/tree/AIMA3e/aimax-osm/src/main/java/aimax/osm/gui) package (JavaFX/Swing-based frameworks). Note that all agent applications (e.g. [RouteFindingAgentOsmApp](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/gui/fx/applications/RouteFindingAgentOsmApp.java)) rely on a [MapAdapter](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/routing/MapAdapter.java), which provides a simple String-based [Map](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/environment/map/Map.java) interface for [OsmMap](https://github.com/aimacode/aima-java/blob/AIMA3e/aimax-osm/src/main/java/aimax/osm/data/OsmMap.java)s and by that allows a core [MapAgent](https://github.com/aimacode/aima-java/blob/AIMA3e/aima-core/src/main/java/aima/core/environment/map/MapAgent.java) to reason about OSM data.
+All other packages can also be used as stand-alone library for building general OSM
 applications.
 
 In the current version, relation entities are still ignored and the size
@@ -60,7 +62,8 @@ cities like Berlin can be loaded and displayed without any problem if enough
 heap space is provided (VM argument `-Xmx500M`).
 
 Getting started: Run one of the applications in the
-`aimax.osm.gui.fx.applications` or `aimax.osm.gui.swing.applications` package,
+[aimax.osm.gui.fx.applications](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/fx/applications)
+or [aimax.osm.gui.swing.applications](https://github.com/aimacode/aima-java/tree/AIMA3e/aima-gui/src/main/java/aima/gui/swing/applications) package,
 or use the corresponding integrated applications one package level up. If no map is
 displayed by default, make sure that the `main/resource` folder is included
 in the build path of your project, recompile and start again.
@@ -72,7 +75,7 @@ markers must be set.
 
 
 ### Current Release
-#### 2.1.1-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016
+#### 2.1.1-AIMAX-OSM JavaFX GUIs Added : 18 Dec 2016 (outdated)
   * Fixed Jar to launch JavaFX Integrated App by default.
 
 ### Keywords

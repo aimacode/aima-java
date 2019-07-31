@@ -44,16 +44,16 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 
 	public final Node<S, A> cutoffNode = new Node<>(null);
 	private final int limit;
-	private final NodeExpander<S, A> nodeExpander;
+	private final NodeFactory<S, A> nodeFactory;
 	private Metrics metrics = new Metrics();
 
 	public DepthLimitedSearch(int limit) {
-		this(limit, new NodeExpander<>());
+		this(limit, new NodeFactory<>());
 	}
 
-	public DepthLimitedSearch(int limit, NodeExpander<S, A> nodeExpander) {
+	public DepthLimitedSearch(int limit, NodeFactory<S, A> nodeFactory) {
 		this.limit = limit;
-		this.nodeExpander = nodeExpander;
+		this.nodeFactory = nodeFactory;
 	}
 
 	// function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or
@@ -66,14 +66,14 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 	 */
 	@Override
 	public Optional<List<A>> findActions(Problem<S, A> p) {
-		nodeExpander.useParentLinks(true);
+		nodeFactory.useParentLinks(true);
 		Optional<Node<S, A>> node = findNode(p);
 		return !isCutoffResult(node) ? SearchUtils.toActions(node) : Optional.empty();
 	}
 
 	@Override
 	public Optional<S> findState(Problem<S, A> p) {
-		nodeExpander.useParentLinks(false);
+		nodeFactory.useParentLinks(false);
 		Optional<Node<S, A>> node = findNode(p);
 		return !isCutoffResult(node) ? SearchUtils.toState(node) : Optional.empty();
 	}
@@ -82,7 +82,7 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 		clearMetrics();
 		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
 		// limit)
-		Node<S, A> node = recursiveDLS(nodeExpander.createRootNode(p.getInitialState()), p, limit);
+		Node<S, A> node = recursiveDLS(nodeFactory.createNode(p.getInitialState()), p, limit);
 		return node != null ? Optional.of(node) : Optional.empty();
 	}
 
@@ -106,7 +106,7 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 			boolean cutoffOccurred = false;
 			// for each action in problem.ACTIONS(node.STATE) do
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
-			for (Node<S, A> child : nodeExpander.expand(node, problem)) {
+			for (Node<S, A> child : nodeFactory.getSuccessors(node, problem)) {
 				// child <- CHILD-NODE(problem, node, action)
 				// result <- RECURSIVE-DLS(child, problem, limit - 1)
 				Node<S, A> result = recursiveDLS(child, problem, limit - 1);
@@ -138,12 +138,12 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 
 	@Override
 	public void addNodeListener(Consumer<Node<S, A>> listener)  {
-		nodeExpander.addNodeListener(listener);
+		nodeFactory.addNodeListener(listener);
 	}
 
 	@Override
 	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
-		return nodeExpander.removeNodeListener(listener);
+		return nodeFactory.removeNodeListener(listener);
 	}
 
 	/**

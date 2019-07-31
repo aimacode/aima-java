@@ -62,7 +62,7 @@ public class MapTest {
 				&& linkedTo.size() == 1);
 
 		linkedTo = aMap.getPossibleNextLocations("E");
-		Assert.assertTrue(linkedTo.size() == 0);
+		Assert.assertEquals(0, linkedTo.size());
 	}
 
 	@Test

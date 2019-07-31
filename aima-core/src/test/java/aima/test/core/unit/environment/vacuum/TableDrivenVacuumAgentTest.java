@@ -30,12 +30,12 @@ public class TableDrivenVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=Right], Action[name=Left], Action[name=Right], Action[name=NoOp]",
+				"Action[name=Right], Action[name=Left], Action[name=Right]",
 				actionTracker.getActions());
 	}
 
@@ -46,12 +46,12 @@ public class TableDrivenVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=Right], Action[name=Suck], Action[name=Left], Action[name=NoOp]",
+				"Action[name=Right], Action[name=Suck], Action[name=Left]",
 				actionTracker.getActions());
 	}
 
@@ -62,12 +62,12 @@ public class TableDrivenVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=Suck], Action[name=Right], Action[name=Left], Action[name=NoOp]",
+				"Action[name=Suck], Action[name=Right], Action[name=Left]",
 				actionTracker.getActions());
 	}
 
@@ -78,12 +78,12 @@ public class TableDrivenVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=Suck], Action[name=Right], Action[name=Suck], Action[name=NoOp]",
+				"Action[name=Suck], Action[name=Right], Action[name=Suck]",
 				actionTracker.getActions());
 	}
 }

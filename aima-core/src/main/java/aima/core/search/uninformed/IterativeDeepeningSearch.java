@@ -33,15 +33,15 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_PATH_COST = "pathCost";
 
-	private final NodeExpander<S, A> nodeExpander;
+	private final NodeFactory<S, A> nodeFactory;
 	private final Metrics metrics;
 
 	public IterativeDeepeningSearch() {
-		this(new NodeExpander<>());
+		this(new NodeFactory<>());
 	}
 	
-	public IterativeDeepeningSearch(NodeExpander<S, A> nodeExpander) {
-		this.nodeExpander = nodeExpander;
+	public IterativeDeepeningSearch(NodeFactory<S, A> nodeFactory) {
+		this.nodeFactory = nodeFactory;
 		this.metrics = new Metrics();
 	}
 	
@@ -50,13 +50,13 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 	// failure
 	@Override
 	public Optional<List<A>> findActions(Problem<S, A> p) {
-		nodeExpander.useParentLinks(true);
+		nodeFactory.useParentLinks(true);
 		return SearchUtils.toActions(findNode(p));
 	}
 
 	@Override
 	public Optional<S> findState(Problem<S, A> p) {
-		nodeExpander.useParentLinks(false);
+		nodeFactory.useParentLinks(false);
 		return SearchUtils.toState(findNode(p));
 	}
 
@@ -71,7 +71,7 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 		// for depth = 0 to infinity do
 		for (int i = 0; !Tasks.currIsCancelled(); i++) {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
-			DepthLimitedSearch<S, A> dls = new DepthLimitedSearch<>(i, nodeExpander);
+			DepthLimitedSearch<S, A> dls = new DepthLimitedSearch<>(i, nodeFactory);
 			Optional<Node<S, A>> result = dls.findNode(p);
 			updateMetrics(dls.getMetrics());
 			// if result != cutoff then return result
@@ -88,12 +88,12 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 
 	@Override
 	public void addNodeListener(Consumer<Node<S, A>> listener)  {
-		nodeExpander.addNodeListener(listener);
+		nodeFactory.addNodeListener(listener);
 	}
 
 	@Override
 	public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
-		return nodeExpander.removeNodeListener(listener);
+		return nodeFactory.removeNodeListener(listener);
 	}
 
 

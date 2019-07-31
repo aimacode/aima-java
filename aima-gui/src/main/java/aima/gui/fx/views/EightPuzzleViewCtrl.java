@@ -62,7 +62,7 @@ public class EightPuzzleViewCtrl {
     /** Updates the view. */
     public void update() {
         for (int i = 0; i < 9; i++ ) {
-            int tileNo = board.getValueAt(new XYLocation(i / 3, i % 3));
+            int tileNo = board.getValueAt(new XYLocation(i % 3, i / 3));
             tileBtns[i].setText(tileNo == 0 ? "" : Integer.toString(tileNo));
             tileBtns[i].setDisable(tileNo == 0);
         }
@@ -72,16 +72,16 @@ public class EightPuzzleViewCtrl {
         for (int i = 0; i < 9; i++) {
             if (ae.getSource() == tileBtns[i]) {
                 XYLocation locGap = board.getLocationOf(0);
-                if (locGap.getXCoOrdinate() == i / 3) {
-                    if (locGap.getYCoOrdinate() == i % 3 - 1)
-                        board.moveGapRight();
-                    else if (locGap.getYCoOrdinate() == i % 3 + 1)
-                        board.moveGapLeft();
-                } else if (locGap.getYCoOrdinate() == i % 3) {
-                    if (locGap.getXCoOrdinate() == i / 3 - 1)
+                if (locGap.getX() == i % 3) {
+                    if (locGap.getY() == i / 3 - 1)
                         board.moveGapDown();
-                    else if (locGap.getXCoOrdinate() == i / 3 + 1)
+                    else if (locGap.getY() == i / 3 + 1)
                         board.moveGapUp();
+                } else if (locGap.getY() == i / 3) {
+                    if (locGap.getX() == i % 3 - 1)
+                        board.moveGapRight();
+                    else if (locGap.getX() == i % 3 + 1)
+                        board.moveGapLeft();
                 }
             }
         }

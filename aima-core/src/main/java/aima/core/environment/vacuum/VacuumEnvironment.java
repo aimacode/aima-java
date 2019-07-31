@@ -3,7 +3,6 @@ package aima.core.environment.vacuum;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
-import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.agent.impl.DynamicAction;
 import aima.core.search.agent.NondeterministicSearchAgent;
@@ -22,13 +21,13 @@ import java.util.Random;
  * actions in this version of the vacuum world: <em>Left</em>, <em>Right</em>,
  * and <em>Suck</em>. Assume for the moment, that sucking is 100% effective. The
  * goal is to clean up all the dirt.
- * 
+ *
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class VacuumEnvironment extends AbstractEnvironment {
+public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action> {
 	// Allowable Actions within the Vacuum Environment
 	public static final Action ACTION_MOVE_LEFT = new DynamicAction("Left");
 	public static final Action ACTION_MOVE_RIGHT = new DynamicAction("Right");
@@ -36,13 +35,13 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	public static final String LOCATION_A = "A";
 	public static final String LOCATION_B = "B";
 
-	public enum LocationState {
-		Clean, Dirty
-	}
-
     private final List<String> locations;
 	protected VacuumEnvironmentState envState = null;
 	protected boolean isDone = false;
+
+	public enum LocationState {
+		Clean, Dirty
+	}
 
 	/**
 	 * Constructs a vacuum environment with two locations A and B, in which dirt is
@@ -54,8 +53,7 @@ public class VacuumEnvironment extends AbstractEnvironment {
 	}
 
 	/**
-	 * Constructs a vacuum environment with two locations A and B, in which dirt is
-	 * placed as specified.
+	 * Constructs a vacuum environment with two locations A and B, in which dirt is placed as specified.
 	 * 
 	 * @param locAState
 	 *            the initial state of location A, which is either
@@ -80,73 +78,55 @@ public class VacuumEnvironment extends AbstractEnvironment {
 			envState.setLocationState(locations.get(i), locStates[i]);
 	}
 
-	public List<String> getLocations() {
-		return locations;
-	}
-
-	public EnvironmentState getCurrentState() {
-		return envState;
-	}
-
-	public LocationState getLocationState(String location) {
-		return envState.getLocationState(location);
-	}
-
-	public String getAgentLocation(Agent a) {
-		return envState.getAgentLocation(a);
-	}
-
 	@Override
-	public void addAgent(Agent a) {
+	public void addAgent(Agent<? super VacuumPercept, ? extends Action> agent) {
 		int idx = new Random().nextInt(locations.size());
-		envState.setAgentLocation(a, locations.get(idx));
-		super.addAgent(a);
+		envState.setAgentLocation(agent, locations.get(idx));
+		super.addAgent(agent);
 	}
 
-	public void addAgent(Agent a, String location) {
-		// Ensure the agent state information is tracked before
-		// adding to super, as super will notify the registered
-		// EnvironmentViews that is was added.
-		envState.setAgentLocation(a, location);
-		super.addAgent(a);
+	public void addAgent(Agent<? super VacuumPercept, ? extends Action> agent, String location) {
+		envState.setAgentLocation(agent, location);
+		super.addAgent(agent);
 	}
 
 	@Override
-	public Percept getPerceptSeenBy(Agent anAgent) {
-		if (anAgent instanceof NondeterministicSearchAgent) {
-			// This agent expects a fully observable environment. It gets a clone of the environment state.
-			return envState.clone();
+	public VacuumPercept getPerceptSeenBy(Agent<?, ?> agent) {
+		String loc = envState.getAgentLocation(agent);
+		VacuumPercept percept = new VacuumPercept(loc, envState.getLocationState(loc));
+		if (agent instanceof NondeterministicSearchAgent) {
+			// This agent expects a fully observable environment.
+			percept.setAttribute(LOCATION_A, envState.getLocationState(LOCATION_A));
+			percept.setAttribute(LOCATION_B, envState.getLocationState(LOCATION_B));
 		}
-		// Other agents get a local percept.
-		String loc = envState.getAgentLocation(anAgent);
-		return new LocalVacuumEnvironmentPercept(loc, envState.getLocationState(loc));
+		return percept;
 	}
 
 	@Override
-	public void executeAction(Agent a, Action action) {
-		String loc = getAgentLocation(a);
-		if (ACTION_MOVE_RIGHT == action) {
+	public void execute(Agent<?, ?> agent, Action action) {
+		String loc = getAgentLocation(agent);
+		if (action == ACTION_MOVE_RIGHT) {
 			int x = getX(loc);
 			if (x < getXDimension())
-				envState.setAgentLocation(a, getLocation(x + 1, getY(loc)));
-			updatePerformanceMeasure(a, -1);
-		} else if (ACTION_MOVE_LEFT == action) {
+				envState.setAgentLocation(agent, getLocation(x + 1, getY(loc)));
+			updatePerformanceMeasure(agent, -1);
+		} else if (action == ACTION_MOVE_LEFT) {
 			int x = getX(loc);
 			if (x > 1)
-				envState.setAgentLocation(a, getLocation(x - 1, getY(loc)));
-			updatePerformanceMeasure(a, -1);
-		} else if (ACTION_SUCK == action) {
-			if (LocationState.Dirty == envState.getLocationState(envState
-					.getAgentLocation(a))) {
-				envState.setLocationState(envState.getAgentLocation(a),
-						LocationState.Clean);
-				updatePerformanceMeasure(a, 10);
+				envState.setAgentLocation(agent, getLocation(x - 1, getY(loc)));
+			updatePerformanceMeasure(agent, -1);
+		} else if (action == ACTION_SUCK) {
+			if (envState.getLocationState(loc) == LocationState.Dirty) {
+				envState.setLocationState(loc, LocationState.Clean);
+				updatePerformanceMeasure(agent, 10);
 			}
-		} else if (action.isNoOp()) {
-			// In the Vacuum Environment we consider things done if
-			// the agent generates a NoOp.
-			isDone = true;
 		}
+	}
+
+	@Override
+	protected void executeNoOp(Agent<?, ?> agent) {
+		// In the Vacuum Environment we consider things done if the agent's act method returns no action.
+		isDone = true;
 	}
 
 	@Override
@@ -154,7 +134,23 @@ public class VacuumEnvironment extends AbstractEnvironment {
 		return super.isDone() || isDone;
 	}
 
+	public List<String> getLocations() {
+		return locations;
+	}
 
+	public VacuumEnvironmentState getCurrentState() {
+		return envState;
+	}
+
+	public LocationState getLocationState(String location) {
+		return envState.getLocationState(location);
+	}
+
+	public String getAgentLocation(Agent agent) {
+		return envState.getAgentLocation(agent);
+	}
+
+	//
 	// Information for grid views...
 
 	public int getXDimension() {

@@ -30,7 +30,7 @@ public class SimpleReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.step(8);
 
@@ -46,7 +46,7 @@ public class SimpleReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.step(8);
 
@@ -62,7 +62,7 @@ public class SimpleReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Clean);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.step(8);
 
@@ -78,7 +78,7 @@ public class SimpleReflexVacuumAgentTest {
 				VacuumEnvironment.LocationState.Dirty);
 		tve.addAgent(agent, VacuumEnvironment.LOCATION_A);
 
-		tve.addEnvironmentView(actionTracker);
+		tve.addEnvironmentListener(actionTracker);
 
 		tve.step(8);
 

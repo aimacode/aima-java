@@ -5,11 +5,12 @@ import org.junit.Test;
 
 /**
  * @author samagra
+ * @author Ruediger Lunde
  */
 public class POMDPValueIterationTest {
     @Test
     public void test() {
-        POMDPValueIteration algo = new POMDPValueIteration(new POMDP(), 0.01, 2);
+        POMDPValueIteration<POMDP.State, POMDP.Action> algo = new POMDPValueIteration<>(new POMDP(), 0.01, 2);
         System.out.println(algo.pomdpValueIteration().toString());
         /**
          * Result comes out to be:

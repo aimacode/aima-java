@@ -135,7 +135,7 @@ public class WumpusAgentApp extends IntegrableApplication {
                         cave.getStart(), dpll, env);
                 break;
         }
-        env.addEnvironmentView(envViewCtrl);
+        env.addEnvironmentListener(envViewCtrl);
         envViewCtrl.initialize(env);
         envViewCtrl.setShowRoomContent(taskPaneCtrl.getParamValueIndex(PARAM_VIEW) != 1);
     }
@@ -152,7 +152,7 @@ public class WumpusAgentApp extends IntegrableApplication {
         if (taskPaneCtrl.getParamValueIndex(PARAM_VIEW) == 1)
             envViewCtrl.setShowRoomContent(true);
         if (taskPaneCtrl.getParamValueIndex(PARAM_VIEW) == 2)
-            env.notifyViews("KB:\n" + agent.getKB().toString());
+            env.notify("KB:\n" + agent.getKB().toString());
     }
 
     @Override

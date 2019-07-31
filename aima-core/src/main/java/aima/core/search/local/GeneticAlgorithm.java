@@ -1,7 +1,6 @@
 package aima.core.search.local;
 
 import aima.core.search.framework.Metrics;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.util.Tasks;
 import aima.core.util.Util;
 
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 4.8, page
@@ -64,7 +64,7 @@ public class GeneticAlgorithm<A> {
 	protected double mutationProbability;
 	
 	protected Random random;
-	private List<ProgressTracker<A>> progressTrackers = new ArrayList<ProgressTracker<A>>();
+	private List<ProgressTracker<A>> progressTrackers = new ArrayList<>();
 
 	public GeneticAlgorithm(int individualLength, Collection<A> finiteAlphabet, double mutationProbability) {
 		this(individualLength, finiteAlphabet, mutationProbability, new Random());
@@ -81,8 +81,8 @@ public class GeneticAlgorithm<A> {
 	}
 
 	/** Progress tracers can be used to display progress information. */
-	public void addProgressTracer(ProgressTracker<A> pTracer) {
-		progressTrackers.add(pTracer);
+	public void addProgressTracer(ProgressTracker<A> pTracker) {
+		progressTrackers.add(pTracker);
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class GeneticAlgorithm<A> {
 	 */
 	public Individual<A> geneticAlgorithm(Collection<Individual<A>> initPopulation,
 			FitnessFunction<A> fitnessFn, final int maxIterations) {
-		GoalTest<Individual<A>> goalTest = state -> getIterations() >= maxIterations;
+		Predicate<Individual<A>> goalTest = state -> getIterations() >= maxIterations;
 		return geneticAlgorithm(initPopulation, fitnessFn, goalTest, 0L);
 	}
 	
@@ -118,7 +118,7 @@ public class GeneticAlgorithm<A> {
 	// inputs: population, a set of individuals
 	// FITNESS-FN, a function that measures the fitness of an individual
 	public Individual<A> geneticAlgorithm(Collection<Individual<A>> initPopulation, FitnessFunction<A> fitnessFn,
-			GoalTest<Individual<A>> goalTest, long maxTimeMilliseconds) {
+										  Predicate<Individual<A>> goalTest, long maxTimeMilliseconds) {
 		Individual<A> bestIndividual = null;
 
 		// Create a local copy of the population to work with
@@ -232,7 +232,7 @@ public class GeneticAlgorithm<A> {
 	 */
 	protected List<Individual<A>> nextGeneration(List<Individual<A>> population, FitnessFunction<A> fitnessFn) {
 		// new_population <- empty set
-		List<Individual<A>> newPopulation = new ArrayList<Individual<A>>(population.size());
+		List<Individual<A>> newPopulation = new ArrayList<>(population.size());
 		// for i = 1 to SIZE(population) do
 		for (int i = 0; i < population.size(); i++) {
 			// x <- RANDOM-SELECTION(population, FITNESS-FN)

@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.Set;
 
 import aima.core.search.framework.Node;
-import aima.core.search.framework.NodeExpander;
+import aima.core.search.framework.NodeFactory;
 import aima.core.search.framework.problem.Problem;
 
 /**
@@ -29,9 +29,9 @@ import aima.core.search.framework.problem.Problem;
  * Figure 3.7 An informal description of the general graph-search algorithm.
  * <br>
  * This implementation is based on the template method
- * {@link QueueSearch#findNode(Problem, Queue)} of the superclass and
+ * {@link TreeSearch#findNode(Problem, Queue)} of the superclass and
  * provides implementations for the needed primitive operations. It is the most
- * efficient variant of graph search for breadth first search. But don't expect
+ * efficient variant of graph search for breadth first. But don't expect
  * shortest paths in combination with priority queue frontiers.
  *
  * @param <S> The type used to represent states
@@ -41,17 +41,17 @@ import aima.core.search.framework.problem.Problem;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public class GraphSearchBFS<S, A> extends QueueSearch<S, A> {
+public class GraphSearchBFS<S, A> extends TreeSearch<S, A> {
 
 	private Set<S> explored = new HashSet<>();
 	private Set<S> frontierStates = new HashSet<>();
 
 	public GraphSearchBFS() {
-		this(new NodeExpander<>());
+		this(new NodeFactory<>());
 	}
 
-	public GraphSearchBFS(NodeExpander<S, A> nodeExpander) {
-		super(nodeExpander);
+	public GraphSearchBFS(NodeFactory<S, A> nodeFactory) {
+		super(nodeFactory);
 	}
 	
 	
@@ -61,7 +61,7 @@ public class GraphSearchBFS<S, A> extends QueueSearch<S, A> {
 	 */
 	@Override
 	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
-		// Initialize the explored set to be empty
+		// initialize the explored set to be empty
 		explored.clear();
 		frontierStates.clear();
 		return super.findNode(problem, frontier);

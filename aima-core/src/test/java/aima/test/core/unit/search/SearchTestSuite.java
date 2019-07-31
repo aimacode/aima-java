@@ -12,7 +12,6 @@ import aima.test.core.unit.search.framework.SolutionTesterTest;
 import aima.test.core.unit.search.informed.AStarSearchTest;
 import aima.test.core.unit.search.informed.GreedyBestFirstSearchTest;
 import aima.test.core.unit.search.informed.RecursiveBestFirstSearchTest;
-import aima.test.core.unit.search.local.SimulatedAnnealingSearchTest;
 import aima.test.core.unit.search.nondeterministic.AndOrSearchTest;
 import aima.test.core.unit.search.online.LRTAStarAgentTest;
 import aima.test.core.unit.search.online.OnlineDFSAgentTest;
@@ -23,7 +22,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({AlphaBetaSearchTest.class, MinimaxSearchTest.class, AssignmentTest.class, CSPTest.class, MapCSPTest.class,
 		MetricsTest.class, TreeCspSolverTest.class, AStarSearchTest.class, GreedyBestFirstSearchTest.class, RecursiveBestFirstSearchTest.class,
-		SimulatedAnnealingSearchTest.class, AndOrSearchTest.class, LRTAStarAgentTest.class, OnlineDFSAgentTest.class,
+		AndOrSearchTest.class, LRTAStarAgentTest.class, OnlineDFSAgentTest.class,
 		BidirectionalSearchTest.class, BreadthFirstSearchTest.class, DepthFirstSearchTest.class,
 		DepthLimitedSearchTest.class, IterativeDeepeningSearchTest.class, UniformCostSearchTest.class, NodeTest.class,
 		SolutionTesterTest.class })

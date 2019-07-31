@@ -1,14 +1,17 @@
 package aima.test.core.unit.search.nondeterministic;
 
 import aima.core.agent.Action;
-import aima.core.environment.vacuum.*;
+import aima.core.agent.impl.DynamicPercept;
+import aima.core.environment.vacuum.NondeterministicVacuumEnvironment;
+import aima.core.environment.vacuum.VacuumEnvironmentState;
+import aima.core.environment.vacuum.VacuumPercept;
+import aima.core.environment.vacuum.VacuumWorldFunctions;
 import aima.core.search.agent.NondeterministicSearchAgent;
+import aima.core.search.nondeterministic.NondeterministicProblem;
+import aima.core.search.nondeterministic.Path;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import aima.core.search.nondeterministic.NondeterministicProblem;
-import aima.core.search.nondeterministic.Path;
 
 import java.util.Arrays;
 
@@ -25,7 +28,8 @@ import static aima.core.environment.vacuum.VacuumEnvironment.*;
  */
 public class AndOrSearchTest {
 
-    private NondeterministicSearchAgent<VacuumEnvironmentState, Action> agent;
+    /** State is used as percept! */
+    private NondeterministicSearchAgent<VacuumPercept, VacuumEnvironmentState, Action> agent;
     private NondeterministicVacuumEnvironment world;
 
     /**
@@ -34,15 +38,16 @@ public class AndOrSearchTest {
     @Before
     public void setUp() {
         // create agent and world (init state: both rooms are dirty and the vacuum is in room A)
-        agent = new NondeterministicSearchAgent<>(percept -> (VacuumEnvironmentState) percept); // percept == env state!
+        agent = new NondeterministicSearchAgent<>(VacuumWorldFunctions::getState);
         world = new NondeterministicVacuumEnvironment(LocationState.Dirty, LocationState.Dirty);
         world.addAgent(agent, LOCATION_A);
 
         // create problem
-        NondeterministicProblem<VacuumEnvironmentState, Action> problem = new NondeterministicProblem<>(
+        NondeterministicProblem<VacuumEnvironmentState, Action> problem =
+                new NondeterministicProblem<>(
                 (VacuumEnvironmentState) world.getCurrentState(),
                 VacuumWorldFunctions::getActions,
-                VacuumWorldFunctions.createResultsFunction(agent),
+                VacuumWorldFunctions.createResultsFunctionFor(agent),
                 VacuumWorldFunctions::testGoal,
                 (s, a, sPrimed) -> 1.0);
         // set the problem and agent
@@ -66,7 +71,7 @@ public class AndOrSearchTest {
         s2.setAgentLocation(agent, LOCATION_A);
         // test
         boolean actual = s1.equals(s2);
-        Assert.assertEquals(true, actual);
+        Assert.assertTrue(actual);
     }
 
     /**
@@ -109,17 +114,17 @@ public class AndOrSearchTest {
         Path<VacuumEnvironmentState> path = new Path<>();
         path.addAll(Arrays.asList(s1, s2, s3, s4));
         // test
-        Assert.assertEquals(true, path.contains(test1));
-        Assert.assertEquals(false, path.contains(test2));
+        Assert.assertTrue(path.contains(test1));
+        Assert.assertFalse(path.contains(test2));
     }
 
     /**
-     * Use AND-OR search to create a contingency plan; execute the plan and
+     * Use AND-OR search to create a contingency plan; act the plan and
      * verify that it successfully cleans the NondeterministicVacuumWorld.
      */
     @Test
     public void testSearchExecutesSuccessfully() {
-        // execute plan
+        // act plan
         world.stepUntilDone();
         // test
         VacuumEnvironmentState endState = (VacuumEnvironmentState) world.getCurrentState();

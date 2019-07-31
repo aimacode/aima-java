@@ -11,6 +11,21 @@ import java.util.*;
 public class QueueFactory {
 
 	/**
+	 * Returns a standard java {@link PriorityQueue}. Note that the smallest
+	 * element comes first!
+	 */
+	public static <E> Queue<E> createPriorityQueue(Comparator<? super E> comparator) {
+		return new PriorityQueue<E>(11, comparator);
+	}
+
+	/**
+	 * Returns a Last-in-first-out (Lifo) view on a {@link LinkedList}.
+	 */
+	public static <E> Queue<E> createLifoQueue() {
+		return Collections.asLifoQueue(new LinkedList<E>());
+	}
+
+	/**
 	 * Returns a {@link LinkedList}.
 	 */
 	public static <E> Queue<E> createFifoQueue() {
@@ -23,21 +38,6 @@ public class QueueFactory {
 	 */
 	public static <E> Queue<E> createFifoQueueNoDuplicates() {
 		return new FifoQueueWithHashSet<E>();
-	}
-
-	/**
-	 * Returns a Last-in-first-out (Lifo) view on a {@link LinkedList}.
-	 */
-	public static <E> Queue<E> createLifoQueue() {
-		return Collections.asLifoQueue(new LinkedList<E>());
-	}
-
-	/**
-	 * Returns a standard java {@link PriorityQueue}. Note that the smallest
-	 * element comes first!
-	 */
-	public static <E> Queue<E> createPriorityQueue(Comparator<? super E> comparator) {
-		return new PriorityQueue<E>(11, comparator);
 	}
 
 	private static class FifoQueueWithHashSet<E> extends LinkedList<E> implements Queue<E> {

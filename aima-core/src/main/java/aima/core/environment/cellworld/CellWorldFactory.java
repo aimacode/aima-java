@@ -15,7 +15,7 @@ public class CellWorldFactory {
 	 * @return a cell world representation of Fig 17.1 in AIMA3e.
 	 */
 	public static CellWorld<Double> createCellWorldForFig17_1() {
-		CellWorld<Double> cw = new CellWorld<Double>(4, 3, -0.04);
+		CellWorld<Double> cw = new CellWorld<>(4, 3, -0.04);
 
 		cw.removeCell(2, 2);
 

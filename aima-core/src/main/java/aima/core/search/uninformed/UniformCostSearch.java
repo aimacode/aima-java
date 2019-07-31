@@ -38,8 +38,8 @@ import aima.core.search.framework.qsearch.QueueSearch;
  * 
  * </br>
  * This implementation is more general. It supports TreeSearch, GraphSearch, and
- * BidirectionalSearch by delegating the search space exploration to an instance
- * of a QueueSearch implementation.
+ * BidirectionalSearch by delegating search execution to an instance
+ * of type {@link QueueSearch}.
  *
  * @author Ruediger Lunde
  * @author Ciaran O'Reilly
@@ -53,7 +53,7 @@ public class UniformCostSearch<S, A> extends QueueBasedSearch<S, A> {
 
 	/**
 	 * Combines UniformCostSearch queue definition with the specified
-	 * search space exploration strategy.
+	 * search execution strategy.
 	 */
 	public UniformCostSearch(QueueSearch<S, A> impl) {
 		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(Node::getPathCost)));

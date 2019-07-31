@@ -16,10 +16,10 @@ package aima.gui.swing.framework;
  * subclasses of the three parts as needed, and then to create a subclass of
  * this class and override the three factory methods.
  * </p>
- * 
+ *
  * @author Ruediger Lunde
  */
-public class SimpleAgentApp {
+public class SimpleAgentApp<P, A> {
 	/**
 	 * Constructs an agent application and sets the application frame visible.
 	 */
@@ -33,10 +33,10 @@ public class SimpleAgentApp {
 	 * Creates all parts of an agent application and makes the parts know each
 	 * other. Part construction is delegated to factory methods.
 	 */
-	public AgentAppFrame constructApplicationFrame() {
-		AgentAppEnvironmentView envView = createEnvironmentView();
-		AgentAppFrame frame = createFrame();
-		AgentAppController controller = createController();
+	public AgentAppFrame<P, A> constructApplicationFrame() {
+		AgentAppEnvironmentView<? super P, ? super A> envView = createEnvironmentView();
+		AgentAppFrame<P, A> frame = createFrame();
+		AgentAppController<P, A> controller = createController();
 		frame.setEnvView(envView);
 		envView.setMessageLogger(frame.getMessageLogger());
 		frame.setController(controller);
@@ -46,8 +46,8 @@ public class SimpleAgentApp {
 	}
 
 	/** Factory method, responsible for creating the environment view. */
-	public AgentAppEnvironmentView createEnvironmentView() {
-		return new EmptyEnvironmentView();
+	public AgentAppEnvironmentView<? super P, ? super A> createEnvironmentView() {
+		return new EmptyEnvironmentView<>();
 	}
 
 	/**
@@ -55,8 +55,8 @@ public class SimpleAgentApp {
 	 * shows how the {@code AgentAppFrame} can be configured with respect to the
 	 * needs of the application even without creating a subclass.
 	 */
-	public AgentAppFrame createFrame() {
-		AgentAppFrame result = new AgentAppFrame();
+	public AgentAppFrame<P, A> createFrame() {
+		AgentAppFrame<P, A> result = new AgentAppFrame<>();
 		result.setTitle("Demo Agent Application");
 		result.setSelectors(new String[] { "XSelect", "YSelect" },
 				new String[] { "Select X", "Select Y" });
@@ -70,8 +70,8 @@ public class SimpleAgentApp {
 	}
 
 	/** Factory method, responsible for creating the controller. */
-	public AgentAppController createController() {
-		return new DemoController();
+	public AgentAppController<P, A> createController() {
+		return new DemoController<>();
 	}
 
 	// ///////////////////////////////////////////////////////////////

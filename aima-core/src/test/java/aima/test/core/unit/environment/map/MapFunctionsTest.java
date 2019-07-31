@@ -1,6 +1,9 @@
 package aima.test.core.unit.environment.map;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import aima.core.environment.map.MapFunctions;
 import aima.core.search.framework.problem.StepCostFunction;
@@ -8,19 +11,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import aima.core.agent.Action;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MoveToAction;
-import aima.core.search.framework.problem.ActionsFunction;
-import aima.core.search.framework.problem.ResultFunction;
 
 /**
  * @author Ciaran O'Reilly
  * @author Ruediger Lunde
  */
 public class MapFunctionsTest {
-	private ActionsFunction<String, MoveToAction> actionsFn;
-	private ResultFunction<String, MoveToAction> resultFn;
+	private Function<String, List<MoveToAction>> actionsFn;
+	private BiFunction<String, MoveToAction, String> resultFn;
 	private StepCostFunction<String, MoveToAction> stepCostFn;
 
 	@Before
@@ -79,7 +79,7 @@ public class MapFunctionsTest {
 		}
 		// E
 		locations.clear();
-		Assert.assertTrue(0 == actionsFn.apply("E").size());
+		Assert.assertEquals(0, actionsFn.apply("E").size());
 	}
 
 	@Test
@@ -96,9 +96,9 @@ public class MapFunctionsTest {
 		Assert.assertEquals(4.0, stepCostFn.applyAsDouble("C", new MoveToAction("B"), "B"), 0.001);
 		Assert.assertEquals(7.0, stepCostFn.applyAsDouble("D", new MoveToAction("C"), "C"), 0.001);
 		//
-		Assert.assertEquals(1.0, stepCostFn.applyAsDouble("X", new MoveToAction("Z"), "Z"), 0.001);
-		Assert.assertEquals(1.0, stepCostFn.applyAsDouble("A", new MoveToAction("Z"), "Z"), 0.001);
-		Assert.assertEquals(1.0, stepCostFn.applyAsDouble("A", new MoveToAction("D"), "D"), 0.001);
-		Assert.assertEquals(1.0, stepCostFn.applyAsDouble("A", new MoveToAction("B"), "E"), 0.001);
+		Assert.assertEquals(0.1, stepCostFn.applyAsDouble("X", new MoveToAction("Z"), "Z"), 0.001);
+		Assert.assertEquals(0.1, stepCostFn.applyAsDouble("A", new MoveToAction("Z"), "Z"), 0.001);
+		Assert.assertEquals(0.1, stepCostFn.applyAsDouble("A", new MoveToAction("D"), "D"), 0.001);
+		Assert.assertEquals(0.1, stepCostFn.applyAsDouble("A", new MoveToAction("B"), "E"), 0.001);
 	}
 }

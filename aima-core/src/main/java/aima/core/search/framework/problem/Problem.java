@@ -42,7 +42,8 @@ public interface Problem<S, A> extends OnlineSearchProblem<S, A> {
     S getInitialState();
 
     /**
-     * Returns the description of the possible actions available to the agent.
+     * Returns the set of actions that can be executed in the given state.
+     * We say that each of these actions is <b>applicable</b> in the state.
      */
     List<A> getActions(S state);
 
@@ -65,10 +66,12 @@ public interface Problem<S, A> extends OnlineSearchProblem<S, A> {
     /**
      * Tests whether a node represents an acceptable solution. The default implementation
      * delegates the check to the goal test. Other implementations could make use of the additional
-     * information given by the node (e.g. the sequence of actions leading to the node). A
-     * solution tester implementation could for example always return false and internally collect
-     * the paths of all nodes whose state passes the goal test. Search implementations should always
-     * access the goal test via this method to support solution acceptance testing.
+     * information given by the node (e.g. the sequence of actions leading to the node). To compute
+     * all or the five best solutions (not just the best), tester implementations could return false
+     * and internally collect the paths of all nodes whose state passes the goal test until enough
+     * solutions have been collected.
+     * Search implementations should always access the goal test via this method to support
+     * solution acceptance testing.
      */
     default boolean testSolution(Node<S, A> node) {
         return testGoal(node.getState());

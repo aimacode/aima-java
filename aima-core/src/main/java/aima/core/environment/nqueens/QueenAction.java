@@ -31,10 +31,10 @@ public class QueenAction extends DynamicAction {
 	}
 
 	public int getX() {
-		return getLocation().getXCoOrdinate();
+		return getLocation().getX();
 	}
 
 	public int getY() {
-		return getLocation().getYCoOrdinate();
+		return getLocation().getY();
 	}
 }

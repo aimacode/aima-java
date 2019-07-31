@@ -6,13 +6,14 @@ package aima.core.util.datastructure;
  * 
  * @author Ravi Mohan
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
 public class XYLocation {
 	public enum Direction {
 		North, South, East, West
 	}
 
-    int xCoOrdinate, yCoOrdinate;
+    int x, y;
 
 	/**
 	 * Constructs and initializes a location at the specified (<em>x</em>,
@@ -24,8 +25,8 @@ public class XYLocation {
 	 *            the y coordinate
 	 */
 	public XYLocation(int x, int y) {
-		xCoOrdinate = x;
-		yCoOrdinate = y;
+		this.x = x;
+		this.y = y;
 	}
 
 	/**
@@ -33,12 +34,12 @@ public class XYLocation {
 	 * 
 	 * @return the X coordinate of the location in double precision.
 	 */
-	public int getXCoOrdinate() {
-		return xCoOrdinate;
+	public int getX() {
+		return x;
 	}
 
-	public int getYCoOrdinate() {
-		return yCoOrdinate;
+	public int getY() {
+		return y;
 	}
 
 	/**
@@ -47,7 +48,7 @@ public class XYLocation {
 	 * @return the location one unit left of this location.
 	 */
 	public XYLocation west() {
-		return new XYLocation(xCoOrdinate - 1, yCoOrdinate);
+		return new XYLocation(x - 1, y);
 	}
 
 	/**
@@ -56,7 +57,7 @@ public class XYLocation {
 	 * @return the location one unit right of this location.
 	 */
 	public XYLocation east() {
-		return new XYLocation(xCoOrdinate + 1, yCoOrdinate);
+		return new XYLocation(x + 1, y);
 	}
 
 	/**
@@ -65,7 +66,7 @@ public class XYLocation {
 	 * @return the location one unit ahead of this location.
 	 */
 	public XYLocation north() {
-		return new XYLocation(xCoOrdinate, yCoOrdinate - 1);
+		return new XYLocation(x, y - 1);
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class XYLocation {
 	 * @return the location one unit behind this location.
 	 */
 	public XYLocation south() {
-		return new XYLocation(xCoOrdinate, yCoOrdinate + 1);
+		return new XYLocation(x, y + 1);
 	}
 
 	/**
@@ -139,24 +140,23 @@ public class XYLocation {
 
 	@Override
 	public boolean equals(Object o) {
-		if (null == o || !(o instanceof XYLocation)) {
-			return super.equals(o);
+		if (null != o && getClass() == o.getClass()) {
+			XYLocation loc = (XYLocation) o;
+			return x == loc.getX() && y == loc.getY();
 		}
-		XYLocation anotherLoc = (XYLocation) o;
-		return ((anotherLoc.getXCoOrdinate() == xCoOrdinate) && (anotherLoc
-				.getYCoOrdinate() == yCoOrdinate));
+		return false;
 	}
 
 	@Override
 	public String toString() {
-		return "(" + xCoOrdinate + ", " + yCoOrdinate + ")";
+		return "(" + x + ", " + y + ")";
 	}
 
 	@Override
 	public int hashCode() {
 		int result = 17;
-		result = 37 * result + xCoOrdinate;
-		result = 43 * result + yCoOrdinate;
+		result = 37 * result + x;
+		result = 43 * result + y;
 		return result;
 	}
 }

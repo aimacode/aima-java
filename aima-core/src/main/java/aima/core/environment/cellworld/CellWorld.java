@@ -24,8 +24,8 @@ import java.util.Set;
  * @author Ravi Mohan
  */
 public class CellWorld<C> {
-	private Set<Cell<C>> cells = new LinkedHashSet<Cell<C>>();
-	private Map<Integer, Map<Integer, Cell<C>>> cellLookup = new HashMap<Integer, Map<Integer, Cell<C>>>();
+	private Set<Cell<C>> cells = new LinkedHashSet<>();
+	private Map<Integer, Map<Integer, Cell<C>>> cellLookup = new HashMap<>();
 
 	/**
 	 * Construct a Cell World with size xDimension * y Dimension cells, all with
@@ -41,7 +41,7 @@ public class CellWorld<C> {
 	 */
 	public CellWorld(int xDimension, int yDimension, C defaultCellContent) {
 		for (int x = 1; x <= xDimension; x++) {
-			Map<Integer, Cell<C>> xCol = new HashMap<Integer, Cell<C>>();
+			Map<Integer, Cell<C>> xCol = new HashMap<>();
 			for (int y = 1; y <= yDimension; y++) {
 				Cell<C> c = new Cell<C>(x, y, defaultCellContent);
 				cells.add(c);

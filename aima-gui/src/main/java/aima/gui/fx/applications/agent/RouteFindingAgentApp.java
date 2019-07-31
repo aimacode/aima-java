@@ -1,6 +1,7 @@
 package aima.gui.fx.applications.agent;
 
 import aima.core.agent.Agent;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.*;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
@@ -22,7 +23,7 @@ import java.util.function.ToDoubleFunction;
 
 /**
  * Integrable application which demonstrates how different kinds of search
- * algorithms perform an a route finding scenario.
+ * algorithms perform in a route finding scenario.
  *
  * @author Ruediger Lunde
  *
@@ -43,7 +44,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 	private TaskExecutionPaneCtrl taskPaneCtrl;
 	private MapEnvironmentViewCtrl envViewCtrl;
 	protected MapEnvironment env = null;
-	protected Agent agent = null;
+	protected Agent<DynamicPercept, MoveToAction> agent = null;
 
 	/** A scenario. */
 	protected Scenario scenario;
@@ -101,7 +102,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		Parameter p3 = new Parameter(PARAM_SEARCH, (Object[]) SearchFactory.getInstance().getSearchStrategyNames());
 		p3.setDefaultValueIndex(5);
 		Parameter p4 = new Parameter(PARAM_Q_SEARCH_IMPL, (Object[]) SearchFactory.getInstance().getQSearchImplNames());
-		p4.setDefaultValueIndex(1);
+		p4.setDefaultValueIndex(2);
 		p4.setDependency(PARAM_SEARCH, "Depth First", "Breadth First", "Uniform Cost", "Greedy Best First", "A*");
 		Parameter p5 = new Parameter(PARAM_HEURISTIC, "0", "SLD");
 		p5.setDefaultValueIndex(1);
@@ -118,16 +119,16 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		String agentLoc = null;
 		switch (taskPaneCtrl.getParamValueIndex(PARAM_SCENARIO)) {
 		case 0:
-			SimplifiedRoadMapOfPartOfRomania.initMap(map);
-			agentLoc = SimplifiedRoadMapOfPartOfRomania.ARAD;
+			SimplifiedRoadMapOfRomania.initMap(map);
+			agentLoc = SimplifiedRoadMapOfRomania.ARAD;
 			break;
 		case 1:
-			SimplifiedRoadMapOfPartOfRomania.initMap(map);
-			agentLoc = SimplifiedRoadMapOfPartOfRomania.LUGOJ;
+			SimplifiedRoadMapOfRomania.initMap(map);
+			agentLoc = SimplifiedRoadMapOfRomania.LUGOJ;
 			break;
 		case 2:
-			SimplifiedRoadMapOfPartOfRomania.initMap(map);
-			agentLoc = SimplifiedRoadMapOfPartOfRomania.FAGARAS;
+			SimplifiedRoadMapOfRomania.initMap(map);
+			agentLoc = SimplifiedRoadMapOfRomania.FAGARAS;
 			break;
 		case 3:
 			SimplifiedRoadMapOfAustralia.initMap(map);
@@ -144,13 +145,13 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		if (taskPaneCtrl.isParamVisible(PARAM_DESTINATION_R)) {
 			switch (taskPaneCtrl.getParamValueIndex(PARAM_DESTINATION_R)) {
 			case 0:
-				destinations.add(SimplifiedRoadMapOfPartOfRomania.BUCHAREST);
+				destinations.add(SimplifiedRoadMapOfRomania.BUCHAREST);
 				break;
 			case 1:
-				destinations.add(SimplifiedRoadMapOfPartOfRomania.EFORIE);
+				destinations.add(SimplifiedRoadMapOfRomania.EFORIE);
 				break;
 			case 2:
-				destinations.add(SimplifiedRoadMapOfPartOfRomania.NEAMT);
+				destinations.add(SimplifiedRoadMapOfRomania.NEAMT);
 				break;
 			case 3:
 				destinations.add(map.randomlyGenerateDestination());
@@ -185,9 +186,9 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 				taskPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL), heuristic);
 
 		String goal = destinations.get(0);
-		agent = new SimpleMapAgent(env.getMap(), search, new String[] { goal });
+		agent = new SimpleMapAgent(env.getMap(), search, goal);
 		env.addAgent(agent, scenario.getInitAgentLocation());
-		env.addEnvironmentView(envViewCtrl);
+		env.addEnvironmentListener(envViewCtrl);
 		envViewCtrl.setGoal(goal);
 		envViewCtrl.initialize(env);
 	}

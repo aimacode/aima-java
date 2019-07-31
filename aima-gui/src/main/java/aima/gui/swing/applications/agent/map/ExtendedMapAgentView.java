@@ -77,11 +77,11 @@ public class ExtendedMapAgentView extends MapAgentView {
 			int x = x(pt);
 			int y = y(pt);
 			String info = "";
-			List<String> track = new ArrayList<String>();
+			List<String> track = new ArrayList<>();
 			if (!env.getAgents().isEmpty())
 				// show details only for track of first agent...
 				track = getTrack(env.getAgents().get(0));
-			ArrayList<Integer> list = new ArrayList<Integer>();
+			ArrayList<Integer> list = new ArrayList<>();
 			for (int i = 0; i < track.size(); i++)
 				if (track.get(i).equals(loc))
 					list.add(i + 1);

@@ -20,10 +20,10 @@ import aima.core.logic.propositional.visitors.SymbolCollector;
  * @author Mike Stampone
  */
 public class KnowledgeBase {
-	private List<Sentence>         sentences = new ArrayList<>();
-	private ConjunctionOfClauses   asCNF     = new ConjunctionOfClauses(Collections.emptySet());
-	private Set<PropositionSymbol> symbols   = new LinkedHashSet<>();
-	private PLParser               parser    = new PLParser();
+	private List<Sentence> sentences = new ArrayList<>();
+	private ConjunctionOfClauses asCNF = new ConjunctionOfClauses(Collections.emptySet());
+	private Set<PropositionSymbol> symbols = new LinkedHashSet<>();
+	private PLParser parser = new PLParser();
 
 
 	/**

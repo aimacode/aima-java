@@ -8,9 +8,7 @@ import aima.core.agent.EnvironmentState;
  */
 public class DynamicEnvironmentState extends ObjectWithDynamicAttributes
 		implements EnvironmentState {
-	public DynamicEnvironmentState() {
-
-	}
+	public DynamicEnvironmentState() { }
 
 	@Override
 	public String describeType() {

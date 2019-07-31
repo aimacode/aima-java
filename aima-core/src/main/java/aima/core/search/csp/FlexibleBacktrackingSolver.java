@@ -18,15 +18,15 @@ import aima.core.search.csp.inference.*;
  */
 public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends AbstractBacktrackingSolver<VAR, VAL> {
 
-    private CspHeuristics.VariableSelection<VAR, VAL> varSelectionStrategy;
-    private CspHeuristics.ValueSelection<VAR, VAL> valSelectionStrategy;
+    private CspHeuristics.VariableSelectionStrategy<VAR, VAL> varSelectionStrategy;
+    private CspHeuristics.ValueOrderingStrategy<VAR, VAL> valOrderingStrategy;
     private InferenceStrategy<VAR, VAL> inferenceStrategy;
 
 
     /**
      * Selects the algorithm for SELECT-UNASSIGNED-VARIABLE. Uses the fluent interface design pattern.
      */
-    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.VariableSelection<VAR, VAL> varStrategy) {
+    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.VariableSelectionStrategy<VAR, VAL> varStrategy) {
         varSelectionStrategy = varStrategy;
         return this;
     }
@@ -34,8 +34,8 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
     /**
      * Selects the algorithm for ORDER-DOMAIN-VALUES. Uses the fluent interface design pattern.
      */
-    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.ValueSelection<VAR, VAL> valStrategy) {
-        valSelectionStrategy = valStrategy;
+    public FlexibleBacktrackingSolver<VAR, VAL> set(CspHeuristics.ValueOrderingStrategy<VAR, VAL> valStrategy) {
+        valOrderingStrategy = valStrategy;
         return this;
     }
 
@@ -51,8 +51,7 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      * Selects MRV&DEG for variable selection, LCV for domain ordering and AC3 as inference method.
      */
     public FlexibleBacktrackingSolver<VAR, VAL> setAll() {
-        set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv()).set(new AC3Strategy<>());
-        return this;
+        return set(CspHeuristics.mrvDeg()).set(CspHeuristics.lcv()).set(new AC3Strategy<>());
     }
 
     /**
@@ -77,8 +76,8 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      */
     @Override
     protected VAR selectUnassignedVariable(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
-        List<VAR> vars = csp.getVariables().stream().
-                filter((v) -> !assignment.contains(v)).collect(Collectors.toList());
+        List<VAR> vars = csp.getVariables().stream().filter(v -> !assignment.contains(v)).
+                collect(Collectors.toList());
         if (varSelectionStrategy != null)
             vars = varSelectionStrategy.apply(csp, vars);
         return vars.get(0);
@@ -89,10 +88,7 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      */
     @Override
     protected Iterable<VAL> orderDomainValues(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
-        if (valSelectionStrategy != null)
-            return valSelectionStrategy.apply(csp, assignment, var);
-        else
-            return csp.getDomain(var);
+        return (valOrderingStrategy != null) ? valOrderingStrategy.apply(csp, assignment, var) : csp.getDomain(var);
     }
 
     /**
@@ -106,9 +102,6 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
      */
     @Override
     protected InferenceLog<VAR, VAL> inference(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
-        if (inferenceStrategy != null)
-            return inferenceStrategy.apply(csp, assignment, var);
-        else
-            return InferenceLog.emptyLog();
+        return (inferenceStrategy != null) ? inferenceStrategy.apply(csp, assignment, var) : InferenceLog.emptyLog();
     }
 }

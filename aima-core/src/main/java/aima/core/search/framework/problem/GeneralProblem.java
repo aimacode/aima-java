@@ -1,6 +1,9 @@
 package aima.core.search.framework.problem;
 
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Configurable problem which uses objects to explicitly represent the required
@@ -12,14 +15,11 @@ import java.util.List;
  * @author Ruediger Lunde
  */
 public class GeneralProblem<S, A> implements Problem<S, A> {
+
     private S initialState;
-
-    private ActionsFunction<S, A> actionsFn;
-
-    private ResultFunction<S, A> resultFn;
-
-    private GoalTest<S> goalTest;
-
+    private Function<S, List<A>> actionsFn;
+    private BiFunction<S, A, S> resultFn;
+    private Predicate<S> goalTest;
     private StepCostFunction<S, A> stepCostFn;
 
     /**
@@ -42,8 +42,8 @@ public class GeneralProblem<S, A> implements Problem<S, A> {
      *            The problem-solving-agent chooses a cost function that
      *            reflects its own performance measure.
      */
-    public GeneralProblem(S initialState, ActionsFunction<S, A> actionsFn,  ResultFunction<S, A> resultFn,
-                          GoalTest<S> goalTest, StepCostFunction<S, A> stepCostFn) {
+    public GeneralProblem(S initialState, Function<S, List<A>> actionsFn,  BiFunction<S, A, S> resultFn,
+                          Predicate<S> goalTest, StepCostFunction<S, A> stepCostFn) {
         this.initialState = initialState;
         this.actionsFn = actionsFn;
         this.resultFn = resultFn;
@@ -67,8 +67,8 @@ public class GeneralProblem<S, A> implements Problem<S, A> {
      * @param goalTest
      *            test determines whether a given state is a goal state.
      */
-    public GeneralProblem(S initialState, ActionsFunction<S, A> actionsFn,  ResultFunction<S, A> resultFn,
-                          GoalTest<S> goalTest) {
+    public GeneralProblem(S initialState, Function<S, List<A>> actionsFn,  BiFunction<S, A, S> resultFn,
+                          Predicate<S> goalTest) {
         this(initialState, actionsFn, resultFn, goalTest, (s, a, sPrimed) -> 1.0);
     }
 

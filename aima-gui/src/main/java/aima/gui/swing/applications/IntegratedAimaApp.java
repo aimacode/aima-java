@@ -1,7 +1,9 @@
 package aima.gui.swing.applications;
 
+import aima.gui.demo.agent.MapAgentDemo;
 import aima.gui.demo.agent.NondeterministicVacuumEnvironmentDemo;
 import aima.gui.demo.agent.TrivialVacuumDemo;
+import aima.gui.demo.agent.WumpusAgentDemo;
 import aima.gui.demo.learning.LearningDemo;
 import aima.gui.demo.logic.DpllDemo;
 import aima.gui.demo.logic.FolDemo;
@@ -41,12 +43,14 @@ public class IntegratedAimaApp {
 		frame.addApp(MonteCarloLocalizationApp.class);
 		
 		frame.addDemo(TrivialVacuumDemo.class);
-		
+		frame.addDemo(NondeterministicVacuumEnvironmentDemo.class);
+		frame.addDemo(MapAgentDemo.class);
+		frame.addDemo(WumpusAgentDemo.class);
+
 		frame.addDemo(EightPuzzleDemo.class);
 		frame.addDemo(TicTacToeDemo.class);
 		frame.addDemo(NQueensDemo.class);
 		frame.addDemo(MapColoringCspDemo.class);
-		frame.addDemo(NondeterministicVacuumEnvironmentDemo.class);
 
 		frame.addDemo(TTEntailsDemo.class);
 		frame.addDemo(PlFcEntailsDemo.class);

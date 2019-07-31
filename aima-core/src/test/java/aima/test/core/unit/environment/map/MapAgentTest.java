@@ -37,26 +37,26 @@ public class MapAgentTest {
 	@Test
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(), new String[] { "A" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(), "A").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(A):Action[name=NoOp]:METRIC[pathCost]=0.0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=0:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(A):Search{maxQueueSize=1, nodesExpanded=0, pathCost=0.0, queueSize=0}:",
 				envChanges.toString());
 	}
 
 	@Test
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(), new String[] { "D" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(),"D").setNotifier(me);
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(D):Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=3:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(D):Search{maxQueueSize=3, nodesExpanded=3, pathCost=13.0, queueSize=1}:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:",
 				envChanges.toString());
 	}
 
@@ -65,31 +65,31 @@ public class MapAgentTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 		UniformCostSearch<String, MoveToAction> ucSearch = new UniformCostSearch<>(new GraphSearchReducedFrontier<>());
 
-		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, ucSearch, new String[] { "D" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), ucSearch, "D").setNotifier(me);
 
 		me.addAgent(ma, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(A), Goal=In(D):Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:METRIC[pathCost]=13.0:METRIC[maxQueueSize]=2:METRIC[queueSize]=1:METRIC[nodesExpanded]=3:Action[name=NoOp]:",
+				"CurrentLocation=In(A), Goal=In(D):Search{maxQueueSize=2, nodesExpanded=3, pathCost=13.0, queueSize=1}:Action[name=moveTo, location=C]:Action[name=moveTo, location=D]:",
 				envChanges.toString());
 	}
 
 	@Test
 	public void testNoPath() {
 		MapEnvironment me = new MapEnvironment(aMap);
-		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), me, new UniformCostSearch<>(), new String[] { "A" });
+		SimpleMapAgent ma = new SimpleMapAgent(me.getMap(), new UniformCostSearch<>(), "A").setNotifier(me);
 		me.addAgent(ma, "E");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"CurrentLocation=In(E), Goal=In(A):Action[name=NoOp]:METRIC[pathCost]=0:METRIC[maxQueueSize]=1:METRIC[queueSize]=0:METRIC[nodesExpanded]=1:Action[name=NoOp]:",
+				"CurrentLocation=In(E), Goal=In(A):Search{maxQueueSize=1, nodesExpanded=1, pathCost=0, queueSize=0}:",
 				envChanges.toString());
 	}
 
-	private class TestEnvironmentView implements EnvironmentView {
+	private class TestEnvironmentView implements EnvironmentListener<Object, Object> {
 		public void notify(String msg) {
 			envChanges.append(msg).append(":");
 		}
@@ -98,7 +98,7 @@ public class MapAgentTest {
 			// Nothing
 		}
 
-		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
+		public void agentActed(Agent agent, Object percept, Object action, Environment source) {
 			envChanges.append(action).append(":");
 		}
 	}

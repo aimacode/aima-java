@@ -42,7 +42,7 @@ public class TicTacToeState implements Cloneable {
 	}
 
 	public void mark(XYLocation action) {
-		mark(action.getXCoOrdinate(), action.getYCoOrdinate());
+		mark(action.getX(), action.getY());
 	}
 
 	public void mark(int col, int row) {

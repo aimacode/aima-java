@@ -1,20 +1,16 @@
 package aima.core.agent.impl.aprog;
 
-import java.util.Set;
-
-import aima.core.agent.Action;
 import aima.core.agent.AgentProgram;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.DynamicPercept;
-import aima.core.agent.impl.NoOpAction;
+import aima.core.agent.impl.DynamicState;
 import aima.core.agent.impl.ObjectWithDynamicAttributes;
 import aima.core.agent.impl.aprog.simplerule.Rule;
 
+import java.util.Optional;
+import java.util.Set;
+
 /**
- * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.10, page
- * 49.<br>
- * <br>
- * 
+ * Artificial Intelligence A Modern Approach (3rd Edition): Figure 2.10, page 49.
+ * <br><br>
  * <pre>
  * function SIMPLE-RELEX-AGENT(percept) returns an action
  *   persistent: rules, a set of condition-action rules
@@ -27,64 +23,37 @@ import aima.core.agent.impl.aprog.simplerule.Rule;
  * 
  * Figure 2.10 A simple reflex agent. It acts according to a rule whose
  * condition matches the current state, as defined by the percept.
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ciaran O'Reilly
  * @author Mike Stampone
- * 
+ * @author Ruediger Lunde
  */
-public class SimpleReflexAgentProgram implements AgentProgram {
-	//
+public abstract class SimpleReflexAgentProgram<P, A> implements AgentProgram<P, A> {
 	// persistent: rules, a set of condition-action rules
-	private Set<Rule> rules;
+	private Set<Rule<A>> rules;
 
 	/**
-	 * Constructs a SimpleReflexAgentProgram with a set of condition-action
-	 * rules.
-	 * 
-	 * @param ruleSet
+	 * Constructs a SimpleReflexAgentProgram with a set of condition-action rules.
+	 * @param rules
 	 *            a set of condition-action rules
 	 */
-	public SimpleReflexAgentProgram(Set<Rule> ruleSet) {
-		rules = ruleSet;
+	protected SimpleReflexAgentProgram(Set<Rule<A>> rules) {
+		this.rules = rules;
 	}
-
-	//
-	// START-AgentProgram
 
 	// function SIMPLE-RELEX-AGENT(percept) returns an action
 	@Override
-	public Action execute(Percept percept) {
-
-		// state <- INTERPRET-INPUT(percept);
-		ObjectWithDynamicAttributes state = interpretInput(percept);
-		// rule <- RULE-MATCH(state, rules);
-		Rule rule = ruleMatch(state, rules);
-		// action <- rule.ACTION;
-		// return action
-		return ruleAction(rule);
+	public final Optional<A> apply(P percept) {
+		DynamicState state = interpretInput(percept);
+		Rule<A> rule = ruleMatch(state, rules);
+		return Optional.ofNullable(rule != null ? rule.getAction() : null);
 	}
 
-	// END-AgentProgram
-	//
+	protected abstract DynamicState interpretInput(P p);
 
-	//
-	// PROTECTED METHODS
-	//
-	protected ObjectWithDynamicAttributes interpretInput(Percept p) {
-		return (DynamicPercept) p;
-	}
-
-	protected Rule ruleMatch(ObjectWithDynamicAttributes state,
-			Set<Rule> rulesSet) {
-		for (Rule r : rulesSet) {
-			if (r.evaluate(state)) {
-				return r;
-			}
-		}
-		return null;
-	}
-
-	protected Action ruleAction(Rule r) {
-		return null == r ? NoOpAction.NO_OP : r.getAction();
+	private Rule<A> ruleMatch(ObjectWithDynamicAttributes state, Set<Rule<A>> rules) {
+		return rules.stream().filter(r -> r.evaluate(state)).findFirst().orElse(null);
 	}
 }

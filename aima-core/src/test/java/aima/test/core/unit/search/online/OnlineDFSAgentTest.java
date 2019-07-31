@@ -1,17 +1,19 @@
 package aima.test.core.unit.search.online;
 
 import aima.core.agent.*;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.ExtendableMap;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.search.framework.problem.GeneralProblem;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.OnlineSearchProblem;
 import aima.core.search.online.OnlineDFSAgent;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.function.Predicate;
 
 public class OnlineDFSAgentTest {
 
@@ -36,33 +38,33 @@ public class OnlineDFSAgentTest {
 	public void testAlreadyAtGoal() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("A"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("A"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
-		OnlineDFSAgent<String, MoveToAction> agent = new OnlineDFSAgent<>
+		OnlineDFSAgent<DynamicPercept, String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());
 
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
-		Assert.assertEquals("Action[name=NoOp]->", envChanges.toString());
+		Assert.assertEquals("", envChanges.toString());
 	}
 
 	@Test
 	public void testNormalSearch() {
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("G"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("G"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
-		OnlineDFSAgent<String, MoveToAction> agent = new OnlineDFSAgent<>
+		OnlineDFSAgent<DynamicPercept, String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());
 
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=moveTo, location=B]->Action[name=moveTo, location=A]->Action[name=moveTo, location=C]->Action[name=moveTo, location=A]->Action[name=moveTo, location=C]->Action[name=moveTo, location=A]->Action[name=moveTo, location=B]->Action[name=moveTo, location=D]->Action[name=moveTo, location=B]->Action[name=moveTo, location=E]->Action[name=moveTo, location=B]->Action[name=moveTo, location=E]->Action[name=moveTo, location=B]->Action[name=moveTo, location=D]->Action[name=moveTo, location=F]->Action[name=moveTo, location=D]->Action[name=moveTo, location=G]->Action[name=NoOp]->",
+				"Action[name=moveTo, location=B]:Action[name=moveTo, location=A]:Action[name=moveTo, location=C]:Action[name=moveTo, location=A]:Action[name=moveTo, location=C]:Action[name=moveTo, location=A]:Action[name=moveTo, location=B]:Action[name=moveTo, location=D]:Action[name=moveTo, location=B]:Action[name=moveTo, location=E]:Action[name=moveTo, location=B]:Action[name=moveTo, location=E]:Action[name=moveTo, location=B]:Action[name=moveTo, location=D]:Action[name=moveTo, location=F]:Action[name=moveTo, location=D]:Action[name=moveTo, location=G]:",
 				envChanges.toString());
 	}
 
@@ -73,18 +75,18 @@ public class OnlineDFSAgentTest {
 		MapEnvironment me = new MapEnvironment(aMap);
 
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("X"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("X"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
-		OnlineDFSAgent<String, MoveToAction> agent = new OnlineDFSAgent<>
+		OnlineDFSAgent<DynamicPercept, String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());
 
 		me.addAgent(agent, "A");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=moveTo, location=B]->Action[name=moveTo, location=A]->Action[name=moveTo, location=B]->Action[name=moveTo, location=A]->Action[name=NoOp]->",
+				"Action[name=moveTo, location=B]:Action[name=moveTo, location=A]:Action[name=moveTo, location=B]:Action[name=moveTo, location=A]:",
 				envChanges.toString());
 	}
 
@@ -102,31 +104,31 @@ public class OnlineDFSAgentTest {
 
 		MapEnvironment me = new MapEnvironment(aMap);
 		OnlineSearchProblem<String, MoveToAction> problem = new GeneralProblem<>(null,
-				MapFunctions.createActionsFunction(aMap), null, GoalTest.forState("3,3"),
+				MapFunctions.createActionsFunction(aMap), null, Predicate.isEqual("3,3"),
 				MapFunctions.createDistanceStepCostFunction(aMap));
-		OnlineDFSAgent<String, MoveToAction> agent = new OnlineDFSAgent<>
+		OnlineDFSAgent<DynamicPercept, String, MoveToAction> agent = new OnlineDFSAgent<>
 				(problem, MapFunctions.createPerceptToStateFunction());
 
 		me.addAgent(agent, "1,1");
-		me.addEnvironmentView(new TestEnvironmentView());
+		me.addEnvironmentListener(new TestEnvironmentView());
 		me.stepUntilDone();
 
 		Assert.assertEquals(
-				"Action[name=moveTo, location=1,2]->Action[name=moveTo, location=1,1]->Action[name=moveTo, location=2,1]->Action[name=moveTo, location=1,1]->Action[name=moveTo, location=2,1]->Action[name=moveTo, location=2,2]->Action[name=moveTo, location=2,1]->Action[name=moveTo, location=3,1]->Action[name=moveTo, location=2,1]->Action[name=moveTo, location=3,1]->Action[name=moveTo, location=3,2]->Action[name=moveTo, location=3,1]->Action[name=moveTo, location=3,2]->Action[name=moveTo, location=3,3]->Action[name=NoOp]->",
+				"Action[name=moveTo, location=1,2]:Action[name=moveTo, location=1,1]:Action[name=moveTo, location=2,1]:Action[name=moveTo, location=1,1]:Action[name=moveTo, location=2,1]:Action[name=moveTo, location=2,2]:Action[name=moveTo, location=2,1]:Action[name=moveTo, location=3,1]:Action[name=moveTo, location=2,1]:Action[name=moveTo, location=3,1]:Action[name=moveTo, location=3,2]:Action[name=moveTo, location=3,1]:Action[name=moveTo, location=3,2]:Action[name=moveTo, location=3,3]:",
 				envChanges.toString());
 	}
 
-	private class TestEnvironmentView implements EnvironmentView {
+	private class TestEnvironmentView implements EnvironmentListener<Object, Object> {
 		public void notify(String msg) {
-			envChanges.append(msg).append("->");
+			envChanges.append(msg).append(":");
 		}
 
 		public void agentAdded(Agent agent, Environment source) {
-			// Nothing.
+			// Nothing
 		}
 
-		public void agentActed(Agent agent, Percept percept, Action action, Environment source) {
-			envChanges.append(action).append("->");
+		public void agentActed(Agent agent, Object percept, Object action, Environment source) {
+			envChanges.append(action).append(":");
 		}
 	}
 }

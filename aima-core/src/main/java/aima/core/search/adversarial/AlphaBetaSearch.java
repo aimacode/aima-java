@@ -41,8 +41,7 @@ import aima.core.search.framework.Metrics;
  * @param <P> Type which is used for players in the game.
  * @author Ruediger Lunde
  */
-public class AlphaBetaSearch<S, A, P> implements
-        AdversarialSearch<S, A> {
+public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
 
     public final static String METRICS_NODES_EXPANDED = "nodesExpanded";
 

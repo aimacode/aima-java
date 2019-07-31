@@ -27,10 +27,12 @@ import javax.swing.JToolBar;
  * selectors. The frame is configurable at run-time, so subclassing will not
  * always be necessary.
  * </p>
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ruediger Lunde
  */
-public class AgentAppFrame extends JFrame {
+public class AgentAppFrame<P, A> extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	/** The controller, which executes the domain-level commands. */
@@ -56,7 +58,7 @@ public class AgentAppFrame extends JFrame {
 
 	protected JSplitPane centerPane;
 	private MessageLoggerPanel messageLogger;
-	private AgentAppEnvironmentView envView;
+	private AgentAppEnvironmentView<? super P, ? super A> envView;
 
 	/** Standard constructor. */
 	public AgentAppFrame() {
@@ -125,7 +127,7 @@ public class AgentAppFrame extends JFrame {
 	 * Returns the environment view which is currently used to display the
 	 * agents in their environment.
 	 */
-	public AgentAppEnvironmentView getEnvView() {
+	public AgentAppEnvironmentView<? super P, ? super A> getEnvView() {
 		return envView;
 	}
 
@@ -134,7 +136,7 @@ public class AgentAppFrame extends JFrame {
 	 * left of the splitbar. It typically implements a 2D-visualization of
 	 * agents in their environment.
 	 */
-	public void setEnvView(AgentAppEnvironmentView view) {
+	public void setEnvView(AgentAppEnvironmentView<? super P, ? super A> view) {
 		envView = view;
 		centerPane.add(JSplitPane.LEFT, envView);
 		envView.setController(controller);
@@ -310,8 +312,7 @@ public class AgentAppFrame extends JFrame {
 						}
 					} else if (selectors.combos.contains(source)) {
 						err = "when preparing the agent ";
-						selectionChanged(selectors
-								.getName((JComboBox<Object>) source));
+						selectionChanged(selectors.getName((JComboBox<Object>) source));
 					}
 				}
 			} catch (Exception e) {
@@ -328,7 +329,7 @@ public class AgentAppFrame extends JFrame {
 		String[] selectorNames = new String[] {};
 		int[] selectorDefaults = new int[] {};
 		// JPanel selectorPanel = new JPanel();
-		List<JComboBox<Object>> combos = new ArrayList<JComboBox<Object>>();
+		List<JComboBox<Object>> combos = new ArrayList<>();
 
 		public void setSelectors(String[] selectorNames, String[] tooltips) {
 			this.selectorNames = selectorNames;
@@ -399,9 +400,9 @@ public class AgentAppFrame extends JFrame {
 	 * frame and the controller.
 	 */
 	public static class SelectionState {
-		private final List<String> selectors = new ArrayList<String>();
-		private final List<Integer> selIndices = new ArrayList<Integer>();
-		private final List<Object> selItems = new ArrayList<Object>();
+		private final List<String> selectors = new ArrayList<>();
+		private final List<Integer> selIndices = new ArrayList<>();
+		private final List<Object> selItems = new ArrayList<>();
 
 		protected SelectionState(String[] selectors) {
 			for (String sel : selectors) {
@@ -442,9 +443,9 @@ public class AgentAppFrame extends JFrame {
 		/** Returns a readable representation of the selection state. */
 		@Override
 		public String toString() {
-			StringBuffer result = new StringBuffer("State[ ");
+			StringBuilder result = new StringBuilder("State[ ");
 			for (int i = 0; i < size(); i++)
-				result.append(selectors.get(i) + "=" + selIndices.get(i) + " ");
+				result.append(selectors.get(i)).append("=").append(selIndices.get(i)).append(" ");
 			result.append("]");
 			return result.toString();
 		}

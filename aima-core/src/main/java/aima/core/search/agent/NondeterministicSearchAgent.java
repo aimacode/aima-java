@@ -1,44 +1,50 @@
 package aima.core.search.agent;
 
-import aima.core.agent.Action;
-import aima.core.agent.EnvironmentViewNotifier;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.NoOpAction;
+import aima.core.agent.Agent;
+import aima.core.agent.Notifier;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.search.nondeterministic.AndOrSearch;
 import aima.core.search.nondeterministic.NondeterministicProblem;
 import aima.core.search.nondeterministic.Plan;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * This agent traverses the nondeterministic environment using a
- * contingency plan. See page 135, AIMA3e.
+ * This agent traverses the nondeterministic environment using a contingency plan. See page 135, AIMA3e.
  *
+ * @param <P> The type used to represent percepts
+ * @param <S> The type used to represent states
+ * @param <A> The type of the actions to be used to navigate through the state space
  * @author Ruediger Lunde
  * @author Andrew Brown
  */
-public class NondeterministicSearchAgent<S, A extends Action> extends AbstractAgent {
-	private Function<Percept, S> ptsFunction;
-	private EnvironmentViewNotifier notifier;
+public class NondeterministicSearchAgent<P, S, A> extends SimpleAgent<P, A> {
+	/** Maps percepts to states. */
+	private Function<P, S> ptsFunction;
+	/** Is informed about every computed contingency plan. */
+	private Notifier notifier;
 
 	private NondeterministicProblem<S, A> problem;
 	private Plan<S, A> contingencyPlan;
 	private int currStep;
 
-	public NondeterministicSearchAgent(Function<Percept, S> ptsFn) {
+	public NondeterministicSearchAgent(Function<P, S> ptsFn) {
 		this.ptsFunction = ptsFn;
 	}
 
-	public NondeterministicSearchAgent(Function<Percept, S> ptsFn, EnvironmentViewNotifier notifier) {
-		this.ptsFunction = ptsFn;
+	public NondeterministicSearchAgent(BiFunction<P, Agent<P, A>, S> ptsFn) {
+		this.ptsFunction = percept -> ptsFn.apply(percept, this);
+	}
+
+	public NondeterministicSearchAgent(BiFunction<P, Agent<P, A>, S> ptsFn, Notifier notifier) {
+		this(ptsFn);
 		this.notifier = notifier;
 	}
 
 	/**
 	 * Computes a contingency plan for the given problem and prepares plan execution.
-	 * 
 	 * @param problem
 	 *            The search problem for this agent to solve.
 	 */
@@ -47,15 +53,44 @@ public class NondeterministicSearchAgent<S, A extends Action> extends AbstractAg
 		setAlive(true);
 		AndOrSearch<S, A> andOrSearch = new AndOrSearch<>();
 		Optional<Plan<S, A>> plan = andOrSearch.search(problem);
-		contingencyPlan = plan.isPresent() ? plan.get() : null;
+		contingencyPlan = plan.orElse(null);
 		currStep = -1;
 		if (notifier != null)
-			notifier.notifyViews("Contingency plan: " + contingencyPlan);
+			notifier.notify("Contingency plan: " + contingencyPlan);
+	}
+
+	/**
+	 * Selects next action from the contingency plan.
+	 * @param percept A percept.
+	 * @return An action from the contingency plan.
+	 */
+	@Override
+	public final Optional<A> act(P percept) {
+		S state = ptsFunction.apply(percept);
+		// at goal or no plan?
+		if (problem.testGoal(state) || contingencyPlan == null)
+			return Optional.empty();
+
+		currStep++;
+		while (true) {
+			// end of plan reached?
+			if (currStep == contingencyPlan.size()) {
+				contingencyPlan = null;
+				return Optional.empty();
+			}
+
+			// next step is action step?
+			if (contingencyPlan.isActionStep(currStep))
+				return Optional.of(contingencyPlan.getAction(currStep));
+
+			// determine next sub-plan and execute it!
+			contingencyPlan = contingencyPlan.getPlan(currStep, state);
+			currStep = 0;
+		}
 	}
 
 	/**
 	 * Returns the search problem for this agent.
-	 *
 	 * @return The search problem for this agent.
 	 */
 	public NondeterministicProblem<S, A> getProblem() {
@@ -64,40 +99,9 @@ public class NondeterministicSearchAgent<S, A extends Action> extends AbstractAg
 
 	/**
 	 * Returns the contingency plan of the agent.
-	 * 
 	 * @return The plan the agent uses to clean the vacuum world or null.
 	 */
 	public Plan<S, A> getPlan() {
 		return contingencyPlan;
-	}
-
-	/**
-	 * Execute an action from the contingency plan.
-	 * 
-	 * @param percept A percept.
-	 * @return An action from the contingency plan.
-	 */
-	@Override
-	public Action execute(Percept percept) {
-		S state = (S) ptsFunction.apply(percept);
-		// at goal or no plan?
-		if (problem.testGoal(state) || contingencyPlan == null)
-			return NoOpAction.NO_OP;
-
-		currStep++;
-		// end of plan reached?
-		if (currStep == contingencyPlan.size()) {
-			contingencyPlan = null;
-			return NoOpAction.NO_OP;
-		}
-
-		// next step is action step?
-		if (contingencyPlan.isActionStep(currStep))
-			return contingencyPlan.getAction(currStep);
-
-		// determine next sub-plan and execute it!
-		contingencyPlan = contingencyPlan.getPlan(currStep, state);
-		currStep = -1;
-		return execute(percept);
 	}
 }

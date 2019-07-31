@@ -28,8 +28,6 @@ public class EQUALCondition extends Condition {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		return sb.append(key).append("==").append(value).toString();
+		return String.valueOf(key) + "==" + value;
 	}
 }

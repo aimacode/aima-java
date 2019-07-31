@@ -1,7 +1,7 @@
 package aima.gui.demo.agent;
 
-import aima.core.agent.EnvironmentView;
 import aima.core.agent.impl.SimpleEnvironmentView;
+import aima.core.environment.wumpusworld.EfficientHybridWumpusAgent;
 import aima.core.environment.wumpusworld.HybridWumpusAgent;
 import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusEnvironment;
@@ -20,20 +20,19 @@ public class WumpusAgentDemo {
         // cave = create4x4Cave();
 
         WumpusEnvironment env = new WumpusEnvironment(cave);
-        EnvironmentView view = new SimpleEnvironmentView();
-        env.addEnvironmentView(view);
+        SimpleEnvironmentView view = new SimpleEnvironmentView();
+        env.addEnvironmentListener(view);
 
-        HybridWumpusAgent a;
-        a = new HybridWumpusAgent
-        // a = new EfficientHybridWumpusAgent
-                (cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart(),
-                new DPLLSatisfiable(), env);
+        HybridWumpusAgent agent;
+        agent = new HybridWumpusAgent
+        // agent = new EfficientHybridWumpusAgent
+                (cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart(), new DPLLSatisfiable(), env);
 
-        env.notifyViews("The cave:\n" + cave.toString());
-        env.addAgent(a);
+        env.notify("The cave:\n" + cave.toString());
+        env.addAgent(agent);
         env.stepUntilDone();
-        env.notifyViews("Metrics: " + a.getMetrics());
-        env.notifyViews("KB:\n" + a.getKB());
+        env.notify("Metrics: " + agent.getMetrics());
+        env.notify("KB:\n" + agent.getKB());
     }
 
     private static WumpusCave create2x2Cave() {

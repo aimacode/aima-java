@@ -1,7 +1,5 @@
 package aima.core.environment.wumpusworld;
 
-import aima.core.agent.Action;
-
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 237.<br>
  * <br>
@@ -17,17 +15,12 @@ import aima.core.agent.Action;
  *
  * @author Ruediger Lunde
  */
-public enum WumpusAction implements Action {
+public enum WumpusAction {
 
     FORWARD("Forward"), TURN_LEFT("TurnLeft"), TURN_RIGHT("TurnRight"), GRAB("Grab"), SHOOT("Shoot"), CLIMB("Climb");
 
     public String getSymbol() {
         return symbol;
-    }
-
-    @Override
-    public boolean isNoOp() {
-        return false;
     }
 
     private String symbol;

@@ -24,38 +24,25 @@ import java.util.function.ToDoubleFunction;
 public class AStarSearch<S, A> extends BestFirstSearch<S, A> {
 
     /**
-     * Constructs an A* search from a specified search space exploration
+     * Constructs an A* search from a specified search execution
      * strategy and a heuristic function.
      *
-     * @param impl a search space exploration strategy (e.g. TreeSearch, GraphSearch).
-     * @param h   a heuristic function <em>h(n)</em>, which estimates the cost
-     *             of the cheapest path from the state at node <em>n</em> to a
+     * @param impl A search execution strategy (e.g. TreeSearch, GraphSearch).
+     * @param h    A heuristic function <em>h(n)</em>, which estimates the cost
+     *             of the cheapest path from the state of node <em>n</em> to a
      *             goal state.
      */
     public AStarSearch(QueueSearch<S, A> impl, ToDoubleFunction<Node<S, A>> h) {
-        super(impl, new EvalFunction<>(h));
+        super(impl, createEvalFn(h));
     }
 
-
-    public static class EvalFunction<S, A> extends HeuristicEvaluationFunction<S, A> {
-        private ToDoubleFunction<Node> g;
-
-        public EvalFunction(ToDoubleFunction<Node<S, A>> h) {
-            this.h = h;
-            this.g = Node::getPathCost;
-        }
-
-        /**
-         * Returns <em>g(n)</em> the cost to reach the node, plus <em>h(n)</em> the
-         * heuristic cost to get from the specified node to the goal.
-         *
-         * @param n a node
-         * @return g(n) + h(n)
-         */
-        @Override
-        public double applyAsDouble(Node<S, A> n) {
-            // f(n) = g(n) + h(n)
-            return g.applyAsDouble(n) + h.applyAsDouble(n);
-        }
+    // f(n) = g(n) + h(n)
+    public static <S, A> EvaluationFunction<S, A> createEvalFn(ToDoubleFunction<Node<S, A>> h) {
+        return new EvaluationFunction<S, A>(h) {
+            @Override
+            public double applyAsDouble(Node<S, A> node) {
+                return node.getPathCost() + this.h.applyAsDouble(node);
+            }
+        };
     }
 }

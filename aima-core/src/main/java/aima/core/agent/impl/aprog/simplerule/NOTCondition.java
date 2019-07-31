@@ -24,8 +24,6 @@ public class NOTCondition extends Condition {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		return sb.append("![").append(con).append("]").toString();
+		return "![" + con + "]";
 	}
 }

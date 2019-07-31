@@ -2,6 +2,7 @@ package aima.test.core.unit.environment.nqueens;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Predicate;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,7 +10,6 @@ import org.junit.Test;
 
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensGenAlgoUtil;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.local.FitnessFunction;
 import aima.core.search.local.Individual;
 
@@ -21,7 +21,7 @@ import aima.core.search.local.Individual;
 public class NQueensGenAlgoUtilTest {
 
 	private FitnessFunction<Integer> fitnessFunction;
-	private GoalTest<Individual<Integer>> goalTest;
+	private Predicate<Individual<Integer>> goalTest;
 
 	@Before
 	public void setUp() {
@@ -59,12 +59,6 @@ public class NQueensGenAlgoUtilTest {
 		NQueensBoard board = NQueensGenAlgoUtil
 				.getBoardForIndividual(new Individual<>(Arrays
 						.asList(5, 6, 1, 3, 6, 4, 7, 7)));
-		Assert.assertEquals(" -  -  -  -  -  -  -  - \n"
-				+ " -  -  Q  -  -  -  -  - \n" + " -  -  -  -  -  -  -  - \n"
-				+ " -  -  -  Q  -  -  -  - \n" + " -  -  -  -  -  Q  -  - \n"
-				+ " Q  -  -  -  -  -  -  - \n" + " -  Q  -  -  Q  -  -  - \n"
-				+ " -  -  -  -  -  -  Q  Q \n", board.getBoardPic());
-
 		Assert.assertEquals("--------\n" + "--Q-----\n" + "--------\n"
 				+ "---Q----\n" + "-----Q--\n" + "Q-------\n" + "-Q--Q---\n"
 				+ "------QQ\n", board.toString());

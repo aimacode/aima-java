@@ -5,18 +5,21 @@ import java.util.List;
 /**
  * An abstract description of possible discrete Environments in which Agent(s)
  * can perceive and act.
- * 
+ *
+ * @param <P> Type which is used to represent percepts
+ * @param <A> Type which is used to represent actions
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
-public interface Environment {
+public interface Environment<P, A> {
 	/**
 	 * Returns the Agents belonging to this Environment.
 	 * 
 	 * @return The Agents belonging to this Environment.
 	 */
-	List<Agent> getAgents();
+	List<Agent<?, ?>> getAgents();
 
 	/**
 	 * Add an agent to the Environment.
@@ -24,7 +27,7 @@ public interface Environment {
 	 * @param agent
 	 *            the agent to be added.
 	 */
-	void addAgent(Agent agent);
+	void addAgent(Agent<? super P, ? extends A> agent);
 
 	/**
 	 * Remove an agent from the environment.
@@ -32,7 +35,7 @@ public interface Environment {
 	 * @param agent
 	 *            the agent to be removed.
 	 */
-	void removeAgent(Agent agent);
+	void removeAgent(Agent<? super P, ? extends A> agent);
 
 	/**
 	 * Returns the EnvironmentObjects that exist in this Environment.
@@ -68,12 +71,18 @@ public interface Environment {
 	 * @param n
 	 *            the number of time steps to move the Environment forward.
 	 */
-	void step(int n);
+	default void step(int n) {
+		for (int i = 0; i < n; i++)
+			step();
+	}
 
 	/**
 	 * Step through time steps until the Environment has no more tasks.
 	 */
-	void stepUntilDone();
+	default void stepUntilDone() {
+		while (!isDone())
+			step();
+	}
 
 	/**
 	 * Returns <code>true</code> if the Environment is finished with its current
@@ -87,33 +96,33 @@ public interface Environment {
 	/**
 	 * Retrieve the performance measure associated with an Agent.
 	 * 
-	 * @param forAgent
+	 * @param agent
 	 *            the Agent for which a performance measure is to be retrieved.
 	 * @return the performance measure associated with the Agent.
 	 */
-	double getPerformanceMeasure(Agent forAgent);
+	double getPerformanceMeasure(Agent<?, ?> agent);
 
 	/**
-	 * Add a view on the Environment.
+	 * Add a listener which is notified about environment changes.
 	 * 
-	 * @param ev
-	 *            the EnvironmentView to be added.
+	 * @param listener
+	 *            the listener to be added.
 	 */
-	void addEnvironmentView(EnvironmentView ev);
+	void addEnvironmentListener(EnvironmentListener<? super P, ? super A> listener);
 
 	/**
-	 * Remove a view on the Environment.
+	 * Remove a listener.
 	 * 
-	 * @param ev
-	 *            the EnvironmentView to be removed.
+	 * @param listener
+	 *            the listener to be removed.
 	 */
-	void removeEnvironmentView(EnvironmentView ev);
+	void removeEnvironmentListener(EnvironmentListener<? super P, ? super A> listener);
 
 	/**
-	 * Notify all registered EnvironmentViews of a message.
+	 * Notify all environment listeners of a message.
 	 * 
 	 * @param msg
-	 *            the message to notify the registered EnvironmentViews with.
+	 *            the message to notify the registered listeners with.
 	 */
-	void notifyViews(String msg);
+	void notify(String msg);
 }

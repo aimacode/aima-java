@@ -2,7 +2,6 @@ package aima.core.environment.vacuum;
 
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentState;
-import aima.core.agent.Percept;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,7 +13,7 @@ import java.util.Map;
  * @author Andrew Brown
  * @author Ruediger Lunde
  */
-public class VacuumEnvironmentState implements EnvironmentState, Percept, Cloneable {
+public class VacuumEnvironmentState implements EnvironmentState, Cloneable {
 
 	private Map<String, VacuumEnvironment.LocationState> state;
 	private Map<Agent, String> agentLocations;
@@ -27,15 +26,15 @@ public class VacuumEnvironmentState implements EnvironmentState, Percept, Clonea
 		agentLocations = new LinkedHashMap<>();
 	}
 
-	public String getAgentLocation(Agent a) {
-		return agentLocations.get(a);
+	public String getAgentLocation(Agent agent) {
+		return agentLocations.get(agent);
 	}
 
 	/**
 	 * Sets the agent location
 	 */
-	public void setAgentLocation(Agent a, String location) {
-		agentLocations.put(a, location);
+	public void setAgentLocation(Agent agent, String location) {
+		agentLocations.put(agent, location);
 	}
 
 	public VacuumEnvironment.LocationState getLocationState(String location) {
@@ -45,8 +44,8 @@ public class VacuumEnvironmentState implements EnvironmentState, Percept, Clonea
 	/**
 	 * Sets the location state
 	 */
-	public void setLocationState(String location, VacuumEnvironment.LocationState s) {
-		state.put(location, s);
+	public void setLocationState(String location, VacuumEnvironment.LocationState locState) {
+		state.put(location, locState);
 	}
 
 	@Override

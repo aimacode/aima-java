@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.ToDoubleFunction;
 
 import aima.core.agent.Agent;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.*;
 import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
@@ -25,10 +26,10 @@ import aimax.osm.routing.MapAdapter;
 
 /**
  * Controller for graphical OSM map agent applications.
- * 
+ *
  * @author Ruediger Lunde
  */
-public class OsmAgentController extends AgentAppController {
+public class OsmAgentController extends AgentAppController<DynamicPercept, MoveToAction> {
 
 	protected MapAdapter map;
 	protected MapEnvironment env;
@@ -152,10 +153,10 @@ public class OsmAgentController extends AgentAppController {
 		search = SearchFactory.getInstance().createSearch(state.getIndex(MapAgentFrame.SEARCH_SEL),
 				state.getIndex(MapAgentFrame.Q_SEARCH_IMPL_SEL), heuristic);
 		
-		Agent agent = null;
+		Agent<DynamicPercept, MoveToAction> agent = null;
 		switch (state.getIndex(MapAgentFrame.AGENT_SEL)) {
 		case 0:
-			agent = new SimpleMapAgent(map, env, search, new String[] { locs[1] });
+			agent = new SimpleMapAgent(map, search, locs[1]).setNotifier(env);
 			break;
 		case 1:
 			Problem<String, MoveToAction> p = new BidirectionalMapProblem(map, null, locs[1]);
@@ -179,7 +180,7 @@ public class OsmAgentController extends AgentAppController {
 		} else {
 			StringBuilder statusMsg = new StringBuilder();
 			statusMsg.append("Task completed");
-			List<Agent> agents = env.getAgents();
+			List<Agent<?, ?>> agents = env.getAgents();
 			if (agents.size() == 1) {
 				Double travelDistance = env.getAgentTravelDistance(agents.get(0));
 				if (travelDistance != null) {

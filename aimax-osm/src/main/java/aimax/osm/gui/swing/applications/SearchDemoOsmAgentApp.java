@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import aima.core.agent.Agent;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.BidirectionalMapProblem;
 import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
@@ -56,12 +57,12 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 	}
 
 	@Override
-	public AgentAppFrame createFrame() {
+	public AgentAppFrame<DynamicPercept, MoveToAction> createFrame() {
 		return new SDFrame();
 	}
 
 	@Override
-	public AgentAppController createController() {
+	public AgentAppController<DynamicPercept, MoveToAction> createController() {
 		return new SDController(map);
 	}
 
@@ -114,10 +115,10 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 					state.getIndex(MapAgentFrame.Q_SEARCH_IMPL_SEL), heuristic);
 			search.addNodeListener((node) -> visitedStates.add(node.getState()));
 			
-			Agent agent = null;
+			Agent<DynamicPercept, MoveToAction> agent = null;
 			switch (state.getIndex(MapAgentFrame.AGENT_SEL)) {
 			case 0:
-				agent = new SimpleMapAgent(map, env, search, new String[] { locs[1] });
+				agent = new SimpleMapAgent(map, search, locs[1]).setNotifier(env);
 				break;
 			case 1:
 				Problem<String, MoveToAction> p = new BidirectionalMapProblem(map, null, locs[1]);

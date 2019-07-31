@@ -1,17 +1,11 @@
 package aima.test.core.unit.environment.wumpusworld;
 
-import aima.core.agent.Action;
-import aima.core.agent.EnvironmentView;
 import aima.core.agent.impl.SimpleActionTracker;
-import aima.core.agent.impl.SimpleEnvironmentView;
 import aima.core.environment.wumpusworld.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 
@@ -99,10 +93,10 @@ public class HybridWumpusAgentTest {
 		HybridWumpusAgent hwa =
 				new HybridWumpusAgent(2, 2, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH));
 		// The gold is in the first square
-		Action a = hwa.execute(new WumpusPercept().setStench().setBreeze().setGlitter());
-		Assert.assertEquals(a, WumpusAction.GRAB);
-		a = hwa.execute(new WumpusPercept().setStench().setBreeze().setGlitter());
-		Assert.assertEquals(a, WumpusAction.CLIMB);
+		Optional<WumpusAction> a = hwa.act(new WumpusPercept().setStench().setBreeze().setGlitter());
+		Assert.assertEquals(WumpusAction.GRAB, a.orElse(null));
+		a = hwa.act(new WumpusPercept().setStench().setBreeze().setGlitter());
+		Assert.assertEquals(WumpusAction.CLIMB, a.orElse(null));
 	}
 
 	@Test
@@ -112,7 +106,7 @@ public class HybridWumpusAgentTest {
 				+ "S G ");
 		WumpusEnvironment env = new WumpusEnvironment(cave);
 		SimpleActionTracker view = new SimpleActionTracker();
-		env.addEnvironmentView(view);
+		env.addEnvironmentListener(view);
 		HybridWumpusAgent a = new HybridWumpusAgent
 				(cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart());
 		env.addAgent(a);

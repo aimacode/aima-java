@@ -1,6 +1,7 @@
 package aimax.osm.gui.fx.applications;
 
 import aima.core.agent.Agent;
+import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.MapAgent;
 import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
@@ -11,7 +12,6 @@ import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
-import aimax.osm.gui.swing.applications.SearchDemoOsmAgentApp;
 import aimax.osm.viewer.DefaultEntityRenderer;
 import aimax.osm.viewer.DefaultEntityViewInfo;
 import aimax.osm.viewer.MapStyleFactory;
@@ -81,7 +81,7 @@ public class ExtendedRouteFindingAgentOsmApp extends RouteFindingAgentOsmApp {
 	 * settings. The agent is provided with a heuristic function factory to
 	 * adapt to different goals. A node listener is used to visualize search space exploration.
 	 */
-	protected Agent createAgent(List<String> locations) {
+	protected Agent<DynamicPercept, MoveToAction> createAgent(List<String> locations) {
 		SearchForActions<String, MoveToAction> search = SearchFactory.getInstance().createSearch
 				(taskPaneCtrl.getParamValueIndex(PARAM_SEARCH), taskPaneCtrl.getParamValueIndex(PARAM_Q_SEARCH_IMPL),
 						state -> 0.0);
@@ -93,7 +93,8 @@ public class ExtendedRouteFindingAgentOsmApp extends RouteFindingAgentOsmApp {
 			hFnFactory = goal -> (node -> 0.0);
 		else
 			hFnFactory = goal -> MapFunctions.createSLDHeuristicFunction(goal, map);
-		return new MapAgent(map, search, locations.subList(1, locations.size()), envViewCtrl::notify, hFnFactory);
+		return new MapAgent(map, search, locations.subList(1, locations.size()), hFnFactory).
+				setNotifier(envViewCtrl::notify);
 	}
 
 	// helper classes...

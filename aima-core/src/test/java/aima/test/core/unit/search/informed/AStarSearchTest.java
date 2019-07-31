@@ -9,7 +9,6 @@ import aima.core.search.framework.Node;
 import aima.core.search.agent.SearchAgent;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
-import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.framework.qsearch.QueueSearch;
@@ -19,6 +18,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 
 public class AStarSearchTest {
@@ -37,8 +37,8 @@ public class AStarSearchTest {
 
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(board);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(),
-					EightPuzzleFunctions.createManhattanHeuristicFunction());
-			SearchAgent<EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+					EightPuzzleFunctions::getManhattanDistance);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			Assert.assertEquals(23, agent.getActions().size());
 			Assert.assertEquals("1133", // "926" GraphSearchReduced Frontier
 					agent.getInstrumentation().getProperty("nodesExpanded"));
@@ -54,19 +54,19 @@ public class AStarSearchTest {
 
 	@Test
 	public void testAIMA3eFigure3_15() throws Exception {
-		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
+		Map romaniaMap = new SimplifiedRoadMapOfRomania();
 		Problem<String, MoveToAction> problem = new GeneralProblem<>(
-				SimplifiedRoadMapOfPartOfRomania.SIBIU,
+				SimplifiedRoadMapOfRomania.SIBIU,
 				MapFunctions.createActionsFunction(romaniaMap),
 				MapFunctions.createResultFunction(),
-				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				Predicate.isEqual(SimplifiedRoadMapOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new GraphSearch<>(),
-				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfRomania.BUCHAREST, romaniaMap));
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 
-		List<Action> actions = agent.getActions();
+		List<MoveToAction> actions = agent.getActions();
 
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]",
@@ -77,17 +77,17 @@ public class AStarSearchTest {
 
 	@Test
 	public void testAIMA3eFigure3_24() throws Exception {
-		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
+		Map romaniaMap = new SimplifiedRoadMapOfRomania();
 		Problem<String, MoveToAction> problem = new GeneralProblem<>(
-						SimplifiedRoadMapOfPartOfRomania.ARAD,
+						SimplifiedRoadMapOfRomania.ARAD,
 						MapFunctions.createActionsFunction(romaniaMap),
 						MapFunctions.createResultFunction(),
-						GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+						Predicate.isEqual(SimplifiedRoadMapOfRomania.BUCHAREST),
 						MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new TreeSearch<>(),
-				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfRomania.BUCHAREST, romaniaMap));
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());
@@ -102,17 +102,17 @@ public class AStarSearchTest {
 
 	@Test
 	public void testAIMA3eFigure3_24_using_GraphSearch() throws Exception {
-		Map romaniaMap = new SimplifiedRoadMapOfPartOfRomania();
+		Map romaniaMap = new SimplifiedRoadMapOfRomania();
 		Problem<String, MoveToAction> problem = new GeneralProblem<>(
-				SimplifiedRoadMapOfPartOfRomania.ARAD,
+				SimplifiedRoadMapOfRomania.ARAD,
 				MapFunctions.createActionsFunction(romaniaMap),
 				MapFunctions.createResultFunction(),
-				GoalTest.forState(SimplifiedRoadMapOfPartOfRomania.BUCHAREST),
+				Predicate.isEqual(SimplifiedRoadMapOfRomania.BUCHAREST),
 				MapFunctions.createDistanceStepCostFunction(romaniaMap));
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new GraphSearch<>(),
-				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfPartOfRomania.BUCHAREST, romaniaMap));
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+				MapFunctions.createSLDHeuristicFunction(SimplifiedRoadMapOfRomania.BUCHAREST, romaniaMap));
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=Sibiu], Action[name=moveTo, location=RimnicuVilcea], Action[name=moveTo, location=Pitesti], Action[name=moveTo, location=Bucharest]]",
 				agent.getActions().toString());
@@ -137,15 +137,15 @@ public class AStarSearchTest {
 		map.addBidirectionalLink("e", "goal", 5.0);
 		Problem<String, MoveToAction> problem = new GeneralProblem<>("start",
 				MapFunctions.createActionsFunction(map),
-				MapFunctions.createResultFunction(), GoalTest.forState("goal"),
+				MapFunctions.createResultFunction(), Predicate.isEqual("goal"),
 				MapFunctions.createDistanceStepCostFunction(map));
 
 		ToDoubleFunction<Node<String, MoveToAction>> h = node -> 0.0; // Don't have one for this test
 
 		SearchForActions<String, MoveToAction> search = new AStarSearch<>(new GraphSearch<>(), h);
-		SearchAgent<String, MoveToAction> agent = new SearchAgent<>(problem, search);
+		SearchAgent<Object, String, MoveToAction> agent = new SearchAgent<>(problem, search);
 
-		List<Action> actions = agent.getActions();
+		List<MoveToAction> actions = agent.getActions();
 
 		Assert.assertEquals(
 				"[Action[name=moveTo, location=b], Action[name=moveTo, location=d], Action[name=moveTo, location=goal]]",

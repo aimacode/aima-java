@@ -1,9 +1,6 @@
 package aima.core.search.agent;
 
-import aima.core.agent.Action;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.AbstractAgent;
-import aima.core.agent.impl.NoOpAction;
+import aima.core.agent.impl.SimpleAgent;
 import aima.core.search.framework.problem.Problem;
 
 import java.util.LinkedList;
@@ -14,7 +11,6 @@ import java.util.Queue;
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.1, page 67.<br>
  * <br>
- * 
  * <pre>
  * function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
  *   persistent: seq, an action sequence, initially empty
@@ -38,6 +34,7 @@ import java.util.Queue;
  * then executes the actions one at a time. When this is complete, it formulates
  * another goal and starts over.<br>
  *
+ * @param <P> The type used to represent percepts
  * @param <S> The type used to represent states
  * @param <A> The type of the actions to be used to navigate through the state space
  *
@@ -45,87 +42,60 @@ import java.util.Queue;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public abstract class SimpleProblemSolvingAgent<S, A extends Action> extends AbstractAgent {
+public abstract class SimpleProblemSolvingAgent<P, S, A> extends SimpleAgent<P, A> {
 
-	// seq, an action sequence, initially empty
+	/// seq, an action sequence, initially empty
 	private Queue<A> seq = new LinkedList<>();
 
-	//
-	private boolean formulateGoalsIndefinitely = true;
-
-	private int maxGoalsToFormulate = 1;
-
-	private int goalsFormulated = 0;
-
+	/// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
 	/**
-	 * Constructs a simple problem solving agent which will formulate goals
-	 * indefinitely.
+	 * Template method which decides about the action to perform next taking into account the current percept.
+	 * @param percept The current percept
+	 * @return An action or empty if started at the goal, current goal unreachable, or no further goal exists
 	 */
-	public SimpleProblemSolvingAgent() {
-		formulateGoalsIndefinitely = true;
-	}
-
-	/**
-	 * Constructs a simple problem solving agent which will formulate, at
-	 * maximum, the specified number of goals.
-	 * 
-	 * @param maxGoalsToFormulate
-	 *            the maximum number of goals this agent is to formulate.
-	 */
-	public SimpleProblemSolvingAgent(int maxGoalsToFormulate) {
-		formulateGoalsIndefinitely = false;
-		this.maxGoalsToFormulate = maxGoalsToFormulate;
-	}
-
-	// function SIMPLE-PROBLEM-SOLVING-AGENT(percept) returns an action
 	@Override
-	public Action execute(Percept p) {
-		Action action = NoOpAction.NO_OP; // return value if at goal or goal not found
-
-		// state <- UPDATE-STATE(state, percept)
-		updateState(p);
-		// if seq is empty then do
+	public Optional<A> act(P percept) {
+		/// state <- UPDATE-STATE(state, percept)
+		updateState(percept);
+		/// if seq is empty then do
 		if (seq.isEmpty()) {
-			if (formulateGoalsIndefinitely || goalsFormulated < maxGoalsToFormulate) {
-				if (goalsFormulated > 0) {
-					notifyViewOfMetrics();
-				}
-				// goal <- FORMULATE-GOAL(state)
-				Object goal = formulateGoal();
-				goalsFormulated++;
-				// problem <- FORMULATE-PROBLEM(state, goal)
-				Problem<S, A> problem = formulateProblem(goal);
-				// seq <- SEARCH(problem)
+			/// goal <- FORMULATE-GOAL(state)
+			Optional<Object> goal = formulateGoal();
+			if (goal.isPresent()) {
+				/// problem <- FORMULATE-PROBLEM(state, goal)
+				Problem<S, A> problem = formulateProblem(goal.get());
+				/// seq <- SEARCH(problem)
 				Optional<List<A>> actions = search(problem);
-				if (actions.isPresent())
-					seq.addAll(actions.get());
+				// actions is empty if goal is unreachable
+				// actions contains empty list of actions if agent is at the goal
+				actions.ifPresent(as -> seq.addAll(as));
 			} else {
-				// Agent no longer wishes to
-				// achieve any more goals
-				setAlive(false);
-				notifyViewOfMetrics();
+				handleNoGoal();
 			}
 		}
-
-		if (seq.size() > 0) {
-			// action <- FIRST(seq)
-			// seq <- REST(seq)
-			action = seq.remove();
-		}
-
-		return action;
+		/// if seq = failure then return a null action
+		/// action <- FIRST(seq)
+		/// seq <- REST(seq)
+		return Optional.ofNullable(!seq.isEmpty() ? seq.remove() : null);
 	}
 
-	//
-	// PROTECTED METHODS
-	//
-	protected abstract void updateState(Percept p);
+	protected abstract void updateState(P percept);
 
-	protected abstract Object formulateGoal();
+	/**
+	 * Primitive operation, responsible for goal generation. Implementations are
+	 * allowed to return empty to indicate that the agent has finished the job.
+	 */
+	protected abstract Optional<Object> formulateGoal();
 
 	protected abstract Problem<S, A> formulateProblem(Object goal);
 
 	protected abstract Optional<List<A>> search(Problem<S, A> problem);
 
-	protected abstract void notifyViewOfMetrics();
+	/**
+	 * Primitive operation, which decides what to do if goal formulation failed.
+	 * In this default implementation the agent dies.
+	 */
+	protected void handleNoGoal() {
+		setAlive(false);
+	}
 }

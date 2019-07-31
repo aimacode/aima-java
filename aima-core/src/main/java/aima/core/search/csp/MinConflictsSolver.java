@@ -79,8 +79,7 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 	private Set<VAR> getConflictedVariables(Assignment<VAR, VAL> assignment, CSP<VAR, VAL> csp) {
 		Set<VAR> result = new LinkedHashSet<>();
 		csp.getConstraints().stream().filter(constraint -> !constraint.isSatisfiedWith(assignment)).
-				forEach(constraint -> constraint.getScope().stream().filter(var -> !result.contains(var)).
-						forEach(result::add));
+				map(Constraint::getScope).forEach(result::addAll);
 		return result;
 	}
 
@@ -103,12 +102,7 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 		 return (!resultCandidates.isEmpty()) ? Util.selectRandomlyFromList(resultCandidates) : null;
 	}
 
-	private int countConflicts(Assignment<VAR, VAL> assignment,
-			List<Constraint<VAR, VAL>> constraints) {
-		int result = 0;
-		for (Constraint<VAR, VAL> constraint : constraints)
-			if (!constraint.isSatisfiedWith(assignment))
-				result++;
-		return result;
+	private int countConflicts(Assignment<VAR, VAL> assignment, List<Constraint<VAR, VAL>> constraints) {
+		return (int) constraints.stream().filter(constraint -> !constraint.isSatisfiedWith(assignment)).count();
 	}
 }

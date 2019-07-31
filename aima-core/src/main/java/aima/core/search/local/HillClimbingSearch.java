@@ -35,106 +35,96 @@ import java.util.function.ToDoubleFunction;
  * @author Mike Stampone
  * @author Ruediger Lunde
  */
-public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A>, Informed<S, A> {
-
-    public enum SearchOutcome {
-        FAILURE, SOLUTION_FOUND
-    }
+public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchForStates<S, A> {
 
     public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
     public static final String METRIC_NODE_VALUE = "nodeValue";
 
-    private ToDoubleFunction<Node<S, A>> h = null;
-    private final NodeExpander<S, A> nodeExpander;
-    private SearchOutcome outcome = SearchOutcome.FAILURE;
+    private ToDoubleFunction<Node<S, A>> evalFn = null;
+    private final NodeFactory<S, A> nodeFactory;
     private S lastState = null;
     private Metrics metrics = new Metrics();
 
     /**
-     * Constructs a hill-climbing search from the specified heuristic function.
+     * Constructs a hill-climbing search for a specified evaluation function.
      *
-     * @param h a heuristic function
+     * @param evalFn a function mapping nodes to the height of their state (the higher, the better).
      */
-    public HillClimbingSearch(ToDoubleFunction<Node<S, A>> h) {
-        this(h, new NodeExpander<>());
+    public HillClimbingSearch(ToDoubleFunction<Node<S, A>> evalFn) {
+        this(evalFn, new NodeFactory<>());
     }
 
-    public HillClimbingSearch(ToDoubleFunction<Node<S, A>> h, NodeExpander<S, A> nodeExpander) {
-        this.h = h;
-        this.nodeExpander = nodeExpander;
-        nodeExpander.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
-    }
-
-    @Override
-    public void setHeuristicFunction(ToDoubleFunction<Node<S, A>> h) {
-        this.h = h;
+    public HillClimbingSearch(ToDoubleFunction<Node<S, A>> evalFn, NodeFactory<S, A> nodeFactory) {
+        this.evalFn = evalFn;
+        this.nodeFactory = nodeFactory;
+        nodeFactory.addNodeListener((node) -> metrics.incrementInt(METRIC_NODES_EXPANDED));
     }
 
     @Override
     public Optional<List<A>> findActions(Problem<S, A> p) {
-        nodeExpander.useParentLinks(true);
+        nodeFactory.useParentLinks(true);
         return SearchUtils.toActions(findNode(p));
     }
 
     @Override
     public Optional<S> findState(Problem<S, A> p) {
-        nodeExpander.useParentLinks(false);
+        nodeFactory.useParentLinks(false);
         return SearchUtils.toState(findNode(p));
     }
 
     /**
-     * Returns a node corresponding to a local maximum or empty if the search was
-     * cancelled by the user.
+     * Returns a node corresponding to a goal state or empty. Method {@link #getLastState()}
+     * provides the local maximum if result is empty.
      *
      * @param p the search problem
      * @return a node or empty
      */
-    // function HILL-CLIMBING(problem) returns a state that is a local maximum
+    /// function HILL-CLIMBING(problem) returns a state that is a local maximum
     public Optional<Node<S, A>> findNode(Problem<S, A> p) {
         clearMetrics();
-        outcome = SearchOutcome.FAILURE;
-        // current <- MAKE-NODE(problem.INITIAL-STATE)
-        Node<S, A> current = nodeExpander.createRootNode(p.getInitialState());
+        /// current <- MAKE-NODE(problem.INITIAL-STATE)
+        Node<S, A> current = nodeFactory.createNode(p.getInitialState());
         Node<S, A> neighbor;
-        // loop do
+        /// loop do
         while (!Tasks.currIsCancelled()) {
-            lastState = current.getState();
             metrics.set(METRIC_NODE_VALUE, getValue(current));
-            List<Node<S, A>> children = nodeExpander.expand(current, p);
-            // neighbor <- a highest-valued successor of current
+            List<Node<S, A>> children = nodeFactory.getSuccessors(current, p);
+            /// neighbor <- a highest-valued successor of current
             neighbor = getHighestValuedNodeFrom(children);
 
-            // if neighbor.VALUE <= current.VALUE then return current.STATE
+            /// if neighbor.VALUE <= current.VALUE then return current.STATE
             if (neighbor == null || getValue(neighbor) <= getValue(current)) {
-                if (p.testSolution(current))
-                    outcome = SearchOutcome.SOLUTION_FOUND;
-                return Optional.of(current);
+                lastState = current.getState();
+                return Optional.ofNullable(p.testSolution(current) ? current : null);
             }
-            // current <- neighbor
+            /// current <- neighbor
             current = neighbor;
         }
+        lastState = current.getState();
         return Optional.empty();
     }
 
-    /**
-     * Returns SOLUTION_FOUND if the local maximum is a goal state, or FAILURE
-     * if the local maximum is not a goal state.
-     *
-     * @return SOLUTION_FOUND if the local maximum is a goal state, or FAILURE
-     * if the local maximum is not a goal state.
-     */
-    public SearchOutcome getOutcome() {
-        return outcome;
+    private Node<S, A> getHighestValuedNodeFrom(List<Node<S, A>> children) {
+        double highestValue = Double.NEGATIVE_INFINITY;
+        Node<S, A> nodeWithHighestValue = null;
+        for (Node<S, A> child : children) {
+            double value = getValue(child);
+            if (value > highestValue) {
+                highestValue = value;
+                nodeWithHighestValue = child;
+            }
+        }
+        return nodeWithHighestValue;
+    }
+
+    private double getValue(Node<S, A> n) {
+        return evalFn.applyAsDouble(n);
     }
 
     /**
-     * Returns the last state from which the hill climbing search found the
-     * local maximum.
-     *
-     * @return the last state from which the hill climbing search found the
-     * local maximum.
+     * Returns the last explored state which is at least a local maximum if search was not cancelled by the user.
      */
-    public S getLastSearchState() {
+    public S getLastState() {
         return lastState;
     }
 
@@ -155,34 +145,11 @@ public class HillClimbingSearch<S, A> implements SearchForActions<S, A>, SearchF
 
     @Override
     public void addNodeListener(Consumer<Node<S, A>> listener) {
-        nodeExpander.addNodeListener(listener);
+        nodeFactory.addNodeListener(listener);
     }
 
     @Override
     public boolean removeNodeListener(Consumer<Node<S, A>> listener) {
-        return nodeExpander.removeNodeListener(listener);
-    }
-
-    //
-    // PRIVATE METHODS
-    //
-
-    private Node<S, A> getHighestValuedNodeFrom(List<Node<S, A>> children) {
-        double highestValue = Double.NEGATIVE_INFINITY;
-        Node<S, A> nodeWithHighestValue = null;
-        for (Node<S, A> child : children) {
-            double value = getValue(child);
-            if (value > highestValue) {
-                highestValue = value;
-                nodeWithHighestValue = child;
-            }
-        }
-        return nodeWithHighestValue;
-    }
-
-    private double getValue(Node<S, A> n) {
-        // assumption greater heuristic value =>
-        // HIGHER on hill; 0 == goal state;
-        return -1 * h.applyAsDouble(n);
+        return nodeFactory.removeNodeListener(listener);
     }
 }

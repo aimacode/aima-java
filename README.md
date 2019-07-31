@@ -2,13 +2,13 @@
 Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~russell/) and [Norvig's](http://www.norvig.com/) [Artificial Intelligence - A Modern Approach 3rd Edition](http://aima.cs.berkeley.edu/). You can use this in conjunction with a course on AI, or for study on your own. We're looking for [solid contributors](https://github.com/aimacode/aima-java/wiki/AIMAJava-Contributing) to help.
 
 ### Getting Started Links 
-  * [Overview of Project](https://github.com/aimacode/aima-java/wiki/AIMA3e-Overview).
+  * [Overview of Project](https://github.com/aimacode/aima-java/wiki/AIMA3e-Overview)
   * [Interested in Contributing](https://github.com/aimacode/aima-java/wiki/AIMAJava-Contributing)
-  * [Setting up your own workspace](https://github.com/aimacode/aima-java/wiki/AIMA3e-Workspace-Setup).
-  * [Demo Applications that can be run from your browser](http://aimacode.github.io/aima-java/aima3e/aima3ejavademos.html).
-  * [Comments on architecture and design](https://github.com/aimacode/aima-java/wiki/AIMA3e-Architecture-and-Design).
-  * [Javadoc for the aima-core project](http://aimacode.github.io/aima-java/aima3e/javadoc/aima-core/index.html).
-  * [Download the latest official (but outdated) version  = 1.9.1 (Dec 18 2016)](https://github.com/aimacode/aima-java/releases/tag/aima3e-v1.9.1).
+  * [Setting up your own workspace](https://github.com/aimacode/aima-java/wiki/AIMA3e-Workspace-Setup)
+  * [Comments on architecture and design](https://github.com/aimacode/aima-java/wiki/AIMA3e-Architecture-and-Design)
+  * [Demo Applications that can be run from your browser (unfortunately not up to date)](http://aimacode.github.io/aima-java/aima3e/aima3ejavademos.html) 
+  * [Javadoc for the aima-core project (outdated)](http://aimacode.github.io/aima-java/aima3e/javadoc/aima-core/index.html)
+  * [Download the latest official (but outdated) version  = 1.9.1 (Dec 18 2016)](https://github.com/aimacode/aima-java/releases/tag/aima3e-v1.9.1)
   * Latest Maven Information (for integration as a third party library)<br>
   
       ```
@@ -32,9 +32,9 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |2.12|51|Model-Based-Reflex-Agent|[ModelBasedReflexAgentProgram](/aima-core/src/main/java/aima/core/agent/impl/aprog/ModelBasedReflexAgentProgram.java)|
 |3|66|Problem|[Problem](/aima-core/src/main/java/aima/core/search/framework/problem/Problem.java)|
 |3.1|67|Simple-Problem-Solving-Agent|[SimpleProblemSolvingAgent](/aima-core/src/main/java/aima/core/search/agent/SimpleProblemSolvingAgent.java)|
-|3.2|68|Romania|[SimplifiedRoadMapOfPartOfRomania](/aima-core/src/main/java/aima/core/environment/map/SimplifiedRoadMapOfPartOfRomania.java)|
+|3.2|68|Romania|[SimplifiedRoadMapOfRomania](/aima-core/src/main/java/aima/core/environment/map/SimplifiedRoadMapOfRomania.java)|
 |3.7|77|Tree-Search|[TreeSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/TreeSearch.java)|
-|3.7|77|Graph-Search|[GraphSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/GraphSearch.java)|
+|3.7|77|Graph-Search|[GraphSearch](/aima-core/src/main/java/aima/core/search/framework/qsearch/GraphSearch4e.java)|
 |3.10|79|Node|[Node](/aima-core/src/main/java/aima/core/search/framework/Node.java)|
 |3.11|82|Breadth-First-Search|[BreadthFirstSearch](/aima-core/src/main/java/aima/core/search/uninformed/BreadthFirstSearch.java)|
 |3.14|84|Uniform-Cost-Search|[UniformCostSearch](/aima-core/src/main/java/aima/core/search/uninformed/UniformCostSearch.java)|

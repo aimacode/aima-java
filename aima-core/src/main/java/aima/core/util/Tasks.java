@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  */
 public class Tasks {
 
-    // simple API to execute cancellable tasks in background - functionality is provided by three functional
+    // simple API to act cancellable tasks in background - functionality is provided by three functional
     // attributes
 
     /** Executes a given task in background. */

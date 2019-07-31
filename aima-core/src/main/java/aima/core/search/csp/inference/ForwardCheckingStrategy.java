@@ -13,7 +13,7 @@ public class ForwardCheckingStrategy<VAR extends Variable, VAL> implements Infer
 
     /** The CSP is not changed at the beginning. */
     @Override
-    public InferenceLog apply(CSP csp) {
+    public InferenceLog<VAR, VAL> apply(CSP csp) {
         return InferenceLog.emptyLog();
     }
 
