@@ -27,7 +27,7 @@ public class GameTree<S, A> {
 		Ni.put(root, 0.0);
 	}
 	
-	public Node<S, A> getRoot(){
+	public Node<S, A> getRoot() {
 		return root;
 	}
 	
@@ -64,7 +64,7 @@ public class GameTree<S, A> {
 		return Ni.containsKey(state);
 	}
 	
-	public void updateStats(boolean result, Node<S, A> node){
+	public void updateStats(boolean result, Node<S, A> node) {
 		Ni.put(node.getState(), Ni.get(node.getState()) + 1);
 		if (result) Wi.put(node.getState(), Wi.get(node.getState()) + 1);
 	}
@@ -86,7 +86,7 @@ public class GameTree<S, A> {
 		return best_children.get(rand.nextInt(best_children.size()));
 	}
 	
-	public Node<S, A> getChildWithMaxPlayouts(Node<S, A> node){
+	public Node<S, A> getChildWithMaxPlayouts(Node<S, A> node) {
 		List<Node<S, A>> best_children = new ArrayList<>();
 		double max_playouts = Double.NEGATIVE_INFINITY;
 		for (Node<S, A> child : successors(node)) {
