@@ -5,6 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+/**
+ *	Basic implementation of Game Tree for the Monte Carlo Tree Search
+ *
+ * 	Wi stands for the number of wins for the node considered after the i-th move.
+ * 	Ni stands for the number of simulations for the node considered after the i-th move.
+ *
+ * @author Suyash Jain
+ */
+
 public class GameTree<S, A> {
 	HashMap<Node<S, A>, List<Node<S, A>>> gameTree;
 	HashMap<S, Double> Wi, Ni;

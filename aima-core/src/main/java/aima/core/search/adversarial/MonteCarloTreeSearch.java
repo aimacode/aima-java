@@ -9,6 +9,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Artificial Intelligence A Modern Approach (4th Edition): page ???.<br>
+ *
+ * <pre>
+ * <code>
+ * function MONTE-CARLO-TREE-SEARCH(state) returns an action
+ *   tree &larr; NODE(state)
+ *   while TIME-REMAINING() do
+ *   	leaf &larr; SELECT(tree)
+ *   	child &larr; EXPAND(leaf)
+ *   	result &larr; SIMULATE(child)
+ *   	BACKPROPAGATE(result, child)
+ *   return the move in ACTIONS(state) whose node has highest number of playouts
+ * </code>
+ * </pre>
+ *
+ * Figure ?.? The Monte Carlo tree search algorithm. A game tree, tree, is initialized, and
+ * then we repeat the cycle of SELECT / EXPAND / SIMULATE/ BACKPROPAGATE until we run  out
+ * of time, and return the move that led to the node with the highest number of playouts.
+ *
+ *
+ * @author Suyash Jain
+ *
+ * @param <S>
+ *            Type which is used for states in the game.
+ * @param <A>
+ *            Type which is used for actions in the game.
+ * @param <P>
+ *            Type which is used for players in the game.
+ */
+
 public class MonteCarloTreeSearch<S, A, P> implements AdversarialSearch<S, A> {
 	private int iterations = 0;
 	private Game<S, A, P> game;
