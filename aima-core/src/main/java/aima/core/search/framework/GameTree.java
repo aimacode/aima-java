@@ -31,6 +31,16 @@ public class GameTree<S, A> {
 		return root;
 	}
 	
+	public List<S> getVisitedChildren(Node<S, A> parent) {
+		List<S> visitedChildren = new ArrayList<>();
+		if (gameTree.containsKey(parent)) {
+			for (Node<S, A> child : gameTree.get(parent)) {
+				visitedChildren.add(child.getState());
+			}
+		}
+		return visitedChildren;
+	}
+	
 	public Node<S, A> addChild(Node<S, A> parent, S child) {
 		Node<S, A> newChild = nodeFactory.createNode(child);
 		List<Node<S, A>> children = successors(parent);
@@ -57,11 +67,8 @@ public class GameTree<S, A> {
 	}
 	
 	public List<Node<S, A>> successors(Node<S, A> node) {
-		return gameTree.get(node);
-	}
-	
-	public boolean contains(S state) {
-		return Ni.containsKey(state);
+		if (gameTree.containsKey(node)) return gameTree.get(node);
+		else return new ArrayList<>();
 	}
 	
 	public void updateStats(boolean result, Node<S, A> node) {
@@ -82,6 +89,7 @@ public class GameTree<S, A> {
 				best_children.add(child);
 			}
 		}
+		
 		Random rand = new Random();
 		return best_children.get(rand.nextInt(best_children.size()));
 	}

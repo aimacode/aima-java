@@ -43,8 +43,8 @@ public class MonteCarloTreeSearch<S, A, P> implements AdversarialSearch<S, A> {
 	}
 	
 	private Node<S, A> select(GameTree gameTree) {
-		Node node = gameTree.getRoot();
-		while (isNodeFullyExpanded(node)) {
+		Node<S, A> node = gameTree.getRoot();
+		while (!game.isTerminal(node.getState()) && isNodeFullyExpanded(node)) {
 			node = gameTree.getChildWithMaxUCT(node);
 		}
 		return node;
@@ -79,15 +79,16 @@ public class MonteCarloTreeSearch<S, A, P> implements AdversarialSearch<S, A> {
 		Node<S, A> bestChild = tree.getChildWithMaxPlayouts(root);
 		for (A a : game.getActions(root.getState())) {
 			S result = game.getResult(root.getState(), a);
-			if (result == bestChild.getState()) return a;
+			if (result.equals(bestChild.getState())) return a;
 		}
 		return null;
 	}
 	
 	private boolean isNodeFullyExpanded(Node<S, A> node) {
+		List<S> visitedChildren = tree.getVisitedChildren(node);
 		for (A a : game.getActions(node.getState())) {
 			S result = game.getResult(node.getState(), a);
-			if (!tree.contains(result)) {
+			if (!visitedChildren.contains(result)) {
 				return false;
 			}
 		}
@@ -97,9 +98,10 @@ public class MonteCarloTreeSearch<S, A, P> implements AdversarialSearch<S, A> {
 	
 	private Node<S, A> randomlySelectUnvisitedChild(Node<S, A> node) {
 		List<S> unvisitedChildren = new ArrayList<>();
+		List<S> visitedChildren = tree.getVisitedChildren(node);
 		for (A a : game.getActions(node.getState())) {
 			S result = game.getResult(node.getState(), a);
-			if (!tree.contains(result)) unvisitedChildren.add(result);
+			if (!visitedChildren.contains(result)) unvisitedChildren.add(result);
 		}
 		Random rand = new Random();
 		Node<S, A> newChild = tree.addChild(node, unvisitedChildren.get(rand.nextInt(unvisitedChildren.size())));

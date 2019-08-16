@@ -19,11 +19,22 @@ public class TicTacToeState implements Cloneable {
 	public static final String X = "X";
 	public static final String EMPTY = "-";
 	//
-	private String[] board = new String[] { EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-			EMPTY, EMPTY, EMPTY, EMPTY };
+	private String[] board;
 
-	private String playerToMove = X;
+	private String playerToMove;
 	private double utility = -1; // 1: win for X, 0: win for O, 0.5: draw
+	
+	public TicTacToeState(){
+		this.board = new String[] { EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY };
+		playerToMove = X;
+	}
+	
+	public TicTacToeState(String[] board, String playerToMove){
+		this.board = board;
+		this.playerToMove = (Objects.equals(playerToMove, X) ? O : X);
+		analyzeUtility();
+		this.playerToMove = playerToMove;
+	}
 
 	public String getPlayerToMove() {
 		return playerToMove;
