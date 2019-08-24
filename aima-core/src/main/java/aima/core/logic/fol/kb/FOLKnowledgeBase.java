@@ -49,6 +49,7 @@ public class FOLKnowledgeBase {
 	private VariableCollector variableCollector;
 	private StandardizeApart standardizeApart;
 	private CNFConverter cnfConverter;
+	public FOLDomain domain;
 	//
 	// Persistent data structures
 	//
@@ -93,6 +94,7 @@ public class FOLKnowledgeBase {
 		this.standardizeApart = new StandardizeApart(variableCollector,
 				substVisitor);
 		this.cnfConverter = new CNFConverter(parser);
+		this.domain = domain;
 	}
 
 	public void clear() {
@@ -423,6 +425,10 @@ public class FOLKnowledgeBase {
 
 	private List<Literal> fetchMatchingFacts(Literal l) {
 		return indexFacts.get(getFactKey(l));
+	}
+
+	public Map<String, List<Literal>> getIndexFacts() {
+		return indexFacts;
 	}
 
 	private String getFactKey(Literal l) {

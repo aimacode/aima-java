@@ -1,5 +1,6 @@
 package aima.test.core.unit.learning;
 
+import aima.test.core.unit.learning.knowledge.FOILTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -18,8 +19,8 @@ import aima.test.core.unit.learning.reinforcement.agent.QLearningAgentTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ DataSetTest.class, InformationAndGainTest.class,
-		DecisionListTest.class, DLTestTest.class, DecisionTreeTest.class,
-		EnsembleLearningTest.class, LearnerTest.class,
+		DecisionListTest.class, DLTestTest.class, FOILTest.class,
+		DecisionTreeTest.class,	EnsembleLearningTest.class, LearnerTest.class,
 		BackPropagationTest.class, LayerTest.class,
 		PassiveADPAgentTest.class, PassiveTDAgentTest.class,
 		QLearningAgentTest.class })
