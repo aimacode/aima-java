@@ -1,5 +1,8 @@
 package aima.test.core.unit.search;
 
+import aima.test.core.unit.search.adversarial.AlphaBetaSearchTest;
+import aima.test.core.unit.search.adversarial.MinimaxSearchTest;
+import aima.test.core.unit.search.adversarial.MonteCarloTreeSearchTest;
 import aima.test.core.unit.search.csp.AssignmentTest;
 import aima.test.core.unit.search.csp.CSPTest;
 import aima.test.core.unit.search.csp.MapCSPTest;
@@ -18,8 +21,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ AssignmentTest.class, CSPTest.class, MapCSPTest.class, MetricsTest.class, TreeCspSolverTest.class,
-		AStarSearchTest.class, GreedyBestFirstSearchTest.class, RecursiveBestFirstSearchTest.class,
+@Suite.SuiteClasses({AlphaBetaSearchTest.class, MinimaxSearchTest.class, MonteCarloTreeSearchTest.class, AssignmentTest.class, CSPTest.class, MapCSPTest.class,
+		MetricsTest.class, TreeCspSolverTest.class, AStarSearchTest.class, GreedyBestFirstSearchTest.class, RecursiveBestFirstSearchTest.class,
 		AndOrSearchTest.class, LRTAStarAgentTest.class, OnlineDFSAgentTest.class,
 		BidirectionalSearchTest.class, BreadthFirstSearchTest.class, DepthFirstSearchTest.class,
 		DepthLimitedSearchTest.class, IterativeDeepeningSearchTest.class, UniformCostSearchTest.class, NodeTest.class,
