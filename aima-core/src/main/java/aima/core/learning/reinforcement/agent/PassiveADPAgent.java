@@ -50,8 +50,7 @@ import java.util.*;
  * @author Ruediger Lunde
  *
  */
-public class PassiveADPAgent<S, A extends Action> extends
-		ReinforcementAgent<S, A> {
+public class PassiveADPAgent<S, A extends Action> extends ReinforcementAgent<S, A> {
 	// persistent: &pi;, a fixed policy
 	private Map<S, A> pi = new HashMap<>();
 	// mdp, an MDP with model P, rewards R, discount &gamma;
@@ -126,8 +125,7 @@ public class PassiveADPAgent<S, A extends Action> extends
 				if (NsDelta_sa.getCount(t_sa) != 0) {
 					// P(t|s,a) <- N<sub>s'|sa</sub>[t,s,a] /
 					// N<sub>sa</sub>[s,a]
-					P.put(t_sa, NsDelta_sa.getCount(t_sa).doubleValue()
-							/ Nsa.getCount(sa).doubleValue());
+					P.put(t_sa, NsDelta_sa.getCount(t_sa).doubleValue() / Nsa.getCount(sa).doubleValue());
 				}
 			}
 		}
