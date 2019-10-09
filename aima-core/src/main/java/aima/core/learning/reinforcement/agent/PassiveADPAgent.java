@@ -92,9 +92,7 @@ public class PassiveADPAgent<S, A extends Action> extends
 		RewardFunction<S> rewardfn = (s) -> R.get(s);
 
 		this.mdp = new MDP<>(states, initialState, actionsFunction,
-				(sDelta, s, a) -> {
-					Double p = P.get(new Pair<>(sDelta, new Pair<>(s, a)));
-					return null == p ? 0.0 : p; },
+				(sDelta, s, a) -> Optional.ofNullable(P.get(new Pair<>(sDelta, new Pair<>(s, a)))).orElse(0.0),
 				rewardfn);
 		this.policyEvaluation = policyEvaluation;
 	}
@@ -117,7 +115,7 @@ public class PassiveADPAgent<S, A extends Action> extends
 			R.put(sDelta, rDelta);
 		}
 		// if s is not null then
-		if (null != s) {
+		if (s != null) {
 			// increment N<sub>sa</sub>[s,a] and N<sub>s'|sa</sub>[s',s,a]
 			Pair<S, A> sa = new Pair<>(s, a);
 			Nsa.incrementFor(sa);
@@ -125,7 +123,7 @@ public class PassiveADPAgent<S, A extends Action> extends
 			// for each t such that N<sub>s'|sa</sub>[t,s,a] is nonzero do
 			for (S t : mdp.states()) {
 				Pair<S, Pair<S, A>> t_sa = new Pair<>(t, sa);
-				if (0 != NsDelta_sa.getCount(t_sa)) {
+				if (NsDelta_sa.getCount(t_sa) != 0) {
 					// P(t|s,a) <- N<sub>s'|sa</sub>[t,s,a] /
 					// N<sub>sa</sub>[s,a]
 					P.put(t_sa, NsDelta_sa.getCount(t_sa).doubleValue()
