@@ -17,8 +17,7 @@ import aima.core.learning.reinforcement.PerceptStateReward;
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  */
-public abstract class ReinforcementAgent<S, A> extends
-		SimpleAgent<PerceptStateReward<S>, A> {
+public abstract class ReinforcementAgent<S, A> extends SimpleAgent<PerceptStateReward<S>, A> {
 
 	/**
 	 * Default Constructor.

@@ -3,6 +3,7 @@ package aima.core.util.datastructure;
 /**
  * @author Ravi Mohan
  * @author Mike Stampone
+ * @author Ruediger Lunde
  * 
  */
 public class Pair<X, Y> {
@@ -45,14 +46,15 @@ public class Pair<X, Y> {
 	public boolean equals(Object o) {
 		if (o instanceof Pair<?, ?>) {
 			Pair<?, ?> p = (Pair<?, ?>) o;
-			return a.equals(p.a) && b.equals(p.b);
+			return (a == null ? p.a == null : a.equals(p.a)) &&
+					(b == null ? p.b == null : b.equals(p.b));
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return a.hashCode() + 31 * b.hashCode();
+		return (a == null ? 0 : a.hashCode()) + 31 * (b == null ? 0 : b.hashCode());
 	}
 
 	@Override

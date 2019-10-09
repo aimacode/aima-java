@@ -91,15 +91,11 @@ public class PassiveADPAgent<S, A extends Action> extends
 		this.pi.putAll(fixedPolicy);
 		RewardFunction<S> rewardfn = (s) -> R.get(s);
 
-		this.mdp = new MDP<S, A>(states, initialState, actionsFunction,
-				new TransitionProbabilityFunction<S, A>() {
-					public double probability(S sDelta, S s, A a) {
-						Double p = P.get(new Pair<S, Pair<S, A>>(sDelta,
-								new Pair<S, A>(s, a)));
-
-						return null == p ? 0.0 : p;
-					}
-				}, rewardfn);
+		this.mdp = new MDP<>(states, initialState, actionsFunction,
+				(sDelta, s, a) -> {
+					Double p = P.get(new Pair<>(sDelta, new Pair<>(s, a)));
+					return null == p ? 0.0 : p; },
+				rewardfn);
 		this.policyEvaluation = policyEvaluation;
 	}
 
@@ -123,12 +119,12 @@ public class PassiveADPAgent<S, A extends Action> extends
 		// if s is not null then
 		if (null != s) {
 			// increment N<sub>sa</sub>[s,a] and N<sub>s'|sa</sub>[s',s,a]
-			Pair<S, A> sa = new Pair<S, A>(s, a);
+			Pair<S, A> sa = new Pair<>(s, a);
 			Nsa.incrementFor(sa);
-			NsDelta_sa.incrementFor(new Pair<S, Pair<S, A>>(sDelta, sa));
+			NsDelta_sa.incrementFor(new Pair<>(sDelta, sa));
 			// for each t such that N<sub>s'|sa</sub>[t,s,a] is nonzero do
 			for (S t : mdp.states()) {
-				Pair<S, Pair<S, A>> t_sa = new Pair<S, Pair<S, A>>(t, sa);
+				Pair<S, Pair<S, A>> t_sa = new Pair<>(t, sa);
 				if (0 != NsDelta_sa.getCount(t_sa)) {
 					// P(t|s,a) <- N<sub>s'|sa</sub>[t,s,a] /
 					// N<sub>sa</sub>[s,a]
@@ -161,7 +157,7 @@ public class PassiveADPAgent<S, A extends Action> extends
 	public void reset() {
 		P.clear();
 		R.clear();
-		U = new HashMap<S, Double>();
+		U = new HashMap<>();
 		Nsa.clear();
 		NsDelta_sa.clear();
 		s = null;
@@ -172,11 +168,7 @@ public class PassiveADPAgent<S, A extends Action> extends
 	// PRIVATE METHODS
 	//
 	private boolean isTerminal(S s) {
-		boolean terminal = false;
-		if (0 == mdp.actions(s).size()) {
-			// No actions possible in state is considered terminal.
-			terminal = true;
-		}
-		return terminal;
+		// A state with no possible actions is considered terminal.
+		return mdp.actions(s).isEmpty();
 	}
 }

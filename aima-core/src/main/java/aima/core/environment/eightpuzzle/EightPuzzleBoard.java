@@ -155,7 +155,7 @@ public class EightPuzzleBoard implements Cloneable {
 	private int getXCoord(int pos) {
 		return pos % 3;
 	}
-	
+
 	private int getYCoord(int pos) {
 		return pos / 3;
 	}

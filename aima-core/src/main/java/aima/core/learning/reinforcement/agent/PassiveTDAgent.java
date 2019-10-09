@@ -119,7 +119,7 @@ public class PassiveTDAgent<S, A> extends ReinforcementAgent<S, A> {
 
 	@Override
 	public void reset() {
-		U = new HashMap<S, Double>();
+		U = new HashMap<>();
 		Ns.clear();
 		s = null;
 		a = null;

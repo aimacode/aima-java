@@ -116,7 +116,7 @@ public class LearningDemo {
 			DataSet ds = DataSetFactory.getRestaurantDataSet();
 			List<DecisionTree> stumps = DecisionTree.getStumpsFor(ds, "Yes",
 					"No");
-			List<Learner> learners = new ArrayList<Learner>();
+			List<Learner> learners = new ArrayList<>();
 
 			System.out
 					.println("\nStump Learners vote to decide in this algorithm");
@@ -216,7 +216,7 @@ public class LearningDemo {
 				MDPFactory.createTransitionProbabilityFunctionForFigure17_1(cw),
 				new JavaRandomizer());
 
-		Map<Cell<Double>, CellWorldAction> fixedPolicy = new HashMap<Cell<Double>, CellWorldAction>();
+		Map<Cell<Double>, CellWorldAction> fixedPolicy = new HashMap<>();
 		fixedPolicy.put(cw.getCellAt(1, 1), CellWorldAction.Up);
 		fixedPolicy.put(cw.getCellAt(1, 2), CellWorldAction.Up);
 		fixedPolicy.put(cw.getCellAt(1, 3), CellWorldAction.Right);
@@ -227,11 +227,10 @@ public class LearningDemo {
 		fixedPolicy.put(cw.getCellAt(3, 3), CellWorldAction.Right);
 		fixedPolicy.put(cw.getCellAt(4, 1), CellWorldAction.Left);
 
-		PassiveADPAgent<Cell<Double>, CellWorldAction> padpa = new PassiveADPAgent<Cell<Double>, CellWorldAction>(
+		PassiveADPAgent<Cell<Double>, CellWorldAction> padpa = new PassiveADPAgent<>(
 				fixedPolicy, cw.getCells(), cw.getCellAt(1, 1),
 				MDPFactory.createActionsFunctionForFigure17_1(cw),
-				new ModifiedPolicyEvaluation<Cell<Double>, CellWorldAction>(10,
-						1.0));
+				new ModifiedPolicyEvaluation<>(10, 1.0));
 
 		cwe.addAgent(padpa);
 
@@ -265,7 +264,7 @@ public class LearningDemo {
 		fixedPolicy.put(cw.getCellAt(3, 3), CellWorldAction.Right);
 		fixedPolicy.put(cw.getCellAt(4, 1), CellWorldAction.Left);
 
-		PassiveTDAgent<Cell<Double>, CellWorldAction> ptda = new PassiveTDAgent<Cell<Double>, CellWorldAction>(
+		PassiveTDAgent<Cell<Double>, CellWorldAction> ptda = new PassiveTDAgent<>(
 				fixedPolicy, 0.2, 1.0);
 
 		cwe.addAgent(ptda);
@@ -287,10 +286,8 @@ public class LearningDemo {
 				MDPFactory.createTransitionProbabilityFunctionForFigure17_1(cw),
 				new JavaRandomizer());
 
-		QLearningAgent<Cell<Double>, CellWorldAction> qla = new QLearningAgent<Cell<Double>, CellWorldAction>(
-				MDPFactory.createActionsFunctionForFigure17_1(cw),
-				CellWorldAction.None, 0.2, 1.0, 5,
-				2.0);
+		QLearningAgent<Cell<Double>, CellWorldAction> qla = new QLearningAgent<>(
+				MDPFactory.createActionsFunctionForFigure17_1(cw), 0.2, 1.0, 5,2.0);
 
 		cwe.addAgent(qla);
 
@@ -322,10 +319,10 @@ public class LearningDemo {
 
 		cwe.addAgent(reinforcementAgent);
 
-		Map<Integer, List<Map<Cell<Double>, Double>>> runs = new HashMap<Integer, List<Map<Cell<Double>, Double>>>();
+		Map<Integer, List<Map<Cell<Double>, Double>>> runs = new HashMap<>();
 		for (int r = 0; r < numRuns; r++) {
 			reinforcementAgent.reset();
-			List<Map<Cell<Double>, Double>> trials = new ArrayList<Map<Cell<Double>, Double>>();
+			List<Map<Cell<Double>, Double>> trials = new ArrayList<>();
 			for (int t = 0; t < numTrialsPerRun; t++) {
 				cwe.executeTrial();
 				if (0 == t % reportEveryN) {
@@ -351,18 +348,12 @@ public class LearningDemo {
 		for (int t = 0; t < (numTrialsPerRun / reportEveryN); t++) {
 			// Use the last run
 			Map<Cell<Double>, Double> u = runs.get(numRuns - 1).get(t);
-			v4_3.append((u.containsKey(cw.getCellAt(4, 3)) ? u.get(cw
-					.getCellAt(4, 3)) : 0.0) + "\t");
-			v3_3.append((u.containsKey(cw.getCellAt(3, 3)) ? u.get(cw
-					.getCellAt(3, 3)) : 0.0) + "\t");
-			v1_3.append((u.containsKey(cw.getCellAt(1, 3)) ? u.get(cw
-					.getCellAt(1, 3)) : 0.0) + "\t");
-			v1_1.append((u.containsKey(cw.getCellAt(1, 1)) ? u.get(cw
-					.getCellAt(1, 1)) : 0.0) + "\t");
-			v3_2.append((u.containsKey(cw.getCellAt(3, 2)) ? u.get(cw
-					.getCellAt(3, 2)) : 0.0) + "\t");
-			v2_1.append((u.containsKey(cw.getCellAt(2, 1)) ? u.get(cw
-					.getCellAt(2, 1)) : 0.0) + "\t");
+			v4_3.append(u.getOrDefault(cw.getCellAt(4, 3), 0.0)).append("\t");
+			v3_3.append(u.getOrDefault(cw.getCellAt(3, 3), 0.0)).append("\t");
+			v1_3.append(u.getOrDefault(cw.getCellAt(1, 3), 0.0)).append("\t");
+			v1_1.append(u.getOrDefault(cw.getCellAt(1, 1), 0.0)).append("\t");
+			v3_2.append(u.getOrDefault(cw.getCellAt(3, 2), 0.0)).append("\t");
+			v2_1.append(u.getOrDefault(cw.getCellAt(2, 1), 0.0)).append("\t");
 		}
 
 		StringBuilder rmseValues = new StringBuilder();
