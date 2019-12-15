@@ -132,14 +132,11 @@ public class DecisionTreeLearner implements Learner {
 
 	private boolean allExamplesHaveSameClassification(DataSet ds) {
 		String classification = ds.getExample(0).targetValue();
-		Iterator<Example> iter = ds.iterator();
-		while (iter.hasNext()) {
-			Example element = iter.next();
-			if (!(element.targetValue().equals(classification))) {
+		ds.forEach( Example element -> {
+			if(!(element.targetValue.equals(classification))) {
 				return false;
 			}
-
-		}
+		});
 		return true;
 	}
 }
