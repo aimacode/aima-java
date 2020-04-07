@@ -10,7 +10,7 @@ import java.util.Set;
  * @author Ciaran O'Reilly
  * @author Mike Stampone
  */
-public abstract class ObjectWithDynamicAttributes {
+public abstract class ObjectWithDynamicAttributes implements Cloneable {
 	private Map<Object, Object> attributes = new LinkedHashMap<>();
 
 	//
@@ -103,17 +103,17 @@ public abstract class ObjectWithDynamicAttributes {
 	/**
 	 * Creates and returns a copy of this ObjectWithDynamicAttributes
 	 */
-	public ObjectWithDynamicAttributes copy() {
-		ObjectWithDynamicAttributes copy = null;
-
+	public ObjectWithDynamicAttributes clone() {
 		try {
-			copy = getClass().newInstance();
-			copy.attributes.putAll(attributes);
+			ObjectWithDynamicAttributes result;
+			result = (ObjectWithDynamicAttributes) super.clone();
+			result.attributes = new LinkedHashMap<>();
+			result.attributes.putAll(attributes);
+			return result;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
-		return copy;
+		return null;
 	}
 
 	@Override

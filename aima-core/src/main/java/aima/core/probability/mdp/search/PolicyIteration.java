@@ -69,7 +69,7 @@ public class PolicyIteration<S, A extends Action> {
 	public Policy<S, A> policyIteration(MarkovDecisionProcess<S, A> mdp) {
 		// local variables: U, a vector of utilities for states in S, initially
 		// zero
-		Map<S, Double> U = Util.create(mdp.states(), new Double(0));
+		Map<S, Double> U = Util.create(mdp.states(),0.0);
 		// &pi;, a policy vector indexed by state, initially random
 		Map<S, A> pi = initialPolicyVector(mdp);
 		boolean unchanged;

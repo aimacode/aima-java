@@ -35,8 +35,7 @@ public class IntegerSumProposition extends AbstractDerivedProposition {
 	//
 	// START-Proposition
 	public boolean holds(Map<RandomVariable, Object> possibleWorld) {
-		Integer sum = new Integer(0);
-
+		Integer sum = 0;
 		for (RandomVariable rv : sumVars) {
 			Object o = possibleWorld.get(rv);
 			if (o instanceof Integer) {

@@ -18,27 +18,17 @@ public class NNExample {
 	}
 
 	public NNExample copyExample() {
-		List<Double> newInput = new ArrayList<Double>();
-		List<Double> newTarget = new ArrayList<Double>();
-		for (Double d : normalizedInput) {
-			newInput.add(new Double(d.doubleValue()));
-		}
-		for (Double d : normalizedTarget) {
-			newTarget.add(new Double(d.doubleValue()));
-		}
+		List<Double> newInput = new ArrayList<>(normalizedInput);
+		List<Double> newTarget = new ArrayList<>(normalizedTarget);
 		return new NNExample(newInput, newTarget);
 	}
 
 	public Vector getInput() {
-		Vector v = new Vector(normalizedInput);
-		return v;
-
+		return new Vector(normalizedInput);
 	}
 
 	public Vector getTarget() {
-		Vector v = new Vector(normalizedTarget);
-		return v;
-
+		return new Vector(normalizedTarget);
 	}
 
 	public boolean isCorrect(Vector prediction) {

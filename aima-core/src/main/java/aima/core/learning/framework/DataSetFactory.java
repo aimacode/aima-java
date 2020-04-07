@@ -16,12 +16,11 @@ import aima.core.util.Util;
  */
 public class DataSetFactory {
 
-	public DataSet fromFile(String filename, DataSetSpecification spec,
-			String separator) throws Exception {
+	public DataSet fromFile(String filename, DataSetSpecification spec, String separator) throws Exception {
 		// assumed file in data directory and ends in .csv
 		DataSet ds = new DataSet(spec);
 
-		try(BufferedReader reader = new BufferedReader(new InputStreamReader(
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
 				DataResource.class.getResourceAsStream(filename + ".csv")))) {
 
 			String line;

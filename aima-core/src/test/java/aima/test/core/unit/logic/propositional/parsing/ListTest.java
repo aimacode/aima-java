@@ -28,8 +28,8 @@ public class ListTest {
 
 	@Test
 	public void testListRemove() {
-		List<Integer> one = new ArrayList<Integer>();
-		one.add(new Integer(1));
+		List<Integer> one = new ArrayList<>();
+		one.add(1);
 		Assert.assertEquals(1, one.size());
 		one.remove(0);
 		Assert.assertEquals(0, one.size());

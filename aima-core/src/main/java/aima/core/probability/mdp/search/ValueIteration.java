@@ -77,8 +77,8 @@ public class ValueIteration<S, A extends Action> {
 		//
 		// local variables: U, U', vectors of utilities for states in S,
 		// initially zero
-		Map<S, Double> U = Util.create(mdp.states(), new Double(0));
-		Map<S, Double> Udelta = Util.create(mdp.states(), new Double(0));
+		Map<S, Double> U = Util.create(mdp.states(), 0.0);
+		Map<S, Double> Udelta = Util.create(mdp.states(), 0.0);
 		// &delta; the maximum change in the utility of any state in an
 		// iteration
 		double delta = 0;

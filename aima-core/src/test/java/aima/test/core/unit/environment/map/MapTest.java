@@ -67,16 +67,16 @@ public class MapTest {
 
 	@Test
 	public void testDistances() {
-		Assert.assertEquals(new Double(5), aMap.getDistance("A", "B"));
-		Assert.assertEquals(new Double(6), aMap.getDistance("A", "C"));
-		Assert.assertEquals(new Double(4), aMap.getDistance("B", "C"));
-		Assert.assertEquals(new Double(7), aMap.getDistance("C", "D"));
-		Assert.assertEquals(new Double(14), aMap.getDistance("B", "E"));
+		Assert.assertEquals((Double) 5.0, aMap.getDistance("A", "B"));
+		Assert.assertEquals((Double) 6.0, aMap.getDistance("A", "C"));
+		Assert.assertEquals((Double) 4.0, aMap.getDistance("B", "C"));
+		Assert.assertEquals((Double) 7.0, aMap.getDistance("C", "D"));
+		Assert.assertEquals((Double) 14.0, aMap.getDistance("B", "E"));
 		//
-		Assert.assertEquals(new Double(5), aMap.getDistance("B", "A"));
-		Assert.assertEquals(new Double(6), aMap.getDistance("C", "A"));
-		Assert.assertEquals(new Double(4), aMap.getDistance("C", "B"));
-		Assert.assertEquals(new Double(7), aMap.getDistance("D", "C"));
+		Assert.assertEquals((Double) 5.0, aMap.getDistance("B", "A"));
+		Assert.assertEquals((Double) 6.0, aMap.getDistance("C", "A"));
+		Assert.assertEquals((Double) 4.0, aMap.getDistance("C", "B"));
+		Assert.assertEquals((Double) 7.0, aMap.getDistance("D", "C"));
 
 		// No distances should be returned if links not established or locations
 		// do not exist

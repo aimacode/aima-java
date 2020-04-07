@@ -62,10 +62,9 @@ public class LayerSensitivity {
 	//
 
 	private Matrix createDerivativeMatrix(Vector lastInducedField) {
-		List<Double> lst = new ArrayList<Double>();
+		List<Double> lst = new ArrayList<>();
 		for (int i = 0; i < lastInducedField.size(); i++) {
-			lst.add(new Double(layer.getActivationFunction().deriv(
-					lastInducedField.getValue(i))));
+			lst.add(layer.getActivationFunction().deriv(lastInducedField.getValue(i)));
 		}
 		return Matrix.createDiagonalMatrix(lst);
 	}

@@ -18,16 +18,16 @@ public class SetOpsTest {
 
 	@Before
 	public void setUp() {
-		s1 = new HashSet<Integer>();
-		s1.add(new Integer(1));
-		s1.add(new Integer(2));
-		s1.add(new Integer(3));
-		s1.add(new Integer(4));
+		s1 = new HashSet<>();
+		s1.add(1);
+		s1.add(2);
+		s1.add(3);
+		s1.add(4);
 
-		s2 = new HashSet<Integer>();
-		s2.add(new Integer(4));
-		s2.add(new Integer(5));
-		s2.add(new Integer(6));
+		s2 = new HashSet<>();
+		s2.add(4);
+		s2.add(5);
+		s2.add(6);
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class SetOpsTest {
 		Assert.assertEquals(4, s1.size());
 		Assert.assertEquals(3, s2.size());
 
-		s1.remove(new Integer(1));
+		s1.remove(1);
 		Assert.assertEquals(6, union.size());
 		Assert.assertEquals(3, s1.size());
 		Assert.assertEquals(3, s2.size());
@@ -50,7 +50,7 @@ public class SetOpsTest {
 		Assert.assertEquals(4, s1.size());
 		Assert.assertEquals(3, s2.size());
 
-		s1.remove(new Integer(1));
+		s1.remove(1);
 		Assert.assertEquals(1, intersection.size());
 		Assert.assertEquals(3, s1.size());
 		Assert.assertEquals(3, s2.size());
@@ -60,17 +60,17 @@ public class SetOpsTest {
 	public void testDifference() {
 		Set<Integer> difference = SetOps.difference(s1, s2);
 		Assert.assertEquals(3, difference.size());
-		Assert.assertTrue(difference.contains(new Integer(1)));
-		Assert.assertTrue(difference.contains(new Integer(2)));
-		Assert.assertTrue(difference.contains(new Integer(3)));
+		Assert.assertTrue(difference.contains(1));
+		Assert.assertTrue(difference.contains(2));
+		Assert.assertTrue(difference.contains(3));
 	}
 
 	@Test
 	public void testDifference2() {
-		Set<Integer> one = new HashSet<Integer>();
-		Set<Integer> two = new HashSet<Integer>();
-		one.add(new Integer(1));
-		two.add(new Integer(1));
+		Set<Integer> one = new HashSet<>();
+		Set<Integer> two = new HashSet<>();
+		one.add(1);
+		two.add(1);
 		Set<Integer> difference = SetOps.difference(one, two);
 		Assert.assertTrue(difference.isEmpty());
 	}

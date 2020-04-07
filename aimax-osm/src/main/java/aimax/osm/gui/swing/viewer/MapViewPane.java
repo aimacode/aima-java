@@ -408,10 +408,10 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			if (e.getButton() == MouseEvent.BUTTON1) {
 				float lat = getTransformer().lat(e.getY());
 				float lon = getTransformer().lon(e.getX());
-				if ((e.getModifiers() & MouseEvent.CTRL_MASK) != 0) {
+				if ((e.getModifiersEx() & MouseEvent.CTRL_DOWN_MASK) != 0) {
 					// mouse left button + ctrl -> add track point
 					getMap().addToTrack("Mouse Track", new Position(lat, lon));
-				} else if ((e.getModifiers() & MouseEvent.SHIFT_MASK) != 0) {
+				} else if ((e.getModifiersEx() & MouseEvent.SHIFT_DOWN_MASK) != 0) {
 					// mouse left button + shift -> add track point
 					removeNearestMarker(e.getX(), e.getY());
 				} else if (e.getClickCount() == 1) {
@@ -462,16 +462,16 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			int rot = e.getWheelRotation();
 			int x = e.getX();
 			int y = e.getY();
-			float fac = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ? 1.1f
+			float fac = ((e.getModifiersEx() & KeyEvent.SHIFT_DOWN_MASK) != 0) ? 1.1f
 					: 1.5f;
 			if (rot == -1) {
-				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
+				if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0) {
 					multiplyDisplayFactorWith(fac);
 				} else {
 					zoom(fac, x, y);
 				}
 			} else if (rot == 1) {
-				if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
+				if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0) {
 					multiplyDisplayFactorWith(1f / fac);
 				} else {
 					zoom(1 / fac, x, y);
@@ -495,25 +495,25 @@ public class MapViewPane extends JComponent implements MapEventListener {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			float zfac = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ? 1.1f
+			float zfac = ((e.getModifiersEx() & KeyEvent.SHIFT_DOWN_MASK) != 0) ? 1.1f
 					: 1.5f;
-			float afac = ((e.getModifiers() & KeyEvent.SHIFT_MASK) != 0) ? 0.1f
+			float afac = ((e.getModifiersEx() & KeyEvent.SHIFT_DOWN_MASK) != 0) ? 0.1f
 					: 0.3f;
 			switch (e.getKeyCode()) {
 				case KeyEvent.VK_PLUS:
-					if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
+					if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0)
 						multiplyDisplayFactorWith(zfac);
 					else
 						zoom(zfac, getWidth() / 2, getHeight() / 2);
 					break;
 				case KeyEvent.VK_MINUS:
-					if ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
+					if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0)
 						multiplyDisplayFactorWith(1f / zfac);
 					else
 						zoom(1 / zfac, getWidth() / 2, getHeight() / 2);
 					break;
 				case KeyEvent.VK_SPACE:
-					if ((e.getModifiers() & KeyEvent.CTRL_MASK) == 0)
+					if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) == 0)
 						zoom(zfac, getWidth() / 2, getHeight() / 2);
 					else
 						zoom(1 / zfac, getWidth() / 2, getHeight() / 2);
