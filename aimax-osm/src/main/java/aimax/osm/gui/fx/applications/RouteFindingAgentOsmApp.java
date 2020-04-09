@@ -55,7 +55,7 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 	public static String TRACK_NAME = "Track";
 
 	protected MapPaneCtrl mapPaneCtrl;
-	protected SimpleEnvironmentViewCtrl envViewCtrl;
+	protected SimpleEnvironmentViewCtrl<DynamicPercept, MoveToAction> envViewCtrl;
 	protected TaskExecutionPaneCtrl taskPaneCtrl;
 
 	protected MapAdapter map;
@@ -126,7 +126,7 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 		mapPaneCtrl = new MapPaneCtrl(mapPane);
 		loadMap();
 		StackPane envView = new StackPane();
-		envViewCtrl = new SimpleEnvironmentViewCtrl(envView, mapPane, 0.75);
+		envViewCtrl = new SimpleEnvironmentViewCtrl<>(envView, mapPane, 0.75);
 
 		TaskExecutionPaneBuilder builder = new TaskExecutionPaneBuilder();
 		builder.defineParameters(params);
@@ -196,7 +196,7 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 	}
 
 	/** Visualizes agent positions. Call from simulation thread. */
-	private void updateTrack(Agent agent, Metrics metrics) {
+	private void updateTrack(Agent<?, ?> agent, Metrics metrics) {
 		MapAdapter map = (MapAdapter) env.getMap();
 		MapNode node = map.getWayNode(env.getAgentLocation(agent));
 		if (node != null) {

@@ -95,7 +95,7 @@ public class FindPanel extends JPanel implements ActionListener,
 		c.gridwidth = 3;
 		add(findField, c);
 
-		typeCombo = new JComboBox<String>(new String[] { "Entities", "Nodes", "Ways",
+		typeCombo = new JComboBox<>(new String[] { "Entities", "Nodes", "Ways",
 				"Address (e.g. 'ulm, pritt')" });
 		c.gridx = 0;
 		c.gridy = 2;
@@ -156,8 +156,8 @@ public class FindPanel extends JPanel implements ActionListener,
 		c.gridwidth = 3;
 		add(resultScroller, c);
 
-		currMarkers = new ArrayList<MapNode>();
-		storedMarkers = new ArrayList<MapNode>();
+		currMarkers = new ArrayList<>();
+		storedMarkers = new ArrayList<>();
 		updateResults(false);
 		updateEnabledState();
 	}
@@ -216,10 +216,9 @@ public class FindPanel extends JPanel implements ActionListener,
 	}
 
 	private List<MapEntity> getSelectedEntities() {
-		List<MapEntity> result = new ArrayList<MapEntity>();
+		List<MapEntity> result = new ArrayList<>();
 		int[] selIdxs = resultTable.getSelectedRows();
-		for (int i = 0; i < selIdxs.length; i++)
-			result.add((MapEntity) tableModel.getValueAt(selIdxs[i], 0));
+		for (int selIdx : selIdxs) result.add((MapEntity) tableModel.getValueAt(selIdx, 0));
 		return result;
 	}
 
@@ -311,7 +310,7 @@ public class FindPanel extends JPanel implements ActionListener,
 
 	static class FindTableModel extends AbstractTableModel {
 		private static final long serialVersionUID = 1L;
-		List<MapEntity> results = new ArrayList<MapEntity>();
+		List<MapEntity> results = new ArrayList<>();
 		boolean isIntermediate;
 
 		void clearResults() {

@@ -59,11 +59,8 @@ public class BoundingBox {
 	}
 
 	public boolean intersectsWith(BoundingBox bb) {
-		if (latMin > bb.latMax || latMax < bb.latMin || lonMin > bb.lonMax
-				|| lonMax < bb.lonMin)
-			return false;
-		else
-			return true;
+		return !(latMin > bb.latMax) && !(latMax < bb.latMin) && !(lonMin > bb.lonMax)
+				&& !(lonMax < bb.lonMin);
 	}
 
 	/**

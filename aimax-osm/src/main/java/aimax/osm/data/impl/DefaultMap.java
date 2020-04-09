@@ -76,12 +76,12 @@ public class DefaultMap implements OsmMap {
 	private ArrayList<MapEventListener> listeners;
 
 	public DefaultMap() {
-		nodes = new Hashtable<Long, MapNode>();
-		ways = new Hashtable<Long, MapWay>();
-		pois = new ArrayList<MapNode>();
-		markers = new ArrayList<MapNode>();
-		tracks = new ArrayList<Track>();
-		listeners = new ArrayList<MapEventListener>();
+		nodes = new Hashtable<>();
+		ways = new Hashtable<>();
+		pois = new ArrayList<>();
+		markers = new ArrayList<>();
+		tracks = new ArrayList<>();
+		listeners = new ArrayList<>();
 		// EntityAttributeManager.instance().ignoreAttKeys(new String[]{
 		// "created_by", "source", "history", "copyright", "fire_hydrant"},
 		// true);
@@ -186,7 +186,7 @@ public class DefaultMap implements OsmMap {
 	@Override
 	public Collection<MapWay> getWays(BoundingBox bb) {
 		// not really efficient but OK for small maps...
-		List<MapWay> result = new ArrayList<MapWay>();
+		List<MapWay> result = new ArrayList<>();
 		for (MapWay way : ways.values())
 			if (way.computeBoundingBox().intersectsWith(bb))
 				result.add(way);
@@ -199,7 +199,7 @@ public class DefaultMap implements OsmMap {
 	 * before using using the container for viewing.
 	 */
 	public void compile() {
-		ArrayList<Long> toDelete = new ArrayList<Long>();
+		ArrayList<Long> toDelete = new ArrayList<>();
 		for (MapNode node : nodes.values()) {
 			if (node.hasPosition()) {
 				if (node.getName() != null || node.getAttributes().length > 0)
@@ -261,8 +261,7 @@ public class DefaultMap implements OsmMap {
 	 */
 	@Override
 	public MapNode getNearestWayNode(Position pos, MapWayFilter filter) {
-		MapNode node = pos.selectNearest(nodes.values(), filter);
-		return node;
+		return pos.selectNearest(nodes.values(), filter);
 	}
 
 	/** Reduces the level of detail by selecting some of the given nodes. */
@@ -280,7 +279,7 @@ public class DefaultMap implements OsmMap {
 			zoomLevel = 0;
 		if (zoomLevel > 0) {
 			int size = wayNodes.size();
-			List<MapNode> result = new ArrayList<MapNode>(size / zoomLevel + 2);
+			List<MapNode> result = new ArrayList<>(size / zoomLevel + 2);
 			int i = 0;
 			for (MapNode node : wayNodes) {
 				if (i == 0 || i == size - 1
@@ -306,7 +305,7 @@ public class DefaultMap implements OsmMap {
 	@Override
 	public List<MapNode> getPois(BoundingBox bb) {
 		// not really efficient but ok for small maps...
-		List<MapNode> result = new ArrayList<MapNode>();
+		List<MapNode> result = new ArrayList<>();
 		for (MapNode poi : pois)
 			if (bb.isInside(poi.getLat(), poi.getLon()))
 				result.add(poi);
@@ -317,7 +316,7 @@ public class DefaultMap implements OsmMap {
 	@Override
 	public List<MapNode> getPlaces(String name) {
 		String pattern = name.toLowerCase();
-		List<MapNode> results = new ArrayList<MapNode>();
+		List<MapNode> results = new ArrayList<>();
 		for (MapNode node : pois) {
 			if (node.getAttributeValue("place") != null
 					&& node.getName() != null
@@ -338,7 +337,7 @@ public class DefaultMap implements OsmMap {
 	/** {@inheritDoc} */
 	@Override
 	public List<MapEntity> getVisibleMarkersAndTracks(float scale) {
-		List<MapEntity> result = new ArrayList<MapEntity>();
+		List<MapEntity> result = new ArrayList<>();
 		for (MapNode marker : markers)
 			if (marker.getViewInfo() != null
 					&& marker.getViewInfo().getMinVisibleScale() <= scale)
@@ -359,7 +358,7 @@ public class DefaultMap implements OsmMap {
 				id = node.getId() + 1;
 		MapNode node = new DefaultMapNode(id);
 		node.setName(Long.toString(id));
-		List<EntityAttribute> atts = new ArrayList<EntityAttribute>(1);
+		List<EntityAttribute> atts = new ArrayList<>(1);
 		atts.add(new EntityAttribute("marker", "yes"));
 		node.setAttributes(atts);
 		node.setPosition(lat, lon);
@@ -448,8 +447,7 @@ public class DefaultMap implements OsmMap {
 	/** {@inheritDoc} */
 	@Override
 	public EntityFinder getEntityFinder() {
-		EntityFinder result = new DefaultEntityFinder(this);
-		return result;
+		return new DefaultEntityFinder(this);
 	}
 
 	/** {@inheritDoc} */

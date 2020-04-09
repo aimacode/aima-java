@@ -12,14 +12,14 @@ import java.util.List;
 public interface MapNode extends MapEntity {
 	
 	/** Checks whether latitude and longitude values have been set. */
-	public boolean hasPosition();
+	boolean hasPosition();
 	/** Sets latitude and longitude values for the node. */
-	public void setPosition(float lat, float lon);
+	void setPosition(float lat, float lon);
 	/** Returns the latitude value. */
-	public float getLat();
+	float getLat();
 	/** Returns the longitude value. */
-	public float getLon();
+	float getLon();
 
 	/** Provides read-only access to the maintained list of way references. */
-	public List<WayRef> getWayRefs();
+	List<WayRef> getWayRefs();
 }

@@ -29,7 +29,6 @@ public class RoutePlannerOsmApp extends IntegrableApplication {
         launch(args);
     }
 
-    private Button clearBtn;
     private ComboBox<String> taskCombo;
     private Button calcBtn;
     private Label statusLabel;
@@ -54,7 +53,7 @@ public class RoutePlannerOsmApp extends IntegrableApplication {
         BorderPane root = new BorderPane();
 
         ToolBar toolBar = new ToolBar();
-        clearBtn = new Button("Clear");
+        Button clearBtn = new Button("Clear");
         clearBtn.setOnAction(ev -> initialize());
 
         taskCombo = new ComboBox<>();

@@ -39,7 +39,7 @@ public class OsmMoveAction implements Action {
 	public List<MapNode> getNodes() {
 		int size = Math.abs(toIndex-fromIndex)+1;
 		List<MapNode> nodes = way.getNodes();
-		List<MapNode> result = new ArrayList<MapNode>(size);
+		List<MapNode> result = new ArrayList<>(size);
 		for (int i = 0; i < size; i++)
 			result.add(nodes.get(fromIndex < toIndex ? fromIndex+i : fromIndex-i));
 		return result;

@@ -8,7 +8,7 @@ package aimax.osm.data.entities;
  */
 public interface WayRef {
 	/** Returns the referenced way. */
-	public MapWay getWay();
+	MapWay getWay();
 	/** Returns a position within the sequence of nodes describing the way. */
-	public short getNodeIdx();
+	short getNodeIdx();
 }

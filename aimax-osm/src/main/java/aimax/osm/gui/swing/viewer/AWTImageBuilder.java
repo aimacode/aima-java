@@ -98,7 +98,7 @@ public class AWTImageBuilder implements UnifiedImageBuilder<Image> {
 
 	@Override
 	public void setLineStyle(boolean dashed, float width) {
-		float dash[] = null;
+		float[] dash = null;
 		if (dashed) {
 			dash = new float[] { width * 2f };
 		}

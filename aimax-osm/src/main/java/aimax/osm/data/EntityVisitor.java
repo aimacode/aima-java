@@ -12,7 +12,7 @@ import aimax.osm.data.entities.Track;
  * @author Ruediger Lunde
  */
 public interface EntityVisitor {
-	public void visitMapNode(MapNode node);
-	public void visitMapWay(MapWay way);
-	public void visitTrack(Track track);
+	void visitMapNode(MapNode node);
+	void visitMapWay(MapWay way);
+	void visitTrack(Track track);
 }

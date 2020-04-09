@@ -1,18 +1,7 @@
 package aimax.osm.gui.swing.viewer.agent;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
-import aima.core.agent.Percept;
-import aima.core.agent.impl.DynamicAction;
 import aima.core.agent.impl.DynamicPercept;
 import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
@@ -23,13 +12,19 @@ import aimax.osm.data.OsmMap;
 import aimax.osm.data.Position;
 import aimax.osm.data.entities.EntityViewInfo;
 import aimax.osm.data.entities.MapNode;
+import aimax.osm.gui.swing.viewer.MapViewPane;
+import aimax.osm.gui.swing.viewer.MapViewPopup;
 import aimax.osm.reader.Bz2OsmReader;
 import aimax.osm.reader.MapReader;
 import aimax.osm.routing.MapAdapter;
 import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.viewer.UColor;
-import aimax.osm.gui.swing.viewer.MapViewPane;
-import aimax.osm.gui.swing.viewer.MapViewPopup;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Visualizes agent positions and movements in an OSM map. It is assumed that
@@ -79,7 +74,7 @@ public class OsmAgentView extends AgentAppEnvironmentView<DynamicPercept, MoveTo
 	 * Reacts on environment changes and updates the tracks.
 	 */
 	@Override
-	public void agentAdded(Agent agent, Environment source) {
+	public void agentAdded(Agent<?, ?> agent, Environment<?, ?> source) {
 		String loc = getMapEnv().getAgentLocation(agent);
 		updateTrack(agent, loc);
 	}
@@ -96,7 +91,7 @@ public class OsmAgentView extends AgentAppEnvironmentView<DynamicPercept, MoveTo
 		updateTrack(agent, getMapEnv().getAgentLocation(agent));
 	}
 
-	private void updateTrack(Agent agent, String location) {
+	private void updateTrack(Agent<?, ?> agent, String location) {
 		MapAdapter map = (MapAdapter) getMapEnv().getMap();
 		MapNode node = map.getWayNode(location);
 		if (node != null) {
@@ -110,7 +105,7 @@ public class OsmAgentView extends AgentAppEnvironmentView<DynamicPercept, MoveTo
 	// inner classes
 
 	/** Extends the <code>MapViewPopup</code> by a load map menu item. */
-	private class MapViewPopupWithLoad extends MapViewPopup {
+	private static class MapViewPopupWithLoad extends MapViewPopup {
 
 		private static final long serialVersionUID = 1L;
 		MapReader mapReader;

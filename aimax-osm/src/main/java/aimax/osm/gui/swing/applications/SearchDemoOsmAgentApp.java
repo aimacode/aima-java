@@ -70,7 +70,7 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 	// inner classes
 
 	/** Variant of the <code>OsmAgentFrame</code>. */
-	private class SDFrame extends OsmAgentFrame {
+	private static class SDFrame extends OsmAgentFrame {
 
 		private static final long serialVersionUID = 1L;
 
@@ -166,7 +166,7 @@ public class SearchDemoOsmAgentApp extends OsmAgentApp {
 	// starter method
 
 	/** Application starter. */
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		// Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		// Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);
 

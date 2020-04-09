@@ -17,7 +17,7 @@ public abstract class NmeaReader {
 	protected InputStream inputStream;
 	private StringBuffer buffer = new StringBuffer();
 	private boolean messageReceived;
-	private List<NmeaMessageListener> listeners = new ArrayList<NmeaMessageListener>();
+	private List<NmeaMessageListener> listeners = new ArrayList<>();
 	
 	public void addListener(NmeaMessageListener listener) {
 		listeners.add(listener);
@@ -61,7 +61,7 @@ public abstract class NmeaReader {
 				}
 			}
 		} catch(IOException ex) {
-			System.err.println(ex);
+			System.err.println(ex.toString());
 		}
 	}
 	
@@ -72,8 +72,8 @@ public abstract class NmeaReader {
 		buffer.delete(0, buffer.length());
 	}
 
-	public static interface NmeaMessageListener {
-		public void messageReceived(String message);
+	public interface NmeaMessageListener {
+		void messageReceived(String message);
 	}
 	
 	

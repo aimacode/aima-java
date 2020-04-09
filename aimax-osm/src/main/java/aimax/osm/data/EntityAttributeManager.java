@@ -1,5 +1,6 @@
 package aimax.osm.data;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Hashtable;
 
@@ -23,9 +24,9 @@ public class EntityAttributeManager {
 	
 	/** Private constructor. */
 	private EntityAttributeManager() {
-		internedTexts = new Hashtable<String, String>();
-		internedAttributes = new Hashtable<EntityAttribute, EntityAttribute>();
-		ignoredAttKeys = new HashSet<String>();
+		internedTexts = new Hashtable<>();
+		internedAttributes = new Hashtable<>();
+		ignoredAttKeys = new HashSet<>();
 	}
 	
 	/** Returns the singleton instance. */
@@ -51,8 +52,7 @@ public class EntityAttributeManager {
 	/** Advises the manager to ignore attributes with certain keys. */
 	public void ignoreAttKeys(String[] attKeys, boolean ignorePathKeys) {
 		ignoredAttKeys.clear();
-		for (String key : attKeys)
-			ignoredAttKeys.add(key);
+		ignoredAttKeys.addAll(Arrays.asList(attKeys));
 		this.ignorePathKeys = ignorePathKeys;
 	}
 	
@@ -88,6 +88,6 @@ public class EntityAttributeManager {
 			internedTexts.put(text, text);
 			result = text;
 		}
-		return text;
+		return result;
 	}
 }

@@ -61,9 +61,9 @@ public class DefaultMapNode extends DefaultMapEntity implements MapNode {
 	/** Adds the information to the node that it is part of the specified way. */
 	public void addWayRef(MapWay way, int nodeIdx) {
 		if (ways == null)
-			ways = new ArrayList<WayRef>(2);
+			ways = new ArrayList<>(2);
 		// be careful with closed ways (begin == end)
-		if (ways.isEmpty() || ways.get(0) != way)
+		if (ways.isEmpty() || ways.get(0).getWay() != way)
 			ways.add(new DefaultWayRef(way, (short) nodeIdx));
 	}
 	
@@ -84,22 +84,12 @@ public class DefaultMapNode extends DefaultMapEntity implements MapNode {
 	/** {@inheritDoc} */
 	@Override
 	public int compareLatitude(float lat) {
-		if (this.lat < lat)
-			return -1;
-		else if (this.lat > lat)
-			return 1;
-		else
-			return 0;
+		return Float.compare(this.lat, lat);
 	}
 	
 	/** {@inheritDoc} */
 	@Override
 	public int compareLongitude(float lon) {
-		if (this.lon < lon)
-			return -1;
-		else if (this.lon > lon)
-			return 1;
-		else
-			return 0;
+		return Float.compare(this.lon, lon);
 	}
 }

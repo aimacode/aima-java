@@ -2,14 +2,13 @@
 // Modified by Ruediger Lunde, 2009
 package aimax.osm.reader;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.xml.sax.Attributes;
-
 import aimax.osm.data.EntityAttributeManager;
 import aimax.osm.data.MapBuilder;
 import aimax.osm.data.entities.EntityAttribute;
+import org.xml.sax.Attributes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides an element processor implementation for a way.
@@ -47,8 +46,8 @@ public class WayElementProcessor extends ElementProcessor implements TagListener
 		
 		tagElementProcessor = new TagElementProcessor(this, this);
 		wayNodeElementProcessor = new WayNodeElementProcessor(this, this);
-		wayAttributes = new ArrayList<EntityAttribute>();
-		wayNodeIds = new ArrayList<Long>();
+		wayAttributes = new ArrayList<>();
+		wayNodeIds = new ArrayList<>();
 	}
 	
 	/**

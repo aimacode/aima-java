@@ -35,7 +35,7 @@ public class MapPaneCtrl {
 
     public MapPaneCtrl(StackPane pane) {
         this.pane = pane;
-        mapDrawer = new UnifiedMapDrawer<Canvas>(new FXImageBuilder(), createMap());
+        mapDrawer = new UnifiedMapDrawer<>(new FXImageBuilder(), createMap());
         mapDrawer.getMap().addMapDataEventListener(ev -> update());
         pane.widthProperty().addListener((obs, o, n) -> { scaleToFit = true; update(); });
         pane.heightProperty().addListener((obs, o, n) -> { scaleToFit = true; update(); });
@@ -235,7 +235,7 @@ public class MapPaneCtrl {
             alert.setHeaderText(header);
             alert.setContentText(content.toString());
             Optional<ButtonType> result = alert.showAndWait();
-            if (!result.isPresent())
+            if (result.isEmpty())
                 break;
         }
     }

@@ -43,7 +43,7 @@ public class RoutePlannerApp implements ActionListener {
 		routeCalculator = createRouteCalculator();
 		JToolBar toolbar = frame.getToolbar();
 		toolbar.addSeparator();
-		taskSelection = new JComboBox<String>(
+		taskSelection = new JComboBox<>(
 				routeCalculator.getTaskSelectionOptions());
 		toolbar.add(taskSelection);
 		toolbar.addSeparator();

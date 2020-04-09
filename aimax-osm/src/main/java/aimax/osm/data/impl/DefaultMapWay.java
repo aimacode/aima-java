@@ -103,9 +103,9 @@ public class DefaultMapWay extends DefaultMapEntity implements MapWay {
 	
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer("Way(" + id + ", [ ");
+		StringBuilder result = new StringBuilder("Way(" + id + ", [ ");
 		for (MapNode node : nodes)
-			result.append(node.getId() + " ");
+			result.append(node.getId()).append(" ");
 		result.append("])");
 		return result.toString();
 	}

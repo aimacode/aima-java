@@ -18,7 +18,7 @@ public class MapWayAttFilter implements MapWayFilter {
 	
 	public void setAccepted(String attValue) {
 		if (attValues == null)
-			attValues = new HashSet<String>();
+			attValues = new HashSet<>();
 		attValues.add(attValue);
 	}
 	

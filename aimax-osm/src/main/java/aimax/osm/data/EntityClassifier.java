@@ -31,7 +31,7 @@ public class EntityClassifier<C> {
 	
 	/** Default constructor. */
 	public EntityClassifier() {
-		rules = new ArrayList<RuleGroup<C>>();
+		rules = new ArrayList<>();
 	}
 	
 	public C getDefaultEntityClass() {
@@ -56,7 +56,7 @@ public class EntityClassifier<C> {
 	 * @return The sub-classifier corresponding to the rule.
 	 */
 	public EntityClassifier<C> addRule(String attName, String attValue, C eclass) {
-		EntityClassifier<C> result = new EntityClassifier<C>();
+		EntityClassifier<C> result = new EntityClassifier<>();
 		result.setDefaultEntityClass(eclass);
 		RuleGroup<C> rg = null;
 		if (!rules.isEmpty()) {
@@ -65,7 +65,7 @@ public class EntityClassifier<C> {
 				rg = last;
 		}
 		if (rg == null) {
-			rg = new RuleGroup<C>(attName);
+			rg = new RuleGroup<>(attName);
 			rules.add(rg);
 		}
 		if (attValue == null)
@@ -75,7 +75,7 @@ public class EntityClassifier<C> {
 			while (i < rg.attValueRules.size()
 					&& attValue.compareTo(rg.attValueRules.get(i).attValue)>0)
 				i++;
-			rg.attValueRules.add(i, new Rule<C>(attValue, result));
+			rg.attValueRules.add(i, new Rule<>(attValue, result));
 		}
 		return result;
 	}
@@ -85,7 +85,7 @@ public class EntityClassifier<C> {
 	 * sub-classifier if found.
 	 */
 	public EntityClassifier<C> replaceRule(String attName, String attValue, C eclass) {
-		EntityClassifier<C> newClassifier = new EntityClassifier<C>();
+		EntityClassifier<C> newClassifier = new EntityClassifier<>();
 		newClassifier.setDefaultEntityClass(eclass);
 		for (RuleGroup<C> rg : rules) {
 			if (attName.equals(rg.attName)) {
@@ -168,7 +168,7 @@ public class EntityClassifier<C> {
 		
 		RuleGroup(String attName) {
 			this.attName = attName;
-			attValueRules = new ArrayList<Rule<C>>();
+			attValueRules = new ArrayList<>();
 		}
 	}
 }

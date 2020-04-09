@@ -93,7 +93,7 @@ public class OsmAgentApp extends SimpleAgentApp<DynamicPercept, MoveToAction> {
 	/**
 	 * Application starter.
 	 */
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		// Start with program arg -screenwidth=xx (with xx the width in cm).
 		Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
 		Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);

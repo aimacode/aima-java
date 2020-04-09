@@ -15,38 +15,38 @@ import aimax.osm.data.EntityVisitor;
 public interface MapEntity {
 	
 	/** Returns a unique ID for the entity. */
-	public long getId();
+	long getId();
 	
 	/** Assigns a unique ID to the entity. */
-	public void setId(int id);
+	void setId(int id);
 	
 	/** Returns the name of the entity or null. */
-	public String getName();
+	String getName();
 
 	/** Assigns a name to the entity. */
-	public void setName(String name);
+	void setName(String name);
 	
 	/** Returns the attributes of the entity. */
-	public EntityAttribute[] getAttributes();
+	EntityAttribute[] getAttributes();
 	
 	/** Assigns attributes to the entity. */
-	public void setAttributes(List<EntityAttribute> atts);
+	void setAttributes(List<EntityAttribute> atts);
 	
 	/** Provides maximal scale information. */
-	public EntityViewInfo getViewInfo();
+	EntityViewInfo getViewInfo();
 
 	/** Assigns maximal scale information to an entity. */
-	public void setViewInfo(EntityViewInfo renderData);
+	void setViewInfo(EntityViewInfo renderData);
 
 	/**
 	 * Typically applies binary search to find the specified attribute
 	 * value and returns null if not found.
 	 */
-	public String getAttributeValue(String attName);
+	String getAttributeValue(String attName);
 	
 	/** 
 	 * Subclasses must call back the entity class specific method
 	 * of the visitor.
 	 */
-	public void accept(EntityVisitor visitor);
+	void accept(EntityVisitor visitor);
 }

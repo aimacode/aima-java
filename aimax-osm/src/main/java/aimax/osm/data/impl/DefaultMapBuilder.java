@@ -91,7 +91,7 @@ public class DefaultMapBuilder implements MapBuilder {
 			DefaultMapWay way = new DefaultMapWay(id);
 			way.setName(name);
 			way.setAttributes(atts);
-			List<MapNode> wayNodes = new ArrayList<MapNode>(wayNodeIds.size());
+			List<MapNode> wayNodes = new ArrayList<>(wayNodeIds.size());
 			int i = 0;
 			for (long nodeId : wayNodeIds) {
 				DefaultMapNode node = (DefaultMapNode) result.getNode(nodeId);

@@ -7,5 +7,5 @@ import aimax.osm.data.entities.MapWay;
  * @author Ruediger Lunde
  */
 public interface MapWayFilter {
-	public boolean isAccepted(MapWay way);
+	boolean isAccepted(MapWay way);
 }

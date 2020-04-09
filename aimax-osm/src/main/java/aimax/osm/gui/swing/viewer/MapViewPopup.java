@@ -147,9 +147,8 @@ public class MapViewPopup extends JPopupMenu implements ActionListener {
 		} else if (ae.getSource() == saveMarkersMenuItem) {
 			XMLEncoder encoder = null;
 			try {
-				File xmlFile = null;
 				if (getFileChooser().showDialog(pane, "Save Markers") == JFileChooser.APPROVE_OPTION) {
-					xmlFile = getFileChooser().getSelectedFile();
+					File xmlFile = getFileChooser().getSelectedFile();
 					if (!xmlFile.getPath().contains("."))
 						xmlFile = new File(xmlFile.getPath() + ".xml");
 					encoder = new XMLEncoder(new BufferedOutputStream(

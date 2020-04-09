@@ -37,8 +37,7 @@ public class Bz2OsmReader extends FilteringOsmReader {
 		InputStream result = new BufferedInputStream(new FileInputStream(file));
 		try {
 			if (compressorClass != null && file.getName().endsWith(".bz2")) {
-				Constructor<?> c = compressorClass.getConstructor
-				(new Class[] {InputStream.class});
+				Constructor<?> c = compressorClass.getConstructor(InputStream.class);
 				result = (InputStream) c.newInstance(result);
 			}
 		} catch (InvocationTargetException e) {

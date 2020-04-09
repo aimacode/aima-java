@@ -11,8 +11,7 @@ import java.io.FileInputStream;
  */
 public class NmeaFileReader extends NmeaReader {
 	private File file;
-	private long delay = 0; //1000l;
-	
+
 	public NmeaFileReader(File file) {
 		this.file = file;
 	}
@@ -21,7 +20,7 @@ public class NmeaFileReader extends NmeaReader {
 	public void openStream() throws Exception {
 		inputStream = new BufferedInputStream(new FileInputStream(file));
 		Thread thread = new FileReaderThread();
-		thread.run();
+		thread.start();
 	}
 	
 	private class FileReaderThread extends Thread {
@@ -30,8 +29,9 @@ public class NmeaFileReader extends NmeaReader {
 			try {
 				while (inputStream.available() > 0) {
 					readFromStream(true);
-					if (delay > 0)
-						sleep(delay);
+					//1000l;
+					long delay = 1;
+					sleep(delay);
 				}
 				closeStream();
 			} catch (Exception e) {

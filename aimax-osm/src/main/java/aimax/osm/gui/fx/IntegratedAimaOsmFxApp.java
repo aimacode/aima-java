@@ -23,7 +23,7 @@ public class IntegratedAimaOsmFxApp extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage) {
 		IntegratedAppBuilder builder = new IntegratedAppBuilder();
 		builder.defineTitle("Integrated AIMA3e OSM FX App");
 		builder.defineSceneSize(1200, 800);

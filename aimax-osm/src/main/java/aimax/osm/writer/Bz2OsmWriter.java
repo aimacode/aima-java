@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 import aimax.osm.data.BoundingBox;
@@ -50,11 +51,10 @@ public class Bz2OsmWriter implements MapWriter {
 			OutputStream os = new BufferedOutputStream
 			(new FileOutputStream(file));
 			if (compressorClass != null && file.getName().endsWith(".bz2")) {
-				Constructor<?> c = compressorClass.getConstructor
-				(new Class[] {OutputStream.class});
+				Constructor<?> c = compressorClass.getConstructor(OutputStream.class);
 				os = (OutputStream) c.newInstance(os);
 			}
-			OutputStreamWriter writer = new OutputStreamWriter(os, "UTF-8");
+			OutputStreamWriter writer = new OutputStreamWriter(os, StandardCharsets.UTF_8);
 			writeMap(writer, mapData, bb);
 		} catch (FileNotFoundException e) {
 			LOG.warning("File does not exist " + file);

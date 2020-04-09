@@ -17,7 +17,7 @@ import aimax.osm.data.entities.MapEntity;
  */
 public abstract class AbstractEntityFinder implements EntityFinder {
 
-	protected static enum Mode {
+	protected enum Mode {
 		ENTITY, NODE, WAY, ADDRESS
 	}
 
@@ -41,8 +41,8 @@ public abstract class AbstractEntityFinder implements EntityFinder {
 		maxRadius = 16;
 		nextRadius = -1;
 		
-		intermediateResults = new ArrayList<MapEntity>();
-		results = new ArrayList<MapEntity>();
+		intermediateResults = new ArrayList<>();
+		results = new ArrayList<>();
 	}
 
 	protected OsmMap getStorage() {

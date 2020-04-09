@@ -1,23 +1,18 @@
 package aimax.osm.writer;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.OsmMap;
 import aimax.osm.data.entities.EntityAttribute;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.reader.OsmRuntimeException;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /** 
  * Writes a map to file using the standard osm XML format.
@@ -34,12 +29,10 @@ public class OsmWriter implements MapWriter {
 		try  {
 			FileOutputStream fs = new FileOutputStream(file);
 			OutputStreamWriter writer = new OutputStreamWriter
-			(new BufferedOutputStream(fs), "UTF-8");
+			(new BufferedOutputStream(fs), StandardCharsets.UTF_8);
 			writeMap(writer, map, bb);
 		} catch (FileNotFoundException fnfe) {
 			LOG.warning("File does not exist "+file);
-		} catch (UnsupportedEncodingException fnfe) {
-			LOG.warning("UTF-8 encoding not supported, sorry.");
 		}
 	}
 	
@@ -49,18 +42,17 @@ public class OsmWriter implements MapWriter {
 	public void writeMap(OutputStreamWriter writer, OsmMap map, BoundingBox bb) {
 
 		try {
-			StringBuffer text = new StringBuffer();
-			text.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-			text.append("<osm version=\"0.6\" generator=\"aimax-osm-writer\">\n");
-			text.append("<bound box=\"");
-			text.append(bb.getLatMin() + ",");
-			text.append(bb.getLonMin() + ",");
-			text.append(bb.getLatMax() + ",");
-			text.append(bb.getLonMax());
-			text.append("\" origin=\"?\"/>\n");
-			writer.write(text.toString());
+			String text = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+					"<osm version=\"0.6\" generator=\"aimax-osm-writer\">\n" +
+					"<bound box=\"" +
+					bb.getLatMin() + "," +
+					bb.getLonMin() + "," +
+					bb.getLatMax() + "," +
+					bb.getLonMax() +
+					"\" origin=\"?\"/>\n";
+			writer.write(text);
 			
-			HashSet<MapNode> nodeHash = new HashSet<MapNode>();
+			HashSet<MapNode> nodeHash = new HashSet<>();
 			Collection<MapWay> ways = map.getWays(bb);
 			for (MapWay way : ways)
 				for (MapNode node : way.getNodes())

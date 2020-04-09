@@ -62,7 +62,7 @@ public class RouteCalculator {
 						taskSelection);
 				SearchForActions<MapNode, OsmMoveAction> search = createSearch(h, taskSelection);
 				Optional<List<OsmMoveAction>> actions = search.findActions(problem);
-				if (!actions.isPresent())
+				if (actions.isEmpty())
 					break;
 				for (Object action : actions.get()) {
 					if (action instanceof OsmMoveAction) {

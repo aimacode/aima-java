@@ -106,8 +106,7 @@ public class Position {
 	 * Returns the node from <code>nodes</code> which is nearest to this
 	 * position. If a filter is given, only those nodes are inspected, which are
 	 * part of a way accepted by the filter.
-	 * 
-	 * @param nodes
+	 *
 	 * @param filter
 	 *            possibly null
 	 * @return A node or null
@@ -137,8 +136,7 @@ public class Position {
 	/**
 	 * Computes a simple approximation of the compass course from this position
 	 * to the specified node.
-	 * 
-	 * @param node
+	 *
 	 * @return Number between 1 and 360
 	 */
 	public int getCourseTo(MapNode node) {

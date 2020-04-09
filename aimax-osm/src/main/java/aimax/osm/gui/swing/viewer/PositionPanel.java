@@ -27,7 +27,7 @@ public class PositionPanel extends JPanel {
 	public PositionPanel() {
 		//setLayout(new GridLayout(2, 3));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		latCombo = new JComboBox<String>(new String[] {"N", "S"});
+		latCombo = new JComboBox<>(new String[] {"N", "S"});
 		add(latCombo);
 		latDegField = new JTextField(3);
 		add(latDegField);
@@ -36,7 +36,7 @@ public class PositionPanel extends JPanel {
 		add(latMinField);
 		add(new JLabel("' "));
 		
-		lonCombo = new JComboBox<String>(new String[] {"E", "W"});
+		lonCombo = new JComboBox<>(new String[] {"E", "W"});
 		add(lonCombo);
 		lonDegField = new JTextField(3);
 		add(lonDegField);

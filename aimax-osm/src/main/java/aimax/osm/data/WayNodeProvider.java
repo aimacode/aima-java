@@ -16,5 +16,5 @@ public interface WayNodeProvider {
 	 * typically decrease with decreasing scale
 	 * (e.g. 1/10 000 -> 80 nodes; 1/100 000 -> 10 nodes).
 	 */
-	public List<MapNode> getWayNodes(MapWay way, float scale);
+	List<MapNode> getWayNodes(MapWay way, float scale);
 }

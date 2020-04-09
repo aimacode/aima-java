@@ -20,10 +20,10 @@ public class DefaultTrack extends DefaultMapEntity implements Track {
 	public DefaultTrack(long id, String name, String trackType) {
 		this.id = id;
 		setName(name);
-		ArrayList<EntityAttribute> atts = new ArrayList<EntityAttribute>(1);
+		ArrayList<EntityAttribute> atts = new ArrayList<>(1);
 		atts.add(new EntityAttribute("track_type", trackType));
 		setAttributes(atts);
-		trkpts = new ArrayList<MapNode>();
+		trkpts = new ArrayList<>();
 	}
 
 	@Override

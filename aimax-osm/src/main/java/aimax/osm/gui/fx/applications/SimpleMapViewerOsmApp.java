@@ -26,7 +26,7 @@ public class SimpleMapViewerOsmApp extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         // indicates progress when reading large maps (for testing only)
         // Logger.getLogger("aimax.osm").setLevel(Level.FINEST);
         // Logger.getLogger("").getHandlers()[0].setLevel(Level.FINE);

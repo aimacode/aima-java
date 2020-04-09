@@ -27,7 +27,7 @@ public class GpsLocator implements NmeaReader.NmeaMessageListener {
 	/** Creates a new locator. */
 	public GpsLocator() {
 		currPosition = new GpsFix(false, 0.0f, 0.0f);
-		listeners = new ArrayList<GpsPositionListener>();
+		listeners = new ArrayList<>();
 	}
 	
 	/**
@@ -147,12 +147,7 @@ public class GpsLocator implements NmeaReader.NmeaMessageListener {
 	public static void main(String[] args) {
 		try {
 			GpsLocator locator = new GpsLocator();
-			locator.addGpsPositionListener(new GpsPositionListener() {
-				@Override
-				public void positionUpdated(GpsFix pos) {
-					System.out.println(pos);
-				}
-			});
+			locator.addGpsPositionListener(System.out::println);
 			//locator.openFileConnection(new File("nmeaout.txt"));
 			locator.openSerialPortConnection();
 		} catch (Exception e) {

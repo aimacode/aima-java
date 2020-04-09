@@ -1,13 +1,12 @@
 package aimax.osm.data.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityVisitor;
 import aimax.osm.data.entities.MapEntity;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 
 /**
@@ -40,7 +39,7 @@ public class KDTree {
 		depth = 0;
 		this.maxEntities = maxEntities;
 		this.maxDepth = maxDepth;
-		entities = new ArrayList<DefaultMapEntity>();
+		entities = new ArrayList<>();
 	}
 	
 	/** Constructor for inner and leaf nodes. */
@@ -95,7 +94,7 @@ public class KDTree {
 				children[0] = new KDTree(c1bb, maxEntities, maxDepth, depth+1);
 				children[1] = new KDTree(c2bb, maxEntities, maxDepth, depth+1);
 				List<DefaultMapEntity> tmp = entities;
-				entities = new ArrayList<DefaultMapEntity>();
+				entities = new ArrayList<>();
 				for (DefaultMapEntity ne : tmp)
 					insertEntity(ne);
 			}
@@ -147,7 +146,7 @@ public class KDTree {
 					bb.getLatMax()-latDiff, splitValue };
 		}
 		if (children == null) {
-			result = new ArrayList<double[]>();
+			result = new ArrayList<>();
 		} else {
 			result = children[0].getSplitCoords();
 			result.addAll(children[1].getSplitCoords());
@@ -164,7 +163,7 @@ public class KDTree {
 	public void visitEntities(EntityVisitor visitor, BoundingBox vbox, float scale) {
 		if (!entities.isEmpty()) {
 			if (!isSorted) {
-				Collections.sort(entities, new EntityComparator());
+				entities.sort(new EntityComparator());
 				isSorted = true;
 			}
 			VisibilityTest vtest = new VisibilityTest(bb, vbox);
@@ -198,12 +197,7 @@ public class KDTree {
 		public int compare(MapEntity e1, MapEntity e2) {
 			float vs1 = e1.getViewInfo().getMinVisibleScale();
 			float vs2 = e2.getViewInfo().getMinVisibleScale();
-			if (vs1 < vs2)
-				return -1;
-			else if (vs1 > vs2)
-				return 1;
-			else
-				return 0;
+			return Float.compare(vs1, vs2);
 		}
 	}
 	
@@ -242,13 +236,13 @@ public class KDTree {
 		boolean isVisible(DefaultMapEntity entity) {
 			if (isTrue)
 				return true;
-			if (testLatMin != Float.NaN && entity.compareLatitude(testLatMin) < 0)
+			if (!Float.isNaN(testLatMin) && entity.compareLatitude(testLatMin) < 0)
 				return false; // entity below visible area
-			if (testLonMin != Float.NaN && entity.compareLongitude(testLonMin) < 0)
+			if (!Float.isNaN(testLonMin) && entity.compareLongitude(testLonMin) < 0)
 				return false; // entity to the left of visible area
-			if (testLatMax != Float.NaN && entity.compareLatitude(testLatMax) > 0)
+			if (!Float.isNaN(testLatMax) && entity.compareLatitude(testLatMax) > 0)
 				return false; // entity above visible area
-			if (testLonMax != Float.NaN && entity.compareLongitude(testLonMax) > 0)
+			if (!Float.isNaN(testLonMax) && entity.compareLongitude(testLonMax) > 0)
 				return false; // entity to the right of visible area
 			return true;
 		}

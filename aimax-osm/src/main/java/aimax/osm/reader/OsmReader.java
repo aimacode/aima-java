@@ -116,9 +116,7 @@ public class OsmReader implements MapReader {
 	protected SAXParser createParser() {
 		try {
 			return SAXParserFactory.newInstance().newSAXParser();
-		} catch (ParserConfigurationException e) {
-			throw new OsmRuntimeException("Unable to create SAX Parser.", e);
-		} catch (SAXException e) {
+		} catch (ParserConfigurationException | SAXException e) {
 			throw new OsmRuntimeException("Unable to create SAX Parser.", e);
 		}
 	}

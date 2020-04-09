@@ -42,7 +42,7 @@ public class NodeElementProcessor extends ElementProcessor implements TagListene
 		super(parentProcessor, mdConsumer);
 		
 		tagElementProcessor = new TagElementProcessor(this, this);
-		nodeAttributes = new ArrayList<EntityAttribute>();
+		nodeAttributes = new ArrayList<>();
 	}
 		
 	/**

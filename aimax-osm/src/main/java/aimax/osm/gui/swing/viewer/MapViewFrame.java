@@ -1,31 +1,5 @@
 package aimax.osm.gui.swing.viewer;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.InputStream;
-import java.util.logging.Logger;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import aimax.osm.data.BoundingBox;
 import aimax.osm.data.EntityClassifier;
 import aimax.osm.data.MapBuilder;
@@ -38,6 +12,15 @@ import aimax.osm.reader.MapReader;
 import aimax.osm.viewer.MapStyleFactory;
 import aimax.osm.writer.Bz2OsmWriter;
 import aimax.osm.writer.MapWriter;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.io.InputStream;
+import java.util.logging.Logger;
 
 /**
  * Implements a simple frame with a toolbar, a sidebar, and a map view. The
@@ -65,8 +48,6 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	private JButton saveButton;
 	private JButton statisticsButton;
 	private JCheckBox sidebarCheckBox;
-
-	protected JTextField infoField;
 
 	/**
 	 * Tries to find an argument starting with <code>-screenwidth=</code> or
@@ -359,7 +340,7 @@ public class MapViewFrame extends JFrame implements ActionListener {
 	}
 
 	protected EntityClassifier<Boolean> createOverviewFilter() {
-		EntityClassifier<Boolean> result = new EntityClassifier<Boolean>();
+		EntityClassifier<Boolean> result = new EntityClassifier<>();
 		EntityClassifier<Boolean> sc;
 		result.addRule("natural", "coastline", Boolean.TRUE);
 		result.addRule("waterway", "river", Boolean.TRUE);

@@ -29,7 +29,7 @@ public abstract class EntityIcon {
 	 */
 	public static class SimpleIcon extends EntityIcon {
 
-		public static enum Shape {
+		public enum Shape {
 			CIRCLE, RECTANGLE, TRIANGLE, NONE
 		}
 
@@ -163,8 +163,7 @@ public abstract class EntityIcon {
 			imageBdr.setAreaFilled(false);
 			imageBdr.drawOval(x, y, dsize, dsize);
 			imageBdr.drawLine(x + offset, y, x + offset, y - dsize / 2);
-			imageBdr.drawLine(x + offset / 2, (int) y - offset / 2, x + offset * 3
-					/ 2, y - offset / 2);
+			imageBdr.drawLine(x + offset / 2, y - offset / 2, x + offset * 3 / 2, y - offset / 2);
 		}
 	}
 

@@ -9,5 +9,5 @@ package aimax.osm.data.entities;
  */
 public interface EntityViewInfo {
 	/** Defines, at which abstraction level the entity is still relevant. */
-	public float getMinVisibleScale();
+	float getMinVisibleScale();
 }

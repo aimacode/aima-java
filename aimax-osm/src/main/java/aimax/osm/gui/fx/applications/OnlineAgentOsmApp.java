@@ -180,7 +180,7 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 	}
 
 	/** Visualizes agent positions. Call from simulation thread. */
-	private void updateTrack(Agent agent, Metrics metrics) {
+	private void updateTrack(Agent<?, ?> agent, Metrics metrics) {
 		MapAdapter map = (MapAdapter) env.getMap();
 		MapNode node = map.getWayNode(env.getAgentLocation(agent));
 		if (node != null) {
@@ -198,7 +198,7 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 		public void notify(String msg) {}
 
 		@Override
-		public void agentAdded(Agent agent, Environment source) {
+		public void agentAdded(Agent<?, ?> agent, Environment<?, ?> source) {
 			updateTrack(agent, new Metrics());
 		}
 
@@ -206,7 +206,7 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 		 * Reacts on environment changes and updates the tracks.
 		 */
 		@Override
-		public void agentActed(Agent agent, Percept percept, Action command, Environment source) {
+		public void agentActed(Agent<?, ?> agent, Percept percept, Action command, Environment<?, ?> source) {
 			if (command instanceof MoveToAction) {
 				Metrics metrics = new Metrics();
 				Double travelDistance = env.getAgentTravelDistance(env.getAgents().get(0));

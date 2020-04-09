@@ -69,7 +69,7 @@ public class MapStyleFactory {
 	 * ones.
 	 */
 	public EntityClassifier<EntityViewInfo> createDefaultClassifier() {
-		EntityClassifier<EntityViewInfo> result = new EntityClassifier<EntityViewInfo>();
+		EntityClassifier<EntityViewInfo> result = new EntityClassifier<>();
 		EntityClassifier<EntityViewInfo> sc;
 		result.setDefaultEntityClass(createDefaultInfo());
 		result.addRule(

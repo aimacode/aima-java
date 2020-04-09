@@ -67,10 +67,10 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	private boolean isImageUpToDate;
 
 	public MapViewPane() {
-		imageUpdater = new UnifiedMapDrawer<Image>(new AWTImageBuilder());
+		imageUpdater = new UnifiedMapDrawer<>(new AWTImageBuilder());
 		imageUpdater.getTransformer().setScreenResolution(Toolkit.getDefaultToolkit()
 				.getScreenResolution()); // doesn't work...
-		eventListeners = new ArrayList<MapViewEventListener>();
+		eventListeners = new ArrayList<>();
 		isAdjusted = false;
 		popup = new MapViewPopup();
 		MyMouseListener mouseListener = new MyMouseListener();
@@ -257,7 +257,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 	 *            Enables a more detailed view.
 	 */
 	public void showMapEntityInfoDialog(MapEntity entity, boolean debug) {
-		List<MapEntity> entities = new ArrayList<MapEntity>();
+		List<MapEntity> entities = new ArrayList<>();
 		if (entity.getName() != null || entity.getAttributes().length > 0
 				|| debug)
 			entities.add(entity);
@@ -348,8 +348,7 @@ public class MapViewPane extends JComponent implements MapEventListener {
 			g2.setBackground(new Color(bg.getRed(), bg.getGreen(),
 					bg.getBlue(), bg.getAlpha()));
 			int newWidth = Math.round(image.getWidth(null) * zoomfactor);
-			int newHeight = (int) Math
-					.round(image.getHeight(null) * zoomfactor);
+			int newHeight = Math.round(image.getHeight(null) * zoomfactor);
 			g2.drawImage(image, dx, dy, newWidth, newHeight, null);
 			if (dx > 0)
 				g2.clearRect(0, 0, dx, getHeight());

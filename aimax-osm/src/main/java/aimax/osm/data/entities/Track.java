@@ -12,11 +12,11 @@ import aimax.osm.data.Position;
  */
 public interface Track extends MapEntity {
 	
-	public List<MapNode> getNodes();
+	List<MapNode> getNodes();
 	
-	public MapNode getLastNode();
+	MapNode getLastNode();
 
-	public void addNode(MapNode node);
+	void addNode(MapNode node);
 	
-	public void addNode(Position pos);
+	void addNode(Position pos);
 }

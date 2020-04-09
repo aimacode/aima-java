@@ -1,17 +1,13 @@
 package aimax.osm.viewer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Hashtable;
-import java.util.List;
-
 import aimax.osm.data.Position;
 import aimax.osm.data.WayNodeProvider;
 import aimax.osm.data.entities.MapEntity;
 import aimax.osm.data.entities.MapNode;
 import aimax.osm.data.entities.MapWay;
 import aimax.osm.data.entities.Track;
+
+import java.util.*;
 
 /**
  * Provides a rather general map entity renderer implementation. It assumes that
@@ -42,14 +38,14 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 
 	/** Standard constructor. */
 	public DefaultEntityRenderer() {
-		wayNodeHash = new Hashtable<Long, List<MapNode>>();
+		wayNodeHash = new Hashtable<>();
 		setBackgroundColor(UColor.WHITE);
-		areaBuffer = new ArrayList<MapWay>();
-		wayBuffer = new ArrayList<MapWay>();
-		nodeBuffer = new ArrayList<MapEntity>();
-		trackBuffer = new ArrayList<Track>();
-		nameInfoBuffer = new ArrayList<NameInfo>();
-		tmpNodeBuffer = new ArrayList<MapNode>();
+		areaBuffer = new ArrayList<>();
+		wayBuffer = new ArrayList<>();
+		nodeBuffer = new ArrayList<>();
+		trackBuffer = new ArrayList<>();
+		nameInfoBuffer = new ArrayList<>();
+		tmpNodeBuffer = new ArrayList<>();
 	}
 
 	/** Clears all buffers and prepares rendering. */
@@ -86,7 +82,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	public MapNode getNextNode(int x, int y) {
 		Position pos = new Position(transformer.lat(y), transformer.lon(x));
 		MapNode nextNode = null;
-		MapNode tmp = null;
+		MapNode tmp;
 		for (int i = 0; i < 2; i++) {
 			List<MapWay> ways = (i == 0) ? areaBuffer : wayBuffer;
 			for (MapWay way : ways) {
@@ -100,10 +96,8 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		for (MapEntity node : nodeBuffer) {
 			if (node instanceof MapNode) {
 				tmp = (MapNode) node;
-				if (tmp != null
-						&& tmp.getAttributeValue("marker") == null
-						&& (nextNode == null || pos.getDistKM(tmp) < pos
-								.getDistKM(nextNode))) {
+				if (tmp.getAttributeValue("marker") == null
+						&& (nextNode == null || pos.getDistKM(tmp) < pos.getDistKM(nextNode))) {
 					nextNode = tmp;
 				}
 			}
@@ -151,12 +145,12 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 	// int awnodes = 0;
 	/** Prints all buffered entities according to their rendering informations. */
 	public void printBufferedObjects() {
-		Collections.sort(areaBuffer, new MapAreaComparator());
+		areaBuffer.sort(new MapAreaComparator());
 		Comparator<MapEntity> comp = new MapEntityComparator();
 		if (wayBuffer.size() < 10000)
-			Collections.sort(wayBuffer, comp);
+			wayBuffer.sort(comp);
 		if (nodeBuffer.size() < 10000)
-			Collections.sort(nodeBuffer, comp);
+			nodeBuffer.sort(comp);
 		for (MapWay area : areaBuffer)
 			printWay(area, (DefaultEntityViewInfo) area.getViewInfo(), true);
 		for (MapWay way : wayBuffer)
@@ -419,8 +413,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 		}
 
 		if (nameColor != null) {
-			String name = (debugMode) ? "P" + Long.toString(node.getId())
-					: node.getName();
+			String name = (debugMode) ? "P" + node.getId() : node.getName();
 			if (name != null) {
 				NameInfo info = new NameInfo(name, nameColor, pInfo.printOrder);
 				info.x = x + width;
@@ -452,12 +445,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 
 		@Override
 		public int compareTo(NameInfo arg0) {
-			if (printOrder < arg0.printOrder)
-				return -1;
-			else if (printOrder > arg0.printOrder)
-				return 1;
-			else
-				return 0;
+			return Integer.compare(printOrder, arg0.printOrder);
 		}
 	}
 
@@ -469,12 +457,7 @@ public class DefaultEntityRenderer extends AbstractEntityRenderer {
 					.getViewInfo();
 			DefaultEntityViewInfo info1 = (DefaultEntityViewInfo) arg1
 					.getViewInfo();
-			if (info0.printOrder < info1.printOrder)
-				return 1;
-			else if (info0.printOrder > info1.printOrder)
-				return -1;
-			else
-				return 0;
+			return Integer.compare(info1.printOrder, info0.printOrder);
 		}
 	}
 
