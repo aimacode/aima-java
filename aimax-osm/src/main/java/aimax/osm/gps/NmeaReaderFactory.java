@@ -46,7 +46,7 @@ public class NmeaReaderFactory {
 		NmeaReader result = null;
 		try {
 			Class<?> cls = Class.forName("aimax.osm.gps.NmeaSerialPortReader");
-	        result = (NmeaReader) cls.newInstance();
+	        result = (NmeaReader) cls.getDeclaredConstructor().newInstance();
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

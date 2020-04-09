@@ -91,13 +91,13 @@ public class MiniNaviApp implements ActionListener {
 			routeCalculator = new RouteCalculator();
 
 		JToolBar toolbar = frame.getToolbar();
-		gpsCombo = new JComboBox<String>(new String[] { "GPS Off", "GPS On",
+		gpsCombo = new JComboBox<>(new String[] { "GPS Off", "GPS On",
 				"GPS Center", "GPS Cen+Log", "Read Log" });
 		gpsCombo.addActionListener(this);
 		toolbar.addSeparator();
 		toolbar.add(gpsCombo);
 
-		waySelection = new JComboBox<String>(
+		waySelection = new JComboBox<>(
 				routeCalculator.getTaskSelectionOptions());
 		toolbar.add(waySelection);
 		toolbar.addSeparator();
@@ -164,7 +164,7 @@ public class MiniNaviApp implements ActionListener {
 			} else {
 				List<MapNode> markers = getMap().getMarkers();
 				if (!markers.isEmpty()) {
-					List<MapNode> routeMarkers = new ArrayList<MapNode>();
+					List<MapNode> routeMarkers = new ArrayList<>();
 					Track gpsTrack = getMap().getTrack(GPS_TRACK_NAME);
 					if (gpsTrack != null) {
 						routeMarkers.add(gpsTrack.getLastNode());
@@ -193,7 +193,7 @@ public class MiniNaviApp implements ActionListener {
 		if (className != null) {
 			try {
 				Class<?> c = Class.forName(className);
-				result = c.newInstance();
+				result = c.getDeclaredConstructor().newInstance();
 				if (!oclass.isInstance(result)) {
 					LOG.warning("Component instantiation failed. Class "
 							+ className + " is not of type "
@@ -233,12 +233,10 @@ public class MiniNaviApp implements ActionListener {
 				e.printStackTrace(); // for debugging
 			}
 			try {
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						frame.getMap().createTrack(ROUTE_TRACK_NAME, positions);
-						routingThread = null;
-						updateEnabledState();
-					}
+				SwingUtilities.invokeLater(() -> {
+					frame.getMap().createTrack(ROUTE_TRACK_NAME, positions);
+					routingThread = null;
+					updateEnabledState();
 				});
 			} catch (Exception e) {
 				e.printStackTrace(); // for debugging

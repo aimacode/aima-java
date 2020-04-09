@@ -1,12 +1,13 @@
 package aima.gui.fx.applications.search.games;
 
-import java.util.Observable;
-
 import aima.core.environment.connectfour.ConnectFourAIPlayer;
 import aima.core.environment.connectfour.ConnectFourGame;
 import aima.core.environment.connectfour.ConnectFourState;
 import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch;
 import aima.core.search.framework.Metrics;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  * Implements a facade for the game related classes of the Connect Four domain
@@ -15,16 +16,21 @@ import aima.core.search.framework.Metrics;
  * 
  * @author Ruediger Lunde
  */
-public class ConnectFourModel extends Observable {
+public class ConnectFourModel {
 	private ConnectFourGame game;
 	private ConnectFourState currState;
 	Metrics searchMetrics;
+	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private boolean enableLog;
 	
 
 	public ConnectFourModel() {
 		game = new ConnectFourGame();
-		currState = (ConnectFourState) game.getInitialState();
+		currState = game.getInitialState();
+	}
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		pcs.addPropertyChangeListener(listener);
 	}
 
 	public int getCols() {
@@ -63,8 +69,7 @@ public class ConnectFourModel extends Observable {
 	public void initGame() {
 		currState = game.getInitialState();
 		searchMetrics = null;
-		setChanged();
-		notifyObservers();
+		pcs.firePropertyChange("state", null, null);
 	}
 
 	public boolean isGameOver() {
@@ -74,8 +79,7 @@ public class ConnectFourModel extends Observable {
 	public void makeMove(int col) {
 		currState = game.getResult(currState, col);
 		searchMetrics = null;
-		setChanged();
-		notifyObservers();
+		pcs.firePropertyChange("state", null, null);
 	}
 
 	/** Uses adversarial search for selecting the next action. */
@@ -90,7 +94,6 @@ public class ConnectFourModel extends Observable {
 		Integer action = search.makeDecision(currState);
 		searchMetrics = search.getMetrics();
 		currState = game.getResult(currState, action);
-		setChanged();
-		notifyObservers();
+		pcs.firePropertyChange("state", null, null);
 	}
 }

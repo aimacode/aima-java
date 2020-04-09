@@ -1,6 +1,8 @@
 package aima.gui.fx.views;
 
-import aima.core.agent.*;
+import aima.core.agent.Agent;
+import aima.core.agent.Environment;
+import aima.core.agent.EnvironmentListener;
 import aima.core.agent.impl.AbstractEnvironment;
 import javafx.application.Platform;
 import javafx.scene.control.SplitPane;
@@ -8,10 +10,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-import java.util.Observable;
-
 /**
- * Controller class for a simple environment view. It logs informations about
+ * Controller class for a simple environment view. It logs information about
  * environment changes on a text area and can be used for any kind of
  * environment. More specific environment views can be created on this base by
  * adding state visualization to the split pane of this implementation.
@@ -21,7 +21,7 @@ import java.util.Observable;
  * @author Ruediger Lunde
  *
  */
-public class SimpleEnvironmentViewCtrl<P, A> extends Observable implements EnvironmentListener<P, A> {
+public class SimpleEnvironmentViewCtrl<P, A> implements EnvironmentListener<P, A> {
 
 	protected SplitPane splitPane;
 	protected TextArea textArea;
@@ -97,9 +97,7 @@ public class SimpleEnvironmentViewCtrl<P, A> extends Observable implements Envir
 	}
 
 	/**
-	 * Is called after agent actions. This implementation just notifies all observers.
+	 * Is called after agent actions. This implementation does nothing.
 	 */
-	protected void updateEnvStateView(Environment<?, ?> env) {
-		notifyObservers();
-	}
+	protected void updateEnvStateView(Environment<?, ?> env) { }
 }

@@ -1,21 +1,11 @@
 package aima.gui.fx.applications.search.games;
 
-import java.util.Observable;
-
 import aima.gui.fx.framework.IntegrableApplication;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -38,10 +28,8 @@ public class ConnectFourApp extends IntegrableApplication {
 	// create attributes for all parts of the application which need to be
 	// accessed by listeners, inner classes, and helper methods
 
-	private Button clearBtn;
 	private ComboBox<String> strategyCombo;
 	private ComboBox<String> timeCombo;
-	private Button proposeBtn;
 	private Label statusBar;
 
 	private Button[] colBtns;
@@ -59,7 +47,7 @@ public class ConnectFourApp extends IntegrableApplication {
 
 		ToolBar toolBar = new ToolBar();
 		toolBar.setStyle("-fx-background-color: rgb(0, 0, 200)");
-		clearBtn = new Button("Clear");
+		Button clearBtn = new Button("Clear");
 		clearBtn.setOnAction(ev -> model.initGame());
 
 		strategyCombo = new ComboBox<>();
@@ -69,7 +57,7 @@ public class ConnectFourApp extends IntegrableApplication {
 		timeCombo.getItems().addAll("2sec", "4sec", "6sec", "8sec");
 		timeCombo.getSelectionModel().select(1);
 
-		proposeBtn = new Button("Propose Move");
+		Button proposeBtn = new Button("Propose Move");
 		proposeBtn.setOnAction(ev -> model.proposeMove((timeCombo.getSelectionModel().getSelectedIndex() + 1) * 2,
 				strategyCombo.getSelectionModel().getSelectedIndex()));
 		toolBar.getItems().addAll(clearBtn, new Separator(), strategyCombo, timeCombo, proposeBtn);
@@ -131,13 +119,13 @@ public class ConnectFourApp extends IntegrableApplication {
 		statusBar.setMaxWidth(Double.MAX_VALUE);
 		statusBar.setStyle("-fx-background-color: rgb(0, 0, 200); -fx-font-size: 20");
 		root.setBottom(statusBar);
-		model.addObserver(this::update);
+		model.addPropertyChangeListener(event -> update());
 		return root;
 	}
 
 	@Override
 	public void initialize() {
-		update(null, null);
+		update();
 
 	}
 
@@ -147,7 +135,7 @@ public class ConnectFourApp extends IntegrableApplication {
 	}
 
 	/** Updates the view after the model state has changed. */
-	private void update(Observable o, Object arg) {
+	private void update() {
 		final int cols = model.getCols();
 		for (int i = 0; i < disks.length; i++) {
 			String player = model.getPlayerAt(i / cols, i % cols);

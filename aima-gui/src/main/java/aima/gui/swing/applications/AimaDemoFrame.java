@@ -106,7 +106,7 @@ public class AimaDemoFrame extends JFrame {
 				if (currPanel != null)
 					getContentPane().remove(currPanel);
 				System.setOut(outStream);
-				Object instance = appClass.newInstance();
+				Object instance = appClass.getDeclaredConstructor().newInstance();
 				Method m = appClass.getMethod("constructApplicationFrame",
 						new Class[0]);
 				JFrame af = (JFrame) m.invoke(instance, (Object[]) null);

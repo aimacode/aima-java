@@ -62,7 +62,7 @@ public class IntegratedAppPaneCtrl {
 	public void startApp(Class<? extends IntegrableApplication> appClass) {
 		stopRunningAppsAndDemo();
 		try {
-			currApp = appClass.newInstance();
+			currApp = appClass.getDeclaredConstructor().newInstance();
 			Pane appPane = currApp.createRootPane();
 			pane.setCenter(appPane);
 			updateStageTitle();
