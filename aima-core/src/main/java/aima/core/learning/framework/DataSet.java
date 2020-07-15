@@ -11,7 +11,7 @@ import aima.core.util.Util;
  * @author Ravi Mohan
  * 
  */
-public class DataSet {
+public class DataSet implements Iterable<Example> {
 	protected DataSet() {
 
 	}
@@ -21,7 +21,7 @@ public class DataSet {
 	public DataSetSpecification specification;
 
 	public DataSet(DataSetSpecification spec) {
-		examples = new LinkedList<Example>();
+		examples = new LinkedList<>();
 		this.specification = spec;
 	}
 
@@ -49,7 +49,7 @@ public class DataSet {
 
 	public double getInformationFor() {
 		String attributeName = specification.getTarget();
-		Hashtable<String, Integer> counts = new Hashtable<String, Integer>();
+		Hashtable<String, Integer> counts = new Hashtable<>();
 		for (Example e : examples) {
 
 			String val = e.getAttributeValueAsString(attributeName);
@@ -71,7 +71,7 @@ public class DataSet {
 	}
 
 	public Hashtable<String, DataSet> splitByAttribute(String attributeName) {
-		Hashtable<String, DataSet> results = new Hashtable<String, DataSet>();
+		Hashtable<String, DataSet> results = new Hashtable<>();
 		for (Example e : examples) {
 			String val = e.getAttributeValueAsString(attributeName);
 			if (results.containsKey(val)) {

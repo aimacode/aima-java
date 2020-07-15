@@ -17,7 +17,7 @@ import aima.core.util.Util;
 public class DecisionTreeLearner implements Learner {
 	private DecisionTree tree;
 
-	private String defaultValue;
+	private final String defaultValue;
 
 	public DecisionTreeLearner() {
 		this.defaultValue = "Unable To Classify";
@@ -132,14 +132,8 @@ public class DecisionTreeLearner implements Learner {
 
 	private boolean allExamplesHaveSameClassification(DataSet ds) {
 		String classification = ds.getExample(0).targetValue();
-		Iterator<Example> iter = ds.iterator();
-		while (iter.hasNext()) {
-			Example element = iter.next();
-			if (!(element.targetValue().equals(classification))) {
-				return false;
-			}
-
-		}
+		for (Example element : ds)
+			if (!(element.targetValue().equals(classification))) return false;
 		return true;
 	}
 }
