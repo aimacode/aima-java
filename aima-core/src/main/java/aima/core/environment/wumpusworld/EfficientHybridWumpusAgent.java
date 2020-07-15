@@ -121,7 +121,7 @@ public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
 
         // if ASK(KB, Glitter<sup>t</sup>) = true then
         // Optimization: Use percept (condition can only be true if plan is empty).
-        if (plan.isEmpty() && ((WumpusPercept) percept).isGlitter()) {
+        if (plan.isEmpty() && percept.isGlitter()) {
             // plan <- [Grab] + PLAN-ROUTE(current, {[1,1]}, safe) + [Climb]
             Set<Room> goals = new LinkedHashSet<>();
             goals.add(modelCave.getStart().getRoom());

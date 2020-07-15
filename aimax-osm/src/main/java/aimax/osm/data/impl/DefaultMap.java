@@ -416,8 +416,7 @@ public class DefaultMap implements OsmMap {
 			tracks.add(track);
 		}
 		track.addNode(pos);
-		fireMapDataEvent(new MapEvent(this, MapEvent.Type.TRACK_MODIFIED, track
-				.getId()));
+		fireMapDataEvent(new MapEvent(this, MapEvent.Type.TRACK_MODIFIED, track.getId()));
 	}
 
 	/** {@inheritDoc} */

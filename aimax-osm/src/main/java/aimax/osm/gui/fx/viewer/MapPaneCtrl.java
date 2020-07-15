@@ -73,20 +73,24 @@ public class MapPaneCtrl {
     public CoordTransformer getTransformer() { return mapDrawer.getTransformer(); }
 
     public void update() {
-        Canvas canvas = osCanvas;
-        if (canvas == null
-                || Math.abs(canvas.getWidth() - pane.getWidth()) > 0.01
-                || Math.abs(canvas.getHeight() - pane.getHeight()) > 0.1) {
-            canvas = new Canvas(pane.getWidth(), pane.getHeight());
-            canvas.setFocusTraversable(true);
+        if (currCanvas == null
+                || Math.abs(currCanvas.getWidth() - pane.getWidth()) > 0.1
+                || Math.abs(currCanvas.getHeight() - pane.getHeight()) > 0.1) {
+            currCanvas = new Canvas(pane.getWidth(), pane.getHeight());
+            osCanvas = new Canvas(pane.getWidth(), pane.getHeight());
+            pane.getChildren().clear();
+            pane.getChildren().addAll(currCanvas, osCanvas);
+            osCanvas.setVisible(false);
         }
-        mapDrawer.drawMap(canvas, scaleToFit);
-        pane.getChildren().add(canvas);
-        if (pane.getChildren().size() > 1)
-            pane.getChildren().remove(0);
+
+        mapDrawer.drawMap(osCanvas, scaleToFit);
+
+        Canvas canvas = osCanvas;
         osCanvas = currCanvas;
         currCanvas = canvas;
         scaleToFit = false;
+        currCanvas.setVisible(true);
+        osCanvas.setVisible(false);
     }
 
     /**
@@ -235,7 +239,7 @@ public class MapPaneCtrl {
             alert.setHeaderText(header);
             alert.setContentText(content.toString());
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.isEmpty())
+            if (!result.isPresent())
                 break;
         }
     }
