@@ -9,6 +9,8 @@ import aimax.osm.gui.fx.applications.RouteFindingAgentOsmApp;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+// VM options (Java>8): --module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml
+
 /**
  * Integrated application which provides access to all JavaFX applications
  * (...App) and command line demos (...Demo) which are currently available in

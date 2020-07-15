@@ -9,6 +9,7 @@ import aimax.osm.data.impl.DefaultMap;
 import aimax.osm.viewer.AbstractEntityRenderer;
 import aimax.osm.viewer.CoordTransformer;
 import aimax.osm.viewer.UnifiedMapDrawer;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -26,17 +27,19 @@ import java.util.Optional;
  */
 public class MapPaneCtrl {
 
-    private StackPane pane;
+    private final StackPane pane;
     private Canvas currCanvas;
     private Canvas osCanvas;
 
-    private UnifiedMapDrawer<Canvas> mapDrawer;
+    private final UnifiedMapDrawer<Canvas> mapDrawer;
     private boolean scaleToFit = true;
+
+    private Thread delayThread;
 
     public MapPaneCtrl(StackPane pane) {
         this.pane = pane;
         mapDrawer = new UnifiedMapDrawer<>(new FXImageBuilder(), createMap());
-        mapDrawer.getMap().addMapDataEventListener(ev -> update());
+        mapDrawer.getMap().addMapDataEventListener(ev -> updateWithDelay());
         pane.widthProperty().addListener((obs, o, n) -> { scaleToFit = true; update(); });
         pane.heightProperty().addListener((obs, o, n) -> { scaleToFit = true; update(); });
         pane.setOnMouseEntered(ev -> {if (currCanvas != null) currCanvas.requestFocus();});
@@ -91,6 +94,26 @@ public class MapPaneCtrl {
         scaleToFit = false;
         currCanvas.setVisible(true);
         osCanvas.setVisible(false);
+    }
+
+    /**
+     * This delayed update reduces the number of mapDrawer.drawMap() calls while the agent is
+     * moving. JavaFX for java versions greater than 8 seems to have problems with to many of
+     * those calls in combination with Platform.runLater(). This hack tries to avoid frozen
+     * GUI situations.
+     */
+    private void updateWithDelay() {
+        if (delayThread == null || !delayThread.isAlive()) {
+            delayThread = new Thread(() -> {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                Platform.runLater(this::update);
+            });
+            delayThread.start();
+        }
     }
 
     /**
