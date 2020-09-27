@@ -1,6 +1,8 @@
 package aima.core.search.framework.qsearch;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
@@ -47,7 +49,8 @@ import aima.core.search.framework.problem.Problem;
  */
 public class GraphSearch<S, A> extends TreeSearch<S, A> {
 
-	private Set<S> explored = new HashSet<>();
+//	private Set<S> explored = new HashSet<>(); // ORIGINAL
+	private Map<S, Node<S,A>> explored = new HashMap<S, Node<S,A>>(); // Ejercicio 3
 
 	public GraphSearch() {
 		this(new NodeFactory<>());
@@ -74,10 +77,21 @@ public class GraphSearch<S, A> extends TreeSearch<S, A> {
 	 */
 	@Override
 	protected void addToFrontier(Node<S, A> node) {
-		if (!explored.contains(node.getState())) {
+		if (!explored.containsValue(node.getState())) {
 			frontier.add(node);
-			updateMetrics(frontier.size());
+		} else {
+			// Ejercicio 3 .- Rectificar ->
+			
+			double newCost = node.getPathCost();
+			double oldCost = explored.get( node.getState() ).getPathCost();
+			
+			if (newCost < oldCost) {
+				explored.remove( node.getState() );
+				frontier.add(node);
+				System.out.println("-------------------Rectificado");
+			}
 		}
+		updateMetrics(frontier.size());
 	}
 
 	/**
@@ -92,7 +106,7 @@ public class GraphSearch<S, A> extends TreeSearch<S, A> {
 	protected Node<S, A> removeFromFrontier() {
 		cleanUpFrontier(); // not really necessary because isFrontierEmpty should be called before...
 		Node<S, A> result = frontier.remove();
-		explored.add(result.getState());
+		explored.put(result.getState(), result);
 		updateMetrics(frontier.size());
 		return result;
 	}
@@ -113,7 +127,7 @@ public class GraphSearch<S, A> extends TreeSearch<S, A> {
 	 * of the frontier.
 	 */
 	private void cleanUpFrontier() {
-		while (!frontier.isEmpty() && explored.contains(frontier.element().getState()))
+		while (!frontier.isEmpty() && explored.containsValue(frontier.element().getState()))
 			frontier.remove();
 	}
 }
