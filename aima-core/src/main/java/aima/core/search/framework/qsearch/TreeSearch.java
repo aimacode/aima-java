@@ -74,6 +74,14 @@ public class TreeSearch<S, A> extends QueueSearch<S, A> {
 		while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
 			// choose a leaf node and remove it from the frontier
 			Node<S, A> node = removeFromFrontier();
+			
+			// Ejercicio 4 .- print f value
+			if (evalFn != null) {
+				double f = node.getPathCost() + evalFn.applyAsDouble(node);
+				System.out.println( "f is: " + f );
+			}
+					
+			
 			// if the node contains a goal state then return the corresponding solution
 			if (!earlyGoalTest && problem.testSolution(node))
 				return asOptional(node);
