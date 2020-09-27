@@ -1,5 +1,7 @@
 package aima.core.search.framework.qsearch;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Optional;
 import java.util.Queue;
 
@@ -65,11 +67,17 @@ public class TreeSearch<S, A> extends QueueSearch<S, A> {
 	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		this.frontier = frontier;
 		clearMetrics();
+		
+		// Ejercicio 6
+		Instant startTime = Instant.now();
+		
 		// initialize the frontier using the initial state of the problem
 		Node<S, A> root = nodeFactory.createNode(problem.getInitialState());
 		addToFrontier(root);
-		if (earlyGoalTest && problem.testSolution(root))
+		if (earlyGoalTest && problem.testSolution(root)) {
+			metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
 			return asOptional(root);
+		}
 
 		while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
 			// choose a leaf node and remove it from the frontier
@@ -83,17 +91,23 @@ public class TreeSearch<S, A> extends QueueSearch<S, A> {
 					
 			
 			// if the node contains a goal state then return the corresponding solution
-			if (!earlyGoalTest && problem.testSolution(node))
+			if (!earlyGoalTest && problem.testSolution(node)) {
+				metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
 				return asOptional(node);
+			}
 
 			// expand the chosen node and add the successor nodes to the frontier
 			for (Node<S, A> successor : nodeFactory.getSuccessors(node, problem)) {
 				addToFrontier(successor);
-				if (earlyGoalTest && problem.testSolution(successor))
+				if (earlyGoalTest && problem.testSolution(successor)) {
+					metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
 					return asOptional(successor);
+				}
 			}
 		}
+		
 		// if the frontier is empty then return failure
+		metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
 		return Optional.empty();
 	}
 

@@ -29,7 +29,8 @@ public abstract class QueueSearch<S, A> {
 	public static final String METRIC_MAX_QUEUE_SIZE = "maxQueueSize";
 	public static final String METRIC_PATH_COST = "pathCost";
 	public static final String METRIC_NODES_EXPANDED_REINSERTED_IN_FRONTIER = "reinserted"; // Ejercicio 5
-	public static final String METRIC_NODES_RECTIFIED_DUPLICATED_IN_FRONTIER = "recrifiedDuped"; // Ejercicio 5
+	public static final String METRIC_NODES_RECTIFIED_DUPLICATED_IN_FRONTIER = "rectifiedDuped"; // Ejercicio 5
+	public static final String METRIC_TIME_TAKEN = "timeTakenMs"; // Ejercicio 6
 
 	final protected NodeFactory<S, A> nodeFactory;
 	protected boolean earlyGoalTest = false;
@@ -89,6 +90,7 @@ public abstract class QueueSearch<S, A> {
 		metrics.set(METRIC_PATH_COST, 0);
 		metrics.set(METRIC_NODES_EXPANDED_REINSERTED_IN_FRONTIER, 0); // Ejercicio 5
 		metrics.set(METRIC_NODES_RECTIFIED_DUPLICATED_IN_FRONTIER, 0); // Ejercicio 5
+		metrics.set(METRIC_TIME_TAKEN, 0); // Ejercicio 6
 	}
 
 	protected void updateMetrics(int queueSize) {
