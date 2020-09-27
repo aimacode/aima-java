@@ -8,4 +8,6 @@
 .idea
 *.iml
 
+# Eclipse
+.metadata
 
