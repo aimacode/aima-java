@@ -33,13 +33,13 @@ public class EightPuzzleDemo {
 
 	public static void main(String[] args) {
 		System.out.println("Initial State:\n" + boardWithThreeMoveSolution);
-		eightPuzzleDLSDemo();
-		eightPuzzleIDLSDemo();
-		eightPuzzleGreedyBestFirstDemo();
-		eightPuzzleGreedyBestFirstManhattanDemo();
+//		eightPuzzleDLSDemo();
+//		eightPuzzleIDLSDemo();
+//		eightPuzzleGreedyBestFirstDemo();
+//		eightPuzzleGreedyBestFirstManhattanDemo();
 		eightPuzzleAStarDemo();
 		eightPuzzleAStarManhattanDemo();
-		eightPuzzleSimulatedAnnealingDemo();
+//		eightPuzzleSimulatedAnnealingDemo();
 	}
 
 	private static void eightPuzzleDLSDemo() {
@@ -130,8 +130,7 @@ public class EightPuzzleDemo {
 		System.out.println("\nEightPuzzleDemo AStar Search (ManhattanHeursitic)");
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
-			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
-					(new GraphSearch<>(), EightPuzzleFunctions::getManhattanDistance);
+			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<> (new GraphSearch<>(), EightPuzzleFunctions::getManhattanDistance);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
