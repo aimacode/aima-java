@@ -40,6 +40,7 @@ public class BestFirstSearch<S, A> extends QueueBasedSearch<S, A> implements Inf
 	public BestFirstSearch(QueueSearch<S, A> impl, final EvaluationFunction<S, A> evalFn) {
 		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(evalFn::applyAsDouble)));
 		this.evalFn = evalFn;
+		impl.evalFn = evalFn; // Ejercicio 4
 	}
 
 	/** Modifies the evaluation function. */
