@@ -85,7 +85,7 @@ public class TreeSearch<S, A> extends QueueSearch<S, A> {
 			
 			// Ejercicio 4 .- print f value
 			if (evalFn != null) {
-				double f = node.getPathCost() + evalFn.applyAsDouble(node);
+				double f = evalFn.applyAsDouble(node);
 				System.out.println( "f is: " + f );
 			}
 					

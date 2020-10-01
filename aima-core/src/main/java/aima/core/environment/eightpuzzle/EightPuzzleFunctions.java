@@ -58,4 +58,10 @@ public class EightPuzzleFunctions {
 				result++;
 		return result;
 	}
+	
+	
+	// Ejercicio 7
+	public static double stepCostFunction(EightPuzzleBoard state, Action action, EightPuzzleBoard succesorState){
+		return Math.pow(2, succesorState.getValueAt(state.getLocationOf(0)));
+	}
 }
