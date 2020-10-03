@@ -79,13 +79,13 @@ public class EightPuzzleDemo {
 //		{6, 4, 0, 2, 8, 1, 7, 3, 5}
 //		{4, 1, 3, 7, 2, 8, 5, 6, 0}
 	//25 movimientos
-		{6, 7, 4, 0, 5, 1, 3, 2, 8}
+//		{6, 7, 4, 0, 5, 1, 3, 2, 8}
 //		{6, 0, 7, 5, 4, 1, 3, 8, 2}
 //		{3, 4, 8, 5, 7, 1, 6, 0, 2}
 //		{4, 5, 3, 7, 6, 2, 8, 0, 1}
 //		{2, 7, 8, 5, 4, 0, 3, 1, 6}
 	//30 movimientos
-//		{5, 6, 7, 2, 8, 4, 0, 3, 1}
+		{5, 6, 7, 2, 8, 4, 0, 3, 1}
 //		{5, 6, 7, 4, 0, 8, 3, 2, 1}
 //		{5, 4, 7, 6, 0, 3, 8, 2, 1} 
 //		{3, 8, 7, 4, 0, 6, 5, 2, 1}
@@ -119,64 +119,74 @@ public class EightPuzzleDemo {
 
 	private static void eightPuzzleAStarNullHeuristic() {
 		System.out.println("\nEightPuzzleDemo AStar Search (Null Heursitic)");
+		SearchAgent<Object, EightPuzzleBoard, Action> agent = null;
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(myCustom);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getNullHeuristic);
-			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
+			printInstrumentation(agent.getInstrumentation());
 			e.printStackTrace();
 		}
 	}
 	private static void eightPuzzleAStarWeightedMisplaced() {
 		System.out.println("\nEightPuzzleDemo AStar Search (Misplaced Heursitic)");
+		SearchAgent<Object, EightPuzzleBoard, Action> agent = null;
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(myCustom);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getWeightedNumberOfMisplacedTiles);
-			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
+			printInstrumentation(agent.getInstrumentation());
 			e.printStackTrace();
 		}
 	}
 
 	private static void eightPuzzleAStarWeightedManhattan() {
 		System.out.println("\nEightPuzzleDemo AStar Search (Manhattan Heursitic)");
+		SearchAgent<Object, EightPuzzleBoard, Action> agent = null;
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(myCustom);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getWeightedManhattanDistance);
-			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
+			printInstrumentation(agent.getInstrumentation());
 			e.printStackTrace();
 		}
 	}
 	
 	private static void eightPuzzleAStarWeightedNonConsistent() {
 		System.out.println("\nEightPuzzleDemo AStar Search (NonConsistent Heursitic)");
+		SearchAgent<Object, EightPuzzleBoard, Action> agent = null;
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(myCustom);
-			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getWeightedEpsilonManhattan);
-			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getWeightedNonConsistentHeuristic);
+			agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
+			printInstrumentation(agent.getInstrumentation());
 			e.printStackTrace();
 		}
 	}
 	
 	private static void eightPuzzleAStarWeightedEpsilonManhattan() {
 		System.out.println("\nEightPuzzleDemo AStar Search (Epsilon Manhattan Heursitic)");
+		SearchAgent<Object, EightPuzzleBoard, Action> agent = null;
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(myCustom);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(), EightPuzzleFunctions::getWeightedEpsilonManhattan);
-			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
+			printInstrumentation(agent.getInstrumentation());
 			e.printStackTrace();
 		}
 	}
