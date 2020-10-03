@@ -71,44 +71,50 @@ public class TreeSearch<S, A> extends QueueSearch<S, A> {
 		// Ejercicio 6
 		Instant startTime = Instant.now();
 		
-		// initialize the frontier using the initial state of the problem
-		Node<S, A> root = nodeFactory.createNode(problem.getInitialState());
-		addToFrontier(root);
-		if (earlyGoalTest && problem.testSolution(root)) {
-			metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
-			return asOptional(root);
-		}
-
-		while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
-			// choose a leaf node and remove it from the frontier
-			Node<S, A> node = removeFromFrontier();
-			
-			// Ejercicio 4 .- print f value
-			if (evalFn != null) {
-				double f = evalFn.applyAsDouble(node);
-				System.out.println( "f is: " + f );
-			}
-					
-			
-			// if the node contains a goal state then return the corresponding solution
-			if (!earlyGoalTest && problem.testSolution(node)) {
+		try {
+			// initialize the frontier using the initial state of the problem
+			Node<S, A> root = nodeFactory.createNode(problem.getInitialState());
+			addToFrontier(root);
+			if (earlyGoalTest && problem.testSolution(root)) {
 				metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
-				return asOptional(node);
+				return asOptional(root);
 			}
 
-			// expand the chosen node and add the successor nodes to the frontier
-			for (Node<S, A> successor : nodeFactory.getSuccessors(node, problem)) {
-				addToFrontier(successor);
-				if (earlyGoalTest && problem.testSolution(successor)) {
+			while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
+				// choose a leaf node and remove it from the frontier
+				Node<S, A> node = removeFromFrontier();
+				
+				// Ejercicio 4 .- print f value
+				if (evalFn != null) {
+					double f = evalFn.applyAsDouble(node);
+					System.out.println( "f is: " + f );
+				}
+						
+				
+				// if the node contains a goal state then return the corresponding solution
+				if (!earlyGoalTest && problem.testSolution(node)) {
 					metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
-					return asOptional(successor);
+					return asOptional(node);
+				}
+
+				// expand the chosen node and add the successor nodes to the frontier
+				for (Node<S, A> successor : nodeFactory.getSuccessors(node, problem)) {
+					addToFrontier(successor);
+					if (earlyGoalTest && problem.testSolution(successor)) {
+						metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
+						return asOptional(successor);
+					}
 				}
 			}
+			
+			// if the frontier is empty then return failure
+			metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
+			return Optional.empty();
+		} catch(Exception e) {
+			
+			metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
+			throw e;
 		}
-		
-		// if the frontier is empty then return failure
-		metrics.set(METRIC_TIME_TAKEN, Duration.between(startTime, Instant.now()).toMillis());
-		return Optional.empty();
 	}
 
 	/**
