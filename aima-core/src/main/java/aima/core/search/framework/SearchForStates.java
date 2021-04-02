@@ -18,8 +18,8 @@ import java.util.function.Consumer;
  */
 public interface SearchForStates<S, A> {
 	/**
-	 * Returns a state which is might be but not necessary is a goal state of
-	 * the problem or empty.
+	 * Returns a state which might be, but not necessarily is a goal state of
+	 * the problem, or empty.
 	 * 
 	 * @param p
 	 *            the search problem
