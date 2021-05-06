@@ -33,14 +33,14 @@ public class MapColoringCspApp extends IntegrableApplication {
         launch(args);
     }
 
-    private final static String PARAM_MAP = "map";
-    private final static String PARAM_STRATEGY = "strategy";
+    protected final static String PARAM_MAP = "map";
+    protected final static String PARAM_STRATEGY = "strategy";
 
-    private CspViewCtrl<Variable, String> stateViewCtrl;
-    private TaskExecutionPaneCtrl taskPaneCtrl;
+    protected CspViewCtrl<Variable, String> stateViewCtrl;
+    protected TaskExecutionPaneCtrl taskPaneCtrl;
 
-    private CSP<Variable, String> csp;
-    private CspSolver<Variable, String> strategy;
+    protected CSP<Variable, String> csp;
+    protected CspSolver<Variable, String> strategy;
     private int stepCounter;
 
     public MapColoringCspApp() {
@@ -86,7 +86,9 @@ public class MapColoringCspApp extends IntegrableApplication {
                 "Backtracking + AC3 + MRV&DEG + LCV",
                 "Min-Conflicts (50)",
                 "Tree-CSP-Solver",
-                "Tree-CSP-Solver with Random Root");
+                "Tree-CSP-Solver with Random Root",
+                "Backtracking + Backjumping",
+                "Backtracking + Backjumping + MRV&DEG");
         return Arrays.asList(p1, p2);
     }
 
@@ -140,6 +142,12 @@ public class MapColoringCspApp extends IntegrableApplication {
                 break;
             case 10:
                 strategy = new TreeCspSolver<Variable, String>().useRandom(true);
+                break;
+            case 11:
+                strategy = new BackjumpingBacktrackingSolver<>();
+                break;
+            case 12:
+                strategy = new BackjumpingBacktrackingSolver<Variable, String>().set(CspHeuristics.mrvDeg());
                 break;
         }
 
