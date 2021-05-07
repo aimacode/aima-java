@@ -57,10 +57,10 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |5.7|170|Alpha-Beta-Search|[AlphaBetaSearch](/aima-core/src/main/java/aima/core/search/adversarial/AlphaBetaSearch.java)|
 |6|202|CSP|[CSP](/aima-core/src/main/java/aima/core/search/csp/CSP.java)|
 |6.1|204|Map CSP|[MapCSP](/aima-core/src/main/java/aima/core/search/csp/examples/MapCSP.java)|
-|6.3|209|AC-3|[AC3Strategy](/aima-core/src/main/java/aima/core/search/csp/inference/AC3Strategy.java)|
-|6.5|215|Backtracking-Search|[AbstractBacktrackingSolver](/aima-core/src/main/java/aima/core/search/csp/AbstractBacktrackingSolver.java)|
-|6.8|221|Min-Conflicts|[MinConflictsSolver](/aima-core/src/main/java/aima/core/search/csp/MinConflictsSolver.java)|
-|6.11|224|Tree-CSP-Solver|[TreeCspSolver](/aima-core/src/main/java/aima/core/search/csp/TreeCspSolver.java)|
+|6.3|209|AC-3|[AC3Strategy](/aima-core/src/main/java/aima/core/search/csp/solver/inference/AC3Strategy.java)|
+|6.5|215|Backtracking-Search|[AbstractBacktrackingSolver](/aima-core/src/main/java/aima/core/search/csp/solver/AbstractBacktrackingSolver.java)|
+|6.8|221|Min-Conflicts|[MinConflictsSolver](/aima-core/src/main/java/aima/core/search/csp/solver/MinConflictsSolver.java)|
+|6.11|224|Tree-CSP-Solver|[TreeCspSolver](/aima-core/src/main/java/aima/core/search/csp/solver/TreeCspSolver.java)|
 |7|235|Knowledge Base|[KnowledgeBase](/aima-core/src/main/java/aima/core/logic/propositional/kb/KnowledgeBase.java)|
 |7.1|236|KB-Agent|[KBAgent](/aima-core/src/main/java/aima/core/logic/propositional/agent/KBAgent.java)|
 |7.7|244|Propositional-Logic-Sentence|[Sentence](/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java)|
