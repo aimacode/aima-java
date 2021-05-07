@@ -1,6 +1,8 @@
 package aima.test.core.unit.search.csp;
 
 import aima.core.search.csp.*;
+import aima.core.search.csp.solver.FlexibleBacktrackingSolver;
+import aima.core.search.csp.solver.MinConflictsSolver;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

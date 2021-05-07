@@ -1,6 +1,9 @@
-package aima.core.search.csp;
+package aima.core.search.csp.solver;
 
-import aima.core.search.csp.inference.InferenceLog;
+import aima.core.search.csp.Assignment;
+import aima.core.search.csp.CSP;
+import aima.core.search.csp.Variable;
+import aima.core.search.csp.solver.inference.InferenceLog;
 import aima.core.util.Tasks;
 
 import java.util.Optional;

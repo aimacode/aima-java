@@ -23,19 +23,19 @@ import java.util.List;
  */
 public class CSP<VAR extends Variable, VAL> implements Cloneable {
 
-    private List<VAR> variables;
+    private final List<VAR> variables;
     private List<Domain<VAL>> domains;
-    private List<Constraint<VAR, VAL>> constraints;
+    private final List<Constraint<VAR, VAL>> constraints;
 
     /**
      * Lookup, which maps a variable to its index in the list of variables.
      */
-    private Hashtable<Variable, Integer> varIndexHash;
+    private final Hashtable<Variable, Integer> varIndexHash;
     /**
      * Constraint network. Maps variables to those constraints in which they
      * participate.
      */
-    private Hashtable<Variable, List<Constraint<VAR, VAL>>> cnet;
+    private final Hashtable<Variable, List<Constraint<VAR, VAL>>> cnet;
 
     /**
      * Creates a new CSP.

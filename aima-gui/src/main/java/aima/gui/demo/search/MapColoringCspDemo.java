@@ -2,6 +2,7 @@ package aima.gui.demo.search;
 
 import aima.core.search.csp.*;
 import aima.core.search.csp.examples.MapCSP;
+import aima.core.search.csp.solver.*;
 
 import java.util.Optional;
 

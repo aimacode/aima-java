@@ -1,10 +1,13 @@
-package aima.core.search.csp;
+package aima.core.search.csp.solver;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import aima.core.search.csp.inference.*;
+import aima.core.search.csp.Assignment;
+import aima.core.search.csp.CSP;
+import aima.core.search.csp.Variable;
+import aima.core.search.csp.solver.inference.*;
 
 /**
  * This backtracking search implementation can be configured with arbitrary strategies for variable selection,

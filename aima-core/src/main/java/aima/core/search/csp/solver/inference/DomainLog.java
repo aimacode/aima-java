@@ -1,4 +1,4 @@
-package aima.core.search.csp.inference;
+package aima.core.search.csp.solver.inference;
 
 import java.util.ArrayList;
 import java.util.HashSet;

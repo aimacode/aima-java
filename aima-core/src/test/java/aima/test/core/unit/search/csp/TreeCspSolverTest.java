@@ -12,7 +12,7 @@ import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Domain;
-import aima.core.search.csp.TreeCspSolver;
+import aima.core.search.csp.solver.TreeCspSolver;
 import aima.core.search.csp.Variable;
 import aima.core.search.csp.examples.NotEqualConstraint;
 

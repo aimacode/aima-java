@@ -1,5 +1,6 @@
-package aima.core.search.csp;
+package aima.core.search.csp.solver;
 
+import aima.core.search.csp.*;
 import aima.core.util.Util;
 
 import java.util.*;

@@ -1,4 +1,4 @@
-package aima.core.search.csp.inference;
+package aima.core.search.csp.solver.inference;
 
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;

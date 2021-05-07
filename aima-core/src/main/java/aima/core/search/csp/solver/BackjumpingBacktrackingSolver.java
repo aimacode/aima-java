@@ -1,5 +1,9 @@
-package aima.core.search.csp;
+package aima.core.search.csp.solver;
 
+import aima.core.search.csp.Assignment;
+import aima.core.search.csp.CSP;
+import aima.core.search.csp.Constraint;
+import aima.core.search.csp.Variable;
 import aima.core.util.Tasks;
 
 import java.util.HashSet;
@@ -65,7 +69,7 @@ public class BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends Cs
     private SolutionOrNogood<VAR, VAL> backtrack(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment) {
         SolutionOrNogood<VAR, VAL> result = new SolutionOrNogood<>();
         if (assignment.isComplete(csp.getVariables()) || Tasks.currIsCancelled()) {
-            result.solution =assignment;
+            result.solution = assignment;
         } else {
             VAR var = selectUnassignedVariable(csp, assignment);
             for (VAL value : orderDomainValues(csp, assignment, var)) {

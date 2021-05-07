@@ -1,4 +1,8 @@
-package aima.core.search.csp;
+package aima.core.search.csp.solver;
+
+import aima.core.search.csp.Assignment;
+import aima.core.search.csp.CSP;
+import aima.core.search.csp.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,4 +57,5 @@ public abstract class CspSolver<VAR extends Variable, VAL> {
     protected void fireStateChanged(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR variable) {
         listeners.forEach(listener -> listener.stateChanged(csp, assignment, variable));
     }
+
 }

@@ -2,6 +2,10 @@ package aima.gui.fx.applications.search;
 
 import aima.core.search.csp.*;
 import aima.core.search.csp.examples.NQueensCSP;
+import aima.core.search.csp.solver.CspListener;
+import aima.core.search.csp.solver.CspSolver;
+import aima.core.search.csp.solver.FlexibleBacktrackingSolver;
+import aima.core.search.csp.solver.MinConflictsSolver;
 
 import java.util.Optional;
 
