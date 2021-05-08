@@ -6,17 +6,24 @@ import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
 import aima.core.util.Tasks;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // vm-options (Java > 8): --module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml
 
 /**
- * Simple version of Backtracking with backjumping. It analyzes reasons for dead-ends by means of so called nogoods
- * and by that tries to avoid useless search in subspaces without solution.
+ * Artificial Intelligence A Modern Approach (3rd Ed.): Section 6.3, Page 223.<br>
+ * A more intelligent approach to backtracking is to backtrack to a variable that might fix the problem — a variable
+ * that was responsible for making one of the possible values of SA impossible. To do this, we will keep track of
+ * a set of assignments that are in conflict with some value for SA. The set (in this case {Q=red, NSW=green, V=blue,}),
+ * is called the conflict set for SA. The backjumping method backtracks to the most recent assignment in
+ * the conflict set; in this case, backjumping would jump over Tasmania and try a new value for V. This method
+ * is easily implemented by a modification to BACK TRACK such that it accumulates the conflict set while checking
+ * for a legal value to assign. If no legal value is found, the algorithm should return the most recent element of
+ * the conflict set along with the failure indicator.<br>
+ *
+ * In this implementation, backtrack returns the whole set of variables causing the dead-end instead of just the most
+ * recent element. The set of variables involved in a conflict set is called nogood here.
  *
  * Limitations:
  * Only one nogood is tracked at a time thought there could be more of them
@@ -82,17 +89,25 @@ public class BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends Cs
                     else
                         result.nogood.addAll(res.nogood);
                 } else {
-                    for (Constraint<VAR, VAL> cons : csp.getConstraints(var))
-                        if (!cons.isSatisfiedWith(assignment)) {
-                            result.nogood.addAll(cons.getScope());
-                            break; // only one nogood is tracked (kiss)
-                        }
+                    result.nogood.addAll(findCause(csp, assignment, var));
                 }
                 assignment.remove(var);
             }
             result.nogood.remove(var);
         }
         return result;
+    }
+
+    /**
+     * Gets an assignment which is inconsistent at <code>var</code> and returns a collection of variables causing the
+     * inconsistency. This implementation just returns the scope of one unsatisfied constraint. A smarter
+     * selection could increase jump length.
+     */
+    protected Collection<VAR> findCause(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
+        for (Constraint<VAR, VAL> cons : csp.getConstraints(var))
+            if (!cons.isSatisfiedWith(assignment))
+                return cons.getScope();
+        return null; // will never happen!
     }
 
     /**
@@ -113,6 +128,9 @@ public class BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends Cs
         return (valOrderingStrategy != null) ? valOrderingStrategy.apply(csp, assignment, var) : csp.getDomain(var);
     }
 
+    /**
+     * Data structure which can store an assignment as well as a nogood.
+     */
     private static class SolutionOrNogood<VAR extends Variable, VAL> {
         Assignment<VAR, VAL> solution;
         Set<VAR> nogood = new HashSet<>(); // set of variables whose current value bindings caused a dead-end
