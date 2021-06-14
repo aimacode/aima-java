@@ -1,6 +1,6 @@
 package aima.core.environment.wumpusworld;
 
-import aima.core.logic.propositional.inference.DPLL;
+import aima.core.logic.propositional.inference.EntailmentChecker;
 import aima.core.logic.propositional.inference.OptimizedDPLL;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
@@ -46,7 +46,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
     private int caveXDimension;
     private int caveYDimension;
     private AgentPosition start;
-    private DPLL dpll;
+    private EntailmentChecker checker;
     private boolean disableNavSentences;
     private long reasoningTime; // in milliseconds
 
@@ -54,20 +54,20 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
         this(caveXDim, caveYDim, new OptimizedDPLL());
     }
 
-    public WumpusKnowledgeBase(int caveXDim, int caveYDim, DPLL dpll) {
-        this(caveXDim, caveYDim, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH), dpll);
+    public WumpusKnowledgeBase(int caveXDim, int caveYDim, EntailmentChecker checker) {
+        this(caveXDim, caveYDim, new AgentPosition(1, 1, AgentPosition.Orientation.FACING_NORTH), checker);
     }
 
     /**
      * Create a Knowledge Base that contains the atemporal "wumpus physics".
      *
-     * @param dpll     the SAT solver implementation to use for answering 'ask' queries.
+     * @param checker     the SAT solver implementation to use for answering 'ask' queries.
      * @param caveXDim x dimensions of the wumpus world's cave.
      * @param caveYDim y dimensions of the wumpus world's cave.
      */
-    public WumpusKnowledgeBase(int caveXDim, int caveYDim, AgentPosition start, DPLL dpll) {
+    public WumpusKnowledgeBase(int caveXDim, int caveYDim, AgentPosition start, EntailmentChecker checker) {
         this.start = start;
-        this.dpll = dpll;
+        this.checker = checker;
         caveXDimension = caveXDim;
         caveYDimension = caveYDim;
         tellAtemporalPhysicsSentences();
@@ -101,7 +101,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
         if (locX == -1 || locY == -1)
             throw new IllegalStateException("Inconsistent KB, unable to determine current room position.");
 
-        AgentPosition current = null;
+        AgentPosition current;
         if (ask(newSymbol(FACING_NORTH, t)))
             current = new AgentPosition(locX, locY, AgentPosition.Orientation.FACING_NORTH);
         else if (ask(newSymbol(FACING_SOUTH, t)))
@@ -209,7 +209,7 @@ public class WumpusKnowledgeBase extends KnowledgeBase {
 
     public boolean ask(Sentence query) {
         long tStart = System.currentTimeMillis();
-        boolean result = dpll.isEntailed(this, query);
+        boolean result = checker.isEntailed(this, query);
         reasoningTime += System.currentTimeMillis() - tStart;
         return result;
     }

@@ -80,7 +80,7 @@ public class DPLLTest {
 	@Test
 	public void testDPLLSucceedsWithAandNotA() {
 		Sentence sentence = parser.parse("A & ~A");
-		boolean satisfiable = dpll.dpllSatisfiable(sentence);
+		boolean satisfiable = dpll.isSatisfiable(sentence);
 		Assert.assertEquals(false, satisfiable);
 	}
 
@@ -104,7 +104,7 @@ public class DPLLTest {
 	@Test
 	public void testDPLLSucceedsWithStackOverflowBugReport1() {
 		Sentence sentence = (Sentence) parser.parse("(A | ~A) & (A | B)");
-		Assert.assertTrue(dpll.dpllSatisfiable(sentence));
+		Assert.assertTrue(dpll.isSatisfiable(sentence));
 	}
 
 	@Test

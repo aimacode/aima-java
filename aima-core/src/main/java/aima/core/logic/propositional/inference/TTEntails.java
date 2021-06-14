@@ -46,8 +46,9 @@ import aima.core.util.Util;
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
-public class TTEntails {
+public class TTEntails implements EntailmentChecker {
 
 	/**
 	 * function TT-ENTAILS?(KB, &alpha;) returns true or false.
@@ -59,7 +60,7 @@ public class TTEntails {
 	 * 
 	 * @return true if KB entails &alpha;, false otherwise.
 	 */
-	public boolean ttEntails(KnowledgeBase kb, Sentence alpha) {
+	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
 		// symbols <- a list of proposition symbols in KB and &alpha
 		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(kb.asSentence(), alpha));

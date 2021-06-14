@@ -1,8 +1,8 @@
 package aima.core.environment.wumpusworld;
 
 import aima.core.agent.Notifier;
-import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.EntailmentChecker;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
 import aima.core.search.framework.problem.Problem;
@@ -71,16 +71,16 @@ import java.util.*;
  */
 public class EfficientHybridWumpusAgent extends HybridWumpusAgent {
 
-    private WumpusCave modelCave;
-    private Set<Room> visitedRooms = new HashSet<>();
+    private final WumpusCave modelCave;
+    private final Set<Room> visitedRooms = new HashSet<>();
 
     public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start) {
         this(caveXDim, caveYDim, start, new DPLLSatisfiable(), null);
     }
 
-    public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, DPLL satSolver,
+    public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, EntailmentChecker checker,
                                       Notifier notifier) {
-        this(caveXDim, caveYDim, start, new WumpusKnowledgeBase(caveXDim, caveYDim, start, satSolver), notifier);
+        this(caveXDim, caveYDim, start, new WumpusKnowledgeBase(caveXDim, caveYDim, start, checker), notifier);
     }
 
     public EfficientHybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, WumpusKnowledgeBase kb,

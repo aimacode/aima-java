@@ -38,6 +38,6 @@ public class PlFcEntailsDemo {
 
 	private static void displayPLFCEntailment(KnowledgeBase kb, String q) {
 		System.out.println("Running PLFCEntailment on knowledge base"
-				+ " with query " + q + " gives " + plfce.plfcEntails(kb, new PropositionSymbol(q)));
+				+ " with query " + q + " gives " + plfce.isEntailed(kb, new PropositionSymbol(q)));
 	}
 }

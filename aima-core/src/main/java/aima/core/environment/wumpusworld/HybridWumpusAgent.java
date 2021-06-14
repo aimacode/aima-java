@@ -2,8 +2,8 @@ package aima.core.environment.wumpusworld;
 
 import aima.core.agent.Notifier;
 import aima.core.agent.impl.SimpleAgent;
-import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.EntailmentChecker;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GeneralProblem;
@@ -72,7 +72,7 @@ import java.util.*;
 public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> {
 
 	/// persistent: KB, a knowledge base, initially the atemporal "wumpus physics"
-	private WumpusKnowledgeBase kb = null;
+	private WumpusKnowledgeBase kb;
 	protected AgentPosition start;
 	/** The agent's current position. */
 	protected AgentPosition currentPosition;
@@ -80,7 +80,7 @@ public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> 
 	protected int t = 0;
 	/// plan, an action sequence, initially empty
 	protected Queue<WumpusAction> plan = new LinkedList<>(); // FIFOQueue
-	private Notifier notifier;
+	private final Notifier notifier;
 
 	public HybridWumpusAgent() {
 		// i.e. default is a 4x4 world as depicted in figure 7.2
@@ -91,9 +91,9 @@ public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> 
 		this(caveXDim, caveYDim, start, new DPLLSatisfiable(), null);
 	}
 
-	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, DPLL satSolver,
+	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, EntailmentChecker checker,
 							 Notifier notifier) {
-		this(caveXDim, caveYDim, start, new WumpusKnowledgeBase(caveXDim, caveYDim, start, satSolver), notifier);
+		this(caveXDim, caveYDim, start, new WumpusKnowledgeBase(caveXDim, caveYDim, start, checker), notifier);
 	}
 
 	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, WumpusKnowledgeBase kb,

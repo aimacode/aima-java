@@ -58,7 +58,7 @@ import aima.core.util.SetOps;
  * @author Ravi Mohan
  * @author Mike Stampone
  */
-public class PLResolution {
+public class PLResolution implements EntailmentChecker {
 	/**
 	 * PL-RESOLUTION(KB, &alpha;)<br>
 	 * A simple resolution algorithm for propositional logic.
@@ -69,17 +69,17 @@ public class PLResolution {
 	 *            the query, a sentence in propositional logic.
 	 * @return true if KB |= &alpha;, false otherwise.
 	 */
-	public boolean plResolution(KnowledgeBase kb, Sentence alpha) {
+	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
 		// clauses <- the set of clauses in the CNF representation
 		// of KB & ~alpha
 		Set<Clause> clauses = setOfClausesInTheCNFRepresentationOfKBAndNotAlpha(
 				kb, alpha);
 		// new <- {}
-		Set<Clause> newClauses = new LinkedHashSet<Clause>();
+		Set<Clause> newClauses = new LinkedHashSet<>();
 		// loop do
 		do {
 			// for each pair of clauses C_i, C_j in clauses do
-			List<Clause> clausesAsList = new ArrayList<Clause>(clauses);
+			List<Clause> clausesAsList = new ArrayList<>(clauses);
 			for (int i = 0; i < clausesAsList.size() - 1; i++) {
 				Clause ci = clausesAsList.get(i);
 				for (int j = i + 1; j < clausesAsList.size(); j++) {
@@ -117,7 +117,7 @@ public class PLResolution {
 	 *         inputs.
 	 */
 	public Set<Clause> plResolve(Clause ci, Clause cj) {
-		Set<Clause> resolvents = new LinkedHashSet<Clause>();
+		Set<Clause> resolvents = new LinkedHashSet<>();
 
 		// The complementary positive literals from C_i
 		resolvePositiveWithNegative(ci, cj, resolvents);
@@ -163,8 +163,6 @@ public class PLResolution {
 	/**
 	 * Determine whether or not the algorithm should discard tautological
 	 * clauses during processing.
-	 * 
-	 * @param discardTautologies
 	 */
 	public void setDiscardTautologies(boolean discardTautologies) {
 		this.discardTautologies = discardTautologies;
@@ -180,7 +178,7 @@ public class PLResolution {
 		Sentence isContradiction = new ComplexSentence(Connective.AND,
 				kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
 		// the set of clauses in the CNF representation
-		Set<Clause> clauses = new LinkedHashSet<Clause>(
+		Set<Clause> clauses = new LinkedHashSet<>(
 				ConvertToConjunctionOfClauses.convert(isContradiction)
 						.getClauses());
 
@@ -197,18 +195,16 @@ public class PLResolution {
 				c1.getPositiveSymbols(), c2.getNegativeSymbols());
 		// Construct a resolvent clause for each complement found
 		for (PropositionSymbol complement : complementary) {
-			List<Literal> resolventLiterals = new ArrayList<Literal>();
+			List<Literal> resolventLiterals = new ArrayList<>();
 			// Retrieve the literals from c1 that are not the complement
 			for (Literal c1l : c1.getLiterals()) {
-				if (c1l.isNegativeLiteral()
-						|| !c1l.getAtomicSentence().equals(complement)) {
+				if (c1l.isNegativeLiteral() || !c1l.getAtomicSentence().equals(complement)) {
 					resolventLiterals.add(c1l);
 				}
 			}
 			// Retrieve the literals from c2 that are not the complement
 			for (Literal c2l : c2.getLiterals()) {
-				if (c2l.isPositiveLiteral()
-						|| !c2l.getAtomicSentence().equals(complement)) {
+				if (c2l.isPositiveLiteral() || !c2l.getAtomicSentence().equals(complement)) {
 					resolventLiterals.add(c2l);
 				}
 			}
@@ -225,7 +221,7 @@ public class PLResolution {
 	// place).
 	protected void discardTautologies(Set<Clause> clauses) {
 		if (isDiscardTautologies()) {
-			Set<Clause> toDiscard = new HashSet<Clause>();
+			Set<Clause> toDiscard = new HashSet<>();
 			for (Clause c : clauses) {
 				if (c.isTautology()) {
 					toDiscard.add(c);

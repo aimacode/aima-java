@@ -25,7 +25,7 @@ public class OptimizedDPLL implements DPLL {
 	//
 	// START-DPLL
 	@Override
-	public boolean dpllSatisfiable(Sentence s) {
+	public boolean isSatisfiable(Sentence s) {
 		// clauses <- the set of clauses in the CNF representation of s
 		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(s)
 				.getClauses();

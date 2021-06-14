@@ -23,6 +23,6 @@ public class PlResolutionDemo {
 	private static void displayResolutionResults(KnowledgeBase kb, String query) {
 		PLParser parser = new PLParser();
 		System.out.println("Running plResolution of query " + query
-				+ " on knowledgeBase  gives " + plr.plResolution(kb, parser.parse(query)));
+				+ " on knowledgeBase  gives " + plr.isEntailed(kb, parser.parse(query)));
 	}
 }

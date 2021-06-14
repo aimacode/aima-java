@@ -116,7 +116,7 @@ public class KnowledgeBase {
 
 		Sentence alpha = parser.parse(queryString);
 
-		return new TTEntails().ttEntails(this, alpha);
+		return new TTEntails().isEntailed(this, alpha);
 	}
 
 	@Override

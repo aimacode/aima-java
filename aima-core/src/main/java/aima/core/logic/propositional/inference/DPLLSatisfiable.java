@@ -70,7 +70,7 @@ public class DPLLSatisfiable implements DPLL {
 	 * @return true if the sentence is satisfiable, false otherwise.
 	 */
 	@Override
-	public boolean dpllSatisfiable(Sentence s) {
+	public boolean isSatisfiable(Sentence s) {
 		// clauses <- the set of clauses in the CNF representation of s
 		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(s)
 				.getClauses();

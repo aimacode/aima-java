@@ -1,9 +1,10 @@
 package aima.gui.fx.applications.agent;
 
 import aima.core.environment.wumpusworld.*;
-import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.EntailmentChecker;
 import aima.core.logic.propositional.inference.OptimizedDPLL;
+import aima.core.logic.propositional.inference.PLResolution;
 import aima.core.util.Tasks;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -32,7 +33,7 @@ public class WumpusAgentApp extends IntegrableApplication {
 
     protected static String PARAM_CAVE = "cave";
     protected static String PARAM_AGENT = "agent";
-    protected static String PARAM_SAT_SOLVER = "satSolver";
+    protected static String PARAM_CHECKER = "checker";
     protected static String PARAM_VIEW = "view";
 
     protected TaskExecutionPaneCtrl taskPaneCtrl;
@@ -76,7 +77,7 @@ public class WumpusAgentApp extends IntegrableApplication {
         p1.setDefaultValueIndex(2);
         Parameter p2 = new Parameter(PARAM_AGENT, "Hybrid Wumpus Agent", "Efficient Hybrid Wumpus Agent");
         p2.setDefaultValueIndex(1);
-        Parameter p3 = new Parameter(PARAM_SAT_SOLVER, "DPLLSatisfiable", "OptimizedDPLL");
+        Parameter p3 = new Parameter(PARAM_CHECKER, "DPLLSatisfiable", "OptimizedDPLL", "PLResolution (too slow!)");
         p3.setDefaultValueIndex(1);
         Parameter p4 = new Parameter(PARAM_VIEW, "Default", "Hide Room Content", "Show KB");
         return Arrays.asList(p1, p2, p3, p4);
@@ -115,24 +116,27 @@ public class WumpusAgentApp extends IntegrableApplication {
         }
         env = new WumpusEnvironment(cave);
 
-        DPLL dpll = null;
-        switch (taskPaneCtrl.getParamValueIndex(PARAM_SAT_SOLVER)) {
+        EntailmentChecker checker = null;
+        switch (taskPaneCtrl.getParamValueIndex(PARAM_CHECKER)) {
             case 0:
-                dpll = new DPLLSatisfiable();
+                checker = new DPLLSatisfiable();
                 break;
             case 1:
-                dpll = new OptimizedDPLL();
+                checker = new OptimizedDPLL();
+                break;
+            case 2:
+                checker = new PLResolution();
                 break;
         }
 
         switch (taskPaneCtrl.getParamValueIndex(PARAM_AGENT)) {
             case 0:
                 agent = new HybridWumpusAgent(cave.getCaveXDimension(), cave.getCaveYDimension(),
-                        cave.getStart(), dpll, env);
+                        cave.getStart(), checker, env);
                 break;
             case 1:
                 agent = new EfficientHybridWumpusAgent(cave.getCaveXDimension(), cave.getCaveYDimension(),
-                        cave.getStart(), dpll, env);
+                        cave.getStart(), checker, env);
                 break;
         }
         env.addEnvironmentListener(envViewCtrl);

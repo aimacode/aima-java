@@ -69,7 +69,7 @@ public class PLFCEntails {
 	 * @throws IllegalArgumentException
 	 *             if KB contains any non-definite clauses.
 	 */
-	public boolean plfcEntails(KnowledgeBase kb, PropositionSymbol q) {
+	public boolean isEntailed(KnowledgeBase kb, PropositionSymbol q) {
 		// count <- a table, where count[c] is the number of symbols in c's
 		// premise
 		Map<Clause, Integer> count = initializeCount(kb);

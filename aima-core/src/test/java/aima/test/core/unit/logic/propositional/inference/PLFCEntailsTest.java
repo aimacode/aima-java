@@ -35,7 +35,7 @@ public class PLFCEntailsTest {
 		kb.tell("B");
 		PropositionSymbol q = (PropositionSymbol) parser.parse("Q");
 		
-		Assert.assertEquals(true, plfce.plfcEntails(kb, q));
+		Assert.assertEquals(true, plfce.isEntailed(kb, q));
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -50,6 +50,6 @@ public class PLFCEntailsTest {
 		kb.tell("B");
 		PropositionSymbol q = (PropositionSymbol) parser.parse("Q");
 		
-		Assert.assertEquals(true, plfce.plfcEntails(kb, q));
+		Assert.assertEquals(true, plfce.isEntailed(kb, q));
 	}
 }

@@ -20,17 +20,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * @author Ciaran O'Reilly
  * 
  */
-public interface DPLL {
-
-	/**
-	 * DPLL-SATISFIABLE?(s)<br>
-	 * Checks the satisfiability of a sentence in propositional logic.
-	 * 
-	 * @param s
-	 *            a sentence in propositional logic.
-	 * @return true if the sentence is satisfiable, false otherwise.
-	 */
-	boolean dpllSatisfiable(Sentence s);
+public interface DPLL extends SatisfiabilityChecker, EntailmentChecker {
 
 	/**
 	 * DPLL(clauses, symbols, model)<br>
@@ -47,14 +37,5 @@ public interface DPLL {
 	boolean dpll(Set<Clause> clauses, List<PropositionSymbol> symbols,
 			Model model);
 
-	/**
-	 * Determine if KB |= &alpha;, i.e. alpha is entailed by KB.
-	 * 
-	 * @param kb
-	 *            a Knowledge Base in propositional logic.
-	 * @param alpha
-	 *            a propositional sentence.
-	 * @return true, if &alpha; is entailed by KB, false otherwise.
-	 */
-	boolean isEntailed(KnowledgeBase kb, Sentence alpha);
+
 }
