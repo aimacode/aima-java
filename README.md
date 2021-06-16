@@ -65,7 +65,7 @@ Java implementation of algorithms from [Russell](http://www.cs.berkeley.edu/~rus
 |7.1|236|KB-Agent|[KBAgent](/aima-core/src/main/java/aima/core/logic/propositional/agent/KBAgent.java)|
 |7.7|244|Propositional-Logic-Sentence|[Sentence](/aima-core/src/main/java/aima/core/logic/propositional/parsing/ast/Sentence.java)|
 |7.10|248|TT-Entails|[TTEntails](/aima-core/src/main/java/aima/core/logic/propositional/inference/TTEntails.java)|
-|7|253|Convert-to-CNF|[ConvertToCNF](/aima-core/src/main/java/aima/core/logic/propositional/visitors/ConvertToCNF.java)|
+|7|253|Convert-to-CNF|[ConvertToCNF](/aima-core/src/main/java/aima/core/logic/propositional/transformations/ConvertToCNF.java)|
 |7.12|255|PL-Resolution|[PLResolution](/aima-core/src/main/java/aima/core/logic/propositional/inference/PLResolution.java)|
 |7.15|258|PL-FC-Entails?|[PLFCEntails](/aima-core/src/main/java/aima/core/logic/propositional/inference/PLFCEntails.java)|
 |7.17|261|DPLL-Satisfiable?|[DPLLSatisfiable](/aima-core/src/main/java/aima/core/logic/propositional/inference/DPLLSatisfiable.java)|
