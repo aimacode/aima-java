@@ -13,7 +13,6 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import aima.core.logic.propositional.inference.DPLL;
-import aima.core.logic.propositional.inference.DPLLSatisfiable;
 import aima.core.logic.propositional.inference.OptimizedDPLL;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
@@ -21,8 +20,8 @@ import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
-import aima.core.logic.propositional.visitors.SymbolCollector;
+import aima.core.logic.propositional.transformations.ConvertToConjunctionOfClauses;
+import aima.core.logic.propositional.transformations.SymbolCollector;
 
 /**
  * @author Ravi Mohan
@@ -37,7 +36,7 @@ public class DPLLTest {
 	@Parameters(name = "{index}: dpll={0}")
     public static Collection<Object[]> inferenceAlgorithmSettings() {
         return Arrays.asList(new Object[][] {
-        		{new DPLLSatisfiable()}, 
+        		{new DPLL()},
         		{new OptimizedDPLL()}   
         });
     }
@@ -53,7 +52,7 @@ public class DPLLTest {
 		model = model.union(new PropositionSymbol("A"), true).union(
 				new PropositionSymbol("B"), true);
 		Sentence sentence = parser.parse("A & B & (A | B)");
-		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(sentence)
+		Set<Clause> clauses = ConvertToConjunctionOfClauses.apply(sentence)
 				.getClauses();
 		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(sentence));
@@ -68,7 +67,7 @@ public class DPLLTest {
 		model = model.union(new PropositionSymbol("A"), true).union(
 				new PropositionSymbol("B"), false);
 		Sentence sentence = parser.parse("(A | B) & (A => B)");
-		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(sentence)
+		Set<Clause> clauses = ConvertToConjunctionOfClauses.apply(sentence)
 				.getClauses();
 		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(sentence));
@@ -131,7 +130,7 @@ public class DPLLTest {
 				.union(new PropositionSymbol("B"), false)
 				.union(new PropositionSymbol("C"), true);
 		Sentence sentence = parser.parse("((A | B) | C)");
-		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(sentence)
+		Set<Clause> clauses = ConvertToConjunctionOfClauses.apply(sentence)
 				.getClauses();
 		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(
 				SymbolCollector.getSymbolsFrom(sentence));

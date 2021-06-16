@@ -13,7 +13,7 @@ import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
+import aima.core.logic.propositional.transformations.ConvertToConjunctionOfClauses;
 import aima.core.util.SetOps;
 
 /**
@@ -179,7 +179,7 @@ public class PLResolution implements EntailmentChecker {
 				kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
 		// the set of clauses in the CNF representation
 		Set<Clause> clauses = new LinkedHashSet<>(
-				ConvertToConjunctionOfClauses.convert(isContradiction)
+				ConvertToConjunctionOfClauses.apply(isContradiction)
 						.getClauses());
 
 		discardTautologies(clauses);

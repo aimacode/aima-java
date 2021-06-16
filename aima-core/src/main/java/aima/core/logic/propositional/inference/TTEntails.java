@@ -7,7 +7,7 @@ import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.SymbolCollector;
+import aima.core.logic.propositional.transformations.SymbolCollector;
 import aima.core.util.Util;
 
 /**

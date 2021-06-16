@@ -1,7 +1,7 @@
 package aima.gui.fx.applications.agent;
 
 import aima.core.environment.wumpusworld.*;
-import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.EntailmentChecker;
 import aima.core.logic.propositional.inference.OptimizedDPLL;
 import aima.core.logic.propositional.inference.PLResolution;
@@ -119,7 +119,7 @@ public class WumpusAgentApp extends IntegrableApplication {
         EntailmentChecker checker = null;
         switch (taskPaneCtrl.getParamValueIndex(PARAM_CHECKER)) {
             case 0:
-                checker = new DPLLSatisfiable();
+                checker = new DPLL();
                 break;
             case 1:
                 checker = new OptimizedDPLL();

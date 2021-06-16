@@ -12,8 +12,8 @@ import aima.core.logic.propositional.kb.data.ConjunctionOfClauses;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
-import aima.core.logic.propositional.visitors.SymbolCollector;
+import aima.core.logic.propositional.transformations.ConvertToConjunctionOfClauses;
+import aima.core.logic.propositional.transformations.SymbolCollector;
 
 /**
  * @author Ravi Mohan
@@ -46,7 +46,7 @@ public class KnowledgeBase {
 	public void tell(Sentence aSentence) {
 		if (!(sentences.contains(aSentence))) {
 			sentences.add(aSentence);
-			asCNF = asCNF.extend(ConvertToConjunctionOfClauses.convert(aSentence).getClauses());
+			asCNF = asCNF.extend(ConvertToConjunctionOfClauses.apply(aSentence).getClauses());
 			symbols.addAll(SymbolCollector.getSymbolsFrom(aSentence));
 		}
 	}

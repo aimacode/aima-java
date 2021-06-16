@@ -8,7 +8,7 @@ import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
+import aima.core.logic.propositional.transformations.ConvertToConjunctionOfClauses;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 261.<br>
@@ -106,6 +106,6 @@ public class SATPlan {
 	//
 	protected Set<Clause> translateToSAT(Describe init, Describe transition, Describe goal, int t) {
 		Sentence s = ComplexSentence.newConjunction(init.assertions(t), transition.assertions(t), goal.assertions(t));		
-		return ConvertToConjunctionOfClauses.convert(s).getClauses();
+		return ConvertToConjunctionOfClauses.apply(s).getClauses();
 	}
 }

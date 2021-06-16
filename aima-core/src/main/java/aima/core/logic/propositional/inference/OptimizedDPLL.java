@@ -1,40 +1,19 @@
 package aima.core.logic.propositional.inference;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Literal;
 import aima.core.logic.propositional.kb.data.Model;
-import aima.core.logic.propositional.parsing.ast.ComplexSentence;
-import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
-import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
-import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.Tasks;
 import aima.core.util.Util;
 import aima.core.util.datastructure.Pair;
 
-public class OptimizedDPLL implements DPLL {
-
-	//
-	// START-DPLL
-	@Override
-	public boolean isSatisfiable(Sentence s) {
-		// clauses <- the set of clauses in the CNF representation of s
-		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(s)
-				.getClauses();
-		// symbols <- a list of the proposition symbols in s
-		List<PropositionSymbol> symbols = getPropositionSymbolsInSentence(s);
-
-		// return DPLL(clauses, symbols, {})
-		return dpll(clauses, symbols, new Model());
-	}
+public class OptimizedDPLL extends DPLL {
 
 	/**
 	 * DPLL(clauses, symbols, model)<br>
@@ -79,8 +58,7 @@ public class OptimizedDPLL implements DPLL {
 		clauses = unknownClauses;
 
 		// P, value <- FIND-PURE-SYMBOL(symbols, clauses, model)
-		Pair<PropositionSymbol, Boolean> pAndValue = findPureSymbol(symbols,
-				clauses, model);
+		Pair<PropositionSymbol, Boolean> pAndValue = findPureSymbol(symbols, clauses, model);
 		// if P is non-null then
 		if (pAndValue != null) {
 			// return DPLL(clauses, symbols - P, model U {P = value})
@@ -106,43 +84,10 @@ public class OptimizedDPLL implements DPLL {
 				|| callDPLL(clauses, rest, model, p, false);
 	}
 
-	/**
-	 * Determine if KB |= &alpha;, i.e. alpha is entailed by KB.
-	 * 
-	 * @param kb
-	 *            a Knowledge Base in propositional logic.
-	 * @param alpha
-	 *            a propositional sentence.
-	 * @return true, if &alpha; is entailed by KB, false otherwise.
-	 */
-	@Override
-	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
-		// AIMA3e p.g. 260: kb |= alpha, can be done by testing
-		// unsatisfiability of kb & ~alpha.
-		Set<Clause>             kbAndNotAlpha = new LinkedHashSet<>();
-		Sentence                notQuery      = new ComplexSentence(Connective.NOT, alpha);
-		Set<PropositionSymbol>  symbols       = new LinkedHashSet<>();
-		List<PropositionSymbol> querySymbols  = new ArrayList<>(SymbolCollector.getSymbolsFrom(notQuery));
-		
-		kbAndNotAlpha.addAll(kb.asCNF());
-		kbAndNotAlpha.addAll(ConvertToConjunctionOfClauses.convert(notQuery).getClauses());
-		symbols.addAll(querySymbols);
-		symbols.addAll(kb.getSymbols());
-
-		return !dpll(kbAndNotAlpha, new ArrayList<>(symbols), new Model());
-	}
-	// END-DPLL
-	//
 	
 	//
 	// PROTECTED
 	//
-	
-	// Note: Override this method if you wish to change the initial variable
-	// ordering when dpllSatisfiable is called.
-	protected List<PropositionSymbol> getPropositionSymbolsInSentence(Sentence s) {
-		return new ArrayList<>(SymbolCollector.getSymbolsFrom(s));
-	}
 	
 	protected boolean callDPLL(Set<Clause> clauses, List<PropositionSymbol> symbols,
 			Model model, PropositionSymbol p, boolean value) {
@@ -173,8 +118,6 @@ public class OptimizedDPLL implements DPLL {
 	 * @param symbols
 	 *            a list of currently unassigned symbols in the model (to be
 	 *            checked if pure or not).
-	 * @param clauses
-	 * @param model
 	 * @return a proposition symbol and value pair identifying a pure symbol and
 	 *         a value to be assigned to it, otherwise null if no pure symbol
 	 *         can be identified.
@@ -222,8 +165,7 @@ public class OptimizedDPLL implements DPLL {
 			result = new Pair<>(candidatePurePositiveSymbols.iterator().next(), true);
 		} // We have a negative pure symbol
 		else if (candidatePureNegativeSymbols.size() > 0) {
-			result = new Pair<PropositionSymbol, Boolean>(
-					candidatePureNegativeSymbols.iterator().next(), false);
+			result = new Pair<>(candidatePureNegativeSymbols.iterator().next(), false);
 		}
 
 		return result;
@@ -247,9 +189,7 @@ public class OptimizedDPLL implements DPLL {
 	 * chaining with definite clauses, and indeed, if the CNF expression
 	 * contains only definite clauses then DPLL essentially replicates forward
 	 * chaining.</quote>
-	 * 
-	 * @param clauses
-	 * @param model
+	 *
 	 * @return a proposition symbol and value pair identifying a unit clause and
 	 *         a value to be assigned to it, otherwise null if no unit clause
 	 *         can be identified.
@@ -305,19 +245,6 @@ public class OptimizedDPLL implements DPLL {
 			}
 		}
 
-		return result;
-	}
-
-	// symbols - P
-	protected List<PropositionSymbol> minus(List<PropositionSymbol> symbols,
-			PropositionSymbol p) {
-		List<PropositionSymbol> result = new ArrayList<>(
-				symbols.size());
-		for (PropositionSymbol s : symbols) {
-			// symbols - P
-			if (!p.equals(s))
-				result.add(s);
-		}
 		return result;
 	}
 }

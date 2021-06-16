@@ -10,8 +10,8 @@ import java.util.Set;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
-import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
-import aima.core.logic.propositional.visitors.SymbolCollector;
+import aima.core.logic.propositional.transformations.ConvertToConjunctionOfClauses;
+import aima.core.logic.propositional.transformations.SymbolCollector;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 258.<br>
@@ -123,7 +123,7 @@ public class PLFCEntails {
 		// premise
 		Map<Clause, Integer> count = new HashMap<Clause, Integer>();
 
-		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(
+		Set<Clause> clauses = ConvertToConjunctionOfClauses.apply(
 				kb.asSentence()).getClauses();
 		for (Clause c : clauses) {
 			if (!c.isDefiniteClause()) {

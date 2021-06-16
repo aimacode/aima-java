@@ -1,6 +1,6 @@
 package aima.gui.demo.logic;
 
-import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.parsing.PLParser;
 
 /**
@@ -8,7 +8,7 @@ import aima.core.logic.propositional.parsing.PLParser;
  * 
  */
 public class DpllDemo {
-	private static DPLLSatisfiable dpll = new DPLLSatisfiable();
+	private static DPLL dpll = new DPLL();
 
 	public static void main(String[] args) {
 		displayDPLLSatisfiableStatus("A & B");

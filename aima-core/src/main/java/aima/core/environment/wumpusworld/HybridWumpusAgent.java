@@ -2,7 +2,7 @@ package aima.core.environment.wumpusworld;
 
 import aima.core.agent.Notifier;
 import aima.core.agent.impl.SimpleAgent;
-import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.EntailmentChecker;
 import aima.core.search.framework.Metrics;
 import aima.core.search.framework.SearchForActions;
@@ -88,7 +88,7 @@ public class HybridWumpusAgent extends SimpleAgent<WumpusPercept, WumpusAction> 
 	}
 
 	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start) {
-		this(caveXDim, caveYDim, start, new DPLLSatisfiable(), null);
+		this(caveXDim, caveYDim, start, new DPLL(), null);
 	}
 
 	public HybridWumpusAgent(int caveXDim, int caveYDim, AgentPosition start, EntailmentChecker checker,

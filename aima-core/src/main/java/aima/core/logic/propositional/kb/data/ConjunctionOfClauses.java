@@ -17,7 +17,7 @@ import java.util.Set;
  * 
  */
 public class ConjunctionOfClauses {
-	private Set<Clause> clauses = new LinkedHashSet<Clause>();
+	private Set<Clause> clauses = new LinkedHashSet<>();
 	//
 	private String cachedStringRep = null;
 	private int cachedHashCode = -1;

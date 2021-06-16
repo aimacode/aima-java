@@ -6,7 +6,7 @@ import aima.core.logic.propositional.inference.WalkSAT;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
+import aima.core.logic.propositional.transformations.ConvertToConjunctionOfClauses;
 
 /**
  * @author Ravi Mohan
@@ -20,7 +20,7 @@ public class WalkSATExperiment {
 	@Test
 	public void testWalkSat() {
 		WalkSAT walkSAT = new WalkSAT();
-		Model m = walkSAT.walkSAT(ConvertToConjunctionOfClauses.convert(parser.parse("A & B"))
+		Model m = walkSAT.walkSAT(ConvertToConjunctionOfClauses.apply(parser.parse("A & B"))
 				.getClauses(), 0.5, 1000);
 		if (m == null) {
 			System.out.println("failure");
@@ -32,7 +32,7 @@ public class WalkSATExperiment {
 	@Test
 	public void testWalkSat2() {
 		WalkSAT walkSAT = new WalkSAT();
-		Model m = walkSAT.walkSAT(ConvertToConjunctionOfClauses.convert(parser.parse("A & ~B"))
+		Model m = walkSAT.walkSAT(ConvertToConjunctionOfClauses.apply(parser.parse("A & ~B"))
 				.getClauses(), 0.5, 1000);
 		if (m == null) {
 			System.out.println("failure");
@@ -52,7 +52,7 @@ public class WalkSATExperiment {
 		kb.tell("A");
 		kb.tell("B");
 		WalkSAT walkSAT = new WalkSAT();
-		Model m = walkSAT.walkSAT(ConvertToConjunctionOfClauses.convert(kb.asSentence())
+		Model m = walkSAT.walkSAT(ConvertToConjunctionOfClauses.apply(kb.asSentence())
 				.getClauses(), 0.5, 1000);
 		if (m == null) {
 			System.out.println("failure");

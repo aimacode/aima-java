@@ -1,7 +1,7 @@
 package aima.test.core.unit.environment.wumpusworld;
 
 import aima.core.environment.wumpusworld.*;
-import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.DPLL;
 import aima.core.logic.propositional.inference.EntailmentChecker;
 import aima.core.logic.propositional.inference.OptimizedDPLL;
 import org.junit.Assert;
@@ -28,7 +28,7 @@ public class WumpusKnowledgeBaseTest {
 	@Parameters(name = "{index}: dpll={0}")
     public static Collection<Object[]> inferenceAlgorithmSettings() {
         return Arrays.asList(new Object[][] {
-        		{new DPLLSatisfiable()}, 
+        		{new DPLL()},
         		{new OptimizedDPLL()}   
         });
     }

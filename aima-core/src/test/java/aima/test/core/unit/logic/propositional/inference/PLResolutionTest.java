@@ -15,7 +15,7 @@ import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
+import aima.core.logic.propositional.transformations.ConvertToConjunctionOfClauses;
 import aima.core.util.SetOps;
 
 /**
@@ -44,11 +44,11 @@ public class PLResolutionTest {
 	@Test
 	public void testPLResolveWithOneLiteralMatching() {
 		Clause one = ConvertToConjunctionOfClauses
-				.convert(parser.parse("A | B")).getClauses().iterator().next();
+				.apply(parser.parse("A | B")).getClauses().iterator().next();
 		Clause two = ConvertToConjunctionOfClauses
-				.convert(parser.parse("~B | C")).getClauses().iterator().next();
+				.apply(parser.parse("~B | C")).getClauses().iterator().next();
 		Clause expected = ConvertToConjunctionOfClauses
-				.convert(parser.parse("A | C")).getClauses().iterator().next();
+				.apply(parser.parse("A | C")).getClauses().iterator().next();
 
 		Set<Clause> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(1, resolvents.size());
@@ -58,9 +58,9 @@ public class PLResolutionTest {
 	@Test
 	public void testPLResolveWithNoLiteralMatching() {
 		Clause one = ConvertToConjunctionOfClauses
-				.convert(parser.parse("A | B")).getClauses().iterator().next();
+				.apply(parser.parse("A | B")).getClauses().iterator().next();
 		Clause two = ConvertToConjunctionOfClauses
-				.convert(parser.parse("C | D")).getClauses().iterator().next();
+				.apply(parser.parse("C | D")).getClauses().iterator().next();
 
 		Set<Clause> resolvents = resolution.plResolve(one, two);
 		Assert.assertEquals(0, resolvents.size());
@@ -68,9 +68,9 @@ public class PLResolutionTest {
 
 	@Test
 	public void testPLResolveWithOneLiteralSentencesMatching() {
-		Clause one = ConvertToConjunctionOfClauses.convert(parser.parse("A"))
+		Clause one = ConvertToConjunctionOfClauses.apply(parser.parse("A"))
 				.getClauses().iterator().next();
-		Clause two = ConvertToConjunctionOfClauses.convert(parser.parse("~A"))
+		Clause two = ConvertToConjunctionOfClauses.apply(parser.parse("~A"))
 				.getClauses().iterator().next();
 
 		Set<Clause> resolvents = resolution.plResolve(one, two);
@@ -82,12 +82,12 @@ public class PLResolutionTest {
 	@Test
 	public void testPLResolveWithTwoLiteralsMatching() {
 		Clause one = ConvertToConjunctionOfClauses
-				.convert(parser.parse("~P21 | B11")).getClauses().iterator()
+				.apply(parser.parse("~P21 | B11")).getClauses().iterator()
 				.next();
 		Clause two = ConvertToConjunctionOfClauses
-				.convert(parser.parse("~B11 | P21 | P12")).getClauses()
+				.apply(parser.parse("~B11 | P21 | P12")).getClauses()
 				.iterator().next();
-		Set<Clause> expected = ConvertToConjunctionOfClauses.convert(
+		Set<Clause> expected = ConvertToConjunctionOfClauses.apply(
 				parser.parse("(P12 | P21 | ~P21) & (B11 | P12 | ~B11)"))
 				.getClauses();
 

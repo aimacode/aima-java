@@ -5,7 +5,7 @@ import aima.core.environment.wumpusworld.EfficientHybridWumpusAgent;
 import aima.core.environment.wumpusworld.HybridWumpusAgent;
 import aima.core.environment.wumpusworld.WumpusCave;
 import aima.core.environment.wumpusworld.WumpusEnvironment;
-import aima.core.logic.propositional.inference.DPLLSatisfiable;
+import aima.core.logic.propositional.inference.DPLL;
 
 /**
  * Demonstrates, how a hybrid search- and logic-based agent tries to find gold in a Wumpus cave.
@@ -26,7 +26,7 @@ public class WumpusAgentDemo {
         HybridWumpusAgent agent;
         agent = new HybridWumpusAgent
         // agent = new EfficientHybridWumpusAgent
-                (cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart(), new DPLLSatisfiable(), env);
+                (cave.getCaveXDimension(), cave.getCaveYDimension(), cave.getStart(), new DPLL(), env);
 
         env.notify("The cave:\n" + cave.toString());
         env.addAgent(agent);

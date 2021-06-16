@@ -9,7 +9,7 @@ import org.junit.Test;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
-import aima.core.logic.propositional.visitors.SymbolCollector;
+import aima.core.logic.propositional.transformations.SymbolCollector;
 
 /**
  * @author Ravi Mohan
