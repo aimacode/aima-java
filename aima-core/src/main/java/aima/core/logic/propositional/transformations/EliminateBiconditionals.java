@@ -15,7 +15,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * @author Ruediger Lunde
  * 
  */
-public class BiconditionalElimination extends AbstractPLVisitor<Object> {
+public class EliminateBiconditionals extends AbstractPLVisitor<Object> {
 
 	/**
 	 * Eliminate the biconditionals from a sentence.
@@ -26,7 +26,7 @@ public class BiconditionalElimination extends AbstractPLVisitor<Object> {
 	 *         eliminated.
 	 */
 	public static Sentence apply(Sentence sentence) {
-		return sentence.accept(new BiconditionalElimination(), null);
+		return sentence.accept(new EliminateBiconditionals(), null);
 	}
 
 	@Override
@@ -37,13 +37,10 @@ public class BiconditionalElimination extends AbstractPLVisitor<Object> {
 			// with (&alpha; => &beta;) & (&beta; => &alpha;)
 			Sentence alpha = s.getSimplerSentence(0).accept(this, arg);
 			Sentence beta = s.getSimplerSentence(1).accept(this, arg);
-			Sentence alphaImpliesBeta = new ComplexSentence(
-					Connective.IMPLICATION, alpha, beta);
-			Sentence betaImpliesAlpha = new ComplexSentence(
-					Connective.IMPLICATION, beta, alpha);
+			Sentence alphaImpliesBeta = new ComplexSentence(Connective.IMPLICATION, alpha, beta);
+			Sentence betaImpliesAlpha = new ComplexSentence(Connective.IMPLICATION, beta, alpha);
 
-			result = new ComplexSentence(Connective.AND, alphaImpliesBeta,
-					betaImpliesAlpha);
+			result = new ComplexSentence(Connective.AND, alphaImpliesBeta, betaImpliesAlpha);
 		} else {
 			result = super.visitBinarySentence(s, arg);
 		}

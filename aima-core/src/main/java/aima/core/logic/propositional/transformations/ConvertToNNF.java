@@ -24,7 +24,7 @@ public class ConvertToNNF {
 	 *         negation normal form.
 	 */
 	public static Sentence apply(Sentence s) {
-		Sentence biconditionalsRemoved = BiconditionalElimination.apply(s);
+		Sentence biconditionalsRemoved = EliminateBiconditionals.apply(s);
 		Sentence implicationsRemoved = EliminateImplications.apply(biconditionalsRemoved);
 		return MoveNotInwards.apply(implicationsRemoved);
 	}
