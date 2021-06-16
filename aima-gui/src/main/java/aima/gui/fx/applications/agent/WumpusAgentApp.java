@@ -1,10 +1,7 @@
 package aima.gui.fx.applications.agent;
 
 import aima.core.environment.wumpusworld.*;
-import aima.core.logic.propositional.inference.DPLL;
-import aima.core.logic.propositional.inference.EntailmentChecker;
-import aima.core.logic.propositional.inference.OptimizedDPLL;
-import aima.core.logic.propositional.inference.PLResolution;
+import aima.core.logic.propositional.inference.*;
 import aima.core.util.Tasks;
 import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
@@ -77,7 +74,7 @@ public class WumpusAgentApp extends IntegrableApplication {
         p1.setDefaultValueIndex(2);
         Parameter p2 = new Parameter(PARAM_AGENT, "Hybrid Wumpus Agent", "Efficient Hybrid Wumpus Agent");
         p2.setDefaultValueIndex(1);
-        Parameter p3 = new Parameter(PARAM_CHECKER, "DPLLSatisfiable", "OptimizedDPLL", "PLResolution (too slow!)");
+        Parameter p3 = new Parameter(PARAM_CHECKER, "DPLLSatisfiable", "OptimizedDPLL", "OptimizedPLResolution (too slow!)");
         p3.setDefaultValueIndex(1);
         Parameter p4 = new Parameter(PARAM_VIEW, "Default", "Hide Room Content", "Show KB");
         return Arrays.asList(p1, p2, p3, p4);
@@ -125,7 +122,7 @@ public class WumpusAgentApp extends IntegrableApplication {
                 checker = new OptimizedDPLL();
                 break;
             case 2:
-                checker = new PLResolution();
+                checker = new OptimizedPLResolution();
                 break;
         }
 

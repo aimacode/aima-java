@@ -1,7 +1,6 @@
 package aima.core.logic.propositional.inference;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,6 +56,7 @@ import aima.core.util.SetOps;
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
  * @author Mike Stampone
+ * @author Ruediger Lunde
  */
 public class PLResolution implements EntailmentChecker {
 	/**
@@ -72,18 +72,17 @@ public class PLResolution implements EntailmentChecker {
 	public boolean isEntailed(KnowledgeBase kb, Sentence alpha) {
 		// clauses <- the set of clauses in the CNF representation
 		// of KB & ~alpha
-		Set<Clause> clauses = setOfClausesInTheCNFRepresentationOfKBAndNotAlpha(
-				kb, alpha);
+		Set<Clause> clauses = convertKBAndNotAlphaIntoCNF(kb, alpha);
 		// new <- {}
 		Set<Clause> newClauses = new LinkedHashSet<>();
 		// loop do
-		do {
+		while (true) {
 			// for each pair of clauses C_i, C_j in clauses do
-			List<Clause> clausesAsList = new ArrayList<>(clauses);
-			for (int i = 0; i < clausesAsList.size() - 1; i++) {
-				Clause ci = clausesAsList.get(i);
-				for (int j = i + 1; j < clausesAsList.size(); j++) {
-					Clause cj = clausesAsList.get(j);
+			List<Clause> clausesList = new ArrayList<>(clauses);
+			for (int i = 0; i < clausesList.size() - 1; i++) {
+				Clause ci = clausesList.get(i);
+				for (int j = i + 1; j < clausesList.size(); j++) {
+					Clause cj = clausesList.get(j);
 					// resolvents <- PL-RESOLVE(C_i, C_j)
 					Set<Clause> resolvents = plResolve(ci, cj);
 					// if resolvents contains the empty clause then return true
@@ -101,8 +100,7 @@ public class PLResolution implements EntailmentChecker {
 
 			// clauses <- clauses U new
 			clauses.addAll(newClauses);
-
-		} while (true);
+		}
 	}
 
 	/**
@@ -168,11 +166,8 @@ public class PLResolution implements EntailmentChecker {
 		this.discardTautologies = discardTautologies;
 	}
 
-	//
-	// PROTECTED
-	//
-	protected Set<Clause> setOfClausesInTheCNFRepresentationOfKBAndNotAlpha(
-			KnowledgeBase kb, Sentence alpha) {
+
+	protected Set<Clause> convertKBAndNotAlphaIntoCNF(KnowledgeBase kb, Sentence alpha) {
 
 		// KB & ~alpha;
 		Sentence isContradiction = new ComplexSentence(Connective.AND,
@@ -217,17 +212,9 @@ public class PLResolution implements EntailmentChecker {
 		}
 	}
 
-	// Utility routine for removing the tautological clauses from a set (in
-	// place).
+	// Utility routine for removing the tautological clauses from a set (in place).
 	protected void discardTautologies(Set<Clause> clauses) {
-		if (isDiscardTautologies()) {
-			Set<Clause> toDiscard = new HashSet<>();
-			for (Clause c : clauses) {
-				if (c.isTautology()) {
-					toDiscard.add(c);
-				}
-			}
-			clauses.removeAll(toDiscard);
-		}
+		if (isDiscardTautologies())
+			clauses.removeIf(Clause::isTautology);
 	}
 }

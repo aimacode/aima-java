@@ -108,7 +108,7 @@ public class PLResolutionTest {
 		Sentence alpha = parser.parse("P11");
 
 		boolean b = resolution.isEntailed(kb, alpha);
-		Assert.assertEquals(false, b);
+		Assert.assertFalse(b);
 	}
 
 	@Test
@@ -118,7 +118,7 @@ public class PLResolutionTest {
 		Sentence alpha = parser.parse("B");
 
 		boolean b = resolution.isEntailed(kb, alpha);
-		Assert.assertEquals(true, b);
+		Assert.assertTrue(b);
 	}
 
 	@Test
@@ -128,7 +128,7 @@ public class PLResolutionTest {
 		Sentence alpha = parser.parse("~P11");
 
 		boolean b = resolution.isEntailed(kb, alpha);
-		Assert.assertEquals(true, b);
+		Assert.assertTrue(b);
 	}
 
 	@Test
@@ -138,7 +138,7 @@ public class PLResolutionTest {
 		Sentence alpha = parser.parse("B");
 
 		boolean b = resolution.isEntailed(kb, alpha);
-		Assert.assertEquals(false, b);
+		Assert.assertFalse(b);
 	}
 
 	@Test
@@ -148,7 +148,7 @@ public class PLResolutionTest {
 		Sentence alpha = parser.parse("~B11");
 
 		boolean b = resolution.isEntailed(kb, alpha);
-		Assert.assertEquals(false, b);
+		Assert.assertFalse(b);
 	}
 	
 	@Test
@@ -159,7 +159,7 @@ public class PLResolutionTest {
 		Sentence alpha = parser.parse("~P21");
 
 		boolean b = resolution.isEntailed(kb, alpha);
-		Assert.assertEquals(true, b);
+		Assert.assertTrue(b);
 	}
 
 	@Test
@@ -170,7 +170,7 @@ public class PLResolutionTest {
 		Sentence alpha = parser.parse("B");
 
 		boolean b = resolution.isEntailed(kb, alpha);
-		Assert.assertEquals(false, b); // false as KB says nothing about B
+		Assert.assertFalse(b); // false as KB says nothing about B
 	}
 
 	@Test
@@ -187,7 +187,7 @@ public class PLResolutionTest {
 		
 		Sentence alpha = parser.parse("P00");
 		boolean b = resolution.isEntailed(kb, alpha);
-		Assert.assertEquals(true, b);
+		Assert.assertTrue(b);
 	}
 	
 	@Test
@@ -204,6 +204,6 @@ public class PLResolutionTest {
 		
 		Sentence alpha = parser.parse("P00");
 		boolean b = resolution.isEntailed(kb, alpha);
-		Assert.assertEquals(true, b);
+		Assert.assertTrue(b);
 	}
 }
