@@ -25,7 +25,7 @@ public class ConvertToNNF {
 	 */
 	public static Sentence apply(Sentence s) {
 		Sentence biconditionalsRemoved = BiconditionalElimination.apply(s);
-		Sentence implicationsRemoved = ImplicationElimination.apply(biconditionalsRemoved);
+		Sentence implicationsRemoved = EliminateImplications.apply(biconditionalsRemoved);
 		return MoveNotInwards.apply(implicationsRemoved);
 	}
 }

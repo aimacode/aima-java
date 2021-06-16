@@ -15,7 +15,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * @author Ruediger Lunde
  * 
  */
-public class ImplicationElimination extends AbstractPLVisitor<Object> {
+public class EliminateImplications extends AbstractPLVisitor<Object> {
 
 	/**
 	 * Eliminate the implications from a sentence.
@@ -26,7 +26,7 @@ public class ImplicationElimination extends AbstractPLVisitor<Object> {
 	 *         eliminated.
 	 */
 	public static Sentence apply(Sentence sentence) {
-		return sentence.accept(new ImplicationElimination(), null);
+		return sentence.accept(new EliminateImplications(), null);
 	}
 
 	@Override
