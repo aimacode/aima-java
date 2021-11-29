@@ -44,7 +44,7 @@ public class NQueensCspApp extends IntegrableApplication {
     private TaskExecutionPaneCtrl taskPaneCtrl;
     private CSP<Variable, Integer> csp;
     private CspSolver<Variable, Integer> solver;
-    private CspListener.StepCounter<Variable, Integer> stepCounter = new CspListener.StepCounter<>();
+    private final CspListener.StepCounter<Variable, Integer> stepCounter = new CspListener.StepCounter<>();
 
     @Override
     public String getTitle() {
@@ -76,12 +76,12 @@ public class NQueensCspApp extends IntegrableApplication {
     }
 
     protected List<Parameter> createParameters() {
-        Parameter p1 = new Parameter(PARAM_STRATEGY, "Backtracking", "Min-Conflicts");
+        Parameter p1 = new Parameter(PARAM_STRATEGY, "Backtracking", "Backjumping", "Min-Conflicts");
         Parameter p2 = new Parameter(PARAM_VAR_SELECT, "Default", "MRV", "DEG", "MRV&DEG");
         Parameter p3 = new Parameter(PARAM_VAL_SELECT, "Default", "LCV");
         Parameter p4 = new Parameter(PARAM_INFERENCE, "None", "Forward Checking", "AC3");
-        p2.setDependency(PARAM_STRATEGY, "Backtracking");
-        p3.setDependency(PARAM_STRATEGY, "Backtracking");
+        p2.setDependency(PARAM_STRATEGY, "Backtracking", "Backjumping");
+        p3.setDependency(PARAM_STRATEGY, "Backtracking", "Backjumping");
         p4.setDependency(PARAM_STRATEGY, "Backtracking");
         Parameter p5 = new Parameter(PARAM_BOARD_SIZE, 4, 8, 16, 32, 64);
         p5.setDefaultValueIndex(1);
@@ -98,18 +98,41 @@ public class NQueensCspApp extends IntegrableApplication {
         if (strategy.equals("Backtracking")) {
             FlexibleBacktrackingSolver<Variable, Integer> bSolver = new FlexibleBacktrackingSolver<>();
             switch ((String) taskPaneCtrl.getParamValue(PARAM_VAR_SELECT)) {
-                case "MRV": bSolver.set(CspHeuristics.mrv()); break;
-                case "DEG": bSolver.set(CspHeuristics.deg()); break;
-                case "MRV&DEG": bSolver.set(CspHeuristics.mrvDeg()); break;
+                case "MRV":
+                    bSolver.set(CspHeuristics.mrv());
+                    break;
+                case "DEG":
+                    bSolver.set(CspHeuristics.deg());
+                    break;
+                case "MRV&DEG":
+                    bSolver.set(CspHeuristics.mrvDeg());
+                    break;
             }
             switch ((String) taskPaneCtrl.getParamValue(PARAM_VAL_SELECT)) {
-                case "LCV": bSolver.set(CspHeuristics.lcv()); break;
+                case "LCV":
+                    bSolver.set(CspHeuristics.lcv());
+                    break;
             }
             switch ((String) taskPaneCtrl.getParamValue(PARAM_INFERENCE)) {
-                case "Forward Checking": bSolver.set(new ForwardCheckingStrategy<>()); break;
-                case "AC3": bSolver.set(new AC3Strategy<>()); break;
+                case "Forward Checking":
+                    bSolver.set(new ForwardCheckingStrategy<>());
+                    break;
+                case "AC3":
+                    bSolver.set(new AC3Strategy<>());
+                    break;
             }
             solver = bSolver;
+        } else if (strategy.equals("Backjumping")) {
+                BackjumpingBacktrackingSolver<Variable, Integer> bSolver = new BackjumpingBacktrackingSolver<>();
+                switch ((String) taskPaneCtrl.getParamValue(PARAM_VAR_SELECT)) {
+                    case "MRV": bSolver.set(CspHeuristics.mrv()); break;
+                    case "DEG": bSolver.set(CspHeuristics.deg()); break;
+                    case "MRV&DEG": bSolver.set(CspHeuristics.mrvDeg()); break;
+                }
+                switch ((String) taskPaneCtrl.getParamValue(PARAM_VAL_SELECT)) {
+                    case "LCV": bSolver.set(CspHeuristics.lcv()); break;
+                }
+                solver = bSolver;
         } else if (strategy.equals("Min-Conflicts")) {
             solver = new MinConflictsSolver<>(1000);
 
