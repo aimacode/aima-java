@@ -34,7 +34,8 @@ public class MapCSP extends CSP<Variable, String> {
 	 * Australia, with the colors Red, Green, and Blue.
 	 */
 	public MapCSP() {
-		super(Arrays.asList(NSW, WA, T, NT, Q, SA, V));
+		super(Arrays.asList(NT, SA, V, T, NSW, Q, WA));
+		//super(Arrays.asList(NSW, WA, T, NT, Q, SA, V));
 
 		Domain<String> colors = new Domain<>(RED, GREEN, BLUE);
 		for (Variable var : getVariables())

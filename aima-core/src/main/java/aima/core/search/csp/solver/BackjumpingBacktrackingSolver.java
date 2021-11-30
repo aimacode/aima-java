@@ -84,10 +84,14 @@ public class BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends Cs
                 fireStateChanged(csp, assignment, var);
                 if (assignment.isConsistent(csp.getConstraints(var))) {
                     SolutionOrNogood<VAR, VAL> res = backtrack(csp, assignment);
-                    if (res.hasSolution() || !res.nogood.contains(var))
+                    if (res.hasSolution()) {
+                        return res; // solution found!
+                    } else if (!res.nogood.contains(var)) {
+                        assignment.remove(var);
                         return res; // jump back!
-                    else
+                    } else {
                         result.nogood.addAll(res.nogood);
+                    }
                 } else {
                     result.nogood.addAll(findCause(csp, assignment, var));
                 }

@@ -85,11 +85,12 @@ public class MapColoringCspApp extends IntegrableApplication {
                 "Backtracking + Forward Checking + MRV&DEG",
                 "Backtracking + AC3",
                 "Backtracking + AC3 + MRV&DEG + LCV",
+                "Backtracking + Backjumping",
+                "Backtracking + Backjumping + MRV&DEG",
                 "Min-Conflicts (50)",
                 "Tree-CSP-Solver",
-                "Tree-CSP-Solver with Random Root",
-                "Backtracking + Backjumping",
-                "Backtracking + Backjumping + MRV&DEG");
+                "Tree-CSP-Solver with Random Root"
+                );
         return Arrays.asList(p1, p2);
     }
 
@@ -136,19 +137,19 @@ public class MapColoringCspApp extends IntegrableApplication {
                 strategy = new FlexibleBacktrackingSolver<Variable, String>().setAll();
                 break;
             case 8:
-                strategy = new MinConflictsSolver<>(50);
-                break;
-            case 9:
-                strategy = new TreeCspSolver<>();
-                break;
-            case 10:
-                strategy = new TreeCspSolver<Variable, String>().useRandom(true);
-                break;
-            case 11:
                 strategy = new BackjumpingBacktrackingSolver<>();
                 break;
-            case 12:
+            case 9:
                 strategy = new BackjumpingBacktrackingSolver<Variable, String>().set(CspHeuristics.mrvDeg());
+                break;
+            case 10:
+                strategy = new MinConflictsSolver<>(50);
+                break;
+            case 11:
+                strategy = new TreeCspSolver<>();
+                break;
+            case 12:
+                strategy = new TreeCspSolver<Variable, String>().useRandom(true);
                 break;
         }
 
