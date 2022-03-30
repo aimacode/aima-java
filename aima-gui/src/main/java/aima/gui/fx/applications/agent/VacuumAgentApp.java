@@ -19,6 +19,8 @@ import javafx.scene.layout.StackPane;
 import java.util.Arrays;
 import java.util.List;
 
+// VM options (Java>8): --module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml
+
 /**
  * Integrable application which demonstrates how different kinds of vacuum
  * cleaner agents behave in a two square environment.
@@ -34,7 +36,7 @@ public class VacuumAgentApp extends IntegrableApplication {
     public final static String PARAM_ENV = "environment";
     public final static String PARAM_AGENT = "agent";
 
-    private TaskExecutionPaneCtrl taskPaneCtrl;
+    protected TaskExecutionPaneCtrl taskPaneCtrl;
     private SimpleEnvironmentViewCtrl<VacuumPercept, Action> envViewCtrl;
     protected VacuumEnvironment env = null;
     protected SimpleAgent<VacuumPercept, Action> agent = null;
@@ -98,7 +100,6 @@ public class VacuumAgentApp extends IntegrableApplication {
                 env = new MazeVacuumEnvironment(5, 5, 0.2);
                 break;
         }
-        agent = null;
         switch (taskPaneCtrl.getParamValueIndex(PARAM_AGENT)) {
             case 0:
                 agent = new TableDrivenVacuumAgent();
