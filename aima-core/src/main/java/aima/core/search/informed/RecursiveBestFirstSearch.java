@@ -189,7 +189,7 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
     // the lowest f-value node
     private int getBestFValueIndex(double[] f) {
         int lidx = 0;
-        Double lowestSoFar = INFINITY;
+        double lowestSoFar = INFINITY;
 
         for (int i = 0; i < f.length; i++) {
             if (f[i] < lowestSoFar) {
@@ -206,7 +206,7 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
         // Array may only contain 1 item (i.e. no alternative),
         // therefore default to bestIndex initially
         int lidx = bestIndex;
-        Double lowestSoFar = INFINITY;
+        double lowestSoFar = INFINITY;
 
         for (int i = 0; i < f.length; i++) {
             if (i != bestIndex && f[i] < lowestSoFar) {

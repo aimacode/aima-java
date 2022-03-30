@@ -4,9 +4,12 @@ import aima.core.search.framework.*;
 import aima.core.search.framework.problem.Problem;
 import aima.core.util.Tasks;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.17, page
@@ -42,10 +45,11 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_PATH_COST = "pathCost";
 
-	public final Node<S, A> cutoffNode = new Node<>(null);
 	private final int limit;
+	private Set<S> explored;
+	public final Node<S, A> cutoffNode = new Node<>(null);
 	private final NodeFactory<S, A> nodeFactory;
-	private Metrics metrics = new Metrics();
+	private final Metrics metrics = new Metrics();
 
 	public DepthLimitedSearch(int limit) {
 		this(limit, new NodeFactory<>());
@@ -54,6 +58,11 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 	public DepthLimitedSearch(int limit, NodeFactory<S, A> nodeFactory) {
 		this.limit = limit;
 		this.nodeFactory = nodeFactory;
+	}
+
+	public DepthLimitedSearch<S, A> setCycleDetection(boolean b) {
+		explored = b ? new HashSet<>() : null;
+		return this;
 	}
 
 	// function DEPTH-LIMITED-SEARCH(problem, limit) returns a solution, or
@@ -104,23 +113,36 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 			// else
 			// cutoff_occurred? <- false
 			boolean cutoffOccurred = false;
+			Node<S, A> result = null;
 			// for each action in problem.ACTIONS(node.STATE) do
 			metrics.incrementInt(METRIC_NODES_EXPANDED);
-			for (Node<S, A> child : nodeFactory.getSuccessors(node, problem)) {
+			for (Node<S, A> child : getSuccessors(node, problem)) {
 				// child <- CHILD-NODE(problem, node, action)
 				// result <- RECURSIVE-DLS(child, problem, limit - 1)
-				Node<S, A> result = recursiveDLS(child, problem, limit - 1);
+				result = recursiveDLS(child, problem, limit - 1);
 				// if result = cutoff then cutoff_occurred? <- true
 				if (result == cutoffNode) {
 					cutoffOccurred = true;
 				} else if (result != null) {
 					// else if result != failure then return result
-					return result;
+					cutoffOccurred = false;
+					break;
 				}
 			}
+			if (explored != null)
+				explored.remove(node.getState());
 			// if cutoff_occurred? then return cutoff else return failure
-			return cutoffOccurred ? cutoffNode : null;
+			return cutoffOccurred ? cutoffNode : result;
 		}
+	}
+
+	private List<Node<S, A>> getSuccessors(Node<S, A> node, Problem<S, A> problem) {
+		List<Node<S, A>> result = nodeFactory.getSuccessors(node, problem);
+		if (explored != null) {
+			explored.add(node.getState());
+			result = result.stream().filter(n -> !explored.contains(n.getState())).collect(Collectors.toList());
+		}
+		return result;
 	}
 
 	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")

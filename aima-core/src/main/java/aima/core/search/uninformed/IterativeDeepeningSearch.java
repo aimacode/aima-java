@@ -33,6 +33,7 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 	public static final String METRIC_NODES_EXPANDED = "nodesExpanded";
 	public static final String METRIC_PATH_COST = "pathCost";
 
+	private boolean useCD;
 	private final NodeFactory<S, A> nodeFactory;
 	private final Metrics metrics;
 
@@ -44,8 +45,12 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 		this.nodeFactory = nodeFactory;
 		this.metrics = new Metrics();
 	}
-	
-	
+
+	public IterativeDeepeningSearch<S, A> setCycleDetection(boolean b) {
+		useCD = b;
+		return this;
+	}
+
 	// function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or
 	// failure
 	@Override
@@ -71,7 +76,7 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 		// for depth = 0 to infinity do
 		for (int i = 0; !Tasks.currIsCancelled(); i++) {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
-			DepthLimitedSearch<S, A> dls = new DepthLimitedSearch<>(i, nodeFactory);
+			DepthLimitedSearch<S, A> dls = new DepthLimitedSearch<>(i, nodeFactory).setCycleDetection(useCD);
 			Optional<Node<S, A>> result = dls.findNode(p);
 			updateMetrics(dls.getMetrics());
 			// if result != cutoff then return result

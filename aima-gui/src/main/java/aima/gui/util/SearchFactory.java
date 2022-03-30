@@ -26,18 +26,20 @@ public class SearchFactory {
 	public final static int BF_SEARCH = 1;
 	/** Search strategy: Iterative deepening search. */
 	public final static int ID_SEARCH = 2;
+	/** Search strategy: Iterative deepening search with cycle detection. */
+	public final static int ID_CD_SEARCH = 3;
 	/** Search strategy: Uniform cost search. */
-	public final static int UC_SEARCH = 3;
+	public final static int UC_SEARCH = 4;
 	/** Search strategy: Greedy best first search. */
-	public final static int GBF_SEARCH = 4;
+	public final static int GBF_SEARCH = 5;
 	/** Search strategy: A* search. */
-	public final static int ASTAR_SEARCH = 5;
+	public final static int ASTAR_SEARCH = 6;
 	/** Search strategy: Recursive best first search. */
-	public final static int RBF_SEARCH = 6;
-	/** Search strategy: Recursive best first search avoiding loops. */
-	public final static int RBF_AL_SEARCH = 7;
+	public final static int RBF_SEARCH = 7;
+	/** Search strategy: Recursive best first search with cycle detection. */
+	public final static int RBF_CD_SEARCH = 8;
 	/** Search strategy: Hill climbing search. */
-	public final static int HILL_SEARCH = 8;
+	public final static int HILL_SEARCH = 9;
 
 	/** Queue search implementation: tree search. */
 	public final static int TREE_SEARCH = 0;
@@ -72,7 +74,7 @@ public class SearchFactory {
 	 */
 	public String[] getSearchStrategyNames() {
 		return new String[] { "Depth First", "Breadth First",
-				"Iterative Deepening", "Uniform Cost", "Greedy Best First",
+				"Iterative Deepening", "Iterative Deepening No Loops", "Uniform Cost", "Greedy Best First",
 				"A*", "Recursive Best First", "Recursive Best First No Loops", "Hill Climbing" };
 	}
 
@@ -127,6 +129,9 @@ public class SearchFactory {
 			case ID_SEARCH:
 				result = new IterativeDeepeningSearch<>();
 				break;
+			case ID_CD_SEARCH:
+				result = new IterativeDeepeningSearch<S, A>().setCycleDetection(true);
+				break;
 			case UC_SEARCH:
 				result = new UniformCostSearch<>(qs);
 				break;
@@ -139,7 +144,7 @@ public class SearchFactory {
 			case RBF_SEARCH:
 				result = new RecursiveBestFirstSearch<>(AStarSearch.createEvalFn(h));
 				break;
-			case RBF_AL_SEARCH:
+			case RBF_CD_SEARCH:
 				result = new RecursiveBestFirstSearch<>(AStarSearch.createEvalFn(h), true);
 				break;
 			case HILL_SEARCH:

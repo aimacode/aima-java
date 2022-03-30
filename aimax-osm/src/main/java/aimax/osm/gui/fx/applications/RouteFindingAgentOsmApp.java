@@ -75,7 +75,7 @@ public class RouteFindingAgentOsmApp extends IntegrableApplication {
 	protected List<Parameter> createParameters() {
 		Parameter p1 = new Parameter(PARAM_WAY_SELECTION, "Use any way", "Travel by car", "Travel by bicycle");
 		Parameter p2 = new Parameter(PARAM_SEARCH, (Object[]) SearchFactory.getInstance().getSearchStrategyNames());
-		p2.setDefaultValueIndex(5);
+		p2.setDefaultValueIndex(6);
 		Parameter p3 = new Parameter(PARAM_Q_SEARCH_IMPL, (Object[]) SearchFactory.getInstance().getQSearchImplNames());
 		p3.setDefaultValueIndex(2);
 		p3.setDependency(PARAM_SEARCH, "Depth First", "Breadth First", "Uniform Cost", "Greedy Best First", "A*");
