@@ -32,7 +32,7 @@ import java.util.Optional;
  * 
  * @author Ciaran O'Reilly
  */
-public abstract class KBAgent extends SimpleAgent<Percept, Action> {
+public abstract class KBAgent <P, A> extends SimpleAgent<P, A> {
 	// persistent: KB, a knowledge base
 	protected KnowledgeBase kb;
 	// t, a counter, initially 0, indicating time
@@ -44,11 +44,11 @@ public abstract class KBAgent extends SimpleAgent<Percept, Action> {
 
 	// function KB-AGENT(percept) returns an action
 	@Override
-	public Optional<Action> act(Percept percept) {
+	public Optional<A> act(P percept) {
 		// TELL(KB, MAKE-PERCEPT-SENTENCE(percept, t))
 		kb.tell(makePerceptSentence(percept, t));
 		// action &lt;- ASK(KB, MAKE-ACTION-QUERY(t))
-		Action action = ask(kb, makeActionQuery(t));
+		A action = ask(kb, makeActionQuery(t));
 		
 		// TELL(KB, MAKE-ACTION-SENTENCE(action, t))
 		kb.tell(makeActionSentence(action, t));
@@ -70,7 +70,7 @@ public abstract class KBAgent extends SimpleAgent<Percept, Action> {
 	 *         at the given time.
 	 */
 	// MAKE-PERCEPT-SENTENCE(percept, t)
-	public abstract Sentence makePerceptSentence(Percept percept, int t);
+	public abstract Sentence makePerceptSentence(P percept, int t);
 
 	/**
 	 * MAKE-ACTION-QUERY constructs a sentence that asks what action should be
@@ -93,7 +93,7 @@ public abstract class KBAgent extends SimpleAgent<Percept, Action> {
 	 * @return a sentence asserting that the chosen action was executed.
 	 */
 	// MAKE-ACTION-SENTENCE(action, t)
-	public abstract Sentence makeActionSentence(Action action, int t);
+	public abstract Sentence makeActionSentence(A action, int t);
 	
 	/**
 	 * A wrapper around the KB's ask() method which translates the action (in the form of
@@ -107,5 +107,5 @@ public abstract class KBAgent extends SimpleAgent<Percept, Action> {
 	 * @return the Action to be performed in response to the given query.
 	 */
 	// ASK(KB, MAKE-ACTION-QUERY(t))
-	public abstract Action ask(KnowledgeBase kb, Sentence actionQuery);
+	public abstract A ask(KnowledgeBase kb, Sentence actionQuery);
 }

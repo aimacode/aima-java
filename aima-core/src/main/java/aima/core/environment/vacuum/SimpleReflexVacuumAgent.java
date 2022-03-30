@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * @author Ciaran O'Reilly
- * @auhtor Ruediger Lunde
+ * @author Ruediger Lunde
  * 
  */
 public class SimpleReflexVacuumAgent extends SimpleAgent<VacuumPercept, Action> {

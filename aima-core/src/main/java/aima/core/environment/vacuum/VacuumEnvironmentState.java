@@ -16,7 +16,7 @@ import java.util.Map;
 public class VacuumEnvironmentState implements EnvironmentState, Cloneable {
 
 	private Map<String, VacuumEnvironment.LocationState> state;
-	private Map<Agent, String> agentLocations;
+	private Map<Agent<?, ?>, String> agentLocations;
 
 	/**
 	 * Constructor
@@ -26,14 +26,14 @@ public class VacuumEnvironmentState implements EnvironmentState, Cloneable {
 		agentLocations = new LinkedHashMap<>();
 	}
 
-	public String getAgentLocation(Agent agent) {
+	public String getAgentLocation(Agent<?, ?> agent) {
 		return agentLocations.get(agent);
 	}
 
 	/**
 	 * Sets the agent location
 	 */
-	public void setAgentLocation(Agent agent, String location) {
+	public void setAgentLocation(Agent<?, ?> agent, String location) {
 		agentLocations.put(agent, location);
 	}
 
@@ -93,7 +93,7 @@ public class VacuumEnvironmentState implements EnvironmentState, Cloneable {
 			builder.append(entity.getKey()).append("=").append(entity.getValue());
 		}
 		int i = 0;
-		for (Map.Entry<Agent, String> entity : agentLocations.entrySet()) {
+		for (Map.Entry<Agent<?, ?>, String> entity : agentLocations.entrySet()) {
 			if (builder.length() > 2) builder.append(", ");
 			builder.append("Loc").append(++i).append("=").append(entity.getValue());
 		}

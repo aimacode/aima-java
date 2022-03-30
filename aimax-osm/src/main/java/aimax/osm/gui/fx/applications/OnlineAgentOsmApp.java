@@ -191,7 +191,7 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 
 	// helper classes...
 
-	private class TrackUpdater implements EnvironmentListener<Percept, Action> {
+	private class TrackUpdater implements EnvironmentListener<DynamicPercept, MoveToAction> {
 		int actionCounter = 0;
 
 		@Override
@@ -206,15 +206,13 @@ public class OnlineAgentOsmApp extends IntegrableApplication {
 		 * Reacts on environment changes and updates the tracks.
 		 */
 		@Override
-		public void agentActed(Agent<?, ?> agent, Percept percept, Action command, Environment<?, ?> source) {
-			if (command instanceof MoveToAction) {
-				Metrics metrics = new Metrics();
-				Double travelDistance = env.getAgentTravelDistance(env.getAgents().get(0));
-				if (travelDistance != null)
-					metrics.set("travelDistance[km]", travelDistance);
-				metrics.set("actions", ++actionCounter);
-				updateTrack(agent, metrics);
-			}
+		public void agentActed(Agent<?, ?> agent, DynamicPercept percept, MoveToAction command, Environment<?, ?> source) {
+			Metrics metrics = new Metrics();
+			Double travelDistance = env.getAgentTravelDistance(env.getAgents().get(0));
+			if (travelDistance != null)
+				metrics.set("travelDistance[km]", travelDistance);
+			metrics.set("actions", ++actionCounter);
+			updateTrack(agent, metrics);
 		}
 	}
 }

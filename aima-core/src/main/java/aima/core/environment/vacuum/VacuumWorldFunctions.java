@@ -33,7 +33,7 @@ public class VacuumWorldFunctions {
 	 * Returns a function which maps possible state-action-pairs to a lists of possible successor states
 	 * for the non-deterministic vacuum world.
 	 */
-	public static ResultsFunction<VacuumEnvironmentState, Action> createResultsFunctionFor(final Agent agent) {
+	public static ResultsFunction<VacuumEnvironmentState, Action> createResultsFunctionFor(final Agent<?, ?> agent) {
 		return (VacuumEnvironmentState state, Action action) -> {
 			List<VacuumEnvironmentState> results = new ArrayList<>();
 			// add clone of state to results, modify later...

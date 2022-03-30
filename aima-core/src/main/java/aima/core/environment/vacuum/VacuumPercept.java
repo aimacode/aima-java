@@ -15,10 +15,10 @@ import aima.core.environment.vacuum.VacuumEnvironment.LocationState;
  * @author Ruediger Lunde
  */
 public class VacuumPercept {
-	private String currLocation;
-	private LocationState currState;
-	// for extended vacuum environments (e.g. fully observable environments, two dimensional checkerboards)
-	private Map<String, Object> dynAttributes;
+	private final String currLocation;
+	private final LocationState currState;
+	// for extended vacuum environments (e.g. fully observable environments, two-dimensional checkerboards)
+	private final Map<String, Object> dynAttributes;
 
 	public VacuumPercept(String currLocation, LocationState state) {
 		this.currLocation = currLocation;

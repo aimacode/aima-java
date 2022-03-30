@@ -65,7 +65,7 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 	}
 
 	@Override
-	public VacuumPercept getPerceptSeenBy(Agent agent) {
+	public VacuumPercept getPerceptSeenBy(Agent<?, ?> agent) {
 		VacuumPercept result = super.getPerceptSeenBy(agent);
 		String loc = getAgentLocation(agent);
 		result.setAttribute(ATT_CAN_MOVE_LEFT, canMoveLeft(loc) ? "True" : "False");
@@ -76,7 +76,7 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 	}
 
 	@Override
-	public void execute(Agent agent, Action action) {
+	public void execute(Agent<?, ?> agent, Action action) {
 		String loc = getAgentLocation(agent);
 		if (action == ACTION_MOVE_RIGHT) {
 			if (canMoveRight(loc))

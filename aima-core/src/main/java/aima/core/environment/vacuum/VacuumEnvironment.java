@@ -2,7 +2,6 @@ package aima.core.environment.vacuum;
 
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
-import aima.core.agent.EnvironmentState;
 import aima.core.agent.impl.AbstractEnvironment;
 import aima.core.agent.impl.DynamicAction;
 import aima.core.search.agent.NondeterministicSearchAgent;
@@ -36,7 +35,7 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 	public static final String LOCATION_B = "B";
 
     private final List<String> locations;
-	protected VacuumEnvironmentState envState = null;
+	protected VacuumEnvironmentState envState;
 	protected boolean isDone = false;
 
 	public enum LocationState {
@@ -146,7 +145,7 @@ public class VacuumEnvironment extends AbstractEnvironment<VacuumPercept, Action
 		return envState.getLocationState(location);
 	}
 
-	public String getAgentLocation(Agent agent) {
+	public String getAgentLocation(Agent<?, ?> agent) {
 		return envState.getAgentLocation(agent);
 	}
 

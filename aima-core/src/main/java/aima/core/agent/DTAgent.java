@@ -47,8 +47,8 @@ public abstract class DTAgent extends SimpleAgent {
 		belief_state.update(action,percept);
 		/** 
 		 * calculate outcome probabilities for actions,
-	   	 *		given action descriptions and current belief_state 
-		*/	
+	   	 *		given action descriptions and current belief_state
+		*/
 		List<Pair<Action,Double>> action_probabilities = cal_action_probabilities(action_descriptions,belief_state);
 		/**  
 		 * select action with highest expected utility

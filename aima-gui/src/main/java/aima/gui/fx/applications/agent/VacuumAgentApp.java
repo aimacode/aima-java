@@ -35,7 +35,7 @@ public class VacuumAgentApp extends IntegrableApplication {
     public final static String PARAM_AGENT = "agent";
 
     private TaskExecutionPaneCtrl taskPaneCtrl;
-    private SimpleEnvironmentViewCtrl envViewCtrl;
+    private SimpleEnvironmentViewCtrl<VacuumPercept, Action> envViewCtrl;
     protected VacuumEnvironment env = null;
     protected SimpleAgent<VacuumPercept, Action> agent = null;
 
@@ -85,7 +85,6 @@ public class VacuumAgentApp extends IntegrableApplication {
     /**
      * Is called after each parameter selection change.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void initialize() {
         switch (taskPaneCtrl.getParamValueIndex(PARAM_ENV)) {
@@ -130,11 +129,10 @@ public class VacuumAgentApp extends IntegrableApplication {
     /**
      * Starts the experiment.
      */
-    @SuppressWarnings("unchecked")
     public void startExperiment() {
         if (agent instanceof NondeterministicSearchAgent) {
             NondeterministicProblem<VacuumEnvironmentState, Action> problem =
-                    new NondeterministicProblem<>((VacuumEnvironmentState) env.getCurrentState(),
+                    new NondeterministicProblem<>(env.getCurrentState(),
                             VacuumWorldFunctions::getActions, VacuumWorldFunctions.createResultsFunctionFor(agent),
                             VacuumWorldFunctions::testGoal, (s, a, sPrimed) -> 1.0);
             // Set the problem now for this kind of agent
