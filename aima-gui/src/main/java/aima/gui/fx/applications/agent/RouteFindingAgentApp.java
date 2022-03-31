@@ -100,7 +100,7 @@ public class RouteFindingAgentApp extends IntegrableApplication {
 		p2a.setDependency(PARAM_SCENARIO, "Australia, from Sydney", "Australia, from Random");
 
 		Parameter p3 = new Parameter(PARAM_SEARCH, (Object[]) SearchFactory.getInstance().getSearchStrategyNames());
-		p3.setDefaultValueIndex(5);
+		p3.setDefaultValueIndex(6);
 		Parameter p4 = new Parameter(PARAM_Q_SEARCH_IMPL, (Object[]) SearchFactory.getInstance().getQSearchImplNames());
 		p4.setDefaultValueIndex(2);
 		p4.setDependency(PARAM_SEARCH, "Depth First", "Breadth First", "Uniform Cost", "Greedy Best First", "A*");
