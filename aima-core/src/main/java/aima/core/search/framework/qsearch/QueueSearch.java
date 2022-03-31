@@ -92,7 +92,8 @@ public abstract class QueueSearch<S, A> {
 	}
 
 	protected Optional<Node<S, A>> asOptional(Node<S, A> node) {
-		metrics.set(METRIC_PATH_COST, node.getPathCost());
-		return Optional.of(node);
+		if (node != null)
+			metrics.set(METRIC_PATH_COST, node.getPathCost());
+		return Optional.ofNullable(node);
 	}
 }

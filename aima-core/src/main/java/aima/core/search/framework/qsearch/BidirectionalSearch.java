@@ -44,7 +44,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	private boolean isReverseActionTestEnabled = true;
 
 	// index 0: original problem, index 1: reverse problem
-	private List<Map<S, ExtendedNode<S, A>>> explored;
+	private final List<Map<S, ExtendedNode<S, A>>> explored;
 	private ExtendedNode<S, A> goalStateNode;
 
 	public BidirectionalSearch() {
@@ -78,7 +78,6 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 *         containing a single NoOp Action if already at the goal, or an
 	 *         empty list if the goal could not be found.
 	 */
-	@SuppressWarnings("unchecked")
 	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		assert (problem instanceof BidirectionalProblem);
 
@@ -103,7 +102,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 
 		while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
 			// choose a leaf node and remove it from the frontier
-			ExtendedNode<S, A> node = (ExtendedNode) removeFromFrontier();
+			ExtendedNode<S, A> node = (ExtendedNode<S, A>) removeFromFrontier();
 			ExtendedNode<S, A> nodeFromOtherProblem;
 
 			// if the node contains a goal state then return the corresponding solution
@@ -156,8 +155,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 * @return A node of a not yet explored state.
 	 */
 	protected Node<S, A> removeFromFrontier() {
-		cleanUpFrontier(); // not really necessary because isFrontierEmpty
-							// should be called before...
+		cleanUpFrontier(); // not really necessary because isFrontierEmpty should be called before...
 		Node<S, A> result = frontier.remove();
 		updateMetrics(frontier.size());
 		// add the node to the explored set of the corresponding problem
@@ -180,7 +178,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 	 * head of the frontier.
 	 */
 	private void cleanUpFrontier() {
-		while (!frontier.isEmpty() && isExplored(frontier.element()))
+		while (!frontier.isEmpty() && isExplored(frontier.peek()))
 			frontier.remove();
 	}
 
@@ -215,8 +213,7 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 
 	/**
 	 * Returns the action which leads from the state of <code>node</code> to the
-	 * state of the node's parent, if such an action exists in problem
-	 * <code>orgP</code>.
+	 * state of the node's parent, if such an action exists in problem <code>orgP</code>.
 	 */
 	private A getReverseAction(Problem<S, A> orgP, Node<S, A> node) {
 		S currState = node.getState();
@@ -230,15 +227,13 @@ public class BidirectionalSearch<S, A> extends QueueSearch<S, A> {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	private boolean isExplored(Node<S, A> node) {
-		ExtendedNode<S, A> eNode =  (ExtendedNode) node;
+		ExtendedNode<S, A> eNode = (ExtendedNode<S, A>) node;
 		return explored.get(eNode.getProblemIndex()).containsKey(eNode.getState());
 	}
 
-	@SuppressWarnings("unchecked")
 	private void setExplored(Node<S, A> node) {
-		ExtendedNode<S, A> eNode = (ExtendedNode) node;
+		ExtendedNode<S, A> eNode = (ExtendedNode<S, A>) node;
 		explored.get(eNode.getProblemIndex()).put(eNode.getState(), eNode);
 	}
 

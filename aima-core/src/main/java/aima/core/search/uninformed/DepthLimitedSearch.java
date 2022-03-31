@@ -89,10 +89,9 @@ public class DepthLimitedSearch<S, A> implements SearchForActions<S, A>, SearchF
 	
 	public Optional<Node<S, A>> findNode(Problem<S, A> p) {
 		clearMetrics();
-		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem,
-		// limit)
+		// return RECURSIVE-DLS(MAKE-NODE(INITIAL-STATE[problem]), problem, limit)
 		Node<S, A> node = recursiveDLS(nodeFactory.createNode(p.getInitialState()), p, limit);
-		return node != null ? Optional.of(node) : Optional.empty();
+		return Optional.ofNullable(node);
 	}
 
 	// function RECURSIVE-DLS(node, problem, limit) returns a solution, or

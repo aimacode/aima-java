@@ -43,8 +43,8 @@ import aima.core.search.framework.problem.Problem;
  */
 public class GraphSearchBFS<S, A> extends TreeSearch<S, A> {
 
-	private Set<S> explored = new HashSet<>();
-	private Set<S> frontierStates = new HashSet<>();
+	private final Set<S> explored = new HashSet<>();
+	private final Set<S> frontierStates = new HashSet<>();
 
 	public GraphSearchBFS() {
 		this(new NodeFactory<>());

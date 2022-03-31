@@ -141,7 +141,7 @@ public class GraphSearch4e<S, A> extends QueueSearch<S, A> {
 	 * on all paths. It is assumed that the frontier contains at least one node.
 	 */
 	protected boolean canPossiblyBeImproved(Node<S, A> solution) {
-		return isCheaper(frontier.element(), solution);
+		return isCheaper(frontier.peek(), solution);
 	}
 
 	/**
