@@ -11,7 +11,7 @@ import java.util.function.ToDoubleFunction;
  * @author Ruediger Lunde
  */
 public class OsmSldHeuristicFunction implements ToDoubleFunction<Node<MapNode, OsmMoveAction>> {
-	private MapNode goalState;
+	private final MapNode goalState;
 	
 	public OsmSldHeuristicFunction(MapNode goalState) {
 		this.goalState = goalState;

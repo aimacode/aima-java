@@ -55,11 +55,11 @@ public class RecursiveBestFirstSearch<S, A> implements SearchForActions<S, A>, I
     private static final Double INFINITY = Double.MAX_VALUE;
 
     private final EvaluationFunction<S, A> evalFn;
-    private boolean avoidLoops;
+    private final boolean avoidLoops;
     private final NodeFactory<S, A> nodeFactory;
 
     // stores the states on the current path if avoidLoops is true.
-    private Set<S> explored = new HashSet<>();
+    private final Set<S> explored = new HashSet<>();
     private Metrics metrics;
 
     public RecursiveBestFirstSearch(EvaluationFunction<S, A> evalFn) {

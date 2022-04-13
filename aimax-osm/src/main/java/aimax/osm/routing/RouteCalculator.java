@@ -64,15 +64,11 @@ public class RouteCalculator {
 				Optional<List<OsmMoveAction>> actions = search.findActions(problem);
 				if (!actions.isPresent())
 					break;
-				for (Object action : actions.get()) {
-					if (action instanceof OsmMoveAction) {
-						OsmMoveAction a = (OsmMoveAction) action;
-						for (MapNode node : a.getNodes()) {
-							if (prevNode != node) {
-								result.add(new Position(node.getLat(), node
-										.getLon()));
-								prevNode = node;
-							}
+				for (OsmMoveAction action : actions.get()) {
+					for (MapNode node : action.getNodes()) {
+						if (prevNode != node) {
+							result.add(new Position(node.getLat(), node.getLon()));
+							prevNode = node;
 						}
 					}
 				}
