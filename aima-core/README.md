@@ -27,7 +27,7 @@ To build from the command line:
   * release/ will contain a jar file of all the core algorithms.
 
 Note: Many IDE's have built in ant versions. So you may want to try that first. 
-Included in the aima-core directory are .classpath and .project files for the [Eclipse](http://www.eclipse.org Eclipse) IDE.
+Included in the aima-core directory are .classpath and .project files for the [Eclipse](http://www.eclipse.org) IDE.
 
 ## Using the Code
 
