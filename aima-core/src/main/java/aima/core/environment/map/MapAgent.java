@@ -31,7 +31,7 @@ public class MapAgent extends ProblemSolvingAgent<DynamicPercept, String, MoveTo
     protected final List<String> goals = new ArrayList<>();
     protected int nextGoalPos = 0;
 
-    private SearchForActions<String, MoveToAction> search;
+    private final SearchForActions<String, MoveToAction> search;
     private Function<String, ToDoubleFunction<Node<String, MoveToAction>>> hFnFactory;
     protected Notifier notifier;
 

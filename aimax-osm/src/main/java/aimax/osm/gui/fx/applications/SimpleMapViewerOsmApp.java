@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 
 import java.util.Locale;
 
+// VM options (Java>8): --module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml
+
 /**
  * Simple demo application which shows a stage with the
  * map of Ulm, provided that a file with name ulm.osm is found

@@ -34,6 +34,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.ToDoubleFunction;
 
+// VM options (Java>8): --module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml
+
 /**
  * Integrable application which demonstrates how the Learning Real-Time A*
  * (LRTA*) search agent performs compared to the Online DFS agent in a route

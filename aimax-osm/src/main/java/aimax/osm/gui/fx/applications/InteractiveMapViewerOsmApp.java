@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 
 import java.util.Locale;
 
+// VM options (Java>8): --module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml
+
 /**
  * Shows a map of the city of Ulm with pan and zoom functionality (mouse drag, mouse wheel, arrow keys,
  * plus and minus keys). Set markers with Mouse-Left and remove them with Mouse-Right. Symbols can be changed in size

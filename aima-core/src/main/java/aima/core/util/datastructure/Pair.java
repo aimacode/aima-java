@@ -1,5 +1,7 @@
 package aima.core.util.datastructure;
 
+import java.util.Objects;
+
 /**
  * @author Ravi Mohan
  * @author Mike Stampone
@@ -44,22 +46,20 @@ public class Pair<X, Y> {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Pair<?, ?>) {
+		if (o != null && getClass() == o.getClass()) {
 			Pair<?, ?> p = (Pair<?, ?>) o;
-			return (a == null ? p.a == null : a.equals(p.a)) &&
-					(b == null ? p.b == null : b.equals(p.b));
+			return Objects.equals(a, p.a) && Objects.equals(b, p.b);
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return (a == null ? 0 : a.hashCode()) + 31 * (b == null ? 0 : b.hashCode());
+		return (a == null ? 0 : 7 * a.hashCode()) + 31 * (b == null ? 0 : b.hashCode());
 	}
 
 	@Override
 	public String toString() {
-		return "< " + getFirst().toString() + " , " + getSecond().toString()
-				+ " > ";
+		return "< " + getFirst().toString() + " , " + getSecond().toString() + " > ";
 	}
 }

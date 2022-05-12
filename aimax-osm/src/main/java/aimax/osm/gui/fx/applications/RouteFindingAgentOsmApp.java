@@ -33,6 +33,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.ToDoubleFunction;
 
+// VM options (Java>8): --module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml
+
 /**
  * Simple OSM route finding agent application which can be used as base class
  * for more advanced OSM agent applications. For example, by overriding some of

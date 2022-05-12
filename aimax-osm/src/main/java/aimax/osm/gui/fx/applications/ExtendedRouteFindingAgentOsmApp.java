@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
+// VM options (Java>8): --module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml
+
 /**
  * Integrable application which demonstrates how different kinds of search
  * algorithms perform in a route finding scenario based on a real OSM map. This

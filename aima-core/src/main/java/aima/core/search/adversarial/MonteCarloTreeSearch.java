@@ -42,8 +42,8 @@ import java.util.Random;
 
 public class MonteCarloTreeSearch<S, A, P> implements AdversarialSearch<S, A> {
 	private int iterations = 0;
-	private Game<S, A, P> game;
-	private GameTree<S, A> tree;
+	private final Game<S, A, P> game;
+	private final GameTree<S, A> tree;
 	
 	public MonteCarloTreeSearch(Game<S, A, P> game, int iterations) {
 		this.game = game;
@@ -73,7 +73,7 @@ public class MonteCarloTreeSearch<S, A, P> implements AdversarialSearch<S, A> {
 		return bestAction(tree.getRoot());
 	}
 	
-	private Node<S, A> select(GameTree gameTree) {
+	private Node<S, A> select(GameTree<S, A> gameTree) {
 		Node<S, A> node = gameTree.getRoot();
 		while (!game.isTerminal(node.getState()) && isNodeFullyExpanded(node)) {
 			node = gameTree.getChildWithMaxUCT(node);
@@ -82,11 +82,10 @@ public class MonteCarloTreeSearch<S, A, P> implements AdversarialSearch<S, A> {
 	}
 	
 	private Node<S, A> expand(Node<S, A> leaf) {
-		if (game.isTerminal(leaf.getState())) return leaf;
-		else {
-			Node<S, A> child = randomlySelectUnvisitedChild(leaf);
-			return child;
-		}
+		if (game.isTerminal(leaf.getState()))
+			return leaf;
+		else
+			return randomlySelectUnvisitedChild(leaf);
 	}
 	
 	private boolean simulate(Node<S, A> node) {
@@ -94,11 +93,10 @@ public class MonteCarloTreeSearch<S, A, P> implements AdversarialSearch<S, A> {
 			Random rand = new Random();
 			A a = game.getActions(node.getState()).get(rand.nextInt(game.getActions(node.getState()).size()));
 			S result = game.getResult(node.getState(), a);
-			NodeFactory nodeFactory = new NodeFactory();
+			NodeFactory<S, A> nodeFactory = new NodeFactory<>();
 			node = nodeFactory.createNode(result);
 		}
-		if (game.getUtility(node.getState(), game.getPlayer(tree.getRoot().getState())) > 0) return true;
-		else return false;
+		return game.getUtility(node.getState(), game.getPlayer(tree.getRoot().getState())) > 0;
 	}
 	
 	private void backpropagate(boolean result, Node<S, A> node) {
@@ -135,8 +133,7 @@ public class MonteCarloTreeSearch<S, A, P> implements AdversarialSearch<S, A> {
 			if (!visitedChildren.contains(result)) unvisitedChildren.add(result);
 		}
 		Random rand = new Random();
-		Node<S, A> newChild = tree.addChild(node, unvisitedChildren.get(rand.nextInt(unvisitedChildren.size())));
-		return newChild;
+		return tree.addChild(node, unvisitedChildren.get(rand.nextInt(unvisitedChildren.size())));
 	}
 	
 	@Override

@@ -18,6 +18,8 @@ import javafx.scene.text.Font;
 import java.text.DecimalFormat;
 import java.util.List;
 
+// VM options (Java>8): --module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml
+
 /**
  * Extendable application for route planning based on a real map of the city of Ulm.
  *
