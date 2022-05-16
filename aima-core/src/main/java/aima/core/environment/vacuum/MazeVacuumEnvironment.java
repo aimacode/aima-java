@@ -46,8 +46,15 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 		}
 	}
 
-	public void setObstacle(String location, boolean state) {
-		envState.setLocationState(location, state ? null : LocationState.Clean);
+	@Override
+	public void addAgent(Agent<? super VacuumPercept, ? extends Action> agent) {
+		super.addAgent(agent);
+		if (envState.getLocationState(getAgentLocation(agent)) == null)
+			envState.setLocationState(getAgentLocation(agent), LocationState.Clean);
+	}
+
+	public void setObstacle(String location, boolean b) {
+		envState.setLocationState(location, b ? null : LocationState.Clean);
 	}
 
 	public boolean containsObstacle(String location) {
