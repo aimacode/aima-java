@@ -37,7 +37,7 @@ public class VacuumAgentApp extends IntegrableApplication {
     public final static String PARAM_AGENT = "agent";
 
     protected TaskExecutionPaneCtrl taskPaneCtrl;
-    private SimpleEnvironmentViewCtrl<VacuumPercept, Action> envViewCtrl;
+    protected SimpleEnvironmentViewCtrl<VacuumPercept, Action> envViewCtrl;
     protected VacuumEnvironment env = null;
     protected SimpleAgent<VacuumPercept, Action> agent = null;
 
@@ -77,7 +77,7 @@ public class VacuumAgentApp extends IntegrableApplication {
 
     protected List<Parameter> createParameters() {
         Parameter p1 = new Parameter(PARAM_ENV, "A/B Deterministic Environment",
-                "A/B Non-Deterministic Environment", "Maze Environment");
+                "A/B Non-Deterministic Environment", "Small Maze Environment", "Maze Environment");
         Parameter p2 = new Parameter(PARAM_AGENT, "TableDrivenVacuumAgent", "ReflexVacuumAgent",
                 "SimpleReflexVacuumAgent", "ModelBasedReflexVacuumAgent", "NondeterministicVacuumAgent",
                 "RandomWalkVacuumAgent");
@@ -97,7 +97,10 @@ public class VacuumAgentApp extends IntegrableApplication {
                 env = new NondeterministicVacuumEnvironment();
                 break;
             case 2:
-                env = new MazeVacuumEnvironment(5, 5, 0.2);
+                env = new MazeVacuumEnvironment(5, 5, 0.5, 0.2);
+                break;
+            case 3:
+                env = new MazeVacuumEnvironment(10, 10, 0.8, 0.3);
                 break;
         }
         switch (taskPaneCtrl.getParamValueIndex(PARAM_AGENT)) {

@@ -29,21 +29,21 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 	private final int yDimension;
 
 	public MazeVacuumEnvironment(int xDim, int yDim) {
+		this(xDim, yDim, 0.5, 0);
+	}
+
+	// Obstacles are marked by with locationState==null
+	public MazeVacuumEnvironment(int xDim, int yDim, double dirtProbability, double obstacleProbability) {
 		super(createLocations(xDim * yDim));
 		xDimension = xDim;
 		yDimension = yDim;
 		for (String loc : getLocations()) {
-			LocationState state = Util.randomBoolean() ? LocationState.Dirty : LocationState.Clean;
+			LocationState state = Util.randomInt(100) < dirtProbability * 100
+					? LocationState.Dirty : LocationState.Clean;
+			if (Util.randomInt(100) < obstacleProbability * 100)
+				state = null;
 			envState.setLocationState(loc, state);
 		}
-	}
-
-	// Obstacles are marked by with locationState==null
-	public MazeVacuumEnvironment(int xDim, int yDim, double obstacleProbability) {
-		this(xDim, yDim);
-		for (String loc : getLocations())
-			if (Util.randomInt(100) < obstacleProbability * 100)
-				envState.setLocationState(loc,null);
 	}
 
 	public void setObstacle(String location, boolean state) {

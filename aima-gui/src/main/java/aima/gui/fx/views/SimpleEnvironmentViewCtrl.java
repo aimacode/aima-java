@@ -3,6 +3,7 @@ package aima.gui.fx.views;
 import aima.core.agent.Agent;
 import aima.core.agent.Environment;
 import aima.core.agent.EnvironmentListener;
+import aima.core.agent.Notifier;
 import aima.core.agent.impl.AbstractEnvironment;
 import javafx.application.Platform;
 import javafx.scene.control.SplitPane;
@@ -21,7 +22,7 @@ import javafx.scene.layout.StackPane;
  * @author Ruediger Lunde
  *
  */
-public class SimpleEnvironmentViewCtrl<P, A> implements EnvironmentListener<P, A> {
+public class SimpleEnvironmentViewCtrl<P, A> implements EnvironmentListener<P, A>, Notifier {
 
 	protected SplitPane splitPane;
 	protected TextArea textArea;
