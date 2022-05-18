@@ -19,7 +19,6 @@ public class GraphPlanAlgorithmTest {
         GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
         Problem spareTireProblem = PlanningProblemFactory.spareTireProblem();
         List<List<ActionSchema>> solution = algorithm.graphPlan(spareTireProblem);
-        Collections.reverse(solution);
         ActionSchema removeSpareTrunk = new ActionSchema("Remove", null,
                 "At(Spare,Trunk)",
                 "~At(Spare,Trunk)^At(Spare,Ground)");

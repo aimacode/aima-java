@@ -54,7 +54,7 @@ public class GraphPlanAlgorithm {
             // if goals all non-mutex in St of graph then
             if (checkAllGoalsNonMutex(state, goals)) {
                 // solution ← EXTRACT-SOLUTION(graph, goals, NUMLEVELS(graph), nogoods)
-                List<List<ActionSchema>> solution = extractSolution(graph, goals, graph.numLevels(), nogoods);
+                List<List<ActionSchema>> solution = extractSolution(graph, goals, graph.numLevels()-1, nogoods);
                 // if solution ≠ failure then return solution
                 if (solution != null && solution.size() != 0)
                     return solution;
@@ -74,8 +74,8 @@ public class GraphPlanAlgorithm {
      * Artificial Intelligence A Modern Approach (3rd Edition): page 384.<br>
      * <p>
      * We can define EXTRACT -SOLUTION as a backward search problem, where
-     * each state in the search contains a pointer to a level in the planning graph and a set of unsat-
-     * isfied goals. We define this search problem as follows:
+     * each state in the search contains a pointer to a level in the planning graph and a set of
+     * unsatisfied goals. We define this search problem as follows:
      * • The initial state is the last level of the planning graph, S n , along with the set of goals
      * from the planning problem.
      * • The actions available in a state at level S i are to select any conflict-free subset of the
@@ -85,6 +85,7 @@ public class GraphPlanAlgorithm {
      * of their preconditions are mutex.
      * • The goal is to reach a state at level S 0 such that all the goals are satisfied.
      * • The cost of each action is 1.
+     * Here a simple depth-first search is used.
      *
      * @param graph    The planning graph.
      * @param goals    Goals of the planning problem.
@@ -92,59 +93,52 @@ public class GraphPlanAlgorithm {
      * @param nogoods  A hash table to store previously calculated results.
      * @return a solution if found else null
      */
-    private List<List<ActionSchema>> extractSolution(Graph graph, List<Literal> goals, int numLevel,
+    private List<List<ActionSchema>> extractSolution(Graph graph, List<Literal> goals, int level,
                                                      Hashtable<Integer, List<Literal>> nogoods) {
-        if (nogoods.contains(numLevel))
+        if (level <= 0)
+            return new ArrayList<>();
+        if (nogoods.containsKey(level) && nogoods.get(level).contains(goals))
             return null;
 
-        List<Literal> goalsCurr = new ArrayList<>(goals);
-        List<List<ActionSchema>> solution = new ArrayList<>();
-        for (int level = (graph.numLevels() - 1) / 2; level > 0; level--) {
-            Level currLevel = graph.getLevels().get(2 * level);
-            List<List<ActionSchema>> setOfPossibleActions = new ArrayList<>();
-            HashMap<Object, List<Object>> mutexLinks = currLevel.getPrevLevel().getMutexLinks();
-            for (Literal literal : goalsCurr) {
-                List<ActionSchema> possibleActionsPerLiteral = new ArrayList<>();
-                for (Object action : currLevel.getPrevLinks().get(literal)) {
-                    possibleActionsPerLiteral.add((ActionSchema) action);
-                }
-                setOfPossibleActions.add(possibleActionsPerLiteral);
-            }
-            List<List<ActionSchema>> allPossibleSubSets = generateCombinations(setOfPossibleActions);
-            boolean validSet;
-            List<ActionSchema> setToBeTaken = null;
-            for (List<ActionSchema> possibleSet : allPossibleSubSets) {
-                validSet = true;
-                ActionSchema firstAction, secondAction;
-                for (int i = 0; i < possibleSet.size(); i++) {
-                    firstAction = possibleSet.get(i);
-                    for (int j = i + 1; j < possibleSet.size(); j++) {
-                        secondAction = possibleSet.get(j);
-                        if (mutexLinks.containsKey(firstAction) && mutexLinks.get(firstAction).contains(secondAction))
-                            validSet = false;
-                    }
-                }
-                if (validSet) {
-                    // This is too simple. Completeness is lost. Search would be required... (RLu)
-                    setToBeTaken = possibleSet;
-                    break;
+        Level currLevel = graph.getLevels().get(level);
+        List<List<ActionSchema>> setOfPossibleActions = new ArrayList<>();
+        HashMap<Object, List<Object>> mutexLinks = currLevel.getPrevLevel().getMutexLinks();
+        for (Literal literal : goals) {
+            List<ActionSchema> possibleActionsPerLiteral = new ArrayList<>();
+            for (Object action : currLevel.getPrevLinks().get(literal))
+                possibleActionsPerLiteral.add((ActionSchema) action);
+            setOfPossibleActions.add(possibleActionsPerLiteral);
+        }
+        List<List<ActionSchema>> allPossibleSubSets = generateCombinations(setOfPossibleActions);
+        boolean validSet;
+        List<ActionSchema> setToBeTaken = null;
+        for (List<ActionSchema> possibleSet : allPossibleSubSets) {
+            validSet = true;
+            ActionSchema firstAction, secondAction;
+            for (int i = 0; i < possibleSet.size(); i++) {
+                firstAction = possibleSet.get(i);
+                for (int j = i + 1; j < possibleSet.size(); j++) {
+                    secondAction = possibleSet.get(j);
+                    if (mutexLinks.containsKey(firstAction) && mutexLinks.get(firstAction).contains(secondAction))
+                        validSet = false;
                 }
             }
-            if (setToBeTaken == null) {
-                nogoods.put(level, goalsCurr);
-                return null;
-            }
-            solution.add(setToBeTaken);
-            goalsCurr.clear();
-            for (ActionSchema action : setToBeTaken) {
-                for (Literal literal : action.getPrecondition()) {
-                    if (!goalsCurr.contains(literal)) {
-                        goalsCurr.add(literal);
-                    }
+            if (validSet) {
+                List<Literal> newGoals = new ArrayList<>();
+                for (ActionSchema action : possibleSet) {
+                    for (Literal literal : action.getPrecondition())
+                        if (!newGoals.contains(literal))
+                            newGoals.add(literal);
+                }
+                List<List<ActionSchema>> solution = extractSolution(graph, newGoals, level-2, nogoods);
+                if (solution != null) {
+                    solution.add(possibleSet);
+                    return solution;
                 }
             }
         }
-        return solution;
+        nogoods.put(level, goals);
+        return null;
     }
 
     /**
