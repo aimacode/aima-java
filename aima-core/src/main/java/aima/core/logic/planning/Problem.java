@@ -55,8 +55,7 @@ public class Problem {
      */
     public List<Constant> getProblemConstants() {
         List<Constant> constants = new ArrayList<>();
-        for (Literal literal :
-                getInitialState().getFluents()) {
+        for (Literal literal : getInitialState().getFluents()) {
             for (Term term :
                     literal.getAtomicSentence().getArgs()) {
                 if (term instanceof Constant) {
@@ -65,8 +64,7 @@ public class Problem {
                 }
             }
         }
-        for (Literal literal :
-                getGoalState().getFluents()) {
+        for (Literal literal : getGoalState().getFluents()) {
             for (Term term :
                     literal.getAtomicSentence().getArgs()) {
                 if (term instanceof Constant) {
@@ -75,8 +73,7 @@ public class Problem {
                 }
             }
         }
-        for (ActionSchema actionSchema :
-                getActionSchemas()) {
+        for (ActionSchema actionSchema : getActionSchemas()) {
             for (Constant constant :
                     actionSchema.getConstants()) {
                 if (!constants.contains(constant))
@@ -92,8 +89,7 @@ public class Problem {
     public List<ActionSchema> getPropositionalisedActions() {
         List<Constant> problemConstants = getProblemConstants();
         List<ActionSchema> result = new ArrayList<>();
-        for (ActionSchema actionSchema :
-                getActionSchemas()) {
+        for (ActionSchema actionSchema : getActionSchemas()) {
             int numberOfVars = actionSchema.getVariables().size();
             for (List<Constant> constants :
                     PermutationGenerator.generatePermutations(problemConstants, numberOfVars)) {

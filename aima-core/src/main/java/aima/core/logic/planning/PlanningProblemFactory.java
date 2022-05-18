@@ -1,6 +1,7 @@
 package aima.core.logic.planning;
 
 import aima.core.logic.fol.parsing.ast.Constant;
+import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
 import aima.core.logic.planning.hierarchicalsearch.HighLevelAction;
 
@@ -19,18 +20,18 @@ public class PlanningProblemFactory {
      * Generates air cargo problem. Artificial Intelligence A Modern Approach (3rd Edition):Figure 10.1 page 369.<br>
      * <p>
      * Init(At(C1, SFO) ∧ At(C2, JFK) ∧ At(P1, SFO) ∧ At(P2, JFK)
-     *   ∧ Cargo(C1) ∧ Cargo(C2) ∧ Plane(P1) ∧ Plane(P2)
-     *   ∧ Airport(JFK) ∧ Airport(SFO))
+     *  ∧ Cargo(C1) ∧ Cargo(C2) ∧ Plane(P1) ∧ Plane(P2)
+     *  ∧ Airport(JFK) ∧ Airport(SFO))
      * Goal(At(C1, JFK) ∧ At(C2, SFO))
      * Action(Load(c, p, a),
-     *  PRECOND: At(c, a) ∧ At(p, a) ∧ Cargo(c) ∧ Plane(p) ∧ Airport(a)
-     *  EFFECT: ¬ At(c, a) ∧ In(c, p))
+     *  PRECOND: At(c, a) ∧ At(p, a) ∧ Cargo(c) ∧ Plane(p) ∧ Airport(a)
+     *  EFFECT: ¬ At(c, a) ∧ In(c, p))
      * Action(Unload(c, p, a),
-     *  PRECOND: In(c, p) ∧ At(p, a) ∧ Cargo(c) ∧ Plane(p) ∧ Airport(a)
-     *  EFFECT: At(c, a) ∧ ¬ In(c, p))
+     *  PRECOND: In(c, p) ∧ At(p, a) ∧ Cargo(c) ∧ Plane(p) ∧ Airport(a)
+     *  EFFECT: At(c, a) ∧ ¬ In(c, p))
      * Action(Fly(p, from, to),
-     *  PRECOND: At(p, from) ∧ Plane(p) ∧ Airport(from) ∧ Airport(to)
-     *  EFFECT: ¬ At(p, from) ∧ At(p, to))
+     *  PRECOND: At(p, from) ∧ Plane(p) ∧ Airport(from) ∧ Airport(to)
+     *  EFFECT: ¬ At(p, from) ∧ At(p, to))
      *
      * @return A PDDL description of an air cargo transportation planning problem.
      */
@@ -43,12 +44,12 @@ public class PlanningProblemFactory {
         Variable a = new Variable("a");
         Variable from = new Variable("from");
         Variable to = new Variable("to");
-        ArrayList variables = new ArrayList<>(Arrays.asList(c, p, a));
-        ArrayList flyVars = new ArrayList<>(Arrays.asList(p, from, to));
-        ActionSchema loadAction = new ActionSchema("Load", variables,
+        ArrayList<Term> loadVars = new ArrayList<>(Arrays.asList(c, p, a));
+        ArrayList<Term> flyVars = new ArrayList<>(Arrays.asList(p, from, to));
+        ActionSchema loadAction = new ActionSchema("Load", loadVars,
                 "At(c,a)^At(p,a)^Cargo(c)^Plane(p)^Airport(a)",
                 "~At(c,a)^In(c,p)");
-        ActionSchema unloadAction = new ActionSchema("Unload", variables,
+        ActionSchema unloadAction = new ActionSchema("Unload", loadVars,
                 "In(c,p)^At(p,a)^Cargo(c)^Plane(p)^Airport(a)",
                 "At(c,a)^~In(c,p)");
         ActionSchema flyAction = new ActionSchema("Fly", flyVars,
@@ -77,15 +78,14 @@ public class PlanningProblemFactory {
      * @return The spare tire problem.
      */
     public static Problem spareTireProblem() {
-        State initialState = new State("Tire(Flat)^Tire(Spare)^At(Flat,Axle)" +
-                "^At(Spare,Trunk)");
+        State initialState = new State("Tire(Flat)^Tire(Spare)^At(Flat,Axle)^At(Spare,Trunk)");
         State goalState = new State("At(Spare,Axle)");
         Variable obj = new Variable("obj");
         Variable loc = new Variable("loc");
         Variable t = new Variable("t");
         Constant Axle = new Constant("Axle");
-        ArrayList removeVars = new ArrayList<>(Arrays.asList(obj, loc));
-        ArrayList putOnVars = new ArrayList<>(Arrays.asList(t, Axle));
+        ArrayList<Term> removeVars = new ArrayList<>(Arrays.asList(obj, loc));
+        ArrayList<Term> putOnVars = new ArrayList<>(Arrays.asList(t, Axle));
         ActionSchema removeAction = new ActionSchema("Remove", removeVars,
                 "At(obj,loc)",
                 "~At(obj,loc)^At(obj,Ground)");

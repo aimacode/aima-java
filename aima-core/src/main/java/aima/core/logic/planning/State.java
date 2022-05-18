@@ -12,7 +12,7 @@ import java.util.List;
  * <p>
  * Each state is represented as a conjunction of fluents that are ground, functionless atoms.
  * For example, Poor ∧ Unknown might represent the state of a hapless agent, and a state
- * in a package delivery problem might be At(Truck 1 , Melbourne) ∧ At(Truck 2 , Sydney).
+ * in a package delivery problem might be At(Truck1 , Melbourne) ∧ At(Truck2 , Sydney).
  *
  * @author samagra
  */
@@ -32,23 +32,22 @@ public class State {
      * Returns the state obtained by the application of an applicable action to
      * the current state.
      * <p>
-     * The result of executing action a in state s is defined as a state s  which is represented
+     * The result of executing action a in state s is defined as a state s which is represented
      * by the set of fluents formed by starting with s, removing the fluents that appear as negative
-     * literals in the action’s effects (what we call the delete list or D EL (a)), and adding the fluents
-     * that are positive literals in the action’s effects (what we call the add list or A DD (a)):
-     * RESULT (s, a) = (s − DEL (a)) ∪ ADD (a) .
+     * literals in the action’s effects (what we call the delete list or DEL(a)), and adding the fluents
+     * that are positive literals in the action’s effects (what we call the add list or ADD(a)):
+     * RESULT(s, a) = (s − DEL(a)) ∪ ADD(a).
      *
      * @param a The applicable action.
      * @return The new state.
      */
     public State result(ActionSchema a) {
         if (this.isApplicable(a)) {
-            for (Literal fluent :
-                    a.getEffectsNegativeLiterals()) {
+            for (Literal fluent : a.getEffectsNegativeLiterals()) {
                 Literal tempFluent = new Literal(fluent.getAtomicSentence());
-                this.fluents.remove(tempFluent);
+                fluents.remove(tempFluent);
             }
-            this.fluents.addAll(a.getEffectsPositiveLiterals());
+            fluents.addAll(a.getEffectsPositiveLiterals());
         }
         return this;
     }
@@ -63,8 +62,7 @@ public class State {
      */
     public State result(List<ActionSchema> actions) {
         State resultState = new State(new ArrayList<>(this.getFluents()));
-        for (ActionSchema action :
-                actions) {
+        for (ActionSchema action : actions) {
             resultState = resultState.result(action);
         }
         return resultState;
@@ -89,7 +87,7 @@ public class State {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof State))
+        if (getClass() != obj.getClass())
             return false;
         return this.fluents.containsAll(((State) obj).getFluents())
                 && ((State) obj).getFluents().containsAll(this.getFluents());
@@ -98,8 +96,7 @@ public class State {
     @Override
     public int hashCode() {
         hashCode = 17;
-        for (Literal fluent :
-                getFluents()) {
+        for (Literal fluent : getFluents()) {
             hashCode = 37 * hashCode + fluent.hashCode();
         }
         return hashCode;

@@ -25,8 +25,7 @@ public class Level {
             this.problem = problem;
             levelObjects = new ArrayList<>();
             prevLinks = new HashMap<>();
-            for (Object node :
-                    linksFromPreviousLevel.keySet()) {
+            for (Object node : linksFromPreviousLevel.keySet()) {
                 List<Object> thisLevelObjects = linksFromPreviousLevel.get(node);
                 for (Object nextNode :
                         thisLevelObjects) {
@@ -49,8 +48,7 @@ public class Level {
             levelObjects = new ArrayList<>();
             prevLinks = new HashMap<>();
             levelObjects.addAll(problem.getInitialState().getFluents());
-            for (Object obj :
-                    levelObjects) {
+            for (Object obj : levelObjects) {
                 prevLinks.put(obj, new ArrayList<>());
             }
             addNoPrecondActions();
@@ -60,17 +58,15 @@ public class Level {
         addPersistentActions();
     }
 
-    public Level(Level prevLevel, Problem problem, String extraLiterals){
+    public Level(Level prevLevel, Problem problem, String extraLiterals) {
         this(prevLevel, problem);
         this.addExtraLiterals(extraLiterals);
     }
 
-    public void addExtraLiterals(String s){
-        for (Literal literal :
-                Utils.parse(s)) {
-            if(!levelObjects.contains(literal)){
+    public void addExtraLiterals(String s) {
+        for (Literal literal : Utils.parse(s)) {
+            if(!levelObjects.contains(literal))
                 levelObjects.add(literal);
-            }
         }
         calculateNextLinks();
         calculateMutexLinks(getPrevLevel());
@@ -99,8 +95,7 @@ public class Level {
 
     private void addPersistentActions() {
        if(getLevelObjects().get(0) instanceof Literal) {
-           for (Object literal :
-                   getLevelObjects()) {
+           for (Object literal : getLevelObjects()) {
                ActionSchema action = new ActionSchema("No-op", null,
                        Collections.singletonList((Literal) literal),
                        Collections.singletonList((Literal) literal));
@@ -110,9 +105,8 @@ public class Level {
     }
 
     public void addNoPrecondActions(){
-        if(getLevelObjects().get(0) instanceof ActionSchema){
-            for (ActionSchema action :
-                    problem.getPropositionalisedActions()) {
+        if(getLevelObjects().get(0) instanceof ActionSchema) {
+            for (ActionSchema action : problem.getPropositionalisedActions()) {
                 if (action.getPrecondition().size()==0)
                     levelObjects.add(action);
             }
@@ -133,12 +127,10 @@ public class Level {
                 for (int j = i; j < levelObjects.size(); j++) {
                     secondLiteral = (Literal) levelObjects.get(j);
                     possibleActionsSecond = prevLinks.get(secondLiteral);
-                    if (firstLiteral.getAtomicSentence().getSymbolicName().equals(
-                            secondLiteral.getAtomicSentence().getSymbolicName()) &&
+                    if (firstLiteral.getAtomicSentence().getSymbolicName().equals
+                            (secondLiteral.getAtomicSentence().getSymbolicName()) &&
                             ((firstLiteral.isNegativeLiteral() && secondLiteral.isPositiveLiteral()) ||
-                                    firstLiteral.isPositiveLiteral() && secondLiteral.isNegativeLiteral()
-                            )) {
-
+                                    firstLiteral.isPositiveLiteral() && secondLiteral.isNegativeLiteral())) {
                         addToHashMap(firstLiteral, secondLiteral, mutexLinks);
                         addToHashMap(secondLiteral, firstLiteral, mutexLinks);
                     } else {
@@ -148,7 +140,8 @@ public class Level {
                                 possibleActionsFirst) {
                             for (Object secondAction :
                                     possibleActionsSecond) {
-                                if ((!prevMutexes.containsKey(firstAction))||(!prevMutexes.get(firstAction).contains(secondAction))) {
+                                if ((!prevMutexes.containsKey(firstAction))
+                                        || (!prevMutexes.get(firstAction).contains(secondAction))) {
                                     eachPossiblePairExclusive = false;
                                 }
                             }
@@ -175,23 +168,18 @@ public class Level {
                     List<Literal> secondActionEffects = secondAction.getEffects();
                     List<Literal> secondActionNegatedLiterals = secondAction.getEffectsNegativeLiterals();
                     List<Literal> secondActionPreconditions = secondAction.getPrecondition();
-                    for (Literal posLiteral :
-                            firstActionPositiveEffects) {
-                        for (Literal negatedLit :
-                                secondActionNegatedLiterals) {
-                            if (posLiteral.equals(new Literal(negatedLit.getAtomicSentence(),false))
-                            ) {
+                    for (Literal posLiteral : firstActionPositiveEffects) {
+                        for (Literal negatedLit : secondActionNegatedLiterals) {
+                            if (posLiteral.equals(new Literal(negatedLit.getAtomicSentence(),false))) {
                                 checkMutex = true;
                             }
                         }
                     }
                     if (!checkMutex) {
-                        if (checkInterference(secondActionPreconditions, firstActionEffects)) {
+                        if (checkInterference(secondActionPreconditions, firstActionEffects))
                             checkMutex = true;
-                        }
-                        if (checkInterference(firstActionPreconditions, secondActionEffects)) {
+                        if (checkInterference(firstActionPreconditions, secondActionEffects))
                             checkMutex = true;
-                        }
                     }
                     if (!checkMutex) {
                         HashMap<Object, List<Object>> prevMutex = prevLevel.getMutexLinks();
@@ -200,7 +188,9 @@ public class Level {
                                     firstActionPreconditions) {
                                 for (Literal secondActionPrecondition :
                                         secondActionPreconditions) {
-                                    if (prevMutex.get(firstActionPrecondition) != null && prevMutex.get(firstActionPrecondition).contains(secondActionPrecondition)) {
+                                    if (prevMutex.get(firstActionPrecondition) != null
+                                            && prevMutex.get(firstActionPrecondition).contains
+                                            (secondActionPrecondition)) {
                                         checkMutex = true;
                                     }
                                 }
@@ -220,15 +210,12 @@ public class Level {
 
     private boolean checkInterference(List<Literal> firstActionPreconditions, List<Literal> secondActionEffects) {
         boolean checkMutex = false;
-        for (Literal secondActionEffect :
-                secondActionEffects) {
-            for (Literal firstActionPrecondition :
-                    firstActionPreconditions) {
-                if (secondActionEffect.equals(new Literal(firstActionPrecondition.getAtomicSentence(),firstActionPrecondition.isPositiveLiteral())))
-                {
-                        checkMutex = true;
+        for (Literal secondActionEffect : secondActionEffects) {
+            for (Literal firstActionPrecondition : firstActionPreconditions) {
+                if (secondActionEffect.equals(new Literal(firstActionPrecondition.getAtomicSentence(),
+                        firstActionPrecondition.isPositiveLiteral()))) {
+                    checkMutex = true;
                 }
-
             }
         }
         return checkMutex;
@@ -248,12 +235,10 @@ public class Level {
     private void calculateNextLinks() {
         nextLinks = new HashMap<>();
         if (levelObjects.get(0) instanceof Literal) {
-            for (ActionSchema action :
-                    problem.getPropositionalisedActions()) {
+            for (ActionSchema action : problem.getPropositionalisedActions()) {
                 if (levelObjects.containsAll(action.getPrecondition())) {
                     List<Object> nextLevelNodes;
-                    for (Literal literal :
-                            action.getPrecondition()) {
+                    for (Literal literal : action.getPrecondition()) {
                         if (nextLinks.containsKey(literal)) {
                             nextLevelNodes = nextLinks.get(literal);
                             nextLevelNodes.add(action);
@@ -266,8 +251,7 @@ public class Level {
 
             }
         } else if (levelObjects.get(0) instanceof ActionSchema) {
-            for (Object action :
-                    levelObjects) {
+            for (Object action : levelObjects) {
                 Object[] effects =  ((ActionSchema) action).getEffects().toArray();
                 nextLinks.put(action, new ArrayList<>(Arrays.asList(effects)));
             }

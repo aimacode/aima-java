@@ -44,7 +44,7 @@ public class Graph {
     public Graph addLevel() {
         Level lastLevel = levels.get(levels.size() - 1);
         Level level = new Level(lastLevel, this.problem);
-        this.levels.add(level);
+        levels.add(level);
         return this;
     }
 }

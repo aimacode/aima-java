@@ -39,22 +39,22 @@ public class GraphPlanAlgorithm {
      * @return a solution or null
      */
     public List<List<ActionSchema>> graphPlan(Problem problem) {
-        //graph ← INITIAL-PLANNING-GRAPH(problem)
+        // graph ← INITIAL-PLANNING-GRAPH(problem)
         Graph graph = initialPlanningGraph(problem);
-        // goals ← CONJUNCTS(problem.GOAL)
+        // goals ← CONJUNCTS(problem.GOAL)
         List<Literal> goals = conjuncts(problem.getGoalState());
-        // nogoods ← an empty hash table
+        // nogoods ← an empty hash table
         Hashtable<Integer, List<Literal>> nogoods = new Hashtable<>();
         Level state;
-        // for tl = 0 to ∞ do
+        // for tl = 0 to ∞ do
         for (int tl = 0; ; tl++) {
             //St
             state = graph.getLevels().get(2 * tl);
-            // if goals all non-mutex in St of graph then
+            // if goals all non-mutex in St of graph then
             if (checkAllGoalsNonMutex(state, goals)) {
                 // solution ← EXTRACT-SOLUTION(graph, goals, NUMLEVELS(graph), nogoods)
                 List<List<ActionSchema>> solution = extractSolution(graph, goals, graph.numLevels(), nogoods);
-                //if solution ≠ failure then return solution
+                // if solution ≠ failure then return solution
                 if (solution != null && solution.size() != 0)
                     return solution;
             }
@@ -62,7 +62,7 @@ public class GraphPlanAlgorithm {
             if (levelledOff(graph) && leveledOff(nogoods)) {
                 return null;
             }
-            //   graph ← EXPAND-GRAPH(graph, problem)
+            // graph ← EXPAND-GRAPH(graph, problem)
             graph = expandGraph(graph);
         }
     }
@@ -97,14 +97,12 @@ public class GraphPlanAlgorithm {
             return null;
 
         int level = (graph.numLevels() - 1) / 2;
-        List<Literal> goalsCurr = goals;
         List<List<ActionSchema>> solution = new ArrayList<>();
         Level currLevel = graph.getLevels().get(2 * level);
         while (level > 0) {
             List<List<ActionSchema>> setOfPossibleActions = new ArrayList<>();
             HashMap<Object, List<Object>> mutexLinks = currLevel.getPrevLevel().getMutexLinks();
-            for (Literal literal :
-                    goalsCurr) {
+            for (Literal literal : goals) {
                 List<ActionSchema> possiBleActionsPerLiteral = new ArrayList<>();
                 for (Object action :
                         currLevel.getPrevLinks().get(literal)) {
@@ -115,8 +113,7 @@ public class GraphPlanAlgorithm {
             List<List<ActionSchema>> allPossibleSubSets = generateCombinations(setOfPossibleActions);
             boolean validSet;
             List<ActionSchema> setToBeTaken = null;
-            for (List<ActionSchema> possibleSet :
-                    allPossibleSubSets) {
+            for (List<ActionSchema> possibleSet : allPossibleSubSets) {
                 validSet = true;
                 ActionSchema firstAction, secondAction;
                 for (int i = 0; i < possibleSet.size(); i++) {
@@ -133,20 +130,19 @@ public class GraphPlanAlgorithm {
                 }
             }
             if (setToBeTaken == null) {
-                nogoods.put(level, goalsCurr);
+                nogoods.put(level, goals);
                 return null;
             }
 
             level--;
             currLevel = graph.getLevels().get(2 * level);
-            goalsCurr.clear();
+            goals.clear();
             solution.add(setToBeTaken);
-            for (ActionSchema action :
-                    setToBeTaken) {
+            for (ActionSchema action : setToBeTaken) {
                 for (Literal literal :
                         action.getPrecondition()) {
-                    if (!goalsCurr.contains(literal)) {
-                        goalsCurr.add(literal);
+                    if (!goals.contains(literal)) {
+                        goals.add(literal);
                     }
                 }
             }
@@ -167,8 +163,7 @@ public class GraphPlanAlgorithm {
             return false;
         }
         boolean mutexCheck = false;
-        for (Object literal :
-                goals) {
+        for (Object literal : goals) {
             List<Object> mutexOfGoal = level.getMutexLinks().get(literal);
             if (mutexOfGoal != null) {
                 for (Object object :
@@ -241,10 +236,8 @@ public class GraphPlanAlgorithm {
     // Helper methods for combinations and permutations.
     public List<List<ActionSchema>> combineTwoLists(List<ActionSchema> firstList, List<ActionSchema> secondList) {
         List<List<ActionSchema>> result = new ArrayList<>();
-        for (ActionSchema firstAction :
-                firstList) {
-            for (ActionSchema secondAction :
-                    secondList) {
+        for (ActionSchema firstAction : firstList) {
+            for (ActionSchema secondAction : secondList) {
                 result.add(Arrays.asList(firstAction, secondAction));
             }
         }
@@ -253,10 +246,8 @@ public class GraphPlanAlgorithm {
 
     public List<List<ActionSchema>> combineExtraList(List<List<ActionSchema>> combinedList, List<ActionSchema> newList) {
         List<List<ActionSchema>> result = new ArrayList<>();
-        for (List<ActionSchema> combined :
-                combinedList) {
-            for (ActionSchema action :
-                    newList) {
+        for (List<ActionSchema> combined : combinedList) {
+            for (ActionSchema action : newList) {
                 List<ActionSchema> tempList = new ArrayList<>(combined);
                 tempList.add(action);
                 result.add(tempList);
@@ -280,6 +271,5 @@ public class GraphPlanAlgorithm {
             }
             return result;
         }
-
     }
 }
