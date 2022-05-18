@@ -162,7 +162,7 @@ public class TicTacToeTest {
 				.createFor(game);
 		search.makeDecision(state);
 		int expandedNodes = search.getMetrics().getInt(MinimaxSearch.METRICS_NODES_EXPANDED);
-		Assert.assertEquals(30709, expandedNodes);
+		Assert.assertEquals(18296, expandedNodes);
 	}
 
 	@Test

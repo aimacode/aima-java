@@ -29,6 +29,7 @@ import java.util.*;
  * is possible.
  *
  * @author samagra
+ * @author Ruediger Lunde
  */
 public class GraphPlanAlgorithm {
 
@@ -96,19 +97,18 @@ public class GraphPlanAlgorithm {
         if (nogoods.contains(numLevel))
             return null;
 
-        int level = (graph.numLevels() - 1) / 2;
+        List<Literal> goalsCurr = new ArrayList<>(goals);
         List<List<ActionSchema>> solution = new ArrayList<>();
-        Level currLevel = graph.getLevels().get(2 * level);
-        while (level > 0) {
+        for (int level = (graph.numLevels() - 1) / 2; level > 0; level--) {
+            Level currLevel = graph.getLevels().get(2 * level);
             List<List<ActionSchema>> setOfPossibleActions = new ArrayList<>();
             HashMap<Object, List<Object>> mutexLinks = currLevel.getPrevLevel().getMutexLinks();
-            for (Literal literal : goals) {
-                List<ActionSchema> possiBleActionsPerLiteral = new ArrayList<>();
-                for (Object action :
-                        currLevel.getPrevLinks().get(literal)) {
-                    possiBleActionsPerLiteral.add((ActionSchema) action);
+            for (Literal literal : goalsCurr) {
+                List<ActionSchema> possibleActionsPerLiteral = new ArrayList<>();
+                for (Object action : currLevel.getPrevLinks().get(literal)) {
+                    possibleActionsPerLiteral.add((ActionSchema) action);
                 }
-                setOfPossibleActions.add(possiBleActionsPerLiteral);
+                setOfPossibleActions.add(possibleActionsPerLiteral);
             }
             List<List<ActionSchema>> allPossibleSubSets = generateCombinations(setOfPossibleActions);
             boolean validSet;
@@ -125,24 +125,21 @@ public class GraphPlanAlgorithm {
                     }
                 }
                 if (validSet) {
+                    // This is too simple. Completeness is lost. Search would be required... (RLu)
                     setToBeTaken = possibleSet;
                     break;
                 }
             }
             if (setToBeTaken == null) {
-                nogoods.put(level, goals);
+                nogoods.put(level, goalsCurr);
                 return null;
             }
-
-            level--;
-            currLevel = graph.getLevels().get(2 * level);
-            goals.clear();
             solution.add(setToBeTaken);
+            goalsCurr.clear();
             for (ActionSchema action : setToBeTaken) {
-                for (Literal literal :
-                        action.getPrecondition()) {
-                    if (!goals.contains(literal)) {
-                        goals.add(literal);
+                for (Literal literal : action.getPrecondition()) {
+                    if (!goalsCurr.contains(literal)) {
+                        goalsCurr.add(literal);
                     }
                 }
             }
