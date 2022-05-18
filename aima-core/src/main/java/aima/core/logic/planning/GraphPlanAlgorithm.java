@@ -60,9 +60,8 @@ public class GraphPlanAlgorithm {
                     return solution;
             }
             // if graph and nogoods have both leveled off then return failure
-            if (levelledOff(graph) && leveledOff(nogoods)) {
+            if (levelledOff(graph) && leveledOff(nogoods))
                 return null;
-            }
             // graph ← EXPAND-GRAPH(graph, problem)
             graph = expandGraph(graph);
         }
@@ -85,11 +84,12 @@ public class GraphPlanAlgorithm {
      * of their preconditions are mutex.
      * • The goal is to reach a state at level S 0 such that all the goals are satisfied.
      * • The cost of each action is 1.
+     *
      * Here a simple depth-first search is used.
      *
      * @param graph    The planning graph.
      * @param goals    Goals of the planning problem.
-     * @param numLevel Number of levels in the graph.
+     * @param level    Number of levels in the graph.
      * @param nogoods  A hash table to store previously calculated results.
      * @return a solution if found else null
      */
@@ -110,10 +110,8 @@ public class GraphPlanAlgorithm {
             setOfPossibleActions.add(possibleActionsPerLiteral);
         }
         List<List<ActionSchema>> allPossibleSubSets = generateCombinations(setOfPossibleActions);
-        boolean validSet;
-        List<ActionSchema> setToBeTaken = null;
         for (List<ActionSchema> possibleSet : allPossibleSubSets) {
-            validSet = true;
+            boolean validSet = true;
             ActionSchema firstAction, secondAction;
             for (int i = 0; i < possibleSet.size(); i++) {
                 firstAction = possibleSet.get(i);
