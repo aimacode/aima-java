@@ -5,12 +5,7 @@ import aima.gui.demo.agent.NondeterministicVacuumEnvironmentDemo;
 import aima.gui.demo.agent.TrivialVacuumDemo;
 import aima.gui.demo.agent.WumpusAgentDemo;
 import aima.gui.demo.learning.LearningDemo;
-import aima.gui.demo.logic.DpllDemo;
-import aima.gui.demo.logic.FolDemo;
-import aima.gui.demo.logic.PlFcEntailsDemo;
-import aima.gui.demo.logic.PlResolutionDemo;
-import aima.gui.demo.logic.TTEntailsDemo;
-import aima.gui.demo.logic.WalkSatDemo;
+import aima.gui.demo.logic.*;
 import aima.gui.demo.search.EightPuzzleDemo;
 import aima.gui.demo.search.MapColoringCspDemo;
 import aima.gui.demo.search.NQueensDemo;
@@ -95,6 +90,7 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerDemo(DpllDemo.class);
 		builder.registerDemo(WalkSatDemo.class);
 		builder.registerDemo(FolDemo.class);
+		builder.registerDemo(GraphPlanAlgorithmDemo.class);
 
 		// builder.registerDemo(ProbabilityDemo.class); // to slow.
 		builder.registerDemo(LearningDemo.class); // to slow.

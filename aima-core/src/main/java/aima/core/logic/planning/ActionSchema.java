@@ -21,6 +21,12 @@ import java.util.List;
  * @author samagra
  */
 public class ActionSchema {
+
+    /**
+     * Name for persistence actions.
+     */
+    public final static String NO_OP = "No-op";
+
     List<Term> variables;// list of variables
     List<Literal> precondition; //PRECONDITION: treated as a conjunction of fluents
     List<Literal> effects;//EFFECT: treated as a conjunction of fluents
@@ -56,11 +62,17 @@ public class ActionSchema {
     @Override
     public String toString() {
         String result = "Action(" + this.getName() + ")\n\tPRECOND:";
-        for (Literal precond : getPrecondition())
-            result = result + "^" + precond.toString();
+        String and = "";
+        for (Literal precond : getPrecondition()) {
+            result = result + and + precond.toString();
+            and = "^";
+        }
         result = result + "\n\tEFFECT:";
-        for (Literal effect : getEffects())
-            result = result + "^" + effect.toString();
+        and = "";
+        for (Literal effect : getEffects()) {
+            result = result + and + effect.toString();
+            and = "^";
+        }
         return result;
     }
 

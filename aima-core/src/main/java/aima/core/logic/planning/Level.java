@@ -55,7 +55,7 @@ public class Level {
             calculateNextLinks();
             calculateMutexLinks(null);
         }
-        addPersistentActions();
+        addPersistenceActions();
     }
 
     public Level(Level prevLevel, Problem problem, String extraLiterals) {
@@ -70,7 +70,7 @@ public class Level {
         }
         calculateNextLinks();
         calculateMutexLinks(getPrevLevel());
-        addPersistentActions();
+        addPersistenceActions();
     }
 
     public List<Object> getLevelObjects() {
@@ -93,10 +93,10 @@ public class Level {
         return problem;
     }
 
-    private void addPersistentActions() {
+    private void addPersistenceActions() {
        if(getLevelObjects().get(0) instanceof Literal) {
            for (Object literal : getLevelObjects()) {
-               ActionSchema action = new ActionSchema("No-op", null,
+               ActionSchema action = new ActionSchema(ActionSchema.NO_OP, null,
                        Collections.singletonList((Literal) literal),
                        Collections.singletonList((Literal) literal));
                addToHashMap(literal, action, nextLinks);

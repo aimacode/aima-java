@@ -3,6 +3,7 @@ package aima.core.logic.planning;
 import aima.core.logic.fol.kb.data.Literal;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 10.9 page
@@ -139,6 +140,13 @@ public class GraphPlanAlgorithm {
         return null;
     }
 
+    public List<ActionSchema> asFlatList(List<List<ActionSchema>> solution) {
+        List<ActionSchema> result = solution.stream().flatMap(Collection::stream)
+                .filter(actionSchema -> !ActionSchema.NO_OP.equals(actionSchema.getName()))
+                .collect(Collectors.toList());
+        return result;
+    }
+
     /**
      * This method is used to check if all goals are present in a particular state
      * and none of them has a mutex link.
@@ -155,8 +163,7 @@ public class GraphPlanAlgorithm {
         for (Object literal : goals) {
             List<Object> mutexOfGoal = level.getMutexLinks().get(literal);
             if (mutexOfGoal != null) {
-                for (Object object :
-                        mutexOfGoal) {
+                for (Object object : mutexOfGoal) {
                     if (goals.contains((Literal) object)) {
                         mutexCheck = true;
                         break;
