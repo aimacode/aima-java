@@ -42,9 +42,9 @@ public class GraphPlanAlgorithm {
      */
     public List<List<ActionSchema>> graphPlan(Problem problem) {
         // graph ← INITIAL-PLANNING-GRAPH(problem)
-        Graph graph = initialPlanningGraph(problem);
+        Graph graph = new Graph(problem);
         // goals ← CONJUNCTS(problem.GOAL)
-        List<Literal> goals = conjuncts(problem.getGoalState());
+        List<Literal> goals = problem.getGoalState().getFluents();
         // nogoods ← an empty hash table
         Hashtable<Integer, List<Literal>> nogoods = new Hashtable<>();
         Level state;
@@ -64,7 +64,7 @@ public class GraphPlanAlgorithm {
             if (levelledOff(graph) && leveledOff(nogoods))
                 return null;
             // graph ← EXPAND-GRAPH(graph, problem)
-            graph = expandGraph(graph);
+            graph.expand(problem);
         }
     }
 
@@ -129,6 +129,7 @@ public class GraphPlanAlgorithm {
                         if (!newGoals.contains(literal))
                             newGoals.add(literal);
                 }
+                newGoals.sort(Comparator.comparing(Literal::hashCode)); // defined order necessary for nogood test
                 List<List<ActionSchema>> solution = extractSolution(graph, newGoals, level-2, nogoods);
                 if (solution != null) {
                     solution.add(possibleSet);
@@ -141,10 +142,9 @@ public class GraphPlanAlgorithm {
     }
 
     public List<ActionSchema> asFlatList(List<List<ActionSchema>> solution) {
-        List<ActionSchema> result = solution.stream().flatMap(Collection::stream)
+        return solution.stream().flatMap(Collection::stream)
                 .filter(actionSchema -> !ActionSchema.NO_OP.equals(actionSchema.getName()))
                 .collect(Collectors.toList());
-        return result;
     }
 
     /**
@@ -175,19 +175,8 @@ public class GraphPlanAlgorithm {
     }
 
     /**
-     * This method adds a new state (a state level and an action level both) to the planning graph.
-     *
-     * @param graph The planning graph.
-     * @return The expanded graph.
-     */
-    private Graph expandGraph(Graph graph) {
-        return graph.addLevel().addLevel();
-    }
-
-    /**
      * A graph is said to be levelled off if two consecutive levels are identical.
      *
-     * @param nogoods
      * @return Boolean stating if the hashtable is levelled off.
      */
     private boolean leveledOff(Hashtable<Integer, List<Literal>> nogoods) {
@@ -199,34 +188,30 @@ public class GraphPlanAlgorithm {
     /**
      * A graph is said to be levelled off if two consecutive levels are identical.
      *
-     * @param graph
      * @return Boolean stating if the graph is levelled off.
      */
     private boolean levelledOff(Graph graph) {
         if (graph.numLevels() < 2)
             return false;
-        return graph.levels.get(graph.numLevels() - 1).equals(graph.levels.get(graph.numLevels() - 2));
+        return graph.getLevel(graph.numLevels() - 1).equals(graph.getLevel(graph.numLevels() - 2));
     }
 
-    /**
-     * Returns a list of literals in a state.
-     *
-     * @param goalState
-     * @return List of literals.
-     */
-    private List<Literal> conjuncts(State goalState) {
-        return goalState.getFluents();
-    }
-
-    /**
-     * This method initialises the planning graph for a particular problem.
-     *
-     * @param problem The planning problem.
-     * @return Graph for the planning problem.
-     */
-    private Graph initialPlanningGraph(Problem problem) {
-        Level initialLevel = new Level(null, problem);
-        return new Graph(problem, initialLevel);
+    public List<List<ActionSchema>> generateCombinations(List<List<ActionSchema>> actionLists) {
+        List<List<ActionSchema>> result = new ArrayList<>();
+        if (actionLists.size() == 1) {
+            result.add(actionLists.get(0));
+        } else if (actionLists.size() > 1) {
+            result = combineTwoLists(actionLists.get(0), actionLists.get(1));
+            if (actionLists.size() > 2) {
+                for (int i = 2; i < actionLists.size(); i++)
+                    result = combineExtraList(result, actionLists.get(i));
+            }
+        }
+        // sorting by increasing number of actions might reduce execution costs of first found solution.
+        result =  result.stream().sorted
+                (Comparator.comparing(x -> x.stream().filter(y -> !ActionSchema.NO_OP.equals(y.getName())).count()))
+                .collect(Collectors.toList());
+        return result;
     }
 
     // Helper methods for combinations and permutations.
@@ -250,22 +235,5 @@ public class GraphPlanAlgorithm {
             }
         }
         return result;
-    }
-
-    public List<List<ActionSchema>> generateCombinations(List<List<ActionSchema>> actionLists) {
-        List<List<ActionSchema>> result = new ArrayList<>();
-        if (actionLists.size() == 1) {
-            result.add(actionLists.get(0));
-            return result;
-        }
-        if (actionLists.size() == 2) {
-            return combineTwoLists(actionLists.get(0), actionLists.get(1));
-        } else {
-            result = combineTwoLists(actionLists.get(0), actionLists.get(1));
-            for (int i = 2; i < actionLists.size(); i++) {
-                result = combineExtraList(result, actionLists.get(i));
-            }
-            return result;
-        }
     }
 }

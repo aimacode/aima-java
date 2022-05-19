@@ -10,6 +10,7 @@ import org.junit.Test;
 
 /**
  * @author samagra
+ * @author Ruediger Lunde
  */
 public class GraphTest {
     Problem problem;
@@ -18,17 +19,12 @@ public class GraphTest {
     @Before
     public void setup() {
         problem = PlanningProblemFactory.spareTireProblem();
-        firstLevel = new Level(null, problem, "At(Spare,Trunk)^At(Flat,Axle) ^~At(Spare,Axle)^~At(Flat,Ground)^~At(Spare,Ground)");
-        secondLevel = new Level(firstLevel, problem);
-        thirdLevel = new Level(thirdLevel, problem);
     }
 
     @Test
-    public void addLevelTest() {
-        Graph graph = new Graph(problem, firstLevel);
-        graph.addLevel();
-        Assert.assertEquals(2, graph.getLevels().size());
-        graph.addLevel();
+    public void expandTest() {
+        Graph graph = new Graph(problem);
+        graph.expand(problem);
         Assert.assertEquals(3, graph.getLevels().size());
     }
 }

@@ -8,27 +8,24 @@ import java.util.*;
  * The data structure for calculating and holding the levels of a planning graph.
  *
  * @author samagra
+ * @author Ruediger Lunde
  */
 public class Level {
     List<Object> levelObjects;
-    HashMap<Object, List<Object>> mutexLinks;//can be planned alternatively
+    HashMap<Object, List<Object>> mutexLinks; //can be planned alternatively
     HashMap<Object, List<Object>> nextLinks;
     HashMap<Object, List<Object>> prevLinks;
-    Problem problem;
     Level prevLevel;
 
     public Level(Level prevLevel, Problem problem) {
-        this.prevLevel = prevLevel;
-        this.problem = problem;
+        levelObjects = new ArrayList<>();
+        prevLinks = new HashMap<>();
         if (prevLevel != null) {
+            this.prevLevel = prevLevel;
             HashMap<Object, List<Object>> linksFromPreviousLevel = prevLevel.getNextLinks();
-            this.problem = problem;
-            levelObjects = new ArrayList<>();
-            prevLinks = new HashMap<>();
             for (Object node : linksFromPreviousLevel.keySet()) {
                 List<Object> thisLevelObjects = linksFromPreviousLevel.get(node);
-                for (Object nextNode :
-                        thisLevelObjects) {
+                for (Object nextNode : thisLevelObjects) {
                     if (levelObjects.contains(nextNode)) {
                         List<Object> tempPrevLink = prevLinks.get(nextNode);
                         tempPrevLink.add(node);
@@ -37,38 +34,27 @@ public class Level {
                         levelObjects.add(nextNode);
                         prevLinks.put(nextNode, new ArrayList<>(Collections.singletonList(node)));
                     }
-
                 }
-
             }
-            addNoPrecondActions();
-            calculateNextLinks();
-            calculateMutexLinks(prevLevel);
         } else {
-            levelObjects = new ArrayList<>();
-            prevLinks = new HashMap<>();
             levelObjects.addAll(problem.getInitialState().getFluents());
-            for (Object obj : levelObjects) {
+            for (Object obj : levelObjects)
                 prevLinks.put(obj, new ArrayList<>());
-            }
-            addNoPrecondActions();
-            calculateNextLinks();
-            calculateMutexLinks(null);
         }
+        addNoPrecondActions(problem);
+        calculateNextLinks(problem);
+        calculateMutexLinks(prevLevel);
         addPersistenceActions();
     }
 
+    // for testing only...
     public Level(Level prevLevel, Problem problem, String extraLiterals) {
         this(prevLevel, problem);
-        this.addExtraLiterals(extraLiterals);
-    }
-
-    public void addExtraLiterals(String s) {
-        for (Literal literal : Utils.parse(s)) {
+        for (Literal literal : Utils.parse(extraLiterals)) {
             if(!levelObjects.contains(literal))
                 levelObjects.add(literal);
         }
-        calculateNextLinks();
+        calculateNextLinks(problem);
         calculateMutexLinks(getPrevLevel());
         addPersistenceActions();
     }
@@ -89,23 +75,12 @@ public class Level {
         return prevLinks;
     }
 
-    public Problem getProblem() {
-        return problem;
+    public Level getPrevLevel() {
+        return prevLevel;
     }
 
-    private void addPersistenceActions() {
-       if(getLevelObjects().get(0) instanceof Literal) {
-           for (Object literal : getLevelObjects()) {
-               ActionSchema action = new ActionSchema(ActionSchema.NO_OP, null,
-                       Collections.singletonList((Literal) literal),
-                       Collections.singletonList((Literal) literal));
-               addToHashMap(literal, action, nextLinks);
-           }
-       }
-    }
-
-    public void addNoPrecondActions(){
-        if(getLevelObjects().get(0) instanceof ActionSchema) {
+    private void addNoPrecondActions(Problem problem) {
+        if(levelObjects.get(0) instanceof ActionSchema) {
             for (ActionSchema action : problem.getPropositionalisedActions()) {
                 if (action.getPrecondition().size()==0)
                     levelObjects.add(action);
@@ -113,11 +88,21 @@ public class Level {
         }
     }
 
-
+    private void addPersistenceActions() {
+        if(levelObjects.get(0) instanceof Literal) {
+            for (Object literal : getLevelObjects()) {
+                ActionSchema action = new ActionSchema(ActionSchema.NO_OP, null,
+                        Collections.singletonList((Literal) literal),
+                        Collections.singletonList((Literal) literal));
+                addToHashMap(literal, action, nextLinks);
+            }
+        }
+    }
 
     private void calculateMutexLinks(Level prevLevel) {
         mutexLinks = new HashMap<>();
-        if(prevLevel == null) return;
+        if (prevLevel == null)
+            return;
         if (levelObjects.get(0) instanceof Literal) {
             Literal firstLiteral, secondLiteral;
             List<Object> possibleActionsFirst, possibleActionsSecond;
@@ -221,18 +206,7 @@ public class Level {
         return checkMutex;
     }
 
-    private void addToHashMap(Object firstObject, Object secondObject, HashMap<Object, List<Object>> map) {
-        List<Object> tempList;
-        if (map.containsKey(firstObject)) {
-            tempList = map.get(firstObject);
-            tempList.add(secondObject);
-            map.put(firstObject, tempList);
-        } else {
-            map.put(firstObject, new ArrayList<>(Collections.singletonList(secondObject)));
-        }
-    }
-
-    private void calculateNextLinks() {
+    private void calculateNextLinks(Problem problem) {
         nextLinks = new HashMap<>();
         if (levelObjects.get(0) instanceof Literal) {
             for (ActionSchema action : problem.getPropositionalisedActions()) {
@@ -252,20 +226,20 @@ public class Level {
             }
         } else if (levelObjects.get(0) instanceof ActionSchema) {
             for (Object action : levelObjects) {
-                Object[] effects =  ((ActionSchema) action).getEffects().toArray();
-                nextLinks.put(action, new ArrayList<>(Arrays.asList(effects)));
+                List<Literal> effects = ((ActionSchema) action).getEffects();
+                nextLinks.put(action, new ArrayList<>(new ArrayList<Object>(effects)));
             }
         }
-
     }
 
-    public Level getPrevLevel() {
-        return prevLevel;
+    private void addToHashMap(Object firstObject, Object secondObject, HashMap<Object, List<Object>> map) {
+        List<Object> list = map.computeIfAbsent(firstObject, k -> new ArrayList<>());
+        list.add(secondObject);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Level))
+        if (obj == null || getClass() != obj.getClass())
             return false;
         return this.levelObjects.containsAll(((Level) obj).levelObjects)
                 && ((Level) obj).levelObjects.containsAll(this.levelObjects)

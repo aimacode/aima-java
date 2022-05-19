@@ -14,15 +14,17 @@ import java.util.List;
  * @author samagra
  */
 public class Graph {
-    ArrayList<Level> levels;// Levels
-    Problem problem;// The planning problem
-    List<ActionSchema> propositionalisedActions;
+    private ArrayList<Level> levels;// Levels
+    private List<ActionSchema> propositionalisedActions;
 
-    public Graph(Problem problem, Level initialLevel) {
-        this.problem = problem;
+    public Graph(Problem problem) {
         levels = new ArrayList<>();
-        levels.add(initialLevel);
+        levels.add(new Level(null, problem));
         propositionalisedActions = problem.getPropositionalisedActions();
+    }
+
+    public Level getLevel(int i) {
+        return levels.get(i);
     }
 
     public int numLevels() {
@@ -33,18 +35,19 @@ public class Graph {
         return levels;
     }
 
-    public Problem getProblem() {
-        return problem;
-    }
-
     public List<ActionSchema> getPropositionalisedActions() {
         return propositionalisedActions;
     }
 
-    public Graph addLevel() {
-        Level lastLevel = levels.get(levels.size() - 1);
-        Level level = new Level(lastLevel, this.problem);
-        levels.add(level);
-        return this;
+    /**
+     * This method adds levels (an action and a state level) for a new state
+     * to the planning graph.
+     */
+    public void expand(Problem problem) {
+        Level level0 = levels.get(levels.size() - 1);
+        Level level1 = new Level(level0, problem); // new action level
+        Level level2 = new Level(level1, problem); // new state level
+        levels.add(level1);
+        levels.add(level2);
     }
 }

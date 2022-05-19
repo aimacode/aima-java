@@ -32,6 +32,7 @@ public class GraphPlanAlgorithmDemo {
             List<List<ActionSchema>> solution = algorithm.graphPlan(problem);
             long duration = System.currentTimeMillis() - start;
             System.out.println("Time for Planning [ms]: " + duration);
+            System.out.println("Levels: " + solution.size());
 
             System.out.println("Plan:");
             List<ActionSchema> sol = algorithm.asFlatList(solution);
