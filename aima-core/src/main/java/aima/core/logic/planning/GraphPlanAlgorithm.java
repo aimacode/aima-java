@@ -50,7 +50,7 @@ public class GraphPlanAlgorithm {
         Level state;
         // for tl = 0 to ∞ do
         for (int tl = 0; ; tl++) {
-            //St
+            // St
             state = graph.getLevels().get(2 * tl);
             // if goals all non-mutex in St of graph then
             if (checkAllGoalsNonMutex(state, goals)) {
@@ -90,7 +90,7 @@ public class GraphPlanAlgorithm {
      *
      * @param graph    The planning graph.
      * @param goals    Goals of the planning problem.
-     * @param level    Number of levels in the graph.
+     * @param level    Index of the level to be analyzed (starting with last level in the graph).
      * @param nogoods  A hash table to store previously calculated results.
      * @return a solution if found else null
      */
@@ -113,11 +113,10 @@ public class GraphPlanAlgorithm {
         List<List<ActionSchema>> allPossibleSubSets = generateCombinations(setOfPossibleActions);
         for (List<ActionSchema> possibleSet : allPossibleSubSets) {
             boolean validSet = true;
-            ActionSchema firstAction, secondAction;
-            for (int i = 0; i < possibleSet.size(); i++) {
-                firstAction = possibleSet.get(i);
-                for (int j = i + 1; j < possibleSet.size(); j++) {
-                    secondAction = possibleSet.get(j);
+            for (int i = 0; i < possibleSet.size() && validSet; i++) {
+                ActionSchema firstAction = possibleSet.get(i);
+                for (int j = i + 1; j < possibleSet.size() &&  validSet; j++) {
+                    ActionSchema secondAction = possibleSet.get(j);
                     if (mutexLinks.containsKey(firstAction) && mutexLinks.get(firstAction).contains(secondAction))
                         validSet = false;
                 }
@@ -156,9 +155,8 @@ public class GraphPlanAlgorithm {
      * @return Boolean representing if goals all non mutex in St
      */
     private boolean checkAllGoalsNonMutex(Level level, List<Literal> goals) {
-        if (!level.getLevelObjects().containsAll(goals)) {
+        if (!level.getLevelObjects().containsAll(goals))
             return false;
-        }
         boolean mutexCheck = false;
         for (Object literal : goals) {
             List<Object> mutexOfGoal = level.getMutexLinks().get(literal);
@@ -182,7 +180,9 @@ public class GraphPlanAlgorithm {
     private boolean leveledOff(Hashtable<Integer, List<Literal>> nogoods) {
         if (nogoods.size() < 2)
             return false;
-        return nogoods.get(nogoods.size() - 1).equals(nogoods.get(nogoods.size() - 2));
+        List<Integer> keys = new ArrayList<>(nogoods.keySet());
+        keys.sort(Comparator.reverseOrder());
+        return nogoods.get(keys.get(0)).equals(nogoods.get(keys.get(1)));
     }
 
     /**
@@ -191,9 +191,9 @@ public class GraphPlanAlgorithm {
      * @return Boolean stating if the graph is levelled off.
      */
     private boolean levelledOff(Graph graph) {
-        if (graph.numLevels() < 2)
+        if (graph.numLevels() < 3)
             return false;
-        return graph.getLevel(graph.numLevels() - 1).equals(graph.getLevel(graph.numLevels() - 2));
+        return graph.getLevel(graph.numLevels() - 1).equals(graph.getLevel(graph.numLevels() - 3));
     }
 
     public List<List<ActionSchema>> generateCombinations(List<List<ActionSchema>> actionLists) {

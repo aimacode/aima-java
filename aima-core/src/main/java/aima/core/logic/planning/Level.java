@@ -18,22 +18,20 @@ public class Level {
     Level prevLevel;
 
     public Level(Level prevLevel, Problem problem) {
+        // store level objects and prevLinks
         levelObjects = new ArrayList<>();
         prevLinks = new HashMap<>();
         if (prevLevel != null) {
             this.prevLevel = prevLevel;
             HashMap<Object, List<Object>> linksFromPreviousLevel = prevLevel.getNextLinks();
-            for (Object node : linksFromPreviousLevel.keySet()) {
-                List<Object> thisLevelObjects = linksFromPreviousLevel.get(node);
-                for (Object nextNode : thisLevelObjects) {
-                    if (levelObjects.contains(nextNode)) {
-                        List<Object> tempPrevLink = prevLinks.get(nextNode);
-                        tempPrevLink.add(node);
-                        prevLinks.put(nextNode, tempPrevLink);
-                    } else {
-                        levelObjects.add(nextNode);
-                        prevLinks.put(nextNode, new ArrayList<>(Collections.singletonList(node)));
+            for (Object obj : linksFromPreviousLevel.keySet()) {
+                List<Object> thisLevelObjects = linksFromPreviousLevel.get(obj);
+                for (Object nextObj : thisLevelObjects) {
+                    if (!levelObjects.contains(nextObj)) {
+                        levelObjects.add(nextObj);
+                        prevLinks.put(nextObj, new ArrayList<>());
                     }
+                    prevLinks.get(nextObj).add(obj);
                 }
             }
         } else {
@@ -41,6 +39,7 @@ public class Level {
             for (Object obj : levelObjects)
                 prevLinks.put(obj, new ArrayList<>());
         }
+        // do the rest
         addNoPrecondActions(problem);
         calculateNextLinks(problem);
         calculateMutexLinks(prevLevel);
@@ -80,7 +79,7 @@ public class Level {
     }
 
     private void addNoPrecondActions(Problem problem) {
-        if(levelObjects.get(0) instanceof ActionSchema) {
+        if (levelObjects.get(0) instanceof ActionSchema) {
             for (ActionSchema action : problem.getPropositionalisedActions()) {
                 if (action.getPrecondition().size()==0)
                     levelObjects.add(action);
@@ -89,7 +88,7 @@ public class Level {
     }
 
     private void addPersistenceActions() {
-        if(levelObjects.get(0) instanceof Literal) {
+        if (levelObjects.get(0) instanceof Literal) {
             for (Object literal : getLevelObjects()) {
                 ActionSchema action = new ActionSchema(ActionSchema.NO_OP, null,
                         Collections.singletonList((Literal) literal),
