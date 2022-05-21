@@ -34,6 +34,13 @@ import java.util.stream.Collectors;
  */
 public class GraphPlanAlgorithm {
 
+    /** Graph which was created in the last <code>graphPlan</code> call. */
+    private Graph graph;
+
+    public Graph getGraph() {
+        return graph;
+    }
+
     /**
      * function GRAPHPLAN(problem) returns solution or failure
      *
@@ -42,7 +49,7 @@ public class GraphPlanAlgorithm {
      */
     public List<List<ActionSchema>> graphPlan(Problem problem) {
         // graph ← INITIAL-PLANNING-GRAPH(problem)
-        Graph graph = new Graph(problem);
+        graph = new Graph(problem);
         // goals ← CONJUNCTS(problem.GOAL)
         List<Literal> goals = problem.getGoalState().getFluents();
         // nogoods ← an empty hash table
@@ -59,7 +66,9 @@ public class GraphPlanAlgorithm {
                 // if solution ≠ failure then return solution
                 if (solution != null && solution.size() != 0)
                     return solution;
-            }
+            } else
+                // seems to be missing in the book - but needed to guarantee termination! (RLu)
+                nogoods.put(tl, goals);
             // if graph and nogoods have both leveled off then return failure
             if (levelledOff(graph) && leveledOff(nogoods))
                 return null;
