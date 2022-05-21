@@ -14,17 +14,19 @@ import java.util.List;
  * by definition).
  *
  * @author samagra
+ * @author Ruediger Lunde
  */
 public class HighLevelAction extends ActionSchema {
     List<List<ActionSchema>> refinements;
 
-    public HighLevelAction(String name, List<Term> variables, String precondition, String effects, List<List<ActionSchema>> refinements) {
+    public HighLevelAction(String name, List<Term> variables, String precondition, String effects,
+                           List<List<ActionSchema>> refinements) {
         super(name, variables, precondition, effects);
         this.refinements = refinements;
     }
 
     public void addRefinement(List<ActionSchema> newRefinement) {
-        this.refinements.add(newRefinement);
+        refinements.add(newRefinement);
     }
 
     public List<List<ActionSchema>> getRefinements() {
@@ -33,16 +35,16 @@ public class HighLevelAction extends ActionSchema {
 
     @Override
     public String toString() {
-        String result = super.toString();
-        result = result + "\n" + "REFINEMENTS : \n";
-        for (List<ActionSchema> refinement :
-                this.getRefinements()) {
-            result += "\n";
-            for (ActionSchema action :
-                    refinement) {
-                result = result + "\n" + (action.getName());
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append("\nREFINEMENTS:");
+        for (List<ActionSchema> refinement : getRefinements()) {
+            result.append("\n\t");
+            String sep = "";
+            for (ActionSchema action : refinement) {
+                result.append(sep).append(action.getName());
+                sep = ", ";
             }
         }
-        return result;
+        return result.toString();
     }
 }

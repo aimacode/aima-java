@@ -44,7 +44,7 @@ public class HierarchicalSearchAlgorithm {
      */
     public List<ActionSchema> heirarchicalSearch(Problem problem) {
         // frontier ← a FIFO queue with [Act] as the only element
-        Queue<List<ActionSchema>> frontier = new LinkedList<>();
+        LinkedList<List<ActionSchema>> frontier = new LinkedList<>();
         frontier.add(new ArrayList<>(Collections.singletonList(PlanningProblemFactory.getHlaAct(problem))));
         // loop do
         while (true) {
@@ -79,16 +79,14 @@ public class HierarchicalSearchAlgorithm {
                 if (outcome.getFluents().containsAll(problem.getGoalState().getFluents()))
                     return plan;
             } else {
-                List<ActionSchema> tempInsertionList = new ArrayList<>();
                 // else for each sequence in REFINEMENTS(hla, outcome, hierarchy) do
-                for (List<ActionSchema> sequence :
-                        refinements(hla, outcome)) {
+                for (List<ActionSchema> sequence : refinements(hla, outcome)) {
                     // frontier ← INSERT(APPEND(prefix, sequence, suffix), frontier)
-                    tempInsertionList.clear();
-                    tempInsertionList.addAll(prefix);
-                    tempInsertionList.addAll(sequence);
-                    tempInsertionList.addAll(suffix);
-                    ((LinkedList<List<ActionSchema>>) frontier).addLast(new ArrayList<>(tempInsertionList));
+                    List<ActionSchema> list = new ArrayList<>();
+                    list.addAll(prefix);
+                    list.addAll(sequence);
+                    list.addAll(suffix);
+                    frontier.addLast(list);
                 }
             }
         }
@@ -105,8 +103,7 @@ public class HierarchicalSearchAlgorithm {
      */
     public List<List<ActionSchema>> refinements(ActionSchema hla, State outcome) {
         List<List<ActionSchema>> result = new ArrayList<>();
-        for (List<ActionSchema> refinement :
-                ((HighLevelAction) hla).getRefinements()) {
+        for (List<ActionSchema> refinement : ((HighLevelAction) hla).getRefinements()) {
             if (refinement.size() > 0) {
                 if (outcome.isApplicable(refinement.get(0)))
                     result.add(refinement);

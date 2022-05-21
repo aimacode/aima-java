@@ -61,19 +61,20 @@ public class ActionSchema {
 
     @Override
     public String toString() {
-        String result = "Action(" + this.getName() + ")\n\tPRECOND:";
+        StringBuilder result = new StringBuilder();
+        result.append("Action(").append(this.getName()).append(")\n\tPRECOND:");
         String and = "";
         for (Literal precond : getPrecondition()) {
-            result = result + and + precond.toString();
+            result.append(and).append(precond);
             and = "^";
         }
-        result = result + "\n\tEFFECT:";
+        result.append("\n\tEFFECT:");
         and = "";
         for (Literal effect : getEffects()) {
-            result = result + and + effect.toString();
+            result.append(and).append(effect);
             and = "^";
         }
-        return result;
+        return result.toString();
     }
 
     @Override
