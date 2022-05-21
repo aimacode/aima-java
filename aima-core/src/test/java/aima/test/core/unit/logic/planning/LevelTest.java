@@ -19,6 +19,7 @@ public class LevelTest {
         spareTireProblem = PlanningProblemFactory.spareTireProblem();
     }
 
+    /*
     @Test
     public void firstLevelTest() {
         Level firstLevel = new Level(null, spareTireProblem, "At(Spare,Trunk)^At(Flat,Axle) ^~At(Spare,Axle)^~At(Flat,Ground)^~At(Spare,Ground)");
@@ -41,39 +42,34 @@ public class LevelTest {
         Level firstLevel = new Level(null, spareTireProblem, "At(Spare,Trunk)^At(Flat,Axle) ^~At(Spare,Axle)^~At(Flat,Ground)^~At(Spare,Ground)");
         Level secondLevel = new Level(firstLevel, spareTireProblem);
         //TODO:test for level objects
-        Assert.assertEquals(10, secondLevel.getLevelObjects().size());//7 No-ops and three actions
+        Assert.assertEquals(10, secondLevel.getLevelObjects().size()); //7 No-ops and three actions
         //TODO:test for next links
-        /*for (Object object :
-                secondLevel.getNextLinks().keySet()) {
-            System.out.println("For=====   "+object.toString());
-            for (Object obj :
-                    secondLevel.getNextLinks().get(object)) {
-                System.out.println(obj.toString());
-            }
-            System.out.println("*************");
-        }*/
+//        for (Object object : secondLevel.getNextLinks().keySet()) {
+//            System.out.println("For=====   "+object.toString());
+//            for (Object obj :
+//                    secondLevel.getNextLinks().get(object)) {
+//                System.out.println(obj.toString());
+//            }
+//            System.out.println("*************");
+//        }
         Assert.assertEquals(10, secondLevel.getNextLinks().keySet().size());
         //TODO:Test for mutexes
-        /*for (Object object :
-        secondLevel.getMutexLinks().keySet()) {
-            System.out.println("For=====   "+object.toString());
-            for (Object obj :
-                    secondLevel.getMutexLinks().get(object)) {
-                System.out.println("With ==="+obj.toString());
-            }
-            System.out.println("*************");
-        }*/
+//        for (Object object : secondLevel.getMutexLinks().keySet()) {
+//            System.out.println("For=====   "+object.toString());
+//            for (Object obj :
+//                    secondLevel.getMutexLinks().get(object)) {
+//                System.out.println("With ==="+obj.toString());
+//            }
+//            System.out.println("*************");
+//        }
         //TODO:test for previous links
-        /*for (Object object :
-                secondLevel.getPrevLinks().keySet()) {
-            System.out.println("For=====   " + object.toString());
-            for (Object obj :
-                    secondLevel.getPrevLinks().get(object)) {
-                System.out.println(obj.toString());
-            }
-            System.out.println("*************");
-        }*/
-
+//        for (Object object : secondLevel.getPrevLinks().keySet()) {
+//            System.out.println("For=====   " + object.toString());
+//            for (Object obj : secondLevel.getPrevLinks().get(object)) {
+//                System.out.println(obj.toString());
+//            }
+//            System.out.println("*************");
+//        }
     }
 
     @Test
@@ -82,40 +78,35 @@ public class LevelTest {
         Level secondLevel = new Level(firstLevel, spareTireProblem);
         Level thirdLevel = new Level(secondLevel, spareTireProblem);
         //TODO:Test for level objects
-        /*for (Object obj :
-                thirdLevel.getLevelObjects()) {
-            System.out.println(obj.toString());
-        }
-        */
+//        for (Object obj : thirdLevel.getLevelObjects())
+//            System.out.println(obj.toString());
         //TODO:Test for nextLinks
-        /*for (Object object :
-                thirdLevel.getNextLinks().keySet()) {
-            System.out.println("For=====   "+object.toString());
-            for (Object obj :
-                    thirdLevel.getNextLinks().get(object)) {
-                System.out.println(obj.toString());
-            }
-            System.out.println("*************");
-        }*/
+//        for (Object object : thirdLevel.getNextLinks().keySet()) {
+//            System.out.println("For=====   "+object.toString());
+//            for (Object obj :
+//                    thirdLevel.getNextLinks().get(object)) {
+//                System.out.println(obj.toString());
+//            }
+//            System.out.println("*************");
+//        }
         //TODO:Test for mutex links
-        /*for (Object object :
-                thirdLevel.getMutexLinks().keySet()) {
-            System.out.println("For=====   "+object.toString());
-            for (Object obj :
-                    thirdLevel.getMutexLinks().get(object)) {
-                System.out.println("With ==="+obj.toString());
-            }
-            System.out.println("*************");
-        }*/
+//        for (Object object : thirdLevel.getMutexLinks().keySet()) {
+//            System.out.println("For=====   "+object.toString());
+//            for (Object obj :
+//                    thirdLevel.getMutexLinks().get(object)) {
+//                System.out.println("With ==="+obj.toString());
+//            }
+//            System.out.println("*************");
+//        }
         //TODO:test for prev links
-        /*for (Object object :
-                thirdLevel.getPrevLinks().keySet()) {
-            System.out.println("For=====   " + object.toString());
-            for (Object obj :
-                    thirdLevel.getPrevLinks().get(object)) {
-                System.out.println(obj.toString());
-            }
-            System.out.println("*************");
-        }*/
+//        for (Object object : thirdLevel.getPrevLinks().keySet()) {
+//            System.out.println("For=====   " + object.toString());
+//            for (Object obj :
+//                    thirdLevel.getPrevLinks().get(object)) {
+//                System.out.println(obj.toString());
+//            }
+//            System.out.println("*************");
+//        }
     }
+     */
 }

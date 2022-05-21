@@ -47,15 +47,15 @@ public class GraphPlanAlgorithm {
         List<Literal> goals = problem.getGoalState().getFluents();
         // nogoods ← an empty hash table
         Hashtable<Integer, List<Literal>> nogoods = new Hashtable<>();
-        Level state;
+        Level<Literal, ActionSchema> state;
         // for tl = 0 to ∞ do
         for (int tl = 0; ; tl++) {
             // St
-            state = graph.getLevels().get(2 * tl);
+            state = graph.getLiteralLevels().get(tl);
             // if goals all non-mutex in St of graph then
             if (checkAllGoalsNonMutex(state, goals)) {
                 // solution ← EXTRACT-SOLUTION(graph, goals, NUMLEVELS(graph), nogoods)
-                List<List<ActionSchema>> solution = extractSolution(graph, goals, graph.numLevels()-1, nogoods);
+                List<List<ActionSchema>> solution = extractSolution(graph, goals, tl, nogoods);
                 // if solution ≠ failure then return solution
                 if (solution != null && solution.size() != 0)
                     return solution;
@@ -101,13 +101,11 @@ public class GraphPlanAlgorithm {
         if (nogoods.containsKey(level) && nogoods.get(level).contains(goals))
             return null;
 
-        Level currLevel = graph.getLevels().get(level);
+        Level<Literal, ActionSchema> currLevel = graph.getLiteralLevels().get(level);
         List<List<ActionSchema>> setOfPossibleActions = new ArrayList<>();
-        HashMap<Object, List<Object>> mutexLinks = currLevel.getPrevLevel().getMutexLinks();
+        HashMap<ActionSchema, List<ActionSchema>> mutexLinks = currLevel.getPrevLevel().getMutexLinks();
         for (Literal literal : goals) {
-            List<ActionSchema> possibleActionsPerLiteral = new ArrayList<>();
-            for (Object action : currLevel.getPrevLinks().get(literal))
-                possibleActionsPerLiteral.add((ActionSchema) action);
+            List<ActionSchema> possibleActionsPerLiteral = new ArrayList<>(currLevel.getPrevLinks().get(literal));
             setOfPossibleActions.add(possibleActionsPerLiteral);
         }
         List<List<ActionSchema>> allPossibleSubSets = generateCombinations(setOfPossibleActions);
@@ -129,7 +127,7 @@ public class GraphPlanAlgorithm {
                             newGoals.add(literal);
                 }
                 newGoals.sort(Comparator.comparing(Literal::hashCode)); // defined order necessary for nogood test
-                List<List<ActionSchema>> solution = extractSolution(graph, newGoals, level-2, nogoods);
+                List<List<ActionSchema>> solution = extractSolution(graph, newGoals, level-1, nogoods);
                 if (solution != null) {
                     solution.add(possibleSet);
                     return solution;
@@ -154,15 +152,15 @@ public class GraphPlanAlgorithm {
      * @param goals List of goals to be checked
      * @return Boolean representing if goals all non mutex in St
      */
-    private boolean checkAllGoalsNonMutex(Level level, List<Literal> goals) {
+    private boolean checkAllGoalsNonMutex(Level<Literal, ActionSchema> level, List<Literal> goals) {
         if (!level.getLevelObjects().containsAll(goals))
             return false;
         boolean mutexCheck = false;
-        for (Object literal : goals) {
-            List<Object> mutexOfGoal = level.getMutexLinks().get(literal);
+        for (Literal literal : goals) {
+            List<Literal> mutexOfGoal = level.getMutexLinks().get(literal);
             if (mutexOfGoal != null) {
                 for (Object object : mutexOfGoal) {
-                    if (goals.contains((Literal) object)) {
+                    if (goals.contains(object)) {
                         mutexCheck = true;
                         break;
                     }
@@ -193,7 +191,7 @@ public class GraphPlanAlgorithm {
     private boolean levelledOff(Graph graph) {
         if (graph.numLevels() < 3)
             return false;
-        return graph.getLevel(graph.numLevels() - 1).equals(graph.getLevel(graph.numLevels() - 3));
+        return graph.getLiteralLevel(graph.numLevels() - 1).equals(graph.getLiteralLevel(graph.numLevels() - 3));
     }
 
     public List<List<ActionSchema>> generateCombinations(List<List<ActionSchema>> actionLists) {

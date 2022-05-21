@@ -14,7 +14,6 @@ import org.junit.Test;
  */
 public class GraphTest {
     Problem problem;
-    Level firstLevel, secondLevel, thirdLevel;
 
     @Before
     public void setup() {
@@ -25,6 +24,6 @@ public class GraphTest {
     public void expandTest() {
         Graph graph = new Graph(problem);
         graph.expand(problem);
-        Assert.assertEquals(3, graph.getLevels().size());
+        Assert.assertEquals(3, graph.getLiteralLevels().size());
     }
 }

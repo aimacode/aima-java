@@ -1,6 +1,7 @@
 package aima.test.core.unit.logic.planning;
 
 import aima.core.logic.fol.parsing.ast.Constant;
+import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
 import aima.core.logic.planning.ActionSchema;
 import aima.core.logic.planning.PlanningProblemFactory;
@@ -33,8 +34,8 @@ public class ProblemTest {
         Variable loc = new Variable("loc");
         Variable t = new Variable("t");
         Constant Axle = new Constant("Axle");
-        ArrayList removeVars = new ArrayList<>(Arrays.asList(obj, loc));
-        ArrayList putOnVars = new ArrayList<>(Arrays.asList(t, Axle));
+        ArrayList<Term> removeVars = new ArrayList<>(Arrays.asList(obj, loc));
+        ArrayList<Term> putOnVars = new ArrayList<>(Arrays.asList(t, Axle));
         ActionSchema removeAction = new ActionSchema("Remove", removeVars,
                 "At(obj,loc)",
                 "~At(obj,loc)^At(obj,Ground)");
