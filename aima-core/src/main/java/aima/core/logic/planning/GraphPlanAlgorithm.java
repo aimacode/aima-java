@@ -176,11 +176,10 @@ public class GraphPlanAlgorithm {
      * @return Boolean stating if the hashtable is levelled off.
      */
     private boolean leveledOff(Hashtable<Integer, List<Literal>> nogoods) {
-        if (nogoods.size() < 2)
+        int lastLevel = nogoods.size()-1;
+        if (lastLevel < 1)
             return false;
-        List<Integer> keys = new ArrayList<>(nogoods.keySet());
-        keys.sort(Comparator.reverseOrder());
-        return nogoods.get(keys.get(0)).equals(nogoods.get(keys.get(1)));
+        return nogoods.get(lastLevel).equals(nogoods.get(lastLevel-1));
     }
 
     /**
@@ -189,9 +188,9 @@ public class GraphPlanAlgorithm {
      * @return Boolean stating if the graph is levelled off.
      */
     private boolean levelledOff(Graph graph) {
-        if (graph.numLevels() < 3)
+        if (graph.numLevels() < 2)
             return false;
-        return graph.getLiteralLevel(graph.numLevels() - 1).equals(graph.getLiteralLevel(graph.numLevels() - 3));
+        return graph.getLiteralLevel(graph.numLevels() - 1).equals(graph.getLiteralLevel(graph.numLevels() - 2));
     }
 
     public List<List<ActionSchema>> generateCombinations(List<List<ActionSchema>> actionLists) {
