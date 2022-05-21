@@ -1,7 +1,5 @@
 package aima.core.logic.planning;
 
-import aima.core.logic.fol.kb.data.Literal;
-
 import java.util.*;
 
 /**
@@ -28,7 +26,7 @@ public class Level<CURR, PREV> {
     public Level(Level<PREV, CURR> prevLevel, Problem problem) {
         // store level objects and prevLinks
         this.prevLevel = prevLevel;
-        HashMap<PREV, List<CURR>> linksFromPreviousLevel = prevLevel.getNextLinks();
+        HashMap<PREV, List<CURR>> linksFromPreviousLevel = prevLevel.nextLinks;
         for (PREV obj : linksFromPreviousLevel.keySet()) {
             List<CURR> thisLevelObjects = linksFromPreviousLevel.get(obj);
             for (CURR nextObj : thisLevelObjects) {
@@ -41,43 +39,25 @@ public class Level<CURR, PREV> {
         }
     }
 
-    /*
-    // for testing only...
-    public Level(Level<PREV, CURR> prevLevel, Problem problem, String extraLiterals) {
-        this(prevLevel, problem);
-        for (Literal literal : Utils.parse(extraLiterals)) {
-            if(!levelObjects.contains(literal))
-                levelObjects.add(literal);
-        }
-        calculateNextLinks(problem);
-        calculateMutexLinks(getPrevLevel());
-        addPersistenceActions();
-    }
-     */
-
     public List<CURR> getLevelObjects() {
         return levelObjects;
     }
 
-    public HashMap<CURR, List<CURR>> getMutexLinks() {
-        return mutexLinks;
+    public List<PREV> getLinkedPrevObjects(CURR obj) {
+        return prevLinks.get(obj);
     }
 
-    public HashMap<CURR, List<PREV>> getNextLinks() {
-        return nextLinks;
-    }
-
-    public HashMap<CURR, List<PREV>> getPrevLinks() {
-        return prevLinks;
+    // for testing
+    public List<PREV> getLinkedNextObjects(CURR obj) {
+        return nextLinks.get(obj);
     }
 
     public Level<PREV, CURR> getPrevLevel() {
         return prevLevel;
     }
 
-    public void addToPrevLinks(CURR currObject, PREV prevObject) {
-        List<PREV> list = prevLinks.computeIfAbsent(currObject, k -> new ArrayList<>());
-        list.add(prevObject);
+    public HashMap<CURR, List<CURR>> getMutexLinks() {
+        return mutexLinks;
     }
 
     public void addToNextLinks(CURR currObject, PREV nextObject) {

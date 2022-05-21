@@ -10,16 +10,34 @@ import java.util.List;
 
 /**
  * @author samagra
+ * @author Ruediger Lunde
  */
 public class LevelTest {
-    Problem spareTireProblem;
+    Problem problem;
 
     @Before
     public void setup() {
-        spareTireProblem = PlanningProblemFactory.spareTireProblem();
+        problem = PlanningProblemFactory.spareTireProblem();
     }
 
-    /*
+
+    @Test
+    public void levelCreationTest() {
+        Level<Literal, ActionSchema> level = new Level<>(problem.getInitialState().getFluents(), problem);
+        List<Literal> expectedLevelObjects = Utils.parse(
+                "Tire(Flat)^Tire(Spare)^At(Spare,Trunk)^At(Flat,Axle)"
+        );
+        Assert.assertTrue(level.getLevelObjects().containsAll(expectedLevelObjects));
+        for (Literal literal : expectedLevelObjects) {
+            List<ActionSchema> linkedActions = level.getLinkedPrevObjects(literal);
+            Assert.assertTrue(linkedActions != null && linkedActions.size() == 0);
+            linkedActions = level.getLinkedNextObjects(literal);
+            Assert.assertNull(linkedActions);
+        }
+        Assert.assertTrue(level.getMutexLinks() != null && level.getMutexLinks().size() == 0);
+    }
+
+    /* currently not supported...(RLu)
     @Test
     public void firstLevelTest() {
         Level firstLevel = new Level(null, spareTireProblem, "At(Spare,Trunk)^At(Flat,Axle) ^~At(Spare,Axle)^~At(Flat,Ground)^~At(Spare,Ground)");

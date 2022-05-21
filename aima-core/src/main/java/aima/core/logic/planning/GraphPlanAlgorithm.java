@@ -51,7 +51,7 @@ public class GraphPlanAlgorithm {
         // for tl = 0 to ∞ do
         for (int tl = 0; ; tl++) {
             // St
-            state = graph.getLiteralLevels().get(tl);
+            state = graph.getLiteralLevel(tl);
             // if goals all non-mutex in St of graph then
             if (checkAllGoalsNonMutex(state, goals)) {
                 // solution ← EXTRACT-SOLUTION(graph, goals, NUMLEVELS(graph), nogoods)
@@ -101,11 +101,11 @@ public class GraphPlanAlgorithm {
         if (nogoods.containsKey(level) && nogoods.get(level).contains(goals))
             return null;
 
-        Level<Literal, ActionSchema> currLevel = graph.getLiteralLevels().get(level);
+        Level<Literal, ActionSchema> currLevel = graph.getLiteralLevel(level);
         List<List<ActionSchema>> setOfPossibleActions = new ArrayList<>();
         HashMap<ActionSchema, List<ActionSchema>> mutexLinks = currLevel.getPrevLevel().getMutexLinks();
         for (Literal literal : goals) {
-            List<ActionSchema> possibleActionsPerLiteral = new ArrayList<>(currLevel.getPrevLinks().get(literal));
+            List<ActionSchema> possibleActionsPerLiteral = new ArrayList<>(currLevel.getLinkedPrevObjects(literal));
             setOfPossibleActions.add(possibleActionsPerLiteral);
         }
         List<List<ActionSchema>> allPossibleSubSets = generateCombinations(setOfPossibleActions);

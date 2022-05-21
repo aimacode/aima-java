@@ -1,6 +1,5 @@
 package aima.core.logic.planning;
 
-import aima.core.agent.Action;
 import aima.core.logic.fol.kb.data.Literal;
 
 import java.util.ArrayList;
@@ -20,13 +19,13 @@ import java.util.List;
  * @author Ruediger Lunde
  */
 public class Graph {
-    private final List<Level<Literal, ActionSchema>> literalLevels;
-    private final List<Level<ActionSchema, Literal>> actionLevels;
+    private final List<Level<Literal, ActionSchema>> literalLevels; // size: numLevels()
+    private final List<Level<ActionSchema, Literal>> actionLevels; // size: numLevels()-1
 
     public Graph(Problem problem) {
         literalLevels = new ArrayList<>();
-        literalLevels.add(createLiteralLevel(null, problem));
         actionLevels = new ArrayList<>();
+        literalLevels.add(createLiteralLevel(null, problem));
     }
 
     public Level<Literal, ActionSchema> getLiteralLevel(int i) {
@@ -35,10 +34,6 @@ public class Graph {
 
     public Level<ActionSchema, Literal> getActionLevel(int i) {
         return actionLevels.get(i);
-    }
-
-    public List<Level<Literal, ActionSchema>> getLiteralLevels() {
-        return literalLevels;
     }
 
     public int numLevels() {
@@ -165,10 +160,10 @@ public class Graph {
         List<ActionSchema> possibleActionsFirst, possibleActionsSecond;
         for (int i = 0; i < literals.size(); i++) {
             firstLiteral = literals.get(i);
-            possibleActionsFirst = level.getPrevLinks().get(firstLiteral);
+            possibleActionsFirst = level.getLinkedPrevObjects(firstLiteral);
             for (int j = i; j < literals.size(); j++) {
                 secondLiteral = literals.get(j);
-                possibleActionsSecond = level.getPrevLinks().get(secondLiteral);
+                possibleActionsSecond = level.getLinkedPrevObjects(secondLiteral);
                 if (firstLiteral.getAtomicSentence().getSymbolicName().equals
                         (secondLiteral.getAtomicSentence().getSymbolicName()) &&
                         ((firstLiteral.isNegativeLiteral() && secondLiteral.isPositiveLiteral()) ||
