@@ -64,11 +64,12 @@ public class GraphPlanAlgorithm {
                 // solution ← EXTRACT-SOLUTION(graph, goals, NUMLEVELS(graph), nogoods)
                 List<List<ActionSchema>> solution = extractSolution(graph, goals, tl, nogoods);
                 // if solution ≠ failure then return solution
-                if (solution != null && solution.size() != 0)
+                if (solution != null)
                     return solution;
-            } else
+            } else {
                 // seems to be missing in the book - but needed to guarantee termination! (RLu)
                 nogoods.put(tl, goals);
+            }
             // if graph and nogoods have both leveled off then return failure
             if (levelledOff(graph) && leveledOff(nogoods))
                 return null;

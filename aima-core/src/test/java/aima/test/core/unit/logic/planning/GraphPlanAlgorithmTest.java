@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * @author samagra
+ * @author Ruediger Lunde
  */
 public class GraphPlanAlgorithmTest {
     @Test
