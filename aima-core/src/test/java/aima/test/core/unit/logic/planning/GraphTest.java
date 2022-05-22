@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * @author Ruediger Lunde
  */
 public class GraphTest {
-    Problem problem;
+    PlanningProblem problem;
 
     @Before
     public void setup() {

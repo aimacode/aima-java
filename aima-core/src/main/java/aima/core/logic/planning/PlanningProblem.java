@@ -22,19 +22,19 @@ import java.util.*;
  *
  * @author samagra
  */
-public class Problem {
-    State initialState;// initialState
-    Set<ActionSchema> actionSchemas;// Planning Domain
-    State goalState;// goalState
+public class PlanningProblem {
+    State initialState; // initialState
+    Set<ActionSchema> actionSchemas; // Planning Domain
+    State goalState; // goalState
 
 
-    public Problem(State initialState, State goalState, Set<ActionSchema> actionSchemas) {
+    public PlanningProblem(State initialState, State goalState, Set<ActionSchema> actionSchemas) {
         this.initialState = initialState;
         this.actionSchemas = actionSchemas;
         this.goalState = goalState;
     }
 
-    public Problem(State initialState, State goalState, ActionSchema... actions) {
+    public PlanningProblem(State initialState, State goalState, ActionSchema... actions) {
         this(initialState, goalState, new HashSet<>(Arrays.asList(actions)));
     }
 
@@ -56,8 +56,7 @@ public class Problem {
     public List<Constant> getProblemConstants() {
         List<Constant> constants = new ArrayList<>();
         for (Literal literal : getInitialState().getFluents()) {
-            for (Term term :
-                    literal.getAtomicSentence().getArgs()) {
+            for (Term term : literal.getAtomicSentence().getArgs()) {
                 if (term instanceof Constant) {
                     if (!constants.contains((Constant) term))
                         constants.add((Constant) term);
@@ -65,8 +64,7 @@ public class Problem {
             }
         }
         for (Literal literal : getGoalState().getFluents()) {
-            for (Term term :
-                    literal.getAtomicSentence().getArgs()) {
+            for (Term term : literal.getAtomicSentence().getArgs()) {
                 if (term instanceof Constant) {
                     if (!constants.contains((Constant) term))
                         constants.add((Constant) term);
@@ -74,8 +72,7 @@ public class Problem {
             }
         }
         for (ActionSchema actionSchema : getActionSchemas()) {
-            for (Constant constant :
-                    actionSchema.getConstants()) {
+            for (Constant constant : actionSchema.getConstants()) {
                 if (!constants.contains(constant))
                     constants.add(constant);
             }
@@ -84,6 +81,8 @@ public class Problem {
     }
 
     /**
+     * Note: Here, all variables are replaced by different constants. It is assumed that preconditions contain
+     * x != y literals for every pair of variables.
      * @return Propositionalises all the actionschemas to return a set of possible ground actions
      */
     public List<ActionSchema> getPropositionalisedActions() {
@@ -91,10 +90,8 @@ public class Problem {
         List<ActionSchema> result = new ArrayList<>();
         for (ActionSchema actionSchema : getActionSchemas()) {
             int numberOfVars = actionSchema.getVariables().size();
-            for (List<Constant> constants :
-                    PermutationGenerator.generatePermutations(problemConstants, numberOfVars)) {
+            for (List<Constant> constants : PermutationGenerator.generatePermutations(problemConstants, numberOfVars))
                 result.add(actionSchema.getActionBySubstitution(constants));
-            }
         }
         return result;
     }

@@ -43,6 +43,8 @@ public class Node<S, A> {
 	// the initial state to the node, as indicated by the parent pointers.
 	private final double pathCost;
 
+	private final int depth;
+
 	/**
 	 * Constructs a root node for the specified state.
 	 * 
@@ -74,6 +76,7 @@ public class Node<S, A> {
 		this.parent = parent;
 		this.action = action;
 		this.pathCost = pathCost;
+		depth = parent != null ? parent.getDepth()+1 : 0;
 	}
 
 	/**
@@ -121,6 +124,10 @@ public class Node<S, A> {
 	 */
 	public boolean isRootNode() {
 		return parent == null;
+	}
+
+	public int getDepth() {
+		return depth;
 	}
 
 	@Override

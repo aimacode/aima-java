@@ -5,7 +5,7 @@ import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
 import aima.core.logic.planning.ActionSchema;
 import aima.core.logic.planning.PlanningProblemFactory;
-import aima.core.logic.planning.Problem;
+import aima.core.logic.planning.PlanningProblem;
 import aima.core.logic.planning.State;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,8 +18,8 @@ import java.util.List;
 /**
  * @author samagra
  */
-public class ProblemTest {
-    private Problem testProblem;
+public class PlanningProblemTest {
+    private PlanningProblem testProblem;
 
     @Before
     public void setup() {

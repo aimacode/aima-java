@@ -2,7 +2,7 @@ package aima.core.logic.planning.hierarchicalsearch;
 
 import aima.core.logic.planning.ActionSchema;
 import aima.core.logic.planning.PlanningProblemFactory;
-import aima.core.logic.planning.Problem;
+import aima.core.logic.planning.PlanningProblem;
 import aima.core.logic.planning.State;
 
 import java.util.*;
@@ -42,7 +42,7 @@ public class HierarchicalSearchAlgorithm {
      * @param problem The planning problem.
      * @return A list of actions representing the plan.
      */
-    public List<ActionSchema> heirarchicalSearch(Problem problem) {
+    public List<ActionSchema> heirarchicalSearch(PlanningProblem problem) {
         // frontier ← a FIFO queue with [Act] as the only element
         LinkedList<List<ActionSchema>> frontier = new LinkedList<>();
         frontier.add(new ArrayList<>(Collections.singletonList(PlanningProblemFactory.getHlaAct(problem))));

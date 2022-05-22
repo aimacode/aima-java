@@ -16,11 +16,14 @@ import java.util.function.Predicate;
  */
 public class GeneralProblem<S, A> implements Problem<S, A> {
 
-    private S initialState;
-    private Function<S, List<A>> actionsFn;
-    private BiFunction<S, A, S> resultFn;
-    private Predicate<S> goalTest;
-    private StepCostFunction<S, A> stepCostFn;
+    protected S initialState;
+    protected Function<S, List<A>> actionsFn;
+    protected BiFunction<S, A, S> resultFn;
+    protected Predicate<S> goalTest;
+    protected StepCostFunction<S, A> stepCostFn;
+
+    protected GeneralProblem() {
+    }
 
     /**
      * Constructs a problem with the specified components, which includes a step

@@ -90,7 +90,7 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerDemo(DpllDemo.class);
 		builder.registerDemo(WalkSatDemo.class);
 		builder.registerDemo(FolDemo.class);
-		builder.registerDemo(GraphPlanAlgorithmDemo.class);
+		builder.registerDemo(PlanningProblemDemo.class);
 
 		// builder.registerDemo(ProbabilityDemo.class); // to slow.
 		builder.registerDemo(LearningDemo.class); // to slow.

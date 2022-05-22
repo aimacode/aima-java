@@ -22,7 +22,7 @@ public class Graph {
     private final List<Level<Literal, ActionSchema>> literalLevels; // size: numLevels()
     private final List<Level<ActionSchema, Literal>> actionLevels; // size: numLevels()-1
 
-    public Graph(Problem problem) {
+    public Graph(PlanningProblem problem) {
         literalLevels = new ArrayList<>();
         actionLevels = new ArrayList<>();
         literalLevels.add(createLiteralLevel(null, problem));
@@ -44,7 +44,7 @@ public class Graph {
      * This method adds a level (an action and a state level) for a new state
      * to the planning graph.
      */
-    public void expand(Problem problem) {
+    public void expand(PlanningProblem problem) {
         Level<Literal, ActionSchema> litLevelCurr = literalLevels.get(numLevels() - 1);
         Level<ActionSchema, Literal> actLevelNext = createActionLevel(litLevelCurr, problem);
         Level<Literal, ActionSchema> litLevelNext = createLiteralLevel(actLevelNext, problem);
@@ -52,7 +52,7 @@ public class Graph {
         literalLevels.add(litLevelNext);
     }
 
-    private Level<ActionSchema, Literal> createActionLevel(Level<Literal, ActionSchema> prevLevel, Problem problem) {
+    private Level<ActionSchema, Literal> createActionLevel(Level<Literal, ActionSchema> prevLevel, PlanningProblem problem) {
         Level<ActionSchema, Literal> result =  new Level<>(prevLevel, problem);
         // add actions with empty precondition
         for (ActionSchema action : problem.getPropositionalisedActions()) {
@@ -61,13 +61,13 @@ public class Graph {
         }
         // set next links
         for (ActionSchema action : result.getLevelObjects())
-            result.putToNextLinks(action, new ArrayList<>(action.getEffects()));
+            result.putToNextLinks(action, new ArrayList<>(action.getEffect()));
         calculateMutexLinksForActionLevel(result);
         return result;
     }
 
     // prevLevel can be null
-    private Level<Literal, ActionSchema> createLiteralLevel(Level<ActionSchema, Literal> prevLevel, Problem problem) {
+    private Level<Literal, ActionSchema> createLiteralLevel(Level<ActionSchema, Literal> prevLevel, PlanningProblem problem) {
         Level<Literal, ActionSchema> result = (prevLevel == null)
                 ? new Level<>(problem.getInitialState().getFluents(), problem)
                 : new Level<>(prevLevel, problem);
@@ -76,7 +76,7 @@ public class Graph {
         return result;
     }
 
-    private void calculateNextLinks(Level<Literal, ActionSchema> level, Problem problem) {
+    private void calculateNextLinks(Level<Literal, ActionSchema> level, PlanningProblem problem) {
         // add applicable actions:
         for (ActionSchema action : problem.getPropositionalisedActions()) {
             if (level.getLevelObjects().containsAll(action.getPrecondition()))
@@ -99,13 +99,13 @@ public class Graph {
 
         for (int i = 0; i < actions.size(); i++) {
             firstAction = actions.get(i);
-            List<Literal> firstActionEffects = firstAction.getEffects();
+            List<Literal> firstActionEffects = firstAction.getEffect();
             List<Literal> firstActionPositiveEffects = firstAction.getEffectsPositiveLiterals();
             List<Literal> firstActionPreconditions = firstAction.getPrecondition();
             for (int j = i + 1; j < actions.size(); j++) {
                 checkMutex = false;
                 secondAction = actions.get(j);
-                List<Literal> secondActionEffects = secondAction.getEffects();
+                List<Literal> secondActionEffects = secondAction.getEffect();
                 List<Literal> secondActionNegatedLiterals = secondAction.getEffectsNegativeLiterals();
                 List<Literal> secondActionPreconditions = secondAction.getPrecondition();
                 for (Literal posLiteral : firstActionPositiveEffects) {

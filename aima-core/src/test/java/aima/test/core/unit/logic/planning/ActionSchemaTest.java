@@ -60,9 +60,9 @@ public class ActionSchemaTest {
         List<Literal> effects = Arrays.asList(effectOne, effectTwo);
         List<Literal> posEffects = Arrays.asList(effectTwo);
         List<Literal> negEffects = Arrays.asList(effectOne);
-        Assert.assertEquals(effectOne, flyAction.getEffects().get(0));
-        Assert.assertEquals(effectTwo, flyAction.getEffects().get(1));
-        Assert.assertEquals(effects, flyAction.getEffects());
+        Assert.assertEquals(effectOne, flyAction.getEffect().get(0));
+        Assert.assertEquals(effectTwo, flyAction.getEffect().get(1));
+        Assert.assertEquals(effects, flyAction.getEffect());
         Assert.assertEquals(posEffects, flyAction.getEffectsPositiveLiterals());
         Assert.assertEquals(negEffects, flyAction.getEffectsNegativeLiterals());
     }
@@ -94,9 +94,9 @@ public class ActionSchemaTest {
         List<Literal> effects = Arrays.asList(effectOne, effectTwo);
         List<Literal> posEffects = Arrays.asList(effectTwo);
         List<Literal> negEffects = Arrays.asList(effectOne);
-        Assert.assertTrue(effectOne.equals(concreteFlyAction.getEffects().get(0)));
-        Assert.assertEquals(effectTwo, concreteFlyAction.getEffects().get(1));
-        Assert.assertEquals(effects, concreteFlyAction.getEffects());
+        Assert.assertTrue(effectOne.equals(concreteFlyAction.getEffect().get(0)));
+        Assert.assertEquals(effectTwo, concreteFlyAction.getEffect().get(1));
+        Assert.assertEquals(effects, concreteFlyAction.getEffect());
         Assert.assertEquals(posEffects, concreteFlyAction.getEffectsPositiveLiterals());
         Assert.assertEquals(negEffects, concreteFlyAction.getEffectsNegativeLiterals());
 

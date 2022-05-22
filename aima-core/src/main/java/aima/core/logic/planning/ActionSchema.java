@@ -19,6 +19,7 @@ import java.util.List;
  * precondition and an effect.
  *
  * @author samagra
+ * @author Ruediger Lunde
  */
 public class ActionSchema {
 
@@ -27,36 +28,60 @@ public class ActionSchema {
      */
     public final static String NO_OP = "No-op";
 
-    List<Term> variables;// list of variables
-    List<Literal> precondition; //PRECONDITION: treated as a conjunction of fluents
-    List<Literal> effects;//EFFECT: treated as a conjunction of fluents
+    List<Term> variables; // list of variables
+    List<Literal> precondition; // PRECONDITION: treated as a conjunction of fluents
+    List<Literal> effect; // EFFECT: treated as a conjunction of fluents
     List<Literal> effectsPositiveLiterals;
     List<Literal> effectsNegativeLiterals;
-    private final String name;//action name
+    private final String name; // action name
 
-    public ActionSchema(String name, List<Term> variables, List<Literal> precondition, List<Literal> effects) {
+    public ActionSchema(String name, List<Term> variables, List<Literal> precondition, List<Literal> effect) {
         if (variables == null)
             variables = new ArrayList<>();
         this.name = name;
         this.variables = variables;
         this.precondition = precondition;
-        this.effects = effects;
+        this.effect = effect;
         effectsNegativeLiterals = new ArrayList<>();
         effectsPositiveLiterals = new ArrayList<>();
         this.sortEffects();
     }
 
-    public ActionSchema(String name, List<Term> variables, String precondition, String effects) {
-        this(name, variables, Utils.parse(precondition), Utils.parse(effects));
+    public ActionSchema(String name, List<Term> variables, String precondition, String effect) {
+        this(name, variables, Utils.parse(precondition), Utils.parse(effect));
     }
 
     private void sortEffects() {
-        for (Literal effect : effects) {
-            if (effect.isNegativeLiteral())
-                effectsNegativeLiterals.add(effect);
+        for (Literal eff : effect) {
+            if (eff.isNegativeLiteral())
+                effectsNegativeLiterals.add(eff);
             else
-                effectsPositiveLiterals.add(effect);
+                effectsPositiveLiterals.add(eff);
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Term> getVariables() {
+        return variables;
+    }
+
+    public List<Literal> getPrecondition() {
+        return precondition;
+    }
+
+    public List<Literal> getEffect() {
+        return effect;
+    }
+
+    public List<Literal> getEffectsPositiveLiterals() {
+        return effectsPositiveLiterals;
+    }
+
+    public List<Literal> getEffectsNegativeLiterals() {
+        return effectsNegativeLiterals;
     }
 
     @Override
@@ -64,14 +89,14 @@ public class ActionSchema {
         StringBuilder result = new StringBuilder();
         result.append("Action(").append(this.getName()).append(")\n\tPRECOND:");
         String and = "";
-        for (Literal precond : getPrecondition()) {
-            result.append(and).append(precond);
+        for (Literal pre : precondition) {
+            result.append(and).append(pre);
             and = "^";
         }
         result.append("\n\tEFFECT:");
         and = "";
-        for (Literal effect : getEffects()) {
-            result.append(and).append(effect);
+        for (Literal eff : effect) {
+            result.append(and).append(eff);
             and = "^";
         }
         return result.toString();
@@ -81,22 +106,22 @@ public class ActionSchema {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!(obj instanceof ActionSchema))
+        if (obj == null || getClass() != obj.getClass())
             return false;
         return this.getName().equals(((ActionSchema) obj).getName()) &&
                 this.getPrecondition().containsAll(((ActionSchema) obj).getPrecondition())
                 && ((ActionSchema) obj).getPrecondition().containsAll(this.getPrecondition())
-                && this.getEffects().containsAll(((ActionSchema) obj).getEffects())
-                && ((ActionSchema) obj).getEffects().containsAll(this.getEffects());
+                && this.getEffect().containsAll(((ActionSchema) obj).getEffect())
+                && ((ActionSchema) obj).getEffect().containsAll(this.getEffect());
     }
 
     @Override
     public int hashCode() {
         int hashCode = 17;
-        for (Literal preCo : this.getPrecondition())
-            hashCode = 37 * hashCode + preCo.hashCode();
-        for (Literal effect : this.getEffects())
-            hashCode = 37 * hashCode + effect.hashCode();
+        for (Literal literal : precondition)
+            hashCode = 37 * hashCode + literal.hashCode();
+        for (Literal literal : effect)
+            hashCode = 37 * hashCode + literal.hashCode();
         for (Term var : this.getVariables())
             hashCode = 37 * hashCode + var.hashCode();
         return hashCode;
@@ -109,37 +134,31 @@ public class ActionSchema {
      * @return A ground action.
      */
     public ActionSchema getActionBySubstitution(List<Constant> constants) {
-        List<Literal> precondList = this.getPrecondition();
-        List<Term> vars = this.getVariables();
-        List<Literal> effectList = this.getEffects();
-        List<Literal> newPrecond = new ArrayList<>();
-        List<Literal> newEffects = new ArrayList<>();
-        for (Literal precondition : precondList) {
+        List<Literal> newPrecondition = new ArrayList<>();
+        List<Literal> newEffect = new ArrayList<>();
+        for (Literal pre : precondition) {
             List<Term> newTerms = new ArrayList<>();
-            for (Term variable : precondition.getAtomicSentence().getArgs()) {
+            for (Term variable : pre.getAtomicSentence().getArgs()) {
                 if (variable instanceof Variable) {
-                    newTerms.add(constants.get(vars.lastIndexOf(variable)));
+                    newTerms.add(constants.get(variables.lastIndexOf(variable)));
                 } else
                     newTerms.add(variable);
             }
-            newPrecond.add(new Literal(new
-                    Predicate(precondition.getAtomicSentence().getSymbolicName(),
-                    newTerms), precondition.isNegativeLiteral()));
+            newPrecondition.add(new Literal(new Predicate(pre.getAtomicSentence().getSymbolicName(), newTerms),
+                    pre.isNegativeLiteral()));
         }
-        for (Literal effect : effectList) {
+        for (Literal eff : effect) {
             List<Term> newTerms = new ArrayList<>();
-            for (Term variable :
-                    effect.getAtomicSentence().getArgs()) {
+            for (Term variable : eff.getAtomicSentence().getArgs()) {
                 if (variable instanceof Variable)
-                    newTerms.add(constants.get(vars.lastIndexOf(variable)));
+                    newTerms.add(constants.get(variables.lastIndexOf(variable)));
                 else
                     newTerms.add(variable);
             }
-            newEffects.add(new Literal(new
-                    Predicate(effect.getAtomicSentence().getSymbolicName(),
-                    newTerms), effect.isNegativeLiteral()));
+            newEffect.add(new Literal(new
+                    Predicate(eff.getAtomicSentence().getSymbolicName(), newTerms), eff.isNegativeLiteral()));
         }
-        return new ActionSchema(this.getName(), null, newPrecond, newEffects);
+        return new ActionSchema(this.getName(), null, newPrecondition, newEffect);
     }
 
     /**
@@ -149,11 +168,11 @@ public class ActionSchema {
      */
     public List<Constant> getConstants() {
         List<Constant> constants = new ArrayList<>();
-        for (Constant constant : extractConstant(getPrecondition())) {
+        for (Constant constant : extractConstant(precondition)) {
             if (!constants.contains(constant))
                 constants.add(constant);
         }
-        for (Constant constant : extractConstant(getEffects())) {
+        for (Constant constant : extractConstant(effect)) {
             if (!constants.contains(constant))
                 constants.add(constant);
         }
@@ -169,29 +188,5 @@ public class ActionSchema {
             }
         }
         return result;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Term> getVariables() {
-        return variables;
-    }
-
-    public List<Literal> getPrecondition() {
-        return precondition;
-    }
-
-    public List<Literal> getEffects() {
-        return effects;
-    }
-
-    public List<Literal> getEffectsPositiveLiterals() {
-        return effectsPositiveLiterals;
-    }
-
-    public List<Literal> getEffectsNegativeLiterals() {
-        return effectsNegativeLiterals;
     }
 }

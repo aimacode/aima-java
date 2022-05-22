@@ -47,7 +47,7 @@ public class GraphPlanAlgorithm {
      * @param problem the planning problem for which the plan is to be created
      * @return a solution or null
      */
-    public List<List<ActionSchema>> graphPlan(Problem problem) {
+    public List<List<ActionSchema>> graphPlan(PlanningProblem problem) {
         // graph ← INITIAL-PLANNING-GRAPH(problem)
         graph = new Graph(problem);
         // goals ← CONJUNCTS(problem.GOAL)

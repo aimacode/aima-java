@@ -4,8 +4,6 @@ import aima.core.logic.planning.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.swing.*;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,7 +14,7 @@ public class GraphPlanAlgorithmTest {
     @Test
     public void spareTireTest() {
         GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
-        Problem spareTireProblem = PlanningProblemFactory.spareTireProblem();
+        PlanningProblem spareTireProblem = PlanningProblemFactory.spareTireProblem();
         List<List<ActionSchema>> solution = algorithm.graphPlan(spareTireProblem);
         ActionSchema removeSpareTrunk = new ActionSchema("Remove", null,
                 "At(Spare,Trunk)",
@@ -36,9 +34,9 @@ public class GraphPlanAlgorithmTest {
     @Test
     public void levelOffTest() {
         GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
-        Problem stProblem = PlanningProblemFactory.spareTireProblem();
+        PlanningProblem stProblem = PlanningProblemFactory.spareTireProblem();
         State initialState = new State("Tire(Flat)^Tire(Spare)^At(Flat,Axle)"); //^At(Spare,Trunk)");
-        Problem modifiedProblem = new Problem(initialState, stProblem.getGoalState(), stProblem.getActionSchemas());
+        PlanningProblem modifiedProblem = new PlanningProblem(initialState, stProblem.getGoalState(), stProblem.getActionSchemas());
         List<List<ActionSchema>> solution = algorithm.graphPlan(modifiedProblem);
         Assert.assertEquals(4, algorithm.getGraph().numLevels());
         Assert.assertNull(solution);

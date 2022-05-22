@@ -19,6 +19,7 @@ public class PlanningProblemFactory {
     /**
      * Generates air cargo problem. Artificial Intelligence A Modern Approach (3rd Edition):Figure 10.1 page 369.<br>
      * <p>
+     * <pre>
      * Init(At(C1, SFO) ∧ At(C2, JFK) ∧ At(P1, SFO) ∧ At(P2, JFK)
      *  ∧ Cargo(C1) ∧ Cargo(C2) ∧ Plane(P1) ∧ Plane(P2)
      *  ∧ Airport(JFK) ∧ Airport(SFO))
@@ -32,10 +33,11 @@ public class PlanningProblemFactory {
      * Action(Fly(p, from, to),
      *  PRECOND: At(p, from) ∧ Plane(p) ∧ Airport(from) ∧ Airport(to)
      *  EFFECT: ¬ At(p, from) ∧ At(p, to))
+     *  </pre>
      *
      * @return A PDDL description of an air cargo transportation planning problem.
      */
-    public static Problem airCargoTransportProblem() {
+    public static PlanningProblem airCargoTransportProblem() {
         State initialState = new State("At(C1,SFO)^At(C2,JFK)^At(P1,SFO)" +
                 "^At(P2,JFK)^Cargo(C1)^Cargo(C2)^Plane(P1)^Plane(P2)^Airport(JFK)^Airport(SFO)");
         State goalState = new State("At(C1,JFK)^At(C2,SFO)");
@@ -56,12 +58,13 @@ public class PlanningProblemFactory {
                 "At(p,from)^Plane(p)^Airport(from)^Airport(to)",
                 "~At(p,from)^At(p,to)");
 
-        return new Problem(initialState, goalState, loadAction, unloadAction, flyAction);
+        return new PlanningProblem(initialState, goalState, loadAction, unloadAction, flyAction);
     }
 
     /**
      * Generates spare tire problem. Artificial Intelligence A Modern Approach (3rd Edition): Figure 10.2 page 370.<br>
      * <p>
+     * <pre>
      * Init(Tire(Flat) ∧ Tire(Spare) ∧ At(Flat, Axle) ∧ At(Spare, Trunk))
      * Goal(At(Spare, Axle))
      * Action(Remove(obj, loc),
@@ -74,10 +77,13 @@ public class PlanningProblemFactory {
      *  PRECOND:
      *  EFFECT: ¬ At(Spare, Ground) ∧ ¬ At(Spare, Axle) ∧ ¬ At(Spare, Trunk)
      *      ∧ ¬ At(Flat, Ground) ∧ ¬ At(Flat, Axle) ∧ ¬ At(Flat, Trunk))
+     * </pre>
+     *
+     * Note: This problem goes beyond STRIPS in that it uses a negated precondition!
      *
      * @return The spare tire problem.
      */
-    public static Problem spareTireProblem() {
+    public static PlanningProblem spareTireProblem() {
         State initialState = new State("Tire(Flat)^Tire(Spare)^At(Flat,Axle)^At(Spare,Trunk)");
         State goalState = new State("At(Spare,Axle)");
         Variable obj = new Variable("obj");
@@ -96,21 +102,23 @@ public class PlanningProblemFactory {
                 "",
                 "~At(Spare,Ground)^~At(Spare,Axle)^~At(Spare,Trunk)" +
                         "^~At(Flat,Ground)^~At(Flat,Axle)^~At(Flat,Trunk)");
-        return new Problem(initialState, goalState, removeAction, putOnAction, leaveOvernightAction);
+        return new PlanningProblem(initialState, goalState, removeAction, putOnAction, leaveOvernightAction);
     }
 
     /**
      * Generates go to SanFrancisco airport . Artificial Intelligence A Modern Approach (3rd Edition): Figure 11.4 page 407.<br>
      * <p>
+     * <pre>
      * Refinement(Go(Home, SFO),
      * STEPS : [Drive(Home, SFOLongTermParking),
      * Shuttle(SFOLongTermParking, SFO)] )
      * Refinement(Go(Home, SFO),
      * STEPS : [Taxi (Home, SFO)] )
+     * </pre>
      *
      * @return The San Francisco Airport problem.
      */
-    public static Problem goHomeToSFOProblem() {
+    public static PlanningProblem goHomeToSFOProblem() {
         State initialState = new State("At(Home)");
         State goalState = new State("At(SFO)");
         ActionSchema driveAction = new ActionSchema("Drive", null,
@@ -122,7 +130,7 @@ public class PlanningProblemFactory {
         ActionSchema taxiAction = new ActionSchema("Taxi", null,
                 "At(Home)",
                 "~At(Home)^At(SFO)");
-        return new Problem(initialState, goalState, driveAction, shuttleAction, taxiAction);
+        return new PlanningProblem(initialState, goalState, driveAction, shuttleAction, taxiAction);
 
     }
 
@@ -132,7 +140,7 @@ public class PlanningProblemFactory {
      * @param problem
      * @return The Act HLA.
      */
-    public static HighLevelAction getHlaAct(Problem problem) {
+    public static HighLevelAction getHlaAct(PlanningProblem problem) {
         List<List<ActionSchema>> refinements = new ArrayList<>();
         HighLevelAction act = new HighLevelAction("Act", null, "", "", refinements);
         for (ActionSchema primitiveAction :

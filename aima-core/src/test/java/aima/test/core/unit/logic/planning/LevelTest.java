@@ -13,7 +13,7 @@ import java.util.List;
  * @author Ruediger Lunde
  */
 public class LevelTest {
-    Problem problem;
+    PlanningProblem problem;
 
     @Before
     public void setup() {

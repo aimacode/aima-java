@@ -15,7 +15,7 @@ import java.util.List;
  * 
  */
 public class Literal {
-	private AtomicSentence atom = null;
+	private AtomicSentence atom;
 	private boolean negativeLiteral = false;
 	private String strRep = null;
 	private int hashCode = 0;
@@ -31,6 +31,10 @@ public class Literal {
 
 	public Literal newInstance(AtomicSentence atom) {
 		return new Literal(atom, negativeLiteral);
+	}
+
+	public Literal getComplementaryLiteral() {
+		return new Literal(getAtomicSentence(), !isNegativeLiteral());
 	}
 
 	public boolean isPositiveLiteral() {
@@ -49,35 +53,24 @@ public class Literal {
 	public String toString() {
 		if (null == strRep) {
 			StringBuilder sb = new StringBuilder();
-			if (isNegativeLiteral()) {
+			if (isNegativeLiteral())
 				sb.append("~");
-			}
 			sb.append(getAtomicSentence().toString());
 			strRep = sb.toString();
 		}
-
 		return strRep;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-
-		if (this == o) {
+		if (this == o)
 			return true;
-		}
-		if (o.getClass() != getClass()) {
-			// This prevents ReducedLiterals
-			// being treated as equivalent to
-			// normal Literals.
+		if (o.getClass() != getClass())
 			return false;
-		}
-		if (!(o instanceof Literal)) {
-			return false;
-		}
+
 		Literal l = (Literal) o;
 		return l.isPositiveLiteral() == isPositiveLiteral()
-				&& l.getAtomicSentence().getSymbolicName()
-						.equals(atom.getSymbolicName())
+				&& l.getAtomicSentence().getSymbolicName().equals(atom.getSymbolicName())
 				&& l.getAtomicSentence().getArgs().equals(atom.getArgs());
 	}
 
@@ -93,18 +86,5 @@ public class Literal {
 			}
 		}
 		return hashCode;
-	}
-
-	public Literal substitute(List<Constant> constants){
-		List<Term> terms = new ArrayList<>();
-		for (int i = 0; i < this.getAtomicSentence().getArgs().size(); i++) {
-			if (this.getAtomicSentence().getArgs().get(i) instanceof Variable){
-				if (constants.size()>i){
-					terms.add(constants.get(i));
-				}
-			}
-		}
-		List<Term> toAdd = new ArrayList<>(constants);
-		return new Literal(new Predicate(this.getAtomicSentence().getSymbolicName(),toAdd),this.isNegativeLiteral());
 	}
 }

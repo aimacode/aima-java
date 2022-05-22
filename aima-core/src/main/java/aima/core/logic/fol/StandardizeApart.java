@@ -40,8 +40,8 @@ public class StandardizeApart {
 			StandardizeApartIndexical standardizeApartIndexical) {
 		Set<Variable> toRename = variableCollector
 				.collectAllVariables(sentence);
-		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
-		Map<Variable, Term> reverseSubstitution = new HashMap<Variable, Term>();
+		Map<Variable, Term> renameSubstitution = new HashMap<>();
+		Map<Variable, Term> reverseSubstitution = new HashMap<>();
 
 		for (Variable var : toRename) {
 			Variable v = null;
@@ -67,7 +67,7 @@ public class StandardizeApart {
 			StandardizeApartIndexical standardizeApartIndexical) {
 
 		Set<Variable> toRename = variableCollector.collectAllVariables(clause);
-		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
+		Map<Variable, Term> renameSubstitution = new HashMap<>();
 
 		for (Variable var : toRename) {
 			Variable v = null;
@@ -82,7 +82,7 @@ public class StandardizeApart {
 		}
 
 		if (renameSubstitution.size() > 0) {
-			List<Literal> literals = new ArrayList<Literal>();
+			List<Literal> literals = new ArrayList<>();
 
 			for (Literal l : clause.getLiterals()) {
 				literals.add(substVisitor.subst(renameSubstitution, l));
@@ -100,10 +100,10 @@ public class StandardizeApart {
 			StandardizeApartIndexical standardizeApartIndexical) {
 
 		Set<Variable> toRename = variableCollector.collectAllVariables(chain);
-		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
+		Map<Variable, Term> renameSubstitution = new HashMap<>();
 
 		for (Variable var : toRename) {
-			Variable v = null;
+			Variable v;
 			do {
 				v = new Variable(standardizeApartIndexical.getPrefix()
 						+ standardizeApartIndexical.getNextIndex());
@@ -115,11 +115,10 @@ public class StandardizeApart {
 		}
 
 		if (renameSubstitution.size() > 0) {
-			List<Literal> lits = new ArrayList<Literal>();
+			List<Literal> lits = new ArrayList<>();
 
 			for (Literal l : chain.getLiterals()) {
-				AtomicSentence atom = (AtomicSentence) substVisitor.subst(
-						renameSubstitution, l.getAtomicSentence());
+				AtomicSentence atom = (AtomicSentence) substVisitor.subst(renameSubstitution, l.getAtomicSentence());
 				lits.add(l.newInstance(atom));
 			}
 
@@ -134,10 +133,9 @@ public class StandardizeApart {
 		return chain;
 	}
 
-	public Map<Variable, Term> standardizeApart(List<Literal> l1Literals,
-			List<Literal> l2Literals,
+	public Map<Variable, Term> standardizeApart(List<Literal> l1Literals, List<Literal> l2Literals,
 			StandardizeApartIndexical standardizeApartIndexical) {
-		Set<Variable> toRename = new HashSet<Variable>();
+		Set<Variable> toRename = new HashSet<>();
 
 		for (Literal pl : l1Literals) {
 			toRename.addAll(variableCollector.collectAllVariables(pl
@@ -148,7 +146,7 @@ public class StandardizeApart {
 					.getAtomicSentence()));
 		}
 
-		Map<Variable, Term> renameSubstitution = new HashMap<Variable, Term>();
+		Map<Variable, Term> renameSubstitution = new HashMap<>();
 
 		for (Variable var : toRename) {
 			Variable v = null;
@@ -162,8 +160,8 @@ public class StandardizeApart {
 			renameSubstitution.put(var, v);
 		}
 
-		List<Literal> posLits = new ArrayList<Literal>();
-		List<Literal> negLits = new ArrayList<Literal>();
+		List<Literal> posLits = new ArrayList<>();
+		List<Literal> negLits = new ArrayList<>();
 
 		for (Literal pl : l1Literals) {
 			posLits.add(substVisitor.subst(renameSubstitution, pl));

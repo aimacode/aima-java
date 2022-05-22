@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ActionSchemaTest.class, GraphPlanAlgorithmTest.class, GraphTest.class, LevelTest.class,
-ProblemTest.class, StateTest.class, UtilsTest.class, HierarchicalSearchTest.class})
+PlanningProblemTest.class, StateTest.class, UtilsTest.class, HierarchicalSearchTest.class})
 
 public class PlanningTestSuite {
 

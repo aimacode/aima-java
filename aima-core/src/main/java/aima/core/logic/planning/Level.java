@@ -16,14 +16,14 @@ public class Level<CURR, PREV> {
 
     private Level<PREV, CURR> prevLevel;
 
-    public Level(List<CURR> levelObjects, Problem problem) {
+    public Level(List<CURR> levelObjects, PlanningProblem problem) {
         // store level objects and prevLinks
         this.levelObjects.addAll(levelObjects);
         for (CURR obj : levelObjects)
             prevLinks.put(obj, new ArrayList<>());
     }
 
-    public Level(Level<PREV, CURR> prevLevel, Problem problem) {
+    public Level(Level<PREV, CURR> prevLevel, PlanningProblem problem) {
         // store level objects and prevLinks
         this.prevLevel = prevLevel;
         HashMap<PREV, List<CURR>> linksFromPreviousLevel = prevLevel.nextLinks;
