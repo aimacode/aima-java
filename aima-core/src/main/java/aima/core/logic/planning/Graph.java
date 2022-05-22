@@ -2,10 +2,7 @@ package aima.core.logic.planning;
 
 import aima.core.logic.fol.kb.data.Literal;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 379.<br>
@@ -52,7 +49,36 @@ public class Graph {
         literalLevels.add(litLevelNext);
     }
 
-    private Level<ActionSchema, Literal> createActionLevel(Level<Literal, ActionSchema> prevLevel, PlanningProblem problem) {
+    /**
+     * A graph is said to be levelled off if two consecutive levels are identical.
+     *
+     * @return Boolean stating if the graph is levelled off.
+     */
+    public boolean levelledOff() {
+        if (numLevels() < 2)
+            return false;
+        return getLiteralLevel(numLevels() - 1).equals(getLiteralLevel(numLevels() - 2));
+    }
+
+    public Set<ActionSchema> getAllActions() {
+        Set<ActionSchema> result = new LinkedHashSet<>();
+        for (Level<ActionSchema, Literal> level : actionLevels)
+            result.addAll(level.getLevelObjects());
+        return result;
+    }
+
+    public int getFirstLevelOfOccurrence(Literal literal) {
+        int result = 0;
+        for (Level<Literal, ActionSchema> level : literalLevels) {
+            if (level.getLevelObjects().contains(literal))
+                return result;
+            result++;
+        }
+        return Integer.MAX_VALUE;
+    }
+
+    private Level<ActionSchema, Literal> createActionLevel(Level<Literal, ActionSchema> prevLevel,
+                                                           PlanningProblem problem) {
         Level<ActionSchema, Literal> result =  new Level<>(prevLevel, problem);
         // add actions with empty precondition
         for (ActionSchema action : problem.getPropositionalisedActions()) {
@@ -67,7 +93,8 @@ public class Graph {
     }
 
     // prevLevel can be null
-    private Level<Literal, ActionSchema> createLiteralLevel(Level<ActionSchema, Literal> prevLevel, PlanningProblem problem) {
+    private Level<Literal, ActionSchema> createLiteralLevel(Level<ActionSchema, Literal> prevLevel,
+                                                            PlanningProblem problem) {
         Level<Literal, ActionSchema> result = (prevLevel == null)
                 ? new Level<>(problem.getInitialState().getFluents(), problem)
                 : new Level<>(prevLevel, problem);

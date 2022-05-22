@@ -2,6 +2,7 @@ package aima.core.logic.planning;
 
 import aima.core.logic.fol.kb.data.Literal;
 import aima.core.search.framework.problem.GeneralProblem;
+import aima.core.search.framework.problem.StepCostFunction;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,18 +18,23 @@ import java.util.List;
  * @author Ruediger Lunde
  */
 public class ForwardStateSpaceSearchProblem extends GeneralProblem<List<Literal>, ActionSchema> {
-    PlanningProblem pProblem;
-    List<ActionSchema> propositionalisedActions;
+    protected PlanningProblem pProblem;
+    protected List<ActionSchema> propositionalisedActions;
 
     public ForwardStateSpaceSearchProblem(PlanningProblem pProblem) {
+        this(pProblem, pProblem.getPropositionalisedActions(), (s, a, sp) -> 1);
+    }
+
+    public ForwardStateSpaceSearchProblem(PlanningProblem pProblem, List<ActionSchema> propositionalisedActions,
+                                          StepCostFunction<List<Literal>, ActionSchema> stepCostFn) {
         this.pProblem = pProblem;
-        propositionalisedActions = pProblem.getPropositionalisedActions();
+        this.propositionalisedActions = propositionalisedActions;
 
         initialState = pProblem.getInitialState().getFluents();
         actionsFn = this::actions;
         resultFn = this::result;
         goalTest = s -> s.containsAll(pProblem.getGoalState().getFluents());
-        stepCostFn = (s, a, sp) -> 1;
+        this.stepCostFn = stepCostFn;
     }
 
     List<ActionSchema> actions(List<Literal> state) {

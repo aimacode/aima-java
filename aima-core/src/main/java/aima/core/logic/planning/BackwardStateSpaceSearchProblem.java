@@ -17,8 +17,8 @@ import java.util.List;
  * @author Ruediger Lunde
  */
 public class BackwardStateSpaceSearchProblem extends GeneralProblem<List<Literal>, ActionSchema> {
-    PlanningProblem pProblem;
-    List<ActionSchema> propositionalisedActions;
+    protected PlanningProblem pProblem;
+    protected List<ActionSchema> propositionalisedActions;
 
     public BackwardStateSpaceSearchProblem(PlanningProblem pProblem) {
         this.pProblem = pProblem;

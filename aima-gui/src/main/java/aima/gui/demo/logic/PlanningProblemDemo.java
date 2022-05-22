@@ -23,79 +23,109 @@ public class PlanningProblemDemo {
                 PlanningProblemFactory.goHomeToSFOProblem(),
                 PlanningProblemFactory.airCargoTransportProblem()
         );
-        startGraphPlanDemo(problems);
-        startForwardStateSpaceSearchDemo(problems);
-        startBackwardStateSpaceSearchDemo(problems);
+        for (PlanningProblem pProblem : problems) {
+            startGraphPlanDemo(pProblem);
+            startHeuristicForwardStateSpaceSearchDemo(pProblem);
+            startForwardStateSpaceSearchDemo(pProblem);
+            startBackwardStateSpaceSearchDemo(pProblem);
+        }
     }
 
-    public static void startGraphPlanDemo(List<PlanningProblem> problems) {
+    public static void startGraphPlanDemo(PlanningProblem pProblem) {
         GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
 
-        int i = 1;
-        for (PlanningProblem problem : problems) {
-            System.out.println("\n\nProblem " + i++ + " (using GraphPlan)");
-            System.out.println("Initial State:");
-            System.out.println(problem.getInitialState().getFluents());
-            System.out.println("Goal State:");
-            System.out.println(problem.getGoalState().getFluents());
+        System.out.println("\n\nProblem " + describe(pProblem) + " using GraphPlan");
+        System.out.println("Initial State:");
+        System.out.println(pProblem.getInitialState().getFluents());
+        System.out.println("Goal State:");
+        System.out.println(pProblem.getGoalState().getFluents());
 
-            long start = System.currentTimeMillis();
-            List<List<ActionSchema>> solution = algorithm.graphPlan(problem);
-            long duration = System.currentTimeMillis() - start;
-            System.out.println("Time for Planning [ms]: " + duration);
-            System.out.println("Levels: " + algorithm.getGraph().numLevels());
-            if (solution != null) {
-                System.out.println("Plan:");
-                List<ActionSchema> sol = algorithm.asFlatList(solution);
-                sol.forEach(System.out::println);
-            }
+        long start = System.currentTimeMillis();
+        List<List<ActionSchema>> solution = algorithm.graphPlan(pProblem);
+        long duration = System.currentTimeMillis() - start;
+        System.out.println("Time for Planning [ms]: " + duration);
+        System.out.println("Levels: " + algorithm.getGraph().numLevels());
+        if (solution != null) {
+            System.out.println("Plan:");
+            List<ActionSchema> sol = algorithm.asFlatList(solution);
+            sol.forEach(System.out::println);
         }
     }
 
-    // uses simple breadth-first search (no heuristics to limit search space)
-    public static void startForwardStateSpaceSearchDemo(List<PlanningProblem> problems) {
-        int i = 1;
-        for (PlanningProblem pProblem : problems) {
-            System.out.println("\n\nProblem " + i++ + " (using ForwardStateSpaceSearch)");
-            System.out.println("Initial State:");
-            System.out.println(pProblem.getInitialState().getFluents());
-            System.out.println("Goal State:");
-            System.out.println(pProblem.getGoalState().getFluents());
+    public static void startHeuristicForwardStateSpaceSearchDemo(PlanningProblem pProblem) {
+        System.out.println("\n\nProblem " + describe(pProblem) + " using HeuristicForwardStateSpaceSearch");
+        System.out.println("Initial State:");
+        System.out.println(pProblem.getInitialState().getFluents());
+        System.out.println("Goal State:");
+        System.out.println(pProblem.getGoalState().getFluents());
 
-            ForwardStateSpaceSearchProblem sProblem = new ForwardStateSpaceSearchProblem(pProblem);
-            long start = System.currentTimeMillis();
-            QueueBasedSearch<List<Literal>, ActionSchema> search = new BreadthFirstSearch<>(new GraphSearch<>());
-            Optional<List<ActionSchema>> solution = search.findActions(sProblem);
-            long duration = System.currentTimeMillis() - start;
-            System.out.println("Time for Planning [ms]: " + duration);
-            if (solution.isPresent())
-                solution.get().forEach(System.out::println);
-            else
-                System.out.println("No Solution");
-        }
+        long start = System.currentTimeMillis();
+        HeuristicForwardStateSpaceSearchAlgorithm algorithm = new HeuristicForwardStateSpaceSearchAlgorithm(pProblem);
+        algorithm.setStepCostFn(PlanningProblemDemo::costs);
+        Optional<List<ActionSchema>> solution = algorithm.search();
+        long duration = System.currentTimeMillis() - start;
+        System.out.println("Time for Planning [ms]: " + duration);
+        if (solution.isPresent())
+            solution.get().forEach(System.out::println);
+        else
+            System.out.println("No Solution");
     }
 
-    // uses simple breadth-first search (no heuristics to limit search space)
-    public static void startBackwardStateSpaceSearchDemo(List<PlanningProblem> problems) {
-        int i = 1;
-        for (PlanningProblem pProblem : problems) {
-            System.out.println("\n\nProblem " + i++ + " (using BackwardStateSpaceSearch)");
-            System.out.println("Initial State:");
-            System.out.println(pProblem.getInitialState().getFluents());
-            System.out.println("Goal State:");
-            System.out.println(pProblem.getGoalState().getFluents());
+    // for testing: add costs for cargo stored in a plane (cargo should't be parked in a plane).
+    private static double costs(List<Literal> s1, ActionSchema action, List<Literal> s2) {
+        double result = 1;
+        for (Literal literal : s2)
+            if (literal.isPositiveLiteral() && literal.getAtomicSentence().getSymbolicName().equals("In"))
+                result += 1;
+        return result;
+    }
 
-            BackwardStateSpaceSearchProblem sProblem = new BackwardStateSpaceSearchProblem(pProblem);
-            long start = System.currentTimeMillis();
-            QueueBasedSearch<List<Literal>, ActionSchema> search = new BreadthFirstSearch<>(new GraphSearch<>());
-            Optional<List<ActionSchema>> solution = search.findActions(sProblem);
-            long duration = System.currentTimeMillis() - start;
-            System.out.println("Time for Planning [ms]: " + duration);
-            if (solution.isPresent()) {
-                Collections.reverse(solution.get());
-                solution.get().forEach(System.out::println);
-            } else
-                System.out.println("No Solution");
+    public static void startForwardStateSpaceSearchDemo(PlanningProblem pProblem) {
+        System.out.println("\n\nProblem " + describe(pProblem) + " using ForwardStateSpaceSearch");
+        System.out.println("Initial State:");
+        System.out.println(pProblem.getInitialState().getFluents());
+        System.out.println("Goal State:");
+        System.out.println(pProblem.getGoalState().getFluents());
+
+        ForwardStateSpaceSearchProblem sProblem = new ForwardStateSpaceSearchProblem(pProblem);
+        long start = System.currentTimeMillis();
+        QueueBasedSearch<List<Literal>, ActionSchema> search = new BreadthFirstSearch<>(new GraphSearch<>());
+        Optional<List<ActionSchema>> solution = search.findActions(sProblem);
+        long duration = System.currentTimeMillis() - start;
+        System.out.println("Time for Planning [ms]: " + duration);
+        if (solution.isPresent())
+            solution.get().forEach(System.out::println);
+        else
+            System.out.println("No Solution");
+    }
+
+    public static void startBackwardStateSpaceSearchDemo(PlanningProblem pProblem) {
+        System.out.println("\n\nProblem " + describe(pProblem) + " using BackwardStateSpaceSearch");
+        System.out.println("Initial State:");
+        System.out.println(pProblem.getInitialState().getFluents());
+        System.out.println("Goal State:");
+        System.out.println(pProblem.getGoalState().getFluents());
+
+        BackwardStateSpaceSearchProblem sProblem = new BackwardStateSpaceSearchProblem(pProblem);
+        long start = System.currentTimeMillis();
+        QueueBasedSearch<List<Literal>, ActionSchema> search = new BreadthFirstSearch<>(new GraphSearch<>());
+        Optional<List<ActionSchema>> solution = search.findActions(sProblem);
+        long duration = System.currentTimeMillis() - start;
+        System.out.println("Time for Planning [ms]: " + duration);
+        if (solution.isPresent()) {
+            Collections.reverse(solution.get());
+            solution.get().forEach(System.out::println);
+        } else
+            System.out.println("No Solution");
+    }
+
+    private static String describe(PlanningProblem pProblem) {
+        StringBuilder builder = new StringBuilder();
+        String conn = "";
+        for (ActionSchema action : pProblem.getActionSchemas()) {
+            builder.append(conn).append(action.getName());
+            conn = "/";
         }
+        return builder.toString();
     }
 }

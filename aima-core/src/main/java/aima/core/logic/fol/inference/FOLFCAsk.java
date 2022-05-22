@@ -86,7 +86,7 @@ public class FOLFCAsk implements InferenceProcedure {
 		Literal alpha = new Literal((AtomicSentence) query);
 
 		// local variables: new, the new sentences inferred on each iteration
-		List<Literal> newSentences = new ArrayList<Literal>();
+		List<Literal> newSentences = new ArrayList<>();
 
 		// Ensure query is not already a know fact before
 		// attempting forward chaining.

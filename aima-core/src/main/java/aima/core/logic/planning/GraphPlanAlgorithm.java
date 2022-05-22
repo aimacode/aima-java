@@ -71,7 +71,7 @@ public class GraphPlanAlgorithm {
                 nogoods.put(tl, goals);
             }
             // if graph and nogoods have both leveled off then return failure
-            if (levelledOff(graph) && leveledOff(nogoods))
+            if (graph.levelledOff() && leveledOff(nogoods))
                 return null;
             // graph ← EXPAND-GRAPH(graph, problem)
             graph.expand(problem);
@@ -180,27 +180,11 @@ public class GraphPlanAlgorithm {
         return (!mutexCheck);
     }
 
-    /**
-     * A graph is said to be levelled off if two consecutive levels are identical.
-     *
-     * @return Boolean stating if the hashtable is levelled off.
-     */
     private boolean leveledOff(Hashtable<Integer, List<Literal>> nogoods) {
         int lastLevel = nogoods.size()-1;
         if (lastLevel < 1)
             return false;
         return nogoods.get(lastLevel).equals(nogoods.get(lastLevel-1));
-    }
-
-    /**
-     * A graph is said to be levelled off if two consecutive levels are identical.
-     *
-     * @return Boolean stating if the graph is levelled off.
-     */
-    private boolean levelledOff(Graph graph) {
-        if (graph.numLevels() < 2)
-            return false;
-        return graph.getLiteralLevel(graph.numLevels() - 1).equals(graph.getLiteralLevel(graph.numLevels() - 2));
     }
 
     public List<List<ActionSchema>> generateCombinations(List<List<ActionSchema>> actionLists) {

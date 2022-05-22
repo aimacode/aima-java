@@ -12,7 +12,7 @@ import aima.core.logic.fol.parsing.FOLVisitor;
  */
 public class Predicate implements AtomicSentence {
 	private String predicateName;
-	private List<Term> terms = new ArrayList<Term>();
+	private List<Term> terms = new ArrayList<>();
 	private String stringRep = null;
 	private int hashCode = 0;
 
@@ -48,7 +48,7 @@ public class Predicate implements AtomicSentence {
 	}
 
 	public Predicate copy() {
-		List<Term> copyTerms = new ArrayList<Term>();
+		List<Term> copyTerms = new ArrayList<>();
 		for (Term t : terms) {
 			copyTerms.add(t.copy());
 		}
