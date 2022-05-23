@@ -42,7 +42,7 @@ public class HierarchicalSearchAlgorithm {
      * @param problem The planning problem.
      * @return A list of actions representing the plan.
      */
-    public List<ActionSchema> heirarchicalSearch(PlanningProblem problem) {
+    public List<ActionSchema> hierarchicalSearch(PlanningProblem problem) {
         // frontier ← a FIFO queue with [Act] as the only element
         LinkedList<List<ActionSchema>> frontier = new LinkedList<>();
         frontier.add(new ArrayList<>(Collections.singletonList(PlanningProblemFactory.getHlaAct(problem))));

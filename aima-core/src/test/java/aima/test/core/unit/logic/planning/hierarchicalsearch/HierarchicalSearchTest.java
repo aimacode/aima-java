@@ -17,7 +17,7 @@ public class HierarchicalSearchTest {
                 "At(Home)",
                 "~At(Home)^At(SFO)");
         for (ActionSchema action :
-                algo.heirarchicalSearch(PlanningProblemFactory.goHomeToSFOProblem())) {
+                algo.hierarchicalSearch(PlanningProblemFactory.goHomeToSFOProblem())) {
             Assert.assertEquals(action, taxiAction);
         }
     }
