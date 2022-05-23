@@ -71,7 +71,6 @@ public class State {
         return state;
     }
 
-
     /**
      * Checks if the action is applicable in a state.
      * <p>
@@ -81,16 +80,13 @@ public class State {
      * @return a boolean stating if the action is applicable.
      */
     public boolean isApplicable(ActionSchema action) {
-        boolean result = true;
         for (Literal literal : action.getPrecondition()) {
             if (literal.isPositiveLiteral()
                     ? !fluents.contains(literal)
-                    : fluents.contains(literal.getComplementaryLiteral())) {
-                result = false;
-                break;
-            }
+                    : fluents.contains(literal.getComplementaryLiteral()))
+                return false;
         }
-        return result;
+        return true;
     }
 
     public List<Literal> getFluents() {
