@@ -21,8 +21,9 @@ public class HeuristicForwardStateSpaceSearchAlgorithm {
     private ToDoubleFunction<Node<List<Literal>, ActionSchema>> heuristicFn = n -> levelSumHeuristic(n.getState());
     private StepCostFunction<List<Literal>, ActionSchema> stepCostFn = (s0, a, s1) -> 1;
 
-    PlanningProblem pProblem;
+    private final PlanningProblem pProblem;
     private final Graph graph;
+    private QueueBasedSearch<List<Literal>, ActionSchema> search;
     private final HashMap<Literal, Integer> literalLookup = new HashMap<>();
 
     public HeuristicForwardStateSpaceSearchAlgorithm(final PlanningProblem pProblem) {
@@ -45,9 +46,12 @@ public class HeuristicForwardStateSpaceSearchAlgorithm {
     public Optional<List<ActionSchema>> search() {
         ForwardStateSpaceSearchProblem sProblem =
                 new ForwardStateSpaceSearchProblem(pProblem, new ArrayList<>(graph.getAllActions()), stepCostFn);
-        QueueBasedSearch<List<Literal>, ActionSchema> search =
-                new AStarSearch<>(new GraphSearch<>(), heuristicFn);
+        search = new AStarSearch<>(new GraphSearch<>(), heuristicFn);
         return search.findActions(sProblem);
+    }
+
+    public QueueBasedSearch<List<Literal>, ActionSchema> getSearch() {
+        return search;
     }
 
     private double levelSumHeuristic(List<Literal> state) {

@@ -31,7 +31,6 @@ public class IntegratedAppPaneCtrl {
 	private String title;
 
 	private TextArea messageArea;
-	private ScrollPane messageScrollPane;
 	private MessagePaneCtrl messagePaneCtrl;
 
 	private DoubleProperty scale = new SimpleDoubleProperty();
@@ -40,10 +39,7 @@ public class IntegratedAppPaneCtrl {
 
 	public IntegratedAppPaneCtrl() {
 		messageArea = new TextArea();
-		messageArea.setFont(Font.font("monospaced"));
-		messageScrollPane = new ScrollPane(messageArea);
-		messageScrollPane.setFitToWidth(true);
-		messageScrollPane.setFitToHeight(true);
+		messageArea.setFont(Font.font("monospaced", 16));
 		messagePaneCtrl = new MessagePaneCtrl(messageArea);
 		scale.set(1.0);
 	}
@@ -74,8 +70,8 @@ public class IntegratedAppPaneCtrl {
 
 	public void startDemo(Class<?> demoClass) {
 		stopRunningAppsAndDemo();
-		if (pane.getCenter() != messageScrollPane)
-			pane.setCenter(messageScrollPane);
+		if (pane.getCenter() != messageArea)
+			pane.setCenter(messageArea);
 		messageArea.clear();
 		updateStageTitle();
 		// redirect the standard output into the text area

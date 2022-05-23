@@ -60,7 +60,7 @@ public class SimpleEnvironmentViewCtrl<P, A> implements EnvironmentListener<P, A
 		if (Platform.isFxApplicationThread())
 			textArea.appendText("\n" + msg + "\n");
 		else
-			Platform.runLater(() -> textArea.appendText("\n" + msg+ "\n"));
+			Platform.runLater(() -> textArea.appendText("\n" + msg + "\n"));
 	}
 
 	/**

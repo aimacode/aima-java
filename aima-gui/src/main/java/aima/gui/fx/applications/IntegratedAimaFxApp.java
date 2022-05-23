@@ -13,6 +13,7 @@ import aima.gui.demo.search.TicTacToeDemo;
 import aima.gui.fx.applications.agent.RouteFindingAgentApp;
 import aima.gui.fx.applications.agent.VacuumAgentApp;
 import aima.gui.fx.applications.agent.WumpusAgentApp;
+import aima.gui.fx.applications.logic.PlanningProblemApp;
 import aima.gui.fx.applications.search.MapColoringCspApp;
 import aima.gui.fx.applications.search.NQueensCspApp;
 import aima.gui.fx.applications.search.NQueensCspDemo;
@@ -70,6 +71,8 @@ public class IntegratedAimaFxApp extends Application {
 
 		builder.registerApp(SimulatedAnnealingMaximumFinderApp.class);
 		builder.registerApp(GeneticMaximumFinderApp.class);
+
+		builder.registerApp(PlanningProblemApp.class);
 
 		builder.registerDemo(NQueensCspDemo.class);
 		builder.registerDemo(GeneticMaximumFinderDemo.class);

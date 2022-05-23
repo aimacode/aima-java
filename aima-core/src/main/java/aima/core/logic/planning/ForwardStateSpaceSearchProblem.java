@@ -62,12 +62,10 @@ public class ForwardStateSpaceSearchProblem extends GeneralProblem<List<Literal>
     List<Literal> result(List<Literal> state, ActionSchema action) {
         List<Literal> result = new ArrayList<>(state);
         for (Literal literal : action.getEffect()) {
-            if (literal.isPositiveLiteral()) {
-                if (!result.contains(literal))
-                    result.add(literal);
-            } else {
+            if (literal.isNegativeLiteral())
                 result.remove(literal.getComplementaryLiteral());
-            }
+            else if (!result.contains(literal))
+                result.add(literal);
         }
         result.sort(Comparator.comparing(Literal::toString));
         return result;
