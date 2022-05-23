@@ -24,6 +24,7 @@ public class State {
 
     public State(List<Literal> fluents) {
         this.fluents = fluents;
+        fluents.sort(Comparator.comparing(Literal::toString));
     }
 
     public State(String fluents) {
@@ -98,10 +99,9 @@ public class State {
 
     @Override
     public boolean equals(Object obj) {
-        if (getClass() != obj.getClass())
+        if (obj == null || getClass() != obj.getClass())
             return false;
-        return this.fluents.containsAll(((State) obj).getFluents())
-                && ((State) obj).getFluents().containsAll(this.getFluents());
+        return fluents.equals(((State) obj).getFluents());
     }
 
     @Override
