@@ -9,10 +9,10 @@ import java.util.*;
  * @author Ruediger Lunde
  */
 public class Level<CURR, PREV> {
-    private List<CURR> levelObjects = new ArrayList<>();
+    private final List<CURR> levelObjects = new ArrayList<>();
     HashMap<CURR, List<PREV>> prevLinks = new HashMap<>();
     HashMap<CURR, List<PREV>> nextLinks = new HashMap<>();
-    private HashMap<CURR, List<CURR>> mutexLinks = new HashMap<>();; //can be planned alternatively
+    private final HashMap<CURR, List<CURR>> mutexLinks = new HashMap<>(); // can be planned alternatively
 
     private Level<PREV, CURR> prevLevel;
 

@@ -96,10 +96,24 @@ public class Graph {
     private Level<Literal, ActionSchema> createLiteralLevel(Level<ActionSchema, Literal> prevLevel,
                                                             PlanningProblem problem) {
         Level<Literal, ActionSchema> result = (prevLevel == null)
-                ? new Level<>(problem.getInitialState().getFluents(), problem)
+                ? new Level<>(getInitialPlanningState(problem), problem)
                 : new Level<>(prevLevel, problem);
         calculateNextLinks(result, problem);
         calculateMutexLinksForLiteralLevel(result);
+        return result;
+    }
+
+    // negative precondition literals are needed for backward search...
+    private List<Literal> getInitialPlanningState(PlanningProblem problem) {
+        List<Literal> result = new ArrayList<>(problem.getInitialState().getFluents());
+        for (ActionSchema action : problem.getPropositionalisedActions()) {
+            for (Literal literal : action.getPrecondition())
+                if (literal.isNegativeLiteral()) {
+                    Literal posLiteral = literal.getComplementaryLiteral();
+                    if (!result.contains(posLiteral))
+                        result.add(literal);
+                }
+        }
         return result;
     }
 

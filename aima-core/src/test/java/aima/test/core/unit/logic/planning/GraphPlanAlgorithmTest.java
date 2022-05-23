@@ -1,13 +1,14 @@
 package aima.test.core.unit.logic.planning;
 
+import aima.core.logic.fol.parsing.ast.Variable;
 import aima.core.logic.planning.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author samagra
  * @author Ruediger Lunde
  */
 public class GraphPlanAlgorithmTest {
@@ -33,13 +34,29 @@ public class GraphPlanAlgorithmTest {
 
     @Test
     public void levelOffTest() {
-        GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
         PlanningProblem stProblem = PlanningProblemFactory.spareTireProblem();
-        State initialState = new State("Tire(Flat)^Tire(Spare)^At(Flat,Axle)"); //^At(Spare,Trunk)");
-        PlanningProblem modifiedProblem = new PlanningProblem(initialState, stProblem.getGoalState(), stProblem.getActionSchemas());
+        State initialState = new State("Tire(Flat)^Tire(Spare)^At(Flat,Axle)");
+        PlanningProblem modifiedProblem = new PlanningProblem(initialState,
+                stProblem.getGoalState(), stProblem.getActionSchemas());
+        GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
         List<List<ActionSchema>> solution = algorithm.graphPlan(modifiedProblem);
         Assert.assertEquals(4, algorithm.getGraph().numLevels());
         Assert.assertNull(solution);
-
     }
+
+    @Test
+    public void negativeLiteralsNeededInFirstGraphLevel() {
+        State initialState = new State("Device(Radio1)");
+        State goalState = new State("On(Radio1)");
+        Variable d = new Variable("d");
+        ActionSchema switchOnAction = new ActionSchema("switch-on", List.of(d),
+                "Device(d)^~On(d)",
+                "On(d)");
+        PlanningProblem problem = new PlanningProblem(initialState, goalState, switchOnAction);
+        GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
+        List<List<ActionSchema>> solution = algorithm.graphPlan(problem);
+        Assert.assertEquals(1, solution.size());
+    }
+
+
 }

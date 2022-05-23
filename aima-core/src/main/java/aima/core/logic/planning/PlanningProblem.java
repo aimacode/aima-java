@@ -23,9 +23,10 @@ import java.util.*;
  * @author samagra
  */
 public class PlanningProblem {
-    State initialState; // initialState
-    Set<ActionSchema> actionSchemas; // Planning Domain
-    State goalState; // goalState
+    private State initialState; // initialState
+    private Set<ActionSchema> actionSchemas; // Planning Domain
+    private List<ActionSchema> propositionalisedActionSchemas;
+    private State goalState; // goalState
 
 
     public PlanningProblem(State initialState, State goalState, Set<ActionSchema> actionSchemas) {
@@ -35,7 +36,7 @@ public class PlanningProblem {
     }
 
     public PlanningProblem(State initialState, State goalState, ActionSchema... actions) {
-        this(initialState, goalState, new HashSet<>(Arrays.asList(actions)));
+        this(initialState, goalState, new LinkedHashSet<>(Arrays.asList(actions)));
     }
 
     public State getInitialState() {
@@ -86,13 +87,15 @@ public class PlanningProblem {
      * @return Propositionalises all the actionschemas to return a set of possible ground actions
      */
     public List<ActionSchema> getPropositionalisedActions() {
-        List<Constant> problemConstants = getProblemConstants();
-        List<ActionSchema> result = new ArrayList<>();
-        for (ActionSchema actionSchema : getActionSchemas()) {
-            int numberOfVars = actionSchema.getVariables().size();
-            for (List<Constant> constants : PermutationGenerator.generatePermutations(problemConstants, numberOfVars))
-                result.add(actionSchema.getActionBySubstitution(constants));
+        if (propositionalisedActionSchemas == null) {
+            List<Constant> problemConstants = getProblemConstants();
+            propositionalisedActionSchemas = new ArrayList<>();
+            for (ActionSchema actionSchema : getActionSchemas()) {
+                int numberOfVars = actionSchema.getVariables().size();
+                for (List<Constant> constants : PermutationGenerator.generatePermutations(problemConstants, numberOfVars))
+                    propositionalisedActionSchemas.add(actionSchema.getActionBySubstitution(constants));
+            }
         }
-        return result;
+        return propositionalisedActionSchemas;
     }
 }

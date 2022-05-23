@@ -1,9 +1,6 @@
 package aima.core.util.math.permute;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author samagra
@@ -11,6 +8,8 @@ import java.util.List;
 public class PermutationGenerator {
 
     public static <T> Iterable<List<T>> generatePermutations(List<T> list, int r) {
+        if (r > list.size())
+            return Collections.emptyList();
         long rfact = (long) PermutationGenerator.factorial(r);
         long total = (long) CombinationGenerator.nCr(list.size(), r) * rfact;
         return () -> new Iterator<>() {
