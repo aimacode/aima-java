@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): page ???.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): page 228.<br>
  * <br>
  * The <b>wumpus world</b> is a cave consisting of rooms connected by
  * passageways. The rooms are always organized into a grid. See Figure 7.2 for
