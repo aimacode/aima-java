@@ -10,7 +10,7 @@ import static aima.core.environment.vacuum.VacuumEnvironment.LOCATION_B;
 import static aima.core.environment.vacuum.VacuumEnvironment.Status.Dirty;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure 2.8, page 67.
  * <br>
  * <br>
  *
@@ -21,9 +21,9 @@ import static aima.core.environment.vacuum.VacuumEnvironment.Status.Dirty;
  *   else if location = B then return Left
  * </pre>
  *
- * Figure ?? The agent program for a simple reflex agent in the two-state vacuum
+ * Figure 2.8 The agent program for a simple reflex agent in the two-state vacuum
  * environment. This program implements the action function tabulated in Figure
- * ??.
+ * 2.3.
  *
  * @author Ciaran O'Reilly
  */
