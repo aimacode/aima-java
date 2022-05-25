@@ -1,7 +1,7 @@
 package aima.core.environment.wumpusworld;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): page ???.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): page 228.<br>
  * <br>
  * The <b>wumpus world</b> is a cave consisting of rooms connected by
  * passageways. Rooms are labeled [x,y], for example [1,1] would indicate the
