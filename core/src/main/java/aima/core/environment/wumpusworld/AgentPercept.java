@@ -1,7 +1,7 @@
 package aima.core.environment.wumpusworld;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): page ???.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): page 229.<br>
  * <br>
  * The agent has five sensors, each of which gives a single bit of information:
  * <ul>
