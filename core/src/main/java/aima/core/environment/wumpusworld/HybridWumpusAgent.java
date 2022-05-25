@@ -22,7 +22,7 @@ import aima.core.search.basic.support.BasicProblem;
 import aima.core.util.SetOps;
 
 /**
- * Artificial Intelligence WWAction Modern Approach (4th Edition): page ???.<br>
+ * Artificial Intelligence WWAction Modern Approach (4th Edition): page 260.<br>
  * <br>
  * 
  * <pre>
