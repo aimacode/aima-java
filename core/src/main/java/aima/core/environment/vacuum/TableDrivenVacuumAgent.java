@@ -13,11 +13,11 @@ import static aima.core.environment.vacuum.VacuumEnvironment.Status.Clean;
 import static aima.core.environment.vacuum.VacuumEnvironment.Status.Dirty;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure 2.3, page 56.
  * <br>
  * <br>
- * Figure ?? Partial tabulation of a simple agent function for the
- * vacuum-cleaner world shown in Figure ??.
+ * Figure 2.3 Partial tabulation of a simple agent function for the
+ * vacuum-cleaner world shown in Figure 2.2.
  *
  * @author Ciaran O'Reilly
  */

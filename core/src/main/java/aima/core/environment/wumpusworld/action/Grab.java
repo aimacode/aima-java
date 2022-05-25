@@ -1,7 +1,7 @@
 package aima.core.environment.wumpusworld.action;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): page ???.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): page 229.<br>
  * <br>
  * The action Grab can be used to pick up the gold if it is in the same square
  * as the agent.

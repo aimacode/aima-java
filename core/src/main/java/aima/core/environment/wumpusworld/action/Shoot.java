@@ -1,7 +1,7 @@
 package aima.core.environment.wumpusworld.action;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): page ???.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): page 229.<br>
  * <br>
  * The action Shoot can be used to fire an arrow in a straight line in the
  * direction the agent is facing. The arrow continues until it either hits (and

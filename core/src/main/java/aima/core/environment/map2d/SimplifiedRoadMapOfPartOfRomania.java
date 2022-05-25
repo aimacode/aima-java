@@ -1,7 +1,7 @@
 package aima.core.environment.map2d;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): Figure ??, page ??.
+ * Artificial Intelligence A Modern Approach (4th Edition): Figure 3.1, page 82.
  * <br>
  *
  * A simplified road map of Romania.
@@ -9,10 +9,10 @@ package aima.core.environment.map2d;
  * The initialization method is declared static. So it can also be used to
  * initialize other specialized subclasses of {@link ExtendableMap2D} with road
  * map data from Romania. Location names, road distances and directions have
- * been extracted from Artificial Intelligence A Modern Approach (?? Edition),
- * Figure ??, page ??. The straight-line distances to Bucharest have been taken
- * from Artificial Intelligence A Modern Approach (?? Edition), Figure ??, page
- * ??.
+ * been extracted from Artificial Intelligence A Modern Approach (4th Edition),
+ * Figure 3.1, page 82. The straight-line distances to Bucharest have been taken
+ * from Artificial Intelligence A Modern Approach (4th Edition), Figure 3.16, page
+ * 103.
  *
  * @author Ruediger Lunde
  * @author Ciaran O'Reilly
