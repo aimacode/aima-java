@@ -1,7 +1,7 @@
 package aima.core.environment.wumpusworld.action;
 
 /**
- * Artificial Intelligence A Modern Approach (4th Edition): page ???.<br>
+ * Artificial Intelligence A Modern Approach (4th Edition): page 229.<br>
  * <br>
  * The action Climb can be used to climb out of the cave, but only from square
  * [1,1].
