@@ -34,9 +34,9 @@ public class PlanningProblemDemo {
 
     public static void startGraphPlanDemo(PlanningProblem pProblem)  {
         System.out.println("\n\nProblem " + describe(pProblem) + " using GraphPlan");
-        System.out.println("Initial State:");
+        System.out.print("Initial State: ");
         System.out.println(pProblem.getInitialState().getFluents());
-        System.out.println("Goal State:");
+        System.out.print("Goal: ");
         System.out.println(pProblem.getGoal());
 
         long start = System.currentTimeMillis();
@@ -56,9 +56,9 @@ public class PlanningProblemDemo {
     public static void startHeuristicForwardStateSpaceSearchDemo(PlanningProblem pProblem) {
         System.out.println("\n\nProblem " + describe(pProblem)
                 + " using HeuristicForwardStateSpaceSearch and Storage Costs");
-        System.out.println("Initial State:");
+        System.out.print("Initial State: ");
         System.out.println(pProblem.getInitialState().getFluents());
-        System.out.println("Goal State:");
+        System.out.print("Goal: ");
         System.out.println(pProblem.getGoal());
 
         long start = System.currentTimeMillis();
@@ -68,18 +68,19 @@ public class PlanningProblemDemo {
         long duration = System.currentTimeMillis() - start;
 
         System.out.println("Time for Planning [ms]: " + duration);
-        if (solution.isPresent())
+        if (solution.isPresent()) {
+            System.out.println("Plan:");
             solution.get().forEach(System.out::println);
-        else
+        } else
             System.out.println("No Solution");
     }
 
     public static void startForwardStateSpaceSearchDemo(PlanningProblem pProblem) {
         System.out.println("\n\nProblem " + describe(pProblem)
                 + " using ForwardStateSpaceSearch and Storage Costs");
-        System.out.println("Initial State:");
+        System.out.print("Initial State: ");
         System.out.println(pProblem.getInitialState().getFluents());
-        System.out.println("Goal State:");
+        System.out.print("Goal: ");
         System.out.println(pProblem.getGoal());
 
         long start = System.currentTimeMillis();
@@ -90,17 +91,18 @@ public class PlanningProblemDemo {
         long duration = System.currentTimeMillis() - start;
 
         System.out.println("Time for Planning [ms]: " + duration);
-        if (solution.isPresent())
+        if (solution.isPresent()) {
+            System.out.println("Plan:");
             solution.get().forEach(System.out::println);
-        else
+        } else
             System.out.println("No Solution");
     }
 
     public static void startBackwardStateSpaceSearchDemo(PlanningProblem pProblem) {
         System.out.println("\n\nProblem " + describe(pProblem) + " using BackwardStateSpaceSearch");
-        System.out.println("Initial State:");
+        System.out.print("Initial State: ");
         System.out.println(pProblem.getInitialState().getFluents());
-        System.out.println("Goal State:");
+        System.out.print("Goal: ");
         System.out.println(pProblem.getGoal());
 
         long start = System.currentTimeMillis();
@@ -111,6 +113,7 @@ public class PlanningProblemDemo {
 
         System.out.println("Time for Planning [ms]: " + duration);
         if (solution.isPresent()) {
+            System.out.println("Plan:");
             Collections.reverse(solution.get());
             solution.get().forEach(System.out::println);
         } else
