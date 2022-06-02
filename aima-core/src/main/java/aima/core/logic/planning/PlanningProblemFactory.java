@@ -58,7 +58,7 @@ public class PlanningProblemFactory {
                 "At(p,from)^Plane(p)^Airport(from)^Airport(to)",
                 "~At(p,from)^At(p,to)");
 
-        return new PlanningProblem(initialState, goalState, loadAction, unloadAction, flyAction);
+        return new PlanningProblem(initialState, goalState.getFluents(), loadAction, unloadAction, flyAction);
     }
 
     /**
@@ -101,7 +101,7 @@ public class PlanningProblemFactory {
                 "",
                 "~At(Spare,Ground)^~At(Spare,Axle)^~At(Spare,Trunk)" +
                         "^~At(Flat,Ground)^~At(Flat,Axle)^~At(Flat,Trunk)");
-        return new PlanningProblem(initialState, goalState, removeAction, putOnAction, leaveOvernightAction);
+        return new PlanningProblem(initialState, goalState.getFluents(), removeAction, putOnAction, leaveOvernightAction);
     }
 
     /**
@@ -129,7 +129,7 @@ public class PlanningProblemFactory {
         ActionSchema taxiAction = new ActionSchema("Taxi", null,
                 "At(Home)",
                 "~At(Home)^At(SFO)");
-        return new PlanningProblem(initialState, goalState, driveAction, shuttleAction, taxiAction);
+        return new PlanningProblem(initialState, goalState.getFluents(), driveAction, shuttleAction, taxiAction);
 
     }
 

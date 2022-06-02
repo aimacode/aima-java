@@ -76,8 +76,8 @@ public class HierarchicalSearchAlgorithm {
             // if hla is null then /* so plan is primitive and outcome is its result */
             if (hla == null) {
                 // if outcome satisfies problem.GOAL then return plan
-                if (outcome.getFluents().containsAll(problem.getGoalState().getFluents()))
-                    return plan;
+                if (outcome.getFluents().containsAll(problem.getGoal()))
+                    return plan; // currently doesn't work for neg. literals (RLu)
             } else {
                 // else for each sequence in REFINEMENTS(hla, outcome, hierarchy) do
                 for (List<ActionSchema> sequence : refinements(hla, outcome)) {

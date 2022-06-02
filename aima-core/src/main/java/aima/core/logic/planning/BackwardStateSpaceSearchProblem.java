@@ -24,7 +24,7 @@ public class BackwardStateSpaceSearchProblem extends GeneralProblem<List<Literal
         this.pProblem = pProblem;
         propositionalisedActions = pProblem.getPropositionalisedActions();
 
-        initialState = pProblem.getGoalState().getFluents();
+        initialState = pProblem.getGoal();
         actionsFn = this::actions;
         resultFn = this::result;
         goalTest = this::goalTest;

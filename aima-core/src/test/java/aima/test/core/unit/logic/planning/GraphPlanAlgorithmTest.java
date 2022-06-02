@@ -5,7 +5,6 @@ import aima.core.logic.planning.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,7 +36,7 @@ public class GraphPlanAlgorithmTest {
         PlanningProblem stProblem = PlanningProblemFactory.spareTireProblem();
         State initialState = new State("Tire(Flat)^Tire(Spare)^At(Flat,Axle)");
         PlanningProblem modifiedProblem = new PlanningProblem(initialState,
-                stProblem.getGoalState(), stProblem.getActionSchemas());
+                stProblem.getGoal(), stProblem.getActionSchemas());
         GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
         List<List<ActionSchema>> solution = algorithm.graphPlan(modifiedProblem);
         Assert.assertEquals(4, algorithm.getGraph().numLevels());
@@ -52,7 +51,7 @@ public class GraphPlanAlgorithmTest {
         ActionSchema switchOnAction = new ActionSchema("switch-on", List.of(d),
                 "Device(d)^~On(d)",
                 "On(d)");
-        PlanningProblem problem = new PlanningProblem(initialState, goalState, switchOnAction);
+        PlanningProblem problem = new PlanningProblem(initialState, goalState.getFluents(), switchOnAction);
         GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
         List<List<ActionSchema>> solution = algorithm.graphPlan(problem);
         Assert.assertEquals(1, solution.size());

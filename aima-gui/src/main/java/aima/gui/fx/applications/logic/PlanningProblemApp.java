@@ -92,7 +92,7 @@ public class PlanningProblemApp extends IntegrableApplication {
         }
         stateViewCtrl.clear();
         stateViewCtrl.notify("Initial State:\n\t" + problem.getInitialState().getFluents());
-        stateViewCtrl.notify("Goal State:\n\t" + problem.getGoalState().getFluents());
+        stateViewCtrl.notify("Goal State:\n\t" + problem.getGoal());
         stateViewCtrl.notify("Actions:");
         problem.getActionSchemas().forEach(a -> stateViewCtrl.notify(a.toString()));
     }

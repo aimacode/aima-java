@@ -51,7 +51,7 @@ public class GraphPlanAlgorithm {
         // graph ← INITIAL-PLANNING-GRAPH(problem)
         graph = new Graph(problem);
         // goals ← CONJUNCTS(problem.GOAL)
-        List<Literal> goals = problem.getGoalState().getFluents();
+        List<Literal> goals = problem.getGoal();
         // nogoods ← an empty hash table
         Hashtable<Integer, List<Literal>> nogoods = new Hashtable<>();
         Level<Literal, ActionSchema> state;

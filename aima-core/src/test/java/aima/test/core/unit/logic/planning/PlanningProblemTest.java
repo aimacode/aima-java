@@ -46,7 +46,7 @@ public class PlanningProblemTest {
                 "~At(Spare,Ground)^~At(Spare,Axle)^~At(Spare,Trunk)" +
                         "^~At(Flat,Ground)^~At(Flat,Axle)^~At(Flat,Trunk)");
         Assert.assertEquals(initState, testProblem.getInitialState());
-        Assert.assertEquals(goalState, testProblem.getGoalState());
+        Assert.assertEquals(goalState, testProblem.getGoal());
         Assert.assertEquals(3, testProblem.getActionSchemas().size());
         Assert.assertTrue(testProblem.getActionSchemas().contains(removeAction));
         Assert.assertTrue(testProblem.getActionSchemas().contains(putOnAction));

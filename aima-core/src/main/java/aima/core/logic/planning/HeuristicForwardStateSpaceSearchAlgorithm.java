@@ -56,7 +56,7 @@ public class HeuristicForwardStateSpaceSearchAlgorithm {
 
     private double levelSumHeuristic(List<Literal> state) {
         double result = 0;
-        for (Literal literal : pProblem.getGoalState().getFluents()) {
+        for (Literal literal : pProblem.getGoal()) {
             if (!state.contains(literal)) {
                 Integer level = literalLookup.get(literal);
                 if (level == null) {

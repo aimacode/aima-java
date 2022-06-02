@@ -33,7 +33,7 @@ public class ForwardStateSpaceSearchProblem extends GeneralProblem<List<Literal>
         initialState = pProblem.getInitialState().getFluents();
         actionsFn = this::actions;
         resultFn = this::result;
-        goalTest = s -> s.containsAll(pProblem.getGoalState().getFluents());
+        goalTest = this::goalTest;
         this.stepCostFn = stepCostFn;
     }
 
@@ -69,5 +69,13 @@ public class ForwardStateSpaceSearchProblem extends GeneralProblem<List<Literal>
         }
         result.sort(Comparator.comparing(Literal::toString));
         return result;
+    }
+
+    boolean goalTest(List<Literal> state) {
+        for (Literal literal : pProblem.getGoal())
+            if (literal.isPositiveLiteral() && !state.contains(literal)
+                || literal.isNegativeLiteral() && state.contains(literal.getComplementaryLiteral()))
+                return false;
+            return true;
     }
 }

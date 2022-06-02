@@ -23,21 +23,21 @@ import java.util.*;
  * @author samagra
  */
 public class PlanningProblem {
-    private State initialState; // initialState
-    private Set<ActionSchema> actionSchemas; // Planning Domain
-    private State goalState; // goalState
+    private final State initialState; // initialState
+    private final Set<ActionSchema> actionSchemas; // Planning Domain
+    private final List<Literal> goal; // goal
 
     private List<ActionSchema> propositionalisedActionSchemas;
 
 
-    public PlanningProblem(State initialState, State goalState, Set<ActionSchema> actionSchemas) {
+    public PlanningProblem(State initialState, List<Literal> goal, Set<ActionSchema> actionSchemas) {
         this.initialState = initialState;
         this.actionSchemas = actionSchemas;
-        this.goalState = goalState;
+        this.goal = goal;
     }
 
-    public PlanningProblem(State initialState, State goalState, ActionSchema... actions) {
-        this(initialState, goalState, new LinkedHashSet<>(Arrays.asList(actions)));
+    public PlanningProblem(State initialState, List<Literal> goal, ActionSchema... actions) {
+        this(initialState, goal, new LinkedHashSet<>(Arrays.asList(actions)));
     }
 
     public State getInitialState() {
@@ -48,8 +48,8 @@ public class PlanningProblem {
         return actionSchemas;
     }
 
-    public State getGoalState() {
-        return goalState;
+    public List<Literal> getGoal() {
+        return goal;
     }
 
     /**
@@ -65,7 +65,7 @@ public class PlanningProblem {
                 }
             }
         }
-        for (Literal literal : getGoalState().getFluents()) {
+        for (Literal literal : getGoal()) {
             for (Term term : literal.getAtomicSentence().getArgs()) {
                 if (term instanceof Constant) {
                     if (!constants.contains((Constant) term))

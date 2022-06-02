@@ -37,7 +37,7 @@ public class PlanningProblemDemo {
         System.out.println("Initial State:");
         System.out.println(pProblem.getInitialState().getFluents());
         System.out.println("Goal State:");
-        System.out.println(pProblem.getGoalState().getFluents());
+        System.out.println(pProblem.getGoal());
 
         long start = System.currentTimeMillis();
         GraphPlanAlgorithm algorithm = new GraphPlanAlgorithm();
@@ -59,7 +59,7 @@ public class PlanningProblemDemo {
         System.out.println("Initial State:");
         System.out.println(pProblem.getInitialState().getFluents());
         System.out.println("Goal State:");
-        System.out.println(pProblem.getGoalState().getFluents());
+        System.out.println(pProblem.getGoal());
 
         long start = System.currentTimeMillis();
         HeuristicForwardStateSpaceSearchAlgorithm algorithm = new HeuristicForwardStateSpaceSearchAlgorithm(pProblem);
@@ -80,7 +80,7 @@ public class PlanningProblemDemo {
         System.out.println("Initial State:");
         System.out.println(pProblem.getInitialState().getFluents());
         System.out.println("Goal State:");
-        System.out.println(pProblem.getGoalState().getFluents());
+        System.out.println(pProblem.getGoal());
 
         long start = System.currentTimeMillis();
         ForwardStateSpaceSearchProblem sProblem = new ForwardStateSpaceSearchProblem(pProblem,
@@ -101,7 +101,7 @@ public class PlanningProblemDemo {
         System.out.println("Initial State:");
         System.out.println(pProblem.getInitialState().getFluents());
         System.out.println("Goal State:");
-        System.out.println(pProblem.getGoalState().getFluents());
+        System.out.println(pProblem.getGoal());
 
         long start = System.currentTimeMillis();
         BackwardStateSpaceSearchProblem sProblem = new BackwardStateSpaceSearchProblem(pProblem);
