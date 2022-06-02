@@ -89,9 +89,8 @@ public class PlanningProblemFactory {
         Variable obj = new Variable("obj");
         Variable loc = new Variable("loc");
         Variable t = new Variable("t");
-        Constant Axle = new Constant("Axle");
         ArrayList<Term> removeVars = new ArrayList<>(Arrays.asList(obj, loc));
-        ArrayList<Term> putOnVars = new ArrayList<>(Arrays.asList(t, Axle));
+        ArrayList<Term> putOnVars = new ArrayList<>(List.of(t));
         ActionSchema removeAction = new ActionSchema("Remove", removeVars,
                 "At(obj,loc)",
                 "~At(obj,loc)^At(obj,Ground)");

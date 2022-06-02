@@ -28,7 +28,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  */
 public class Model implements PLVisitor<Boolean, Boolean> {
 
-	private HashMap<PropositionSymbol, Boolean> assignments = new HashMap<>();
+	private final HashMap<PropositionSymbol, Boolean> assignments = new HashMap<>();
 
 	/**
 	 * Default Constructor.
@@ -167,29 +167,23 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 	// START-PLVisitor
 	@Override
 	public Boolean visitPropositionSymbol(PropositionSymbol s, Boolean arg) {
-		if (s.isAlwaysTrue()) {
+		if (s.isAlwaysTrue())
 			return Boolean.TRUE;
-		}
-		if (s.isAlwaysFalse()) {
+		if (s.isAlwaysFalse())
 			return Boolean.FALSE;
-		}
 		return getValue(s);
 	}
 
 	@Override
 	public Boolean visitUnarySentence(ComplexSentence fs, Boolean arg) {
-		Object negatedValue = fs.getSimplerSentence(0).accept(this, null);
-		if (negatedValue != null) {
-			return !(Boolean) negatedValue;
-		} else {
-			return null;
-		}
+		Boolean negatedValue = fs.getSimplerSentence(0).accept(this, null);
+		return (negatedValue != null) ? !negatedValue : null;
 	}
 
 	@Override
 	public Boolean visitBinarySentence(ComplexSentence bs, Boolean arg) {
-		Boolean firstValue = (Boolean) bs.getSimplerSentence(0).accept(this, null);
-		Boolean secondValue = (Boolean) bs.getSimplerSentence(1).accept(this, null);
+		Boolean firstValue =  bs.getSimplerSentence(0).accept(this, null);
+		Boolean secondValue =  bs.getSimplerSentence(1).accept(this, null);
 		boolean bothValuesKnown = firstValue != null && secondValue != null;
 		Connective connective = bs.getConnective();
 

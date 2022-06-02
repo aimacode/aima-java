@@ -25,8 +25,9 @@ import java.util.*;
 public class PlanningProblem {
     private State initialState; // initialState
     private Set<ActionSchema> actionSchemas; // Planning Domain
-    private List<ActionSchema> propositionalisedActionSchemas;
     private State goalState; // goalState
+
+    private List<ActionSchema> propositionalisedActionSchemas;
 
 
     public PlanningProblem(State initialState, State goalState, Set<ActionSchema> actionSchemas) {

@@ -28,12 +28,14 @@ public class ActionSchema {
      */
     public final static String NO_OP = "No-op";
 
-    List<Term> variables; // list of variables
-    List<Literal> precondition; // PRECONDITION: treated as a conjunction of fluents
-    List<Literal> effect; // EFFECT: treated as a conjunction of fluents
-    List<Literal> effectsPositiveLiterals;
-    List<Literal> effectsNegativeLiterals;
     private final String name; // action name
+    private final List<Term> variables; // list of variables
+    private final List<Literal> precondition; // PRECONDITION: treated as a conjunction of fluents
+    private final List<Literal> effect; // EFFECT: treated as a conjunction of fluents
+
+    private final List<Literal> effectsPositiveLiterals;
+    private final List<Literal> effectsNegativeLiterals;
+
 
     public ActionSchema(String name, List<Term> variables, List<Literal> precondition, List<Literal> effect) {
         if (variables == null)
@@ -64,6 +66,18 @@ public class ActionSchema {
         return name;
     }
 
+    public String getFullName() {
+        StringBuilder result = new StringBuilder(name);
+        result.append(("("));
+        String sep = "";
+        for (Term var : variables) {
+            result.append(sep).append(var);
+            sep = ", ";
+        }
+        result.append(")");
+        return result.toString() ;
+    }
+
     public List<Term> getVariables() {
         return variables;
     }
@@ -87,13 +101,13 @@ public class ActionSchema {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("Action(").append(this.getName()).append(")\n\tPRECOND:");
+        result.append("Action ").append(this.getFullName()).append("\n\tPRECOND: ");
         String and = "";
         for (Literal pre : precondition) {
             result.append(and).append(pre);
             and = "^";
         }
-        result.append("\n\tEFFECT:");
+        result.append("\n\tEFFECT: ");
         and = "";
         for (Literal eff : effect) {
             result.append(and).append(eff);
@@ -158,7 +172,8 @@ public class ActionSchema {
             newEffect.add(new Literal(new
                     Predicate(eff.getAtomicSentence().getSymbolicName(), newTerms), eff.isNegativeLiteral()));
         }
-        return new ActionSchema(this.getName(), null, newPrecondition, newEffect);
+        return new ActionSchema(this.getName(), new ArrayList<>(constants), newPrecondition, newEffect);
+        //return new ActionSchema(this.getName(),null, newPrecondition, newEffect);
     }
 
     /**

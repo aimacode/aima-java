@@ -149,7 +149,7 @@ public class PlanningProblemApp extends IntegrableApplication {
                             .sorted().collect(Collectors.toList()).toString());
                     if (i < graph.numLevels()-1)
                         stateViewCtrl.notify(graph.getActionLevel(i).getLevelObjects().stream()
-                                .map(ActionSchema::getName).sorted()
+                                .map(ActionSchema::getFullName).sorted()
                                 .collect(Collectors.toList()).toString());
                 }
             }
