@@ -4,6 +4,7 @@ import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.FiniteNode;
 import aima.core.probability.bayes.impl.BayesNet;
 import aima.core.probability.bayes.impl.FullCPTNode;
+import aima.core.probability.example.ExampleRV;
 
 /**
  * 
