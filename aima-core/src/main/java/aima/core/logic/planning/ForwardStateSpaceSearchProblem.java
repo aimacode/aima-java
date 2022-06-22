@@ -51,10 +51,6 @@ public class ForwardStateSpaceSearchProblem extends GeneralProblem<List<Literal>
             }
             if (applicable)
                 result.add(action);
-
-            if (state.containsAll(action.getPrecondition())) {
-                result.add(action);
-            }
         }
         return result;
     }
