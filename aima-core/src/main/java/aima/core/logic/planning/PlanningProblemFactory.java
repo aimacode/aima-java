@@ -1,5 +1,6 @@
 package aima.core.logic.planning;
 
+import aima.core.logic.fol.kb.data.Literal;
 import aima.core.logic.fol.parsing.ast.Constant;
 import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
@@ -40,7 +41,7 @@ public class PlanningProblemFactory {
     public static PlanningProblem airCargoTransportProblem() {
         State initialState = new State("At(C1,SFO)^At(C2,JFK)^At(P1,SFO)" +
                 "^At(P2,JFK)^Cargo(C1)^Cargo(C2)^Plane(P1)^Plane(P2)^Airport(JFK)^Airport(SFO)");
-        State goalState = new State("At(C1,JFK)^At(C2,SFO)");
+        List<Literal> goal = Utils.parse("At(C1,JFK)^At(C2,SFO)");
         Variable c = new Variable("c");
         Variable p = new Variable("p");
         Variable a = new Variable("a");
@@ -58,7 +59,7 @@ public class PlanningProblemFactory {
                 "At(p,from)^Plane(p)^Airport(from)^Airport(to)",
                 "~At(p,from)^At(p,to)");
 
-        return new PlanningProblem(initialState, goalState.getFluents(), loadAction, unloadAction, flyAction);
+        return new PlanningProblem(initialState, goal, loadAction, unloadAction, flyAction);
     }
 
     /**
@@ -85,7 +86,7 @@ public class PlanningProblemFactory {
      */
     public static PlanningProblem spareTireProblem() {
         State initialState = new State("Tire(Flat)^Tire(Spare)^At(Flat,Axle)^At(Spare,Trunk)");
-        State goalState = new State("At(Spare,Axle)");
+        List<Literal> goal = Utils.parse("At(Spare,Axle)");
         Variable obj = new Variable("obj");
         Variable loc = new Variable("loc");
         Variable t = new Variable("t");
@@ -101,7 +102,7 @@ public class PlanningProblemFactory {
                 "",
                 "~At(Spare,Ground)^~At(Spare,Axle)^~At(Spare,Trunk)" +
                         "^~At(Flat,Ground)^~At(Flat,Axle)^~At(Flat,Trunk)");
-        return new PlanningProblem(initialState, goalState.getFluents(), removeAction, putOnAction, leaveOvernightAction);
+        return new PlanningProblem(initialState, goal, removeAction, putOnAction, leaveOvernightAction);
     }
 
     /**
@@ -119,7 +120,7 @@ public class PlanningProblemFactory {
      */
     public static PlanningProblem goHomeToSFOProblem() {
         State initialState = new State("At(Home)");
-        State goalState = new State("At(SFO)");
+        List<Literal> goal = Utils.parse("At(SFO)");
         ActionSchema driveAction = new ActionSchema("Drive", null,
                 "At(Home)",
                 "~At(Home)^At(SFOLongTermParking)");
@@ -129,7 +130,7 @@ public class PlanningProblemFactory {
         ActionSchema taxiAction = new ActionSchema("Taxi", null,
                 "At(Home)",
                 "~At(Home)^At(SFO)");
-        return new PlanningProblem(initialState, goalState.getFluents(), driveAction, shuttleAction, taxiAction);
+        return new PlanningProblem(initialState, goal, driveAction, shuttleAction, taxiAction);
 
     }
 

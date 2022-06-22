@@ -1,12 +1,10 @@
 package aima.test.core.unit.logic.planning;
 
+import aima.core.logic.fol.kb.data.Literal;
 import aima.core.logic.fol.parsing.ast.Constant;
 import aima.core.logic.fol.parsing.ast.Term;
 import aima.core.logic.fol.parsing.ast.Variable;
-import aima.core.logic.planning.ActionSchema;
-import aima.core.logic.planning.PlanningProblemFactory;
-import aima.core.logic.planning.PlanningProblem;
-import aima.core.logic.planning.State;
+import aima.core.logic.planning.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +27,7 @@ public class PlanningProblemTest {
     @Test
     public void constructorTest() {
         State initState = new State("Tire(Flat)^Tire(Spare)^At(Flat,Axle)^At(Spare,Trunk)");
-        State goalState = new State("At(Spare,Axle)");
+        List<Literal> goal = Utils.parse("At(Spare,Axle)");
         Variable obj = new Variable("obj");
         Variable loc = new Variable("loc");
         Variable t = new Variable("t");
@@ -46,7 +44,7 @@ public class PlanningProblemTest {
                 "~At(Spare,Ground)^~At(Spare,Axle)^~At(Spare,Trunk)" +
                         "^~At(Flat,Ground)^~At(Flat,Axle)^~At(Flat,Trunk)");
         Assert.assertEquals(initState, testProblem.getInitialState());
-        Assert.assertEquals(goalState, testProblem.getGoal());
+        Assert.assertEquals(goal, testProblem.getGoal());
         Assert.assertEquals(3, testProblem.getActionSchemas().size());
         Assert.assertTrue(testProblem.getActionSchemas().contains(removeAction));
         Assert.assertTrue(testProblem.getActionSchemas().contains(putOnAction));

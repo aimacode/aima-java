@@ -16,16 +16,17 @@ import java.util.*;
  * within the domain is defined with the addition of an initial state and a goal. The initial
  * state is a conjunction of ground atoms.The goal is just like a
  * precondition: a conjunction of literals (positive or negative) that may contain variables, such
- * as At(p, SFO ) ∧ Plane(p). Any variables are treated as existentially quantified, so this goal
+ * as At(p, SFO) ∧ Plane(p). Any variables are treated as existentially quantified, so this goal
  * is to have any plane at SFO. The problem is solved when we can find a sequence of actions
  * that end in a state s that entails the goal.
  *
  * @author samagra
+ * @author Ruediger Lunde
  */
 public class PlanningProblem {
-    private final State initialState; // initialState
-    private final Set<ActionSchema> actionSchemas; // Planning Domain
-    private final List<Literal> goal; // goal
+    private final State initialState;
+    private final Set<ActionSchema> actionSchemas;
+    private final List<Literal> goal;
 
     private List<ActionSchema> propositionalisedActionSchemas;
 

@@ -73,9 +73,10 @@ public class ForwardStateSpaceSearchProblem extends GeneralProblem<List<Literal>
 
     boolean goalTest(List<Literal> state) {
         for (Literal literal : pProblem.getGoal())
-            if (literal.isPositiveLiteral() && !state.contains(literal)
-                || literal.isNegativeLiteral() && state.contains(literal.getComplementaryLiteral()))
+            if (literal.isPositiveLiteral()
+                    ? !state.contains(literal)
+                    : state.contains(literal.getComplementaryLiteral()))
                 return false;
-            return true;
+        return true;
     }
 }

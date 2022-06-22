@@ -46,7 +46,7 @@ public class BackwardStateSpaceSearchProblem extends GeneralProblem<List<Literal
             if (relevant) {
                 for (Literal literal : action.getPrecondition()) {
                     Literal cLit = literal.getComplementaryLiteral();
-                    if (!action.getEffect().contains(cLit) && state.contains(cLit)) {
+                    if (state.contains(cLit) && !action.getEffect().contains(cLit)) {
                         relevant = false; // unchanged precondition contradicts state specification
                         break;
                     }
