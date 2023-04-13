@@ -43,7 +43,7 @@ public abstract class SimpleReflexAgentProgram<P, A> implements AgentProgram<P, 
 		this.rules = rules;
 	}
 
-	// function SIMPLE-RELEX-AGENT(percept) returns an action
+	// function SIMPLE-REFLEX-AGENT(percept) returns an action
 	@Override
 	public final Optional<A> apply(P percept) {
 		DynamicState state = interpretInput(percept);

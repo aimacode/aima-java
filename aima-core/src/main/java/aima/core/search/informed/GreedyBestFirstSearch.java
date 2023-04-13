@@ -35,7 +35,7 @@ public class GreedyBestFirstSearch<S, A> extends BestFirstSearch<S, A> {
 
 	// f(n) = h(n)
 	public static <S, A> EvaluationFunction<S, A> createEvalFn(ToDoubleFunction<Node<S, A>> h) {
-		return new EvaluationFunction<S, A>(h) {
+		return new EvaluationFunction<>(h) {
 			@Override
 			public double applyAsDouble(Node<S, A> node) {
 				return this.h.applyAsDouble(node);

@@ -5,6 +5,7 @@ import aima.core.agent.impl.SimpleAgent;
 import aima.core.util.Util;
 import static aima.core.environment.vacuum.MazeVacuumEnvironment.*;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -44,13 +45,13 @@ public class RandomWalkVacuumAgent extends SimpleAgent<VacuumPercept, Action> {
 
             // avoid obstacles
             for (int i = 0; i < 2 ; i++) {
-				if (action == ACTION_MOVE_UP && "False".equals(percept.getAttribute(ATT_CAN_MOVE_UP)))
+				if (action == ACTION_MOVE_UP && Objects.equals(percept.getAttribute(ATT_CAN_MOVE_UP), false))
 					action = ACTION_MOVE_LEFT;
-				if (action == ACTION_MOVE_LEFT && "False".equals(percept.getAttribute(ATT_CAN_MOVE_LEFT)))
+				if (action == ACTION_MOVE_LEFT && Objects.equals(percept.getAttribute(ATT_CAN_MOVE_LEFT), false))
 					action = ACTION_MOVE_DOWN;
-				if (action == ACTION_MOVE_DOWN && "False".equals(percept.getAttribute(ATT_CAN_MOVE_DOWN)))
+				if (action == ACTION_MOVE_DOWN && Objects.equals(percept.getAttribute(ATT_CAN_MOVE_DOWN), false))
 					action = ACTION_MOVE_RIGHT;
-				if (action == ACTION_MOVE_RIGHT && "False".equals(percept.getAttribute(ATT_CAN_MOVE_RIGHT)))
+				if (action == ACTION_MOVE_RIGHT && Objects.equals(percept.getAttribute(ATT_CAN_MOVE_RIGHT), false))
 					action = ACTION_MOVE_UP;
 				else
 					break;

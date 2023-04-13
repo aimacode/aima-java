@@ -75,10 +75,10 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 	public VacuumPercept getPerceptSeenBy(Agent<?, ?> agent) {
 		VacuumPercept result = super.getPerceptSeenBy(agent);
 		String loc = getAgentLocation(agent);
-		result.setAttribute(ATT_CAN_MOVE_LEFT, canMoveLeft(loc) ? "True" : "False");
-		result.setAttribute(ATT_CAN_MOVE_RIGHT, canMoveRight(loc) ? "True" : "False");
-		result.setAttribute(ATT_CAN_MOVE_DOWN, canMoveDown(loc) ? "True" : "False");
-		result.setAttribute(ATT_CAN_MOVE_UP, canMoveUp(loc) ? "True" : "False");
+		result.setAttribute(ATT_CAN_MOVE_LEFT, canMoveLeft(loc));
+		result.setAttribute(ATT_CAN_MOVE_RIGHT, canMoveRight(loc));
+		result.setAttribute(ATT_CAN_MOVE_DOWN, canMoveDown(loc));
+		result.setAttribute(ATT_CAN_MOVE_UP, canMoveUp(loc));
 		return result;
 	}
 
