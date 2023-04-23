@@ -261,6 +261,7 @@ public class MapPaneCtrl {
             alert.setTitle("Map Entity Info");
             alert.setHeaderText(header);
             alert.setContentText(content.toString());
+            alert.setResizable(true);
             Optional<ButtonType> result = alert.showAndWait();
             if (!result.isPresent())
                 break;
