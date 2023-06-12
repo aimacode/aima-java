@@ -32,7 +32,7 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 		this(xDim, yDim, 0.5, 0);
 	}
 
-	// Obstacles are marked by with locationState==null
+	// Obstacles are marked with locationState==null
 	public MazeVacuumEnvironment(int xDim, int yDim, double dirtProbability, double obstacleProbability) {
 		super(createLocations(xDim * yDim));
 		xDimension = xDim;

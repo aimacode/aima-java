@@ -4,10 +4,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,10 +62,13 @@ public class SudokuViewCtrl {
     }
 
     public void clear(boolean allDigits) {
-        for (int i = 0; i < 81; i++) {
-            ComboBox<String> combo = combos.get(i);
-            if (allDigits || !isFixed(i % 9 + 1, i / 9 + 1))
-                combo.getSelectionModel().select(0);
+        for (int row = 1; row <= 9; row++) {
+            for (int col = 1; col <= 9; col++) {
+                if (allDigits || !isFixed(col, row)) {
+                    clearDigit(col, row);
+                    setGrey(col, row, false);
+                }
+            }
         }
     }
 
@@ -98,6 +98,10 @@ public class SudokuViewCtrl {
     public boolean isFixed(int col, int row) {
         int selIdx = getCombo(col, row).getSelectionModel().getSelectedIndex();
         return selIdx >= 10;
+    }
+
+    public void setGrey(int col, int row, boolean b) {
+        getCombo(col, row).setOpacity(b ? 0.5 : 1);
     }
 
     private ComboBox<String> getCombo(int col, int row) {
