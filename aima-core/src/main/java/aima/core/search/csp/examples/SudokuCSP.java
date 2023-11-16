@@ -62,7 +62,7 @@ public class SudokuCSP extends CSP<Variable, Integer> {
         setDomains(values);
 
         // Set Constraints
-        setAllDiffConstraints(variables);
+        setConstraints(variables);
     }
 
     /**
@@ -78,14 +78,38 @@ public class SudokuCSP extends CSP<Variable, Integer> {
     }
 
     /**
-     * Adding alldiff(...) constraints for the Sudoku grid.
+     * Adding alldiff() constraints for the Sudoku grid.
      *
      * @param variables = fields in the Sudoku grid.
      */
-    private void setAllDiffConstraints(List<Variable> variables) {
+    private void setConstraints(List<Variable> variables) {
+        // alldiff() constraints for a csp
+        List<AllDiffConstraint<Variable, Integer>> allDiffConstraints = getAllDiffConstraints(variables);
+        List<NotEqualConstraint<Variable, Integer>> notEqualConstraints = new ArrayList<>();
+
+        // Transforming alldiff() constraints to not-equal constraints
+        for (AllDiffConstraint<Variable, Integer> allDiffConstraint : allDiffConstraints) {
+            notEqualConstraints.addAll(allDiffConstraint.getNotEqualConstraints());
+        }
+
+        // Adding not-equal constraints
+        for (NotEqualConstraint<Variable, Integer> notEqualConstraint : notEqualConstraints) {
+            addConstraint(notEqualConstraint);
+        }
+    }
+
+    /**
+     * Getting the alldiff() constraints for a Sukoku csp.
+     *
+     * @param variables all variables of the csp.
+     * @return a list of all necessary alldiff() constraints
+     */
+    private List<AllDiffConstraint<Variable, Integer>> getAllDiffConstraints(List<Variable> variables) {
+        List<AllDiffConstraint<Variable, Integer>> allDiffConstraints = new ArrayList<>();
+
         // Rows
         for (int i = 0; i <= variables.size() - 9; i += 9) {
-            addConstraint(new AllDiffConstraint<>(variables.subList(i, i + 9)));
+            allDiffConstraints.add(new AllDiffConstraint<>(variables.subList(i, i + 9)));
             //System.out.println("allDiff(" + variables.subList(i, i + 9) + ")");
         }
 
@@ -95,45 +119,44 @@ public class SudokuCSP extends CSP<Variable, Integer> {
             for (int j = i; j < variables.size(); j += 9) {
                 constraintVars.add(variables.get(j));
             }
-            addConstraint(new AllDiffConstraint<>(constraintVars));
-            //System.out.println("allDiff(" + constraintVars + ")");
+            allDiffConstraints.add(new AllDiffConstraint<>(constraintVars));
         }
 
         // Squares
         //TODO: this could be improved
-        addConstraint((new AllDiffConstraint<>(Arrays.asList(
+        allDiffConstraints.add((new AllDiffConstraint<>(Arrays.asList(
                 variables.get(0), variables.get(1), variables.get(2),
                 variables.get(9), variables.get(10), variables.get(11),
                 variables.get(18), variables.get(19), variables.get(20)
         ))));
 
-        addConstraint((new AllDiffConstraint<>(Arrays.asList(
+        allDiffConstraints.add((new AllDiffConstraint<>(Arrays.asList(
                 variables.get(3), variables.get(4), variables.get(5),
                 variables.get(12), variables.get(13), variables.get(14),
                 variables.get(21), variables.get(22), variables.get(23)
         ))));
 
-        addConstraint((new AllDiffConstraint<>(Arrays.asList(
+        allDiffConstraints.add((new AllDiffConstraint<>(Arrays.asList(
                 variables.get(6), variables.get(7), variables.get(8),
-                variables.get(13), variables.get(14), variables.get(15),
+                variables.get(15), variables.get(16), variables.get(17),
                 variables.get(24), variables.get(25), variables.get(26)
         ))));
 
         //--------------------------------------------------------------
 
-        addConstraint((new AllDiffConstraint<>(Arrays.asList(
+        allDiffConstraints.add((new AllDiffConstraint<>(Arrays.asList(
                 variables.get(27), variables.get(28), variables.get(29),
                 variables.get(36), variables.get(37), variables.get(38),
                 variables.get(45), variables.get(46), variables.get(47)
         ))));
 
-        addConstraint((new AllDiffConstraint<>(Arrays.asList(
+        allDiffConstraints.add((new AllDiffConstraint<>(Arrays.asList(
                 variables.get(30), variables.get(31), variables.get(32),
                 variables.get(39), variables.get(40), variables.get(41),
                 variables.get(48), variables.get(49), variables.get(50)
         ))));
 
-        addConstraint((new AllDiffConstraint<>(Arrays.asList(
+        allDiffConstraints.add((new AllDiffConstraint<>(Arrays.asList(
                 variables.get(33), variables.get(34), variables.get(35),
                 variables.get(42), variables.get(43), variables.get(44),
                 variables.get(51), variables.get(52), variables.get(53)
@@ -141,32 +164,25 @@ public class SudokuCSP extends CSP<Variable, Integer> {
 
         //--------------------------------------------------------------
 
-        addConstraint((new AllDiffConstraint<>(Arrays.asList(
+        allDiffConstraints.add((new AllDiffConstraint<>(Arrays.asList(
                 variables.get(54), variables.get(55), variables.get(56),
                 variables.get(63), variables.get(64), variables.get(65),
                 variables.get(72), variables.get(73), variables.get(74)
         ))));
 
-        addConstraint((new AllDiffConstraint<>(Arrays.asList(
+        allDiffConstraints.add((new AllDiffConstraint<>(Arrays.asList(
                 variables.get(57), variables.get(58), variables.get(59),
                 variables.get(66), variables.get(67), variables.get(68),
                 variables.get(75), variables.get(76), variables.get(77)
         ))));
 
-        addConstraint((new AllDiffConstraint<>(Arrays.asList(
+        allDiffConstraints.add((new AllDiffConstraint<>(Arrays.asList(
                 variables.get(60), variables.get(61), variables.get(62),
                 variables.get(69), variables.get(70), variables.get(71),
                 variables.get(78), variables.get(79), variables.get(80)
         ))));
-    }
 
-    /**
-     * Adding binary constraints for the Sudoku grid to be able to use e.g. the AC-3 algorithm.
-     *
-     * @param variables = fields in the Sudoku grid.
-     */
-    private void setBinaryConstraints(List<Variable> variables) {
-
+        return allDiffConstraints;
     }
 
     /**
