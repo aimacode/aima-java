@@ -75,6 +75,23 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
     }
 
     /**
+     * Applies an initial inference step and then calls the super class implementation with a start assignment.
+     */
+    @Override
+    public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp, Assignment<VAR, VAL> startAssignment) {
+        if (inferenceStrategy != null) {
+            csp = csp.copyDomains(); // do not change the original CSP!
+            InferenceLog log = inferenceStrategy.apply(csp);
+            if (!log.isEmpty()) {
+                fireStateChanged(csp, null, null);
+                if (log.inconsistencyFound())
+                    return Optional.empty();
+            }
+        }
+        return super.solve(csp, startAssignment);
+    }
+
+    /**
      * Primitive operation, selecting a not yet assigned variable.
      */
     @Override

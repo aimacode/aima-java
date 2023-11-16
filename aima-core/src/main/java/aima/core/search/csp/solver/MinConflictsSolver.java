@@ -56,7 +56,11 @@ public class MinConflictsSolver<VAR extends Variable, VAL> extends CspSolver<VAR
 	}
 
 	public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp) {
-		Assignment<VAR, VAL> current = generateRandomAssignment(csp);
+		return solve(csp, generateRandomAssignment(csp));
+	}
+
+	public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp, Assignment<VAR, VAL> startAssignment) {
+		Assignment<VAR, VAL> current = startAssignment;
 		fireStateChanged(csp, current, null);
 		for (int i = 0; i < maxSteps && !Tasks.currIsCancelled(); i++) {
 			if (current.isSolution(csp)) {

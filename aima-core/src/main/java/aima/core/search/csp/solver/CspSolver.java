@@ -34,6 +34,16 @@ public abstract class CspSolver<VAR extends Variable, VAL> {
     public abstract Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp);
 
     /**
+     * Computes a solution to the given CSP, which specifies values for all
+     * variables of the CSP such that all constraints are satisfied.
+     *
+     * @param csp a CSP to be solved.
+     * @param startAssignment a start assignment of values to variables.
+     * @return the computed solution or empty if no solution was found.
+     */
+    public abstract Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp, Assignment<VAR, VAL> startAssignment);
+
+    /**
      * Adds a CSP listener to the solution strategy.
      *
      * @param listener a listener which follows the progress of the solution strategy

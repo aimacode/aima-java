@@ -53,7 +53,12 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
 
     /** Applies a recursive backtracking search to solve the CSP. */
     public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp) {
-        Assignment<VAR, VAL> result = backtrack(csp, new Assignment<>());
+        return solve(csp, new Assignment<>());
+    }
+
+    /** Applies a recursive backtracking search to solve the CSP with a given assignment. */
+    public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp, Assignment<VAR, VAL> startAssignment) {
+        Assignment<VAR, VAL> result = backtrack(csp, startAssignment);
         return result != null ? Optional.of(result) : Optional.empty();
     }
 

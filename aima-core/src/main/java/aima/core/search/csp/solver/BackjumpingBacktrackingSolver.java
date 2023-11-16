@@ -60,7 +60,15 @@ public class BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends Cs
      * Applies backtracking search with backjumping to solve the CSP.
      */
     public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp) {
-        SolutionOrNogood<VAR, VAL> result = backtrack(csp, new Assignment<>());
+        return solve(csp, new Assignment<>());
+    }
+
+    /**
+     * Applies backtracking search with backjumping to solve the CSP.
+     * A start assignment is used.
+     */
+    public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp, Assignment<VAR, VAL> startAssignment) {
+        SolutionOrNogood<VAR, VAL> result = backtrack(csp, startAssignment);
         return result.hasSolution() ? Optional.of(result.solution) : Optional.empty();
     }
 

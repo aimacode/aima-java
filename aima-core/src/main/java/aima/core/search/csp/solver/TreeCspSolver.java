@@ -48,8 +48,13 @@ public class TreeCspSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL
 
     @Override
     public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp) {
+        return solve(csp, new Assignment<>());
+    }
 
-        Assignment<VAR, VAL> assignment = new Assignment<>();
+    @Override
+    public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp, Assignment<VAR, VAL> startAssignment) {
+
+        Assignment<VAR, VAL> assignment = startAssignment;
         // Select a root from the List of Variables
         VAR root = useRandom ? Util.selectRandomlyFromList(csp.getVariables()) : csp.getVariables().get(0);
         // Sort the variables in topological order
