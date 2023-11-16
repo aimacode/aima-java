@@ -14,11 +14,7 @@ import aima.gui.fx.applications.agent.RouteFindingAgentApp;
 import aima.gui.fx.applications.agent.VacuumAgentApp;
 import aima.gui.fx.applications.agent.WumpusAgentApp;
 import aima.gui.fx.applications.logic.PlanningProblemApp;
-import aima.gui.fx.applications.search.MapColoringCspApp;
-import aima.gui.fx.applications.search.NQueensCspApp;
-import aima.gui.fx.applications.search.NQueensCspDemo;
-import aima.gui.fx.applications.search.NQueensSearchApp;
-import aima.gui.fx.applications.search.NQueensSearchDemo;
+import aima.gui.fx.applications.search.*;
 import aima.gui.fx.applications.search.games.ConnectFourApp;
 import aima.gui.fx.applications.search.games.EightPuzzleApp;
 import aima.gui.fx.applications.search.games.SimpleSudokuApp;
@@ -63,6 +59,7 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerApp(MapColoringCspApp.class);
 		builder.registerApp(NQueensCspApp.class);
 		builder.registerApp(NQueensSearchApp.class);
+		builder.registerApp(SudokuCspApp.class);
 
 		builder.registerApp(EightPuzzleApp.class);
 		builder.registerApp(TicTacToeApp.class);
