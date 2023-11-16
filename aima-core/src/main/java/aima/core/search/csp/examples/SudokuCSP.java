@@ -42,49 +42,45 @@ import java.util.Map;
  */
 public class SudokuCSP extends CSP<Variable, Integer> {
 
+    List<Integer> values = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
     /**
      * Constructs a Sudoku CSP. Sets variables, their domains (possible values) and the constraints.
      */
     public SudokuCSP() {
-        // Set Variables
+        setVariables();
+        setDomains();
+        setConstraints();
+    }
+
+    /**
+     * Setting the variables for the Sudoku game. Variables are named like in the example above.
+     */
+    private void setVariables() {
         for (int y = 1; y <= 9; y++) {
             for (int x = 1; x <= 9; x++) {
                 Variable variable = new Variable(String.valueOf(y) + String.valueOf(x));
                 addVariable(variable);
             }
         }
-        List<Variable> variables = getVariables();
-
-        // Set Values
-        List<Integer> values = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
-
-        // Set Domains for all variables
-        setDomains(values);
-
-        // Set Constraints
-        setConstraints(variables);
     }
 
     /**
      * Setting the domain for all variables in the Sudoku game.
      * At the beginning all variables (fields in the game) could potentially be one number out of the domain {1, 2, 3, 4, 5, 6, 7, 8, 9}.
-     *
-     * @param values = domain = {1, 2, 3, 4, 5, 6, 7, 8, 9}.
      */
-    private void setDomains(List<Integer> values) {
-        Domain<Integer> domain = new Domain<>(values);
+    private void setDomains() {
+        Domain<Integer> domain = new Domain<>(this.values);
         for (Variable variable : getVariables())
             setDomain(variable, domain);
     }
 
     /**
      * Adding alldiff() constraints for the Sudoku grid.
-     *
-     * @param variables = fields in the Sudoku grid.
      */
-    private void setConstraints(List<Variable> variables) {
+    private void setConstraints() {
         // alldiff() constraints for a csp
-        List<AllDiffConstraint<Variable, Integer>> allDiffConstraints = getAllDiffConstraints(variables);
+        List<AllDiffConstraint<Variable, Integer>> allDiffConstraints = getAllDiffConstraints(getVariables());
         List<NotEqualConstraint<Variable, Integer>> notEqualConstraints = new ArrayList<>();
 
         // Transforming alldiff() constraints to not-equal constraints
@@ -203,10 +199,15 @@ public class SudokuCSP extends CSP<Variable, Integer> {
             }
             result.append((y % 3 == 0 && y % 9 != 0) ? "\n| ------+-------+------ |" : "");
         }
-        result.append("\n-------------------------\n");
+        result.append("\n-------------------------");
         System.out.println(result);
     }
 
+    /**
+     * Getting a possible start assignment for a Sudoku to solve.
+     *
+     * @return the assignment.
+     */
     public Assignment<Variable, Integer> getStartingAssignment() {
 
         /* Sudoku Board:
@@ -280,4 +281,14 @@ public class SudokuCSP extends CSP<Variable, Integer> {
         return assignment;
     }
 
+    /**
+     * Setting the right domain for the variables contained in the starting assignment.
+     */
+    public void setDomainsForStartingAssignment(Assignment<Variable, Integer> assignment) {
+        for (Variable var : assignment.getVariables()) {
+            if (assignment.getValue(var) != null) {
+                setDomain(var, new Domain<>(assignment.getValue(var)));
+            }
+        }
+    }
 }

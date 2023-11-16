@@ -39,4 +39,16 @@ public class AllDiffConstraint<VAR extends Variable, VAL> implements Constraint<
         }
         return set.size() == valueCounter;
     }
+
+    public List<NotEqualConstraint<VAR, VAL>> getNotEqualConstraints() {
+        List<NotEqualConstraint<VAR, VAL>> notEqualConstraints = new ArrayList<>();
+        for (int i = 0; i < variables.size(); i++) {
+            for (int j = i; j < variables.size(); j++) {
+                if (variables.get(i) != variables.get(j)) {
+                    notEqualConstraints.add(new NotEqualConstraint<>(variables.get(i), variables.get(j)));
+                }
+            }
+        }
+        return notEqualConstraints;
+    }
 }
