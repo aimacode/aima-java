@@ -12,7 +12,7 @@ import aima.gui.fx.framework.IntegrableApplication;
 import aima.gui.fx.framework.Parameter;
 import aima.gui.fx.framework.TaskExecutionPaneBuilder;
 import aima.gui.fx.framework.TaskExecutionPaneCtrl;
-import aima.gui.fx.views.CspViewCtrl;
+import aima.gui.fx.views.SudokuUnmodifiableViewCtrl;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -30,7 +30,7 @@ public class SudokuCspApp extends IntegrableApplication {
     protected final static String PARAM_STRATEGY = "strategy";
     protected final static String PARAM_DIFFICULTY = "difficulty level";
 
-    protected CspViewCtrl<Variable, Integer> stateViewCtrl; //SudokuViewCtrl
+    protected SudokuUnmodifiableViewCtrl stateViewCtrl;
     protected TaskExecutionPaneCtrl taskPaneCtrl;
 
     protected CSP<Variable, Integer> csp;
@@ -49,7 +49,7 @@ public class SudokuCspApp extends IntegrableApplication {
         BorderPane root = new BorderPane();
 
         StackPane stateView = new StackPane();
-        stateViewCtrl = new CspViewCtrl<>(stateView); //new SudokuViewCtrl(stateView);
+        stateViewCtrl = new SudokuUnmodifiableViewCtrl(stateView);
 
         List<Parameter> params = createParameters();
 
@@ -143,8 +143,7 @@ public class SudokuCspApp extends IntegrableApplication {
 
         ((SudokuCSP) csp).setDomainsForStartingAssignment(this.startAssignment);
 
-        stateViewCtrl.initialize(csp);
-        stateViewCtrl.update(csp, this.startAssignment);
+        stateViewCtrl.initialize((SudokuCSP) csp, this.startAssignment);
     }
 
     @Override
@@ -166,7 +165,7 @@ public class SudokuCspApp extends IntegrableApplication {
     }
 
     private void updateStateViewLater(CSP<Variable, Integer> csp, Assignment<Variable, Integer> assignment, Variable var) {
-        stateViewCtrl.update(csp, assignment);
+        stateViewCtrl.update(((SudokuCSP) csp), assignment);
 
         String txt1 = "Step " + stepCounter + ": ";
         String txt2 = "Domain reduced";
