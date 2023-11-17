@@ -10,11 +10,16 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
 import java.util.*;
 
 public class SudokuUnmodifiableViewCtrl {
+
+    private SudokuCSP csp;
+    private Assignment<Variable, Integer> assignment;
+
     private final GridPane gridPane = new GridPane();
     private List<Integer> boldValues;
 
@@ -39,6 +44,7 @@ public class SudokuUnmodifiableViewCtrl {
     }
 
     public void initialize(SudokuCSP csp, Assignment<Variable, Integer> startAssignment) {
+        this.csp = csp;
         this.boldValues = new ArrayList<>();
         for (Variable variable : startAssignment.getVariables()) {
             int row = Integer.parseInt(String.valueOf(variable.getName().charAt(0))) - 1;
@@ -49,8 +55,10 @@ public class SudokuUnmodifiableViewCtrl {
     }
 
     public void update(SudokuCSP csp, Assignment<Variable, Integer> assignment) {
-        if (assignment == null)
-            return;
+        if (assignment != null)
+            this.assignment = assignment;
+        if (csp != null)
+            this.csp = csp;
 
         gridPane.getChildren().clear();
         for (int row = 0; row < 9; row++) {
@@ -60,7 +68,7 @@ public class SudokuUnmodifiableViewCtrl {
 
                 int currentRow = row;
                 int currentCol = col;
-                Variable currentVariable = assignment.getVariables().stream()
+                Variable currentVariable = this.csp.getVariables().stream()
                         .filter(var -> var.getName().equals(String.valueOf(currentRow + 1) + String.valueOf(currentCol + 1)))
                         .findFirst()
                         .orElse(null);
@@ -68,11 +76,15 @@ public class SudokuUnmodifiableViewCtrl {
                 boolean assignmentFromStart = false;
 
                 if (currentVariable != null) {
-                    value = String.valueOf(assignment.getValue(currentVariable));
-                    domain = csp.getDomain(currentVariable).toString();
+                    value = (this.assignment != null) ? String.valueOf(this.assignment.getValue(currentVariable)) : "";
+                    value = (!value.equals("null")) ? value : "";
+                    domain = this.csp.getDomain(currentVariable).toString();
 
                     if (boldValues.contains(row * 9 + col))
                         assignmentFromStart = true;
+                } else {
+                    value = "test";
+                    domain = "test";
                 }
 
                 TextFlow textArea = createTextFlow(domain, value, assignmentFromStart);
@@ -86,18 +98,20 @@ public class SudokuUnmodifiableViewCtrl {
 
         Text domainText = new Text(domain + "\n");
         domainText.setFont(Font.font(10));
-        domainText.setTextAlignment(TextAlignment.CENTER);
+        domainText.setFill(Color.DARKSLATEGREY);
 
         Text valueText = new Text(value);
-        if (bold)
+        if (bold) {
             valueText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        else
-            valueText.setFont(Font.font(20));
-        valueText.setTextAlignment(TextAlignment.CENTER);
+        } else {
+            valueText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+            valueText.setFill(Color.DARKSLATEGREY);
+        }
 
         textFlow.getChildren().addAll(domainText, valueText);
         textFlow.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        textFlow.setPadding(new Insets(5));
+        textFlow.setPadding(new Insets(10));
+        textFlow.setTextAlignment(TextAlignment.CENTER);
         textFlow.setStyle("-fx-background-color: white;");
         return textFlow;
     }
