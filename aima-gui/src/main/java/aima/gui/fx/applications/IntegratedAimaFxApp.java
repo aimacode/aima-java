@@ -6,10 +6,7 @@ import aima.gui.demo.agent.TrivialVacuumDemo;
 import aima.gui.demo.agent.WumpusAgentDemo;
 import aima.gui.demo.learning.LearningDemo;
 import aima.gui.demo.logic.*;
-import aima.gui.demo.search.EightPuzzleDemo;
-import aima.gui.demo.search.MapColoringCspDemo;
-import aima.gui.demo.search.NQueensDemo;
-import aima.gui.demo.search.TicTacToeDemo;
+import aima.gui.demo.search.*;
 import aima.gui.fx.applications.agent.RouteFindingAgentApp;
 import aima.gui.fx.applications.agent.VacuumAgentApp;
 import aima.gui.fx.applications.agent.WumpusAgentApp;
@@ -83,6 +80,7 @@ public class IntegratedAimaFxApp extends Application {
 		builder.registerDemo(TicTacToeDemo.class);
 		builder.registerDemo(NQueensDemo.class);
 		builder.registerDemo(MapColoringCspDemo.class);
+		builder.registerDemo(SudokuCspDemo.class);
 
 		builder.registerDemo(TTEntailsDemo.class);
 		builder.registerDemo(PlFcEntailsDemo.class);
