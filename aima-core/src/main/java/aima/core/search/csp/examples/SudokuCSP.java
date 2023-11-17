@@ -1,14 +1,12 @@
 package aima.core.search.csp.examples;
 
+import aima.core.environment.sudoku.SudokuDifficulty;
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
 import aima.core.search.csp.Variable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Sudoku
@@ -184,9 +182,15 @@ public class SudokuCSP extends CSP<Variable, Integer> {
     /**
      * Printing the Sudoku board with a given assignment.
      *
-     * @param assignments = the numbers that are already set in the Sudoku game a.k.a. the previous variable-value-assignments.
+     * @param assignment = the numbers that are already set in the Sudoku game a.k.a. the previous variable-value-assignments.
      */
-    public static void printCSP(Map<String, Integer> assignments) {
+    public static void printCSP(Assignment<Variable, Integer> assignment) {
+        Map<String, Integer> assignments = new HashMap<>();
+
+        for (Variable variable : assignment.getVariables()) {
+            assignments.put(variable.getName(), assignment.getValue(variable));
+        }
+
         StringBuilder result = new StringBuilder("-------------------------");
 
         for (int y = 1; y <= 9; y++) { //for (char y = 'A'; y <= 'I'; y++) {
@@ -208,74 +212,49 @@ public class SudokuCSP extends CSP<Variable, Integer> {
      *
      * @return the assignment.
      */
-    public Assignment<Variable, Integer> getStartingAssignment() {
-
-        /* Sudoku Board:
-            1 2 3   4 5 6   7 8 9
-          -------------------------
-        1 | - - 1 | - - 9 | - - - |
-        2 | 4 - 9 | 1 7 - | - - 2 |
-        3 | - 3 5 | - 4 8 | 1 - - |
-          | ------+-------+------ |
-        4 | 9 - 6 | - - - | 3 7 - |
-        5 | 1 - - | 7 3 6 | 4 - 9 |
-        6 | 3 - - | 9 8 2 | - - - |
-          | ------+-------+------ |
-        7 | - - - | - 2 7 | - - 4 |
-        8 | 6 9 4 | - 1 3 | - 5 7 |
-        9 | - 7 2 | - - - | - - - |
-          -------------------------
-        */
-
+    public Assignment<Variable, Integer> getStartingAssignment(SudokuDifficulty difficulty) {
         Assignment<Variable, Integer> assignment = new Assignment<>();
-        for (Variable variable : getVariables()) {
-            switch (variable.getName()) {
-                case "13" -> assignment.add(variable, 1);
-                case "16" -> assignment.add(variable, 9);
-
-                case "21" -> assignment.add(variable, 4);
-                case "23" -> assignment.add(variable, 9);
-                case "24" -> assignment.add(variable, 1);
-                case "25" -> assignment.add(variable, 7);
-                case "29" -> assignment.add(variable, 2);
-
-                case "32" -> assignment.add(variable, 3);
-                case "33" -> assignment.add(variable, 5);
-                case "35" -> assignment.add(variable, 4);
-                case "36" -> assignment.add(variable, 8);
-                case "37" -> assignment.add(variable, 1);
-
-                case "41" -> assignment.add(variable, 9);
-                case "43" -> assignment.add(variable, 6);
-                case "47" -> assignment.add(variable, 3);
-                case "48" -> assignment.add(variable, 7);
-
-                case "51" -> assignment.add(variable, 1);
-                case "54" -> assignment.add(variable, 7);
-                case "55" -> assignment.add(variable, 3);
-                case "56" -> assignment.add(variable, 6);
-                case "57" -> assignment.add(variable, 4);
-                case "59" -> assignment.add(variable, 9);
-
-                case "61" -> assignment.add(variable, 3);
-                case "64" -> assignment.add(variable, 9);
-                case "65" -> assignment.add(variable, 8);
-                case "66" -> assignment.add(variable, 2);
-
-                case "75" -> assignment.add(variable, 2);
-                case "76" -> assignment.add(variable, 7);
-                case "79" -> assignment.add(variable, 4);
-
-                case "81" -> assignment.add(variable, 6);
-                case "82" -> assignment.add(variable, 9);
-                case "83" -> assignment.add(variable, 4);
-                case "85" -> assignment.add(variable, 1);
-                case "86" -> assignment.add(variable, 3);
-                case "88" -> assignment.add(variable, 5);
-                case "89" -> assignment.add(variable, 7);
-
-                case "92" -> assignment.add(variable, 7);
-                case "93" -> assignment.add(variable, 2);
+        if (difficulty == SudokuDifficulty.EASY) {
+            for (Variable variable : getVariables()) {
+                switch (variable.getName()) {
+                    case "13", "24", "37", "51", "85" -> assignment.add(variable, 1);
+                    case "29", "66", "75", "93" -> assignment.add(variable, 2);
+                    case "32", "47", "55", "61", "86" -> assignment.add(variable, 3);
+                    case "21", "35", "57", "79", "83" -> assignment.add(variable, 4);
+                    case "33", "88" -> assignment.add(variable, 5);
+                    case "43", "56", "81" -> assignment.add(variable, 6);
+                    case "25", "48", "54", "76", "89", "92" -> assignment.add(variable, 7);
+                    case "36", "65" -> assignment.add(variable, 8);
+                    case "16", "23", "41", "59", "64", "82" -> assignment.add(variable, 9);
+                }
+            }
+        } else if (difficulty == SudokuDifficulty.MEDIUM) {
+            for (Variable variable : getVariables()) {
+                switch (variable.getName()) {
+                    case "27", "31", "69", "78", "86", "93" -> assignment.add(variable, 1);
+                    case "11", "72" -> assignment.add(variable, 2);
+                    case "32", "68", "95" -> assignment.add(variable, 3);
+                    case "16", "22", "38", "45", "59", "61" -> assignment.add(variable, 4);
+                    case "23" -> assignment.add(variable, 5);
+                    case "29", "71", "87", "96" -> assignment.add(variable, 6);
+                    case "67", "79", "91" -> assignment.add(variable, 7);
+                    case "26", "44", "62" -> assignment.add(variable, 8);
+                    case "35", "49", "63", "88" -> assignment.add(variable, 9);
+                }
+            }
+        } else {
+            for (Variable variable : getVariables()) {
+                switch (variable.getName()) {
+                    case "15", "58", "87" -> assignment.add(variable, 1);
+                    case "13", "29", "55" -> assignment.add(variable, 2);
+                    case "35", "94" -> assignment.add(variable, 3);
+                    case "18", "56" -> assignment.add(variable, 4);
+                    case "19", "44", "78", "86" -> assignment.add(variable, 5);
+                    case "22", "53", "74" -> assignment.add(variable, 6);
+                    case "16", "85", "93" -> assignment.add(variable, 7);
+                    case "61" -> assignment.add(variable, 8);
+                    case "67", "82" -> assignment.add(variable, 9);
+                }
             }
         }
         return assignment;

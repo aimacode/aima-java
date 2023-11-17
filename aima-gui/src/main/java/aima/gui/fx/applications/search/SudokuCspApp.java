@@ -1,5 +1,6 @@
 package aima.gui.fx.applications.search;
 
+import aima.core.environment.sudoku.SudokuDifficulty;
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Variable;
@@ -17,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class SudokuCspApp extends IntegrableApplication {
@@ -26,6 +28,7 @@ public class SudokuCspApp extends IntegrableApplication {
     }
 
     protected final static String PARAM_STRATEGY = "strategy";
+    protected final static String PARAM_DIFFICULTY = "difficulty level";
 
     protected CspViewCtrl<Variable, Integer> stateViewCtrl; //SudokuViewCtrl
     protected TaskExecutionPaneCtrl taskPaneCtrl;
@@ -33,6 +36,8 @@ public class SudokuCspApp extends IntegrableApplication {
     protected CSP<Variable, Integer> csp;
     protected CspSolver<Variable, Integer> strategy;
     private int stepCounter;
+    private SudokuDifficulty difficultyLevel;
+    private Assignment<Variable, Integer> startAssignment;
 
     @Override
     public String getTitle() {
@@ -71,13 +76,30 @@ public class SudokuCspApp extends IntegrableApplication {
                 "Backtracking + Backjumping",
                 "Backtracking + Backjumping + MRV&DEG"
         );
-        return List.of(p1);
+        Parameter p2 = new Parameter(PARAM_DIFFICULTY, "Easy", "Medium", "Hard");
+        p2.setDefaultValueIndex(2);
+        return Arrays.asList(p1, p2);
     }
 
     @Override
     public void initialize() {
         // CSP
         csp = new SudokuCSP();
+
+        // Difficulty
+        switch (taskPaneCtrl.getParamValueIndex(PARAM_DIFFICULTY)) {
+            case 0:
+                this.difficultyLevel = SudokuDifficulty.EASY;
+                break;
+            case 1:
+                this.difficultyLevel = SudokuDifficulty.MEDIUM;
+                break;
+            default:
+                this.difficultyLevel = SudokuDifficulty.HARD;
+                break;
+        }
+
+        this.startAssignment = ((SudokuCSP) csp).getStartingAssignment(this.difficultyLevel);
 
         // Strategy
         switch (taskPaneCtrl.getParamValueIndex(PARAM_STRATEGY)) {
@@ -119,10 +141,10 @@ public class SudokuCspApp extends IntegrableApplication {
             updateStateView(csp, assignment, var);
         });
 
-        ((SudokuCSP) csp).setDomainsForStartingAssignment(((SudokuCSP) csp).getStartingAssignment());
+        ((SudokuCSP) csp).setDomainsForStartingAssignment(this.startAssignment);
 
         stateViewCtrl.initialize(csp);
-        stateViewCtrl.update(csp, ((SudokuCSP) csp).getStartingAssignment());
+        stateViewCtrl.update(csp, this.startAssignment);
     }
 
     @Override
@@ -134,12 +156,8 @@ public class SudokuCspApp extends IntegrableApplication {
      * Starts the experiment.
      */
     public void startExperiment() {
-        try {
-            stepCounter = 0;
-            strategy.solve(csp, ((SudokuCSP) csp).getStartingAssignment());
-        } catch (RuntimeException ex) { // If TreeCspSolver is applied to non-tree-structured CSP
-            taskPaneCtrl.setStatus(ex.getClass().getSimpleName() + ": " + ex.getMessage());
-        }
+        stepCounter = 0;
+        strategy.solve(csp, this.startAssignment);
     }
 
     public void updateStateView(CSP<Variable, Integer> csp, Assignment<Variable, Integer> assignment, Variable var) {
