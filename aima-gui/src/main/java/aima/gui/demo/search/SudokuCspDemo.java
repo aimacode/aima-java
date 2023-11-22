@@ -8,6 +8,7 @@ import aima.core.search.csp.solver.*;
 public class SudokuCspDemo {
 
     private static int stepCounterOverall = 0;
+    private static long startTime;
 
     public static void main(String[] args) {
         SudokuCSP csp = new SudokuCSP();
@@ -34,6 +35,7 @@ public class SudokuCspDemo {
         System.out.println("Solving Sudoku CSP ...");
         csp.setDomainsForStartingAssignment(startAssignment);
         stepCounterOverall = 0;
+        startTime = System.nanoTime();
         solver.solve(csp, startAssignment);
         System.out.println();
         System.out.println("Steps overall: " + stepCounterOverall);
@@ -53,7 +55,7 @@ public class SudokuCspDemo {
             else
                 txt2 = "Assignment changed, " + assignment.toString();
             if (assignment.isSolution(csp))
-                txt2 += " (Solution)";
+                txt2 += " (Solution in " + ((System.nanoTime() - startTime) / 1000000) + "ms)";
         } else {
             txt2 = "Domain reduced" + (var != null ? ", Dom(" + var + ") = " + csp.getDomain(var) + ")" : "");
         }

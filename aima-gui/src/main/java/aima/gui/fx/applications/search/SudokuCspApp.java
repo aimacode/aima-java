@@ -36,6 +36,7 @@ public class SudokuCspApp extends IntegrableApplication {
     protected CSP<Variable, Integer> csp;
     protected CspSolver<Variable, Integer> strategy;
     private int stepCounter;
+    private long startTime;
     private SudokuDifficulty difficultyLevel;
     private Assignment<Variable, Integer> startAssignment;
 
@@ -156,6 +157,7 @@ public class SudokuCspApp extends IntegrableApplication {
      */
     public void startExperiment() {
         stepCounter = 0;
+        startTime = System.nanoTime();
         strategy.solve(csp, this.startAssignment);
     }
 
@@ -175,7 +177,7 @@ public class SudokuCspApp extends IntegrableApplication {
             else
                 txt2 = "Assignment changed, " + assignment.toString();
             if (assignment.isSolution(csp))
-                txt2 += " (Solution)";
+                txt2 += " (Solution in " + ((System.nanoTime() - startTime) / 1000000) + "ms)";
         } else {
             txt2 = "Domain reduced" + (var != null ? ", Dom(" + var + ") = " + csp.getDomain(var) + ")" : "");
         }

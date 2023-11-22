@@ -231,20 +231,6 @@ public class SudokuCSP extends CSP<Variable, Integer> {
         } else if (difficulty == SudokuDifficulty.MEDIUM) {
             for (Variable variable : getVariables()) {
                 switch (variable.getName()) {
-                    case "27", "31", "69", "78", "86", "93" -> assignment.add(variable, 1);
-                    case "11", "72" -> assignment.add(variable, 2);
-                    case "32", "68", "95" -> assignment.add(variable, 3);
-                    case "16", "22", "38", "45", "59", "61" -> assignment.add(variable, 4);
-                    case "23" -> assignment.add(variable, 5);
-                    case "29", "71", "87", "96" -> assignment.add(variable, 6);
-                    case "67", "79", "91" -> assignment.add(variable, 7);
-                    case "26", "44", "62" -> assignment.add(variable, 8);
-                    case "35", "49", "63", "88" -> assignment.add(variable, 9);
-                }
-            }
-        } else {
-            for (Variable variable : getVariables()) {
-                switch (variable.getName()) {
                     case "15", "58", "87" -> assignment.add(variable, 1);
                     case "13", "29", "55" -> assignment.add(variable, 2);
                     case "35", "94" -> assignment.add(variable, 3);
@@ -254,6 +240,20 @@ public class SudokuCSP extends CSP<Variable, Integer> {
                     case "16", "85", "93" -> assignment.add(variable, 7);
                     case "61" -> assignment.add(variable, 8);
                     case "67", "82" -> assignment.add(variable, 9);
+                }
+            }
+        } else {
+            for (Variable variable : getVariables()) {
+                switch (variable.getName()) {
+                    case "27", "31", "69", "78", "86", "93" -> assignment.add(variable, 1);
+                    case "11", "72" -> assignment.add(variable, 2);
+                    case "32", "68", "95" -> assignment.add(variable, 3);
+                    case "16", "22", "38", "45", "59", "61" -> assignment.add(variable, 4);
+                    case "23" -> assignment.add(variable, 5);
+                    case "29", "71", "87", "96" -> assignment.add(variable, 6);
+                    case "67", "79", "91" -> assignment.add(variable, 7);
+                    case "26", "44", "62" -> assignment.add(variable, 8);
+                    case "35", "49", "63", "88" -> assignment.add(variable, 9);
                 }
             }
         }
