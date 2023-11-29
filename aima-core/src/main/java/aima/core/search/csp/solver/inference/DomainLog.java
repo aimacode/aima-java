@@ -24,6 +24,8 @@ public class DomainLog<VAR extends Variable, VAL> implements InferenceLog<VAR, V
 	private HashSet<VAR> affectedVariables;
 	private boolean emptyDomainObserved;
 
+	private VAR emptyDomainVariable;
+
 	public DomainLog() {
 		savedDomains = new ArrayList<>();
 		affectedVariables = new HashSet<>();
@@ -86,5 +88,13 @@ public class DomainLog<VAR extends Variable, VAL> implements InferenceLog<VAR, V
 		if (emptyDomainObserved)
 			result.append("!");
 		return result.toString();
+	}
+
+	public void setEmptyDomainVariable(VAR variable){
+		this.emptyDomainVariable = variable;
+	}
+
+	public VAR getEmptyDomainVariable(){
+		return this.emptyDomainVariable;
 	}
 }

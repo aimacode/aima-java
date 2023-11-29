@@ -75,7 +75,9 @@ public class SudokuCspApp extends IntegrableApplication {
                 "Backtracking + AC3",
                 "Backtracking + AC3 + MRV&DEG + LCV",
                 "Backtracking + Backjumping",
-                "Backtracking + Backjumping + MRV&DEG"
+                "Backtracking + Backjumping + MRV&DEG",
+                "Backtracking + AC3 + Backjumping",
+                "Backtracking + AC3 + Backjumping + MRV&DEG + LCV"
         );
         Parameter p2 = new Parameter(PARAM_DIFFICULTY, "Easy", "Medium", "Hard");
         p2.setDefaultValueIndex(2);
@@ -134,6 +136,12 @@ public class SudokuCspApp extends IntegrableApplication {
                 break;
             case 9: // Backjumping + MRV&DEG
                 strategy = new BackjumpingBacktrackingSolver<Variable, Integer>().set(CspHeuristics.mrvDeg());
+                break;
+            case 10: // Backjumping + AC3
+                strategy = new AC3BackjumpingBacktrackingSolver<Variable, Integer>();
+                break;
+            case 11: // Backjumping + AC3 + MRV&DEG + LCV
+                strategy = new AC3BackjumpingBacktrackingSolver<Variable, Integer>().setAll();
                 break;
         }
 

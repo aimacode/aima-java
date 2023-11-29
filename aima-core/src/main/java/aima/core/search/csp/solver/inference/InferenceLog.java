@@ -14,6 +14,8 @@ public interface InferenceLog<VAR extends Variable, VAL> {
     boolean inconsistencyFound();
     void undo(CSP<VAR, VAL> csp);
 
+    VAR getEmptyDomainVariable();
+
     /**
      * Returns an empty inference log.
      */
@@ -27,6 +29,9 @@ public interface InferenceLog<VAR extends Variable, VAL> {
 
             @Override
             public void undo(CSP<VAR, VAL> csp){ }
+
+            @Override
+            public VAR getEmptyDomainVariable(){ return null; }
         };
     }
 }
