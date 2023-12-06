@@ -2,7 +2,6 @@ package aima.core.search.csp.solver;
 
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
-import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
 import aima.core.search.csp.solver.inference.AC3Strategy;
 import aima.core.search.csp.solver.inference.InferenceLog;
@@ -16,6 +15,8 @@ public class AC3BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends
     private CspHeuristics.VariableSelectionStrategy<VAR, VAL> varSelectionStrategy;
     private CspHeuristics.ValueOrderingStrategy<VAR, VAL> valOrderingStrategy;
     private final AC3Strategy<VAR, VAL> inferenceStrategy = new AC3Strategy<>();
+
+    private HashMap<VAR, Set<VAR>> conflictSets = new HashMap<>();
 
     /**
      * Selects the algorithm for SELECT-UNASSIGNED-VARIABLE. Uses the fluent interface design pattern.
@@ -69,7 +70,6 @@ public class AC3BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends
      * Causes of dead-ends are analyzed by means of nogoods which are sets of variables whose
      * current value bindings have proven not to be a part of a solution. This is used for intelligent
      * upwards navigation (backjumping).
-     * <p>
      * Other than BackjumpingBacktrackingSolver this solver also applies inference with a AC3Strategy.
      *
      * @return An assignment (possibly incomplete if task was cancelled) or a nogood (set of variables)
@@ -86,8 +86,9 @@ public class AC3BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends
                 fireStateChanged(csp, assignment, var);
 
                 if (assignment.isConsistent(csp.getConstraints(var))) {
-
                     InferenceLog<VAR, VAL> log = inference(csp, assignment, var);
+                    addConflictSets(csp, log);
+
                     if (!log.isEmpty())
                         fireStateChanged(csp, null, null);
 
@@ -101,10 +102,10 @@ public class AC3BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends
                             return res; // jump back!
                         } else {
                             result.nogood.addAll(res.nogood);
-                            result.nogood.addAll(getAssignedNeighbors(csp, assignment, var));
+                            result.nogood.addAll(getConflictSet(var));
                         }
                     } else {
-                        result.nogood.addAll(findCause(csp, assignment, log));
+                        result.nogood.addAll(getConflictSet(var));
                     }
                     log.undo(csp);
                 }
@@ -113,18 +114,6 @@ public class AC3BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends
             result.nogood.remove(var);
         }
         return result;
-    }
-
-    /**
-     * Gets an inference log which stores the variable that got an empty domain while reducing the domains in AC-3.
-     * Neighbors of the variable with empty domain are used as conflict set.
-     *
-     * @param csp = associated CSP
-     * @param log = inference log
-     * @return neighbors of the variable with empty domain.
-     */
-    protected Collection<VAR> findCause(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, InferenceLog<VAR, VAL> log) {
-        return getAssignedNeighbors(csp, assignment, log.getEmptyDomainVariable());
     }
 
     /**
@@ -159,20 +148,26 @@ public class AC3BackjumpingBacktrackingSolver<VAR extends Variable, VAL> extends
     }
 
     /**
-     * Detects the neighbors to a variable that are connected to it through a constraint.
+     * Provides the conflict set for a specific variable.
      *
-     * @param variable = variable for which the neighbors are searched
-     * @param csp      = associated constraint satisfaction problem
-     * @return a list of variables that are connected to the given variable through a constraint
+     * @param variable = variable for which the cs is wanted.
+     * @return the conflict set for the variable.
      */
-    private List<VAR> getAssignedNeighbors(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR variable) {
-        List<VAR> neighbors = new ArrayList<>();
-        for (Constraint<VAR, VAL> cons : csp.getConstraints(variable)) {
-            VAR neighbor = csp.getNeighbor(variable, cons);
-            if (neighbor != null && assignment.getValue(neighbor) != null)
-                neighbors.add(neighbor);
+    public Set<VAR> getConflictSet(VAR variable) {
+        return (conflictSets.get(variable) != null) ? conflictSets.get(variable) : new HashSet<>();
+    }
+
+    /**
+     * Merges two Maps of conflict sets.
+     *
+     * @param csp = current CSP
+     * @param log = Inference log, from which the new conflict sets come from.
+     */
+    public void addConflictSets(CSP<VAR, VAL> csp, InferenceLog<VAR, VAL> log) {
+        for (VAR variable : csp.getVariables()) {
+            conflictSets.computeIfAbsent(variable, k -> new HashSet<>());
+            this.conflictSets.get(variable).addAll(log.getConflictSet(variable));
         }
-        return neighbors;
     }
 
     /**

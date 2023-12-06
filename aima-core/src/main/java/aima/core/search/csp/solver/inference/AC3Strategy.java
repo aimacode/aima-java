@@ -94,9 +94,10 @@ public class AC3Strategy<VAR extends Variable, VAL> implements InferenceStrategy
 				if (neighbor != null && revise(neighbor, var, constraint, csp, log)) {
 					if (csp.getDomain(neighbor).isEmpty()) {
 						log.setEmptyDomainFound(true);
-						log.setEmptyDomainVariable(neighbor);
+						log.addConflictSet(var, log.getConflictSet(neighbor));
 						return;
 					}
+					log.addConflict(neighbor, var);
 					queue.add(neighbor);
 				}
 			}

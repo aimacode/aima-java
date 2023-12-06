@@ -1,8 +1,6 @@
 package aima.core.search.csp.solver.inference;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
@@ -23,12 +21,12 @@ public class DomainLog<VAR extends Variable, VAL> implements InferenceLog<VAR, V
 	private List<Pair<VAR, Domain<VAL>>> savedDomains;
 	private HashSet<VAR> affectedVariables;
 	private boolean emptyDomainObserved;
-
-	private VAR emptyDomainVariable;
+	private HashMap<VAR, Set<VAR>> confictSets;
 
 	public DomainLog() {
 		savedDomains = new ArrayList<>();
 		affectedVariables = new HashSet<>();
+		confictSets = new HashMap<>();
 	}
 
 	public void clear() {
@@ -90,11 +88,18 @@ public class DomainLog<VAR extends Variable, VAL> implements InferenceLog<VAR, V
 		return result.toString();
 	}
 
-	public void setEmptyDomainVariable(VAR variable){
-		this.emptyDomainVariable = variable;
+	@Override
+	public Set<VAR> getConflictSet(VAR variable) {
+		return (confictSets.get(variable) != null) ? confictSets.get(variable) : new HashSet<VAR>();
 	}
 
-	public VAR getEmptyDomainVariable(){
-		return this.emptyDomainVariable;
+	public void addConflict(VAR variable, VAR conflictingVariable){
+        confictSets.computeIfAbsent(variable, k -> new HashSet<>());
+		confictSets.get(variable).add(conflictingVariable);
+	}
+
+	public void addConflictSet(VAR variable, Set<VAR> conflictSet){
+		confictSets.computeIfAbsent(variable, k -> new HashSet<>());
+		confictSets.get(variable).addAll(conflictSet);
 	}
 }

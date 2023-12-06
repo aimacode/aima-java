@@ -3,6 +3,9 @@ package aima.core.search.csp.solver.inference;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Variable;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Provides information about (1) whether changes have been performed, (2) possibly inferred empty domains , and
  * (3) how to restore the CSP.
@@ -14,7 +17,7 @@ public interface InferenceLog<VAR extends Variable, VAL> {
     boolean inconsistencyFound();
     void undo(CSP<VAR, VAL> csp);
 
-    VAR getEmptyDomainVariable();
+    Set<VAR> getConflictSet(VAR variable);
 
     /**
      * Returns an empty inference log.
@@ -31,7 +34,7 @@ public interface InferenceLog<VAR extends Variable, VAL> {
             public void undo(CSP<VAR, VAL> csp){ }
 
             @Override
-            public VAR getEmptyDomainVariable(){ return null; }
+            public Set<VAR> getConflictSet(VAR variable){ return new HashSet<>(); }
         };
     }
 }
