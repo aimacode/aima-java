@@ -102,9 +102,9 @@ public class SudokuUnmodifiableViewCtrl {
 
         Text valueText = new Text(value);
         if (bold) {
-            valueText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+            valueText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         } else {
-            valueText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+            valueText.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
             valueText.setFill(Color.DARKSLATEGREY);
         }
 
