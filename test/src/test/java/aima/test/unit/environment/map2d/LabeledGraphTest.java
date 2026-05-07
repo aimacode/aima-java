@@ -1,7 +1,7 @@
 package aima.test.unit.environment.map2d;
 
 import aima.core.environment.map2d.LabeledGraph;
-import javafx.util.Pair;
+import aima.core.util.datastructure.Pair;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
