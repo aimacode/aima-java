@@ -3,7 +3,6 @@ package aima.core.environment.vacuum;
 import aima.core.agent.Action;
 import aima.core.agent.Agent;
 import aima.core.agent.impl.DynamicAction;
-import aima.core.util.Util;
 
 import java.util.*;
 
@@ -27,6 +26,7 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 
 	private final int xDimension;
 	private final int yDimension;
+	private final Random random;
 
 	public MazeVacuumEnvironment(int xDim, int yDim) {
 		this(xDim, yDim, 0.5, 0);
@@ -34,13 +34,18 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 
 	// Obstacles are marked with locationState==null
 	public MazeVacuumEnvironment(int xDim, int yDim, double dirtProbability, double obstacleProbability) {
+		this(xDim, yDim, dirtProbability, obstacleProbability, System.currentTimeMillis());
+	}
+
+	public MazeVacuumEnvironment(int xDim, int yDim, double dirtProbability, double obstacleProbability, long seed) {
 		super(createLocations(xDim * yDim));
 		xDimension = xDim;
 		yDimension = yDim;
+		random = new Random(seed);
 		for (String loc : getLocations()) {
-			LocationState state = Util.randomInt(100) < dirtProbability * 100
+			LocationState state = random.nextInt(100) < dirtProbability * 100
 					? LocationState.Dirty : LocationState.Clean;
-			if (Util.randomInt(100) < obstacleProbability * 100)
+			if (random.nextInt(100) < obstacleProbability * 100)
 				state = null;
 			envState.setLocationState(loc, state);
 		}
