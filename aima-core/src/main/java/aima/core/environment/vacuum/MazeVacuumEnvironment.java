@@ -53,9 +53,12 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 
 	@Override
 	public void addAgent(Agent<? super VacuumPercept, ? extends Action> agent) {
-		super.addAgent(agent);
-		if (envState.getLocationState(getAgentLocation(agent)) == null)
-			envState.setLocationState(getAgentLocation(agent), LocationState.Clean);
+		List<String> freeLocs = new ArrayList<>();
+		for (String loc : getLocations())
+			if (!containsObstacle(loc))
+				freeLocs.add(loc);
+		List<String> candidates = freeLocs.isEmpty() ? getLocations() : freeLocs;
+		addAgent(agent, candidates.get(random.nextInt(candidates.size())));
 	}
 
 	public void setObstacle(String location, boolean b) {

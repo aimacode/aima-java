@@ -179,13 +179,7 @@ public class VacuumAgentApp extends IntegrableApplication {
         if (env != null && agent != null) {
             envViewCtrl.initialize(env);
             env.addEnvironmentListener(envViewCtrl);
-            if (env instanceof MazeVacuumEnvironment) {
-                java.util.Random positionRandom = new java.util.Random(seed);
-                String randomLocation = env.getLocations().get(positionRandom.nextInt(env.getLocations().size()));
-                env.addAgent(agent, randomLocation);
-            } else {
-                env.addAgent(agent);
-            }
+            env.addAgent(agent);
         }
     }
 
