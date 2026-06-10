@@ -113,6 +113,26 @@ public class VacuumAgentApp extends IntegrableApplication {
         return root;
     }
 
+    /**
+     * Provides the selected seed for initialize method and subclasses.
+     */
+    protected long getSeed() {
+        long seed;
+        boolean useSeed = seedEnabledCheckBox.isSelected();
+
+        if (useSeed) {
+            try {
+                seed = Long.parseLong(seedField.getText().trim());
+            } catch (NumberFormatException e) {
+                seed = 404;
+                seedField.setText("404");
+            }
+        } else {
+            seed = System.currentTimeMillis();
+        }
+        return seed;
+    }
+
     protected List<Parameter> createParameters() {
         Parameter p1 = new Parameter(PARAM_ENV, "A/B Deterministic Environment",
                 "A/B Non-Deterministic Environment", "Small Maze Environment", "Maze Environment");
@@ -127,21 +147,6 @@ public class VacuumAgentApp extends IntegrableApplication {
      */
     @Override
     public void initialize() {
-
-        long seed = 0;
-        boolean useSeed = seedEnabledCheckBox.isSelected();
-
-        if (useSeed) {
-            try {
-                seed = Long.parseLong(seedField.getText().trim());
-            } catch (NumberFormatException e) {
-                seed = 404;
-                seedField.setText("404");
-            }
-        } else {
-            seed = System.currentTimeMillis();
-        }
-
         switch (taskPaneCtrl.getParamValueIndex(PARAM_ENV)) {
             case 0:
                 env = new VacuumEnvironment();
@@ -150,10 +155,10 @@ public class VacuumAgentApp extends IntegrableApplication {
                 env = new NondeterministicVacuumEnvironment();
                 break;
             case 2:
-                env = new MazeVacuumEnvironment(5, 5, 0.5, 0.2, seed);
+                env = new MazeVacuumEnvironment(5, 5, 0.5, 0.2, getSeed());
                 break;
             case 3:
-                env = new MazeVacuumEnvironment(10, 10, 0.8, 0.3, seed);
+                env = new MazeVacuumEnvironment(10, 10, 0.8, 0.3, getSeed());
                 break;
         }
         switch (taskPaneCtrl.getParamValueIndex(PARAM_AGENT)) {
