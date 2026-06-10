@@ -49,12 +49,13 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 	@Override
 	public void addAgent(Agent<? super VacuumPercept, ? extends Action> agent) {
 		super.addAgent(agent);
-		if (envState.getLocationState(getAgentLocation(agent)) == null)
-			envState.setLocationState(getAgentLocation(agent), LocationState.Clean);
+		if (envState.getLocationState(getAgentLocation(agent)) == null) {
+			envState.setLocationState(getAgentLocation(agent), LocationState.Clean); // hack - no view update!
+		}
 	}
 
 	public void setObstacle(String location, boolean b) {
-		envState.setLocationState(location, b ? null : LocationState.Clean);
+		envState.setLocationState(location, b ? null : LocationState.Clean); // hack - value null used for obstacles
 	}
 
 	public boolean containsObstacle(String location) {
