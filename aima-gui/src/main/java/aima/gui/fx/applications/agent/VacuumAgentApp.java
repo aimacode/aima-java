@@ -13,8 +13,13 @@ import aima.gui.fx.framework.TaskExecutionPaneCtrl;
 import aima.gui.fx.views.SimpleEnvironmentViewCtrl;
 import aima.gui.fx.views.VacuumEnvironmentViewCtrl;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.CheckBox;
+import javafx.geometry.Pos;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +43,8 @@ public class VacuumAgentApp extends IntegrableApplication {
 
     protected TaskExecutionPaneCtrl taskPaneCtrl;
     protected SimpleEnvironmentViewCtrl<VacuumPercept, Action> envViewCtrl;
+    protected CheckBox seedEnabledCheckBox;
+    protected TextField seedField;
     protected VacuumEnvironment env = null;
     protected SimpleAgent<VacuumPercept, Action> agent = null;
 
@@ -72,6 +79,37 @@ public class VacuumAgentApp extends IntegrableApplication {
         builder.defineTaskMethod(this::startExperiment);
         taskPaneCtrl = builder.getResultFor(root);
 
+        // Add seed input field to the toolbar
+        seedEnabledCheckBox = new CheckBox("Use Seed");
+        seedEnabledCheckBox.setSelected(false);
+        seedField = new TextField("404");
+        seedField.setPrefWidth(80);
+        seedField.setStyle("-fx-control-inner-background: #f0f0f0; -fx-padding: 5;");
+        seedField.setDisable(true);
+        Label seedLabel = new Label("Seed:");
+        HBox seedBox = new HBox(5);
+        seedBox.setAlignment(Pos.CENTER_LEFT);
+        seedBox.getChildren().addAll(seedEnabledCheckBox, seedLabel, seedField);
+        seedBox.setStyle("-fx-padding: 0 10 0 10;");
+
+        // Add listener to enable/disable seed field based on checkbox
+        seedEnabledCheckBox.selectedProperty().addListener((obs, oldVal, newVal) ->
+                seedField.setDisable(!newVal)
+        );
+
+        // Insert seed input into toolbar
+        javafx.scene.control.ToolBar toolbar = (javafx.scene.control.ToolBar) root.getTop();
+        int separatorIndex = -1;
+        for (int i = 0; i < toolbar.getItems().size(); i++) {
+            if (toolbar.getItems().get(i) instanceof javafx.scene.control.Separator) {
+                separatorIndex = i;
+                break;
+            }
+        }
+        if (separatorIndex != -1) {
+            toolbar.getItems().add(separatorIndex + 1, seedBox);
+        }
+
         return root;
     }
 
@@ -89,6 +127,21 @@ public class VacuumAgentApp extends IntegrableApplication {
      */
     @Override
     public void initialize() {
+
+        long seed = 0;
+        boolean useSeed = seedEnabledCheckBox.isSelected();
+
+        if (useSeed) {
+            try {
+                seed = Long.parseLong(seedField.getText().trim());
+            } catch (NumberFormatException e) {
+                seed = 404;
+                seedField.setText("404");
+            }
+        } else {
+            seed = System.currentTimeMillis();
+        }
+
         switch (taskPaneCtrl.getParamValueIndex(PARAM_ENV)) {
             case 0:
                 env = new VacuumEnvironment();
@@ -97,10 +150,10 @@ public class VacuumAgentApp extends IntegrableApplication {
                 env = new NondeterministicVacuumEnvironment();
                 break;
             case 2:
-                env = new MazeVacuumEnvironment(5, 5, 0.5, 0.2);
+                env = new MazeVacuumEnvironment(5, 5, 0.5, 0.2, seed);
                 break;
             case 3:
-                env = new MazeVacuumEnvironment(10, 10, 0.8, 0.3);
+                env = new MazeVacuumEnvironment(10, 10, 0.8, 0.3, seed);
                 break;
         }
         switch (taskPaneCtrl.getParamValueIndex(PARAM_AGENT)) {
