@@ -62,7 +62,7 @@ public class MazeVacuumEnvironment extends VacuumEnvironment {
 	}
 
 	public void setObstacle(String location, boolean b) {
-		envState.setLocationState(location, b ? null : LocationState.Clean);
+		envState.setLocationState(location, b ? null : LocationState.Clean); // hack - value null used for obstacles
 	}
 
 	public boolean containsObstacle(String location) {
