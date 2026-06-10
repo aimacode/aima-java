@@ -17,7 +17,7 @@ public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
 	public void test_RollingPairFairDiceModel() {
 		for (BayesInference bi : getBayesInferenceImplementations()) {
 			test_RollingPairFairDiceModel(new FiniteBayesModel(
-					BayesNetExampleFactory.construct2FairDiceNetwor(), bi));
+					BayesNetExampleFactory.construct2FairDiceNetwork(), bi));
 		}
 	}
 
@@ -65,7 +65,7 @@ public class FiniteBayesModelTest extends CommonFiniteProbabilityModelTests {
 	public void test_RollingPairFairDiceModel_Distributions() {
 		for (BayesInference bi : getBayesInferenceImplementations()) {
 			test_RollingPairFairDiceModel_Distributions(new FiniteBayesModel(
-					BayesNetExampleFactory.construct2FairDiceNetwor(), bi));
+					BayesNetExampleFactory.construct2FairDiceNetwork(), bi));
 		}
 	}
 

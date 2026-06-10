@@ -11,7 +11,7 @@ import aima.core.probability.bayes.impl.FullCPTNode;
  *
  */
 public class BayesNetExampleFactory {
-	public static BayesianNetwork construct2FairDiceNetwor() {
+	public static BayesianNetwork construct2FairDiceNetwork() {
 		FiniteNode dice1 = new FullCPTNode(ExampleRV.DICE_1_RV, new double[] {
 				1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0, 1.0 / 6.0,
 				1.0 / 6.0 });
