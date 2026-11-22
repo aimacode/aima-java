@@ -319,14 +319,13 @@ public class HITS {
 	public void sortHub(List<Page> result) {
 		Collections.sort(result, new Comparator<Page>() {
 			public int compare(Page p1, Page p2) {
-				// Sorts by 'TimeStarted' property
-				return p1.hub < p2.hub ? -1 : p1.hub > p2.hub ? 1 : secondaryOrderSort(p1, p2);
+				// Sorts by 'hub' property, descending
+				return p1.hub < p2.hub ? 1 : p1.hub > p2.hub ? -1 : secondaryOrderSort(p1, p2);
 			}
 
-			// If 'TimeStarted' property is equal sorts by 'TimeEnded' property
+			// If 'hub' property is equal sorts by 'location' property
 			public int secondaryOrderSort(Page p1, Page p2) {
-				return p1.getLocation().compareToIgnoreCase(p2.getLocation()) < 1 ? -1
-						: p1.getLocation().compareToIgnoreCase(p2.getLocation()) > 1 ? 1 : 0;
+				return p1.getLocation().compareToIgnoreCase(p2.getLocation());
 			}
 		});
 	}
@@ -339,14 +338,13 @@ public class HITS {
 	public void sortAuthority(List<Page> result) {
 		Collections.sort(result, new Comparator<Page>() {
 			public int compare(Page p1, Page p2) {
-				// Sorts by 'TimeStarted' property
-				return p1.hub < p2.hub ? -1 : p1.hub > p2.hub ? 1 : secondaryOrderSort(p1, p2);
+				// Sorts by 'authority' property, descending
+				return p1.authority < p2.authority ? 1 : p1.authority > p2.authority ? -1 : secondaryOrderSort(p1, p2);
 			}
 
-			// If 'TimeStarted' property is equal sorts by 'TimeEnded' property
+			// If 'authority' property is equal sorts by 'location' property
 			public int secondaryOrderSort(Page p1, Page p2) {
-				return p1.getLocation().compareToIgnoreCase(p2.getLocation()) < 1 ? -1
-						: p1.getLocation().compareToIgnoreCase(p2.getLocation()) > 1 ? 1 : 0;
+				return p1.getLocation().compareToIgnoreCase(p2.getLocation());
 			}
 		});
 	}
@@ -372,8 +370,8 @@ public class HITS {
 		System.out.println();
 		// Print Max Authority
 		System.out.println("Page with highest Authority score: " + getMaxAuthority(result).getLocation());
-		// Print Max Authority
-		System.out.println("Page with highest Hub score: " + getMaxAuthority(result).getLocation());
+		// Print Max Hub
+		System.out.println("Page with highest Hub score: " + getMaxHub(result).getLocation());
 	}
 
 }

@@ -2,7 +2,11 @@ package aima.test.core.unit.nlp.rank;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -77,5 +81,81 @@ public class HITSTest {
 		
 		double aveDelta = hits.getAveDelta(one, two);
 		assertEquals( aveDelta, 0.5, 0 );
+	}
+
+	@Test
+	public void testSortAuthorityOrdersByDescendingAuthority() {
+		// authority order (A,B,C) differs from hub order (C,A,B), so a sort
+		// which uses the wrong field cannot pass.
+		Page a = page("A", 0.9, 0.5);
+		Page b = page("B", 0.5, 0.9);
+		Page c = page("C", 0.1, 0.1);
+		List<Page> result = new ArrayList<>(Arrays.asList(c, a, b));
+
+		hits.sortAuthority(result);
+
+		assertEquals(Arrays.asList("A", "B", "C"), locations(result));
+	}
+
+	@Test
+	public void testSortHubOrdersByDescendingHub() {
+		// hub order (B,A,C) differs from authority order (A,B,C).
+		Page a = page("A", 0.9, 0.5);
+		Page b = page("B", 0.5, 0.9);
+		Page c = page("C", 0.1, 0.1);
+		List<Page> result = new ArrayList<>(Arrays.asList(c, a, b));
+
+		hits.sortHub(result);
+
+		assertEquals(Arrays.asList("B", "A", "C"), locations(result));
+	}
+
+	@Test
+	public void testSortBreaksTiesByLocation() {
+		Page a = page("A", 0.5, 0.5);
+		Page b = page("B", 0.5, 0.5);
+		Page c = page("C", 0.5, 0.5);
+		List<Page> result = new ArrayList<>(Arrays.asList(c, a, b));
+
+		hits.sortAuthority(result);
+
+		assertEquals(Arrays.asList("A", "B", "C"), locations(result));
+	}
+
+	@Test
+	public void testReportLabelsMaxHubByHubNotAuthority() {
+		// The summary lines must report the page with the highest hub as the
+		// hub winner, which is a different page from the authority winner here.
+		Page highAuthority = page("highAuthority", 1.0, 0.0);
+		Page highHub = page("highHub", 0.0, 1.0);
+		List<Page> result = new ArrayList<>(
+				Arrays.asList(highAuthority, highHub));
+
+		PrintStream original = System.out;
+		ByteArrayOutputStream captured = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(captured, true));
+		try {
+			hits.report(result);
+		} finally {
+			System.setOut(original);
+		}
+		String output = captured.toString();
+
+		assertTrue(output.contains("highest Authority score: highAuthority"));
+		assertTrue(output.contains("highest Hub score: highHub"));
+	}
+
+	private static Page page(String location, double authority, double hub) {
+		Page page = new Page(location);
+		page.authority = authority;
+		page.hub = hub;
+		return page;
+	}
+
+	private static List<String> locations(List<Page> pages) {
+		List<String> locations = new ArrayList<>();
+		for (Page page : pages)
+			locations.add(page.getLocation());
+		return locations;
 	}
 }
